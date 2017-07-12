@@ -1,0 +1,13 @@
+name: new_strain_pipeline
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - python = 2.7
+ - perl = 5.22.0
+ - spades = 3.10.1
+ - fastqc = 0.11.5
+ - trimmomatic = 0.36
+ - quast = 4.5
+ - entrez-direct = 5.80
+ - curl = 7.45.0
