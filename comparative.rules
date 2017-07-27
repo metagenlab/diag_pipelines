@@ -1,0 +1,23 @@
+configfile: "config.yml"
+
+genus = config["genus"]
+genus_query = "|".join(genus)
+
+        
+rule download_genomes_from_refseq:
+    input:
+        "lol"
+    output:
+        "test"
+    shell:
+        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if FtpPath_RefSeq  -element FtpPath_RefSeq | sed \"s/\(\/GCF_.*\)/\\1\\1_protein.faa.gz/\"  > test"
+
+
+
+rule extract_genome_refseq_info:
+    input:
+        "config.yml" 
+    output:
+        "refSeq/genome_info.txt"
+    shell:
+        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -element SpeciesName  | sort | uniq -c | sort -k 1 -n > refSeq/genome_info.txt"
