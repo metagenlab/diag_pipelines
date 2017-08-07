@@ -3,8 +3,6 @@ import csv
 
 configfile: "config.yml"
 
-genus = config["genus"]
-genus_query = "|".join(genus)
 
 rule trimmomatic:
     input:
@@ -53,7 +51,13 @@ rule error_correction_spades:
     shell:
          "spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]}))"
         
-
+rule check_low_coverage_contigs:
+    input:
+        "assembly/spades/{sample}/contigs_500bp_low_kmer_coverage.fasta"
+    output:
+        "blast_check/{sample}/contig_low_kmer_coverage.txt"
+    shell:
+        "blastn -query {input[0]} -db dub -remote"
         
 rule spades:
     input:
@@ -94,11 +98,11 @@ rule prokka:
     input:
         "assembly/spades/{sample}/contigs_500bp_high_kmer_coverage_renamed.fasta"
     output:
-        "annotation/{sample}/gene.log",
-        "annotation/{sample}/gene.gff",
-        "annotation/{sample}/gene.txt"
+        "annotation/{sample}/genes.log",
+        "annotation/{sample}/genes.gff",
+        "annotation/{sample}/genes.txt"
     shell:
-        "prokka --outdir $( dirname {output[0]}) --prefix gene --force {input}"
+        "prokka --outdir $( dirname {output[0]}) --force {input} --prefix genes"
 
 
 rule check_coverage_assembly:
@@ -122,33 +126,32 @@ rule filter_contigs_on_coverage:
     shell:
         "grep -A 1 -f {input[1]} {input[0]} | sed '/^--$/d' > {output[0]} && grep -A 1 -f {input[2]} {input[0]} | sed '/^--$/d' > {output[1]}"              
 
-
-rule extract_genome_refseq_info:
-    input:
-        "config.yml" 
-    output:
-        "refSeq/genome_info.txt"
-    shell:
-        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -element SpeciesName  | sort | uniq -c | sort -k 1 -n > refSeq/genome_info.txt"
-
-
-        
-rule download_genomes_from_refseq:
-    input:
-        "lol"
-    output:
-        "test"
-    shell:
-        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if FtpPath_RefSeq  -element FtpPath_RefSeq | sed \"s/\(\/GCF_.*\)/\\1\\1_protein.faa.gz/\"  > test"
-
     
 rule gff_to_embl:
     input:
-        "annotation/{sample}/gene.gff"
+        "annotation/{sample}/genes.gff"
     output:
-        "annotation/{sample}"
+        "{sample}/ena_submission/flatfile.embl"
+    params:
+        publ=config["publication"],
+        id=config["taxon_id_number"],
+        name=config["taxon_name"],
+        PRJ=config["EBI_project_number"],
+        desc=config["description_of_the_genome_sequence"],
+        aut="'"+" ".join(config["authors"])+"'",
+        tt=config["translation_table"],
+        pre=config["prefix_locus_tag"]
     shell:
-        "echo lol"
+        "gff3_to_embl --translation_table {params.tt} --locus_tag {params.pre} --authors {params.aut} --classification PROK --publication {params.publ} --output_filename {output} {params.name} {params.id} {params.PRJ} {params.desc} {input} "
+
+rule validate_gff_for_ena_submission:
+    input:
+        "{sample}/ena_submission/flatfile.embl"
+    output:
+        "{sample}/ena_submission/VAL_REPORTS.txt"
+    shell:
+        "cd $( dirname {input}) && embl-api-validator $( basename {input}) "
+        
 
 def extract_report_fastqc(filename, pattern):
     s=''
