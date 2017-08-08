@@ -1,4 +1,4 @@
-name: new_strain_pipeline
+name: new_strain
 channels:
  - bioconda
  - conda-forge
@@ -10,4 +10,5 @@ dependencies:
  - trimmomatic = 0.36
  - quast = 4.5
  - entrez-direct = 5.80
- - curl = 7.45.0
+ - biopython = 1.70
+ - orthofinder = 1.1.4
