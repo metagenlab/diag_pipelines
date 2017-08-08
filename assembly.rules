@@ -53,9 +53,9 @@ rule error_correction_spades:
         
 rule check_low_coverage_contigs:
     input:
-        "{sample}/assembly/spades//contigs_500bp_low_kmer_coverage.fasta"
+        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
     output:
-        "{sample}/blast_check//contig_low_kmer_coverage.txt"
+        "{sample}/blast_check/contig_low_kmer_coverage.txt"
     shell:
         "blastn -query {input[0]} -db dub -remote"
         
@@ -64,65 +64,65 @@ rule spades:
         "{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
         "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"
     output:
-        "{sample}/assembly/spades//spades.log",
-        "{sample}/assembly/spades//contigs.fasta"
+        "{sample}/assembly/spades/spades.log",
+        "{sample}/assembly/spades/contigs.fasta"
     shell:
         "spades.py -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})"
 
 rule quast:
     input:
-        "{sample}/assembly/spades//contigs_500bp_high_kmer_coverage.fasta"
+        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
     output:
-        "{sample}/assembly/spades//quast/report.txt"
+        "{sample}/assembly/spades/quast/report.txt"
     shell:
         "quast.py {input} -o $( dirname {output})"
 
 rule extract_contigs_500bp:
     input:
-        "{sample}/assembly/spades//contigs.fasta"
+        "{sample}/assembly/spades/contigs.fasta"
     output:
-        "{sample}/assembly/spades//contigs_500bp.fasta"
+        "{sample}/assembly/spades/contigs_500bp.fasta"
     shell:
         "awk '/^>/{{print (NR==1)?$0: \"\\n\" $0;next}} {{printf \"%s\", $0}}END{{print \"\"}}' {input} |  awk \'!/^>/ {{ next }} {{ getline seq }} length(seq) >= 500 {{ print $0 \"\\n\" seq }}\'  > {output}"  
 
 
 rule rename_contigs:
     input:
-        "{sample}/assembly/spades//contigs_500bp_high_kmer_coverage.fasta"
+        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
     output:
-        "{sample}/assembly/spades//contigs_500bp_high_kmer_coverage_renamed.fasta"
+        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
     shell:
         "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig00\\1/\" {input} > {output}"
         
 rule prokka:
     input:
-        "{sample}/assembly/spades//contigs_500bp_high_kmer_coverage_renamed.fasta"
+        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
     output:
-        "{sample}/annotation//genes.log",
-        "{sample}/annotation//genes.gff",
-        "{sample}/annotation//genes.txt"
+        "{sample}/annotation/genes.log",
+        "{sample}/annotation/genes.gff",
+        "{sample}/annotation/genes.txt"
     shell:
         "prokka --outdir $( dirname {output[0]}) --force {input} --prefix genes"
 
 
 rule check_coverage_assembly:
     input:
-        "{sample}/assembly/spades//contigs_500bp.fasta"
+        "{sample}/assembly/spades/contigs_500bp.fasta"
     output:
-        "{sample}/assembly/spades//contigs_500bp_low_kmer_coverage.txt",
-        "{sample}/assembly/spades//contigs_500bp_high_kmer_coverage.txt"
+        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
+        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt"
     shell:
         "grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 < 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$//\" | sed \"s/^>//\" > {output[0]} && grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 > 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$/_/\" | sed \"s/^>//\"  > {output[1]} "
 
 
 rule filter_contigs_on_coverage:
     input:
-        "{sample}/assembly/spades//contigs_500bp.fasta",
-        "{sample}/assembly/spades//contigs_500bp_high_kmer_coverage.txt",
-        "{sample}/assembly/spades//contigs_500bp_low_kmer_coverage.txt"
+        "{sample}/assembly/spades/contigs_500bp.fasta",
+        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt",
+        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt"
     output:
-        "{sample}/assembly/spades//contigs_500bp_high_kmer_coverage.fasta",
-        "{sample}/assembly/spades//contigs_500bp_low_kmer_coverage.fasta"
+        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta",
+        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
     shell:
         "grep -A 1 -f {input[1]} {input[0]} | sed '/^--$/d' > {output[0]} && grep -A 1 -f {input[2]} {input[0]} | sed '/^--$/d' > {output[1]}"              
 
@@ -200,7 +200,7 @@ rule report:
         fastqc1html = "{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
         fastqc2html = "{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html",
         spades = "{sample}/assembly/spades/spades.log",
-        low_cov_names = "{sample}/assembly/spades//contigs_500bp_low_kmer_coverage.txt",
+        low_cov_names = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
         low_cov = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
         quast = "{sample}/assembly/spades/quast/report.txt",
         prokka = "{sample}/annotation/genes.txt",
