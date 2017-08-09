@@ -1,6 +1,3 @@
-
-
-
 configfile: "comparative_search.yml"
 
 genus = config["genus"]
@@ -10,7 +7,7 @@ rule get_proteomes_from_refseq:
     output:
         "refSeq/proteomes_urls.txt"
     shell:
-        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if FtpPath_RefSeq  -element FtpPath_RefSeq | sed \"s/\(\/GCF_.*\)/\\1\\1_protein.faa.gz/\"  >  refSeq/proteomes_urls.txt"
+        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -if RefSeq -element FtpPath_RefSeq | sed \"s/\(\/GCF_.*\)/\\1\\1_protein.faa.gz/\"  >  refSeq/proteomes_urls.txt"
 
 
 rule download_proteomes_from_refseq:
@@ -20,12 +17,20 @@ rule download_proteomes_from_refseq:
         "refSeq/proteomes/log_wget.txt"
     shell:
         "wget -N -i refSeq/proteomes_urls.txt -P $( dirname {output}) -o {output}" 
-        
+
+
 rule extract_genome_refseq_info:
     output:
         "refSeq/genome_info.txt"
     shell:
-        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -element SpeciesName  | sort | uniq -c | sort -k 1 -n > refSeq/genome_info.txt"
+        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq -element SpeciesName  | sort | uniq -c | sort -k 1 -n > refSeq/genome_info.txt"
+
+rule extract_id_species_correspondance:
+    output:
+        "refSeq/genome_id.txt"
+    shell:
+        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq -element SpeciesName Sub_value RefSeq"
+
 
 
 rule unzip_proteomes:
@@ -35,6 +40,16 @@ rule unzip_proteomes:
         "refSeq/proteomes/log_unzip.txt"
     shell:
         "for i in $( ls $( dirname {input})/*.gz); do gzip -d $i; done > {output}"
+
+
+rule orthofinder_downloaded_proteomes:
+    input:
+        "refSeq/proteomes/log_unzip.txt"
+    output:
+        "refSeq/orthologs/log_orthofinder.txt"
+    shell:
+        "orthofinder -f $( dirname {input}) -M msa > {output}"
     
-    
+
+
     
