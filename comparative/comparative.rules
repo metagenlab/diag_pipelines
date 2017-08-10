@@ -1,47 +1,81 @@
 configfile: "comparative_search.yml"
 
-genus = config["genus"]
+genus = config["search"]
 genus_query = "|".join(genus)
 
-rule get_proteomes_from_refseq:
-    output:
-        "refSeq/proteomes_urls.txt"
-    shell:
-        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -if RefSeq -element FtpPath_RefSeq | sed \"s/\(\/GCF_.*\)/\\1\\1_protein.faa.gz/\"  >  refSeq/proteomes_urls.txt"
+shell.prefix("set -euo pipefail;") 
 
+rule download_genomes_from_refseq:
+    input:
+        "refSeq/genome_addresses.txt"
+    output:
+        "refSeq/genomes/log_wget.txt"
+    shell:
+        "cut -f1,2,3,4 {input} | xargs -I{{}} sh -c \
+        'str=$1; id=$(echo ${{str%%ftp:*}} | tr \" \" \"_\"); address=$(echo ftp:${{str##*ftp:}} | sed \"s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/\"); echo ${{id}} ${{address}}; wget -O $(dirname {output})/${{id}}.fna.gz ${{address}}' -- {{}} > {output} "
 
 rule download_proteomes_from_refseq:
     input:
-        "refSeq/proteomes_urls.txt"
+        "refSeq/genome_addresses.txt"
     output:
         "refSeq/proteomes/log_wget.txt"
     shell:
-        "wget -N -i refSeq/proteomes_urls.txt -P $( dirname {output}) -o {output}" 
+        "cut -f1,2,4 {input} | xargs -I{{}} sh -c \
+        'str=$1; id=$(echo ${{str%%ftp:*}} | tr \" \" \"_\"); address=$(echo ftp:${{str##*ftp:}} | sed \"s/\(\/GCF_.*\)/\\1\\1_protein.faa.gz/\"); echo ${{id}} ${{address}}; wget -O $(dirname {output})/${{id}}.faa.gz ${{address}}' -- {{}} > {output} "
 
+        
 
 rule extract_genome_refseq_info:
     output:
-        "refSeq/genome_info.txt"
+        "refSeq/nb_genomes_per_species.txt"
     shell:
-        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq -element SpeciesName  | sort | uniq -c | sort -k 1 -n > refSeq/genome_info.txt"
+        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -if RefSeq -if Sub_value -element SpeciesName  | sort | uniq -c | sort -k 1 -n > {output}"
 
-rule extract_id_species_correspondance:
+
+rule fetch_refSeq_id_and_filtering:
+    input:
+        "refSeq/nb_genomes_per_species.txt"
     output:
-        "refSeq/genome_id.txt"
+        "refSeq/genome_addresses.txt"
     shell:
-        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq -element SpeciesName Sub_value RefSeq"
+        "rm {output} &&\
+        awk '$1 > 5' {input} | awk '{{print $2, $3}}' | xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -unless RefSeq_category -equals \"na\" -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}} &&\
+        awk '$1 < 5' {input} | awk '{{print $2, $3}}'|  xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}}"
+        
+rule calculate_ani:
+    input:
+        "refSeq/genomes/log_unzip.txt",
+        "local_genomes/id_local_genomes.txt"
+    output:
+        "ANI/log_pyani.txt"
+    shell:
+        "cp refSeq/genomes/*.fna $(dirname {output})  &&\
+        cp local_genomes/*.fna $(dirname {output}) &&\
+        average_nucleotide_identity.py -i $(dirname {output}) -o $( dirname {output})/results/ -l {output} -g --gformat eps -f" 
 
-
-
+        
 rule unzip_proteomes:
     input:
         "refSeq/proteomes/log_wget.txt"
     output:
         "refSeq/proteomes/log_unzip.txt"
     shell:
-        "for i in $( ls $( dirname {input})/*.gz); do gzip -d $i; done > {output}"
+        "for i in $( ls $( dirname {input})/*.gz);\
+        do gzip -d -f $i;\
+        done > {output}"
 
 
+rule unzip_genomes:
+    input:
+        "refSeq/genomes/log_wget.txt"
+    output:
+        "refSeq/genomes/log_unzip.txt"
+    shell:
+        "for i in $( ls $( dirname {input})/*.gz);\
+        do gzip -d -f $i;\
+        done > {output}"   
+
+        
 rule orthofinder_downloaded_proteomes:
     input:
         "refSeq/proteomes/log_unzip.txt"
@@ -50,6 +84,83 @@ rule orthofinder_downloaded_proteomes:
     shell:
         "orthofinder -f $( dirname {input}) -M msa > {output}"
     
+rule adding_local_genomes_to_orthofinder_run:
+    input:
+        "refSeq/orthologs/log_orthofinder.txt",
+        "local_genomes/id_local_genomes.txt"
+    output:
+        "orthologs/log_orthofinder.txt"
+    shell:
+        """
+        last_remote_orthofinder_result=$( grep -A 1 -m 1 'Orthogroups have been written to tab-delimited files:' {input[0]} | tail -n 1 | sed 's/Orthogroups.csv/WorkingDirectory/' )
+        orthofinder -b ${{last_remote_orthofinder_result}} -f $(dirname {input[1]}) -M msa > {output}
+        """
 
+rule extracting_one_to_one_orthologs:
+    input:
+        "orthologs/log_orthofinder.txt",
+        "refSeq/orthologs/log_orthofinder.txt"
+    output:
+        "orthologs/1to1groups/log.txt"
+    shell:
+        """
+        out_folder=$(dirname {output})
+        last_orthofinder_results=$(dirname $( grep -A 1 -m 1 'Orthogroups have been written to tab-delimited files:' {input[0]} | tail -n 1 ))
+        echo ${{last_orthofinder_results}}
+        last_single_copy_orthogroups=$( ls -Srt ${{last_orthofinder_results}}/SingleCopyOrthogroups_* | tail -n 1 | cut -f9 -d' ')
+        echo ${{last_single_copy_orthogroups}}
+        last_orthologues_folder=$( ls -Srtd ${{last_orthofinder_results}}/Orthologues_* | tail -n 1 | cut -f9 -d' ')
+        echo ${{last_orthologues_folder}}
+        alignmentsid_folder=${{last_orthologues_folder}}/WorkingDirectory/Alignments_ids/
 
+        for og in $(cat ${{last_single_copy_orthogroups}})
+        do
+            awk '/^>/ {{printf("\\n%s\\n",$0);next; }} {{ printf("%s",$0);}}  END {{printf("\\n");}}' < ${{alignmentsid_folder}}/${{og}}.fa >  ${{out_folder}}/${{og}}_oneline.fa;
+        done
+        sed -i "s/>\([0-9]\+\)_.*/>\\1/" ${{out_folder}}/*_oneline.fa
+        sed -i "/^\s*$/d" ${{out_folder}}/*_oneline.fa
+        echo "Orthogroups extracted" >> {output}
+        """
+
+rule prepare_raxml_files:
+    input:
+        "orthologs/1to1groups/log.txt"
+    output:
+        "raxml/concatenated_orthogroups.fa",
+        "raxml/partition_file.txt"
+    shell:
+        """
+        target_folder=$(dirname {input})
+        type=prot
+        model=LG
+        index=0
+        start=1
+        if [ -f {output[1]} ] 
+        then
+            rm {output[1]}
+        fi
+        for i in $(ls ${{target_folder}}/*_oneline.fa)
+        do
+            length=$(tail -n -1 ${{i}} | tr -d '\\n' | wc -m);
+            echo "${{model}}, ${{type}}${{index}} = ${{start}}-$(( start + length - 1 ))" >> {output[1]}
+            start=$(( start + length ));
+            index=$(( index + 1 ));
+        done
+        paste -d'\\0' ${{target_folder}}/*_oneline.fa | sed "s/>\([0-9]\+\)>.*/>\\1/"  |  sed "/^\s*$/d" > {output[0]}
+        """
     
+
+
+        
+rule report:
+    input:
+        "orthologs/log_orthofinder.txt",
+        "ANI/log_pyani.txt"
+    output:
+        "report.html"
+    run:
+        from snakemake.utils import report
+        report("""
+        An awesome report of the comparative genomics pipeline
+        """, output[0], **input)
+        
