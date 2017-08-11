@@ -7,5 +7,4 @@ dependencies:
  - orthofinder = 1.1.8
  - mafft = 7.310
  - fasttree = 2.1.9
- - pyani = 0.2.3
-
+ - raxml = 8.2.10

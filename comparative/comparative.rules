@@ -1,3 +1,7 @@
+import re
+from snakemake.utils import report
+
+
 configfile: "comparative_search.yml"
 
 genus = config["search"]
@@ -26,6 +30,8 @@ rule download_proteomes_from_refseq:
         
 
 rule extract_genome_refseq_info:
+    input:
+        "comparative_search.yml"
     output:
         "refSeq/nb_genomes_per_species.txt"
     shell:
@@ -38,9 +44,14 @@ rule fetch_refSeq_id_and_filtering:
     output:
         "refSeq/genome_addresses.txt"
     shell:
-        "rm {output} &&\
-        awk '$1 > 5' {input} | awk '{{print $2, $3}}' | xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -unless RefSeq_category -equals \"na\" -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}} &&\
-        awk '$1 < 5' {input} | awk '{{print $2, $3}}'|  xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}}"
+        """
+        if [ -f {output} ]
+        then
+            rm {output}
+        fi
+        awk '$1 > 5' {input} | awk '{{print $2, $3}}' | xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -unless RefSeq_category -equals \"na\" -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}}
+        awk '$1 < 5' {input} | awk '{{print $2, $3}}'|  xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}}
+        """
         
 rule calculate_ani:
     input:
@@ -49,9 +60,11 @@ rule calculate_ani:
     output:
         "ANI/log_pyani.txt"
     shell:
-        "cp refSeq/genomes/*.fna $(dirname {output})  &&\
-        cp local_genomes/*.fna $(dirname {output}) &&\
-        average_nucleotide_identity.py -i $(dirname {output}) -o $( dirname {output})/results/ -l {output} -g --gformat eps -f" 
+        """
+        cp refSeq/genomes/*.fna $(dirname {output})
+        cp local_genomes/*.fna $(dirname {output})
+        average_nucleotide_identity.py -i $(dirname {output}) -o $( dirname {output})/results/ -l {output} -g --gformat eps,png -f
+        """
 
         
 rule unzip_proteomes:
@@ -89,11 +102,13 @@ rule adding_local_genomes_to_orthofinder_run:
         "refSeq/orthologs/log_orthofinder.txt",
         "local_genomes/id_local_genomes.txt"
     output:
-        "orthologs/log_orthofinder.txt"
+        "orthologs/log_orthofinder.txt",
+        "orthologs/SpeciesID.txt"
     shell:
         """
         last_remote_orthofinder_result=$( grep -A 1 -m 1 'Orthogroups have been written to tab-delimited files:' {input[0]} | tail -n 1 | sed 's/Orthogroups.csv/WorkingDirectory/' )
         orthofinder -b ${{last_remote_orthofinder_result}} -f $(dirname {input[1]}) -M msa > {output}
+        sed "s/://" ${{last_remote_orthofinder_result}}/SpeciesID.txt | sed "s/\\.faa//" >  {output[1]}
         """
 
 rule extracting_one_to_one_orthologs:
@@ -146,21 +161,105 @@ rule prepare_raxml_files:
             start=$(( start + length ));
             index=$(( index + 1 ));
         done
-        paste -d'\\0' ${{target_folder}}/*_oneline.fa | sed "s/>\([0-9]\+\)>.*/>\\1/"  |  sed "/^\s*$/d" > {output[0]}
+        paste -d'\\0' ${{target_folder}}/*_oneline.fa | sed "s/>\([0-9]\+\)>.*/>\\1/"  |  sed "/^\s*$/d" | sed "s/U/C/g" > {output[0]}
         """
-    
 
+        #sed "s/U/C/g" replaces Selenocysteine (U) which is not accepted by raxml by Cysteine (C) which is the closest AA possible
 
+rule run_raxml_on_1to1groups:
+    input:
+        "raxml/concatenated_orthogroups.fa",
+        "raxml/partition_file.txt"
+    output:
+        "raxml/RAxML_info.run",
+        "raxml/RAxML_bestTree.run"
+    shell:
+        """
+        if [ -f {output[0]} ]
+        then
+            rm {output[0]}
+        fi
+        raxmlHPC -m PROTGAMMALG -w $(dirname $(readlink -f {output[0]})) -n run -s {input[0]} -q {input[1]} -p 123 > $(dirname {output[0]})/logs.txt
+        """
+
+rule generate_tree_figure_from_raxml:
+    input:
+        "raxml/RAxML_bestTree.run",
+        "orthologs/SpeciesIDs.txt"
+    output:
+        "raxml/tree.svg",
+        "raxml/tree.png"
+    shell:
+        """
+        nw_rename {input[0]} {input[1]} | nw_display -S -s -b 'opacity:0' -w 800 - > {output[0]}
+        inkscape -z {output[0]} -e {output[1]}
+        """
         
+        
+def extract_orthofinder_results(filename):
+    s=""
+    stats_file_pattern = re.compile(r"Statistics_Overall_\d+\.csv")
+    folder_pattern = re.compile(r"existing analysis in /.*")
+    stats_file = re.findall(stats_file_pattern, open(filename, "r").read())
+    folder = re.findall(folder_pattern, open(filename, "r").read())
+    return "\n    ".join(open(("/"+"/".join(folder[0].split("/")[1:])+stats_file[0]), "r").read().split("Date")[0].split("\n"))
+        
+
+
+
+
 rule report:
     input:
-        "orthologs/log_orthofinder.txt",
-        "ANI/log_pyani.txt"
+        species="refSeq/nb_genomes_per_species.txt",
+        genomes="refSeq/genome_addresses.txt",
+        local_genomes="local_genomes/id_local_genomes.txt",
+        ortho="orthologs/log_orthofinder.txt",
+        pyani="ANI/log_pyani.txt",
+        raxml="raxml/RAxML_info.run",
+        tree="raxml/tree.png"
     output:
         "report.html"
     run:
-        from snakemake.utils import report
+        tree=input["tree"]
+        queries="\n    ".join(genus)
+        numbers=open(input["species"], "r").read()
+        genomes="\n    ".join(open(input["genomes"], "r").read().split("\n"))
+        idlocal="\n    ".join(open(input["local_genomes"], "r").read().split("\n"))
+        report_ortho=extract_orthofinder_results(input["ortho"])
         report("""
-        An awesome report of the comparative genomics pipeline
+        Report of the comparative genomics pipeline 
+        ===========================================
+        The RefSeq database was searched for the available genomes using the requested queries::
+        
+            {queries}
+
+        The number of available genomes in RefSeq are, excluding the entries whos subspecies was not defined::
+        
+        {numbers}
+
+        If species had more than 5 genomes available, only the reference and representative genomes were selected. Hence here are the genomes that were downloaded for this analysis::
+            
+            Species name\t Subspecies name\t RefSeqID \t FTP link
+            {genomes}
+        
+        Additionnaly, here are the local genomes that were included in this analysis::
+        
+            {idlocal}
+
+        Orthofinder was run on those genomes and the results were::
+
+            {report_ortho}
+        
+        A phylogeny was constructed using the single-copy orthogroups using RAxML
+
+        .. image:: {tree}
+
+        The Average Nucleotide Identity between all genomes was calculated using pyani. Here are the ANI values:
+
+        .. image:: ANI/results/ANIm_percentage_identity.png
+        
+        And here is the percentage of the genome that was aligned:
+
+        .. image:: ANI/results/ANIm_alignment_coverage.png
         """, output[0], **input)
         
