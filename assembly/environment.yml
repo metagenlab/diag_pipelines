@@ -1,14 +1,18 @@
-name: new_strain
+name: new_strain_assembly
 channels:
  - bioconda
  - conda-forge
 dependencies:
- - python = 2.7
- - perl = 5.22.0
  - spades = 3.10.1
  - fastqc = 0.11.5
  - trimmomatic = 0.36
  - quast = 4.5
+<<<<<<< HEAD
  - entrez-direct = 7.00
  - biopython = 1.70
  - orthofinder = 1.1.4
+=======
+ - gff3toembl = 1.1.4
+ - embl-api-validator = 1.1.173
+ - prokka = 1.11
+>>>>>>> master
