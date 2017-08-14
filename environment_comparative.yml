@@ -1,9 +1,0 @@
-name: comparative_analysis
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - entrez-direct = 7.00
- - orthofinder = 1.1.8
- - mafft = 7.310
- - fasttree = 2.1.9

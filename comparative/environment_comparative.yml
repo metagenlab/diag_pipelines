@@ -8,3 +8,5 @@ dependencies:
  - mafft = 7.310
  - fasttree = 2.1.9
  - raxml = 8.2.10
+ - inkscape = 0.91
+ 

@@ -215,7 +215,6 @@ rule report:
         local_genomes="local_genomes/id_local_genomes.txt",
         ortho="orthologs/log_orthofinder.txt",
         pyani="ANI/log_pyani.txt",
-        raxml="raxml/RAxML_info.run",
         tree="raxml/tree.png"
     output:
         "report.html"
@@ -246,15 +245,15 @@ rule report:
         
             {idlocal}
 
-        Orthofinder was run on those genomes and the results were::
+        Orthofinder was run on those genomes and the output statistics were::
 
             {report_ortho}
         
-        A phylogeny was constructed using the single-copy orthogroups using RAxML
+        A phylogeny was constructed using the single-copy orthogroups using RAxML:
 
         .. image:: {tree}
 
-        The Average Nucleotide Identity between all genomes was calculated using pyani. Here are the ANI values:
+        The Average Nucleotide Identity (ANI) between all genomes was calculated using pyani. Here are the ANI values:
 
         .. image:: ANI/results/ANIm_percentage_identity.png
         
