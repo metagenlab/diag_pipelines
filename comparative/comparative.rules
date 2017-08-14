@@ -35,7 +35,7 @@ rule extract_genome_refseq_info:
     output:
         "refSeq/nb_genomes_per_species.txt"
     shell:
-        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -if RefSeq -if Sub_value -element SpeciesName  | sort | uniq -c | sort -k 1 -n > {output}"
+        "esearch -db assembly -query \"{genus_query}\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq -if Sub_value -element SpeciesName  | sort | uniq -c | sort -k 1 -n > {output}"
 
 
 rule fetch_refSeq_id_and_filtering:
@@ -49,8 +49,8 @@ rule fetch_refSeq_id_and_filtering:
         then
             rm {output}
         fi
-        awk '$1 > 5' {input} | awk '{{print $2, $3}}' | xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -unless RefSeq_category -equals \"na\" -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}}
-        awk '$1 < 5' {input} | awk '{{print $2, $3}}'|  xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract.Linux -pattern DocumentSummary -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}}
+        awk '$1 > 5' {input} | awk '{{print $2, $3}}' | xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless RefSeq_category -equals \"na\" -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}}
+        awk '$1 < 5' {input} | awk '{{print $2, $3}}'|  xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}}
         """
         
 rule calculate_ani:
