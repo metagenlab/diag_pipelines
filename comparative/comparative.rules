@@ -9,25 +9,43 @@ genus_query = "|".join(genus)
 
 shell.prefix("set -euo pipefail;") 
 
+rule all:
+    input:
+        dynamic("refSeq/proteomes/{id}.faa.gz")
+
 rule download_genomes_from_refseq:
     input:
         "refSeq/genome_addresses.txt"
     output:
         "refSeq/genomes/log_wget.txt"
+    log:
+        "refSeq/genomes/log_wget.txt"
     shell:
         "cut -f1,2,3,4 {input} | xargs -I{{}} sh -c \
-        'str=$1; id=$(echo ${{str%%ftp:*}} | tr \" \" \"_\"); address=$(echo ftp:${{str##*ftp:}} | sed \"s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/\"); echo ${{id}} ${{address}}; wget -O $(dirname {output})/${{id}}.fna.gz ${{address}}' -- {{}} > {output} "
+        'str=$1; id=$(echo ${{str%%ftp:*}} | tr \" \" \"_\"); address=$(echo ftp:${{str##*ftp:}} | sed \"s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/\"); echo ${{id}} ${{address}}; wget -O ($dirname {output})/${{id}}.fna.gz ${{address}}' -o {log} -- {{}} "
 
+        
 rule download_proteomes_from_refseq:
     input:
         "refSeq/genome_addresses.txt"
     output:
+        "refSeq/proteomes/downloads.txt"
+    log:
         "refSeq/proteomes/log_wget.txt"
     shell:
-        "cut -f1,2,4 {input} | xargs -I{{}} sh -c \
-        'str=$1; id=$(echo ${{str%%ftp:*}} | tr \" \" \"_\"); address=$(echo ftp:${{str##*ftp:}} | sed \"s/\(\/GCF_.*\)/\\1\\1_protein.faa.gz/\"); echo ${{id}} ${{address}}; wget -O $(dirname {output})/${{id}}.faa.gz ${{address}}' -- {{}} > {output} "
-
-        
+        """
+        if [ -f {log} ]
+        then
+            rm {log}
+        fi
+        while read p;
+        do  
+            id=$(echo ${{p}} | sed "s/ ftp:.*//" | tr " " "_" | tr "\\t" "_" | tr "." "_")
+            address=$(echo ${{p}} | sed "s/.* //" | sed \"s/\(\/GCF_.*\)/\\1\\1_protein.faa.gz/\")
+            echo ${{id}} ${{address}} >> {output}
+            wget -O refSeq/proteomes/${{id}}.faa.gz -a {log} ${{address}}
+        done < {input}
+        """
 
 rule extract_genome_refseq_info:
     input:
@@ -69,13 +87,16 @@ rule calculate_ani:
         
 rule unzip_proteomes:
     input:
-        "refSeq/proteomes/log_wget.txt"
+        "refSeq/proteomes/downloads.txt"
     output:
-        "refSeq/proteomes/log_unzip.txt"
+        "refSeq/proteomes/unzips.txt"
     shell:
-        "for i in $( ls $( dirname {input})/*.gz);\
-        do gzip -d -f $i;\
-        done > {output}"
+        """
+        for i in $( ls $( dirname {input})/*.gz)
+        do 
+            gzip -d -f $i
+        done > {output}
+        """
 
 
 rule unzip_genomes:
@@ -84,50 +105,54 @@ rule unzip_genomes:
     output:
         "refSeq/genomes/log_unzip.txt"
     shell:
-        "for i in $( ls $( dirname {input})/*.gz);\
-        do gzip -d -f $i;\
-        done > {output}"   
+        """
+        for i in $( ls $( dirname {input})/*.gz)
+        do 
+            gzip -d -f $i
+        done > {output}
+        """
 
-        
 rule orthofinder_downloaded_proteomes:
     input:
-        "refSeq/proteomes/log_unzip.txt"
+        "refSeq/proteomes/unzips.txt"
     output:
-        "refSeq/orthologs/log_orthofinder.txt"
+        "orthologs/orthofinder_downloaded_proteomes/Orthogroups.csv"
+    log:
+        "refSeq/log_orthofinder.txt"
     shell:
-        "orthofinder -f $( dirname {input}) -M msa > {output}"
+        "rm -rf $(dirname {input})/Results_* && orthofinder -og -f $(dirname {input}) > {log} && cp -R $(dirname {input})/Results_* $(dirname {output})"
     
 rule adding_local_genomes_to_orthofinder_run:
     input:
-        "refSeq/orthologs/log_orthofinder.txt",
-        "local_genomes/id_local_genomes.txt"
+        "refSeq/log_orthofinder.txt",
+        "local_data/ids.txt"
     output:
         "orthologs/log_orthofinder.txt",
-        "orthologs/SpeciesID.txt"
+        "orthologs/SpeciesIDs.txt"
     shell:
         """
-        last_remote_orthofinder_result=$( grep -A 1 -m 1 'Orthogroups have been written to tab-delimited files:' {input[0]} | tail -n 1 | sed 's/Orthogroups.csv/WorkingDirectory/' )
-        orthofinder -b ${{last_remote_orthofinder_result}} -f $(dirname {input[1]}) -M msa > {output}
-        sed "s/://" ${{last_remote_orthofinder_result}}/SpeciesID.txt | sed "s/\\.faa//" >  {output[1]}
+        last_remote_orthofinder_result=$(grep -A 1 -m 1 'Orthogroups have been written to tab-delimited files:' {input[0]} | tail -n 1 | sed 's/Orthogroups.csv/WorkingDirectory/')
+        orthofinder -og -b ${{last_remote_orthofinder_result}} -f $(dirname {input[1]})/proteomes/to_be_added/ > {output[0]}
+        sed "s/://" ${{last_remote_orthofinder_result}}/SpeciesIDs.txt | sed "s/\\.faa//" | sed "s/^#.*//" >  {output[1]}
+        mv $(dirname {input[1]})/proteomes/to_be_added/*.faa $(dirname {input[1]})/proteomes/added/
         """
 
 rule extracting_one_to_one_orthologs:
     input:
         "orthologs/log_orthofinder.txt",
-        "refSeq/orthologs/log_orthofinder.txt"
+        "refSeq/log_orthofinder.txt"
     output:
         "orthologs/1to1groups/log.txt"
     shell:
         """
         out_folder=$(dirname {output})
-        last_orthofinder_results=$(dirname $( grep -A 1 -m 1 'Orthogroups have been written to tab-delimited files:' {input[0]} | tail -n 1 ))
+        last_orthofinder_results=$(dirname $(grep -A 1 -m 1 'Orthogroups have been written to tab-delimited files:' {input[0]} | tail -n 1 ))
         echo ${{last_orthofinder_results}}
-        last_single_copy_orthogroups=$( ls -Srt ${{last_orthofinder_results}}/SingleCopyOrthogroups_* | tail -n 1 | cut -f9 -d' ')
+        last_single_copy_orthogroups=$(ls -Srt ${{last_orthofinder_results}}/SingleCopyOrthogroups_* | tail -n 1 | cut -f9 -d' ')
         echo ${{last_single_copy_orthogroups}}
-        last_orthologues_folder=$( ls -Srtd ${{last_orthofinder_results}}/Orthologues_* | tail -n 1 | cut -f9 -d' ')
+        last_orthologues_folder=$(ls -Srtd ${{last_orthofinder_results}}/Orthologues_* | tail -n 1 | cut -f9 -d' ')
         echo ${{last_orthologues_folder}}
         alignmentsid_folder=${{last_orthologues_folder}}/WorkingDirectory/Alignments_ids/
-
         for og in $(cat ${{last_single_copy_orthogroups}})
         do
             awk '/^>/ {{printf("\\n%s\\n",$0);next; }} {{ printf("%s",$0);}}  END {{printf("\\n");}}' < ${{alignmentsid_folder}}/${{og}}.fa >  ${{out_folder}}/${{og}}_oneline.fa;
@@ -136,6 +161,8 @@ rule extracting_one_to_one_orthologs:
         sed -i "/^\s*$/d" ${{out_folder}}/*_oneline.fa
         echo "Orthogroups extracted" >> {output}
         """
+
+
 
 rule prepare_raxml_files:
     input:
@@ -163,7 +190,6 @@ rule prepare_raxml_files:
         done
         paste -d'\\0' ${{target_folder}}/*_oneline.fa | sed "s/>\([0-9]\+\)>.*/>\\1/"  |  sed "/^\s*$/d" | sed "s/U/C/g" > {output[0]}
         """
-
         #sed "s/U/C/g" replaces Selenocysteine (U) which is not accepted by raxml by Cysteine (C) which is the closest AA possible
 
 rule run_raxml_on_1to1groups:
