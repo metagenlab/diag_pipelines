@@ -4,6 +4,8 @@ import csv
 configfile: "config.yml"
 
 
+
+
 rule trimmomatic:
     input:
         "{sample}/reads/raw/R1_001.fastq",
@@ -102,7 +104,7 @@ rule prokka:
         "{sample}/annotation/genes.gff",
         "{sample}/annotation/genes.txt"
     shell:
-        "prokka --outdir $( dirname {output[0]}) --force {input} --prefix genes"
+        "prokka --outdir $( dirname {output[0]}) --force {input} --prefix {sample}"
 
 
 rule check_coverage_assembly:
@@ -152,7 +154,7 @@ rule validate_gff_for_ena_submission:
         "{sample}/ena_submission/VAL_ERROR.txt"
         
     shell:
-        "cd $( dirname {input}) && embl-api-validator $( basename {input}) "
+        "cd $( dirname {input}) && embl-api-validator $( basename {input}) || true "
         
 
 def extract_report(filename, pattern):
@@ -230,6 +232,8 @@ rule report:
         r2w = format_table(extract_report(input["fastqc2"], warn))
         spw = extract_report(input["spades"], warn)
         spw = "    " + "\n    ".join([ x for x in spw.split("\n") if "*" in x ])
+        if spw.isspace():
+            spw = "    No warnings nor errors"
         contigs_excluded = "    "+"    ".join(open(input["low_cov_names"]).readlines()).replace("_", " ")
         prokka_annot = extract_info_prokka(input["prokka"])
         rRNA = prokka_annot["rRNA"]
@@ -237,8 +241,6 @@ rule report:
         tRNA = prokka_annot["tRNA"]
         enavalidator_warn = format_table(extract_report(input["ena_validator_summary"], warn))
         enavalidator_err = format_table(extract_report(input["ena_validator_summary"], error))
-        
-        
         report("""
         Report of the assembly and annotation of the strain {wildcards.sample}
         ===========================================================================================
