@@ -1,0 +1,7 @@
+name: pyani
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - pyani = 0.2.3 
+

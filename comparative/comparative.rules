@@ -65,11 +65,13 @@ rule fetch_refSeq_id_and_filtering:
         """
         
 rule calculate_ani:
+    conda:
+        "env/ani.yaml"
     input:
         "refSeq/genomes/downloads.txt",
         "local_data/ids.txt"
     output:
-        "ANI/log_pyani.txt"
+        "ANI/log.txt"
     shell:
         """
         cp refSeq/genomes/*.fna $(dirname {output})
@@ -202,6 +204,8 @@ rule run_raxml_on_1to1groups:
         """
 
 rule generate_tree_figure_from_raxml:
+    conda:
+        "env/tree_figure.yaml"
     input:
         "phylogeny/RAxML_bestTree.run",
         "orthologs/SpeciesIDs.txt"
@@ -211,7 +215,7 @@ rule generate_tree_figure_from_raxml:
     shell:
         """
         nw_rename {input[0]} {input[1]} | nw_display -S -s -b 'opacity:0' -w 800 - > {output[0]}
-        inkscape -z {output[0]} -e {output[1]}
+        convert {output[0]} {output[1]}
         """
         
         
@@ -233,14 +237,14 @@ rule report:
         genomes="refSeq/genome_addresses.txt",
         local_genomes="local_data/ids.txt",
         ortho="orthologs/current_results/log.txt",
-        pyani="ANI/log_pyani.txt",
+        pyani="ANI/log.txt",
         tree="phylogeny/tree.png"
     output:
         "report.html"
     run:
         tree=input["tree"]
         queries="\n    ".join(genus)
-        numbers=open(input["species"], "r").read()
+        numbers="\n    ".join(open(input["species"], "r").read().split("\n"))
         genomes="\n    ".join(open(input["genomes"], "r").read().split("\n"))
         idlocal="\n    ".join(open(input["local_genomes"], "r").read().split("\n"))
         report_ortho=extract_orthofinder_results(input["ortho"])
@@ -251,9 +255,9 @@ rule report:
         
             {queries}
 
-        Number of available genomes in RefSeq:
+        Number of available genomes in RefSeq::
         
-        {numbers}
+            {numbers}
 
         If species had more than 5 genomes available, only the reference and representative genomes were selected. Hence here are the genomes that were downloaded for this analysis::
             
