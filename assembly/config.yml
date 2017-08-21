@@ -23,3 +23,19 @@ translation_table: "11"
 prefix_locus_tag: "TERRISP13"
 
 #This is the prefix of the locus tag for each genes. They have to be book from EBI-ENA and this can be done during the project registration
+
+
+
+
+
+
+
+
+
+#Internal pipeline parameters
+
+#These are the parameters for read trimming 
+minimum_quality_base: "35"
+mimimum_read_length: "60"
+crop_at_read_beginning: "10"
+

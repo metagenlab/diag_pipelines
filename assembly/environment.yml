@@ -11,4 +11,4 @@ dependencies:
  - gff3toembl = 1.1.4
  - embl-api-validator = 1.1.173
  - prokka = 1.11
-
+ - imagemagick
