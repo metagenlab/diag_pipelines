@@ -39,3 +39,4 @@ minimum_quality_base: "35"
 mimimum_read_length: "60"
 crop_at_read_beginning: "10"
 
+kraken_db: "/home/sacha/Documents/krakendb/"

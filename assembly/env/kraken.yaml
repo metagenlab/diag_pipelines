@@ -1,0 +1,6 @@
+name: kraken
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - kraken = 0.10.6

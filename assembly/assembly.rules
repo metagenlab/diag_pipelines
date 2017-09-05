@@ -9,6 +9,8 @@ shell.prefix("set -euo pipefail;")
 
 
 rule trimmomatic:
+    conda:
+        "env/trim.yaml"
     input:
         "reads/raw/{sample}_R1_001.fastq",
         "reads/raw/{sample}_R2_001.fastq"
@@ -25,7 +27,22 @@ rule trimmomatic:
     shell:
         "trimmomatic PE {input} {output[0]} {output[1]} {output[2]} {output[3]}  ILLUMINACLIP:TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {output[4]}"
 
-
+rule identification:
+    conda:
+        "env/kraken.yaml"
+    params:
+        kraken_db=config["kraken_path"]
+    input:
+        "{sample}/reads/trimmed/R1_paired.fastq",
+        "{sample}/reads/trimmed/R2_paired.fastq"
+    output:
+        "{sample}/logs/kraken.log"
+    shell:
+        """
+        export KRAKEN_DEFAULT_DB="{params.kraken_db}"
+        kraken --paired {input[0]} {input[1]} | kraken-report | awk '$4=="S"' | sort -r | head -n 5 | cut -f1,6 | sed "s/^ *//" | sed -e "s/  \+/\t/g" > {output[0]}
+        """
+        
 rule virulence_factor_search:
     input:
         "{sample}/annotation/{sample}.faa"
@@ -35,6 +52,8 @@ rule virulence_factor_search:
         ""
 
 rule fastqc:
+    conda:
+        "env/fastqc.yaml"
     input:
         "{sample}/reads/trimmed/R1_paired.fastq",
         "{sample}/reads/trimmed/R2_paired.fastq"
@@ -58,6 +77,8 @@ rule unzip_fastqc:
 
         
 rule error_correction_spades:
+    conda:
+        "env/spades.yaml"
     input:
         "{sample}/reads/trimmed/R1_paired.fastq",
         "{sample}/reads/trimmed/R2_paired.fastq"
@@ -76,6 +97,8 @@ rule check_low_coverage_contigs:
         "blastn -query {input[0]} -db dub -remote"
         
 rule spades:
+    conda:
+        "env/spades.yaml"
     input:
         "{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
         "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"
@@ -86,6 +109,8 @@ rule spades:
         "spades.py --only-assembler -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})"
 
 rule quast:
+    conda:
+        "env/quast.yaml"
     input:
         "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
     output:
@@ -111,6 +136,8 @@ rule rename_contigs:
         "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig00\\1/\" {input} > {output}"
         
 rule prokka:
+    conda:
+        "env/prokka.yaml"
     input:
         "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
     output:
@@ -152,6 +179,8 @@ rule filter_contigs_on_coverage:
         """
 
 rule convert_quast_images:
+    conda:
+        "env/imagemagick.yaml"
     input:
         "{sample}/assembly/spades/quast/report.txt"
     output:
@@ -166,6 +195,8 @@ rule convert_quast_images:
         
     
 rule gff_to_embl:
+    conda:
+        "env/gff3toembl.yaml"
     input:
         "{sample}/annotation/{sample}.gff"
     output:
@@ -183,6 +214,8 @@ rule gff_to_embl:
         "gff3_to_embl --translation_table {params.tt} --locus_tag {params.pre} --authors {params.aut} --classification PROK --publication {params.publ} --output_filename {output} {params.name} {params.id} {params.PRJ} {params.desc} {input} "
 
 rule validate_gff_for_ena_submission:
+    conda:
+        "env/validator_ena.yaml"
     input:
         "{sample}/ena_submission/flatfile.embl"
     output:
@@ -245,7 +278,8 @@ rule report:
         ena_validator_summary = "{sample}/ena_submission/VAL_SUMMARY.txt",
         ena_validator_error = "{sample}/ena_submission/VAL_ERROR.txt",
         cov_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
-        GC_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png"
+        GC_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
+        kraken = "{sample}/logs/kraken.log"
     output:
         "{sample}_report.html"
     run:
@@ -273,7 +307,8 @@ rule report:
         contigs_excluded = "    "+"    ".join(open(input["low_cov_names"]).readlines()).replace("_", " ")
         if contigs_excluded.isspace():
             contigs_excluded = "    No low kmer coverage contig"
-
+        kraken = "     \n".join(open(input["kraken"]).readlines())
+        kraken = open(input["kraken"]).readlines()
         prokka_annot = extract_info_prokka(input["prokka"])
         rRNA = prokka_annot["rRNA"]
         CDS = prokka_annot["CDS"]
@@ -310,6 +345,10 @@ rule report:
         
         (File fastqc2html_) \n
         Check the html fastqc files for the details of the quality checks.
+
+        Read classification per species (in %)::
+
+        {kraken}
         
         The genome was assembled using spades. Spades reported the following warnings::
         
