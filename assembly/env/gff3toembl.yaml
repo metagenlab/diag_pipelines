@@ -1,6 +1,7 @@
-name: spades
+name: gff3toembl
 channels:
  - bioconda
  - conda-forge
 dependencies:
- - spades = 3.10.1
+ - gff3toembl = 1.1.4
+

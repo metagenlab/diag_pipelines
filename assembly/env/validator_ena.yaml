@@ -1,6 +1,7 @@
-name: spades
+name: validator
 channels:
  - bioconda
  - conda-forge
 dependencies:
- - spades = 3.10.1
+ - embl-api-validator = 1.1.173
+

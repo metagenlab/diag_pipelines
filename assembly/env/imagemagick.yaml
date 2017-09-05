@@ -1,6 +1,6 @@
-name: spades
+name: imagemagick
 channels:
  - bioconda
  - conda-forge
 dependencies:
- - spades = 3.10.1
+ - imagemagick

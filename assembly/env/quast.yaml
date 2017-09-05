@@ -1,6 +1,7 @@
-name: spades
+name: quast
 channels:
  - bioconda
  - conda-forge
 dependencies:
- - spades = 3.10.1
+ - quast = 4.5
+

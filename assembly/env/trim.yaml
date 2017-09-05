@@ -1,6 +1,6 @@
-name: spades
+name: trimm
 channels:
  - bioconda
  - conda-forge
 dependencies:
- - spades = 3.10.1
+ - trimmomatic = 0.36
