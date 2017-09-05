@@ -3,8 +3,8 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
+ - python = 3.5
  - entrez-direct = 7.00
- - orthofinder = 1.1.8
  - mafft = 7.310
  - fasttree = 2.1.9
  - raxml = 8.2.10

@@ -43,8 +43,10 @@ rule download_proteomes_from_refseq:
         """
 
 rule extract_genome_refseq_info:
+    conda:
+        "env/entrez-direct.yaml"
     input:
-        "comparative_search.yml"
+        "comparative_search.yaml"
     output:
         "refSeq/nb_genomes_per_species.txt"
     shell:
@@ -52,6 +54,8 @@ rule extract_genome_refseq_info:
 
 
 rule fetch_refSeq_id_and_filtering:
+    conda:
+        "env/entrez-direct.yaml"
     input:
         "refSeq/nb_genomes_per_species.txt"
     output:
@@ -94,6 +98,8 @@ rule unzip_genomes:
         """
 
 rule orthofinder_downloaded_proteomes:
+    conda:
+        "env/ortho_search.yaml"
     input:
         "refSeq/proteomes/downloads.txt"
     output:
@@ -106,6 +112,8 @@ rule orthofinder_downloaded_proteomes:
 
 
 rule adding_local_genomes_to_orthofinder_run:
+    conda:
+        "env/ortho_search.yaml"
     input:
         ancient("orthologs/current_results/Orthogroups.csv"),
         "local_data/ids.txt"
@@ -133,7 +141,7 @@ rule adding_local_genomes_to_orthofinder_run:
                 rm -rf $(dirname {input[0]})
                 mv {log} $(dirname {log})/tmp/log.txt
                 cp -R $(dirname {log})/tmp/ $(dirname {input[0]})
-                sed "s/://" $(dirname {output[0]})/WorkingDirectory/SpeciesIDs.txt | sed "s/\\.faa//" | sed "s/^#.*//" > {output[1]}
+                sed "s/://" $(dirname {output[0]})/WorkingDirectory/SpeciesIDs.txt | sed "s/\\.faa//" | sed "s/^#.*//" | sed "s/\[/{{/" | sed "s/\]/}}/" > {output[1]}
                 mkdir -p $(dirname {input[1]})/proteomes/added/
                 mv $(dirname {input[1]})/proteomes/to_be_added/*.faa $(dirname {input[1]})/proteomes/added/
 
@@ -141,7 +149,7 @@ rule adding_local_genomes_to_orthofinder_run:
         fi
         """
 
-rule extracting_and_align_one_to_one_orthologs:
+rule extracting_alignments_one_to_one_orthologs:
     input:
         "orthologs/current_results/id.txt",
         "orthologs/current_results/log.txt"
@@ -192,6 +200,8 @@ rule prepare_raxml_files:
         #sed "s/U/C/g" replaces Selenocysteine (U) which is not accepted by raxml by Cysteine (C) which is the closest AA possible
 
 rule run_raxml_on_1to1groups:
+    conda:
+        "env/raxml.yaml"
     input:
         "phylogeny/concatenated_orthogroups.fa",
         "phylogeny/partition_file.txt"
