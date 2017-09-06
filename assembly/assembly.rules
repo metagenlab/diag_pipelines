@@ -307,8 +307,7 @@ rule report:
         contigs_excluded = "    "+"    ".join(open(input["low_cov_names"]).readlines()).replace("_", " ")
         if contigs_excluded.isspace():
             contigs_excluded = "    No low kmer coverage contig"
-        kraken = "     \n".join(open(input["kraken"]).readlines())
-        kraken = open(input["kraken"]).readlines()
+        kraken = "    "+"     ".join(open(input["kraken"]).readlines()).replace("\t\t", " ")
         prokka_annot = extract_info_prokka(input["prokka"])
         rRNA = prokka_annot["rRNA"]
         CDS = prokka_annot["CDS"]
