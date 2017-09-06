@@ -1,13 +1,23 @@
 import re
 import csv
+from snakemake.utils import report
 
 configfile: "config.yml"
 
 
+shell.prefix("set -euo pipefail;") 
+
+
 rule trimmomatic:
+    conda:
+        "env/trim.yaml"
     input:
-        "{sample}/reads/raw/R1_001.fastq",
-        "{sample}/reads/raw/R2_001.fastq"
+        "reads/raw/{sample}_R1_001.fastq",
+        "reads/raw/{sample}_R2_001.fastq"
+    params:
+        minlength = config["minimum_read_length"],
+        minqual = config["minimum_quality_base"],
+        croplength = config["crop_at_read_beginning"]
     output:
         "{sample}/reads/trimmed/R1_paired.fastq",
         "{sample}/reads/trimmed/R1_unpaired.fastq",
@@ -15,10 +25,35 @@ rule trimmomatic:
         "{sample}/reads/trimmed/R2_unpaired.fastq",
         "{sample}/logs/trimmomatic.log"
     shell:
-        "trimmomatic PE {input} {output[0]} {output[1]} {output[2]} {output[3]}  ILLUMINACLIP:/home/sacha/Téléchargements/Genomic_tools/Trimmomatic/adapters/TruSeq3-PE.fa:3:25:6 LEADING:35 TRAILING:35 SLIDINGWINDOW:4:15 MINLEN:60 &> {output[4]}"
+        "trimmomatic PE {input} {output[0]} {output[1]} {output[2]} {output[3]}  ILLUMINACLIP:TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {output[4]}"
 
+rule identification:
+    conda:
+        "env/kraken.yaml"
+    params:
+        kraken_db=config["kraken_path"]
+    input:
+        "{sample}/reads/trimmed/R1_paired.fastq",
+        "{sample}/reads/trimmed/R2_paired.fastq"
+    output:
+        "{sample}/logs/kraken.log"
+    shell:
+        """
+        export KRAKEN_DEFAULT_DB="{params.kraken_db}"
+        kraken --paired {input[0]} {input[1]} | kraken-report | awk '$4=="S"' | sort -r | head -n 5 | cut -f1,6 | sed "s/^ *//" | sed -e "s/  \+/\t/g" > {output[0]}
+        """
+        
+rule virulence_factor_search:
+    input:
+        "{sample}/annotation/{sample}.faa"
+    output:
+        "{sample}/virulence/"
+    shell:
+        ""
 
 rule fastqc:
+    conda:
+        "env/fastqc.yaml"
     input:
         "{sample}/reads/trimmed/R1_paired.fastq",
         "{sample}/reads/trimmed/R2_paired.fastq"
@@ -42,6 +77,8 @@ rule unzip_fastqc:
 
         
 rule error_correction_spades:
+    conda:
+        "env/spades.yaml"
     input:
         "{sample}/reads/trimmed/R1_paired.fastq",
         "{sample}/reads/trimmed/R2_paired.fastq"
@@ -60,6 +97,8 @@ rule check_low_coverage_contigs:
         "blastn -query {input[0]} -db dub -remote"
         
 rule spades:
+    conda:
+        "env/spades.yaml"
     input:
         "{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
         "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"
@@ -67,9 +106,11 @@ rule spades:
         "{sample}/assembly/spades/spades.log",
         "{sample}/assembly/spades/contigs.fasta"
     shell:
-        "spades.py -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})"
+        "spades.py --only-assembler -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})"
 
 rule quast:
+    conda:
+        "env/quast.yaml"
     input:
         "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
     output:
@@ -95,14 +136,17 @@ rule rename_contigs:
         "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig00\\1/\" {input} > {output}"
         
 rule prokka:
+    conda:
+        "env/prokka.yaml"
     input:
         "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
     output:
-        "{sample}/annotation/genes.log",
-        "{sample}/annotation/genes.gff",
-        "{sample}/annotation/genes.txt"
+        "{sample}/annotation/{sample}.log",
+        "{sample}/annotation/{sample}.gff",
+        "{sample}/annotation/{sample}.faa",
+        "{sample}/annotation/{sample}.txt"
     shell:
-        "prokka --outdir $( dirname {output[0]}) --force {input} --prefix genes"
+        "prokka --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample}"
 
 
 rule check_coverage_assembly:
@@ -124,12 +168,37 @@ rule filter_contigs_on_coverage:
         "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta",
         "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
     shell:
-        "grep -A 1 -f {input[1]} {input[0]} | sed '/^--$/d' > {output[0]} && grep -A 1 -f {input[2]} {input[0]} | sed '/^--$/d' > {output[1]}"              
+        """
+        grep -A 1 -f {input[1]} {input[0]} | sed '/^--$/d' > {output[0]}
+        if [ -f {input[2]} ]
+        then 
+            grep -A 1 -f {input[2]} {input[0]} | sed '/^--$/d' > {output[1]}
+        else
+            touch {output[1]}
+        fi
+        """
 
+rule convert_quast_images:
+    conda:
+        "env/imagemagick.yaml"
+    input:
+        "{sample}/assembly/spades/quast/report.txt"
+    output:
+        "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
+        "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png"
+    shell:
+        """
+        convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png
+        convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png
+        """
+
+        
     
 rule gff_to_embl:
+    conda:
+        "env/gff3toembl.yaml"
     input:
-        "{sample}/annotation/genes.gff"
+        "{sample}/annotation/{sample}.gff"
     output:
         "{sample}/ena_submission/flatfile.embl"
     params:
@@ -145,6 +214,8 @@ rule gff_to_embl:
         "gff3_to_embl --translation_table {params.tt} --locus_tag {params.pre} --authors {params.aut} --classification PROK --publication {params.publ} --output_filename {output} {params.name} {params.id} {params.PRJ} {params.desc} {input} "
 
 rule validate_gff_for_ena_submission:
+    conda:
+        "env/validator_ena.yaml"
     input:
         "{sample}/ena_submission/flatfile.embl"
     output:
@@ -152,7 +223,7 @@ rule validate_gff_for_ena_submission:
         "{sample}/ena_submission/VAL_ERROR.txt"
         
     shell:
-        "cd $( dirname {input}) && embl-api-validator $( basename {input}) "
+        "cd $( dirname {input}) && embl-api-validator $( basename {input}) || true "
         
 
 def extract_report(filename, pattern):
@@ -203,14 +274,15 @@ rule report:
         low_cov_names = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
         low_cov = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
         quast = "{sample}/assembly/spades/quast/report.txt",
-        prokka = "{sample}/annotation/genes.txt",
+        prokka = "{sample}/annotation/{sample}.txt",
         ena_validator_summary = "{sample}/ena_submission/VAL_SUMMARY.txt",
-        ena_validator_error = "{sample}/ena_submission/VAL_ERROR.txt"
-        
+        ena_validator_error = "{sample}/ena_submission/VAL_ERROR.txt",
+        cov_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
+        GC_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
+        kraken = "{sample}/logs/kraken.log"
     output:
-        "{sample}/report.html"
+        "{sample}_report.html"
     run:
-        from snakemake.utils import report
         trim_result = extract_report_trimmomatic(input["trim"])
         trim_result_percent = [ x / float(trim_result[0]) for x in trim_result ]
         trim_result_percent_strings = [ "{:2.1f}".format(x*100) for x in trim_result_percent ]
@@ -230,15 +302,20 @@ rule report:
         r2w = format_table(extract_report(input["fastqc2"], warn))
         spw = extract_report(input["spades"], warn)
         spw = "    " + "\n    ".join([ x for x in spw.split("\n") if "*" in x ])
+        if spw.isspace():
+            spw = "    No warnings nor errors"
         contigs_excluded = "    "+"    ".join(open(input["low_cov_names"]).readlines()).replace("_", " ")
+        if contigs_excluded.isspace():
+            contigs_excluded = "    No low kmer coverage contig"
+        kraken = "    "+"     ".join(open(input["kraken"]).readlines()).replace("\t\t", " ")
         prokka_annot = extract_info_prokka(input["prokka"])
         rRNA = prokka_annot["rRNA"]
         CDS = prokka_annot["CDS"]
         tRNA = prokka_annot["tRNA"]
         enavalidator_warn = format_table(extract_report(input["ena_validator_summary"], warn))
         enavalidator_err = format_table(extract_report(input["ena_validator_summary"], error))
-        
-        
+        cov_plot=input["cov_plot"]
+        GC_plot = input["GC_plot"]
         report("""
         Report of the assembly and annotation of the strain {wildcards.sample}
         ===========================================================================================
@@ -267,6 +344,10 @@ rule report:
         
         (File fastqc2html_) \n
         Check the html fastqc files for the details of the quality checks.
+
+        Read classification per species (in %)::
+
+        {kraken}
         
         The genome was assembled using spades. Spades reported the following warnings::
         
@@ -280,7 +361,7 @@ rule report:
         
         Try blasting their sequences (in file low_cov_) to check their origin.
         
-        The statitics of the assembly, without the excluded contigs, were obtained with quast: 
+        The statistics of the assembly, without the excluded contigs, were obtained with quast: 
         
         ================================= ==============================
         Number of contigs                 {ncontigs}
@@ -290,8 +371,12 @@ rule report:
         N50                               {n50} bps
         ================================= ==============================
         
-        Genes were annotated using prokka in local. 
+        The histogram for GC content and kmer coverage can indicate contamination if outlier values are observed:
+        
+        .. image:: {cov_plot}
+        .. image:: {GC_plot}
 
+        Genes were annotated using prokka in local. 
 
         ================================= ==============================
         Number of CDS                     {CDS}
@@ -304,6 +389,6 @@ rule report:
         {enavalidator_warn}
         {enavalidator_err}
 
-        Check files ena_validator_summary_ and ena_validator_error_ 
-
+        Check files ena_validator_summary_ and ena_validator_error_
+ 
         """, output[0], **input)

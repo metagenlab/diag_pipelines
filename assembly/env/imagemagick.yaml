@@ -1,0 +1,6 @@
+name: imagemagick
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - imagemagick

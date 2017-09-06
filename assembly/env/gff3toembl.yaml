@@ -1,0 +1,7 @@
+name: gff3toembl
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - gff3toembl = 1.1.4
+
