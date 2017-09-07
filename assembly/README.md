@@ -1,4 +1,4 @@
-#Requirements
+# Requirements
 Miniconda
 Snakemake > 4.0.0
 Setting kraken database
