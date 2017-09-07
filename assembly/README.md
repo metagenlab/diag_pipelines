@@ -1,7 +1,7 @@
 # Requirements
-Miniconda
-Snakemake > 4.0.0 
-Setting kraken database 
+Miniconda 
+Snakemake > 4.0.0  
+Setting kraken database  
 
 
 ```
@@ -12,5 +12,5 @@ Setting kraken database
         rm -rf krakendb.tgz
 	export KRAKEN_DEFAULT_DB=${PWD}/krakendb/
 ```
-Illumina adapter file for trimming
-Modify config file
+Illumina adapter file for trimming  
+Modify config file  
