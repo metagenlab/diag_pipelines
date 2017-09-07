@@ -39,4 +39,4 @@ minimum_quality_base: "35"
 minimum_read_length: "60"
 crop_at_read_beginning: "10"
 
-kraken_path: "/home/sacha/Documents/krakendb/"
+kraken_path: "~/krakendb/"
