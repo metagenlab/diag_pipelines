@@ -7,7 +7,6 @@ Setting kraken database
         tar xzf krakendb.tgz
         mv minikraken_* krakendb/
         rm -rf krakendb.tgz
-	export KRAKEN_DEFAULT_DB=${PWD}/krakendb/
 ```
 Illumina adapter file for trimming  
 Modify config file  
