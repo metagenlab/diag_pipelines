@@ -49,7 +49,7 @@ rule identification:
     shell:
         """
         export KRAKEN_DEFAULT_DB="{params.kraken_db}"
-        kraken --paired {input[0]} {input[1]} | kraken-report | awk '$4=="S"' | sort -r | head -n 5 | cut -f1,6 | sed "s/^ *//" | sed -e "s/  \+/\t/g" > {output[0]}
+        kraken --paired {input[0]} {input[1]} | kraken-report | awk '$4=="S"' | sort -r | head -n 5 | cut -f1,6 | sed "s/^ *//" | sed -e "s/  \+/\\t/g" > {output[0]}
         """
         
 rule virulence_factor_search:
