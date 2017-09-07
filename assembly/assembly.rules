@@ -7,6 +7,15 @@ configfile: "config.yml"
 
 shell.prefix("set -euo pipefail;") 
 
+rule mlst:
+    conda:
+        "env/mlst.yaml"
+    input:
+        "{sample}/annotation/{sample}.fsa"
+    output:
+        "{sample}/mlst/mlst.out"
+    shell:
+        "mlst {input[0]} > {output[0]}"
 
 rule trimmomatic:
     conda:
@@ -144,6 +153,7 @@ rule prokka:
         "{sample}/annotation/{sample}.log",
         "{sample}/annotation/{sample}.gff",
         "{sample}/annotation/{sample}.faa",
+        "{sample}/annotation/{sample}.fsa",
         "{sample}/annotation/{sample}.txt"
     shell:
         "prokka --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample}"
