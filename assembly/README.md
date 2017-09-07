@@ -9,10 +9,10 @@ Setting kraken database
         rm -rf krakendb.tgz
 ```
 
-Illumina adapter file for trimming is needed (TruSeq3-PE.fa)
+Illumina adapter file for trimming is needed (TruSeq3-PE.fa)  
 Modify config file to your needs
 
-The paired reads files have to be uncompressed, stored in the folder reads/raw/ relative from where the snakemake command is called and their names be ${ISOLATE_NAME}_R1_001.fastq and ${ISOLATE_NAME}_R2_001.fastq.
+The paired reads files have to be uncompressed, stored in the folder reads/raw/ relative from where the snakemake command is called and their names be ${ISOLATE_NAME}_R1_001.fastq and ${ISOLATE_NAME}_R2_001.fastq.  
 
 Call Snakemake like this:
 ```
