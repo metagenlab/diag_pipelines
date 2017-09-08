@@ -2,7 +2,7 @@ import re
 from snakemake.utils import report
 
 
-configfile: "comparative_search.yml"
+configfile: "comparative_search.yaml"
 
 genus = config["search"]
 genus_query = "|".join(genus)
