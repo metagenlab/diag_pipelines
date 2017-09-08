@@ -2,12 +2,18 @@ import re
 from snakemake.utils import report
 
 
+
 configfile: "comparative_search.yaml"
 
 genus = config["search"]
 genus_query = "|".join(genus)
 
-shell.prefix("set -euo pipefail;") 
+shell.prefix("set -euo pipefail;")
+
+
+samples="".join(open("ids.txt").readlines()).split("\n")[:-1]
+
+print(samples)
 
 rule download_genomes_from_refseq:
     input:
@@ -83,6 +89,52 @@ rule calculate_ani:
         average_nucleotide_identity.py -i $(dirname {output}) -o $( dirname {output})/results/ -l {output} -g --gformat eps,png -f
         """
 
+rule extract_16S_from_local:
+    input:
+        "{genome}/annotation/{genome}.ffn"
+    output:
+        "genes/{genome}_16S.fa"
+    shell:
+        "sed -n -e  \"/16S ribosomal RNA/,/^>/ p\" {input} | sed \$d | sed \"s/PROKKA_[0-9]\+/{wildcards.genome}/\"| sed \"s/ /_/g\" > {output[0]}"
+
+rule merge_16S_from_local:
+    input:
+        expand("genes/{genome}_16S.fa", genome=samples)
+    output:
+        "genes/merged_local_16S.fa"
+    shell:
+        "cat {input} > {output}"
+
+        
+rule blast_16S:
+    conda:
+        "env/blast.yaml"
+    input:
+        "genes/merged_local_16S.fa"
+    output:
+        "genes/16S_filtered.txt"
+    shell:
+        "~/Téléchargements/ncbi-blast-2.6.0+/bin/blastn -remote -db nt -query {input[0]} -outfmt \"6 sgi sstart send staxids\" | awk '$4!=\"155900\"' | awk '$4!=\"77133\"' > {output[0]}" 
+        
+rule fetch_16S_fasta:
+    conda:
+        "env/entrez-direct.yaml"
+    input:
+        "genes/16S_filtered.txt"
+    output:
+        "genes/16S_filtered.fasta"
+    shell:
+        """
+        while read p;
+        do
+            gi=$(echo ${p} | cut -d' ' -f1)
+            start=$(echo ${p} | cut -d' ' -f2)
+            end=$(echo ${p} | cut -d' ' -f3)
+            efetch -db nuccore -format fasta -id ${gi} -chr_start ${start} -chr_stop ${end} | sed "s/ /_/g" | sed "s/://g" | sed "s/,//g" | sed "s/(//g" | sed "s/)//g"  >> {output[0]}
+        done < {input[0]}
+        """
+
+        
         
 rule unzip_genomes:
     input:
