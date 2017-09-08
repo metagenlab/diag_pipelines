@@ -4,7 +4,6 @@ from snakemake.utils import report
 
 configfile: "config.yml"
 
-
 shell.prefix("set -euo pipefail;") 
 
 rule mlst:
@@ -105,15 +104,27 @@ rule check_low_coverage_contigs:
     shell:
         "blastn -query {input[0]} -db dub -remote"
         
-rule spades:
+rule spades_error_corrected:
     conda:
         "env/spades.yaml"
     input:
         "{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
         "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"
     output:
-        "{sample}/assembly/spades/spades.log",
-        "{sample}/assembly/spades/contigs.fasta"
+        "{sample}/assembly/spades/correction/spades.log",
+        "{sample}/assembly/spades/correction/contigs.fasta"
+    shell:
+        "spades.py --only-assembler -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})"
+
+rule spades_not_error_corrected:
+    conda:
+        "env/spades.yaml"
+    input:
+        "{sample}/reads/trimmed/R1_paired.fastq",
+        "{sample}/reads/trimmed/R2_paired.fastq"
+    output:
+        "{sample}/assembly/spades/no_correction/spades.log",
+        "{sample}/assembly/spades/no_correction/contigs.fasta"
     shell:
         "spades.py --only-assembler -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})"
 
@@ -121,26 +132,26 @@ rule quast:
     conda:
         "env/quast.yaml"
     input:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
+        "{sample}/assembly/spades/{correction}/contigs_500bp_high_kmer_coverage.fasta"
     output:
-        "{sample}/assembly/spades/quast/report.txt"
+        "{sample}/assembly/spades/{correction}/quast/report.txt"
     shell:
         "quast.py {input} -o $( dirname {output})"
 
 rule extract_contigs_500bp:
     input:
-        "{sample}/assembly/spades/contigs.fasta"
+        "{sample}/assembly/spades/{correction}/contigs.fasta"
     output:
-        "{sample}/assembly/spades/contigs_500bp.fasta"
+        "{sample}/assembly/spades/{correction}/contigs_500bp.fasta"
     shell:
         "awk '/^>/{{print (NR==1)?$0: \"\\n\" $0;next}} {{printf \"%s\", $0}}END{{print \"\"}}' {input} |  awk \'!/^>/ {{ next }} {{ getline seq }} length(seq) >= 500 {{ print $0 \"\\n\" seq }}\'  > {output}"  
 
 
 rule rename_contigs:
     input:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
+        "{sample}/assembly/spades/{correction}/contigs_500bp_high_kmer_coverage.fasta"
     output:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
+        "{sample}/assembly/spades/{correction}/contigs_500bp_high_kmer_coverage_renamed.fasta"
     shell:
         "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig00\\1/\" {input} > {output}"
         
@@ -148,35 +159,35 @@ rule prokka:
     conda:
         "env/prokka.yaml"
     input:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
+        "{sample}/assembly/spades/{correction}/contigs_500bp_high_kmer_coverage_renamed.fasta"
     output:
-        "{sample}/annotation/{sample}.log",
-        "{sample}/annotation/{sample}.gff",
-        "{sample}/annotation/{sample}.faa",
-        "{sample}/annotation/{sample}.fsa",
-        "{sample}/annotation/{sample}.txt"
+        "{sample}/annotation/{correction}/{sample}.log",
+        "{sample}/annotation/{correction}/{sample}.gff",
+        "{sample}/annotation/{correction}/{sample}.faa",
+        "{sample}/annotation/{correction}/{sample}.fsa",
+        "{sample}/annotation/{correction}/{sample}.txt"
     shell:
         "prokka --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample}"
 
 
 rule check_coverage_assembly:
     input:
-        "{sample}/assembly/spades/contigs_500bp.fasta"
+        "{sample}/assembly/spades/{correction}/contigs_500bp.fasta"
     output:
-        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt"
+        "{sample}/assembly/spades/{correction}/contigs_500bp_low_kmer_coverage.txt",
+        "{sample}/assembly/spades/{correction}/contigs_500bp_high_kmer_coverage.txt"
     shell:
         "grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 < 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$//\" | sed \"s/^>//\" > {output[0]} && grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 > 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$/_/\" | sed \"s/^>//\"  > {output[1]} "
 
 
 rule filter_contigs_on_coverage:
     input:
-        "{sample}/assembly/spades/contigs_500bp.fasta",
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt",
-        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt"
+        "{sample}/assembly/spades/{correction}/contigs_500bp.fasta",
+        "{sample}/assembly/spades/{correction}/contigs_500bp_high_kmer_coverage.txt",
+        "{sample}/assembly/spades/{correction}/contigs_500bp_low_kmer_coverage.txt"
     output:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta",
-        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
+        "{sample}/assembly/spades/{correction}/contigs_500bp_high_kmer_coverage.fasta",
+        "{sample}/assembly/spades/{correction}/contigs_500bp_low_kmer_coverage.fasta"
     shell:
         """
         grep -A 1 -f {input[1]} {input[0]} | sed '/^--$/d' > {output[0]}
@@ -192,10 +203,10 @@ rule convert_quast_images:
     conda:
         "env/imagemagick.yaml"
     input:
-        "{sample}/assembly/spades/quast/report.txt"
+        "{sample}/assembly/spades/{correction}/quast/report.txt"
     output:
-        "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
-        "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png"
+        "{sample}/assembly/spades/{correction}/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
+        "{sample}/assembly/spades/{correction}/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png"
     shell:
         """
         convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png
@@ -208,9 +219,9 @@ rule gff_to_embl:
     conda:
         "env/gff3toembl.yaml"
     input:
-        "{sample}/annotation/{sample}.gff"
+        "{sample}/annotation/{correction}/{sample}.gff"
     output:
-        "{sample}/ena_submission/flatfile.embl"
+        "{sample}/ena_submission/{correction}/flatfile.embl"
     params:
         publ=config["publication"],
         id=config["taxon_id_number"],
@@ -223,14 +234,15 @@ rule gff_to_embl:
     shell:
         "gff3_to_embl --translation_table {params.tt} --locus_tag {params.pre} --authors {params.aut} --classification PROK --publication {params.publ} --output_filename {output} {params.name} {params.id} {params.PRJ} {params.desc} {input} "
 
+        
 rule validate_gff_for_ena_submission:
     conda:
         "env/validator_ena.yaml"
     input:
-        "{sample}/ena_submission/flatfile.embl"
+        "{sample}/ena_submission/{correction}/flatfile.embl"
     output:
-        "{sample}/ena_submission/VAL_SUMMARY.txt",
-        "{sample}/ena_submission/VAL_ERROR.txt"
+        "{sample}/ena_submission/{correction}/VAL_SUMMARY.txt",
+        "{sample}/ena_submission/{correction}/VAL_ERROR.txt"
         
     shell:
         "cd $( dirname {input}) && embl-api-validator $( basename {input}) || true "
@@ -280,18 +292,18 @@ rule report:
         fastqc2 = "{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt",
         fastqc1html = "{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
         fastqc2html = "{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html",
-        spades = "{sample}/assembly/spades/spades.log",
-        low_cov_names = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
-        low_cov = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
-        quast = "{sample}/assembly/spades/quast/report.txt",
-        prokka = "{sample}/annotation/{sample}.txt",
-        ena_validator_summary = "{sample}/ena_submission/VAL_SUMMARY.txt",
-        ena_validator_error = "{sample}/ena_submission/VAL_ERROR.txt",
-        cov_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
-        GC_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
+        spades = "{sample}/assembly/spades/{correction}/spades.log",
+        low_cov_names = "{sample}/assembly/spades/{correction}/contigs_500bp_low_kmer_coverage.txt",
+        low_cov = "{sample}/assembly/spades/{correction}/contigs_500bp_low_kmer_coverage.fasta",        
+        quast = "{sample}/assembly/spades/{correction}/quast/report.txt",
+        prokka = "{sample}/annotation/{correction}/{sample}.txt",
+        ena_validator_summary = "{sample}/ena_submission/{correction}/VAL_SUMMARY.txt",
+        ena_validator_error = "{sample}/ena_submission/{correction}/VAL_ERROR.txt",
+        cov_plot = "{sample}/assembly/spades/{correction}/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
+        GC_plot = "{sample}/assembly/spades/{correction}/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
         kraken = "{sample}/logs/kraken.log"
     output:
-        "{sample}_report.html"
+        "{sample}_report_{correction}.html"
     run:
         trim_result = extract_report_trimmomatic(input["trim"])
         trim_result_percent = [ x / float(trim_result[0]) for x in trim_result ]
