@@ -3,7 +3,7 @@ from snakemake.utils import report
 
 
 
-configfile: "comparative_search.yaml"
+configfile: "genome_search.yaml"
 
 genus = config["search"]
 genus_query = "|".join(genus)
@@ -12,8 +12,6 @@ shell.prefix("set -euo pipefail;")
 
 
 samples="".join(open("ids.txt").readlines()).split("\n")[:-1]
-
-print(samples)
 
 rule download_genomes_from_refseq:
     input:
@@ -107,14 +105,12 @@ rule merge_16S_from_local:
 
         
 rule blast_16S:
-    conda:
-        "env/blast.yaml"
     input:
         "genes/merged_local_16S.fa"
     output:
         "genes/16S_filtered.txt"
     shell:
-        "~/Téléchargements/ncbi-blast-2.6.0+/bin/blastn -remote -db nt -query {input[0]} -outfmt \"6 sgi sstart send staxids\" | awk '$4!=\"155900\"' | awk '$4!=\"77133\"' > {output[0]}" 
+        "~/Téléchargements/ncbi-blast-2.6.0+/bin/blastn -remote -db nt -query {input[0]} -outfmt \"6 sgi sstart send staxids evalue pident\" -evalue 0.0000001 | awk '$4!=\"155900\"' | awk '$4!=\"77133\"' | awk '$6>96' > {output[0]}" 
         
 rule fetch_16S_fasta:
     conda:
