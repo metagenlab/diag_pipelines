@@ -99,9 +99,13 @@ rule merge_16S_from_local:
     input:
         expand("genes/{genome}_16S.fa", genome=samples)
     output:
-        "genes/merged_local_16S.fa"
+        "genes/merged_local_16S.fa",
+        "genes/merged_local_16S.id"
     shell:
-        "cat {input} > {output}"
+        """
+        sed "s/ /_/g" {input} | sed "s/://g" | sed "s/,//g" | sed "s/(//g" | sed "s/)//g" > {output[0]}
+        grep ">" {output[0]} | sed "s/>//" > {output[1]}
+        """
 
         
 rule blast_16S:
@@ -110,7 +114,10 @@ rule blast_16S:
     output:
         "genes/16S_filtered.txt"
     shell:
-        "~/Téléchargements/ncbi-blast-2.6.0+/bin/blastn -remote -db nt -query {input[0]} -outfmt \"6 sgi sstart send staxids evalue pident\" -evalue 0.0000001 | awk '$4!=\"155900\"' | awk '$4!=\"77133\"' | awk '$6>96' > {output[0]}" 
+        """
+        ~/Téléchargements/ncbi-blast-2.6.0+/bin/blastn -remote -db nt -query {input[0]} -outfmt \"6 std sgi staxids\" -entrez_query "all [filter] NOT(environmental samples[organism] OR metagenomes[orgn] OR txid32644[orgn])" -evalue 0.000001 | awk '$3>98' > {output[0]}
+        """
+
         
 rule fetch_16S_fasta:
     conda:
@@ -118,19 +125,78 @@ rule fetch_16S_fasta:
     input:
         "genes/16S_filtered.txt"
     output:
-        "genes/16S_filtered.fasta"
+        "genes/16S_filtered.fa"
     shell:
         """
+        cut -f2,9,10,13 {input} | sort | uniq > genes/tmp.txt
         while read p;
         do
-            gi=$(echo ${p} | cut -d' ' -f1)
-            start=$(echo ${p} | cut -d' ' -f2)
-            end=$(echo ${p} | cut -d' ' -f3)
-            efetch -db nuccore -format fasta -id ${gi} -chr_start ${start} -chr_stop ${end} | sed "s/ /_/g" | sed "s/://g" | sed "s/,//g" | sed "s/(//g" | sed "s/)//g"  >> {output[0]}
-        done < {input[0]}
+            seqid=$(echo ${{p}} | cut -d' ' -f1)
+            gi=$(echo ${{p}} | cut -d' ' -f4)
+            start=$(echo ${{p}} | cut -d' ' -f2)
+            end=$(echo ${{p}} | cut -d' ' -f3)
+            efetch -db nuccore -format fasta -id ${{gi}} -chr_start ${{start}} -chr_stop ${{end}} >> {output[0]}
+        done < genes/tmp.txt
+        rm genes/tmp.txt
         """
 
+rule generate_16S_ids:
+    input:
+        "genes/16S_filtered.fa"
+    output:
+        "genes/16S.ids"
+    shell:
+        """
+        grep ">" {input[0]} | sed "s/>//" | sed "s/:/_/g" | sed "s/ /\t/" | sed "s/ /_/g" | sed "s/(/{{/" | sed "s/)/}}/" | sed "s/,//g" > {output[0]}
+        """
         
+
+rule merge_align_16S:
+    conda:
+        "env/mafft.yaml"
+    input:
+        "genes/16S_filtered.fa",
+        "genes/merged_local_16S.fa"
+    output:
+        "genes/16S_aligned.fa"
+    shell:
+        """
+        cat {input} | cut -f 1 -d' '| sed "s/:/_/g"   > genes/merged.fa
+        mafft genes/merged.fa > {output}
+        rm genes/merged.fa
+        """
+
+rule image_tree_16S:
+    conda:
+        "env/tree_figure.yaml"
+    input:
+        "genes/16S.ids",
+        "genes/RAxML_bestTree.16S",
+        "genes/merged_local_16S.id"
+    output:
+        "genes/tree.png",
+        "genes/tree.svg",
+        "genes/map.css"
+    shell:
+        """
+        sed "s/^/font-style:italic;stroke:#d6426f;fill:#d6426f I /" {input[2]} > {output[2]}
+        sed "s/^/font-size:small;font-family:italics;stroke:green C /" {input[2]} > {output[2]}
+        nw_rename {input[1]} {input[0]} | nw_display -s -c {output[2]} -w 1600 -b 'opacity:0' -v 15 - > genes/tree.svg
+        convert {output[1]} {output[0]}
+        """
+        
+
+rule reconstruct_tree_16S:
+    conda:
+        "env/raxml.yaml"
+    input:
+        "genes/16S_aligned.fa"
+    output:
+        "genes/RAxML_info.16S",
+        "genes/RAxML_bestTree.16S"
+    shell:
+        "raxmlHPC -m GTRCAT -w $(dirname $(readlink -f {output[0]}))  -n 16S -s {input} -p 123"
+
         
 rule unzip_genomes:
     input:
