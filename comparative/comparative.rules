@@ -3,11 +3,9 @@ from snakemake.utils import report
 
 configfile: "comparative_search.yaml"
 
-samples="".join(open("ids.txt").readlines()).split("\n")[:-1]
+samples = config["isolates"]
 
 include: "../assembly/assembly.rules"
-
-
 
 genus = config["search"]
 genus_query = "|".join(genus)
