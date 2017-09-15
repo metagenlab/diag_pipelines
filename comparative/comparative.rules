@@ -1,11 +1,13 @@
 import re
 from snakemake.utils import report
 
+configfile: "comparative_search.yaml"
+
 samples="".join(open("ids.txt").readlines()).split("\n")[:-1]
 
 include: "../assembly/assembly.rules"
 
-configfile: "comparative_search.yaml"
+
 
 genus = config["search"]
 genus_query = "|".join(genus)
@@ -70,13 +72,29 @@ rule fetch_refSeq_id_and_filtering:
         awk '$1 < 5' {input} | sed "s/^\s*[0-9]\+//" | sed "s/\[//"  | sed "s/\]//" |  xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq -if Sub_value -element SpeciesName Sub_value RefSeq FtpPath_RefSeq >> {output}' -- {{}}
         awk '$1 < 5' {input} | sed "s/^\s*[0-9]\+//" | sed "s/\[//"  | sed "s/\]//" |  xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq -unless Sub_value -element SpeciesName RefSeq FtpPath_RefSeq | sed "s/GCF_/NA\tGCF_/" >> {output}' -- {{}}
         """
+
+rule link_genomes_to_ani_folder:
+    input:
+        expand("{sample}/annotation/{sample}.fsa", sample=samples)
+    output:
+        "ANI/{sample}.fna"
+    shell:
+        "ln -s {input} ANI/{wildcards.sample}.fna"
+
+rule link_proteomes_to_orthofinder_folder:
+    input:
+        expand("{sample}/annotation/{sample}.faa", sample=samples)
+    output:
+        "local_data/proteomes/to_be_added/{sample}.faa"
+    shell:
+        "ln -s {input} local_data/proteomes/to_be_added/{wildcards.sample}.faa"
         
 rule calculate_ani:
     conda:
         "env/ani.yaml"
     input:
         "refSeq/genomes/downloads.txt",
-        "local_data/ids.txt"
+        expand("ANI/{sample}.fna", sample=samples)
     output:
         "ANI/log.txt"
     shell:
@@ -119,7 +137,7 @@ rule adding_local_genomes_to_orthofinder_run:
         "env/ortho_search.yaml"
     input:
         ancient("orthologs/current_results/Orthogroups.csv"),
-        "local_data/ids.txt"
+        expand("local_data/proteomes/to_be_added/{sample}.faa", sample=samples)
     output:
         "orthologs/current_results/id.txt",
         "orthologs/SpeciesIDs.txt",
@@ -244,11 +262,11 @@ def extract_orthofinder_results(filename):
 
 
 
-rule report:
+rule report_comparative:
     input:
+        expand("{sample}/report.html", sample=samples),
         species="refSeq/nb_genomes_per_species.txt",
         genomes="refSeq/genome_addresses.txt",
-        local_genomes="local_data/ids.txt",
         ortho="orthologs/current_results/log.txt",
         pyani="ANI/log.txt",
         tree="phylogeny/tree.png"

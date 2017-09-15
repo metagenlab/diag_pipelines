@@ -270,7 +270,7 @@ def extract_info_prokka(filename):
             d[row[0]] = row[1]
         return(d)
 
-rule report:
+rule report_assembly:
     input:
         trim = "{sample}/logs/trimmomatic.log",
         fastqc1 = "{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
@@ -288,7 +288,7 @@ rule report:
         GC_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
         kraken = "{sample}/logs/kraken.log"
     output:
-        "{sample}_report.html"
+        "{sample}/report.html"
     run:
         trim_result = extract_report_trimmomatic(input["trim"])
         trim_result_percent = [ x / float(trim_result[0]) for x in trim_result ]
