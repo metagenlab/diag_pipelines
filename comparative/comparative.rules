@@ -1,7 +1,7 @@
 import re
 from snakemake.utils import report
 
-configfile: "comparative_search.yaml"
+configfile: "config.yaml"
 
 samples = config["isolates"]
 

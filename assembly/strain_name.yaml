@@ -1,0 +1,14 @@
+taxon_id_number: "36841"
+
+#This is the taxonomic identification number of the species that was sequenced, that can be found in the Taxonomy Browser of the NCBI for instance. If the sequenced strain belongs to a new species, a new taxon id must be ask following the protocol available here : http://www.ebi.ac.uk/ena/submit/genomes-tax-id-requests
+
+taxon_name: "'Terrisporobacter glycolicus 13042'"
+
+
+description_of_the_genome_sequence: "'A genome'"
+
+prefix_locus_tag: "TERRISP13"
+
+
+
+
