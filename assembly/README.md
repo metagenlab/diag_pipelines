@@ -1,17 +1,5 @@
 # Requirements
-Miniconda  
-Snakemake > 4.0.0  
-Setting kraken database  
-```
-        wget -O - https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz > krakendb.tgz
-        tar xzf krakendb.tgz
-        mv minikraken_* krakendb/
-        rm -rf krakendb.tgz
-```
-
 Modify strain config file (.yaml) to your needs and place it in the folder where snakemake is going to be called.
-
-The paired reads files have to be uncompressed, stored in the folder reads/raw/ relative from where the snakemake command is called and their names be ${ISOLATE_NAME}_R1_001.fastq and ${ISOLATE_NAME}_R2_001.fastq.  
 
 Call Snakemake like this:
 ```
