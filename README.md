@@ -1,8 +1,8 @@
-# Pipeline for assembling a set of pair read sequecing files and performing comparative genomics analysis.
+# Pipeline for assembling a set of pair read sequecing files and performing comparative genomics analysis
 
 This pipeline is composed of two modules. The first one assembles paired reads, checks the identity of the species, annotates the genome, controls for contamination and generates an EMBL file ready to be submitted to the European Nucleotide Archive.
 
-The second pipeline uses the assembled genomes, and downloads from requested species or genera already sequenced genomes to perform an orthologous gene search, an ANI calculation, and a phylogeny based on 1 to 1 orthologous protein coding genes. It accomodates any number of sequenced genome, modification of comparative/config.yaml and config file for each isolate only is needed.
+The second pipeline uses the assembled genomes, and downloads from requested species or genera already sequenced genomes to perform an orthologous gene search, an ANI calculation, and a phylogeny based on 1 to 1 orthologous protein coding genes. It accomodates any number of sequenced genome. Modification of comparative/config.yaml and config file for each isolate is needed.
 
 It uses the conda package manager, and will run provided Snakemake, Miniconda3 are available on the osX or Linux computer.
 Setting up a minikraken database is also needed : 
@@ -24,7 +24,7 @@ Check every thing is order by performing first a dry run :
 snakemake --snakefile ${PATH_TO_COMPARATIVE_RULES_FILE} --dryrun --use-conda --conda-prefix=${PATH_WHERE_CONDA_ENV_WILL_BE_STORED} report.html
 ```
 
-You can also generated a directed acyclic graph of your run to visualize all jobs that will be performed :
+A directed acyclic graph of the run can be generated to visualize all jobs that will be performed :
 
 ```
 snakemake --snakefile ${PATH_TO_COMPARATIVE_RULES_FILE} --dryrun --use-conda --conda-prefix=${PATH_WHERE_CONDA_ENV_WILL_BE_STORED} --dag report.html | dot -Tsvg > dag.svg
