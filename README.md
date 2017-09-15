@@ -16,3 +16,23 @@ Setting up a minikraken database is also needed :
 The paired reads files have to be uncompressed, stored in the folder reads/raw/ relative from where the snakemake command is called and their names be ${ISOLATE_NAME}_R1_001.fastq and ${ISOLATE_NAME}_R2_001.fastq.  
 
 Modify config.yaml to search RefSeq for species/genus. Do not include large genera or too many genomes will be added. 
+
+
+Check every thing is order by performing first a dry run :
+
+```
+snakemake --snakefile ${PATH_TO_COMPARATIVE_RULES_FILE} --dryrun --use-conda --conda-prefix=${PATH_WHERE_CONDA_ENV_WILL_BE_STORED} report.html
+```
+
+You can also generated a directed acyclic graph of your run to visualize all jobs that will be performed :
+
+```
+snakemake --snakefile ${PATH_TO_COMPARATIVE_RULES_FILE} --dryrun --use-conda --conda-prefix=${PATH_WHERE_CONDA_ENV_WILL_BE_STORED} --dag report.html | dot -Tsvg > dag.svg
+```
+
+Finally run the full pipeline : 
+
+```
+snakemake --snakefile ${PATH_TO_COMPARATIVE_RULES_FILE} --use-conda --conda-prefix=${PATH_WHERE_CONDA_ENV_WILL_BE_STORED} report.html 
+```
+
