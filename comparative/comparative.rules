@@ -48,8 +48,6 @@ rule download_proteomes_from_refseq:
 rule extract_genome_refseq_info:
     conda:
         "env/entrez-direct.yaml"
-    input:
-        "comparative_search.yaml"
     output:
         "refSeq/nb_genomes_per_species.txt"
     shell:
