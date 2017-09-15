@@ -2,20 +2,20 @@
 
 This pipeline is composed of two modules. The first one assembles paired reads, checks the identity of the species, annotates the genome, controls for contamination and generates an EMBL file ready to be submitted to the European Nucleotide Archive.
 
-The second pipeline uses the assembled genomes, and downloads from requested species or genera already sequenced genomes to perform an orthologous gene search, an ANI calculation, and a phylogeny based on 1 to 1 orthologous protein coding genes. It accomodates any number of sequenced genome. Modification of comparative/config.yaml and one config file for each isolate is needed (example in strain_name.yaml).
+The second pipeline uses the assembled genomes, and downloads from requested species or genera already sequenced genomes to perform an orthologous gene search, an ANI calculation, and a phylogeny based on one to one orthologous protein coding genes. It accomodates any number of sequenced genome. Modification of `comparative/config.yaml` and one config file for each isolate is needed (example in `strain_name.yaml`).
 
-The pipeline uses the conda package manager, and will run provided Snakemake, Miniconda3 are available on the osX or Linux computer.
+The pipeline uses the conda package manager, and will run provided snakemake, Miniconda3 are available on the osX or Linux computer.
 Setting up a minikraken database is also needed : 
 ```
-        wget -O - https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz > krakendb.tgz
-        tar xzf krakendb.tgz
-        mv minikraken_* krakendb/
-        rm -rf krakendb.tgz
+wget -O - https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz > krakendb.tgz
+tar xzf krakendb.tgz
+mv minikraken_* krakendb/
+rm -rf krakendb.tgz
 ```
 
-The paired reads files have to be uncompressed, stored in the folder reads/raw/ relative from where the snakemake command is called and their names be ${ISOLATE_NAME}_R1_001.fastq and ${ISOLATE_NAME}_R2_001.fastq.  
+The paired reads files have to be uncompressed, stored in the folder reads/raw/ relative from where the snakemake command is called and their names be `${ISOLATE_NAME}_R1_001.fastq` and `${ISOLATE_NAME}_R2_001.fastq`.
 
-Modify config.yaml and copy it in the folder from which the analysis will be run. For the RefSeq genome search, do not include large genera or too many genomes will be added. 
+Modify config.yaml and copy it in the folder from which the analysis will be run. For the RefSeq genome search, do not include large genera or too many genomes will be added.   
 
 Check every thing is order by performing first a dry run :
 
@@ -35,4 +35,4 @@ Finally run the full pipeline :
 snakemake --snakefile ${PATH_TO_COMPARATIVE_RULES_FILE} --use-conda --conda-prefix=${PATH_WHERE_CONDA_ENV_WILL_BE_STORED} report.html 
 ```
 
-You can find in the dag.svg an example of the pipeline with 4 strains that are assembled and then compared to RefSeq genomes.
+You can find in `dag.svg` an example of the pipeline with 4 strains that are assembled and then compared to RefSeq genomes.
