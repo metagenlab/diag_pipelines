@@ -1,10 +1,7 @@
-# Comparative analysis with genomes from RefSeq
+# Comparative analysis with genomes from RefSeq, assembles the local genomes 
 
-Modify comparative_search.yaml to search RefSeq for species/genus. Do not include large genera or too many genomes will be added.
-
-Include genomes and proteomes to be added in local_data/genomes and local_data/proteomes/to_be_added/. The extensions of the files have to be .fna and .faa.
-
-Include a list of the ids of the isolates in local_data/ids.txt.
+Modify config.yaml to search RefSeq for species/genus. Do not include large genera or too many genomes will be added. 
+Include all the name of the strains for which you have sequencing read files. 
 
 Call snakemake:
 
