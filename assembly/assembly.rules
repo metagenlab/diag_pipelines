@@ -2,9 +2,6 @@ import re
 import csv
 from snakemake.utils import report
 
-configfile: "config.yml"
-
-
 shell.prefix("set -euo pipefail;") 
 
 rule mlst:

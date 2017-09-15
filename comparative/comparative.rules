@@ -1,6 +1,9 @@
 import re
 from snakemake.utils import report
 
+samples="".join(open("ids.txt").readlines()).split("\n")[:-1]
+
+include: "../assembly/assembly.rules"
 
 configfile: "comparative_search.yaml"
 
