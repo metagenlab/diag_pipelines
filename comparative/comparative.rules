@@ -1,8 +1,6 @@
 import re
 from snakemake.utils import report
 
-
-
 configfile: "genome_search.yaml"
 
 genus = config["search"]
