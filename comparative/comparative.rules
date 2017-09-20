@@ -73,17 +73,17 @@ rule link_genomes_to_ani_folder:
     input:
         expand("{sample}/annotation/{sample}.fsa", sample=samples)
     output:
-        "ANI/{sample}.fna"
+        expand("ANI/{sample}.fna", sample=samples)
     shell:
-        "ln -s {input} ANI/{wildcards.sample}.fna"
+        "ln -sr {input} ANI/"
 
 rule link_proteomes_to_orthofinder_folder:
     input:
         expand("{sample}/annotation/{sample}.faa", sample=samples)
     output:
-        "local_data/proteomes/to_be_added/{sample}.faa"
+        expand("local_data/proteomes/to_be_added/{sample}.faa", sample=samples)
     shell:
-        "ln -s {input} local_data/proteomes/to_be_added/{wildcards.sample}.faa"
+        "ln -sr {input} local_data/proteomes/to_be_added/"
         
 rule calculate_ani:
     conda:
