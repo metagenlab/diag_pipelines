@@ -73,7 +73,7 @@ rule link_genomes_to_ani_folder:
     input:
         expand("{sample}/annotation/{sample}.fsa", sample=samples)
     output:
-        expand("ANI/{sample}.fna", sample=samples)
+        expand("ANI/{sample}.fsa", sample=samples)
     shell:
         "ln -sr {input} ANI/"
 
@@ -90,7 +90,7 @@ rule calculate_ani:
         "env/ani.yaml"
     input:
         "refSeq/genomes/downloads.txt",
-        expand("ANI/{sample}.fna", sample=samples)
+        expand("ANI/{sample}.fsa", sample=samples)
     output:
         "ANI/log.txt"
     shell:
@@ -142,7 +142,9 @@ rule adding_local_genomes_to_orthofinder_run:
         "orthologs/log.txt"
     shell:
         """
-        if [ ! "$(find $(dirname {input[1]})/proteomes/to_be_added/ -name *.faa)" ]
+        input_folder=$(dirname {input[1]})
+        storing_folder=$(dirname ${{input_folder}})/added/
+        if [ ! "$(find ${{input_folder}} -name *.faa)" ]
         then
             echo 'No additional fasta files included for new orthofinder run'
             cp $(dirname {log})/tmp/id.txt {output[0]}
@@ -151,7 +153,7 @@ rule adding_local_genomes_to_orthofinder_run:
         else
             rm -rf $(dirname {log})/tmp/
             cp -R $(dirname {input[0]}) $(dirname {log})/tmp/ 
-            orthofinder -oa -M msa -b $(dirname {log})/tmp/WorkingDirectory/ -f $(dirname {input[1]})/proteomes/to_be_added/ > {log}
+            orthofinder -oa -M msa -b $(dirname {log})/tmp/WorkingDirectory/ -f ${{input_folder}} > {log}
             grep -no "Statistics_Overall_[0-9]\\+.csv" {log} | sed "s/.*\\([0-9]\\+\\).csv/\\1/" > $(dirname {log})/tmp/id.txt
             if [ -s $(dirname {log})/tmp/id.txt ]
             then
@@ -159,8 +161,8 @@ rule adding_local_genomes_to_orthofinder_run:
                 mv {log} $(dirname {log})/tmp/log.txt
                 cp -R $(dirname {log})/tmp/ $(dirname {input[0]})
                 sed "s/://" $(dirname {output[0]})/WorkingDirectory/SpeciesIDs.txt | sed "s/\\.faa//" | sed "s/^#.*//" | sed "s/\[/{{/" | sed "s/\]/}}/" > {output[1]}
-                mkdir -p $(dirname {input[1]})/proteomes/added/
-                mv $(dirname {input[1]})/proteomes/to_be_added/*.faa $(dirname {input[1]})/proteomes/added/
+                mkdir -p ${{storing_folder}}
+                mv ${{input_folder}}/*.faa ${{storing_folder}}
 
             fi
         fi
