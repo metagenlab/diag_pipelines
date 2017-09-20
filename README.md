@@ -2,9 +2,9 @@
 
 This pipeline is composed of two modules. The first one assembles paired reads, checks the identity of the species, annotates the genome, controls for contamination and generates an EMBL file ready to be submitted to the European Nucleotide Archive.
 
-The second pipeline uses the assembled genomes, and downloads from requested species or genera already sequenced genomes to perform an orthologous gene search, an ANI calculation, and a phylogeny based on one to one orthologous protein coding genes. It accomodates any number of sequenced genome. Modification of `comparative/config.yaml` and one config file for each isolate is needed (example in `strain_name.yaml`).
+The second module uses the assembled genomes, and downloads from requested species or genera already sequenced genomes to perform an orthologous gene search, an ANI calculation, and a phylogeny based on one to one orthologous protein coding genes. It accomodates any number of sequenced genome. 
 
-The pipeline uses the conda package manager, and will run provided snakemake, Miniconda3 are available on the osX or Linux computer.
+The pipeline uses the conda package manager, and will run provided snakemake and Miniconda3 are available on the osX or Linux computer.
 Setting up a minikraken database is also needed : 
 ```
 wget -O - https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz > krakendb.tgz
@@ -13,7 +13,7 @@ mv minikraken_* krakendb/
 rm -rf krakendb.tgz
 ```
 
-The paired reads files have to be uncompressed, stored in the folder reads/raw/ relative from where the snakemake command is called and their names be `${ISOLATE_NAME}_R1_001.fastq` and `${ISOLATE_NAME}_R2_001.fastq`.
+The paired reads files have to be uncompressed, stored in the folder reads/raw/ relative from where the snakemake command is called and their names be `${ISOLATE_NAME}_R1_001.fastq` and `${ISOLATE_NAME}_R2_001.fastq`. For each isolate, a file called `${ISOLATE_NAME}.yaml` must be present in the main folder (see example in `strain_name.yaml`)
 
 Modify config.yaml and copy it in the folder from which the analysis will be run. For the RefSeq genome search, do not include large genera or too many genomes will be added.   
 
