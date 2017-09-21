@@ -83,7 +83,7 @@ rule link_proteomes_to_orthofinder_folder:
     output:
         "local_data/proteomes/to_be_added/{sample}.faa"
     shell:
-        "ln -sr {input} local_data/proteomes/to_be_added/"
+        "ln -sr {input} local_data/proteomes/to_be_added/{wildcards.sample}.faa"
         
 rule calculate_ani:
     conda:
@@ -123,7 +123,12 @@ rule orthofinder_downloaded_proteomes:
     log:
         "orthologs/log.txt"
     shell:
-        "rm -rf $(dirname {input})/Results_* && rm -rf $(dirname {output})/ && orthofinder -oa -M msa -f $(dirname {input}) > {log} && mv $(dirname {input})/Results_* $(dirname {output}) && mv {log} $(dirname {output})/log.txt"
+        """
+        rm -rf $(dirname {input})/Results_*
+        rm -rf $(dirname {output})/ 
+        orthofinder -oa -M msa -f $(dirname {input}) > {log} && mv $(dirname {input})/Results_* $(dirname {output}) 
+        mv {log} $(dirname {output})/log.txt
+        """
 
 
 
