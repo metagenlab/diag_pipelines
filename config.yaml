@@ -6,16 +6,16 @@ search: ["Terrisporobacter", "Intestinibacter", "Romboutsia", "Clostridium diffi
 publication: Submitted () to the INSDC
 
 #Project identification number of the EBI. The project must be registered beforehand according to http://www.ebi.ac.uk/ena/submit/project-format on the Webin interface of the genome
-EBI_project_number: "PRJEB22086"
+EBI_project_number: PRJEB22086
 authors: ["Opota O", "Laurent S", "Greub G"]
-translation_table: "11"
+translation_table: 11
 
 #Internal pipeline parameters
 #These are the parameters for read trimming 
 minimum_quality_base: 35
 minimum_read_length: 60
 crop_at_read_beginning: 10
-kraken_path: "/home/sacha/Documents/krakendb/"
+kraken_path: /home/sacha/Documents/krakendb/
 
 
 #Here are the name of the isolates that will be included in this instance of the pipeline. There must be for each one of them a config file created, called ${sample}.yaml, that must include values for the parameters taxon_id_number, taxon_name, description_of_the_genome_sequence and prefix_locus_tag.
