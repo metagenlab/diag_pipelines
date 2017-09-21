@@ -217,9 +217,9 @@ rule gff_to_embl:
         """
         name=$(grep "taxon_name:" {input[1]} | cut -f2 -d':')
         desc=$(grep "description_of_the_genome_sequence:" {input[1]} | cut -f2 -d':')
-        id=$(grep "taxon_id:" {input[1]} | cut -f2 -d':')
+        id=$(grep "taxon_id_number:" {input[1]} | cut -f2 -d':')
         pre=$(grep "prefix_locus_tag:" {input[1]} | cut -f2 -d':')
-        gff3_to_embl --translation_table {params.tt} --locus_tag ${{pre}} --authors {params.aut} --classification PROK --publication {params.publ} --output_filename {output} ${{name}} ${{id}} {params.PRJ} ${{desc}} {input[0]}
+        gff3_to_embl --translation_table {params.tt} --locus_tag ${{pre}} --authors {params.aut} --classification PROK --publication {params.publ} --output_filename {output} "${{name}}" "${{id}}" "{params.PRJ}" "${{desc}}" {input[0]}
         """
 
 rule validate_gff_for_ena_submission:

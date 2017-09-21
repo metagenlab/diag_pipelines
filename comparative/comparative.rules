@@ -71,17 +71,17 @@ rule fetch_refSeq_id_and_filtering:
 
 rule link_genomes_to_ani_folder:
     input:
-        expand("{sample}/annotation/{sample}.fsa", sample=samples)
+        "{sample}/annotation/{sample}.fsa"
     output:
-        expand("ANI/{sample}.fsa", sample=samples)
+        "ANI/{sample}.fna"
     shell:
-        "ln -sr {input} ANI/"
+        "ln -sr {input} ANI/{wildcards.sample}.fna"
 
 rule link_proteomes_to_orthofinder_folder:
     input:
-        expand("{sample}/annotation/{sample}.faa", sample=samples)
+        "{sample}/annotation/{sample}.faa"
     output:
-        expand("local_data/proteomes/to_be_added/{sample}.faa", sample=samples)
+        "local_data/proteomes/to_be_added/{sample}.faa"
     shell:
         "ln -sr {input} local_data/proteomes/to_be_added/"
         
@@ -90,13 +90,12 @@ rule calculate_ani:
         "env/ani.yaml"
     input:
         "refSeq/genomes/downloads.txt",
-        expand("ANI/{sample}.fsa", sample=samples)
+        expand("ANI/{sample}.fna", sample=samples)
     output:
         "ANI/log.txt"
     shell:
         """
-        cp refSeq/genomes/*.fna $(dirname {output})
-        cp $(dirname {input[1]})/genomes/*.fna $(dirname {output})
+        ln -sr refSeq/genomes/*.fna $(dirname {output})
         average_nucleotide_identity.py -i $(dirname {output}) -o $( dirname {output})/results/ -l {output} -g --gformat eps,png -f
         """
 
@@ -268,6 +267,8 @@ rule report_comparative:
         ortho="orthologs/current_results/log.txt",
         pyani="ANI/log.txt",
         tree="phylogeny/tree.png"
+    params:
+        local_genomes=config["isolates"]
     output:
         "report.html"
     run:
@@ -275,7 +276,7 @@ rule report_comparative:
         queries="\n    ".join(genus)
         numbers="\n    ".join(open(input["species"], "r").read().split("\n"))
         genomes="\n    ".join(open(input["genomes"], "r").read().split("\n"))
-        idlocal="\n    ".join(open(input["local_genomes"], "r").read().split("\n"))
+        idlocal="\n    ".join(params["local_genomes"])
         report_ortho=extract_orthofinder_results(input["ortho"])
         report("""
         Report of the comparative genomics pipeline 
