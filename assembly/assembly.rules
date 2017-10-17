@@ -25,10 +25,10 @@ rule trimmomatic:
         minqual = config["minimum_quality_base"],
         croplength = config["crop_at_read_beginning"]
     output:
-        "{sample}/reads/trimmed/R1_paired.fastq",
-        "{sample}/reads/trimmed/R1_unpaired.fastq",
-        "{sample}/reads/trimmed/R2_paired.fastq",
-        "{sample}/reads/trimmed/R2_unpaired.fastq",
+        temp("{sample}/reads/trimmed/R1_paired.fastq"),
+        temp("{sample}/reads/trimmed/R1_unpaired.fastq"),
+        temp("{sample}/reads/trimmed/R2_paired.fastq"),
+        temp("{sample}/reads/trimmed/R2_unpaired.fastq"),
         "{sample}/logs/trimmomatic.log"
     shell:
         "trimmomatic PE {input} {output[0]} {output[1]} {output[2]} {output[3]}  ILLUMINACLIP:TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {output[4]}"
@@ -89,8 +89,8 @@ rule error_correction_spades:
         "{sample}/reads/trimmed/R1_paired.fastq",
         "{sample}/reads/trimmed/R2_paired.fastq"
     output:
-        "{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
-        "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"
+        temp("{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz"),
+        temp("{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz")
     shell:
          "spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]}))"
         
@@ -177,7 +177,7 @@ rule filter_contigs_on_coverage:
     shell:
         """
         grep -A 1 -f {input[1]} {input[0]} | sed '/^--$/d' > {output[0]}
-        if [ -f {input[2]} ]
+        if [ -s {input[2]} ]
         then 
             grep -A 1 -f {input[2]} {input[0]} | sed '/^--$/d' > {output[1]}
         else
@@ -200,39 +200,6 @@ rule convert_quast_images:
         """
         
     
-rule gff_to_embl:
-    conda:
-        "env/gff3toembl.yaml"
-    input:
-        "{sample}/annotation/{sample}.gff",
-        "{sample}.yaml"
-    output:
-        "{sample}/ena_submission/flatfile.embl"
-    params:
-        publ=config["publication"],
-        PRJ=config["EBI_project_number"],
-        aut="'"+" ".join(config["authors"])+"'",
-        tt=config["translation_table"],
-    shell:
-        """
-        name=$(grep "taxon_name:" {input[1]} | cut -f2 -d':')
-        desc=$(grep "description_of_the_genome_sequence:" {input[1]} | cut -f2 -d':')
-        id=$(grep "taxon_id_number:" {input[1]} | cut -f2 -d':')
-        pre=$(grep "prefix_locus_tag:" {input[1]} | cut -f2 -d':')
-        gff3_to_embl --translation_table {params.tt} --locus_tag ${{pre}} --authors {params.aut} --classification PROK --publication {params.publ} --output_filename {output} "${{name}}" "${{id}}" "{params.PRJ}" "${{desc}}" {input[0]}
-        """
-
-rule validate_gff_for_ena_submission:
-    conda:
-        "env/validator_ena.yaml"
-    input:
-        "{sample}/ena_submission/flatfile.embl"
-    output:
-        "{sample}/ena_submission/VAL_SUMMARY.txt",
-        "{sample}/ena_submission/VAL_ERROR.txt"
-        
-    shell:
-        "cd $( dirname {input}) && embl-api-validator $( basename {input}) || true "
         
 
 def extract_report(filename, pattern):
@@ -284,8 +251,6 @@ rule report_assembly:
         low_cov = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
         quast = "{sample}/assembly/spades/quast/report.txt",
         prokka = "{sample}/annotation/{sample}.txt",
-        ena_validator_summary = "{sample}/ena_submission/VAL_SUMMARY.txt",
-        ena_validator_error = "{sample}/ena_submission/VAL_ERROR.txt",
         cov_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
         GC_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
         kraken = "{sample}/logs/kraken.log"
@@ -321,8 +286,6 @@ rule report_assembly:
         rRNA = prokka_annot["rRNA"]
         CDS = prokka_annot["CDS"]
         tRNA = prokka_annot["tRNA"]
-        enavalidator_warn = format_table(extract_report(input["ena_validator_summary"], warn))
-        enavalidator_err = format_table(extract_report(input["ena_validator_summary"], error))
         cov_plot=input["cov_plot"]
         GC_plot = input["GC_plot"]
         report("""
@@ -393,11 +356,4 @@ rule report_assembly:
         Number of tRNA genes              {tRNA}
         ================================= ==============================
         
-        The European Nucleotide Archive (ENA) submission file was prepared and checked using their validator. The reports of the validator were::
-
-        {enavalidator_warn}
-        {enavalidator_err}
-
-        Check files ena_validator_summary_ and ena_validator_error_
- 
         """, output[0], **input)
