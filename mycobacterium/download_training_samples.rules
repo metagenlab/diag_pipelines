@@ -6,8 +6,10 @@ shell.prefix("set -euo pipefail;")
 include: "../assembly/assembly.rules"
 configfile: "config.yaml"
 
-samples = pandas.read_csv(config["samples"])
-    
+samples = pandas.read_csv(config["samples"], index_col=0)
+
+
+print(samples)
 genes_of_interest=["gyrA", "rpoB", "rpsL", "katG", "embB"]
 
 rule get_sra:
@@ -17,10 +19,16 @@ rule get_sra:
         temp("reads/raw/{sample}_R1_001.fastq"),
         temp("reads/raw/{sample}_R2_001.fastq")
     params:
-        samples_file = config["samples"]
+        sra = lambda wildcards: samples.loc[wildcards.sample, "Sequence_Read_Archive"]
     shell:
         """
-        sra=$(cut -f1,5 -d',' {params.samples_file} | grep "^{wildcards.sample}," | sed "s/.*,//")
+        echo {params.sra}
+        if [[ "{params.sra}" == *","* ]]; then
+            sra=$(echo {params.sra} | sed "s/,.*//")
+        else
+            sra={params.sra}
+        fi
+        echo ${{sra}}
         fastq-dump --split-files --outdir reads/raw/ ${{sra}}
         mv reads/raw/${{sra}}_1.fastq reads/raw/{wildcards.sample}_R1_001.fastq 
         mv reads/raw/${{sra}}_2.fastq reads/raw/{wildcards.sample}_R2_001.fastq 
@@ -90,8 +98,8 @@ def extract_resistance_results_rgi(filename, genes):
 
 rule report:
     input:
-        expand("{sample}/report.html", sample=list(samples.Specimen)),
-        rgis=expand("{sample}/resistance/rgi.json", sample=list(samples.Specimen))
+        expand("{sample}/report.html", sample=list(samples.index.values)),
+        rgis=expand("{sample}/resistance/rgi.json", sample=list(samples.index.values))
     output:
         "report.html"
     params:
