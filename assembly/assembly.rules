@@ -31,7 +31,7 @@ rule trimmomatic:
         temp("{sample}/reads/trimmed/R2_unpaired.fastq"),
         "{sample}/logs/trimmomatic.log"
     shell:
-        "trimmomatic PE {input} {output[0]} {output[1]} {output[2]} {output[3]}  ILLUMINACLIP:TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {output[4]}"
+        "trimmomatic PE {input} {output[0]} {output[1]} {output[2]} {output[3]}  ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/adapters/TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {output[4]}"
 
 rule identification:
     conda:

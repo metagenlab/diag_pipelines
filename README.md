@@ -4,7 +4,7 @@ This pipeline is composed of two modules. The first one assembles paired reads, 
 
 The second module uses the assembled genomes, and downloads from requested species or genera already sequenced genomes to perform an orthologous gene search, an ANI calculation, and a phylogeny based on one to one orthologous protein coding genes. It accomodates any number of sequenced genome. 
 
-The pipeline uses the conda package manager, and will run provided snakemake and Miniconda3 are available on the osX or Linux computer.
+The pipeline uses the conda package manager, and will run provided snakemake (version >=4) and Miniconda3 are available on the osX or Linux computer.
 Setting up a minikraken database is also needed : 
 ```
 wget -O - https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz > krakendb.tgz
