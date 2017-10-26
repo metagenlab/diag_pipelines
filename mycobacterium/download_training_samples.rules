@@ -10,6 +10,39 @@ configfile: "config.yaml"
 
 samples = pandas.read_csv(config["samples"], index_col=0)
 
+rule create_dbs:
+    conda:
+        "env/biopython-mysql.yaml"
+    input:
+        "/home/sacha/.my.cnf"
+    output:
+        "logs/db_mysql.txt"
+    script:
+        "scripts/create_db.py"
+
+rule download_data_from_niaid:
+    output:
+        "cases.html",
+        "patient_data.txt",
+        "logs/download_niaid.txt"
+    shell:
+        """
+        wget -qO- https://data.tbportals.niaid.nih.gov/cases?dstProfile=sensitive%2CMDRnonXDR%2CpolyDR%2CmonoDR%2CXDR\&sequenced=True\&_take=10000 > {output[0]}
+        grep "href='/patient/.*case/details/.*" {output[0]} | sed "s/.*'\//https:\/\/data.tbportals.niaid.nih.gov\//" | sed "s/'//g" > {output[1]}
+        wget -N -i patient_data.txt -P patient_html/ -o {output[2]}
+        """
+        
+def get_files_in_folder(wildcards):
+    return(os.listdir(wildcards.folder))
+    
+rule parse_and_load_html_files_from_niaid:
+    input:
+        "logs/download_niaid.txt"
+    output:
+        "logs/parsing_niaid.txt"
+    script:
+        "scripts/parse_html.py"
+
 rule get_sra:
     conda:
         "env/sra-tools.yaml"
