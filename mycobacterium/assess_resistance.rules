@@ -1,0 +1,152 @@
+from snakemake.utils import report
+import re
+import os
+import pandas
+
+shell.prefix("set -euo pipefail;") 
+
+include: "../assembly/assembly.rules"
+configfile: "config.yaml"
+
+samples = os.listdir("links/")
+regex = re.compile("UK_.*_R1_.*")
+samples = [ re.sub(r'_R1.*', '', x) for x in list(filter(regex.match, samples))]
+print(samples)
+
+rule get_h37rv_genome:
+    conda:
+        "env/entrez-direct.yaml"
+    output:
+        "reference/h37rv.gbk"
+    shell:
+        """
+        esearch -db assembly -query h37rv | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq_category -equals "reference genome" -element FtpPath_RefSeq | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" | xargs wget -qO- | gzip -d > {output[0]}
+        """
+
+rule index_resistance_genes:
+    conda:
+        "env/bwa.yaml"
+    input:
+        "reference/resistance.fna"
+    output:
+        "reference/resistance.fna.bwt"
+    shell:
+        "bwa index {input[0]}"
+
+        
+rule align_to_resistome:
+    conda:
+        "env/bwa.yaml"
+    input:
+        "reads/raw/{sample}_R1_001.fastq",
+        "reads/raw/{sample}_R2_001.fastq",
+        "reference/resistance.fna",
+        "reference/resistance.fna.bwt"
+    output:
+        "{sample}/resistance/resistome_mapping.sam"
+    shell:
+        """
+        bwa mem {input[2]} {input[0]} {input[1]} > {output[0]} 
+        """
+
+rule sort_mapping:
+    conda:
+        "env/samtools.yaml"
+    input:
+        "{sample}/resistance/resistome_mapping.sam"
+    output:
+        "{sample}/resistance/resistome_mapping.bam"
+    shell:
+        "samtools sort {input[0]} > {output[0]}"
+
+rule index_mapping:
+    conda:
+        "env/bwa.yaml"
+    input:
+        "{sample}/resistance/resistome_mapping.bam"
+    output:
+        "{sample}/resistance/resistome_mapping.bam.bai"
+    shell:
+        "samtools index {input[0]}"
+        
+rule get_resistance_genes:
+    conda:
+        "env/biopython-mysql.yaml"
+    input:
+        "reference/h37rv.gbk"
+    output:
+        "reference/resistance.fna",
+        "reference/resistance.faa"
+    script:
+        "scripts/extract_resistance_genes_from_reference.py"
+
+        
+rule variant_calling:
+    conda:
+        "env/bcftools.yaml"
+    input:
+        "{sample}/resistance/resistome_mapping.bam",
+        "reference/resistance.fna"
+    output:
+        "{sample}/resistance/variants.vcf"
+    shell:
+        "bcftools mpileup -Ou -f {input[1]} {input[0]} | bcftools call --ploidy 1 -vm > {output[0]}"
+        
+        
+
+rule compare_genome:
+    conda:
+        "env/quast.yaml"
+    input:
+        "{sample}/annotation/{sample}.fsa",
+        "{sample}/reference/ref.fna"
+    output:
+        "{sample}/qc/quast/report.txt"
+    shell:
+        "quast.py {input[0]} -R {input[1]} -o $(dirname  {output[0]}"
+
+rule rgi:
+    conda:
+        "env/rgi.yaml"
+    input:
+        "{sample}/annotation/{sample}.faa"
+    output:
+        "{sample}/resistance/rgi.json"
+    shell:
+        "rgi -t protein -i {input} -o {wildcards.sample}/resistance/rgi"
+
+rule extract_rgi_res:
+    conda:
+        "env/biopython-mysql.yaml"
+    input:
+        "{sample}/resistance/rgi.json",
+        "/home/sacha/.my.cnf"
+    output:
+        "logs/{sample}/rgi_mysql.txt"
+    script:
+        "scripts/parse_rgi_json.py"
+
+rule call_protein_variants_from_vcf:
+    conda:
+        "env/pyvcf.yaml"
+    input:
+        "{sample}/resistance/variants.vcf",
+        "reference/resistance.fna",
+        "/home/sacha/.my.cnf"
+    output:
+        "logs/{sample}/local_mysql.txt"
+    script:
+        "scripts/call_protein_variants.py"
+
+rule report:
+    input:
+#        rgis=expand("logs/{sample}/rgi_mysql.txt", sample=list(samples.index.values)),
+#        locals=expand("logs/{sample}/local_mysql.txt", sample=list(samples.index.values))
+        rgis=expand("logs/{sample}/rgi_mysql.txt", sample=samples),
+        locals=expand("logs/{sample}/local_mysql.txt", sample=samples)
+    output:
+        "report.html"
+    run:
+        report("""
+        Report of the comparative genomics pipeline 
+        """, output[0])
