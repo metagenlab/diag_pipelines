@@ -8,7 +8,6 @@ configfile: "config.yaml"
 
 samples = pandas.read_csv(config["samples"], index_col=0)
 
-
 genes_of_interest=["gyrA", "rpoB", "rpsL", "katG", "embB"]
 
 rule get_sra:
@@ -21,7 +20,6 @@ rule get_sra:
         sra = lambda wildcards: samples.loc[wildcards.sample, "Sequence_Read_Archive"] if len(samples.loc[wildcards.sample, "Sequence_Read_Archive"].split(","))==1 else samples.loc[wildcards.sample, "Sequence_Read_Archive"].split(",")[0]
     shell:
         """
-        echo {params.sra}
         fastq-dump --split-files --outdir reads/raw/ {params.sra}
         mv reads/raw/{params.sra}_1.fastq reads/raw/{wildcards.sample}_R1_001.fastq 
         mv reads/raw/{params.sra}_2.fastq reads/raw/{wildcards.sample}_R2_001.fastq 
@@ -57,7 +55,7 @@ rule align_to_resistome:
         "reference/resistance.fna",
         "reference/resistance.fna.bwt"
     output:
-        "{sample}/resistome_mapping.sam"
+        "{sample}/resistance/resistome_mapping.sam"
     shell:
         """
         bwa mem {input[2]} {input[0]} {input[1]} > {output[0]} 
@@ -67,9 +65,9 @@ rule sort_mapping:
     conda:
         "env/samtools.yaml"
     input:
-        "{sample}/resistome_mapping.sam"
+        "{sample}/resistance/resistome_mapping.sam"
     output:
-        "{sample}/resistome_mapping.bam"
+        "{sample}/resistance/resistome_mapping.bam"
     shell:
         "samtools sort {input[0]} > {output[0]}"
 
@@ -77,9 +75,9 @@ rule index_mapping:
     conda:
         "env/bwa.yaml"
     input:
-        "{sample}/resistome_mapping.bam"
+        "{sample}/resistance/resistome_mapping.bam"
     output:
-        "{sample}/resistome_mapping.bam.bai"
+        "{sample}/resistance/resistome_mapping.bam.bai"
     shell:
         "samtools index {input[0]}"
         
@@ -92,16 +90,17 @@ rule get_resistance_genes:
         "reference/resistance.fna",
         "reference/resistance.faa"
     script:
-        "scripts/extract_res_genes.py"
+        "scripts/extract_resistance_genes_from_reference.py"
+
         
 rule variant_calling:
     conda:
         "env/bcftools.yaml"
     input:
-        "{sample}/resistome_mapping.bam",
+        "{sample}/resistance/resistome_mapping.bam",
         "reference/resistance.fna"
     output:
-        "{sample}/variants.vcf"
+        "{sample}/resistance/variants.vcf"
     shell:
         "bcftools mpileup -Ou -f {input[1]} {input[0]} | bcftools call --ploidy 1 -vm > {output[0]}"
         
@@ -128,7 +127,28 @@ rule rgi:
     shell:
         "rgi -t protein -i {input} -o {wildcards.sample}/resistance/rgi"
 
+rule extract_rgi_res:
+    conda:
+        "env/biopython-mysql.yaml"
+    input:
+        "{sample}/resistance/rgi.json",
+        "/home/sacha/.my.cnf"
+    output:
+        "logs/{sample}/rgi_mysql.txt"
+    script:
+        "scripts/parse_rgi_json.py"
 
+rule call_protein_variants_from_vcf:
+    conda:
+        "env/pyvcf.yaml"
+    input:
+        "{sample}/resistance/variants.vcf",
+        "reference/resistance.fna",
+        "/home/sacha/.my.cnf"
+    output:
+        "logs/{sample}/local_mysql.txt"
+    script:
+        "scripts/call_protein_variants.py"
 
 rule extract_resistance_gene:
     conda:
@@ -138,36 +158,7 @@ rule extract_resistance_gene:
     output:
         "{sample}/resistance/genes.faa"
     script:
-        "scripts/extract_res_genes.py"
-        
-
-def extract_resistance_results_rgi(filename, genes):
-    data={}
-    with open(filename, "r") as f:
-        rgi = json.load(f)
-        for j in rgi.keys():
-            if j != "_metadata":
-                for k in rgi[j].keys():
-                    try: 
-                        snp=rgi[j][k]["SNP"]
-                        try:
-                            antibio=rgi[j][k]["ARO_name"].split()[-1]
-                            if antibio not in data:
-                                data[antibio]={}
-                            data[antibio].setdefault(list(set(rgi[j][k]["ARO_name"].split()).intersection(genes))[0], []).append(snp["original"]+str(snp["position"])+snp["change"])
-                        except IndexError:
-                            pass
-                    except KeyError:
-                        pass
-                    #                             try:
-                    #                                for l in rgi[j][k]["ARO_category"]:
-                    #                                    print(rgi[j][k]["ARO_category"][l])
-                    #                                    print(rgi[j][k]["ARO_category"][l]["category_aro_description"])
-                    #                            except KeyError:
-                    #                                print(rgi[j][k])
-
-    return(data)
-
+        "scripts/lol"
 
 rule report:
     input:
