@@ -6,9 +6,8 @@ import pandas
 shell.prefix("set -euo pipefail;") 
 
 include: "../assembly/assembly.rules"
-configfile: "config.yaml"
 
-samples = pandas.read_csv(config["samples"], index_col=0)
+samples = pandas.read_csv(config["samples"], index_col=0, delimiter="\t")
 
 rule create_dbs:
     conda:
@@ -32,12 +31,14 @@ rule download_data_from_niaid:
         wget -N -i patient_data.txt -P patient_html/ -o {output[2]}
         """
         
-def get_files_in_folder(wildcards):
-    return(os.listdir(wildcards.folder))
-    
 rule parse_and_load_html_files_from_niaid:
+    conda:
+        "env/biopython-mysql.yaml"
     input:
-        "logs/download_niaid.txt"
+        "logs/download_niaid.txt",
+        "/home/sacha/.my.cnf"
+    params:
+        folder="patient_html/"
     output:
         "logs/parsing_niaid.txt"
     script:

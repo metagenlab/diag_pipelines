@@ -1,16 +1,23 @@
-from bs4 import BeautifulSoup as bs
 import csv
-from collections import OrderedDict
-from dateutil import parser
+import os
 import mysql.connector
+import re
+from datetime import datetime
+from bs4 import BeautifulSoup as bs
+from collections import OrderedDict
 
-def extract_data(filename):
+cnx = mysql.connector.connect(option_files=snakemake.input[1], option_groups="myco")
+cnx.get_warnings = True
+cursor = cnx.cursor()
+with open(snakemake.output[0], "w") as myfile:
+    myfile.write("")
+
+def extract_data(filename, curs, inf, test, anti, log):
     dic={}
     soup=bs(open(filename).read(), "html.parser")
     for mdr in soup.find_all("li"):
         if "Patient: " in mdr.get_text():
             patient="".join(mdr.get_text().replace("Patient:", "").split())
-            
     for lol in soup.find_all("h5"):
         if lol.get_text() =="Genomes":
             table=lol.find_next("table")
@@ -24,17 +31,13 @@ def extract_data(filename):
                 dic[v[0]]["Patient"]=patient
                 for i in range(1,8):
                     if l[i]=="Specimen Collected Date":
-                        dic[v[0]]["Specimen_Collected_Date"]=parser.parse(v[i]).strftime('%Y-%m-%d')
+                        dic[v[0]]["Specimen_Collected_Date"]=datetime.strptime(v[i], '%b %d, %Y').strftime('%Y-%m-%d')
                     else:
                         dic[v[0]][l[i].replace(" ", "_")]=v[i]
                 dic[v[0]]["Filename"]=filename
-                
-
     if not len(dic):
         print(filename)
         raise ValueError("No genome found in this entry")
-
-
     for lol in soup.find_all("h5"):
         if lol.get_text() =="Specimen":
             table=lol.find_next("table")
@@ -46,9 +49,6 @@ def extract_data(filename):
                 v=[s.strip() for s in [k.get_text() for k in cells]]
                 if v[0] in dic.keys():
                     dic[v[0]][l[2]]=v[2]
-
-
-
     for lol in soup.find_all("h5"):
         if lol.get_text() =="Drug susceptibility testing":
             table=lol.find_next("table")
@@ -62,69 +62,47 @@ def extract_data(filename):
                     dic[v[0]][v[1]]={}
                     for i in range(2, len(v)):
                         if l[i]=="Date":
-                            dic[v[0]][v[1]]["Date"]=parser.parse(v[i]).strftime('%Y-%m-%d')
+                            dic[v[0]][v[1]]["Date"]=datetime.strptime(v[i], '%b %d, %Y').strftime('%Y-%m-%d')
                         else:
-                            dic[v[0]][v[1]][l[i]]=v[i]
-
+                            if v[i] != "":
+                                dic[v[0]][v[1]][l[i]]=v[i]
+    for i in dic.keys():
+        cmd=[]
+        samp = {k: dic[i][k] for k in inf}
+        columns = ', '.join(samp.keys())
+        cmd.append("INSERT IGNORE INTO samples ( Specimen, {0} ) VALUES ( \"{1}\", {2} )".format(', '.join(samp.keys()), i, "\""+"\", \"".join(samp.values())+"\""))
+        cmd.append("INSERT IGNORE into corres (Specimen, file) VALUES (\"{0}\", \"{1}\")".format(i, re.sub(r'.*/', "", dic[i]["Filename"])))
+        if len(dic[i]["Sequence_Read_Archive"].split(",")) > 1:
+            for sra in dic[i]["Sequence_Read_Archive"].split(","):
+                cmd.append("INSERT IGNORE into sras (Specimen, Sequence_Read_Archive) VALUES (\"{0}\", \"{1}\")".format(i, "".join(sra.split())))
+        else:
+            cmd.append("INSERT IGNORE into sras (Specimen, Sequence_Read_Archive) VALUES (\"{0}\", \"{1}\")".format(i, dic[i]["Sequence_Read_Archive"]))
+        tests_made = [val for val in test if val in list(dic[i].keys())]
+        for u in tests_made:
+            date = dic[i][u]["Date"]
+            for key, value in dic[i][u].items():
+                if key != "Date":
+                    cmd.append("INSERT IGNORE into dst (Specimen, test, Date, antibio, phenotype) VALUES (\"{0}\", \"{1}\",\"{2}\",\"{3}\", \"{4}\" )".format(i, u, date, key, value))
+        for c in cmd:
+            curs.execute(c)
+            warn=curs.fetchwarnings()
+            if warn is not None:
+                with open(log, "a") as f:
+                    f.write(str(warn[0])+"\n") 
     return(dic)
 
-final_dic={}
-files = [f for f in os.scandir("../") if os.path.isfile("../"+f.name)]
-print(files)
-for i in files:
-    final_dic={** final_dic, ** extract_data("../"+i.name)}
-    
-     
 
+
+files = [f for f in os.scandir(snakemake.params[0]) if os.path.isfile(snakemake.params[0]+f.name)]
+info = ["Patient", "Bio_Project", "Material", "Specimen_Collected_Date", "Bio_Sample","Lineage","Octal_Spoligotype"]
 tests = ["Lowenstein-Jensen", "Bactec", "GeneXpert", "Hain", "DST"]
-info = ["Specimen","Patient","Bio_Project","Material","Specimen_Collected_Date", "Bio_Sample","Lineage","Octal_Spoligotype"]
 antibio = ["Specimen","test","Date", 'H', 'R', 'S', 'E', 'Ofx', 'Cm', 'Am', 'Km', 'Z', 'Lfx', 'Mfx', 'Pas', 'Pto', 'Cs', 'Amx/Clv', 'Mb', 'Dld', 'Bdq', 'Ipm/Cln', 'Lzd', 'Cfz', 'Clr', 'Ft', 'AG/CP', 'Action']
 
-deli="\t"
-with open("samples.csv", "w") as f:
-    w = csv.DictWriter(f, None, delimiter=deli)
-    w.fieldnames = info
-    w.writeheader()
+for i in files:
+    extract_data(snakemake.params[0]+i.name, cursor, info, tests, antibio, snakemake.output[0])
 
+cnx.commit()
+cnx.close()
+    
 
-with open("test.csv", "w") as f:
-    w = csv.DictWriter(f, None, delimiter=deli)
-    w.fieldnames = antibio
-    w.writeheader()
-
-with open("sras.csv", "w") as f:
-    w = csv.DictWriter(f, None, delimiter=deli)
-    w.fieldnames=["Specimen", "Sequence_Read_Archive"]
-    w.writeheader()
-
-print(final_dic.keys())
-with open('samples.csv', 'a') as f:
-    for i in final_dic.keys():
-        tmp = {}
-        tmp["Specimen"]=i
-        tmp = {** tmp, ** {k: final_dic[i][k] for k in info[1:]}}
-        w = csv.DictWriter(f, tmp, delimiter=deli)
-        w.fieldnames=info
-        w.writerow(tmp)
-        with open("sras.csv", "a") as u:
-            for sras in final_dic[i]["Sequence_Read_Archive"].split(","):
-                u.write(i+deli+sras.replace(" ", "")+"\n")
-        tests_made = [val for val in tests if val in list(final_dic[i].keys())]
-        with open("test.csv", "a") as g:
-            for test in tests_made:
-                tmpres = {}
-                tmpres["Specimen"] = i
-                tmpres["test"] = test
-                tmpres = {** tmpres, ** final_dic[i][test]}
-                print(tmpres)
-                w = csv.DictWriter(g, tmpres, delimiter=deli)
-                w.fieldnames=antibio
-                w.writerow(tmpres)
-        
-        
-        
-with open("file_correspondance.csv", "w") as f:
-    f.write("Speciment\tID\n")
-    for i in final_dic.keys():
-        f.write(i+deli+final_dic[i]["Filename"].replace(".", "").replace("/", "")+"\n")
 

@@ -8,8 +8,8 @@ shell.prefix("set -euo pipefail;")
 include: "../assembly/assembly.rules"
 configfile: "config.yaml"
 
-samples = os.listdir("links/")
-regex = re.compile("UK_.*_R1_.*")
+samples = os.listdir("reads/raw/")
+regex = re.compile(".*_R1_.*")
 samples = [ re.sub(r'_R1.*', '', x) for x in list(filter(regex.match, samples))]
 print(samples)
 
@@ -43,7 +43,7 @@ rule align_to_resistome:
         "reference/resistance.fna",
         "reference/resistance.fna.bwt"
     output:
-        "{sample}/resistance/resistome_mapping.sam"
+        temp("{sample}/resistance/resistome_mapping.sam")
     shell:
         """
         bwa mem {input[2]} {input[0]} {input[1]} > {output[0]} 
@@ -55,7 +55,7 @@ rule sort_mapping:
     input:
         "{sample}/resistance/resistome_mapping.sam"
     output:
-        "{sample}/resistance/resistome_mapping.bam"
+        temp("{sample}/resistance/resistome_mapping.bam")
     shell:
         "samtools sort {input[0]} > {output[0]}"
 
@@ -142,7 +142,7 @@ rule report:
     input:
 #        rgis=expand("logs/{sample}/rgi_mysql.txt", sample=list(samples.index.values)),
 #        locals=expand("logs/{sample}/local_mysql.txt", sample=list(samples.index.values))
-        rgis=expand("logs/{sample}/rgi_mysql.txt", sample=samples),
+   #     rgis=expand("logs/{sample}/rgi_mysql.txt", sample=samples),
         locals=expand("logs/{sample}/local_mysql.txt", sample=samples)
     output:
         "report.html"
