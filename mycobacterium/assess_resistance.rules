@@ -3,15 +3,9 @@ import re
 import os
 import pandas
 
-shell.prefix("set -euo pipefail;") 
+shell.prefix("set -euo pipefail;")
 
 include: "../assembly/assembly.rules"
-configfile: "config.yaml"
-
-samples = os.listdir("reads/raw/")
-regex = re.compile(".*_R1_.*")
-samples = [ re.sub(r'_R1.*', '', x) for x in list(filter(regex.match, samples))]
-print(samples)
 
 rule get_h37rv_genome:
     conda:
@@ -34,21 +28,20 @@ rule index_resistance_genes:
         "bwa index {input[0]}"
 
         
-rule align_to_resistome:
+rule align_to_resistome_paired:
     conda:
         "env/bwa.yaml"
     input:
-        "reads/raw/{sample}_R1_001.fastq",
-        "reads/raw/{sample}_R2_001.fastq",
         "reference/resistance.fna",
-        "reference/resistance.fna.bwt"
+        "reference/resistance.fna.bwt",
+        files=lambda wildcards: expand("reads/raw/"+wildcards.sample+"_{ext}", ext=extension[wildcards.sample])
     output:
         temp("{sample}/resistance/resistome_mapping.sam")
     shell:
         """
-        bwa mem {input[2]} {input[0]} {input[1]} > {output[0]} 
+        bwa mem {input[0]} {input.files} > {output[0]} 
         """
-
+        
 rule sort_mapping:
     conda:
         "env/samtools.yaml"
@@ -80,7 +73,6 @@ rule get_resistance_genes:
     script:
         "scripts/extract_resistance_genes_from_reference.py"
 
-        
 rule variant_calling:
     conda:
         "env/bcftools.yaml"
@@ -91,19 +83,6 @@ rule variant_calling:
         "{sample}/resistance/variants.vcf"
     shell:
         "bcftools mpileup -Ou -f {input[1]} {input[0]} | bcftools call --ploidy 1 -vm > {output[0]}"
-        
-        
-
-rule compare_genome:
-    conda:
-        "env/quast.yaml"
-    input:
-        "{sample}/annotation/{sample}.fsa",
-        "{sample}/reference/ref.fna"
-    output:
-        "{sample}/qc/quast/report.txt"
-    shell:
-        "quast.py {input[0]} -R {input[1]} -o $(dirname  {output[0]}"
 
 rule rgi:
     conda:
@@ -120,7 +99,7 @@ rule extract_rgi_res:
         "env/biopython-mysql.yaml"
     input:
         "{sample}/resistance/rgi.json",
-        "/home/sacha/.my.cnf"
+        ancient("/home/sacha/.my.cnf")
     output:
         "logs/{sample}/rgi_mysql.txt"
     script:
@@ -131,22 +110,13 @@ rule call_protein_variants_from_vcf:
         "env/pyvcf.yaml"
     input:
         "{sample}/resistance/variants.vcf",
-        "reference/resistance.fna",
-        "/home/sacha/.my.cnf"
+        ancient("reference/resistance.fna"),
+        ancient("/home/sacha/.my.cnf")
     output:
         "logs/{sample}/local_mysql.txt"
     script:
         "scripts/call_protein_variants.py"
 
-rule report:
-    input:
-#        rgis=expand("logs/{sample}/rgi_mysql.txt", sample=list(samples.index.values)),
-#        locals=expand("logs/{sample}/local_mysql.txt", sample=list(samples.index.values))
-   #     rgis=expand("logs/{sample}/rgi_mysql.txt", sample=samples),
-        locals=expand("logs/{sample}/local_mysql.txt", sample=samples)
-    output:
-        "report.html"
-    run:
-        report("""
-        Report of the comparative genomics pipeline 
-        """, output[0])
+#rule all:
+#    input:
+#        locals=expand("logs/{sample}/local_mysql.txt", sample=list(mdr_tb_study.index.values))

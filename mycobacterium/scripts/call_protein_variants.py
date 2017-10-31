@@ -20,16 +20,15 @@ with open(snakemake.output[0], "w") as myfile:
     
 for record in vcf_reader:
     mutation = str(record.ALT).replace("[","").replace("]","")
-    print(record)
     if mutation in ["A","T","G","C"]:
-        codon = genes[record.CHROM][((record.POS-1)//3*3):(((record.POS-1)//3+1)*3)].seq
+        codon_number=(record.POS-1)//3+1
+        codon = genes[record.CHROM][slice((codon_number-1)*3, codon_number*3)].seq
         mutated_codon=list(codon)
         mutated_codon[record.POS%3-1]=mutation
         mutated_codon=''.join(mutated_codon)
         if str(codon.translate()) != str(Seq(mutated_codon).translate()):
-            cmd="INSERT IGNORE INTO mutations (Specimen, software, gene, position, ref_aa, mut_aa) VALUES (\"{0}\", \"local\", \"{1}\", {2}, \"{3}\", \"{4}\");".format(snakemake.wildcards.sample, record.CHROM, record.POS//3, str(codon.translate()), str(Seq(mutated_codon).translate()))
+            cmd="INSERT IGNORE INTO mutations (Specimen, software, gene, position, ref_aa, mut_aa) VALUES (\"{0}\", \"local\", \"{1}\", {2}, \"{3}\", \"{4}\");".format(snakemake.wildcards.sample, record.CHROM, codon_number, str(codon.translate()), str(Seq(mutated_codon).translate()))
             cursor.execute(cmd)
-            print(cmd)
             i=cursor.fetchwarnings()
             if i is not None:
                 with open(snakemake.output[0], "a") as f:

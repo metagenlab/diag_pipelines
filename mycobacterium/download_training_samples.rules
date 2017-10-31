@@ -1,71 +1,46 @@
-from snakemake.utils import report
-import re
 import os
-import pandas
+import mysql.connector
+from snakemake.utils import report
 
 shell.prefix("set -euo pipefail;") 
 
-include: "../assembly/assembly.rules"
+cnx = mysql.connector.connect(option_files="/home/sacha/.my.cnf", option_groups="myco")
+cnx.get_warnings = True
+cursor = cnx.cursor()
+cursor.execute("SELECT * FROM sras;")
+samples={}
+for sample, sra in cursor.fetchall():
+    samples.setdefault(sample, []).append(sra)
+cnx.commit()
+cnx.close()
 
-samples = pandas.read_csv(config["samples"], index_col=0, delimiter="\t")
+include: "assess_resistance.rules"
 
-rule create_dbs:
-    conda:
-        "env/biopython-mysql.yaml"
-    input:
-        "/home/sacha/.my.cnf"
-    output:
-        "logs/db_mysql.txt"
-    script:
-        "scripts/create_db.py"
-
-rule download_data_from_niaid:
-    output:
-        "cases.html",
-        "patient_data.txt",
-        "logs/download_niaid.txt"
-    shell:
-        """
-        wget -qO- https://data.tbportals.niaid.nih.gov/cases?dstProfile=sensitive%2CMDRnonXDR%2CpolyDR%2CmonoDR%2CXDR\&sequenced=True\&_take=10000 > {output[0]}
-        grep "href='/patient/.*case/details/.*" {output[0]} | sed "s/.*'\//https:\/\/data.tbportals.niaid.nih.gov\//" | sed "s/'//g" > {output[1]}
-        wget -N -i patient_data.txt -P patient_html/ -o {output[2]}
-        """
-        
-rule parse_and_load_html_files_from_niaid:
-    conda:
-        "env/biopython-mysql.yaml"
-    input:
-        "logs/download_niaid.txt",
-        "/home/sacha/.my.cnf"
-    params:
-        folder="patient_html/"
-    output:
-        "logs/parsing_niaid.txt"
-    script:
-        "scripts/parse_html.py"
+extension= {}
+for i in samples.keys():
+    extension[i] = ["R1.fastq", "R2.fastq"]
 
 rule get_sra:
     conda:
         "env/sra-tools.yaml"
     output:
-        temp("reads/raw/{sample}_R1_001.fastq"),
-        temp("reads/raw/{sample}_R2_001.fastq")
+        temp("reads/raw/{sample}_R1.fastq"),
+        temp("reads/raw/{sample}_R2.fastq")
     params:
-        sra = lambda wildcards: samples.loc[wildcards.sample, "Sequence_Read_Archive"] if len(samples.loc[wildcards.sample, "Sequence_Read_Archive"].split(","))==1 else samples.loc[wildcards.sample, "Sequence_Read_Archive"].split(",")[0]
+        sra = lambda wildcards: samples[str(wildcards.sample)][0]
     shell:
         """
         fastq-dump --split-files --outdir reads/raw/ {params.sra}
-        mv reads/raw/{params.sra}_1.fastq reads/raw/{wildcards.sample}_R1_001.fastq 
-        mv reads/raw/{params.sra}_2.fastq reads/raw/{wildcards.sample}_R2_001.fastq 
+        mv reads/raw/{params.sra}_1.fastq reads/raw/{wildcards.sample}_R1.fastq 
+        mv reads/raw/{params.sra}_2.fastq reads/raw/{wildcards.sample}_R2.fastq 
         """
-
-rule report:
+        
+rule all:
     input:
-        rgis=expand("logs/{sample}/rgi_mysql.txt", sample=list(samples.index.values)),
-        locals=expand("logs/{sample}/local_mysql.txt", sample=list(samples.index.values))
+        expand("logs/{sample}/local_mysql.txt", sample=samples.keys())
     output:
-        "report.html"
-    run:
-        report("""
-        Report of the comparative genomics pipeline 
-        """, output[0])
+        "logs/final.txt"
+    shell:
+        """
+        echo "all good" > {output}
+        """
