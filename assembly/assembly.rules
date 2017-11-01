@@ -29,7 +29,7 @@ rule trimmomatic_SE:
         "{sample}/logs/trimmomatic.log"
     shell:
         """
-        trimmomatic SE {input[0]} {output[0]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} {log}
+        trimmomatic SE {input[0]} {output[0]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} > {log}
         """
 
 rule trimmomatic_PE:
@@ -51,7 +51,7 @@ rule trimmomatic_PE:
         "{sample}/logs/trimmomatic.log"
     shell:
         """
-        trimmomatic PE {input[0]} ${{second_file}} {output[0]} {output[1]} {output[2]} {output[3]}  ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} {log}
+        trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} > {log}
         """        
 
 rule identification:
@@ -70,14 +70,6 @@ rule identification:
         kraken --paired {input[0]} {input[1]} | kraken-report | awk '$4=="S"' | sort -r | head -n 5 | cut -f1,6 | sed "s/^ *//" | sed "s/  \+/\\t/g" > {output[0]}
         """
         
-rule virulence_factor_search:
-    input:
-        "{sample}/annotation/{sample}.faa"
-    output:
-        "{sample}/virulence/"
-    shell:
-        ""
-
 rule fastqc:
     conda:
         "env/fastqc.yaml"
@@ -141,10 +133,14 @@ rule spades_paired:
         "{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
         "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"
     output:
-        "{sample}/assembly/spades/spades.log",
         "{sample}/assembly/spades/contigs.fasta"
+    log:
+        "{sample}/logs/spades.log"
     shell:
-        "spades.py --only-assembler -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})"
+        """
+        spades.py --only-assembler -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})
+        mv {wildcards.sample}/assembly/spades/spades.log {log}
+        """
 
 rule spades_single:
     conda:
