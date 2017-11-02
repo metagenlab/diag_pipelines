@@ -17,7 +17,6 @@ rule get_cdc1551_genome:
         esearch -db assembly -query "CDC1551" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if AssemblyStatus -equals "Complete Genome" -element FtpPath_RefSeq | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" | xargs wget -qO- | gzip -d > {output[0]}
         """
 
-
 rule get_h37rv_genome:
     conda:
         "env/entrez-direct.yaml"
@@ -110,6 +109,19 @@ rule variant_calling:
     shell:
         "bcftools mpileup -Ou -f {input[1]} {input[0]} | bcftools call --ploidy 1 -vm > {output[0]}"
 
+
+rule snippy_to_reference_paired:
+    input:
+        "reads/raw/{sample}_R1.fastq",
+        "reads/raw/{sample}_R2.fastq",
+        "reference/{dataset}.gbk"
+    output:
+        "{sample}/mapping/snippy/{dataset}/snps.vcf"
+    shell:
+        "/home/sacha/Téléchargements/snippy/bin/snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]}"
+        
+
+        
 rule rgi:
     conda:
         "env/rgi.yaml"
@@ -127,7 +139,7 @@ rule extract_rgi_res:
         "{sample}/resistance/rgi.json",
         ancient("/home/sacha/.my.cnf")
     output:
-        "logs/{sample}/rgi_mysql.txt"
+        "{sample}/logs/rgi_mysql.txt"
     script:
         "scripts/parse_rgi_json.py"
 
@@ -139,6 +151,6 @@ rule call_protein_variants_from_vcf:
         ancient("reference/resistance.fna"),
         ancient("/home/sacha/.my.cnf")
     output:
-        "logs/{sample}/local_mysql.txt"
+        "{sample}/logs/local_mysql.txt"
     script:
         "scripts/call_protein_variants.py"
