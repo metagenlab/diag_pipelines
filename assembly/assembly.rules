@@ -103,9 +103,15 @@ rule error_correction_spades_paired:
         "{sample}/reads/trimmed/R2_paired.fastq"
     output:
         temp("{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz"),
-        temp("{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz")
+        temp("{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
+        temp("{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz")
+    log:
+        "{sample}/logs/spades_read_correction.txt"
     shell:
-         "spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]}))"
+         """
+         spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]}))
+         mv {wildcards.sample}/reads/spades.log {log}
+         """
 
 
 rule error_correction_spades_single:
@@ -131,14 +137,15 @@ rule spades_paired:
         "env/spades.yaml"
     input:
         "{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
-        "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"
+        "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
+        "{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz"
     output:
         "{sample}/assembly/spades/contigs.fasta"
     log:
-        "{sample}/logs/spades.log"
+        "{sample}/logs/spades_assembly.txt"
     shell:
         """
-        spades.py --only-assembler -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})
+        spades.py --only-assembler -1 {input[0]} -2 {input[1]} -s {input[2]} -o $( dirname {output[0]})
         mv {wildcards.sample}/assembly/spades/spades.log {log}
         """
 
