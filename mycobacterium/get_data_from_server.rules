@@ -1,0 +1,54 @@
+import csv
+import re
+
+include : "assess_resistance.rules"
+include : "mapping_and_phylogeny.rules"
+    
+def get_extensions(directory):
+    result = []
+    extension= {}
+    for fname in os.listdir(directory):
+        if fname.endswith("fastq.gz") or fname.endswith("fq.gz"):
+            ext = re.search(r'_R(1|2)(\.|_).*', fname)
+            if ext is None:
+                ext = re.search(r'f(?:ast)?q\.gz', fname)
+                samp = re.search(r'^([^\.]*)\.*', fname)
+                extension[re.sub("\.$", "", samp.group(0))]=[ext.group(0)]
+            else:
+                samp = re.sub(r'_R(1|2)$', '', re.search(r'.*_R(1|2)', fname).group(0))
+                extension.setdefault(samp, []).append(re.sub("^_", "", ext.group(0)))
+    return(extension)
+
+extension=get_extensions("links/")
+
+rule copy_fastq_paired:
+    input:
+        lambda wildcards: expand("links/"+wildcards.sample+"_{ext}", ext=extension[wildcards.sample])
+    output:
+        temp("reads/raw/{sample}_R1.fastq"),
+        temp("reads/raw/{sample}_R2.fastq")
+    shell:
+        """
+        gzip -f -c -d {input[0]} > {output[0]}
+        gzip -f -c -d {input[1]} > {output[1]}
+        """
+        
+rule copy_fastq_single:
+    input:
+        lambda wildcards: "links/"+wildcards.sample+"."+extension[wildcards.sample][0]
+    output:
+        temp("reads/raw/{sample}.fastq")
+    shell:
+        """
+        gzip -f -c -d {input[0]} > {output[0]}
+        """
+    
+rule all:
+    input:
+        expand("{sample}/logs/local_mysql.txt", sample=extension.keys())
+    output:
+        "logs/final.txt"
+    shell:
+        """
+        echo "all good" > {output}
+        """
