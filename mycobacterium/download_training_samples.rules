@@ -34,10 +34,10 @@ rule get_sra:
         mv reads/raw/{params.sra}_1.fastq reads/raw/{wildcards.sample}_R1.fastq 
         mv reads/raw/{params.sra}_2.fastq reads/raw/{wildcards.sample}_R2.fastq 
         """
-        
+
 rule all:
     input:
-        expand("logs/{sample}/local_mysql.txt", sample=samples.keys())
+        expand("strains/{sample}/logs/local_mysql.txt", sample=samples.keys())
     output:
         "logs/final.txt"
     shell:

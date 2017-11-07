@@ -45,7 +45,7 @@ rule copy_fastq_single:
     
 rule all:
     input:
-        expand("{sample}/logs/local_mysql.txt", sample=extension.keys())
+        expand("strains/{sample}/mapping/snippy/h37rv/snps.vcf", sample=extension.keys())
     output:
         "logs/final.txt"
     shell:
