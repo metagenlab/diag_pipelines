@@ -119,7 +119,8 @@ rule snippy_to_reference_paired:
         "reads/raw/{sample}_R2.fastq",
         "reference/{dataset}/genome.gbk"
     output:
-        "strains/{sample}/mapping/snippy/{dataset}/snps.vcf"
+        "strains/{sample}/mapping/snippy/{dataset}/snps.vcf",
+        temp("strains/{sample}/mapping/snippy/{dataset}/snps.bam")
     shell:
         "snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]}"
 

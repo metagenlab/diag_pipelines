@@ -24,7 +24,7 @@ rule trimmomatic_SE:
         minqual = config["minimum_quality_base"],
         croplength = config["crop_at_read_beginning"]
     output:
-        temp("{sample}/reads/trimmed/single.fastq"),
+        temp("strains/{sample}/reads/trimmed/single.fastq"),
     log:
         "strains/{sample}/logs/trimmomatic.log"
     shell:
@@ -43,10 +43,10 @@ rule trimmomatic_PE:
         minqual = config["minimum_quality_base"],
         croplength = config["crop_at_read_beginning"]
     output:
-        temp("{sample}/reads/trimmed/R1_paired.fastq"),
-        temp("{sample}/reads/trimmed/R1_unpaired.fastq"),
-        temp("{sample}/reads/trimmed/R2_paired.fastq"),
-        temp("{sample}/reads/trimmed/R2_unpaired.fastq"),
+        temp("strains/{sample}/reads/trimmed/R1_paired.fastq"),
+        temp("strains/{sample}/reads/trimmed/R1_unpaired.fastq"),
+        temp("strains/{sample}/reads/trimmed/R2_paired.fastq"),
+        temp("strains/{sample}/reads/trimmed/R2_unpaired.fastq"),
     log:
         "strains/{sample}/logs/trimmomatic.log"
     shell:
@@ -113,7 +113,6 @@ rule error_correction_spades_paired:
          mv {wildcards.sample}/reads/spades.log {log}
          """
 
-
 rule error_correction_spades_single:
     conda:
         "env/spades.yaml"
@@ -123,7 +122,8 @@ rule error_correction_spades_single:
         temp("strains/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz"),
     shell:
          "spades.py -s {input[0]} --only-error-correction -o $( dirname $(dirname {output[0]}))"
-        
+
+         
 rule check_low_coverage_contigs:
     input:
         "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
@@ -131,6 +131,7 @@ rule check_low_coverage_contigs:
         "strains/{sample}/blast_check/contig_low_kmer_coverage.txt"
     shell:
         "blastn -query {input[0]} -db dub -remote"
+
         
 rule spades_paired:
     conda:
@@ -175,7 +176,7 @@ rule quast:
 
 rule extract_contigs_500bp:
     input:
-        "strains/{sample}/assembly/spades_contigs.fasta"
+        "strains/{sample}/assembly/spades/contigs.fasta"
     output:
         "strains/{sample}/assembly/spades/contigs_500bp.fasta"
     shell:
@@ -290,21 +291,21 @@ def extract_info_prokka(filename):
 
 rule report_assembly:
     input:
-        trim = "{sample}/logs/trimmomatic.log",
-        fastqc1 = "{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-        fastqc2 = "{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt",
-        fastqc1html = "{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
-        fastqc2html = "{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html",
-        spades = "{sample}/assembly/spades/spades.log",
-        low_cov_names = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
-        low_cov = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
-        quast = "{sample}/assembly/spades/quast/report.txt",
-        prokka = "{sample}/annotation/{sample}.txt",
-        cov_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
-        GC_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
-        kraken = "{sample}/logs/kraken.log"
+        trim = "strains/{sample}/logs/trimmomatic.log",
+        fastqc1 = "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        fastqc2 = "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt",
+        fastqc1html = "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
+        fastqc2html = "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html",
+        spades = "strains/{sample}/assembly/spades/spades.log",
+        low_cov_names = "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
+        low_cov = "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
+        quast = "strains/{sample}/assembly/spades/quast/report.txt",
+        prokka = "strains/{sample}/annotation/{sample}.txt",
+        cov_plot = "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
+        GC_plot = "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
+        kraken = "strains/{sample}/logs/kraken.log"
     output:
-        "{sample}/report.html"
+        "strains/{sample}/report.html"
     run:
         trim_result = extract_report_trimmomatic(input["trim"])
         trim_result_percent = [ x / float(trim_result[0]) for x in trim_result ]
