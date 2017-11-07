@@ -71,7 +71,7 @@ rule fetch_refSeq_id_and_filtering:
 
 rule link_genomes_to_ani_folder:
     input:
-        "{sample}/annotation/{sample}.fsa"
+        "strains/{sample}/annotation/{sample}.fsa"
     output:
         "ANI/{sample}.fna"
     shell:
@@ -79,7 +79,7 @@ rule link_genomes_to_ani_folder:
 
 rule link_proteomes_to_orthofinder_folder:
     input:
-        "{sample}/annotation/{sample}.faa"
+        "strains/{sample}/annotation/{sample}.faa"
     output:
         "local_data/proteomes/to_be_added/{sample}.faa"
     shell:
@@ -266,7 +266,7 @@ def extract_orthofinder_results(filename):
 
 rule report_comparative:
     input:
-        expand("{sample}/report.html", sample=samples),
+        expand("strains/{sample}/report.html", sample=samples),
         species="refSeq/nb_genomes_per_species.txt",
         genomes="refSeq/genome_addresses.txt",
         ortho="orthologs/current_results/log.txt",

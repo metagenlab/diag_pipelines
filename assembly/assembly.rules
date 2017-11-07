@@ -14,24 +14,45 @@ rule mlst:
     shell:
         "mlst {input[0]} > {output[0]}"
 
-rule trimmomatic:
+rule trimmomatic_SE:
     conda:
         "env/trim.yaml"
     input:
-        "reads/raw/{sample}_R1_001.fastq",
-        "reads/raw/{sample}_R2_001.fastq"
+        "reads/raw/{sample}.fastq",
     params:
         minlength = config["minimum_read_length"],
         minqual = config["minimum_quality_base"],
         croplength = config["crop_at_read_beginning"]
     output:
-        "{sample}/reads/trimmed/R1_paired.fastq",
-        "{sample}/reads/trimmed/R1_unpaired.fastq",
-        "{sample}/reads/trimmed/R2_paired.fastq",
-        "{sample}/reads/trimmed/R2_unpaired.fastq",
-        "{sample}/logs/trimmomatic.log"
+        temp("strains/{sample}/reads/trimmed/single.fastq"),
+    log:
+        "strains/{sample}/logs/trimmomatic.log"
     shell:
-        "trimmomatic PE {input} {output[0]} {output[1]} {output[2]} {output[3]}  ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/NexteraPE-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {output[4]}"
+        """
+        trimmomatic SE {input[0]} {output[0]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {log}
+        """
+
+rule trimmomatic_PE:
+    conda:
+        "env/trim.yaml"
+    input:
+        "reads/raw/{sample}_R1.fastq",
+        "reads/raw/{sample}_R2.fastq"
+    params:
+        minlength = config["minimum_read_length"],
+        minqual = config["minimum_quality_base"],
+        croplength = config["crop_at_read_beginning"]
+    output:
+        temp("strains/{sample}/reads/trimmed/R1_paired.fastq"),
+        temp("strains/{sample}/reads/trimmed/R1_unpaired.fastq"),
+        temp("strains/{sample}/reads/trimmed/R2_paired.fastq"),
+        temp("strains/{sample}/reads/trimmed/R2_unpaired.fastq"),
+    log:
+        "strains/{sample}/logs/trimmomatic.log"
+    shell:
+        """
+        trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {log}
+        """        
 
 rule identification:
     conda:
@@ -39,105 +60,133 @@ rule identification:
     params:
         kraken_db=config["kraken_path"]
     input:
-        "{sample}/reads/trimmed/R1_paired.fastq",
-        "{sample}/reads/trimmed/R2_paired.fastq"
+        "strains/{sample}/reads/trimmed/R1_paired.fastq",
+        "strains/{sample}/reads/trimmed/R2_paired.fastq"
     output:
-        "{sample}/logs/kraken.log"
+        "strains/{sample}/logs/kraken.log"
     shell:
         """
         export KRAKEN_DEFAULT_DB="{params.kraken_db}"
-        kraken --paired {input[0]} {input[1]} | kraken-report > {output[0]}
-         """
+        kraken --paired {input[0]} {input[1]} | kraken-report | awk '$4=="S"' | sort -r | head -n 5 | cut -f1,6 | sed "s/^ *//" | sed "s/  \+/\\t/g" > {output[0]}
+        """
         
-rule virulence_factor_search:
-    input:
-        "{sample}/annotation/{sample}.faa"
-    output:
-        "{sample}/virulence/"
-    shell:
-        ""
-
 rule fastqc:
     conda:
         "env/fastqc.yaml"
     input:
-        "{sample}/reads/trimmed/R1_paired.fastq",
-        "{sample}/reads/trimmed/R2_paired.fastq"
+        "strains/{sample}/reads/trimmed/R1_paired.fastq",
+        "strains/{sample}/reads/trimmed/R2_paired.fastq"
     output:
-        "{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
-        "{sample}/reads/trimmed/fastqc/R2_paired_fastqc.zip",
-        "{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
-        "{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html"
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
+        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.zip",
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
+        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html"
     shell:
         "fastqc {input} -o $( dirname {output[0]})"
     
 rule unzip_fastqc:
     input:
-        "{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
-        "{sample}/reads/trimmed/fastqc/R2_paired_fastqc.zip"
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
+        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.zip"
     output:
-        "{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-        "{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt"
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt"
     shell:
         "unzip -D -u {input[0]} -d $( dirname {input[0]}) && unzip -D -u {input[1]} -d $( dirname {input[0]}) && touch {output[0]} &&  touch {output[1]}"
 
         
-rule error_correction_spades:
+rule error_correction_spades_paired:
     conda:
         "env/spades.yaml"
     input:
-        "{sample}/reads/trimmed/R1_paired.fastq",
-        "{sample}/reads/trimmed/R2_paired.fastq"
+        "strains/{sample}/reads/trimmed/R1_paired.fastq",
+        "strains/{sample}/reads/trimmed/R2_paired.fastq"
     output:
-        "{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
-        "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"
+        temp("strains/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz"),
+        temp("strains/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
+        temp("strains/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz")
+    log:
+        "strains/{sample}/logs/spades_read_correction.txt"
     shell:
-         "spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]}))"
+         """
+         spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]}))
+         mv {wildcards.sample}/reads/spades.log {log}
+         """
+
+
+rule error_correction_spades_single:
+    conda:
+        "env/spades.yaml"
+    input:
+        "strains/{sample}/reads/trimmed/single.fastq",
+    output:
+        temp("strains/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz"),
+    shell:
+         "spades.py -s {input[0]} --only-error-correction -o $( dirname $(dirname {output[0]}))"
         
 rule check_low_coverage_contigs:
     input:
-        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
     output:
-        "{sample}/blast_check/contig_low_kmer_coverage.txt"
+        "strains/{sample}/blast_check/contig_low_kmer_coverage.txt"
     shell:
         "blastn -query {input[0]} -db dub -remote"
         
-rule spades:
+rule spades_paired:
     conda:
         "env/spades.yaml"
     input:
-        "{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
-        "{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"
+        "strains/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
+        "strains/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
+        "strains/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz"
     output:
-        "{sample}/assembly/spades/spades.log",
-        "{sample}/assembly/spades/contigs.fasta"
+        "strains/{sample}/assembly/spades/contigs.fasta"
+    log:
+        "strains/{sample}/logs/spades_assembly.txt"
     shell:
-        "spades.py --only-assembler -1 {input[0]} -2 {input[1]} -o $( dirname {output[0]})"
+        """
+        spades.py --only-assembler -1 {input[0]} -2 {input[1]} -s {input[2]} -o $( dirname {output[0]})
+        mv {wildcards.sample}/assembly/spades/spades.log {log}
+        mv strains/{wildcards.sample}/assembly/spades/contigs.fasta strains/{wildcards.sample}/assembly/
+        rm -rf strains/{wildcards.sample}/assembly/spades/*
+        mv strains/{wildcards.sample}/assembly/contigs.fasta strains/{wildcards.sample}/assembly/spades/
+        """
 
+rule spades_single:
+    conda:
+        "env/spades.yaml"
+    input:
+        "strains/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz",
+    output:
+        "strains/{sample}/assembly/spades/spades.log",
+        "strains/{sample}/assembly/spades/contigs.fasta"
+    shell:
+        "spades.py --only-assembler -s {input[0]} -o $( dirname {output[0]})"
+        
 rule quast:
     conda:
         "env/quast.yaml"
     input:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
     output:
-        "{sample}/assembly/spades/quast/report.txt"
+        "strains/{sample}/assembly/spades/quast/report.txt"
     shell:
         "quast.py {input} -o $( dirname {output})"
 
 rule extract_contigs_500bp:
     input:
-        "{sample}/assembly/spades/contigs.fasta"
+        "strains/{sample}/assembly/spades/contigs.fasta"
     output:
-        "{sample}/assembly/spades/contigs_500bp.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp.fasta"
     shell:
         "awk '/^>/{{print (NR==1)?$0: \"\\n\" $0;next}} {{printf \"%s\", $0}}END{{print \"\"}}' {input} |  awk \'!/^>/ {{ next }} {{ getline seq }} length(seq) >= 500 {{ print $0 \"\\n\" seq }}\'  > {output}"  
 
 
 rule rename_contigs:
     input:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
     output:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
     shell:
         "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig00\\1/\" {input} > {output}"
         
@@ -145,39 +194,39 @@ rule prokka:
     conda:
         "env/prokka.yaml"
     input:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
     output:
-        "{sample}/annotation/{sample}.log",
-        "{sample}/annotation/{sample}.gff",
-        "{sample}/annotation/{sample}.faa",
-        "{sample}/annotation/{sample}.fsa",
-        "{sample}/annotation/{sample}.txt"
+        "strains/{sample}/annotation/{sample}.log",
+        "strains/{sample}/annotation/{sample}.gff",
+        "strains/{sample}/annotation/{sample}.faa",
+        "strains/{sample}/annotation/{sample}.fsa",
+        "strains/{sample}/annotation/{sample}.txt"
     shell:
-        "prokka --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample}"
+        "prokka --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample}"
 
 
 rule check_coverage_assembly:
     input:
-        "{sample}/assembly/spades/contigs_500bp.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp.fasta"
     output:
-        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt"
+        "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
+        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt"
     shell:
         "grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 < 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$//\" | sed \"s/^>//\" > {output[0]} && grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 > 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$/_/\" | sed \"s/^>//\"  > {output[1]} "
 
 
 rule filter_contigs_on_coverage:
     input:
-        "{sample}/assembly/spades/contigs_500bp.fasta",
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt",
-        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt"
+        "strains/{sample}/assembly/spades/contigs_500bp.fasta",
+        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt",
+        "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt"
     output:
-        "{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta",
-        "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta",
+        "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
     shell:
         """
         grep -A 1 -f {input[1]} {input[0]} | sed '/^--$/d' > {output[0]}
-        if [ -f {input[2]} ]
+        if [ -s {input[2]} ]
         then 
             grep -A 1 -f {input[2]} {input[0]} | sed '/^--$/d' > {output[1]}
         else
@@ -189,10 +238,10 @@ rule convert_quast_images:
     conda:
         "env/imagemagick.yaml"
     input:
-        "{sample}/assembly/spades/quast/report.txt"
+        "strains/{sample}/assembly/spades/quast/report.txt"
     output:
-        "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
-        "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png"
+        "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
+        "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png"
     shell:
         """
         convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png
@@ -200,39 +249,6 @@ rule convert_quast_images:
         """
         
     
-rule gff_to_embl:
-    conda:
-        "env/gff3toembl.yaml"
-    input:
-        "{sample}/annotation/{sample}.gff",
-        "{sample}.yaml"
-    output:
-        "{sample}/ena_submission/flatfile.embl"
-    params:
-        publ=config["publication"],
-        PRJ=config["EBI_project_number"],
-        aut="'"+" ".join(config["authors"])+"'",
-        tt=config["translation_table"],
-    shell:
-        """
-        name=$(grep "taxon_name:" {input[1]} | cut -f2 -d':')
-        desc=$(grep "description_of_the_genome_sequence:" {input[1]} | cut -f2 -d':')
-        id=$(grep "taxon_id_number:" {input[1]} | cut -f2 -d':')
-        pre=$(grep "prefix_locus_tag:" {input[1]} | cut -f2 -d':')
-        gff3_to_embl --translation_table {params.tt} --locus_tag ${{pre}} --authors {params.aut} --classification PROK --publication {params.publ} --output_filename {output} "${{name}}" "${{id}}" "{params.PRJ}" "${{desc}}" {input[0]}
-        """
-
-rule validate_gff_for_ena_submission:
-    conda:
-        "env/validator_ena.yaml"
-    input:
-        "{sample}/ena_submission/flatfile.embl"
-    output:
-        "{sample}/ena_submission/VAL_SUMMARY.txt",
-        "{sample}/ena_submission/VAL_ERROR.txt"
-        
-    shell:
-        "cd $( dirname {input}) && embl-api-validator $( basename {input}) || true "
         
 
 def extract_report(filename, pattern):
@@ -274,23 +290,21 @@ def extract_info_prokka(filename):
 
 rule report_assembly:
     input:
-        trim = "{sample}/logs/trimmomatic.log",
-        fastqc1 = "{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-        fastqc2 = "{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt",
-        fastqc1html = "{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
-        fastqc2html = "{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html",
-        spades = "{sample}/assembly/spades/spades.log",
-        low_cov_names = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
-        low_cov = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
-        quast = "{sample}/assembly/spades/quast/report.txt",
-        prokka = "{sample}/annotation/{sample}.txt",
-        ena_validator_summary = "{sample}/ena_submission/VAL_SUMMARY.txt",
-        ena_validator_error = "{sample}/ena_submission/VAL_ERROR.txt",
-        cov_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
-        GC_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
-        kraken = "{sample}/logs/kraken.log"
+        trim = "strains/{sample}/logs/trimmomatic.log",
+        fastqc1 = "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        fastqc2 = "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt",
+        fastqc1html = "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
+        fastqc2html = "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html",
+        spades = "strains/{sample}/assembly/spades/spades.log",
+        low_cov_names = "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
+        low_cov = "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
+        quast = "strains/{sample}/assembly/spades/quast/report.txt",
+        prokka = "strains/{sample}/annotation/{sample}.txt",
+        cov_plot = "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
+        GC_plot = "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
+        kraken = "strains/{sample}/logs/kraken.log"
     output:
-        "{sample}/report.html"
+        "strains/{sample}/report.html"
     run:
         trim_result = extract_report_trimmomatic(input["trim"])
         trim_result_percent = [ x / float(trim_result[0]) for x in trim_result ]
@@ -321,8 +335,6 @@ rule report_assembly:
         rRNA = prokka_annot["rRNA"]
         CDS = prokka_annot["CDS"]
         tRNA = prokka_annot["tRNA"]
-        enavalidator_warn = format_table(extract_report(input["ena_validator_summary"], warn))
-        enavalidator_err = format_table(extract_report(input["ena_validator_summary"], error))
         cov_plot=input["cov_plot"]
         GC_plot = input["GC_plot"]
         report("""
@@ -393,11 +405,4 @@ rule report_assembly:
         Number of tRNA genes              {tRNA}
         ================================= ==============================
         
-        The European Nucleotide Archive (ENA) submission file was prepared and checked using their validator. The reports of the validator were::
-
-        {enavalidator_warn}
-        {enavalidator_err}
-
-        Check files ena_validator_summary_ and ena_validator_error_
- 
         """, output[0], **input)
