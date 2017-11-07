@@ -113,7 +113,6 @@ rule error_correction_spades_paired:
          mv {wildcards.sample}/reads/spades.log {log}
          """
 
-
 rule error_correction_spades_single:
     conda:
         "env/spades.yaml"
@@ -123,7 +122,8 @@ rule error_correction_spades_single:
         temp("strains/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz"),
     shell:
          "spades.py -s {input[0]} --only-error-correction -o $( dirname $(dirname {output[0]}))"
-        
+
+         
 rule check_low_coverage_contigs:
     input:
         "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
@@ -131,6 +131,7 @@ rule check_low_coverage_contigs:
         "strains/{sample}/blast_check/contig_low_kmer_coverage.txt"
     shell:
         "blastn -query {input[0]} -db dub -remote"
+
         
 rule spades_paired:
     conda:
