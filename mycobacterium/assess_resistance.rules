@@ -181,13 +181,13 @@ rule annotate_reference:
         "snpEff build -c {output[0]} -dataDir $(dirname {output[0]}) -genbank {input[0]}"
 
 
-rule snippy_core:
-    conda:
-        "env/snippy.yaml"
-    input:
-        expand("strains/{sample}/mapping/snippy/{dataset}/", sample=extension.keys())
-    output:
-        ""
-    shell:
-        "snippy-core --prefix $(dirname {output[0]}) {input}"
+#rule snippy_core:
+  #  conda:
+  #      "env/snippy.yaml"
+ #   input:
+#        expand("strains/{sample}/mapping/snippy/{dataset}/", sample=extension.keys())
+ #   output:
+  #      ""
+   # shell:
+    #    "snippy-core --prefix $(dirname {output[0]}) {input}"
         
