@@ -94,8 +94,8 @@ rule get_resistance_genes:
     input:
         "reference/h37rv/genome.gbk"
     output:
-        "reference/resistance.fna",
-        "reference/resistance.faa"
+        "reference/resistance/genome.fna",
+        "reference/resistance/genome.faa"
     script:
         "scripts/extract_resistance_genes_from_reference.py"
 
@@ -136,6 +136,8 @@ rule snippy_to_reference_single:
     shell:
         "snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[1]} --se {input[0]}"
 
+
+        
         
 rule rgi:
     conda:
@@ -181,13 +183,4 @@ rule annotate_reference:
         "snpEff build -c {output[0]} -dataDir $(dirname {output[0]}) -genbank {input[0]}"
 
 
-#rule snippy_core:
-  #  conda:
-  #      "env/snippy.yaml"
- #   input:
-#        expand("strains/{sample}/mapping/snippy/{dataset}/", sample=extension.keys())
- #   output:
-  #      ""
-   # shell:
-    #    "snippy-core --prefix $(dirname {output[0]}) {input}"
         
