@@ -1,29 +1,14 @@
 import csv
 import re
 
+include : "../assembly/assembly.rules"
 include : "assess_resistance.rules"
-include : "mapping_and_phylogeny.rules"
-    
-def get_extensions(directory):
-    result = []
-    extension= {}
-    for fname in os.listdir(directory):
-        if fname.endswith("fastq.gz") or fname.endswith("fq.gz"):
-            ext = re.search(r'_R(1|2)(\.|_).*', fname)
-            if ext is None:
-                ext = re.search(r'f(?:ast)?q\.gz', fname)
-                samp = re.search(r'^([^\.]*)\.*', fname)
-                extension[re.sub("\.$", "", samp.group(0))]=[ext.group(0)]
-            else:
-                samp = re.sub(r'_R(1|2)$', '', re.search(r'.*_R(1|2)', fname).group(0))
-                extension.setdefault(samp, []).append(re.sub("^_", "", ext.group(0)))
-    return(extension)
 
-extension=get_extensions("links/")
 
 rule copy_fastq_paired:
     input:
-        lambda wildcards: expand("links/"+wildcards.sample+"_{ext}", ext=extension[wildcards.sample])
+        lambda wildcards: "links/paired/"+wildcards.sample+"_"+extension[wildcards.sample]["R1"],
+        lambda wildcards: "links/paired/"+wildcards.sample+"_"+extension[wildcards.sample]["R2"]
     output:
         temp("reads/raw/{sample}_R1.fastq"),
         temp("reads/raw/{sample}_R2.fastq")
@@ -35,9 +20,9 @@ rule copy_fastq_paired:
         
 rule copy_fastq_single:
     input:
-        lambda wildcards: "links/"+wildcards.sample+"."+extension[wildcards.sample][0]
+        lambda wildcards: "links/single/"+wildcards.sample+"."+extension[wildcards.sample]
     output:
-        temp("reads/raw/{sample}.fastq")
+        temp("reads/raw/{sample}_single.fastq")
     shell:
         """
         gzip -f -c -d {input[0]} > {output[0]}
@@ -45,10 +30,9 @@ rule copy_fastq_single:
     
 rule all:
     input:
-        "strains/{sample}/logs/local_mysql.txt",
-        "strains/{sample}/logs/rgi_mysql.txt"
+        "mapping/snippy/{dataset}/core/core.tab"
     output:
-        "logs/{sample}_final.txt"
+        "logs/{dataset}_final.txt"
     shell:
         """
         echo "all good" > {output}

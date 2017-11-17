@@ -5,8 +5,6 @@ import pandas
 
 shell.prefix("set -euo pipefail;")
 
-include: "../assembly/assembly.rules"
-
 rule get_cdc1551_genome:
     conda:
         "env/entrez-direct.yaml"
@@ -31,7 +29,7 @@ rule index_dataset:
     conda:
         "env/bwa.yaml"
     input:
-        ancient("reference/{dataset}/genome.fna")
+        "reference/{dataset}/genome.fna"
     output:
         "reference/{dataset}/genome.fna.bwt"
     shell:
@@ -42,10 +40,10 @@ rule align_to_dataset_paired:
     conda:
         "env/bwa.yaml"
     input:
-        ancient("reference/{dataset}/genome.fna"),
-        ancient("reference/{dataset}/genome.fna.bwt"),
-        ancient("reads/raw/{sample}_R1.fastq"),
-        ancient("reads/raw/{sample}_R2.fastq")
+        "reference/{dataset}/genome.fna",
+        "reference/{dataset}/genome.fna.bwt",
+        "reads/raw/{sample}_R1.fastq",
+        "reads/raw/{sample}_R2.fastq"
     output:
         temp("strains/{sample}/mapping/{dataset}.sam")
     shell:
@@ -103,8 +101,8 @@ rule variant_calling:
     conda:
         "env/bcftools.yaml"
     input:
-        ancient("strains/{sample}/mapping/{dataset}.bam"),
-        ancient("reference/{dataset}/genome.fna")
+        "strains/{sample}/mapping/{dataset}.bam",
+        "reference/{dataset}/genome.fna"
     output:
         "strains/{sample}/{dataset}/variants.vcf"
     shell:
@@ -119,8 +117,8 @@ rule snippy_to_reference_paired:
         "reads/raw/{sample}_R2.fastq",
         "reference/{dataset}/genome.gbk"
     output:
-        "strains/{sample}/mapping/snippy/{dataset}/snps.vcf",
-        temp("strains/{sample}/mapping/snippy/{dataset}/snps.bam")
+        "mapping/snippy/{dataset}/{sample}/snps.vcf",
+        temp("mapping/snippy/{dataset}/{sample}/snps.bam")
     shell:
         "snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]}"
 
@@ -132,12 +130,20 @@ rule snippy_to_reference_single:
         "reads/raw/{sample}.fastq",
         "reference/{dataset}/genome.gbk"
     output:
-        "strains/{sample}/mapping/snippy/{dataset}/snps.vcf"
+        "mapping/snippy/{dataset}/{sample}/snps.vcf",
+        temp("mapping/snippy/{dataset}/{sample}/snps.bam")
     shell:
         "snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[1]} --se {input[0]}"
 
-
-        
+rule snippy_core:
+    conda:
+        "env/snippy.yaml"
+    input:
+        expand("mapping/snippy/{{dataset}}/{sample}/snps.bam", sample=extension.keys())
+    output:
+        "mapping/snippy/{dataset}/core/core.tab"
+    shell:
+        "snippy-core --prefix $(dirname {output[0]}) {input}"
         
 rule rgi:
     conda:
@@ -164,8 +170,8 @@ rule call_protein_variants_from_vcf:
     conda:
         "env/pyvcf.yaml"
     input:
-        ancient("strains/{sample}/resistance/variants.vcf"),
-        ancient("reference/resistance/genome.fna"),
+        "strains/{sample}/resistance/variants.vcf",
+        "reference/resistance/genome.fna",
         ancient("/home/sacha/.my.cnf")
     output:
         "strains/{sample}/logs/local_mysql.txt"

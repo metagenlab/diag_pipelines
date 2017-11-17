@@ -1,5 +1,3 @@
-include: "../assembly/assembly.rules"
-
 rule gbk_to_fasta:
     conda:
         "env/biopython-mysql.yaml"
