@@ -1,8 +1,6 @@
 import re
 from snakemake.utils import report
 
-configfile: "config.yaml"
-
 samples = config["isolates"]
 
 include: "../assembly/assembly.rules"
@@ -69,7 +67,7 @@ rule fetch_refSeq_id_and_filtering:
         awk '$1 < 5' {input} | sed "s/^\s*[0-9]\+//" | sed "s/\[//"  | sed "s/\]//" |  xargs -I{{}} sh -c 'esearch -db assembly -query \"$1\" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq -unless Sub_value -element SpeciesName RefSeq FtpPath_RefSeq | sed "s/GCF_/NA\tGCF_/" >> {output}' -- {{}}
         """
 
-rule link_genomes_to_ani_folder:
+rule link_genome_to_ani_folder:
     input:
         "strains/{sample}/annotation/{sample}.fsa"
     output:
@@ -77,13 +75,15 @@ rule link_genomes_to_ani_folder:
     shell:
         "ln -sr {input} ANI/{wildcards.sample}.fna"
 
-rule link_proteomes_to_orthofinder_folder:
+        
+rule link_proteome_to_orthofinder_folder:
     input:
         "strains/{sample}/annotation/{sample}.faa"
     output:
         "local_data/proteomes/to_be_added/{sample}.faa"
     shell:
         "ln -sr {input} local_data/proteomes/to_be_added/{wildcards.sample}.faa"
+
         
 rule calculate_ani:
     conda:
@@ -259,14 +259,12 @@ def extract_orthofinder_results(filename):
     stats_file = re.findall(stats_file_pattern, open(filename, "r").read())
     folder = re.findall(folder_pattern, open(filename, "r").read())
     return "\n    ".join(open(("/"+"/".join(folder[0].split("/")[1:])+stats_file[0]), "r").read().split("Date")[0].split("\n"))
-        
-
 
 
 
 rule report_comparative:
     input:
-        expand("strains/{sample}/report.html", sample=samples),
+        expand("strains/{sample}/report/multiqc_report.html", sample=samples),
         species="refSeq/nb_genomes_per_species.txt",
         genomes="refSeq/genome_addresses.txt",
         ortho="orthologs/current_results/log.txt",
