@@ -1,0 +1,16 @@
+rule get_reference_or_representative_genome:
+    conda:
+        "env/entrez-direct.yaml"
+    output:
+        "references/{ref}/genome.gbk"
+    shell:
+        """
+        search=$( echo {wildcards.ref} | tr '_' ' ')
+        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq_category -equals "reference genome" -element FtpPath_RefSeq | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" > $(dirname {output[0]})/urls.txt
+        if [[ $( wc -l < $(dirname {output[0]})/urls.txt) -eq 1 ]]; then
+            wget -i $(dirname {output[0]})/urls.txt -qO- | gzip -d > {output[0]}
+        else
+            esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq_category -equals "representative genome" -element FtpPath_RefSeq | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" > $(dirname {output[0]})/urls.txt 
+        fi
+        """
+

@@ -1,0 +1,42 @@
+rule snippy_to_gbk_paired:
+    conda:
+        "env/snippy.yaml"
+    input:
+        "reads/raw/{sample}_R1.fastq",
+        "reads/raw/{sample}_R2.fastq",
+        "references/{ref}/genome.gbk"
+    output:
+        "mapping/snippy/{ref}/{sample}/snps.vcf",
+        temp("mapping/snippy/{ref}/{sample}/snps.bam")
+    shell:
+        """
+        snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]}
+        """
+        
+rule snippy_to_gbk_single:
+    conda:
+        "env/snippy.yaml"
+    input:
+        "reads/raw/{sample}_single.fastq",
+        "references/{ref}/genome.gbk"
+    output:
+        "mapping/snippy/{ref}/{sample}/snps.vcf",
+        temp("mapping/snippy/{ref}/{sample}/snps.bam")
+    shell:
+        """
+        snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[1]} --se {input[0]}
+        """
+
+rule snippy_core:
+    conda:
+        "env/snippy.yaml"
+    input:
+        expand("mapping/snippy/{{ref}}/{sample}/snps.vcf", sample=extension.keys())
+    output:
+        "mapping/snippy/{ref}/core.aln",
+        "alignments/{ref}.fa"
+    shell:
+        """
+        snippy-core --prefix $(dirname {output[0]})/core $(dirname {input})
+        cp {output[0]} {output[1]}
+        """

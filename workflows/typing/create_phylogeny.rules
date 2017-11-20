@@ -1,0 +1,8 @@
+include:
+    "../../mapping/snippy.rules"
+
+include:
+    "../../downloading/fetch_references.rules"
+
+include:
+    "../../phylogeny/raxml.rules"
