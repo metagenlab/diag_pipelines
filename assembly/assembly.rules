@@ -12,23 +12,25 @@ def get_extensions(directory):
                 samp = re.sub("\.$", "", re.search(r'^([^\.]*)\.*', fname).group(0))
                 if samp in extension.keys():
                     if ext.group(0).endswith(".gz"):
-                        extension[samp]=ext.group(0)
+                        extension[samp]=[ext.group(0)]
                 else:
-                    extension[samp]=ext.group(0)
+                    extension[samp]=[ext.group(0)]
             else:
-                read = re.search(r'R(1|2)', fname).group(0).replace("_", "")
+                read = re.compile(re.search(r'_R(1|2)(\.|_)', fname).group(0).replace("_", "").replace(".", ""))
                 samp = re.sub(r'_R(1|2)$', '', re.search(r'.*_R(1|2)', fname).group(0))
-                extension.setdefault(samp, {})
-                if read in extension[samp].keys():
-                    if ext.group(0).endswith(".gz"):
-                        extension[samp][read]=re.sub("^_", "", ext.group(0))
+                extension.setdefault(samp, [])
+                match = list(filter(read.match, extension[samp]))
+                if len(match) == 1:
+                    if match[0].endswith("fastq") or match[0].endswith("fq"):
+                        extension[samp].remove(match[0])
+                        extension[samp].append(re.sub("^_", "", ext.group(0)))
                 else:
-                    extension[samp][read]=re.sub("^_", "", ext.group(0))
+                    extension[samp].append(re.sub("^_", "", ext.group(0)))
+                    
+                    
     return(extension)
 
-extension=get_extensions("links/paired")
-
-extension = { **extension, **get_extensions("links/single") }
+extension=get_extensions("links/")
 
 print(extension)
 

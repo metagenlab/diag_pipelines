@@ -7,8 +7,7 @@ include : "assess_resistance.rules"
 
 rule copy_fastq_paired:
     input:
-        lambda wildcards: "links/paired/"+wildcards.sample+"_"+extension[wildcards.sample]["R1"],
-        lambda wildcards: "links/paired/"+wildcards.sample+"_"+extension[wildcards.sample]["R2"]
+        lambda wildcards: expand("links/"+wildcards.sample+"_{ext}", ext=extension[wildcards.sample])
     output:
         temp("reads/raw/{sample}_R1.fastq"),
         temp("reads/raw/{sample}_R2.fastq")
@@ -20,7 +19,7 @@ rule copy_fastq_paired:
         
 rule copy_fastq_single:
     input:
-        lambda wildcards: "links/single/"+wildcards.sample+"."+extension[wildcards.sample]
+        lambda wildcards: "links/"+wildcards.sample+"."+extension[wildcards.sample][0]
     output:
         temp("reads/raw/{sample}_single.fastq")
     shell:
@@ -30,7 +29,7 @@ rule copy_fastq_single:
     
 rule all:
     input:
-        "mapping/snippy/{dataset}/core/core.tab"
+        "mapping/snippy/{dataset}/core.aln"
     output:
         "logs/{dataset}_final.txt"
     shell:

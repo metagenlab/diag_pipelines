@@ -50,6 +50,7 @@ rule align_to_dataset_paired:
         """
         bwa mem {input[0]} {input[2]} {input[3]} > {output[0]} 
         """
+
         
 rule align_to_dataset_single:
     conda:
@@ -127,7 +128,7 @@ rule snippy_to_reference_single:
     conda:
         "env/snippy.yaml"
     input:
-        "reads/raw/{sample}.fastq",
+        "reads/raw/{sample}_single.fastq",
         "reference/{dataset}/genome.gbk"
     output:
         "mapping/snippy/{dataset}/{sample}/snps.vcf",
@@ -141,9 +142,9 @@ rule snippy_core:
     input:
         expand("mapping/snippy/{{dataset}}/{sample}/snps.bam", sample=extension.keys())
     output:
-        "mapping/snippy/{dataset}/core/core.tab"
+        "mapping/snippy/{dataset}/core.aln"
     shell:
-        "snippy-core --prefix $(dirname {output[0]}) {input}"
+        "snippy-core --prefix $(dirname {output[0]})/core $(dirname {input})"
         
 rule rgi:
     conda:
