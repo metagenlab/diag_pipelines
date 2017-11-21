@@ -1,3 +1,6 @@
+import csv
+import os.path
+
 def get_read_naming_patterns(directory):
     result = []
     extension= {}
@@ -26,7 +29,18 @@ def get_read_naming_patterns(directory):
     return(extension)
 
 
+def get_sample_names_correspondance(filename):
+    corres = {}
+    with open(filename) as file_object:
+        reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+        for row in reader:
+            corres[row[0]] = row[1].replace(" ", "_")
+    return(corres)
+        
 read_naming = get_read_naming_patterns("links/")
+
+if os.path.isfile("sample_names.tsv"):
+    sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
 
 include:
     "../../read_manipulation/get_reads.rules"
@@ -40,6 +54,11 @@ include:
 include:
     "../../phylogeny/raxml.rules"
 
+include:
+    "../../assembly/assembly.rules"
+
+include:
+    "../../typing/mlst.rules"
 
 
 

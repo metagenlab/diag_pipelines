@@ -1,42 +1,3 @@
-import re
-import csv
-
-def get_extensions(directory):
-    result = []
-    extension= {}
-    for fname in os.listdir(directory):
-        if fname.endswith("fastq.gz") or fname.endswith("fq.gz") or fname.endswith("fastq") or fname.endswith("fq"):
-            ext = re.search(r'_R(1|2)(\.|_).*', fname)
-            if ext is None:
-                ext = re.search(r'f(?:ast)?q(?:\.gz)?', fname)
-                samp = re.sub("\.$", "", re.search(r'^([^\.]*)\.*', fname).group(0))
-                if samp in extension.keys():
-                    if ext.group(0).endswith(".gz"):
-                        extension[samp]=[ext.group(0)]
-                else:
-                    extension[samp]=[ext.group(0)]
-            else:
-                read = re.compile(re.search(r'_R(1|2)(\.|_)', fname).group(0).replace("_", "").replace(".", ""))
-                samp = re.sub(r'_R(1|2)$', '', re.search(r'.*_R(1|2)', fname).group(0))
-                extension.setdefault(samp, [])
-                match = list(filter(read.match, extension[samp]))
-                if len(match) == 1:
-                    if match[0].endswith("fastq") or match[0].endswith("fq"):
-                        extension[samp].remove(match[0])
-                        extension[samp].append(re.sub("^_", "", ext.group(0)))
-                else:
-                    extension[samp].append(re.sub("^_", "", ext.group(0)))
-                    
-                    
-    return(extension)
-
-extension=get_extensions("links/")
-
-print(extension)
-
-shell.prefix("set -euo pipefail;") 
-
-
 rule remove_fasta_part_from_gff:
     input:
         "strains/{sample}/annotation/{sample}.gff"
@@ -75,9 +36,6 @@ rule align_single_reads_to_assembled_genome:
         bwa mem {input} | samtools sort -O BAM -o {output} -
         """
 
-
-
-
 rule qualimap_mapping:
     conda:
         "env/qualimap.yaml"
@@ -90,17 +48,6 @@ rule qualimap_mapping:
         """
         qualimap bamqc -bam {input[0]} -gff {input[1]} -outdir $(dirname {output})
         """
-
-
-rule mlst:
-    conda:
-        "env/mlst.yaml"
-    input:
-        "{sample}/annotation/{sample}.fsa"
-    output:
-        "{sample}/mlst/mlst.out"
-    shell:
-        "mlst {input[0]} > {output[0]}"
 
 rule trimmomatic_SE:
     conda:
@@ -142,37 +89,6 @@ rule trimmomatic_PE:
         trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {log}
         """        
 
-rule identification_paired:
-    conda:
-        "env/kraken.yaml"
-    params:
-        kraken_db=config["kraken_path"]
-    input:
-        "strains/{sample}/reads/trimmed/R1_paired.fastq",
-        "strains/{sample}/reads/trimmed/R2_paired.fastq"
-    output:
-        "strains/{sample}/logs/kraken.log"
-    shell:
-        """
-        export KRAKEN_DEFAULT_DB="{params.kraken_db}"
-        kraken --paired {input[0]} {input[1]} | kraken-report > {output[0]}
-        """
-rule identification_single:
-    conda:
-        "env/kraken.yaml"
-    params:
-        kraken_db=config["kraken_path"]
-    input:
-        "strains/{sample}/reads/trimmed/single.fastq",
-    output:
-        "strains/{sample}/logs/kraken.log"
-    shell:
-        """
-        export KRAKEN_DEFAULT_DB="{params.kraken_db}"
-        kraken {input[0]} | kraken-report > {output[0]}
-        """
-
-        
 rule fastqc_single:
     conda:
         "env/fastqc.yaml"
@@ -249,15 +165,6 @@ rule error_correction_spades_single:
          "spades.py -s {input[0]} --only-error-correction -o $( dirname $(dirname {output[0]}))"
 
          
-rule check_low_coverage_contigs:
-    input:
-        "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
-    output:
-        "strains/{sample}/blast_check/contig_low_kmer_coverage.txt"
-    shell:
-        "blastn -query {input[0]} -db dub -remote"
-
-        
 rule spades_paired:
     conda:
         "env/spades.yaml"
@@ -341,27 +248,6 @@ rule check_coverage_assembly:
     shell:
         "grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 < 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$//\" | sed \"s/^>//\" > {output[0]} && grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 > 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$/_/\" | sed \"s/^>//\"  > {output[1]} "
 
-rule abricate_db:
-    conda:
-        "env/abricate.yaml"
-    input:
-        "strains/{sample}/annotation/{sample}.fsa"
-    output:
-        "strains/{sample}/annotation/virulence_resistance/{db}/{sample}.tab"
-    shell:
-        "abricate --db {wildcards.db} {input} > {output}"
-
-
-rule abricate_summary:
-    conda:
-        "env/abricate.yaml"
-    input:
-        "strains/{sample}/annotation/virulence_resistance/{db}/{sample}.tab"
-    output:
-        "strains/{sample}/annotation/virulence_resistance/{db}/{sample}_summary.tab"
-    shell:
-        "abricate --summary {input} > {output}"
-        
 rule filter_contigs_on_coverage:
     input:
         "strains/{sample}/assembly/spades/contigs_500bp.fasta",
@@ -394,61 +280,3 @@ rule convert_quast_images:
         convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png
         convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png
         """
-        
-
-def extract_report(filename, pattern):
-    s=''
-    with open(filename) as text:
-        for i, line in enumerate(text):
-            if pattern.search(line) is not None:
-                s=s+line+"\n"
-    if s.isspace():
-        return "    "
-    return s
-
-def extract_report_quast(filename):
-    with open(filename) as text:
-        l = text.readlines()
-        return "\n".join(l[-9:-1])
-
-def extract_report_trimmomatic(filename):
-    with open(filename) as f:
-        lines = f.read().splitlines()
-        return [int(s) for s in lines[-2].split() if s.isdigit()]
-
-def format_table(string):
-    s = "    "
-    for i in string.split("\n"):
-        if len(i):
-            s = s + "\t".join(i.split("\t")[0:2]) + "\n    " 
-    return(s)
-
-def extract_info_quast(l, index):
-    return [x for x in l[index].split(" ") if x is not ""][-1]
-
-def extract_info_prokka(filename):
-    with open(filename) as f:
-        d = {}
-        for row in csv.reader(f, delimiter=":"):
-            d[row[0]] = row[1]
-        return(d)
-
-rule report_assembly:
-    conda:
-        "env/multiqc.yaml"
-    input:
-        fastqc1 = "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-        fastqc2 = "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt",
-        fastqc1html = "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
-        fastqc2html = "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html",
-        low_cov_names = "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
-        low_cov = "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
-        quast = "strains/{sample}/assembly/spades/quast/report.txt",
-        prokka = "strains/{sample}/annotation/{sample}.txt",
-        cov_plot = "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
-        GC_plot = "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
-        kraken = "strains/{sample}/logs/kraken.log"
-    output:
-        "strains/{sample}/report/multiqc_report.html"
-    shell:
-        "multiqc $(dirname $(dirname {output})) -o $(dirname {output})"

@@ -1,0 +1,12 @@
+rule mlst:
+    conda:
+        "env/mlst.yaml"
+    input:
+        expand("strains/{sample}/annotation/{sample}.fsa", sample=read_naming.keys())
+    output:
+        "typing/mlst/summary.out"
+    shell:
+        """
+        mlst {input[0]} > {output[0]}
+        """
+
