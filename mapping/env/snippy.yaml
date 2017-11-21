@@ -1,0 +1,4 @@
+channels:
+ - bioconda
+dependencies:
+ - snippy = 3.1

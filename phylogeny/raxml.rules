@@ -1,0 +1,40 @@
+rule raxml_on_alignment_to_ref:
+    conda:
+        "env/raxml.yaml"
+    input:
+        "alignments/{ref}.fa"
+    output:
+        "phylogeny/RAxML_bestTree.{ref}"
+    shell:
+        """
+        rm phylogeny/RAxML_*.{wildcards.ref}
+        raxmlHPC -m GTRCAT -n {wildcards.ref} -s {input[0]} -w $(dirname $(readlink -f {output[0]})) -p 123  
+        """
+
+rule raxml_bootstrap:
+    conda:
+        "env/raxml.yaml"
+    input:
+        "alignments/{ref}.fa"
+    output:
+        "phylogeny/RAxML_bootstrap.{ref}_boot"
+    shell:
+        """
+        rm phylogeny/RAxML_*.{wildcards.ref}_boot
+        raxmlHPC -m GTRCAT -n {wildcards.ref}_boot -s {input[0]} -b 123 -w $(dirname $(readlink -f {output[0]})) -N 100 -p 123
+        """
+
+rule convert_phylogeny_to_image:
+    conda:
+        "env/newick-utils.yaml"
+    input:
+        "phylogeny/RAxML_bestTree.{ref}",
+        "phylogeny/RAxML_bootstrap.{ref}_boot"
+    output:
+        "phylogeny/{ref}.svg"
+    shell:
+        """
+        nw_support {input[0]} {input[1]} | nw_reroot - Reference | nw_display -s -b 'opacity:0' -w 800 - > {output[0]}
+        """
+
+        

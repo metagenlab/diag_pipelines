@@ -2,18 +2,30 @@ rule get_reference_or_representative_genome:
     conda:
         "env/entrez-direct.yaml"
     output:
-        "references/{ref}/genome.gbk"
+        "references/{ref}_url.txt"
     shell:
         """
         search=$( echo {wildcards.ref} | tr '_' ' ')
-        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq_category -equals "reference genome" -element FtpPath_RefSeq | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" > $(dirname {output[0]})/urls.txt
+        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq_category -equals "reference genome" -element FtpPath_RefSeq | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" > $(dirname {output[0]})/{ref}_url.txt
         if [[ $( wc -l < $(dirname {output[0]})/urls.txt) -eq 1 ]]; then
             wget -i $(dirname {output[0]})/urls.txt -qO- | gzip -d > {output[0]}
         else
             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -if RefSeq_category -equals "representative genome" -element FtpPath_RefSeq | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" > $(dirname {output[0]})/urls.txt 
-        if [[ $( wc -l < $(dirname {output[0]})/urls.txt -eq 1 ]]; then
+        if [[ $( wc -l < $(dirname {output[0]})/urls.txt) -eq 1 ]]; then
             wget -i $(dirname {output[0]})/urls.txt -qO- | gzip -d > {output[0]}
         fi
         fi
         """
 
+
+
+rule download_genomes_from_url_file:
+    input:
+        "references/{ref}_url.txt"
+    output:
+        "references/{ref}/genome.gbk"
+    shell:
+        """
+        wget -i ${input[0]} -qO- | gzip -d > {output[0]}
+        """
+        
