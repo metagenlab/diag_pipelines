@@ -31,35 +31,41 @@ def get_read_naming_patterns(directory):
 
 def get_sample_names_correspondance(filename):
     corres = {}
-    with open(filename) as file_object:
+    with open(filename) as csvfile:
         reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
-        for row in reader:
-            corres[row[0]] = row[1].replace(" ", "_")
+        for row in [[s.strip() for s in inner] for inner in reader]:
+            cells = list(filter(None, row))
+            corres[cells[0]] = cells[1].replace(" ", "_")
     return(corres)
         
 read_naming = get_read_naming_patterns("links/")
 
-#if os.path.isfile("sample_names.tsv"):
-#    sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
+if os.path.isfile("sample_names.tsv"):
+    sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
+
+
+prefix = "../../rules/"
 
 include:
-    "../../read_manipulation/get_reads.rules"
+    prefix + "read_manipulation/get_reads.rules"
 
 include:
-    "../../downloading/fetch_references.rules"
+    prefix + "downloading/fetch_references.rules"
 
 include:
-    "../../mapping/snippy.rules"
+    prefix + "mapping/snippy.rules"
 
 include:
-    "../../phylogeny/raxml.rules"
+    prefix + "phylogeny/raxml.rules"
 
 include:
-    "../../assembly/assembly.rules"
+    prefix + "assembly/assembly.rules"
 
 include:
-    "../../typing/mlst.rules"
+    prefix + "typing/mlst.rules"
 
+include:
+    prefix + "typing/snps_distance.rules"
 
 
 rule all:
