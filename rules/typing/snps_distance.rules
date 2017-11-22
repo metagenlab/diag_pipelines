@@ -1,0 +1,12 @@
+rule snp_distance:
+    params:
+        corres = sample_correspondance
+    conda:
+        "env/biopython.yaml"
+    input:
+        "alignments/{ref}.fa"
+    output:
+        "alignments/distance_{ref}.txt"
+    script:
+        "scripts/calculate_number_of_differences.py"
+
