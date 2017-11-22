@@ -39,8 +39,8 @@ def get_sample_names_correspondance(filename):
         
 read_naming = get_read_naming_patterns("links/")
 
-if os.path.isfile("sample_names.tsv"):
-    sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
+#if os.path.isfile("sample_names.tsv"):
+#    sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
 
 include:
     "../../read_manipulation/get_reads.rules"
@@ -64,5 +64,12 @@ include:
 
 rule all:
     input:
-        "phylogeny/{ref}.svg"
+        "phylogeny/{ref}.svg",
+        "typing/mlst/summary.out"
+    output:
+        "report_{ref}.html"
+    shell:
+        """
+        echo "" > {output[0]}
+        """
     
