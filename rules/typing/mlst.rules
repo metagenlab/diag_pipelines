@@ -2,7 +2,8 @@ rule mlst:
     conda:
         "env/mlst.yaml"
     input:
-        expand("strains/{sample}/annotation/{sample}.fsa", sample=read_naming.keys())
+        expand("strains/{sample}/annotation/{sample}.fsa", sample=read_naming.keys()),
+        "references/{ref}"
     output:
         "typing/mlst/summary.out"
     shell:
@@ -10,3 +11,26 @@ rule mlst:
         mlst {input} > {output[0]}
         """
 
+rule get_samples_corres:
+    input:
+        "typing/mlst/summary.out"
+    output:
+        "typing/mlst/summary_formatted.out"
+    shell:
+        """
+        awk '$3 != "-"' {input[0]} | cut -f 1,3 | sed "s/strains\/.*\/annotation\///" | sed "s/\.fsa//" > {output[0]}
+        """
+
+rule label_renaming_phylogeny:
+    input:
+        "typing/mlst/summary_formatted.out"
+    output:
+        "phylogeny/label_ids.txt"
+    shell:
+        """
+        if [ -f sample_names.tsv ]; then
+            echo "" > {output[0]};
+        else 
+            sed 's/\(.*\)\\t/\\1\\t\\1_ST_/' {input[0]} > {output[0]};
+        fi
+        """

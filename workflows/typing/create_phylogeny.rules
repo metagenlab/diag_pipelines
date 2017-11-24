@@ -84,6 +84,11 @@ include:
 
 include:
     prefix + "typing/snps_distance.rules"
+    
+include:
+    prefix + "typing/compare_methods.rules"
+
+
 
 
 rule all:

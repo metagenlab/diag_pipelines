@@ -37,16 +37,13 @@ rule convert_phylogeny_to_image:
         "env/newick-utils.yaml"
     input:
         "phylogeny/RAxML_bestTree.{ref}",
-        "phylogeny/RAxML_bootstrap.{ref}_boot"
+        "phylogeny/RAxML_bootstrap.{ref}_boot",
+        "phylogeny/label_ids.txt"
     output:
         "phylogeny/{ref}.svg"
     shell:
         """
-        if [ -f sample_names.tsv ]; then
-            nw_support {input[0]} {input[1]} | nw_reroot - Reference | nw_rename - sample_names.tsv | nw_display -s -b 'opacity:0' -w -1600 -I m -W 20 -v 15 - > {output[0]}
-        else
-            nw_support {input[0]} {input[1]} | nw_reroot - Reference | nw_display -s -b 'opacity:0' -w 800 -v 15 - > {output[0]}
-        fi 
+        nw_support {input[0]} {input[1]} | nw_reroot - ERR863190 | nw_rename - {input[2]} | nw_display -s -b 'opacity:0' -w -1600 -I m -W 20 -v 15 - > {output[0]}
         """
 
         
