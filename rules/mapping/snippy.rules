@@ -7,9 +7,10 @@ rule snippy_to_gbk_paired:
         "references/{ref}/genome.gbk"
     output:
         "mapping/snippy/{ref}/{sample}/snps.vcf",
+        temp("mapping/snippy/{ref}/{sample}/snps.bam")
     shell:
         """
-        snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]} --cleanup
+        snippy --quiet --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]}
         """
         
 rule snippy_to_gbk_single:
@@ -20,18 +21,19 @@ rule snippy_to_gbk_single:
         "references/{ref}/genome.gbk"
     output:
         "mapping/snippy/{ref}/{sample}/snps.vcf",
+        temp("mapping/snippy/{ref}/{sample}/snps.bam")
     log:
-        "mapping/snippy/{ref}/{sample}/log.txt"
+        "mapping/snippy/{ref}/{sample}/snps.log"
     shell:
         """
-        snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[1]} --se {input[0]} --cleanup 
+        snippy --quiet --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[1]} --se {input[0]} 
         """
 
 rule snippy_core:
     conda:
         "env/snippy.yaml"
     input:
-        expand("mapping/snippy/{{ref}}/{sample}/snps.vcf", sample=read_naming.keys())
+        expand("mapping/snippy/{{ref}}/{sample}/snps.vcf", sample=list(read_naming.keys()))
     output:
         "mapping/snippy/{ref}/core.aln",
         "alignments/{ref}.fa"

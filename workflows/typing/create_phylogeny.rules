@@ -1,5 +1,6 @@
 import csv
-import os.path
+import os
+import shutil
 
 def get_read_naming_patterns(directory):
     result = []
@@ -37,12 +38,29 @@ def get_sample_names_correspondance(filename):
             cells = list(filter(None, row))
             corres[cells[0]] = cells[1].replace(" ", "_")
     return(corres)
-        
-read_naming = get_read_naming_patterns("links/")
+
+link_directory="links/"
+
+folders = {}
+read_naming = get_read_naming_patterns(link_directory)
+for key in read_naming.keys():
+    folders[key] = "."
+original_name = { x : x for x in read_naming.keys()}
+
+for i in os.listdir(link_directory):
+    if os.path.isdir(link_directory + "/" + i):
+        l = get_read_naming_patterns(link_directory+"/"+i)
+        k = { i + "_" + x : y for x, y in l.items()}
+        u = { i + "_" + x : x for x in l.keys()}
+        for key in k.keys():
+            folders[key]=i
+        read_naming = { ** read_naming, **k}
+        original_name = { ** original_name, **u}
 
 if os.path.isfile("sample_names.tsv"):
     sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
-
+else:
+    sample_correspondance = { x:x for x in read_naming.keys()}
 
 prefix = "../../rules/"
 

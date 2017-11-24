@@ -241,7 +241,7 @@ rule prokka:
         "strains/{sample}/annotation/{sample}.fsa",
         "strains/{sample}/annotation/{sample}.txt"
     shell:
-        "prokka --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample}"
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample}"
 
 
 rule check_coverage_assembly:

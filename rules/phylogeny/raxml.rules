@@ -9,7 +9,7 @@ rule raxml_on_alignment_to_ref:
         "logs/phylogeny/RAxML_log.{ref}"
     shell:
         """
-        if [ -f phylogeny/RAxML_*.{wildcards.ref} ]; then
+        if ls phylogeny/RAxML_*.{wildcards.ref} 1> /dev/null 2>&1; then
              rm phylogeny/RAxML_*.{wildcards.ref}
         fi
         raxmlHPC -m GTRCAT -V -n {wildcards.ref} -s {input[0]} -w $(dirname $(readlink -f {output[0]})) -p 123 > {log} 
@@ -26,7 +26,7 @@ rule raxml_bootstrap:
         "logs/phylogeny/RAxML_log.{ref}_boot"
     shell:
         """
-        if [ -f phylogeny/RAxML_*.{wildcards.ref}_boot ]; then
+        if ls phylogeny/RAxML_*.{wildcards.ref}_boot 1> /dev/null 2>&1; then
              rm phylogeny/RAxML_*.{wildcards.ref}_boot
         fi
         raxmlHPC -m GTRCAT -V -n {wildcards.ref}_boot -s {input[0]} -b 123 -w $(dirname $(readlink -f {output[0]})) -N 100 -p 123 > {log} 
