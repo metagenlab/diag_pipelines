@@ -38,7 +38,7 @@ rule convert_phylogeny_to_image:
     input:
         "phylogeny/RAxML_bestTree.{ref}",
         "phylogeny/RAxML_bootstrap.{ref}_boot",
-        "phylogeny/label_ids.txt"
+        "phylogeny/label_ids_{ref}.txt"
     output:
         "phylogeny/{ref}.svg"
     shell:
