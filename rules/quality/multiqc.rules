@@ -1,0 +1,27 @@
+rule get_files_for_multiqc:
+    input:
+        "strains/{sample}/mapping/qualimap/qualimapReport.html",
+        "strains/{sample}/assembly/spades/quast/report.txt",
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        "strains/{sample}/annotation/{sample}.txt",
+        "strains/{sample}/logs/trimmomatic.log"
+    output:
+        "strains/{sample}/multiqc/log.txt"
+    shell:
+        """
+  #      cp -R {input} $(dirname {output[0]})/
+        if [ ! -d "$(dirname {output[0]})/{wildcards.sample}" ]; then
+             mkdir $(dirname {output[0]})/{wildcards.sample}
+        fi
+        cp -R $(dirname {input[0]})/* $(dirname {output[0]})/{wildcards.sample}
+        sed "s/_R1\.fastq/\.fastq/g" {input[4]} | sed "s/_R2\.fastq/\.fastq/g" > $(dirname {output[0]})/trimmomatic.log
+        cp {input[3]} $(dirname {output[0]})
+      #  sed "s/R1_paired\.fastq/{wildcards.sample}/
+        cp -R $(dirname {input[2]})/* $(dirname {output[0]})/{wildcards.sample}
+        sed -i.bak "s/R1_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
+        sed -i.bak "s/R2_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
+        sed "s/{wildcards.sample}\.fsa/{wildcards.sample}/g" {input[1]} > $(dirname {output[0]})/quast.log
+        cp -R $(dirname {input[1]}) $(dirname {output[0]})
+        sed -i.bak "s/.fsa//g" $(dirname {output[0]})/quast/report.tsv
+        echo "okay" > {output}
+        """
