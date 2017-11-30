@@ -6,49 +6,6 @@ rule remove_fasta_part_from_gff:
     shell:
         "sed '/^##FASTA$/,$d' {input} > {output}"
     
-    
-rule align_paired_reads_to_assembled_genome:
-    conda:
-        "env/bwa.yaml"
-    input:
-        "strains/{sample}/annotation/{sample}.fsa",
-        "reads/raw/{sample}_R1.fastq",
-        "reads/raw/{sample}_R2.fastq"
-    output:
-        temp("strains/{sample}/mapping/{sample}.bam")
-    shell:
-        """
-        bwa index {input[0]}
-        bwa mem {input} | samtools sort -O BAM -o {output} -
-        """
-
-rule align_single_reads_to_assembled_genome:
-    conda:
-        "env/bwa.yaml"
-    input:
-        "strains/{sample}/annotation/{sample}.fsa",
-        "reads/raw/{sample}.fastq"
-    output:
-        temp("strains/{sample}/mapping/{sample}.bam")
-    shell:
-        """
-        bwa index {input[0]}
-        bwa mem {input} | samtools sort -O BAM -o {output} -
-        """
-
-rule qualimap_mapping:
-    conda:
-        "env/qualimap.yaml"
-    input:
-        "strains/{sample}/mapping/{sample}.bam",
-        "strains/{sample}/annotation/{sample}_truncated.gff"
-    output:
-        "strains/{sample}/mapping/qualimap/qualimapReport.html"
-    shell:
-        """
-        qualimap bamqc -bam {input[0]} -gff {input[1]} -outdir $(dirname {output})
-        """
-
 rule trimmomatic_SE:
     conda:
         "env/trim.yaml"
@@ -89,53 +46,7 @@ rule trimmomatic_PE:
         trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/TruSeq3-PE.fa:3:25:6 LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} HEADCROP:{params.croplength} &> {log}
         """        
 
-rule fastqc_single:
-    conda:
-        "env/fastqc.yaml"
-    input:
-        "strains/{sample}/reads/trimmed/single.fastq",
-    output:
-        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
-        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
-    shell:
-        "fastqc {input} -o $( dirname {output[0]})"
 
-        
-rule fastqc_paired:
-    conda:
-        "env/fastqc.yaml"
-    input:
-        "strains/{sample}/reads/trimmed/R1_paired.fastq",
-        "strains/{sample}/reads/trimmed/R2_paired.fastq"
-    output:
-        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
-        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.zip",
-        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
-        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html"
-    shell:
-        "fastqc {input} -o $( dirname {output[0]})"
-
-
-rule unzip_fastqc_single:
-    input:
-        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
-    output:
-        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-    shell:
-        "unzip -D -u {input[0]} -d $( dirname {input[0]}) && unzip -D -u {input[1]} -d $( dirname {input[0]}) && touch {output[0]} &&  touch {output[1]}"
-
-    
-rule unzip_fastqc_paired:
-    input:
-        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
-        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.zip"
-    output:
-        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt"
-    shell:
-        "unzip -D -u {input[0]} -d $( dirname {input[0]}) && unzip -D -u {input[1]} -d $( dirname {input[0]}) && touch {output[0]} &&  touch {output[1]}"
-
-        
 rule error_correction_spades_paired:
     conda:
         "env/spades.yaml"
@@ -202,16 +113,6 @@ rule spades_single:
         mv $(dirname $(dirname {output[0]}))/contigs.fasta $(dirname {output[0]})/
         """
         
-rule quast:
-    conda:
-        "env/quast.yaml"
-    input:
-        "strains/{sample}/annotation/{sample}.fsa"
-    output:
-        "strains/{sample}/assembly/spades/quast/report.txt"
-    shell:
-        "quast.py {input} -o $( dirname {output})"
-
 rule extract_contigs_500bp:
     input:
         "strains/{sample}/assembly/spades/contigs.fasta"
@@ -244,44 +145,3 @@ rule prokka:
         "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample}"
 
 
-rule check_coverage_assembly:
-    input:
-        "strains/{sample}/assembly/spades/contigs_500bp.fasta"
-    output:
-        "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
-        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt"
-    shell:
-        "grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 < 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$//\" | sed \"s/^>//\" > {output[0]} && grep \">\" {input} | sed \"s/.*cov_//\" | awk '$1 > 5 {{print NR}}' | sed \"s/^/NODE_/\" | sed \"s/$/_/\" | sed \"s/^>//\"  > {output[1]} "
-
-rule filter_contigs_on_coverage:
-    input:
-        "strains/{sample}/assembly/spades/contigs_500bp.fasta",
-        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.txt",
-        "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt"
-    output:
-        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta",
-        "strains/{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta"
-    shell:
-        """
-        grep -A 1 -f {input[1]} {input[0]} | sed '/^--$/d' > {output[0]}
-        if [ -s {input[2]} ]
-        then 
-            grep -A 1 -f {input[2]} {input[0]} | sed '/^--$/d' > {output[1]}
-        else
-            touch {output[1]}
-        fi
-        """
-
-rule convert_quast_images:
-    conda:
-        "env/imagemagick.yaml"
-    input:
-        "strains/{sample}/assembly/spades/quast/report.txt"
-    output:
-        "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
-        "strains/{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png"
-    shell:
-        """
-        convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png
-        convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png
-        """

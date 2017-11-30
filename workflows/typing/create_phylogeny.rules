@@ -74,11 +74,23 @@ include:
     prefix + "mapping/snippy.rules"
 
 include:
+    prefix + "mapping/align_reads_to_genome.rules"
+
+include:
     prefix + "phylogeny/raxml.rules"
 
 include:
     prefix + "assembly/assembly.rules"
 
+include:
+    prefix + "quality/multiqc.rules"
+
+include:
+    prefix + "quality/quality_assembly.rules"
+
+include:
+    prefix + "quality/quality_reads.rules"    
+    
 include:
     prefix + "typing/mlst.rules"
 
@@ -89,12 +101,11 @@ include:
     prefix + "typing/compare_methods.rules"
 
 
-
-
 rule all:
     input:
-        "phylogeny/{ref}.svg",
-        "typing/mlst/summary.out"
+        expand("strains/{sample}/multiqc/log.txt", sample= read_naming.keys()),
+   #     "phylogeny/{ref}.svg",
+    #    "typing/mlst/summary_{ref}.out"
     output:
         "report_{ref}.html"
     shell:

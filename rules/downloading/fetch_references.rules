@@ -26,28 +26,28 @@ rule download_genomes_from_url:
         """
         
 
-rule get_all_complete_genomes_urls:
-    conda:
-        "env/entrez-direct.yaml"
-    output:
-        "references/{species}_all_uniq_subtypes_complete.txt"
-    shell:
-        """
-        esearch -db assembly -query "{wildcards.species}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -if Sub_value -element Sub_value | uniq -u > {output[0]}
-        """
+#rule get_all_complete_genomes_urls:
+#    conda:
+#        "env/entrez-direct.yaml"
+#    output:
+#        "references/{species}_all_uniq_subtypes_complete.txt"
+#    shell:
+#        """
+#        esearch -db assembly -query "{wildcards.species}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -if Sub_value -element Sub_value | uniq -u > {output[0]}
+#        """
 
-rule download_every_complete_genome:
-    input:
-        "references/{species}_all_uniq_subtypes_complete.txt"
-    output:
-        dynamic("references/{species}_{ref}.gbk")
-    shell:
-        """
-        while read -r p 
-        do
-             esearch -db assembly -query "{wildcards.species} ${{p}}" | efetch -db assembly -format docsum;
-        done < "{input[0]}"
-        """
+#rule download_every_complete_genome:
+#    input:
+#        "references/{species}_all_uniq_subtypes_complete.txt"
+#    output:
+#        dynamic("references/{species}_{ref}.gbk")
+#    shell:
+#        """
+#        while read -r p 
+#        do
+#             esearch -db assembly -query "{wildcards.species} ${{p}}" | efetch -db assembly -format docsum;
+#        done < "{input[0]}"
+#       """
 
 
 

@@ -43,7 +43,7 @@ rule convert_phylogeny_to_image:
         "phylogeny/{ref}.svg"
     shell:
         """
-        nw_support {input[0]} {input[1]} | nw_reroot - ERR863190 | nw_rename - {input[2]} | nw_display -s -b 'opacity:0' -w -1600 -I m -W 20 -v 15 - > {output[0]}
+        nw_support {input[0]} {input[1]} | nw_rename - {input[2]} | nw_display -s -b 'opacity:0' -w -1600 -I m -W 20 -v 15 - > {output[0]}
         """
 
         
