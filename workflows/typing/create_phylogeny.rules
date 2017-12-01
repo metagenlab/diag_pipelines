@@ -107,7 +107,7 @@ rule all:
    #     "phylogeny/{ref}.svg",
     #    "typing/mlst/summary_{ref}.out"
     output:
-        "report_{ref}.html"
+        "report.html"
     shell:
         """
         echo "" > {output[0]}

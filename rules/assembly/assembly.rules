@@ -39,6 +39,7 @@ rule trimmomatic_PE:
         temp("strains/{sample}/reads/trimmed/R1_unpaired.fastq"),
         temp("strains/{sample}/reads/trimmed/R2_paired.fastq"),
         temp("strains/{sample}/reads/trimmed/R2_unpaired.fastq"),
+        "strains/{sample}/logs/trimmomatic.log"
     log:
         "strains/{sample}/logs/trimmomatic.log"
     shell:
