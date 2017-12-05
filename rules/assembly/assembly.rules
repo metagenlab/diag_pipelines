@@ -82,9 +82,9 @@ rule spades_paired:
     conda:
         "env/spades.yaml"
     input:
-        "strains/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
-        "strains/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
-        "strains/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz"
+        ancient("strains/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz"),
+        ancient("strains/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
+        ancient("strains/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz")
     output:
         "strains/{sample}/assembly/spades/contigs.fasta"
     log:
@@ -130,19 +130,4 @@ rule rename_contigs:
         "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
     shell:
         "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig00\\1/\" {input} > {output}"
-        
-rule prokka:
-    conda:
-        "env/prokka.yaml"
-    input:
-        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
-    output:
-        "strains/{sample}/annotation/{sample}.log",
-        "strains/{sample}/annotation/{sample}.gff",
-        "strains/{sample}/annotation/{sample}.faa",
-        "strains/{sample}/annotation/{sample}.fsa",
-        "strains/{sample}/annotation/{sample}.txt"
-    shell:
-        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample}"
-
 

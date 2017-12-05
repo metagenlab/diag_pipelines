@@ -1,0 +1,9 @@
+rule create_dbs:
+    conda:
+        "env/biopython-mysql.yaml"
+    input:
+        ancient("/home/sacha/.my.cnf")
+    output:
+        "logs/db_mysql.txt"
+    script:
+        "scripts/db_creation.py"

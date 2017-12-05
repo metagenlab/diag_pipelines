@@ -1,0 +1,15 @@
+rule prokka:
+    conda:
+        "env/prokka.yaml"
+    input:
+        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
+    output:
+        "strains/{sample}/annotation/{sample}.log",
+        "strains/{sample}/annotation/{sample}.gff",
+        "strains/{sample}/annotation/{sample}.faa",
+        "strains/{sample}/annotation/{sample}.fsa",
+        "strains/{sample}/annotation/{sample}.txt"
+    shell:
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample}"
+
+

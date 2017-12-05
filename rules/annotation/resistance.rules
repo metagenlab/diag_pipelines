@@ -1,0 +1,35 @@
+rule rgi:
+    conda:
+        "env/rgi.yaml"
+    input:
+        "strains/{sample}/annotation/{sample}.faa"
+    output:
+        "strains/{sample}/resistance/rgi.json"
+    shell:
+        """
+        rgi -t protein -i {input} -o strains/{wildcards.sample}/resistance/rgi
+        """
+
+rule extract_rgi_res:
+    conda:
+        "env/biopython-mysql.yaml"
+    input:
+        "strains/{sample}/resistance/rgi.json",
+        ancient("/home/sacha/.my.cnf")
+    output:
+        "strains/{sample}/logs/rgi_mysql.txt"
+    script:
+        "scripts/parse_rgi_json.py"
+
+
+rule fetch_resistance_from_db:
+    conda:
+        "env/biopython-mysql.yaml"
+    input:
+        ancient("/home/sacha/.my.cnf")
+    output:
+        "resistance/summary.txt"
+    params:
+        samples=list(read_naming.keys())
+    script:
+        "scripts/fetch_resistance_from_db.py"

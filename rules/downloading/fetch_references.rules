@@ -6,11 +6,11 @@ rule get_reference_or_representative_or_complete_genome_urls:
     shell:
         """
         search=$( echo {wildcards.ref} | tr '_' ' ')
-        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if RefSeq_category -equals "reference genome" -element FtpPath_RefSeq  > {output[0]}
+        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if RefSeq_category -equals "reference genome" -element FtpPath_RefSeq  > {output[0]}
         if [  ! -s {output[0]} ]; then 
-             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if RefSeq_category -equals "representative genome" -element FtpPath_RefSeq > {output[0]}
+             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if RefSeq_category -equals "representative genome" -element FtpPath_RefSeq > {output[0]}
         if [ ! -s {output[0]} ]; then
-             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -element FtpPath_RefSeq  > {output[0]}
+             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if AssemblyStatus -equals "Complete Genome" -element FtpPath_RefSeq  > {output[0]}
         fi
         fi
         """
@@ -19,49 +19,26 @@ rule get_complete_genomes_urls:
     conda:
         "env/entrez-direct.yaml"
     output:
-        "references/{ref}_url_complete.txt"
+        "references/{ref}_url_complete_genomes.txt"
     shell:
         """
         search=$( echo {wildcards.ref} | tr '_' ' ')
-        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -element FtpPath_RefSeq > {output[0]}
+        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -element Sub_value FtpPath_RefSeq | tr ' ' '_' > {output[0]}
         """         
-
+        
 
         
-rule download_gbks_from_url:
+rule download_file_from_url:
     input:
-        "references/{ref}_url.txt"
+        "references/{ref}_url_complete_genomes.txt"
     output:
-        "references/{ref}/genome.gbk"
+        dynamic("references/{ref}/{strain}_genome.{format}")
     shell:
         """
-        sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" {input[0]} | xargs wget -qO- | gzip -d > {output[0]}
+        while read id ftp; do
+            echo ${{id}}
+            echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.{wildcards.format}.gz/" | xargs wget -qO- | gzip -d  > references/{wildcards.ref}/${{id}}_genome.{wildcards.format}
+        done < "{input[0]}"
         """
         
-
-#rule get_all_complete_genomes_urls:
-#    conda:
-#        "env/entrez-direct.yaml"
-#    output:
-#        "references/{species}_all_uniq_subtypes_complete.txt"
-#    shell:
-#        """
-#        esearch -db assembly -query "{wildcards.species}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -if Sub_value -element Sub_value | uniq -u > {output[0]}
-#        """
-
-#rule download_every_complete_genome:
-#    input:
-#        "references/{species}_all_uniq_subtypes_complete.txt"
-#    output:
-#        dynamic("references/{species}_{ref}.gbk")
-#    shell:
-#        """
-#        while read -r p 
-#        do
-#             esearch -db assembly -query "{wildcards.species} ${{p}}" | efetch -db assembly -format docsum;
-#        done < "{input[0]}"
-#       """
-
-
-
         

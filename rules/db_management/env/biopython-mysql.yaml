@@ -1,0 +1,7 @@
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - biopython = 1.70
+ - mysql-connector-python = 2.2.2
+
