@@ -26,6 +26,19 @@ rule get_complete_genomes_urls:
         esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -element Sub_value FtpPath_RefSeq | tr ' ' '_' > {output[0]}
         """         
         
+rule download_file_from_url_2:
+    input:
+        "references/{ref}_url_complete_genomes.txt"
+    output:
+        "references/{ref}/genome.{format}"
+    shell:
+        """
+        while read id ftp; do
+            echo ${{id}}
+            echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.{wildcards.format}.gz/" | xargs wget -qO- | gzip -d  > references/{wildcards.ref}/${{id}}_genome.{wildcards.format}
+        done < "{input[0]}"
+        """
+        
 
         
 rule download_file_from_url:

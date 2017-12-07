@@ -10,7 +10,7 @@ rule rgi:
         rgi -t protein -i {input} -o strains/{wildcards.sample}/resistance/rgi
         """
 
-rule extract_rgi_res:
+rule extract_rgi_res_load_into_db:
     conda:
         "env/biopython-mysql.yaml"
     input:
@@ -33,3 +33,11 @@ rule fetch_resistance_from_db:
         samples=list(read_naming.keys())
     script:
         "scripts/fetch_resistance_from_db.py"
+
+
+rule resistance_mykrobe_predictor:
+    conda:
+        "env/mykrobe.yaml"
+    input:
+        "reads/raw/{sample}_R1.fastq",
+        "reads/raw/{sample}_R2.fastq"
