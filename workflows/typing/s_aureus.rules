@@ -39,6 +39,7 @@ def get_sample_names_correspondance(filename):
             corres[cells[0]] = cells[1].replace(" ", "_")
     return(corres)
 
+
 link_directory="links/"
 
 folders = {}
@@ -55,7 +56,6 @@ else:
     sample_correspondance = { x:x for x in read_naming.keys()}
 
 
-
 for i in os.listdir(link_directory):
     if os.path.isdir(link_directory + "/" + i):
         l = get_read_naming_patterns(link_directory+"/"+i)
@@ -66,8 +66,12 @@ for i in os.listdir(link_directory):
         read_naming = { ** read_naming, **k}
         original_name = { ** original_name, **u}
 
-prefix = "../../rules/"
 
+
+spec_for_mykrobe = 'staph'
+db_to_use = "saureus"
+
+prefix = "../../rules/"
 include:
     prefix + "read_manipulation/get_reads.rules"
 
@@ -117,7 +121,7 @@ include:
 
 rule something:
     input:
-        expand("strains/{sample}/multiqc/log.txt", sample= read_naming.keys())
+        expand("strains/{sample}/resistance/mykrobe.tsv", sample= read_naming.keys())
     output:
         "report.html"
     shell:
