@@ -41,3 +41,23 @@ rule resistance_mykrobe_predictor:
     input:
         "reads/raw/{sample}_R1.fastq",
         "reads/raw/{sample}_R2.fastq"
+    output:
+        "strains/{sample}/resistance/mykrobe.json"
+    params:
+        species = spec_for_mykrobe
+    shell:
+        """
+        mykrobe predict "{wildcards.sample}" "{params.species}" -1 {input[0]} --min_variant_conf 100  > {output[0]} 
+        """
+
+
+
+rule parse_mykrobe_results:
+    input:
+        "strains/{sample}/resistance/mykrobe.json"
+    output:
+        "strains/{sample}/resistance/mykrobe.tsv"
+    script:
+        "scripts/json_to_tsv.py"
+
+        

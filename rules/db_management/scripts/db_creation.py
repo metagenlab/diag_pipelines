@@ -1,6 +1,6 @@
 import mysql.connector
 
-cnx = mysql.connector.connect(option_files=snakemake.input[0], option_groups="myco")
+cnx = mysql.connector.connect(option_files=snakemake.input[0], option_groups=snakemake.params["db"])
 cnx.get_warnings = True
 cursor = cnx.cursor()
 

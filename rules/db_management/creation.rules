@@ -5,5 +5,7 @@ rule create_dbs:
         ancient("/home/sacha/.my.cnf")
     output:
         "logs/db_mysql.txt"
+    params:
+        db = db_to_use
     script:
         "scripts/db_creation.py"
