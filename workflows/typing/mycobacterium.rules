@@ -53,7 +53,8 @@ for key in read_naming.keys():
     folders[key] = "."
 original_name = { x : x for x in read_naming.keys()}
 
-
+db_to_use = "myco"
+spec_for_mykrobe = "tb"
 
 for i in os.listdir(link_directory):
     if os.path.isdir(link_directory + "/" + i):

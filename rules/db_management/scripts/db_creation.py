@@ -35,8 +35,8 @@ CREATE TABLE phenotype_prediction(Specimen varchar(255) NOT NULL, software varch
 """
 
 
-cmds["resistance_confering_genes"]="""
-CREATE TABLE resistance_confering_genes(Specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255) NOT NULL, PRIMARY KEY(Specimen, software, gene));
+cmds["resistance_conferring_genes"]="""
+CREATE TABLE resistance_conferring_genes(Specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255), description TEXT, PRIMARY KEY(Specimen, software, gene));
 """
 
 with open(snakemake.output[0], "w") as myfile:
@@ -45,12 +45,9 @@ with open(snakemake.output[0], "w") as myfile:
 for i in cmds.keys():
     try:
         cursor.execute(cmds[i])
-    except mysql.connector.errors.ProgrammingError:
+    except mysql.connector.errors.Error as err :
         with open(snakemake.output[0], "a") as f:
-            f.write(str(i)+' table already exists\n')
-    except mysql.connector.errors.DatabaseError:
-        with open(snakemake.output[0], "a") as f:
-            f.write(str(i)+' table already exists\n')
+            f.write("Something went wrong: {}\n".format(err))
         
 cnx.commit()
 cnx.close()

@@ -187,14 +187,14 @@ with open(snakemake.output[0], "w") as fileres:
         ]
         # rows.append(row)
         if row[14] == "R":
-            cmd="INSERT IGNORE INTO resistance_confering_genes (Specimen, software, gene) VALUES (\"{0}\", \"mykrobe\", \"{1}\");".format(str(row[2]), str(row[16]))
+            cmd="INSERT IGNORE INTO resistance_conferring_genes (Specimen, software, gene) VALUES (\"{0}\", \"mykrobe\", \"{1}\");".format(snakemake.params["id"][snakemake.wildcards["sample"]], str(row[16]))
             print(cmd)
             cursor.execute(cmd)
             i=cursor.fetchwarnings()
             if i is not None:
                 with open(snakemake.log[0], "a") as f:
                     f.write(str(i)+"\n")
-            cmd="INSERT IGNORE INTO phenotype_prediction (Specimen, software, antibiotic) VALUES (\"{0}\", \"mykrobe\", \"{1}\");".format(str(row[2]), str(row[4]))
+            cmd="INSERT IGNORE INTO phenotype_prediction (Specimen, software, antibiotic) VALUES (\"{0}\", \"mykrobe\", \"{1}\");".format(snakemake.params["id"][snakemake.wildcards["sample"]], str(row[4]))
             cursor.execute(cmd)
             i=cursor.fetchwarnings()
             if i is not None:
