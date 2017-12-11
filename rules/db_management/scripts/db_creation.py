@@ -34,6 +34,11 @@ cmds["phenotype_prediction"]="""
 CREATE TABLE phenotype_prediction(Specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, antibiotic varchar(255) NOT NULL, PRIMARY KEY(Specimen, software, antibiotic));
 """
 
+
+cmds["resistance_confering_genes"]="""
+CREATE TABLE resistance_confering_genes(Specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255) NOT NULL, PRIMARY KEY(Specimen, software, gene));
+"""
+
 with open(snakemake.output[0], "w") as myfile:
     myfile.write("")
 

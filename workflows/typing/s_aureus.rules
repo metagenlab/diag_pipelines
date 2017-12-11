@@ -121,7 +121,7 @@ include:
 
 rule something:
     input:
-        expand("strains/{sample}/resistance/mykrobe.tsv", sample= read_naming.keys())
+        expand("strains/{sample}/logs/rgi_db.txt", sample= read_naming.keys())
     output:
         "report.html"
     shell:
