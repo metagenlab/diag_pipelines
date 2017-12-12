@@ -1,0 +1,41 @@
+rule fetch_resistance_from_db:
+    conda:
+        "env/python-mysql.yaml"
+    output:
+        expand("resistance/phenotype_summary_{soft}.tsv", soft=resistance_prediction_softwares)
+    params:
+        samples = [sample_correspondance[x] for x in list(read_naming.keys())],
+        conf = mysql_conf_file,
+        id = db_to_use,
+        soft = resistance_prediction_softwares
+    script:
+        "scripts/fetch_resistance_from_db.py"
+        
+rule fetch_mutations_from_db:
+    conda:
+        "env/python-mysql.yaml"
+    output:
+        expand("resistance/mutations_summary_{soft}.tsv", soft=resistance_prediction_softwares)
+    params:
+        samples = [sample_correspondance[x] for x in list(read_naming.keys())],
+        conf = mysql_conf_file,
+        id = db_to_use,
+        soft = resistance_prediction_softwares
+    script:
+        "scripts/fetch_mutations_from_db.py"
+
+
+rule fetch_resistance_genes_from_db:
+    conda:
+        "env/python-mysql.yaml"
+    output:
+        expand("resistance/genes_summary_{soft}.tsv", soft=resistance_prediction_softwares)
+    params:
+        samples= [sample_correspondance[x] for x in list(read_naming.keys())],
+        conf = mysql_conf_file,
+        id = db_to_use,
+        soft = resistance_prediction_softwares
+    script:
+        "scripts/fetch_genes_from_db.py"
+
+
