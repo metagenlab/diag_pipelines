@@ -2,7 +2,7 @@ import mysql.connector
 import csv
 import re
 
-cnx = mysql.connector.connect(option_files=snakemake.input[1], option_groups=snakemake.params["db"])
+cnx = mysql.connector.connect(option_files=snakemake.conf["params"], option_groups=snakemake.params["db"])
 cnx.get_warnings = True
 cursor = cnx.cursor()
 
@@ -70,7 +70,7 @@ def load_row_into_db(row, curs, log, sample):
                         with open(log, "a") as f:
                             f.write(str(i)+"\n")
                 except UnboundLocalError as err:
-                    raise ValueError("Failed during the search of the antibiotic resistance in the Best_Hit_ARO_category value, for a resistance conferring gene acquisition, in the rgi tsv file: {}".format(err))
+                    raise ValueError("Failed during the search of the antibiotic resistance in the Best_Hit_ARO_category value, for a resistance conferring gene acquisition, in the rgi tsv file: {0}, the offending string to parse was: ".format(err, j))
 
                 
             

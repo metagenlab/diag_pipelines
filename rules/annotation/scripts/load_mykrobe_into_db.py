@@ -6,7 +6,7 @@ import csv
 import os
 import mysql.connector
 
-cnx = mysql.connector.connect(option_files=snakemake.input[1], option_groups=snakemake.params["db"])
+cnx = mysql.connector.connect(option_files=snakemake.params["conf"], option_groups=snakemake.params["db"])
 cnx.get_warnings = True
 cursor = cnx.cursor()
 
@@ -188,7 +188,6 @@ with open(snakemake.output[0], "w") as fileres:
         # rows.append(row)
         if row[14] == "R":
             cmd="INSERT IGNORE INTO resistance_conferring_genes (Specimen, software, gene) VALUES (\"{0}\", \"mykrobe\", \"{1}\");".format(snakemake.params["id"][snakemake.wildcards["sample"]], str(row[16]))
-            print(cmd)
             cursor.execute(cmd)
             i=cursor.fetchwarnings()
             if i is not None:

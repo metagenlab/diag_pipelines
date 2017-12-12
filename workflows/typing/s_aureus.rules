@@ -34,10 +34,12 @@ def get_sample_names_correspondance(filename):
     corres = {}
     with open(filename) as csvfile:
         reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+        next(reader, None)
+        next(reader, None)
         for row in [[s.strip() for s in inner] for inner in reader]:
             cells = list(filter(None, row))
-            print(cells)
-            corres[cells[0]] = cells[1].replace(" ", "_")
+            if cells:
+                corres[cells[0]] = cells[1].replace(" ", "_")
     return(corres)
 
 
@@ -49,12 +51,6 @@ read_naming = get_read_naming_patterns(link_directory)
 for key in read_naming.keys():
     folders[key] = "."
 original_name = { x : x for x in read_naming.keys()}
-
-
-if os.path.isfile("sample_names.tsv"):
-    sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
-else:
-    sample_correspondance = { x:x for x in read_naming.keys()}
 
 
 for i in os.listdir(link_directory):
@@ -71,8 +67,16 @@ for i in os.listdir(link_directory):
 
 spec_for_mykrobe = 'staph'
 db_to_use = "saureus"
+mysql_conf_file = "/home/sacha/.my.cnf"
+sample_names = "sample_names.tsv"
+resistance_prediction_softwares = ["mykrobe", "rgi", "abricate"]
 
 prefix = "../../rules/"
+
+sample_correspondance = get_sample_names_correspondance(sample_names)
+
+
+
 
 include:
     prefix + "read_manipulation/get_reads.rules"
@@ -94,6 +98,12 @@ include:
 
 include:
     prefix + "db_management/creation.rules"
+
+include:
+    prefix + "db_management/insert_data.rules"
+    
+include:
+    prefix + "db_management/fetch_data.rules"
 
 include:
     prefix + "annotation/prokka.rules"
@@ -123,7 +133,9 @@ include:
 
 rule something:
     input:
-        expand("strains/{sample}/logs/rgi_db.txt", sample= read_naming.keys())
+        expand("strains/{sample}/logs/rgi_db.txt", sample= read_naming.keys()),
+        expand("strains/{sample}/logs/abricate_db.txt", sample= read_naming.keys()),
+        expand("strains/{sample}/resistance/mykrobe.tsv", sample= read_naming.keys())
     output:
         "report.html"
     shell:

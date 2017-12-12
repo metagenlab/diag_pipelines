@@ -1,11 +1,10 @@
 rule create_dbs:
     conda:
-        "env/biopython-mysql.yaml"
-    input:
-        ancient("/home/sacha/.my.cnf")
+        "env/python-mysql.yaml"
     output:
         "logs/db_mysql.txt"
     params:
-        db = db_to_use
+        db = db_to_use,
+        conf = mysql_conf_file
     script:
         "scripts/db_creation.py"

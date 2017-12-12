@@ -55,6 +55,8 @@ original_name = { x : x for x in read_naming.keys()}
 
 db_to_use = "myco"
 spec_for_mykrobe = "tb"
+mysql_conf_file = "/home/sacha/.my.cnf"
+sample_names = "sample_names.tsv"
 
 for i in os.listdir(link_directory):
     if os.path.isdir(link_directory + "/" + i):

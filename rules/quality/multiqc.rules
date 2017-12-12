@@ -9,14 +9,12 @@ rule get_files_for_multiqc:
         "strains/{sample}/multiqc/log.txt"
     shell:
         """
-  #      cp -R {input} $(dirname {output[0]})/
         if [ ! -d "$(dirname {output[0]})/{wildcards.sample}" ]; then
              mkdir $(dirname {output[0]})/{wildcards.sample}
         fi
         cp -R $(dirname {input[0]})/* $(dirname {output[0]})/{wildcards.sample}
         sed "s/_R1\.fastq/\.fastq/g" {input[4]} | sed "s/_R2\.fastq/\.fastq/g" > $(dirname {output[0]})/trimmomatic.log
         cp {input[3]} $(dirname {output[0]})
-      #  sed "s/R1_paired\.fastq/{wildcards.sample}/
         cp -R $(dirname {input[2]})/* $(dirname {output[0]})/{wildcards.sample}
         sed -i.bak "s/R1_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
         sed -i.bak "s/R2_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
@@ -25,3 +23,16 @@ rule get_files_for_multiqc:
         sed -i.bak "s/.fsa//g" $(dirname {output[0]})/quast/report.tsv
         echo "okay" > {output}
         """
+
+
+rule multiqc_all:
+    conda:
+        "env/multiqc.yaml"
+    input:
+        expand("strains/{sample}/multiqc/log.txt", sample = read_naming.keys())
+    output:
+        "quality/multiqc_report.html"
+    params:
+        names = sample_names
+    shell:
+        "multiqc -f --sample-names {params.names} -o $(dirname {output[0]}) $(dirname {input})"

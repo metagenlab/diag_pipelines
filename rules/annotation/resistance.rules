@@ -22,35 +22,7 @@ rule rgi_json_to_tsv:
         rgi_jsontab -v ON -i {input[0]} -o {output[0]}
         mv {output[0]}.txt {output[0]}
         """
-
     
-rule extract_rgi_res_load_into_db:
-    conda:
-        "env/python-mysql.yaml"
-    input:
-        "strains/{sample}/resistance/rgi.tsv",
-        ancient("/home/sacha/.my.cnf")
-    output:
-        "strains/{sample}/logs/rgi_db.txt"
-    params:
-        db = db_to_use,
-        id = sample_correspondance
-    script:
-        "scripts/load_rgi_into_db.py"
-
-
-rule fetch_resistance_from_db:
-    conda:
-        "env/biopython-mysql.yaml"
-    input:
-        ancient("/home/sacha/.my.cnf")
-    output:
-        "resistance/summary.txt"
-    params:
-        samples=list(read_naming.keys())
-    script:
-        "scripts/fetch_resistance_from_db.py"
-
 rule abricate:
     conda:
         "env/abricate.yaml"
@@ -64,21 +36,6 @@ rule abricate:
         """
         abricate --nopath --db resfinder {input[0]} 2> {log} 1> {output[0]} 
         """
-        
-rule load_abricate_results_into_db:
-    conda:
-        "env/python-mysql.yaml"
-    input:
-        "strains/{sample}/resistance/abricate.txt",
-        ancient("/home/sacha/.my.cnf")
-    output:
-        "strains/{sample}/logs/abricate_db.txt"
-    params:
-        db = db_to_use,
-        id = sample_correspondance
-    script:
-        "scripts/load_abricate_into_db.py"
-        
         
 rule resistance_mykrobe_predictor:
     conda:
@@ -100,14 +57,14 @@ rule resistance_mykrobe_predictor:
 rule parse_mykrobe_results_load_into_db:
     input:
         "strains/{sample}/resistance/mykrobe.json",
-        ancient("/home/sacha/.my.cnf")
     output:
         "strains/{sample}/resistance/mykrobe.tsv"
     log:
         "strains/{sample}/logs/mykrobe_db.txt"
     params:
         db = db_to_use,
-        id = sample_correspondance
+        id = sample_correspondance,
+        conf = mysql_conf_file
     script:
         "scripts/load_mykrobe_into_db.py"
 
