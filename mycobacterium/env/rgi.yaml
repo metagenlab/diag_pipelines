@@ -1,7 +1,0 @@
-name: sra-tools
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - rgi = 3.2.1
-

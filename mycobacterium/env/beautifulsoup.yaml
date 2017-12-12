@@ -1,5 +1,0 @@
-name: beautifulsoup4
-channels:
- - conda-forge
-dependencies:
- - beautifulsoup4 = 4.6.0
