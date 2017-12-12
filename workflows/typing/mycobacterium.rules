@@ -57,6 +57,13 @@ db_to_use = "myco"
 spec_for_mykrobe = "tb"
 mysql_conf_file = "/home/sacha/.my.cnf"
 sample_names = "sample_names.tsv"
+resistance_prediction_softwares = ["mykrobe", "rgi"]
+
+
+
+ontology_file_aro = 'aro.obo'
+ontology_file_mo = 'mo.obo'
+ontology_file_ro = 'ro.obo'
 
 for i in os.listdir(link_directory):
     if os.path.isdir(link_directory + "/" + i):
@@ -90,6 +97,12 @@ include:
 
 include:
     prefix + "db_management/creation.rules"
+
+include:
+    prefix + "db_management/insert_data.rules"
+
+include:
+    prefix + "db_management/fetch_data.rules"
 
 include:
     prefix + "annotation/prokka.rules"

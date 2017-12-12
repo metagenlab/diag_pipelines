@@ -2,7 +2,7 @@ rule load_rgi_results_into_db:
     conda:
         "env/mysql-pronto.yaml"
     input:
-        "strains/{sample}/resistance/rgi.tsv",
+        ancient("strains/{sample}/resistance/rgi.tsv")
     output:
         "strains/{sample}/logs/rgi_db.txt"
     params:

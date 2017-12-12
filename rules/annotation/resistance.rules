@@ -41,8 +41,8 @@ rule mykrobe:
     conda:
         "env/mykrobe.yaml"
     input:
-        "reads/raw/{sample}_R1.fastq",
-        "reads/raw/{sample}_R2.fastq",
+        "reads/raw/{sample}_R1.fastq.gz",
+        "reads/raw/{sample}_R2.fastq.gz",
     output:
         "strains/{sample}/resistance/mykrobe.json"
     params:

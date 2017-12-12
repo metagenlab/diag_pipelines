@@ -22,8 +22,8 @@ cmds["corres"]="""
 CREATE TABLE corres(specimen varchar(255) NOT NULL, file varchar(255), PRIMARY KEY(specimen));
 """
 
-cmds["mutations"]="""
-CREATE TABLE mutations(specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255) NOT NULL, position int NOT NULL, ref_aa varchar(255) NOT NULL, mut_aa varchar(255) NOT NULL, PRIMARY KEY(specimen, software, gene, position));
+cmds["resistance_associated_mutations"]="""
+CREATE TABLE resistance_associated_mutations(specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255) NOT NULL, position int NOT NULL, ref_aa varchar(255) NOT NULL, mut_aa varchar(255) NOT NULL, PRIMARY KEY(specimen, software, gene, position));
 """
 
 cmds["phenotype_prediction"]="""

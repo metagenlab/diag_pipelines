@@ -3,8 +3,8 @@ rule align_paired_reads_to_assembled_genome:
         "env/bwa.yaml"
     input:
         "strains/{sample}/annotation/{sample}.fsa",
-        "reads/raw/{sample}_R1.fastq",
-        "reads/raw/{sample}_R2.fastq"
+        "reads/raw/{sample}_R1.fastq.gz",
+        "reads/raw/{sample}_R2.fastq.gz"
     output:
         temp("strains/{sample}/mapping/{sample}.bam")
     shell:
@@ -18,7 +18,7 @@ rule align_single_reads_to_assembled_genome:
         "env/bwa.yaml"
     input:
         "strains/{sample}/annotation/{sample}.fsa",
-        "reads/raw/{sample}_single.fastq"
+        "reads/raw/{sample}_single.fastq.gz"
     output:
         temp("strains/{sample}/mapping/{sample}.bam")
     shell:
