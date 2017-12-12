@@ -1,6 +1,0 @@
-name: entrez-direct
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - entrez-direct = 7.00
