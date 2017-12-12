@@ -1,0 +1,30 @@
+rule load_rgi_results_into_db:
+    conda:
+        "env/python-mysql.yaml"
+    input:
+        "strains/{sample}/resistance/rgi.tsv",
+    output:
+        "strains/{sample}/logs/rgi_db.txt"
+    params:
+        db = db_to_use,
+        id = sample_correspondance,
+        conf = mysql_conf_file
+    script:
+        "scripts/load_rgi_into_db.py"
+
+rule load_abricate_results_into_db:
+    conda:
+        "env/python-mysql.yaml"
+    input:
+        "strains/{sample}/resistance/abricate.txt",
+    output:
+        "strains/{sample}/logs/abricate_db.txt"
+    params:
+        db = db_to_use,
+        id = sample_correspondance,
+        conf = mysql_conf_file
+    script:
+        "scripts/load_abricate_into_db.py"
+
+
+        
