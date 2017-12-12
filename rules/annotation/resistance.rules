@@ -37,7 +37,7 @@ rule abricate:
         abricate --nopath --db resfinder {input[0]} 2> {log} 1> {output[0]} 
         """
         
-rule resistance_mykrobe_predictor:
+rule mykrobe:
     conda:
         "env/mykrobe.yaml"
     input:
@@ -54,18 +54,12 @@ rule resistance_mykrobe_predictor:
 
 
 
-rule parse_mykrobe_results_load_into_db:
+rule mykrobe_json_to_tsv:
     input:
         "strains/{sample}/resistance/mykrobe.json",
     output:
         "strains/{sample}/resistance/mykrobe.tsv"
-    log:
-        "strains/{sample}/logs/mykrobe_db.txt"
-    params:
-        db = db_to_use,
-        id = sample_correspondance,
-        conf = mysql_conf_file
     script:
-        "scripts/load_mykrobe_into_db.py"
+        "scripts/mykrobe_json_to_tsv.py"
 
         

@@ -1,18 +1,11 @@
 # This script is intended to load a JSON dict containing resistotypes,
 # a list of comids and a list of drugs of interest. It will return a column for each drug,
 # Where 1 = R, 0 S, 0 unknown.
+# Comes from the mykrobe github repo 
+
 import json
 import csv
 import os
-import mysql.connector
-
-cnx = mysql.connector.connect(option_files=snakemake.params["conf"], option_groups=snakemake.params["db"])
-cnx.get_warnings = True
-cursor = cnx.cursor()
-
-
-with open(snakemake.log[0], "w") as myfile:
-    myfile.write("")
 
 def load_json(f):
     with open(f, 'r') as infile:
@@ -186,22 +179,5 @@ with open(snakemake.output[0], "w") as fileres:
                called_by_genes
         ]
         # rows.append(row)
-        if row[14] == "R":
-            cmd="INSERT IGNORE INTO resistance_conferring_genes (Specimen, software, gene) VALUES (\"{0}\", \"mykrobe\", \"{1}\");".format(snakemake.params["id"][snakemake.wildcards["sample"]], str(row[16]))
-            cursor.execute(cmd)
-            i=cursor.fetchwarnings()
-            if i is not None:
-                with open(snakemake.log[0], "a") as f:
-                    f.write(str(i)+"\n")
-            cmd="INSERT IGNORE INTO phenotype_prediction (Specimen, software, antibiotic) VALUES (\"{0}\", \"mykrobe\", \"{1}\");".format(snakemake.params["id"][snakemake.wildcards["sample"]], str(row[4]))
-            cursor.execute(cmd)
-            i=cursor.fetchwarnings()
-            if i is not None:
-                with open(snakemake.log[0], "a") as f:
-                    f.write(str(i)+"\n")
-
         fileres.write("\t".join(row)+"\n")
-    
 
-cnx.commit()
-cnx.close()

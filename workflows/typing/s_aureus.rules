@@ -73,6 +73,12 @@ resistance_prediction_softwares = ["mykrobe", "rgi", "abricate"]
 
 prefix = "../../rules/"
 
+ontology_file_aro = 'aro.obo'
+ontology_file_mo = 'mo.obo'
+ontology_file_ro = 'ro.obo'
+
+
+
 sample_correspondance = get_sample_names_correspondance(sample_names)
 
 
@@ -135,7 +141,7 @@ rule something:
     input:
         expand("strains/{sample}/logs/rgi_db.txt", sample= read_naming.keys()),
         expand("strains/{sample}/logs/abricate_db.txt", sample= read_naming.keys()),
-        expand("strains/{sample}/resistance/mykrobe.tsv", sample= read_naming.keys())
+        expand("strains/{sample}/logs/mykrobe_db.txt", sample= read_naming.keys())
     output:
         "report.html"
     shell:
