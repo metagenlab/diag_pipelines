@@ -8,7 +8,7 @@ cursor = cnx.cursor()
 
 def load_row_into_db(row, curs, log, sample):
     gene = row[4]
-    cmd="INSERT IGNORE INTO resistance_conferring_genes(Specimen, software, gene) VALUES (\"{0}\", \"abricate\", \"{1}\");".format(sample, str(gene))
+    cmd="INSERT IGNORE INTO resistance_associated_genes(specimen, software, gene) VALUES (\"{0}\", \"abricate\", \"{1}\");".format(sample, str(gene))
     curs.execute(cmd)
     i=cursor.fetchwarnings()
     if i is not None:

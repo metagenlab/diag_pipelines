@@ -11,32 +11,35 @@ CREATE TABLE samples(Specimen varchar(255) NOT NULL, Patient varchar(255) NOT NU
 
 
 cmds['sras']="""
-CREATE TABLE sras(Specimen varchar(255) NOT NULL, Sequence_Read_Archive varchar(255) NOT NULL, PRIMARY KEY(Specimen, Sequence_Read_Archive));
+CREATE TABLE sras(specimen varchar(255) NOT NULL, Sequence_Read_Archive varchar(255) NOT NULL, PRIMARY KEY(specimen, Sequence_Read_Archive));
 """
 
 cmds["dst"]="""
-CREATE TABLE dst(Specimen varchar(255) NOT NULL, test varchar(255) NOT NULL, Date date, antibio varchar(255) NOT NULL, phenotype varchar(255) NOT NULL, PRIMARY KEY (Specimen, test, Date, antibio));
+CREATE TABLE dst(specimen varchar(255) NOT NULL, test varchar(255) NOT NULL, Date date, antibio varchar(255) NOT NULL, phenotype varchar(255) NOT NULL, PRIMARY KEY (specimen, test, Date, antibio));
 """
 
 cmds["corres"]="""
-CREATE TABLE corres(Specimen varchar(255) NOT NULL, file varchar(255), PRIMARY KEY(Specimen));
-"""
-
-cmds["resistance"]="""
-CREATE TABLE resistance(antibiotic varchar(255) NOT NULL, gene varchar(255), PRIMARY KEY(antibiotic, gene));
+CREATE TABLE corres(specimen varchar(255) NOT NULL, file varchar(255), PRIMARY KEY(specimen));
 """
 
 cmds["mutations"]="""
-CREATE TABLE mutations(Specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255) NOT NULL, position int NOT NULL, ref_aa varchar(255) NOT NULL, mut_aa varchar(255) NOT NULL, PRIMARY KEY(Specimen, software, gene, position));
+CREATE TABLE mutations(specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255) NOT NULL, position int NOT NULL, ref_aa varchar(255) NOT NULL, mut_aa varchar(255) NOT NULL, PRIMARY KEY(specimen, software, gene, position));
 """
 
 cmds["phenotype_prediction"]="""
-CREATE TABLE phenotype_prediction(Specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, antibiotic varchar(255) NOT NULL, PRIMARY KEY(Specimen, software, antibiotic));
+CREATE TABLE phenotype_prediction(specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, antibiotic varchar(255) NOT NULL, PRIMARY KEY(specimen, software, antibiotic));
 """
 
+cmds["antibiotic_resistance_conferring_genes_annotation"]="""
+CREATE TABLE antibiotic_resistance_conferring_genes_annotation (gene varchar(255) NOT NULL, annotation_source varchar(255) NOT NULL, antibiotic varchar(255), PRIMARY KEY(gene, annotation_source, antibiotic));
+"""
 
-cmds["resistance_conferring_genes"]="""
-CREATE TABLE resistance_conferring_genes(Specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255), description TEXT, PRIMARY KEY(Specimen, software, gene));
+cmds["antibiotic_resistance_conferring_mutations_annotation"]="""
+CREATE TABLE antiobiotic_resistance_conferring_mutations_annotation (gene varchar(255) NOT NULL, position int NOT NULL, ref_aa varchar(255) NOT NULL, mut_aa varchar(255), annotation_source varchar(255) NOT NULL, antibiotic varchar(255), PRIMARY KEY(gene, position, ref_aa, mut_aa, annotation_source, antibiotic));
+"""
+
+cmds["resistance_associated_genes"]="""
+CREATE TABLE resistance_associated_genes(specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255) NOT NULL, PRIMARY KEY(specimen, software, gene));
 """
 
 with open(snakemake.output[0], "w") as myfile:
