@@ -26,16 +26,20 @@ cmds["resistance_associated_mutations"]="""
 CREATE TABLE resistance_associated_mutations(specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, gene varchar(255) NOT NULL, position int NOT NULL, ref_aa varchar(255) NOT NULL, mut_aa varchar(255) NOT NULL, PRIMARY KEY(specimen, software, gene, position));
 """
 
-cmds["phenotype_prediction"]="""
-CREATE TABLE phenotype_prediction(specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, antibiotic varchar(255) NOT NULL, PRIMARY KEY(specimen, software, antibiotic));
+cmds["phenotype_prediction_from_mutation"]="""
+CREATE TABLE phenotype_prediction_from_mutation(specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, antibiotic varchar(255) NOT NULL, PRIMARY KEY(specimen, software, antibiotic));
 """
 
-cmds["antibiotic_resistance_conferring_genes_annotation"]="""
-CREATE TABLE antibiotic_resistance_conferring_genes_annotation (gene varchar(255) NOT NULL, annotation_source varchar(255) NOT NULL, antibiotic varchar(255), PRIMARY KEY(gene, annotation_source, antibiotic));
+cmds["phenotype_prediction_from_gene_presence"]="""
+CREATE TABLE phenotype_prediction_from_gene_presence(specimen varchar(255) NOT NULL, software varchar(255) NOT NULL, antibiotic varchar(255) NOT NULL, PRIMARY KEY(specimen, software, antibiotic));
 """
 
-cmds["antibiotic_resistance_conferring_mutations_annotation"]="""
-CREATE TABLE antiobiotic_resistance_conferring_mutations_annotation (gene varchar(255) NOT NULL, position int NOT NULL, ref_aa varchar(255) NOT NULL, mut_aa varchar(255), annotation_source varchar(255) NOT NULL, antibiotic varchar(255), PRIMARY KEY(gene, position, ref_aa, mut_aa, annotation_source, antibiotic));
+cmds["resistance_conferring_genes_annotation"]="""
+CREATE TABLE resistance_conferring_genes_annotation (gene varchar(255) NOT NULL, annotation_source varchar(255) NOT NULL, antibiotic varchar(255), PRIMARY KEY(gene, annotation_source, antibiotic));
+"""
+
+cmds["resistance_conferring_mutations_annotation"]="""
+CREATE TABLE resistance_conferring_mutations_annotation (gene varchar(255) NOT NULL, position int NOT NULL, ref_aa varchar(255) NOT NULL, mut_aa varchar(255), annotation_source varchar(255) NOT NULL, antibiotic varchar(255), PRIMARY KEY(gene, position, ref_aa, mut_aa, annotation_source, antibiotic));
 """
 
 cmds["resistance_associated_genes"]="""

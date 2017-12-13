@@ -11,27 +11,40 @@ cursor = cnx.cursor()
 aro = pronto.Ontology(snakemake.params["ontology_aro"])
 ro = pronto.Ontology(snakemake.params["ontology_ro"])
 mo = pronto.Ontology(snakemake.params["ontology_mo"])
+currated_genes = snakemake.params["currated_genes"]
 
 aro.merge(ro)
 aro.merge(mo)
 
-def load_row_into_db(row, curs, log, sample, aro_ont):
+
+def load_row_into_db(row, curs, log, sample, aro_ont, gene_list):
     cmds = []
     if row["SNP"] != "n/a":
-        term = aro_ont[row["ARO"]]
-        for child in term.relations:
-            if child.obo_name=="is_a":
-
-                print(term.relations[child][0].synonyms)
-                print(term.relations[child].name[0].split()[-1].strip())
-            
-        for parent in term.rparents():
-            print(parent)
-            for child in parent.relations:
+        best_hit = row["Best_Hit_ARO"].split()
+        gene = list(set(best_hit).intersection(set(gene_list)))
+        pos = re.sub("[^0-9]", "", row["SNP"])
+        ref = row["SNP"][0]
+        mut = row["SNP"][-1]
+        if len(gene) == 1:
+            term = aro_ont[row["ARO"]]
+            for child in term.relations:
                 if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
-                    for antibiotic in parent.relations[child]:
+                    for antibiotic in term.relations[child]:
                         anti = antibiotic.name.replace("antibiotic", "").strip()
-                        print(anti)
+                        cmds.append("INSERT INTO resistance_associated_mutations (specimen, software, gene, position, ref_aa, mut_aa) VALUES (\"{0}\", \"rgi\", \"{1}\", {2}, \"{3}\", \"{4}\");".format(sample, gene, pos, ref, mut))
+                        cmds.append("INSERT INTO phenotype_prediction_from_mutation (specimen, software, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(sample, anti))
+                        cmds.append("INSERT INTO resistance_conferring_mutations_annotation (gene, position, ref_aa, mut_aa, annotation_source, antibiotic) VALUES (\"{0}\", {1}, \"{2}\", \"{3}\", \"rgi\", \"{4}\");".format(gene, pos, ref, mut, anti))
+            for cmd in cmds:
+                try:
+                    cursor.execute(cmd)
+                except mysql.connector.errors.Error as err :
+                    with open(log, "a") as f:
+                        f.write("Something went wrong: {}\n".format(err))
+
+
+        else:
+            raise Exception("Problem parsing the predicted ARO Model from RGI from {0}".format(sample))  
+                            
 #                        cmds.append("INSERT INTO phenotype_prediction (specimen, software, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(sample, anti))
 #                        cmds.append("INSERT INTO antibiotic_resistance_conferring_genes_annotation (gene, annotation_source, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(gene, anti))
 #                        print(cmds)
@@ -84,28 +97,28 @@ def load_row_into_db(row, curs, log, sample, aro_ont):
     elif "intrinsic" not in row["Best_Hit_ARO"]:
         term = aro_ont[row["ARO"]]
         gene = row["Best_Hit_ARO"].replace(" ", "_").strip()
-        for parent in term.rparents():
-            for child in parent.relations:
-                if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
-                    for antibiotic in parent.relations[child]:
-                        anti = antibiotic.name.replace("antibiotic", "").strip()
-                        cmds.append("INSERT INTO phenotype_prediction (specimen, software, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(sample, anti))
-                        cmds.append("INSERT INTO antibiotic_resistance_conferring_genes_annotation (gene, annotation_source, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(gene, anti))
+#        for parent in term.rparents():
+#            for child in parent.relations:
+#                if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
+#                    for antibiotic in parent.relations[child]:
+#                        anti = antibiotic.name.replace("antibiotic", "").strip()
+#                        cmds.append("INSERT IGNORE INTO phenotype_prediction_from_gene_presence (specimen, software, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(sample, anti))
+#                        cmds.append("INSERT IGNORE INTO resistance_conferring_genes_annotation (gene, annotation_source, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(gene, anti))
         for child in term.relations:
             if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
                 for antibiotic in term.relations[child]:
                     anti = antibiotic.name.replace("antibiotic", "").strip()
-                    cmds.append("INSERT INTO phenotype_prediction (specimen, software, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(sample, anti))
-                    cmds.append("INSERT INTO antibiotic_resistance_conferring_genes_annotation (gene, annotation_source, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(gene, anti))
+                    cmds.append("INSERT IGNORE INTO phenotype_prediction_from_gene_presence (specimen, software, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(sample, anti))
+                    cmds.append("INSERT IGNORE INTO resistance_conferring_genes_annotation (gene, annotation_source, antibiotic) VALUES (\"{0}\", \"rgi\", \"{1}\");".format(gene, anti))
 
-        cmds.append("INSERT INTO resistance_associated_genes(specimen, software, gene) VALUES  (\"{0}\", \"rgi\", \"{1}\");".format(sample, gene))
+        cmds.append("INSERT IGNORE INTO resistance_associated_genes(specimen, software, gene) VALUES  (\"{0}\", \"rgi\", \"{1}\");".format(sample, gene))
         for cmd in cmds:
             try:
                 cursor.execute(cmd)
             except mysql.connector.errors.Error as err :
                 with open(log, "a") as f:
-                        f.write("Something went wrong: {}\n".format(err))
-                
+                    f.write("Something went wrong: {}\n".format(err))
+                    
             
 
 with open(snakemake.output[0], "w") as myfile:
@@ -114,7 +127,7 @@ with open(snakemake.output[0], "w") as myfile:
 with open(snakemake.input[0], "r") as tsvfile:
     csvreader = csv.DictReader(tsvfile, delimiter="\t")
     for row in csvreader:
-        load_row_into_db(row, cursor, snakemake.output[0], snakemake.params["id"][snakemake.wildcards["sample"]], aro)
+        load_row_into_db(row, cursor, snakemake.output[0], snakemake.params["id"][snakemake.wildcards["sample"]], aro, currated_genes)
         
 cnx.commit()
 cnx.close()

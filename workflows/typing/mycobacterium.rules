@@ -58,8 +58,13 @@ spec_for_mykrobe = "tb"
 mysql_conf_file = "/home/sacha/.my.cnf"
 sample_names = "sample_names.tsv"
 resistance_prediction_softwares = ["mykrobe", "rgi"]
+currated_genes_file = "resistance_genes.csv"
 
-
+genes = []
+with open(currated_genes_file) as csvfile:
+    reader = csv.reader(csvfile, delimiter="\t")
+    for row in reader:
+        genes.append(row[1])
 
 ontology_file_aro = 'aro.obo'
 ontology_file_mo = 'mo.obo'
@@ -132,7 +137,7 @@ include:
 
 rule something:
     input:
-        expand("strains/{sample}/multiqc/log.txt", sample= read_naming.keys())
+        expand("strains/{sample}/logs/rgi_db.txt", sample= read_naming.keys())
     output:
         "report.html"
     shell:
