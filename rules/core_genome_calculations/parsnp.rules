@@ -1,0 +1,27 @@
+rule calculate_core_genome_parsnp:
+    input:
+        "bin/parsnp",
+        "references/{species}/log.txt",
+        "references/{ref}/genome.gbk"
+    output:
+        "core/{species}/{ref}_parsnp.xmfa"
+    shell:
+        """
+        bin/parsnp -g {input[2]} -d $(dirname {input[1]})/all_complete_genomes/ -o $(dirname {output[0]})
+        mv $(dirname {output[0]})/parsnp.xmfa {output[0]}
+        """
+
+    
+    
+rule extract_core_genome_from_ref:
+    input:
+        "core/{species}/{ref}_parsnp.xmfa",
+        "references/{ref}/genome.gbk"
+    output:
+        "core/{species}/{ref}_core.bed"
+    shell:
+        """
+        accession=$(grep "ACCESSION" {input[1]} | sed "s/ACCESSION//" | tr -d '[:space:]')
+        echo ${{accession}}
+        grep ">1:[0-9]\+-[0-9]\+" {input[0]} | sed "s/ .*//" | sed "s/-/\t/" | sed "s/:/\t/" | sed "s/^>1/${{accession}}/" > {output[0]}
+        """
