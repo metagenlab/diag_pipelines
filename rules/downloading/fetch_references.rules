@@ -15,43 +15,44 @@ rule get_reference_or_representative_or_complete_genome_urls:
         fi
         """
 
+
+rule download_gbks_from_url:
+    input:
+        "references/{ref}_url.txt"
+    output:
+        "references/{ref}/genome.gbk"
+    shell:
+        """
+        head -n 1 {input[0]} | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" | xargs wget -qO- | gzip -d > {output[0]} 
+        """
+
+        
 rule get_complete_genomes_urls:
     conda:
         "env/entrez-direct.yaml"
     output:
-        "references/{ref}_url_complete_genomes.txt"
+        "references/{species}_url_complete_genomes.txt"
     shell:
         """
-        search=$( echo {wildcards.ref} | tr '_' ' ')
+        search=$( echo {wildcards.species} | tr '_' ' ')
         esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -element Sub_value FtpPath_RefSeq | tr ' ' '_' > {output[0]}
         """         
         
-rule download_file_from_url_2:
+rule download_all_complete_genomes_fasta:
     input:
-        "references/{ref}_url_complete_genomes.txt"
+        "references/{species}_url_complete_genomes.txt"
     output:
-        "references/{ref}/genome.{format}"
+        "references/{species}/all_complete_genomes/log.txt"
     shell:
         """
         while read id ftp; do
-            echo ${{id}}
-            echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.{wildcards.format}.gz/" | xargs wget -qO- | gzip -d  > references/{wildcards.ref}/${{id}}_genome.{wildcards.format}
+            correct_id=$( echo ${{id}} | tr "/" "_" | tr "(" "" | tr ")" "" )
+            echo ${{correct_id}}
+            if [ ! -f references/{wildcards.species}/${{correct_id}}_genome.gbk ]; then
+                 echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs wget -qO- | gzip -d  > references/{wildcards.species}/all_complete_genomes/${{correct_id}}_genome.fasta
+            fi
         done < "{input[0]}"
-        """
-        
-
-        
-rule download_file_from_url:
-    input:
-        "references/{ref}_url_complete_genomes.txt"
-    output:
-        dynamic("references/{ref}/{strain}_genome.{format}")
-    shell:
-        """
-        while read id ftp; do
-            echo ${{id}}
-            echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.{wildcards.format}.gz/" | xargs wget -qO- | gzip -d  > references/{wildcards.ref}/${{id}}_genome.{wildcards.format}
-        done < "{input[0]}"
+        echo 'ok' > {output[0]}
         """
         
         
