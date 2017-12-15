@@ -138,9 +138,14 @@ include:
 include:
     prefix + "core_genome_calculations/parsnp.rules"
 
+include:
+    prefix + "core_genome_calculations/extract_snps_core.rules"
+
+
+
 rule something:
     input:
-        expand("strains/{sample}/logs/mykrobe_db.txt", sample= read_naming.keys())
+        expand("strains/{sample}/core/h37rv/snps.vcf", sample= read_naming.keys())
     output:
         "report.html"
     shell:

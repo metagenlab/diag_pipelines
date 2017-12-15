@@ -7,6 +7,7 @@ rule snippy_to_gbk_paired:
         ancient("references/{ref}/genome.gbk")
     output:
         "mapping/snippy/{ref}/{sample}/snps.vcf",
+        "mapping/snippy/{ref}/{sample}/snps.vcf.gz",
         "mapping/snippy/{ref}/{sample}/snps.bam"
     log:
         "strains/{sample}/mapping/snippy.log"
