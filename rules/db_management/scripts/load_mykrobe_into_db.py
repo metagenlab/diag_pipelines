@@ -16,7 +16,7 @@ def load_row_into_db(row, curs, log, sample):
         cmds.append("INSERT INTO phenotype_prediction_from_gene_presence (specimen, software, antibiotic) VALUES (\"{0}\", \"mykrobe\", \"{1}\");".format(sample, anti))
         cmds.append("INSERT INTO resistance_associated_genes(specimen, software, gene) VALUES  (\"{0}\", \"mykrobe\", \"{1}\");".format(sample, gene))
         
-    if row["susceptibility"] == "R" and row["variants (gene:alt_depth:wt_depth:conf)"] !="" and "del" not in row["variants (gene:alt_depth:wt_depth:conf)"] and "ins" not in row["variants (gene:alt_depth:wt_depth:conf)"]:
+    elif row["susceptibility"] == "R" and row["variants (gene:alt_depth:wt_depth:conf)"] !="" and "del" not in row["variants (gene:alt_depth:wt_depth:conf)"] and "ins" not in row["variants (gene:alt_depth:wt_depth:conf)"]:
         gene = row["variants (gene:alt_depth:wt_depth:conf)"].split('_')[0]
         anti = row["drug"].lower()
         mutation = row["variants (gene:alt_depth:wt_depth:conf)"].split('_')[1].split("-")[0]
@@ -26,7 +26,7 @@ def load_row_into_db(row, curs, log, sample):
         cmds.append("INSERT INTO resistance_associated_mutations (specimen, software, gene, position, ref_aa, mut_aa) VALUES (\"{0}\", \"mykrobe\", \"{1}\", {2}, \"{3}\", \"{4}\");".format(sample, gene, pos, ref, mut))
         cmds.append("INSERT INTO phenotype_prediction_from_mutation (specimen, software, antibiotic) VALUES (\"{0}\", \"mykrobe\", \"{1}\");".format(sample, anti))
         cmds.append("INSERT INTO resistance_conferring_mutations_annotation (gene, position, ref_aa, mut_aa, annotation_source, antibiotic) VALUES (\"{0}\", {1}, \"{2}\", \"{3}\", \"mykrobe\", \"{4}\");".format(gene, pos, ref, mut, anti))
-    if "del" in row["variants (gene:alt_depth:wt_depth:conf)"] or "ins" in row["variants (gene:alt_depth:wt_depth:conf)"]:
+    elif "del" in row["variants (gene:alt_depth:wt_depth:conf)"] or "ins" in row["variants (gene:alt_depth:wt_depth:conf)"]:
         raise Exception("Insertion or deletion confering resistance have been detected by Mykrobe in {0}, parsing currently not implemented".format(sample))
     for cmd in cmds:
         try:
