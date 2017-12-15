@@ -12,7 +12,7 @@ rule copy_fastq_paired_from_link:
         
 rule copy_fastq_single_from_link:
     input:
-        ancient(lambda wildcards: "links/"+wildcards.sample+"."+read_naming[wildcards.sample][0])
+        ancient(lambda wildcards: "links/"+folders[wildcards.sample]+ "/" +original_name[wildcards.sample]+ "." +read_naming[wildcards.sample][0])
     output:
         "reads/raw/{sample}_single.fastq.gz"
     shell:
