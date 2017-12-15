@@ -1,0 +1,5 @@
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - vcftools = 0.1.15

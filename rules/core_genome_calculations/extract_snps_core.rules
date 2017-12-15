@@ -1,0 +1,15 @@
+rule extract_snp_core:
+    conda:
+        "env/vcftools.yaml"
+    input:
+        "core/Mycobacterium_tuberculosis/{ref}_core.bed",
+        "mapping/snippy/{ref}/{sample}/snps.vcf.gz"
+    output:
+        "strains/{sample}/core/{ref}/snps.vcf"
+    shell:
+        """
+        tabix -h -R {input[0]} {input[1]} > {output[0]}
+        """
+
+
+    
