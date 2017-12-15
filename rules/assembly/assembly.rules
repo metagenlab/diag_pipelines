@@ -10,7 +10,7 @@ rule trimmomatic_SE:
     conda:
         "env/trim.yaml"
     input:
-        "reads/raw/{sample}.fastq.gz"
+        "reads/raw/{sample}_single.fastq.gz"
     params:
         minlength = config["minimum_read_length"],
         minqual = config["minimum_quality_base"],

@@ -10,7 +10,7 @@ rule align_paired_reads_to_assembled_genome:
     shell:
         """
         bwa index {input[0]}
-        bwa mem {input} | samtools sort -O BAM -o {output} -
+        bwa mem -v 1 {input} | samtools sort -O BAM -o {output} - 
         """
 
 rule align_single_reads_to_assembled_genome:
@@ -24,5 +24,5 @@ rule align_single_reads_to_assembled_genome:
     shell:
         """
         bwa index {input[0]}
-        bwa mem {input} | samtools sort -O BAM -o {output} -
+        bwa mem -v 1 {input} | samtools sort -O BAM -o {output} -
         """

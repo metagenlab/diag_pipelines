@@ -4,10 +4,10 @@ rule snippy_to_gbk_paired:
     input:
         ancient("reads/raw/{sample}_R1.fastq.gz"),
         ancient("reads/raw/{sample}_R2.fastq.gz"),
-        "references/{ref}/genome.gbk"
+        ancient("references/{ref}/genome.gbk")
     output:
         "mapping/snippy/{ref}/{sample}/snps.vcf",
-        temp("mapping/snippy/{ref}/{sample}/snps.bam")
+        "mapping/snippy/{ref}/{sample}/snps.bam"
     log:
         "strains/{sample}/mapping/snippy.log"
     shell:
