@@ -86,6 +86,9 @@ include:
 
 include:
     prefix + "downloading/fetch_references.rules"
+    
+include:
+    prefix + "downloading/fetch_software.rules"
 
 include:
     prefix + "mapping/snippy.rules"
@@ -132,7 +135,8 @@ include:
 include:
     prefix + "typing/compare_methods.rules"
 
-
+include:
+    prefix + "core_genome_calculations/parsnp.rules"
 
 rule something:
     input:

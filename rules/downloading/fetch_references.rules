@@ -42,13 +42,14 @@ rule download_all_complete_genomes_fasta:
     input:
         "references/{species}_url_complete_genomes.txt"
     output:
-        "references/{species}/all_complete_genomes/log.txt"
+        "references/{species}/log.txt"
     shell:
         """
+        mkdir -p $(dirname {output[0]})/all_complete_genomes/
         while read id ftp; do
-            correct_id=$( echo ${{id}} | tr "/" "_" | tr "(" "" | tr ")" "" )
+            correct_id=$( echo ${{id}} | tr "/" "_" | sed "s/(//g" | sed "s/)//" | sed "s/;//")
             echo ${{correct_id}}
-            if [ ! -f references/{wildcards.species}/${{correct_id}}_genome.gbk ]; then
+            if [ ! -f references/{wildcards.species}/all_complete_genomes/${{correct_id}}_genome.fasta ]; then
                  echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs wget -qO- | gzip -d  > references/{wildcards.species}/all_complete_genomes/${{correct_id}}_genome.fasta
             fi
         done < "{input[0]}"
