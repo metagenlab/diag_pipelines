@@ -34,6 +34,8 @@ def get_sample_names_correspondance(filename):
     corres = {}
     with open(filename) as csvfile:
         reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+        next(reader, None)
+        next(reader, None)
         for row in [[s.strip() for s in inner] for inner in reader]:
             cells = list(filter(None, row))
             corres[cells[0]] = cells[1].replace(" ", "_")
@@ -41,10 +43,7 @@ def get_sample_names_correspondance(filename):
 
 link_directory="links/"
 
-if os.path.isfile("sample_names.tsv"):
-    sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
-else:
-    sample_correspondance = { x:x for x in read_naming.keys()}
+sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
 
 folders = {}
 read_naming = get_read_naming_patterns(link_directory)
@@ -137,7 +136,7 @@ include:
 
 rule something:
     input:
-        expand("strains/{sample}/logs/rgi_db.txt", sample= read_naming.keys())
+        expand("strains/{sample}/logs/mykrobe_db.txt", sample= read_naming.keys())
     output:
         "report.html"
     shell:
