@@ -31,7 +31,7 @@ rule unzip_fastqc_single:
     output:
         "strains/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
     shell:
-        "unzip -D -u {input[0]} -d $( dirname {input[0]}) && unzip -D -u {input[1]} -d $( dirname {input[0]}) && touch {output[0]} &&  touch {output[1]}"
+        "unzip -D -u {input[0]} -d $( dirname {input[0]})  && touch {output[0]}"
 
     
 rule unzip_fastqc_paired:
