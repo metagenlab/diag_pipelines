@@ -37,7 +37,7 @@ rule abricate:
         abricate --nopath --db resfinder {input[0]} 2> {log} 1> {output[0]} 
         """
         
-rule mykrobe:
+rule mykrobe_paired:
     conda:
         "env/mykrobe.yaml"
     input:
@@ -52,6 +52,21 @@ rule mykrobe:
         mykrobe predict "{wildcards.sample}" "{params.species}" -1 {input[0]} --min_variant_conf 100  > {output[0]} 
         """
 
+rule mykrobe_single:
+    conda:
+        "env/mykrobe.yaml"
+    input:
+        "reads/raw/{sample}_single.fastq.gz",
+    output:
+        "strains/{sample}/resistance/mykrobe.json"
+    params:
+        species = spec_for_mykrobe
+    shell:
+        """
+        mykrobe predict "{wildcards.sample}" "{params.species}" -1 {input[0]} --min_variant_conf 100  > {output[0]} 
+        """
+
+    
 
 
 rule mykrobe_json_to_tsv:
