@@ -1,0 +1,32 @@
+rule blast_virulence_protein:
+    conda:
+        "env/blast.yaml"
+    input:
+        "virulence/log.txt",
+        "strains/{sample}/annotation/{sample}.faa"
+    output:
+        "strains/{sample}/virulence/results.tsv"
+    shell:
+        """
+        makeblastdb -dbtype prot -in {input[1]}
+        echo "Virulence factor ID\tSequenced gene ID\tAmino acid percentage identity\tCoverage of the Virulence factor protein on the alignement\tE-value" > {output[0]}
+        for i in $(ls $(dirname {input[0]})/fastas/*.fasta); do
+             blastp -query ${{i}} -db {input[1]} -outfmt "6 qseqid sseqid pident qcovs evalue" | awk '$3>90' >> {output[0]}
+        done
+        """
+        
+rule add_description:
+    conda:
+        "env/xlwt.yaml"
+    input:
+        "strains/{sample}/virulence/results.tsv",
+        "virulence_factors.tsv"
+    params:
+        sample_corres = sample_correspondance
+    output:
+        "strains/{sample}/virulence/{sample}_virulence.tsv",
+        "strains/{sample}/virulence/{sample}_virulence.xlsx"
+    script:
+        "scripts/merge_result_and_description.py"
+        
+    
