@@ -8,17 +8,24 @@ cnx = mysql.connector.connect(option_files=snakemake.params["conf"], option_grou
 cnx.get_warnings = True
 cursor = cnx.cursor()
 
-for j in snakemake.params["soft"]:
-    out = "_".join(snakemake.output[0].split("_")[:-1])+"_"+j+".tsv"
-    with open(out, "w") as f:
-        w = csv.writer(f)
-        w.writerow(["Specimen", "gene"])
+out = snakemake.output[0]
+
+with open(out, "a") as f:
+    w = csv.writer(f, delimiter="\t")
+    w.writerow(["Specimen", "software", "gene", "antibiotic_resistance"])
+    for j in snakemake.params["soft"]:
         for i in snakemake.params['samples']:
-            cmd = "SELECT Specimen, gene from resistance_conferring_genes where software=\""+j+"\" and Specimen =\"{0}\";".format(str(i))
+            cmd = "SELECT Specimen, gene from resistance_associated_genes where software=\""+j+"\" and Specimen =\"{0}\";".format(str(i))
             cursor.execute(cmd)
             results = cursor.fetchall()
             for row in results:
-                w.writerow(row)
+                gene = row[1]
+                cmd = "SELECT antibiotic from resistance_conferring_genes_annotation where annotation_source=\""+j+"\" and gene = \"{0}\";".format(str(gene))
+                cursor.execute(cmd)
+                results = cursor.fetchall()
+                anti = ",".join([x[0] for x in results])
+                res=[i, j, gene, anti]
+                w.writerow(res)
                 
             
 

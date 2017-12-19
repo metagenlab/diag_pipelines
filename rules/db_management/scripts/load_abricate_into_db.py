@@ -8,12 +8,16 @@ cursor = cnx.cursor()
 
 def load_row_into_db(row, curs, log, sample):
     gene = row[4]
-    cmd="INSERT IGNORE INTO resistance_associated_genes(specimen, software, gene) VALUES (\"{0}\", \"abricate\", \"{1}\");".format(sample, str(gene))
-    curs.execute(cmd)
-    i=cursor.fetchwarnings()
-    if i is not None:
-        with open(log, "a") as f:
-            f.write(str(i)+"\n")
+    cmds = []
+    cmds.append("INSERT IGNORE INTO resistance_associated_genes(specimen, software, gene) VALUES  (\"{0}\", \"abricate\", \"{1}\");".format(sample, str(gene)))
+    for cmd in cmds:
+        try:
+            cursor.execute(cmd)
+        except mysql.connector.errors.Error as err :
+            with open(log, "a") as f:
+                f.write("Something went wrong: {}\n".format(err))
+
+    
 
 with open(snakemake.output[0], "w") as logfile:
     logfile.write("")

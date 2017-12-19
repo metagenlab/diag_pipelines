@@ -14,11 +14,11 @@ for j in snakemake.params["soft"]:
     cmd="Specimen="
     for i in snakemake.params['samples']:
         cmd += '"' + i + '"' + " or Specimen="
-    cmd = "Select distinct antibiotic from phenotype_prediction where software=\""+j+"\" and ("+cmd[:-13]+");"
+    cmd = "Select distinct antibiotic from phenotype_prediction_from_gene_presence where software=\""+j+"\" and ("+cmd[:-13]+");"
     cursor.execute(cmd)
     anti = [x[0] for x in cursor.fetchall()]
     for i in snakemake.params['samples']:
-        cmd = "SELECT antibiotic from phenotype_prediction where software=\""+j+"\" and Specimen =\"{0}\";".format(str(i))
+        cmd = "SELECT antibiotic from phenotype_prediction_from_gene_presence  where software=\""+j+"\" and Specimen =\"{0}\";".format(str(i))
         cursor.execute(cmd)
         res[i]={}
         for k in anti:
