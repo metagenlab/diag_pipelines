@@ -63,32 +63,11 @@ for i in os.listdir(link_directory):
         read_naming = { ** read_naming, **k}
         original_name = { ** original_name, **u}
 
-
-
-spec_for_mykrobe = 'staph'
-db_to_use = "saureus"
-mysql_conf_file = "/home/sacha/.my.cnf"
-resistance_prediction_softwares = ["mykrobe", "rgi", "abricate"]
-
-prefix = "../../rules/"
-
-ontology_file_aro = 'aro.obo'
-ontology_file_mo = 'mo.obo'
-ontology_file_ro = 'ro.obo'
-
-
-if os.path.isfile("sample_names.tsv"):
-    sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
-else:
-    sample_correspondance = { x:x for x in read_naming.keys()} 
-
-
-genes =["gyrA", "grlA"]
-
 sample_names = "sample_names.tsv"
+       
+sample_correspondance = get_sample_names_correspondance(sample_names)
 
-print(sample_correspondance)
-print(read_naming)
+prefix = "../rules/"
 
 include:
     prefix + "read_manipulation/get_reads.rules"
@@ -96,9 +75,6 @@ include:
 include:
     prefix + "downloading/fetch_references.rules"
     
-include:
-    prefix + "downloading/fetch_virulence_factors.rules"
-
 include:
     prefix + "mapping/snippy.rules"
 
@@ -110,25 +86,10 @@ include:
 
 include:
     prefix + "assembly/assembly.rules"
-
-include:
-    prefix + "db_management/creation.rules"
-
-include:
-    prefix + "db_management/insert_data.rules"
     
-include:
-    prefix + "db_management/fetch_data.rules"
-
 include:
     prefix + "annotation/prokka.rules"
 
-include:
-    prefix + "annotation/resistance.rules"
-
-include:
-    prefix + "annotation/virulence.rules"
-    
 include:
     prefix + "quality/multiqc.rules"
 
@@ -137,27 +98,5 @@ include:
 
 include:
     prefix + "quality/quality_reads.rules"    
-    
-include:
-    prefix + "typing/mlst.rules"
-
-include:
-    prefix + "typing/snps_distance.rules"
-    
-include:
-    prefix + "typing/compare_methods.rules"
 
 
-
-rule something:
-    input:
-        expand("strains/{sample}/resistance/{sample}_resistance_summary.xlsx", sample= read_naming.keys()),
-        expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample= read_naming.keys()),
-
-    output:
-        "report.html"
-    shell:
-        """
-        echo "" > {output[0]}
-        """
-    
