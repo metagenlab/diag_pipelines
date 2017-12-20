@@ -3,7 +3,7 @@ rule mlst:
         "env/mlst.yaml"
     input:
         expand("strains/{sample}/annotation/{sample}.fsa", sample=read_naming.keys()),
-        "references/{ref}/genome.gbff"
+        "references/{ref}/genome.gbk"
     output:
         "typing/mlst/summary_{ref}.out"
     shell:
