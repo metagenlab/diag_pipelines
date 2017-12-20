@@ -25,7 +25,7 @@ rule add_description:
         sample_corres = sample_correspondance
     output:
         "strains/{sample}/virulence/{sample}_virulence.tsv",
-        "strains/{sample}/virulence/{sample}_virulence.xlsx"
+        "strains/{sample}/virulence/{sample}_virulence_summary.xlsx"
     script:
         "scripts/merge_result_and_description.py"
         

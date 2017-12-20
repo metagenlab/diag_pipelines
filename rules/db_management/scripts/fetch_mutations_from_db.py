@@ -30,14 +30,11 @@ with open(out_csv, "a") as f:
             cmd = "SELECT distinct antibiotic from resistance_conferring_mutations_annotation where annotation_source=\""+j+"\" and gene=\""+gene+"\";"
             cursor.execute(cmd)
             annot = cursor.fetchall()
-            if len(annot)>1:
-                raise ValueError("One gene is annotated for more than one antibiotic in the mutation db")
-            else:
-                anti = annot[0][0]
-                mut = result[4]+str(result[3])+result[5]
-                res = [j, gene, "variant", mut, anti]
-                w.writerow(res)
-                all_res.append(res)
+            anti = ",".join(x[0] for x in annot)
+            mut = result[4]+str(result[3])+result[5]
+            res = [j, gene, "variant", mut, anti]
+            w.writerow(res)
+            all_res.append(res)
         cmd = "SELECT Specimen, gene from resistance_associated_genes where software=\""+j+"\" and Specimen =\""+spec+"\";"
         cursor.execute(cmd)
         results = cursor.fetchall()

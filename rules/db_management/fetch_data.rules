@@ -13,6 +13,10 @@ rule fetch_resistance_from_db:
         
         
 rule fetch_mutations_from_db:
+    input:
+        "strains/{sample}/logs/rgi_db.txt",
+        "strains/{sample}/logs/mykrobe_db.txt",
+        "strains/{sample}/logs/abricate_db.txt"
     conda:
         "env/python-mysql-pandas.yaml"
     output:
