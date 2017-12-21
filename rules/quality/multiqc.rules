@@ -64,4 +64,4 @@ rule multiqc_all:
     params:
         names = sample_names
     shell:
-        "multiqc -f --sample-names {params.names} -o $(dirname {output[0]}) $(dirname {input})"
+        "multiqc -f -o $(dirname {output[0]}) $(dirname {input})"

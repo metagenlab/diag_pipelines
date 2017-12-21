@@ -2,33 +2,13 @@ import csv
 import os
 import shutil
 
-def get_read_naming_patterns(directory):
-    result = []
-    extension= {}
-    for fname in os.listdir(directory):
-        if fname.endswith("fastq.gz") or fname.endswith("fq.gz") or fname.endswith("fastq") or fname.endswith("fq"):
-            ext = re.search(r'_R(1|2)(\.|_).*', fname)
-            if ext is None:
-                ext = re.search(r'f(?:ast)?q(?:\.gz)?', fname)
-                samp = re.sub("\.$", "", re.search(r'^([^\.]*)\.*', fname).group(0))
-                if samp in extension.keys():
-                    if ext.group(0).endswith(".gz"):
-                        extension[samp]=[ext.group(0)]
-                else:
-                    extension[samp]=[ext.group(0)]
-            else:
-                read = re.compile(re.search(r'_R(1|2)(\.|_)', fname).group(0).replace("_", "").replace(".", ""))
-                samp = re.sub(r'_R(1|2)$', '', re.search(r'.*_R(1|2)', fname).group(0))
-                extension.setdefault(samp, [])
-                match = list(filter(read.match, extension[samp]))
-                if len(match) == 1:
-                    if match[0].endswith("fastq") or match[0].endswith("fq"):
-                        extension[samp].remove(match[0])
-                        extension[samp].append(re.sub("^_", "", ext.group(0)))
-                else:
-                    extension[samp].append(re.sub("^_", "", ext.group(0)))
-    return(extension)
+snakemake_path = "/home/sacha/Documents/new_strain/"
 
+sys.path.insert(0, snakemake_path)
+
+from helper_scripts.get_sample_naming_from_folder_general import get_read_naming_patterns
+
+from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
 
 def get_sample_names_correspondance(filename):
     corres = {}
@@ -38,34 +18,28 @@ def get_sample_names_correspondance(filename):
         next(reader, None)
         for row in [[s.strip() for s in inner] for inner in reader]:
             cells = list(filter(None, row))
-            print(cells)
             corres[cells[0]] = cells[1].replace(" ", "_")
     return(corres)
 
 link_directory="links/"
 
 
-folders = {}
+read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, get_read_naming_patterns)
 
-read_naming = get_read_naming_patterns(link_directory)
-
-
-for key in read_naming.keys():
-    folders[key] = "."
-original_name = { x : x for x in read_naming.keys()}
 
 if os.path.isfile("sample_names.tsv"):
     sample_correspondance = get_sample_names_correspondance("sample_names.tsv")
 else:
     sample_correspondance = { x:x for x in read_naming.keys()} 
 
-
+taxid=1773
 db_to_use = "myco"
 spec_for_mykrobe = "tb"
 mysql_conf_file = "/home/sacha/.my.cnf"
 sample_names = "sample_names.tsv"
 resistance_prediction_softwares = ["mykrobe", "rgi"]
 currated_genes_file = "resistance_genes.csv"
+species = "Mycobacterium tuberculosis"
 
 genes = []
 with open(currated_genes_file) as csvfile:
@@ -79,16 +53,6 @@ genes.append("gidB")
 ontology_file_aro = 'aro.obo'
 ontology_file_mo = 'mo.obo'
 ontology_file_ro = 'ro.obo'
-
-for i in os.listdir(link_directory):
-    if os.path.isdir(link_directory + "/" + i):
-        l = get_read_naming_patterns(link_directory+"/"+i)
-        k = { i + "_" + x : y for x, y in l.items()}
-        u = { i + "_" + x : x for x in l.keys()}
-        for key in k.keys():
-            folders[key]=i
-        read_naming = { ** read_naming, **k}
-        original_name = { ** original_name, **u}
 
 prefix = "../../rules/"
 
@@ -156,8 +120,9 @@ include:
 
 rule something:
     input:
-        expand("strains/{sample}/resistance/{sample}_resistance_summary.xlsx", sample= read_naming.keys())
-#        expand("strains/{sample}/core/h37rv/snps.vcf", sample= read_naming.keys())
+        expand("strains/{sample}/core/h37rv/snps.vcf.gz", sample= read_naming.keys())
+#        expand("mapping/snippy/cdc1551/{sample}/snps.vcf", sample= read_naming.keys())
+     #
     output:
         "report.html"
     shell:

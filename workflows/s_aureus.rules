@@ -33,7 +33,7 @@ sample_names=""
 genes =["gyrA", "grlA"]
 
 
-prefix = "../../rules/"
+prefix = "../rules/"
 
 include:
     prefix + "read_manipulation/get_reads.rules"
