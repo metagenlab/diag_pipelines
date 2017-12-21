@@ -8,7 +8,8 @@ rule prokka:
         "strains/{sample}/annotation/{sample}.gff",
         "strains/{sample}/annotation/{sample}.faa",
         "strains/{sample}/annotation/{sample}.fsa",
-        "strains/{sample}/annotation/{sample}.txt"
+        "strains/{sample}/annotation/{sample}.txt",
+        "strains/{sample}/annotation/{sample}.gbk"
     shell:
         "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample}"
 
