@@ -6,9 +6,9 @@ rule snippy_to_gbk_paired:
         ancient("reads/raw/{sample}_R2.fastq.gz"),
         ancient("references/{ref}/genome.gbk")
     output:
-        "mapping/snippy/{ref}/{sample}/snps.vcf",
-        "mapping/snippy/{ref}/{sample}/snps.vcf.gz",
-        "mapping/snippy/{ref}/{sample}/snps.bam"
+        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf",
+        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz",
+        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam"
     log:
         "strains/{sample}/mapping/snippy.log"
     shell:
