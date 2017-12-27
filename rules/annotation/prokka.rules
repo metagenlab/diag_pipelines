@@ -10,7 +10,10 @@ rule prokka:
         "strains/{sample}/annotation/{sample}.fsa",
         "strains/{sample}/annotation/{sample}.txt",
         "strains/{sample}/annotation/{sample}.gbk"
+    params:
+        genus = lambda wildcards: species_names[wildcards.sample]["genus"],
+        spec = lambda wildcards: species_names[wildcards.sample]["species"]
     shell:
-        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample}"
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}'"
 
 
