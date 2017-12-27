@@ -4,14 +4,13 @@ rule get_files_for_multiqc_paired:
         "strains/{sample}/assembly/spades/quast/report.txt",
         "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
         "strains/{sample}/annotation/{sample}.txt",
-        "strains/{sample}/logs/trimmomatic.log"
+        "strains/{sample}/logs/trimmomatic.log",
+        "strains/{sample}/contamination/blast_results_taxid_species.tsv"
     output:
         "strains/{sample}/multiqc/log.txt"
     shell:
         """
-        if [ ! -d "$(dirname {output[0]})/{wildcards.sample}" ]; then
-             mkdir $(dirname {output[0]})/{wildcards.sample}
-        fi
+        mkdir -p $(dirname {output[0]})/{wildcards.sample}
         cp -R $(dirname {input[0]})/* $(dirname {output[0]})/{wildcards.sample}
         sed "s/_R1\.fastq/\.fastq/g" {input[4]} | sed "s/_R2\.fastq/\.fastq/g" > $(dirname {output[0]})/trimmomatic.log
         cp {input[3]} $(dirname {output[0]})
@@ -31,14 +30,14 @@ rule get_files_for_multiqc_single:
         "strains/{sample}/assembly/spades/quast/report.txt",
         "strains/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
         "strains/{sample}/annotation/{sample}.txt",
-        "strains/{sample}/logs/trimmomatic.log"
+        "strains/{sample}/logs/trimmomatic.log",
+        "strains/{sample}/contamination/blast_results_taxid_species.tsv"
+
     output:
         "strains/{sample}/multiqc/log.txt"
     shell:
         """
-        if [ ! -d "$(dirname {output[0]})/{wildcards.sample}" ]; then
-             mkdir $(dirname {output[0]})/{wildcards.sample}
-        fi
+        mkdir -p $(dirname {output[0]})/{wildcards.sample}
         cp -R $(dirname {input[0]})/* $(dirname {output[0]})/{wildcards.sample}
         sed "s/_R1\.fastq/\.fastq/g" {input[4]} | sed "s/_R2\.fastq/\.fastq/g" > $(dirname {output[0]})/trimmomatic.log
         cp {input[3]} $(dirname {output[0]})
@@ -55,13 +54,11 @@ rule get_files_for_multiqc_single:
         
 
 rule multiqc_all:
-    conda:
-        "env/multiqc.yaml"
     input:
         expand("strains/{sample}/multiqc/log.txt", sample = read_naming.keys())
     output:
         "quality/multiqc_report.html"
-    params:
-        names = sample_names
     shell:
-        "multiqc -f -o $(dirname {output[0]}) $(dirname {input})"
+        """
+        docker run -v ${{PWD}}:/data/ multiqc sh -c 'multiqc -f -o /data/quality/ /data/strains/*/multiqc/ && chmod 666 /data/quality/multiqc_report.html'
+        """
