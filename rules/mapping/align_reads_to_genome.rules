@@ -6,11 +6,12 @@ rule align_paired_reads_to_assembled_genome:
         "reads/raw/{sample}_R1.fastq.gz",
         "reads/raw/{sample}_R2.fastq.gz"
     output:
-        temp("strains/{sample}/mapping/{sample}.bam")
+        "strains/{sample}/mapping/qualimap/{sample}.bam"
     shell:
         """
         bwa index {input[0]}
         bwa mem -v 1 {input} | samtools sort -O BAM -o {output} - 
+        samtools index {output[0]}
         """
 
 rule align_single_reads_to_assembled_genome:
@@ -25,4 +26,5 @@ rule align_single_reads_to_assembled_genome:
         """
         bwa index {input[0]}
         bwa mem -v 1 {input} | samtools sort -O BAM -o {output} -
+        samtools index {output[0]}
         """
