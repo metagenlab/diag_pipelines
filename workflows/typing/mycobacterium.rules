@@ -120,7 +120,7 @@ include:
 
 rule something:
     input:
-        expand("strains/{sample}/core/h37rv/snps.vcf.gz", sample= read_naming.keys())
+        expand("strains/{sample}/mapping/qualimap/{sample}.bam", sample= read_naming.keys())
 #        expand("mapping/snippy/cdc1551/{sample}/snps.vcf", sample= read_naming.keys())
      #
     output:

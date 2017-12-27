@@ -2,7 +2,6 @@ import csv
 import os
 import shutil
 
-
 snakemake_path = "/home/sacha/Documents/new_strain/"
 
 sys.path.insert(0, snakemake_path)
@@ -11,6 +10,7 @@ from helper_scripts.get_sample_naming_from_folder_molis import get_read_naming_p
 
 from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
 
+from helper_scripts.get_species_from_molis import get_species_from_molis
 
 link_directory="links/"
 
@@ -18,8 +18,9 @@ sample_names = ""
        
 read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, get_read_naming_patterns)
 
-sample_correspondance = { x:x for x in read_naming.keys()} 
+sample_correspondance = { x:x for x in read_naming.keys() } 
 
+species_names = get_species_from_molis("species.csv")
 
 prefix = "../rules/"
 
@@ -27,16 +28,7 @@ include:
     prefix + "read_manipulation/get_reads.rules"
 
 include:
-    prefix + "downloading/fetch_references.rules"
-    
-include:
-    prefix + "mapping/snippy.rules"
-
-include:
     prefix + "mapping/align_reads_to_genome.rules"
-
-include:
-    prefix + "phylogeny/raxml.rules"
 
 include:
     prefix + "assembly/assembly.rules"
@@ -53,4 +45,5 @@ include:
 include:
     prefix + "quality/quality_reads.rules"    
 
-
+include:
+    prefix + "quality/contamination.rules"

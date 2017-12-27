@@ -16,8 +16,9 @@ read_naming, folders, original_name  = get_folders_structure_with_sample_naming(
 
 sample_correspondance = { x:x for x in read_naming.keys()} 
 
-
 spec_for_mykrobe = 'staph'
+taxid=1280
+species="Staphylococcus aureus"
 db_to_use = "saureus"
 mysql_conf_file = "/home/sacha/.my.cnf"
 resistance_prediction_softwares = ["mykrobe", "rgi", "abricate"]
