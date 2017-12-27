@@ -2,7 +2,7 @@ rule qualimap_mapping:
     conda:
         "env/qualimap.yaml"
     input:
-        "strains/{sample}/mapping/{sample}.bam",
+        "strains/{sample}/mapping/qualimap/{sample}.bam",
         "strains/{sample}/annotation/{sample}_truncated.gff"
     output:
         "strains/{sample}/mapping/qualimap/qualimapReport.html"
