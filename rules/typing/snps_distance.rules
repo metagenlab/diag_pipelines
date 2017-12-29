@@ -10,3 +10,15 @@ rule snp_distance:
     script:
         "scripts/calculate_number_of_differences.py"
 
+rule snp_distance_from_vcf:
+    conda:
+        "env/pandas.yaml"
+    params:
+        samples=list(read_naming.keys())
+    input:
+        "core/{ref}/genotype.GT.FORMAT"
+    output:
+        "typing/{ref}/distance.txt",
+        "typing/{ref}/positions.txt"
+    script:
+        "scripts/snp_distance_from_vcf.py"
