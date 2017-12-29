@@ -10,7 +10,7 @@ from helper_scripts.get_sample_naming_from_folder_molis import get_read_naming_p
 
 from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
 
-from helper_scripts.get_species_from_molis import get_species_from_molis
+from helper_scripts.get_species import get_species_from_file
 
 link_directory="links/"
 
@@ -20,9 +20,11 @@ read_naming, folders, original_name  = get_folders_structure_with_sample_naming(
 
 sample_correspondance = { x:x for x in read_naming.keys() } 
 
-species_names = get_species_from_molis("species.csv")
+species_names = get_species_from_file("species.csv")
 
 prefix = "../rules/"
+
+cov_cutoff = 5
 
 include:
     prefix + "read_manipulation/get_reads.rules"
@@ -47,3 +49,9 @@ include:
 
 include:
     prefix + "quality/contamination.rules"
+
+
+
+rule all:
+    input:
+        expand("strains/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta", sample = read_naming.keys())

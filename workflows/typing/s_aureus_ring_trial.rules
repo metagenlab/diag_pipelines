@@ -10,43 +10,63 @@ from helper_scripts.get_sample_naming_from_folder_general import get_read_naming
 
 from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
 
+from helper_scripts.get_species import get_species_from_file
+
 link_directory="links/"
+
+def get_sample_names_correspondance(filename):
+    corres = {}
+    with open(filename) as csvfile:
+        reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+        for row in [[s.strip() for s in inner] for inner in reader]:
+            if row:
+                cells = list(filter(None, row))
+                corres[cells[0]] = cells[1].replace(" ", "_")
+    return(corres)
+
+sample_names="sample_names.tsv"
+sample_correspondance = get_sample_names_correspondance(sample_names)
+
 
 read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, get_read_naming_patterns)
 
-sample_correspondance = { x:x for x in read_naming.keys()} 
+read_correct = {}
+original_correct = {}
+folders_correct = {}
+
+for i in folders.keys():
+    folders_correct[sample_correspondance[i]] = folders[i]
+
+for i in original_name.keys():
+    original_correct[sample_correspondance[i]] = original_name[i]
+
+for i in read_naming.keys():
+    read_correct[sample_correspondance[i]] = read_naming[i]
+
+
+original_name = original_correct
+read_naming = read_correct
+folders = folders_correct
 
 
 spec_for_mykrobe = 'staph'
 db_to_use = "saureus"
 mysql_conf_file = "/home/sacha/.my.cnf"
 resistance_prediction_softwares = ["mykrobe", "rgi", "abricate"]
+species = "Staphylococcus aureus"
+taxid = 1280
+
+species_names = get_species_from_file("species.csv")
+cov_cutoff = 5
 
 ontology_file_aro = 'aro.obo'
 ontology_file_mo = 'mo.obo'
 ontology_file_ro = 'ro.obo'
 
-def get_sample_names_correspondance(filename):
-    corres = {}
-    with open(filename) as csvfile:
-        reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
-        next(reader, None)
-        next(reader, None)
-        for row in [[s.strip() for s in inner] for inner in reader]:
-            if row:
-                cells = list(filter(None, row))
-                print(cells)
-                corres[cells[0]] = cells[1].replace(" ", "_")
-    return(corres)
-
-sample_names="sample_names.tsv"
-
-sample_correspondance = get_sample_names_correspondance(sample_names)
-
 genes =["gyrA", "grlA"]
 
-
 prefix = "../../rules/"
+
 
 include:
     prefix + "read_manipulation/get_reads.rules"
@@ -55,7 +75,7 @@ include:
     prefix + "downloading/fetch_references.rules"
     
 include:
-    prefix + "downloading/fetch_virulence_factors.rules"
+    prefix + "downloading/fetch_software.rules"
 
 include:
     prefix + "mapping/snippy.rules"
@@ -74,7 +94,7 @@ include:
 
 include:
     prefix + "db_management/insert_data.rules"
-    
+
 include:
     prefix + "db_management/fetch_data.rules"
 
@@ -83,9 +103,6 @@ include:
 
 include:
     prefix + "annotation/resistance.rules"
-
-include:
-    prefix + "annotation/virulence.rules"
     
 include:
     prefix + "quality/multiqc.rules"
@@ -105,8 +122,13 @@ include:
 include:
     prefix + "typing/compare_methods.rules"
 
+include:
+    prefix + "core_genome_calculations/parsnp.rules"
 
+include:
+    prefix + "core_genome_calculations/extract_snps_core.rules"
 
+    
 rule something:
     input:
         expand("strains/{sample}/resistance/{sample}_resistance_summary.xlsx", sample= read_naming.keys()),
