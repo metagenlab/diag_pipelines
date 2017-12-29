@@ -4,7 +4,6 @@ rule fetch_resistance_from_db:
     output:
         "resistance/phenotype_summary.tsv"
     params:
-        samples = [sample_correspondance[x] for x in list(read_naming.keys())],
         conf = mysql_conf_file,
         id = db_to_use,
         soft = resistance_prediction_softwares
@@ -23,7 +22,6 @@ rule fetch_mutations_from_db:
         "strains/{sample}/resistance/{sample}_summary.tsv",
         "strains/{sample}/resistance/{sample}_resistance_summary.xlsx"
     params:
-        sample_corres = sample_correspondance,
         conf = mysql_conf_file,
         id = db_to_use,
         soft = resistance_prediction_softwares
@@ -37,7 +35,6 @@ rule fetch_resistance_genes_from_db:
     output:
         "strains/{sample}/resistance/genes_summary.tsv"
     params:
-        sample_corres= sample_correspondance,
         conf = mysql_conf_file,
         id = db_to_use,
         soft = resistance_prediction_softwares

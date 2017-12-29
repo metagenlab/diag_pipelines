@@ -2,7 +2,6 @@ import mysql.connector
 import csv
 import re
 import pronto
-from pprint import pprint
 
 cnx = mysql.connector.connect(option_files=snakemake.params["conf"], option_groups=snakemake.params["db"])
 cnx.get_warnings = True

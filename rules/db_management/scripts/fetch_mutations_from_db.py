@@ -12,9 +12,7 @@ cursor = cnx.cursor()
 out_csv = snakemake.output[0]
 out_xlsx = snakemake.output[1]
 
-spec = snakemake.params["sample_corres"][snakemake.wildcards["sample"]]
-
-
+spec = [snakemake.wildcards["sample"]
 
 all_res = []
 
