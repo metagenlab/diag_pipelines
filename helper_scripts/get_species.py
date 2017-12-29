@@ -1,6 +1,6 @@
 import csv
 
-def get_species_from_molis(filename):
+def get_species_from_file(filename):
     corres = {}
     with open(filename) as csvfile:
         reader = csv.reader(csvfile, delimiter='\t', quotechar='"')

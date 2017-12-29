@@ -125,9 +125,9 @@ rule extract_contigs_500bp:
 
 rule rename_contigs:
     input:
-        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp.fasta"
     output:
-        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
+        "strains/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
     shell:
-        "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig00\\1/\" {input} > {output}"
+        "sed \"s/NODE_\\([0-9]\\+\\)_.*/{wildcards.sample}_contig00\\1/\" {input} > {output}"
 
