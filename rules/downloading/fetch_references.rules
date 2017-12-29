@@ -38,14 +38,14 @@ rule get_complete_genomes_urls:
     shell:
         """
         search=$( echo {params.spec} | tr '_' ' ')
-        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -if FtpPath_RefSeq -element Sub_value FtpPath_RefSeq | tr ' ' '_' > {output[0]}
+        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -if Sub_value -if FtpPath_RefSeq -element Sub_value FtpPath_RefSeq | tr ' ' '_' > {output[0]}
         """         
         
 rule download_all_complete_genomes_fasta:
     input:
         "references/url_complete_genomes.txt"
     output:
-        "references/all_genomes_log.txt"
+        "references/all_complete_genomes_log.txt"
     shell:
         """
         mkdir -p $(dirname {output[0]})/all_complete_genomes/
