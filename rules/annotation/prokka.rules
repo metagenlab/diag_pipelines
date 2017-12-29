@@ -2,7 +2,7 @@ rule prokka:
     conda:
         "env/prokka.yaml"
     input:
-        "strains/{sample}/assembly/spades/contigs_500bp_high_kmer_coverage_renamed.fasta"
+        "strains/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
     output:
         "strains/{sample}/annotation/{sample}.log",
         "strains/{sample}/annotation/{sample}.gff",

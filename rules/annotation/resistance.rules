@@ -66,8 +66,6 @@ rule mykrobe_single:
         mykrobe predict "{wildcards.sample}" "{params.species}" -1 {input[0]} --min_variant_conf 100  > {output[0]} 
         """
 
-    
-
 
 rule mykrobe_json_to_tsv:
     input:
@@ -78,3 +76,22 @@ rule mykrobe_json_to_tsv:
         "scripts/mykrobe_json_to_tsv.py"
 
         
+rule summary_csv_excel_file:
+    params:
+        ontology_aro = ontology_file_aro,
+        ontology_mo = ontology_file_mo,
+        ontology_ro = ontology_file_ro,
+        currated_genes = genes
+    conda:
+        "env/pandas-openpyxl.yaml"
+    input:
+        "strains/{sample}/resistance/mykrobe.tsv",
+        "strains/{sample}/resistance/abricate.txt",
+        "strains/{sample}/resistance/rgi.tsv"
+    output:
+        "strains/{sample}/resistance/summary.csv",
+        "strains/{sample}/resistance/summary.xlsx"
+    script:
+        "scripts/summary_csv_xlsx.py"
+
+

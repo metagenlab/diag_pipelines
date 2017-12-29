@@ -1,4 +1,6 @@
 import pandas
+import pronto
+import csv
 
 out_csv = snakemake.output[0]
 out_xlsx = snakemake.output[1]
@@ -43,18 +45,18 @@ def extract_rgi(row, aro_ont, gene_list):
             if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
                 for antibiotic in term.relations[child]:
                     anti = antibiotic.name.replace("antibiotic", "").strip()
-                    res.append(["rgi", gene, "variant", "", anti])
+                    res.append(["rgi", gene, "gene presence", "", anti])
         for parent in term.rparents():
             print(parent)
             for child in parent.relations:
                 if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
                     for antibiotic in parent.relations[child]:
                         anti = antibiotic.name.replace("antibiotic", "").strip()
-                        res.append(["rgi", gene, "variant", "", anti])
+                        res.append(["rgi", gene, "gene presence", "", anti])
     return(res)
 
 
-def extract_mykrobe(row):
+def extract_mykrobe(row, aro_ont=None, gene_list=None):
     res = []
     if row["susceptibility"] == "R" and row["variants (gene:alt_depth:wt_depth:conf)"] =="":
         for result in  row["genes (prot_mut-ref_mut:percent_covg:depth)"].split(";"):
@@ -76,11 +78,11 @@ def extract_mykrobe(row):
     return(res)
 
 
-def extract_abricate(row):
+def extract_abricate(row, aro_ont=None, gene_list=None):
     res = []
-    gene = row[4]
-    res.append("abricate", gene, "gene presence", "", "")
-
+    gene = row["GENE"]
+    res.append(["abricate", gene, "gene presence", "", ""])
+    return(res)
 
 for file_tsv in snakemake.input:
     if 'rgi' in file_tsv:
@@ -101,6 +103,5 @@ writer = pandas.ExcelWriter(out_xlsx)
 df.to_excel(writer, snakemake.wildcards["sample"], index=False)
 writer.save()
 
-writer = pandas.ExcelWriter(out_csv)
-df.to_csv(writer, snakemake.wildcards["sample"], index= False)
+df.to_csv(out_csv, index= False, sep="\t")
 writer.save()
