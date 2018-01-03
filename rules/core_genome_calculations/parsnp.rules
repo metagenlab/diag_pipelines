@@ -1,26 +1,41 @@
 rule calculate_core_genome_parsnp:
+    conda:
+        "env/inotify.yaml"
     input:
         "bin/parsnp",
-        "references/all_complete_genomes_log.txt",
+        "references/all_complete_genomes_log.txt"
     output:
-        "core/parsnp.xmfa"
+        "core_genome/parsnp/parsnp.xmfa"
+    log:
+        "core_genome/parsnp/log.txt"
     shell:
         """
-        bin/parsnp -c -r ! -d $(dirname {input[1]})/all_complete_genomes/ -o $(dirname {output[0]})
+        echo "begining" > {output[0]}
+        cmd="bin/parsnp -r ! -c -d $(dirname {input[1]})/all_complete_genomes/ -o $(dirname {output[0]})" 
+        echo ${{cmd}}
+        ${{cmd}} &
+        pid=$!
+        echo ${{pid}}
+        while inotifywait -e close_write {output[0]}
+        do
+           echo "detected"
+           pstree -p ${{pid}} | grep -o "([0-9]\+)" | grep -o "[0-9]\+"
+           pstree -p ${{pid}} | grep -o "([0-9]\+)" | grep -o "[0-9]\+" | xargs -I % kill % || :
+        done
         """
 
 rule extract_core_genome_from_ref:
     conda:
         "env/bedtools.yaml"
     input:
-        "core/parsnp.xmfa",
+        "core_genome/parsnp/parsnp.xmfa",
         "references/{ref}/genome.gbk"
     output:
-        "core/{ref}_core.bed",
-        "core/{ref}_core_sorted.bed"
+        "core_genome/{ref}_core_parsnp.bed",
+        "core_genome/{ref}_core_parsnp_sorted.bed"
     shell:
         """
-        accession=$(grep "ACCESSION" {input[1]} | sed "s/ACCESSION *//" | cut -f1 -d' ' | tr -d '[:space:]')
+        accession=$(grep -m 1 "ACCESSION" {input[1]} | sed "s/ACCESSION *//" | cut -f1 -d' ' | tr -d '[:space:]')
         id=$(grep -B 2 $accession {input[0]} | head -n 1 | cut -f2 -d' ')
         grep ">${{id}}:[0-9]\+-[0-9]\+" {input[0]} | sed "s/ .*//" | sed "s/-/\\t/" | sed "s/:/\\t/" | sed "s/^>${{id}}/${{accession}}/" > {output[0]}
         bedtools sort -i {output[0]} > {output[1]}
