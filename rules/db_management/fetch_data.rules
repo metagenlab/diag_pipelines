@@ -20,7 +20,6 @@ rule fetch_mutations_from_db:
         "env/python-mysql-pandas.yaml"
     output:
         "strains/{sample}/resistance/{sample}_summary.tsv",
-        "strains/{sample}/resistance/{sample}_resistance_summary.xlsx"
     params:
         conf = mysql_conf_file,
         id = db_to_use,
