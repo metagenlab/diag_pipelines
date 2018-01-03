@@ -3,14 +3,16 @@ rule get_reference_or_representative_or_complete_genome_urls:
         "env/entrez-direct.yaml"
     output:
         "references/{ref}_url.txt"
+    params:
+        id = taxid
     shell:
         """
         search=$( echo {wildcards.ref} | tr '_' ' ')
-        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if RefSeq_category -equals "reference genome" -element FtpPath_RefSeq  > {output[0]}
+        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if RefSeq_category -equals "reference genome" -if SpeciesTaxid -equals {params.id} -element FtpPath_RefSeq  > {output[0]}
         if [  ! -s {output[0]} ]; then 
-             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if RefSeq_category -equals "representative genome" -element FtpPath_RefSeq > {output[0]}
+             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if RefSeq_category -equals "representative genome" -if SpeciesTaxid -equals {params.id} -element FtpPath_RefSeq > {output[0]}
         if [ ! -s {output[0]} ]; then
-             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if AssemblyStatus -equals "Complete Genome" -element FtpPath_RefSeq  > {output[0]}
+             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -element FtpPath_RefSeq  > {output[0]}
         fi
         fi
         """
@@ -23,7 +25,13 @@ rule download_gbks_from_url:
         "references/{ref}/genome.gbk"
     shell:
         """
-        head -n 1 {input[0]} | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" | xargs wget -qO- | gzip -d > {output[0]} 
+        nb_lines=$(wc -l < {input[0]})
+        if [ $nb_lines -eq 1 ]; then
+             sed "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" {input[0]} | xargs wget -qO- | gzip -d > {output[0]}
+        else
+             echo "There was zero or more than one results for the reference strain you searched" 1>&2
+             exit 1
+        fi
         """
 
         
@@ -50,13 +58,13 @@ rule download_all_complete_genomes_fasta:
         """
         mkdir -p $(dirname {output[0]})/all_complete_genomes/
         while read id ftp; do
-            correct_id=$( echo ${{id}} | tr "/" "_" | sed "s/(//g" | sed "s/)//" | sed "s/;//")
+            correct_id=$( echo ${{id}} | tr "/" "_" | sed "s/(//g" | sed "s/)//" | sed "s/;/_/" | sed "s/:/_/" | sed "s/\./_/" | sed "s/\-/_/")
             echo ${{correct_id}}
             if [ ! -f references/all_complete_genomes/${{correct_id}}_genome.fasta ]; then
-                 echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs wget -qO- | gzip -d  > references/all_complete_genomes/${{correct_id}}_genome.fasta
+                 echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs wget -qO- | gzip -d | sed "s/-/_/g"  > references/all_complete_genomes/${{correct_id}}_genome.fasta
             fi
         done < "{input[0]}"
         echo 'ok' > {output[0]}
         """
-        
-        
+
+
