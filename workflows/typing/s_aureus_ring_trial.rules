@@ -27,7 +27,6 @@ def get_sample_names_correspondance(filename):
 sample_names="sample_names.tsv"
 sample_correspondance = get_sample_names_correspondance(sample_names)
 
-
 read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, get_read_naming_patterns)
 
 read_correct = {}
@@ -48,10 +47,7 @@ original_name = original_correct
 read_naming = read_correct
 folders = folders_correct
 
-
 spec_for_mykrobe = 'staph'
-db_to_use = "saureus"
-mysql_conf_file = "/home/sacha/.my.cnf"
 resistance_prediction_softwares = ["mykrobe", "rgi", "abricate"]
 species = "Staphylococcus aureus"
 taxid = 1280
@@ -78,6 +74,9 @@ include:
     prefix + "downloading/fetch_software.rules"
 
 include:
+    prefix + "downloading/fetch_virulence_factors.rules"
+    
+include:
     prefix + "mapping/snippy.rules"
 
 include:
@@ -90,19 +89,13 @@ include:
     prefix + "assembly/assembly.rules"
 
 include:
-    prefix + "db_management/creation.rules"
-
-include:
-    prefix + "db_management/insert_data.rules"
-
-include:
-    prefix + "db_management/fetch_data.rules"
-
-include:
     prefix + "annotation/prokka.rules"
 
 include:
     prefix + "annotation/resistance.rules"
+
+include:
+    prefix + "annotation/virulence.rules"
     
 include:
     prefix + "quality/multiqc.rules"
@@ -131,11 +124,10 @@ include:
     
 rule something:
     input:
-        expand("strains/{sample}/resistance/{sample}_resistance_summary.xlsx", sample= read_naming.keys()),
+        expand("strains/{sample}/resistance/summary.xlsx", sample= read_naming.keys()),
         expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample= read_naming.keys()),
         "quality/multiqc_report.html",
-        "typing/mlst/summary_nctc_8325.out"
-
+        "typing/mlst/summary.out"
     output:
         "report.html"
     shell:
