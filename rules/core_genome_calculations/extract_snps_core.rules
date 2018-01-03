@@ -2,7 +2,7 @@ rule extract_snps_core:
     conda:
         "env/vcftools.yaml"
     input:
-        "core/{ref}_core_sorted.bed",
+        "core_genome/{ref}_core_parsnp_sorted.bed",
         "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz"
     output:
         "strains/{sample}/core/{ref}/snps.vcf.gz"
@@ -21,7 +21,7 @@ rule merge_vcf_files:
     input:
         expand("strains/{sample}/core/{{ref}}/snps.vcf.gz", sample=sorted(read_naming.keys()))
     output:
-        "core/{ref}/snps_merged.vcf"
+        "typing/core_parsnp/{ref}/snps_merged.vcf"
     shell:
         """
         vcf-merge {input} | sed "s/\\tsnps\\t/\\t{params.sample}\\t/" | sed "s/\/core\/{wildcards.ref}\/snps_snps\\t/\\t/g" | sed "s/\/core\/{wildcards.ref}\/snps_snps$//g" > {output[0]}
@@ -33,9 +33,9 @@ rule extract_genotype_info_no_indels:
     conda:
         "env/vcftools.yaml"
     input:
-        "core/{ref}/snps_merged.vcf"
+        "typing/core_parsnp/{ref}/snps_merged.vcf"
     output:
-        "core/{ref}/genotype.GT.FORMAT"
+        "typing/core_parsnp/{ref}/genotype.GT.FORMAT"
     shell:
         """
         vcftools --remove-indels --vcf {input[0]} --extract-FORMAT-info GT --out $(dirname {output[0]})/genotype

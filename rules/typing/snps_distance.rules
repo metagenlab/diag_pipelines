@@ -16,9 +16,9 @@ rule snp_distance_from_vcf:
     params:
         samples=list(read_naming.keys())
     input:
-        "core/{ref}/genotype.GT.FORMAT"
+        "typing/core_parsnp/{ref}/genotype.GT.FORMAT"
     output:
-        "typing/{ref}/distance.txt",
-        "typing/{ref}/positions.txt"
+        "typing/core_parsnp/{ref}/distance.txt",
+        "typing/core_parsnp/{ref}/positions.txt"
     script:
         "scripts/snp_distance_from_vcf.py"
