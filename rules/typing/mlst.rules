@@ -1,36 +1,23 @@
-rule mlst:
+rule mlst_samples:
     conda:
         "env/mlst.yaml"
     input:
-        expand("strains/{sample}/annotation/{sample}.fsa", sample=read_naming.keys()),
-        "references/{ref}/genome.gbk"
+        expand("strains/{sample}/annotation/{sample}.fsa", sample=read_naming.keys())
     output:
-        "typing/mlst/summary_{ref}.out"
+        "typing/mlst/summary.out"
     shell:
         """
         mlst {input} > {output[0]}
         """
 
-rule get_samples_corres:
+rule mlst_all_complete_genomes_fasta:
+    conda:
+        "env/mlst.yaml"
     input:
-        "typing/mlst/summary_{ref}.out"
+        "references/all_complete_genomes_log.txt"
     output:
-        "typing/mlst/summary_formatted_{ref}.txt"
+        "references/mlst_summary.txt"
     shell:
         """
-        awk '$3 != "-"' {input[0]} | cut -f 1,3 | sed "s/strains\/.*\/annotation\///" | sed "s/\.fsa//" > {output[0]}
-        """
-
-rule label_renaming_phylogeny:
-    input:
-        "typing/mlst/summary_formatted_{ref}.txt"
-    output:
-        "phylogeny/label_ids_{ref}.txt"
-    shell:
-        """
-        if [ -f sample_names.tsv ]; then
-            echo "" > {output[0]};
-        else 
-            sed 's/references\//Reference_/' {input[0]} | sed 's/\/genome.gbk//' | sed 's/\(.*\)\\t/\\1\\t\\1_ST_/' | sed 's/_{wildcards.ref}//' > {output[0]};
-        fi
+        mlst $(dirname {input[0]})/all_complete_genomes/*.fasta | sed "s/references\/all_complete_genomes\///" | sed "s/_genome\.fasta//" > {output[0]}
         """
