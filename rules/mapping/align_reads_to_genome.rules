@@ -21,7 +21,7 @@ rule align_single_reads_to_assembled_genome:
         "strains/{sample}/assembly/spades/contigs.fasta.fsa",
         "reads/raw/{sample}_single.fastq.gz"
     output:
-        temp("strains/{sample}/mapping/{sample}.bam")
+        "strains/{sample}/mapping/{sample}.bam"
     shell:
         """
         bwa index {input[0]}
