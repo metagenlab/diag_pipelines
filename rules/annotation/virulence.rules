@@ -21,8 +21,6 @@ rule add_description:
     input:
         "strains/{sample}/virulence/results.tsv",
         "virulence_factors.tsv"
-    params:
-        sample_corres = sample_correspondance
     output:
         "strains/{sample}/virulence/{sample}_virulence.tsv",
         "strains/{sample}/virulence/{sample}_virulence_summary.xlsx"
