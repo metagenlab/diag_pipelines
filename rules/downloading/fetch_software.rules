@@ -9,3 +9,12 @@ rule fetch_parsnp:
         rm -rf  Parsnp-Linux64-v1.2
         rm parsnp-Linux64-v1.2.tar.gz*
         """
+
+
+rule fetch_mash_sketch:
+    output:
+        "references/mash_sketch.msh"
+    shell:
+        """
+        wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > {output}
+        """
