@@ -3,7 +3,7 @@ rule calculate_core_genome_parsnp:
         "env/inotify.yaml"
     input:
         "bin/parsnp",
-        "references/all_complete_genomes_log.txt"
+        ancient("references/all_complete_genomes_log.txt")
     output:
         "core_genome/parsnp/parsnp.xmfa"
     log:
@@ -19,6 +19,7 @@ rule calculate_core_genome_parsnp:
         while inotifywait -e close_write {output[0]}
         do
            echo "detected"
+           sleep 5
            pstree -p ${{pid}} | grep -o "([0-9]\+)" | grep -o "[0-9]\+"
            pstree -p ${{pid}} | grep -o "([0-9]\+)" | grep -o "[0-9]\+" | xargs -I % kill % || :
         done
