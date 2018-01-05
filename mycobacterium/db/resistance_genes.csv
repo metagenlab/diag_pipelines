@@ -36,13 +36,16 @@ pyrazinamide	panD
 streptomycin 	rpsL
 streptomycin	rrs
 streptomycin	gid
+streptomycin	gidB
 amikacin	rrs
 amikacin	eis
 amikacin	gid
+amikacin	gidB
 amikacin	tlyA
 capreomycin	rrs
 capreomycin	eis
 capreomycin	gid
+capreomycin	gidB
 capreomycin	tlyA
 kanamycin	rrs
 kanamycin	eis
