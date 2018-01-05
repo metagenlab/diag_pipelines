@@ -46,7 +46,7 @@ rule mykrobe_paired:
     output:
         "strains/{sample}/resistance/mykrobe.json"
     params:
-        species = spec_for_mykrobe
+        species = config["spec_for_mykrobe"]
     shell:
         """
         mykrobe predict "{wildcards.sample}" "{params.species}" -1 {input[0]} --min_variant_conf 100  > {output[0]} 
@@ -60,7 +60,7 @@ rule mykrobe_single:
     output:
         "strains/{sample}/resistance/mykrobe.json"
     params:
-        species = spec_for_mykrobe
+        species = config["spec_for_mykrobe"]
     shell:
         """
         mykrobe predict "{wildcards.sample}" "{params.species}" -1 {input[0]} --min_variant_conf 100  > {output[0]} 
@@ -78,9 +78,9 @@ rule mykrobe_json_to_tsv:
         
 rule summary_csv_excel_file:
     params:
-        ontology_aro = ontology_file_aro,
-        ontology_mo = ontology_file_mo,
-        ontology_ro = ontology_file_ro,
+        ontology_aro = config["ontology_file_aro"],
+        ontology_mo = config["ontology_file_mo"],
+        ontology_ro = config["ontology_file_ro"],
         currated_genes = genes
     conda:
         "env/pandas-openpyxl.yaml"
