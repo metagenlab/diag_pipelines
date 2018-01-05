@@ -1,10 +1,11 @@
 rule snp_distance:
     params:
-        corres = sample_correspondance
+        samples = list(read_naming.keys())
     conda:
         "env/biopython.yaml"
     input:
-        "alignments/{ref}.fa"
+        "alignments/{ref}.fa",
+        "mapping/snippy/{ref}/core.aln"
     output:
         "alignments/distance_{ref}.txt"
     script:
@@ -12,13 +13,18 @@ rule snp_distance:
 
 rule snp_distance_from_vcf:
     conda:
-        "env/pandas.yaml"
+        "env/pandas-biopython-pysam.yaml"
     params:
-        samples=list(read_naming.keys())
+        samples=list(read_naming.keys()),
+        dist_thre=int(config["snps_distance_threshold"])
     input:
-        "typing/core_parsnp/{ref}/genotype.GT.FORMAT"
+        gbk="references/{ref}/genome.gbk",
+        genotype="typing/core_parsnp/{ref}/genotype.GT.FORMAT",
+        bams=expand("strains/{sample}/mapping/snippy/{{ref}}/{sample}/snps.bam", sample=read_naming.keys())
     output:
         "typing/core_parsnp/{ref}/distance.txt",
         "typing/core_parsnp/{ref}/positions.txt"
     script:
         "scripts/snp_distance_from_vcf.py"
+
+
