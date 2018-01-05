@@ -6,61 +6,53 @@ snakemake_path = "/home/sacha/Documents/new_strain/"
 
 sys.path.insert(0, snakemake_path)
 
-from helper_scripts.get_sample_naming_from_folder_general import get_read_naming_patterns
+import helper_scripts.get_sample_naming_from_link_folder as sample_naming
 
 from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
 
-from helper_scripts.get_species import get_species_from_file
+import helper_scripts.get_species_and_sample_correspondance as get_species_sample
+
 
 link_directory="links/"
 
-def get_sample_names_correspondance(filename):
-    corres = {}
-    with open(filename) as csvfile:
-        reader = csv.reader(csvfile, delimiter='\t', quotechar='|')
-        for row in [[s.strip() for s in inner] for inner in reader]:
-            if row:
-                cells = list(filter(None, row))
-                corres[cells[0]] = cells[1].replace(" ", "_")
-    return(corres)
-
-sample_names="sample_names.tsv"
-sample_correspondance = get_sample_names_correspondance(sample_names)
-
-read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, get_read_naming_patterns)
-
-read_correct = {}
-original_correct = {}
-folders_correct = {}
-
-for i in folders.keys():
-    folders_correct[sample_correspondance[i]] = folders[i]
-
-for i in original_name.keys():
-    original_correct[sample_correspondance[i]] = original_name[i]
-
-for i in read_naming.keys():
-    read_correct[sample_correspondance[i]] = read_naming[i]
 
 
-original_name = original_correct
-read_naming = read_correct
-folders = folders_correct
+if config["sample_naming_type"] == "molis":
+    read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns_molis)
+else:
+    read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns_general)
+    if config["sample_names"]:
+        sample_correspondance = get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"])
+        read_correct = {}
+        original_correct = {}
+        folders_correct = {}
+        for i in folders.keys():
+            folders_correct[sample_correspondance[i]] = folders[i]
+        for i in original_name.keys():
+            original_correct[sample_correspondance[i]] = original_name[i]
+        for i in read_naming.keys():
+            read_correct[sample_correspondance[i]] = read_naming[i]
+        original_name = original_correct
+        read_naming = read_correct
+        folders = folders_correct
 
-spec_for_mykrobe = 'staph'
-resistance_prediction_softwares = ["mykrobe", "rgi", "abricate"]
-species = "Staphylococcus aureus"
-taxid = 1280
 
-species_names = get_species_from_file("species.csv")
-cov_cutoff = 5
 
-ontology_file_aro = 'aro.obo'
-ontology_file_mo = 'mo.obo'
-ontology_file_ro = 'ro.obo'
+resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
-genes =["gyrA", "grlA"]
+species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
 
+if type(config["currated_genes"]) == "str":
+    genes = []
+    with open(config["currated_genes"]) as csvfile:
+        reader = csv.reader(csvfile, delimiter="\t")
+        for row in reader:
+            genes.append(row[1])
+else:
+    genes=config["currated_genes"]
+
+
+    
 prefix = "../../rules/"
 
 
@@ -75,12 +67,15 @@ include:
 
 include:
     prefix + "downloading/fetch_virulence_factors.rules"
-    
+
 include:
     prefix + "mapping/snippy.rules"
 
 include:
     prefix + "mapping/align_reads_to_genome.rules"
+
+include:
+    prefix + "mapping/find_closest_genomes.rules"
 
 include:
     prefix + "phylogeny/raxml.rules"
@@ -105,6 +100,9 @@ include:
 
 include:
     prefix + "quality/quality_reads.rules"    
+
+include:
+    prefix + "quality/contamination.rules"
     
 include:
     prefix + "typing/mlst.rules"
@@ -125,13 +123,8 @@ include:
 rule something:
     input:
         expand("strains/{sample}/resistance/summary.xlsx", sample= read_naming.keys()),
-        expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample= read_naming.keys()),
         "quality/multiqc_report.html",
-        "typing/mlst/summary.out"
-    output:
-        "report.html"
-    shell:
-        """
-        echo "" > {output[0]}
-        """
+        "typing/mlst/summary.out",
+        expand("strains/{sample}/closest_genome.txt", sample=read_naming.keys())
+
     
