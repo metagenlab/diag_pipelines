@@ -7,10 +7,14 @@ rule align_paired_reads_to_assembled_genome:
         "reads/raw/{sample}_R2.fastq.gz"
     output:
         "strains/{sample}/mapping/bwa/{sample}.bam"
+    log:
+        "strains/{sample}/logs/mapping_bwa_self.log"
     shell:
         """
         bwa index {input[0]}
-        bwa mem -v 1 {input} | samtools sort -O BAM -o {output} - 
+        bwa mem -v 1 {input} -o {output[0]}.tmp &> {log}
+        samtools sort -O BAM -o {output} {output[0]}.tmp
+        rm {output[0]}.tmp
         samtools index {output[0]}
         """
 
@@ -22,9 +26,11 @@ rule align_single_reads_to_assembled_genome:
         "reads/raw/{sample}_single.fastq.gz"
     output:
         "strains/{sample}/mapping/{sample}.bam"
+    log:
+        "strains/{sample}/logs/mapping_bwa_self.log"
     shell:
         """
         bwa index {input[0]}
-        bwa mem -v 1 {input} | samtools sort -O BAM -o {output} -
+        bwa mem -v 1 {input} | samtools sort -O BAM -o {output} - > {log}
         samtools index {output[0]}
         """
