@@ -4,7 +4,7 @@ rule get_reference_or_representative_or_complete_genome_urls:
     output:
         "references/{ref}_url.txt"
     params:
-        id = taxid
+        id = config["taxid"]
     shell:
         """
         search=$( echo {wildcards.ref} | tr '_' ' ')
@@ -45,8 +45,8 @@ rule download_gbks_from_url:
         
 rule get_complete_genomes_urls:
     params:
-        id = taxid,
-        spec= species
+        id = config["taxid"],
+        spec= config["species"]
     conda:
         "env/entrez-direct.yaml"
     output:
