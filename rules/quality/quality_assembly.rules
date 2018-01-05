@@ -49,7 +49,7 @@ rule convert_quast_images:
 
 rule filter_contigs_on_coverage:
     params:
-        cutoff = cov_cutoff
+        cutoff = config["cov_cutoff"]
     input:
         "strains/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
         "strains/{sample}/quality/contig_coverage.txt"
