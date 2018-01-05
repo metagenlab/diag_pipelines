@@ -1,0 +1,35 @@
+rule mash_sketch_complete_genomes:
+    conda:
+        "../quality/env/mash.yaml"
+    input:
+        "references/all_complete_genomes_log.txt"
+    output:
+        "references/all_complete_genomes.msh"
+    shell:
+        """
+        mash sketch -o {output[0]} $(dirname {input[0]})/all_complete_genomes/*.fasta
+        """
+
+    
+rule mash_dist_sample:
+    conda:
+        "../quality/env/mash.yaml"
+    input:
+        "references/all_complete_genomes.msh",
+        "strains/{sample}/annotation/{sample}.fsa"
+    output:
+        "strains/{sample}/closest_genome.txt"
+    shell:
+        """
+        mash dist {input} | sort -gk3 | sed -n 1p | cut -f1 | sed "s/references\/all_complete_genomes\///" | sed "s/_genome\.fasta//" > {output[0]}
+        """
+
+rule get_all_closest_genomes:
+    input:
+        expand("strains/{sample}/closest_genome.txt", sample=read_naming.keys())
+    output:
+        "closest_genomes.txt"
+    shell:
+        """
+        cat {input} | sort | uniq > {output}
+        """
