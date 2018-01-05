@@ -24,7 +24,7 @@ def return_number_of_snps(seqRec):
         s += "\n"
     return(s)
 
-corres = snakemake.params.corres
+corres = {x:x for x in snakemake.params.samples}
 corres["Reference"] = snakemake.wildcards.ref
 
 with open(snakemake.output[0], "w") as myfile:
