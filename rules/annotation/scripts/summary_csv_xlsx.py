@@ -1,6 +1,7 @@
 import pandas
 import pronto
 import csv
+import re
 
 out_csv = snakemake.output[0]
 out_xlsx = snakemake.output[1]
