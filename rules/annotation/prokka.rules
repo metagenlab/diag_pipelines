@@ -9,7 +9,8 @@ rule prokka:
         "strains/{sample}/annotation/{sample}.faa",
         "strains/{sample}/annotation/{sample}.fsa",
         "strains/{sample}/annotation/{sample}.txt",
-        "strains/{sample}/annotation/{sample}.gbk"
+        "strains/{sample}/annotation/{sample}.gbk",
+        "strains/{sample}/annotation/{sample}.ffn"
     params:
         genus = lambda wildcards: species_names[wildcards.sample]["genus"],
         spec = lambda wildcards: species_names[wildcards.sample]["species"]
@@ -17,3 +18,14 @@ rule prokka:
         "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}'"
 
 
+rule hashing_genes:
+    conda:
+        "env/biopython.yaml"
+    input:
+        "strains/{sample}/annotation/{sample}.ffn"
+    output:
+        "strains/{sample}/annotation/{sample}_hashes.txt"
+    script:
+        "scripts/hashing_genes.py"
+    
+        
