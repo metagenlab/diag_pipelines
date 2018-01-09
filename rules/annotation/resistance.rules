@@ -95,3 +95,14 @@ rule summary_csv_excel_file:
         "scripts/summary_csv_xlsx.py"
 
 
+
+rule merge_summary_xlsx_files:
+    conda:
+        "env/pandas-openpyxl.yaml"
+    input:
+        expand("strains/{sample}/resistance/summary.xlsx", sample = read_naming.keys())
+    output:
+        "resistance_summary.xlsx"
+    script:
+        "scripts/merge_summary_xlsx.py"
+        
