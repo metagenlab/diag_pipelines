@@ -33,11 +33,11 @@ rule extract_genotype_info_no_indels:
     conda:
         "env/vcftools.yaml"
     input:
-        "typing/core_parsnp/{ref}/snps_merged.vcf"
+        "typing/core_{method}/{ref}/snps_merged.vcf"
     output:
-        "typing/core_parsnp/{ref}/genotype.GT.FORMAT"
+        "typing/core_{method}/{ref}/genotype.GT.FORMAT"
     shell:
         """
-        vcftools --remove-indels --vcf {input[0]} --extract-FORMAT-info GT --out $(dirname {output[0]})/genotype
+        vcftools --remove-indels --vcf {input[0]} --extract-FORMAT-info GT --stdout | sed "s/\\t\.\\t/\\t0\\t/g" |  sed "s/\\t\.$/\\t0/" | sed "s/\\t\.\\t/\\t0\\t/g" > {output[0]}
         """
         

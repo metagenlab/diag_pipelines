@@ -39,12 +39,16 @@ rule snippy_core:
     conda:
         "env/snippy.yaml"
     input:
-        ancient(expand("mapping/snippy/{{ref}}/{sample}/snps.vcf", sample=list(read_naming.keys())))
+        ancient(expand("strains/{sample}/mapping/snippy/{{ref}}/{sample}/snps.vcf", sample=list(read_naming.keys())))
     output:
-        "mapping/snippy/{ref}/core.aln",
-        "alignments/{ref}.fa"
+        "typing/core_snippy/{ref}/core.aln",
+        "typing/core_snippy/{ref}/core.vcf",
+        "typing/core_snippy/{ref}/snps_merged.vcf"
+        
     shell:
         """
         snippy-core --prefix $(dirname {output[0]})/core $(dirname {input})
-        cp {output[0]} {output[1]}
+        vcftools --remove-indv "Reference" --vcf {output[1]} --recode --out $(dirname {output[0]})/snps_merged
+        mv $(dirname {output[0]})/snps_merged.recode.vcf {output[2]}
         """
+        
