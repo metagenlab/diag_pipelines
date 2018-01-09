@@ -37,19 +37,20 @@ else:
         folders = folders_correct
 
 
-
 resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
 species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
 
-if type(config["currated_genes"]) == "str":
+if isinstance(config["currated_genes"], str):
     genes = []
     with open(config["currated_genes"]) as csvfile:
         reader = csv.reader(csvfile, delimiter="\t")
         for row in reader:
             genes.append(row[1])
-else:
+elif isinstance(config["currated_genes"], list):
     genes=config["currated_genes"]
+else:
+    raise ValueError("Currated gene variable ill defined : {}".format(config["currated_genes"]))
 
 
     
@@ -114,6 +115,9 @@ include:
     prefix + "typing/compare_methods.rules"
 
 include:
+    prefix + "typing/cgmlst.rules"
+
+include:
     prefix + "core_genome_calculations/parsnp.rules"
 
 include:
@@ -125,6 +129,7 @@ rule something:
         expand("strains/{sample}/resistance/summary.xlsx", sample= read_naming.keys()),
         "quality/multiqc_report.html",
         "typing/mlst/summary.out",
-        expand("strains/{sample}/closest_genome.txt", sample=read_naming.keys())
+        expand("strains/{sample}/closest_genome.txt", sample=read_naming.keys()),
+        expand("strains/{sample}/cgmlst/alleles.txt", sample = read_naming.keys())
 
     
