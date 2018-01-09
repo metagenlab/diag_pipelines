@@ -2,51 +2,59 @@ import pandas
 import itertools
 import pysam
 import re
-from collections import defaultdict
 
 from Bio import SeqIO
 
+def atoi(text):
+    return int(text) if text.isdigit() else text
+
+def natural_keys(text):
+    '''
+    alist.sort(key=natural_keys) sorts in human order
+    http://nedbatchelder.com/blog/200712/human_sorting.html
+    (See Toothy's implementation in the comments)
+    '''
+    return [ atoi(c) for c in re.split('(\d+)', text) ]
+
+out_xlsx = snakemake.output[2]
+out_csv = snakemake.output[0]
 
 acc=re.sub("\..*", "", list(SeqIO.parse(snakemake.input["gbk"], "genbank"))[0].id)
-
 
 snps = pandas.read_csv(snakemake.input["genotype"], sep="\t", header=0)
 
 ref = snakemake.wildcards["ref"]
-all_samples = sorted(snakemake.params["samples"] + [ref])
+all_samples = snakemake.params["samples"]
+all_samples.sort(key=natural_keys)
 number_of_snps = {}
+position_of_snps = {}
 
-position_of_snps={}
+result = pandas.DataFrame(0, index=all_samples + [ref], columns = all_samples + [ref])
 
-for i in snakemake.params["samples"]:
-    vect = [ 1 if x=="1" else 0 for x in list(snps[[i]].values) ]
-    number_of_snps[frozenset((i,ref))]=sum(vect)
-    vect = "".join([str(i) for i in vect])
-    for j in all_samples:
-        if j != i and frozenset((i, j)) not in number_of_snps.keys():
-            vect2 = "".join([ "1" if x=="1" else "0" for x in snps[[j]].values ])
-            diff = 0
-            for x, y in zip(vect, vect2):
-                if x != y:
-                    diff += 1
-            number_of_snps[frozenset((i,j))] = diff
-            position_of_snps[frozenset((i,j))] = list(snps.loc[[ i for i in range(len(vect)) if vect[i] != vect2[i] ], "POS"].values)
+for i, j in itertools.combinations(all_samples, 2):
+    vect = list(snps[[i]].values)
+    if frozenset((i, ref)) not in number_of_snps.keys():
+        number_of_snps[frozenset((i, ref))] = sum(vect)[0]
+        result.loc[[i], [ref]] = number_of_snps[frozenset((i, ref))]
+        result.loc[[ref], [i]] = number_of_snps[frozenset((i, ref))]
+    vect2 = list(snps[[j]].values)
+    if frozenset((j, ref)) not in number_of_snps.keys():
+        number_of_snps[frozenset((j, ref))] = sum(vect2)[0]
+        result.loc[[j], [ref]] = number_of_snps[frozenset((j, ref))]
+        result.loc[[ref], [j]] = number_of_snps[frozenset((j, ref))]
+    number_of_snps[frozenset((i,j))] = len([u for u in range(len(vect)) if vect[u] != vect2[u]])
+    position_of_snps[frozenset((i,j))] = list(snps.loc[[ u for u in range(len(vect)) if vect[u] != vect2[u] ], "POS"].values)
+    result.loc[[i], [j]] = number_of_snps[frozenset((i,j))]
+    result.loc[[j], [i]] = number_of_snps[frozenset((i,j))]
+    
+writer = pandas.ExcelWriter(out_xlsx)
+result.to_excel(writer, snakemake.wildcards["ref"], index=True)
+writer.save()
 
-res_str="\t"+"\t".join(all_samples)+"\n"
-for j in all_samples:
-    res_str+=j+"\t"
-    for i in all_samples:
-        if i != j:
-            res_str+=str(number_of_snps[frozenset((i,j))])+"\t"
-        else:
-            res_str+="0\t"
-    res_str+="\n"
-
-with open(snakemake.output[0], "w") as resfile:
-    resfile.write(res_str)
-
+result.to_csv(out_csv, index= True, sep="\t")
+writer.save()
+    
 bam_files=str(snakemake.input["bams"]).split(" ")
-
 
 def return_acgt_count(alignment_file, position):
     samfile = pysam.AlignmentFile(alignment_file, "rb")
@@ -61,9 +69,6 @@ def return_acgt_count(alignment_file, position):
                     counts[y.alignment.query_sequence[y.query_position]] += 1
     return(counts)
         
-    
-
-
 with open(snakemake.output[1], "w") as posfile:
     for i, j in itertools.combinations_with_replacement(snakemake.params["samples"], 2):
         if i != j:
