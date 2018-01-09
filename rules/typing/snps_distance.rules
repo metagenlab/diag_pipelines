@@ -19,12 +19,23 @@ rule snp_distance_from_vcf:
         dist_thre=int(config["snps_distance_threshold"])
     input:
         gbk="references/{ref}/genome.gbk",
-        genotype="typing/core_parsnp/{ref}/genotype.GT.FORMAT",
+        genotype="typing/core_{method}/{ref}/genotype.GT.FORMAT",
         bams=expand("strains/{sample}/mapping/snippy/{{ref}}/{sample}/snps.bam", sample=read_naming.keys())
     output:
-        "typing/core_parsnp/{ref}/distance.txt",
-        "typing/core_parsnp/{ref}/positions.txt"
+        "typing/core_{method}/{ref}/distance.csv",
+        "typing/core_{method}/{ref}/positions.txt",
+        "typing/core_{method}/{ref}/distance.xlsx",
     script:
         "scripts/snp_distance_from_vcf.py"
 
 
+
+rule merge_snps_distance_xlsx:
+    conda:
+        "env/pandas-biopython-pysam.yaml"
+    input:
+        expand("typing/core_{{method}}/{ref}/distance.xlsx", ref = ["1272841", "247331", "355408"])
+    output:
+        "typing/core_{method}/summary.xlsx"
+    script:
+        "scripts/merge_typing_xlsx.py"
