@@ -60,7 +60,8 @@ position_of_snps = {}
 matrix_distances = pandas.DataFrame(0, index=all_samples + [ref], columns = all_samples + [ref])
 
 for sample1 in all_samples:
-    number_of_snps[frozenset((sample1,ref))]=sum(snps[[sample1]].values)[0]
+    diff = len([ x for x in snps[[sample1]].values if x != 0])
+    number_of_snps[frozenset((sample1,ref))]=diff
     matrix_distances.loc[sample1, ref] = number_of_snps[frozenset((sample1, ref))]
     matrix_distances.loc[ref, sample1] = number_of_snps[frozenset((sample1, ref))]
 
@@ -76,14 +77,10 @@ mapping_at_snps = []
 for i, j in itertools.combinations(all_samples, 2):
     if number_of_snps[frozenset((i,j))] < snakemake.params["dist_thre"]:
         for k in position_of_snps[frozenset((i,j))]:
-            file1 = [s for s in bam_files if i in s][0]
-            file2 = [s for s in bam_files if j in s][0]
-            mapping_at_snps.append(get_mapping_result_at_position(file1, k, i))
-            mapping_at_snps.append(get_mapping_result_at_position(file2, k, j))
+            mapping_at_snps.append(get_mapping_result_at_position([s for s in bam_files if i in s][0], k, i))
+            mapping_at_snps.append(get_mapping_result_at_position([s for s in bam_files if j in s][0], k, j))
 
 df = pandas.DataFrame(mapping_at_snps, columns=['Strain', 'Position in reference genome', 'A', 'C', 'G', 'T', 'Total Coverage'])
-
-
 
 out_csv_distances = snakemake.output[0]
 out_csv_positions = snakemake.output[1]
