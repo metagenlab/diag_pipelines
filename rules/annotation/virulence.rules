@@ -28,3 +28,12 @@ rule add_description:
         "scripts/merge_result_and_description.py"
         
     
+rule merge_description_files:
+    conda:
+        "env/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys())
+    output:
+        "virulence_summary.xlsx"
+    script:
+        "scripts/merge_summary_xlsx.py"
