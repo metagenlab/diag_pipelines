@@ -9,12 +9,14 @@ rule snippy_to_gbk_paired:
         "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf",
         "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz",
         "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam.bai"
+        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam.bai",
+        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz.tbi"
     log:
         "strains/{sample}/mapping/snippy.log"
     shell:
         """
         snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]} 2> {log}
+        tabix -f -p vcf {output[1]}
         """
         
 rule snippy_to_gbk_single:
@@ -27,28 +29,30 @@ rule snippy_to_gbk_single:
         "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf",
         "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz",
         "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam.bai"
+        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam.bai",
+        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz.tbi"
     log:
         "mapping/snippy/{ref}/{sample}/snps.log"
     shell:
         """
         snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[1]} --se {input[0]} 2> {log}
+        tabix -f -p vcf {output[1]}
         """
 
 rule snippy_core:
     conda:
-        "env/snippy.yaml"
+        "env/snippy-bcftools.yaml"
     input:
         ancient(expand("strains/{sample}/mapping/snippy/{{ref}}/{sample}/snps.vcf", sample=list(read_naming.keys())))
     output:
         "typing/core_snippy/{ref}/core.aln",
         "typing/core_snippy/{ref}/core.vcf",
-        "typing/core_snippy/{ref}/snps_merged.vcf"
+        "typing/core_snippy/{ref}/merged.vcf",
         
     shell:
         """
         snippy-core --prefix $(dirname {output[0]})/core $(dirname {input})
-        vcftools --remove-indv "Reference" --vcf {output[1]} --recode --out $(dirname {output[0]})/snps_merged
-        mv $(dirname {output[0]})/snps_merged.recode.vcf {output[2]}
+        tabix -f -p vcf {output[1]}
+        bcftools view --samples ^Reference {output[1]} > {output[2]}
         """
         
