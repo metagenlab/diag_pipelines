@@ -17,8 +17,34 @@ def natural_keys(text):
     '''
     return [ atoi(c) for c in re.split('(\d+)', text) ]
 
-out_xlsx = snakemake.output[2]
-out_csv = snakemake.output[0]
+def get_number_of_snps_and_position(snp_list, i, j):
+    vect1 = list(snp_list[[i]].values)
+    vect2 = list(snp_list[[j]].values)
+    return( len([u for u in range(len(vect1)) if vect1[u] != vect2[u]]), list(snp_list.loc[[ u for u in range(len(vect1)) if vect1[u] != vect2[u] ], "POS"].values))
+
+def get_acgt_count(alignment_file, position):
+    samfile = pysam.AlignmentFile(alignment_file, "rb")
+    iterator=samfile.pileup(contig=acc, start=position-1, stop=position)
+    counts = defaultdict(int)
+    for x in iterator:
+        if x.reference_pos == (position-1):
+            for y in x.pileups:
+                if y.query_position is not None:
+                    counts[y.alignment.query_sequence[y.query_position]] += 1
+    return(counts)
+
+def highlight_max(row):
+    values = [ x for x in row if isinstance(x, float) and x<=1 ]
+    is_max = values.index(max(values))
+    ret = [""]*7
+    ret[is_max+2] = 'background-color: yellow' 
+    return(ret)
+
+def get_mapping_result_at_position(bam_file, position, sample):
+    counts = get_acgt_count(bam_file, position)
+    results = [ counts[x]/sum(counts.values()) for x in ["A", "C", "G", "T"] ]
+    return [sample, position] + results + [sum(counts.values())]
+    
 
 acc=re.sub("\..*", "", list(SeqIO.parse(snakemake.input["gbk"], "genbank"))[0].id)
 
@@ -31,86 +57,49 @@ all_samples.sort(key=natural_keys)
 number_of_snps = {}
 position_of_snps = {}
 
-result = pandas.DataFrame(0, index=all_samples + [ref], columns = all_samples + [ref])
+matrix_distances = pandas.DataFrame(0, index=all_samples + [ref], columns = all_samples + [ref])
 
-for i, j in itertools.combinations(all_samples, 2):
-    vect = list(snps[[i]].values)
-    if frozenset((i, ref)) not in number_of_snps.keys():
-        number_of_snps[frozenset((i, ref))] = sum(vect)[0]
-        result.loc[i, ref] = number_of_snps[frozenset((i, ref))]
-        result.loc[ref, i] = number_of_snps[frozenset((i, ref))]
-    vect2 = list(snps[[j]].values)
-    if frozenset((j, ref)) not in number_of_snps.keys():
-        number_of_snps[frozenset((j, ref))] = sum(vect2)[0]
-        result.loc[j, ref] = number_of_snps[frozenset((j, ref))]
-        result.loc[ref, j] = number_of_snps[frozenset((j, ref))]
-    number_of_snps[frozenset((i,j))] = len([u for u in range(len(vect)) if vect[u] != vect2[u]])
-    position_of_snps[frozenset((i,j))] = list(snps.loc[[ u for u in range(len(vect)) if vect[u] != vect2[u] ], "POS"].values)
-    result.loc[[i], [j]] = number_of_snps[frozenset((i,j))]
-    result.loc[[j], [i]] = number_of_snps[frozenset((i,j))]
-    
-writer = pandas.ExcelWriter(out_xlsx)
-result.to_excel(writer, snakemake.wildcards["ref"], index=True)
-writer.save()
+for sample1 in all_samples:
+    number_of_snps[frozenset((sample1,ref))]=sum(snps[[sample1]].values)[0]
+    matrix_distances.loc[sample1, ref] = number_of_snps[frozenset((sample1, ref))]
+    matrix_distances.loc[ref, sample1] = number_of_snps[frozenset((sample1, ref))]
 
-result.to_csv(out_csv, index= True, sep="\t")
-writer.save()
+for sample1, sample2 in itertools.combinations(all_samples, 2):
+    number_of_snps[frozenset((sample1, sample2))], position_of_snps[frozenset((sample1,sample2))] = get_number_of_snps_and_position(snps, sample1, sample2)
+    matrix_distances.loc[sample1, sample2] = number_of_snps[frozenset((sample1,sample2))]
+    matrix_distances.loc[sample2, sample1] = number_of_snps[frozenset((sample1,sample2))]
     
 bam_files=str(snakemake.input["bams"]).split(" ")
 
-def return_acgt_count(alignment_file, position):
-    samfile = pysam.AlignmentFile(alignment_file, "rb")
-    iterator=samfile.pileup(contig=acc, start=position-1, stop=position)
-    counts = defaultdict(int)
-    for x in iterator:
-        if x.reference_pos == (position-1):
-            for y in x.pileups:
-                if y.query_position is not None:
-                    counts[y.alignment.query_sequence[y.query_position]] += 1
-    return(counts)
+mapping_at_snps = []
+
+for i, j in itertools.combinations(all_samples, 2):
+    if number_of_snps[frozenset((i,j))] < snakemake.params["dist_thre"]:
+        for k in position_of_snps[frozenset((i,j))]:
+            file1 = [s for s in bam_files if i in s][0]
+            file2 = [s for s in bam_files if j in s][0]
+            mapping_at_snps.append(get_mapping_result_at_position(file1, k, i))
+            mapping_at_snps.append(get_mapping_result_at_position(file2, k, j))
+
+df = pandas.DataFrame(mapping_at_snps, columns=['Strain', 'Position in reference genome', 'A', 'C', 'G', 'T', 'Total Coverage'])
 
 
 
-
-res = []
-with open(snakemake.output[1], "w") as posfile:
-    for i, j in itertools.combinations(all_samples, 2):
-        if number_of_snps[frozenset((i,j))] < snakemake.params["dist_thre"]:
-            for k in position_of_snps[frozenset((i,j))]:
-                file1 = [s for s in bam_files if i in s][0]
-                file2 = [s for s in bam_files if j in s][0]
-                c1 = return_acgt_count(file1, k)
-                c2 = return_acgt_count(file2, k)
-                res1 = [c1[x]/sum(c1.values()) for x in ["A", "C", "G", "T"]]
-                res2 = [c2[x]/sum(c2.values()) for x in ["A", "C", "G", "T"]]
-                res.append([i, k, res1[0], res1[1], res1[2], res1[3], sum(c1.values())])
-                res.append([j, k, res2[0], res2[1], res2[2], res2[3], sum(c2.values())])
-
-
-
-def color_negative_red(val):
-    """
-    Takes a scalar and returns a string with
-    the css property `'color: red'` for negative
-    strings, black otherwise.
-    """
-    if isinstance(val, str) or val < 0.5 :
-        color = 'black'
-    else:
-        color = 'red'
-    return 'color: %s' % color
-
-
-print(pandas.__file__)
-
-df = pandas.DataFrame(res, columns=['Strain', 'Position in reference genome', 'A', 'C', 'G', 'T', 'Total Coverage'])
-
-out_xlsx_positions = snakemake.output[3]
+out_csv_distances = snakemake.output[0]
 out_csv_positions = snakemake.output[1]
+out_xlsx_distances = snakemake.output[2]
+out_xlsx_positions = snakemake.output[3]
 
-writer = pandas.ExcelWriter(out_xlsx_positions)
+matrix_distances.to_csv(out_csv_distances, index= True, sep="\t")
 
-df.style.applymap(color_negative_red).to_excel(writer, ref, index=False, engine="openpyxl")
+writer = pandas.ExcelWriter(out_xlsx_distances)
+matrix_distances.to_excel(writer, snakemake.wildcards["ref"], index=True)
 writer.save()
 
 df.to_csv(out_csv_positions, index=False, sep="\t")
+    
+writer = pandas.ExcelWriter(out_xlsx_positions)
+df.style.apply(highlight_max, axis=1).to_excel(writer, ref, index=False, engine="openpyxl")
+writer.save()
+
+
