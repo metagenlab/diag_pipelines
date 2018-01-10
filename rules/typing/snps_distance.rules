@@ -11,7 +11,8 @@ rule snp_distance:
     script:
         "scripts/calculate_number_of_differences.py"
 
-rule snp_distance_from_vcf:
+        
+rule snp_distance_from_vcf_and_positions_for_close_pairs:
     conda:
         "env/pandas-biopython-pysam.yaml"
     params:
@@ -23,18 +24,18 @@ rule snp_distance_from_vcf:
         bams=expand("strains/{sample}/mapping/snippy/{{ref}}/{sample}/snps.bam", sample=read_naming.keys())
     output:
         "typing/core_{method}/{ref}/distance.csv",
-        "typing/core_{method}/{ref}/positions.txt",
+        "typing/core_{method}/{ref}/positions.csv",
         "typing/core_{method}/{ref}/distance.xlsx",
+        "typing/core_{method}/{ref}/positions.xlsx",
     script:
         "scripts/snp_distance_from_vcf.py"
 
-
-
+        
 rule merge_snps_distance_xlsx:
     conda:
         "env/pandas-biopython-pysam.yaml"
     input:
-        expand("typing/core_{{method}}/{ref}/distance.xlsx", ref = ref_ids_for_mapping)
+        expand("typing/core_{{method}}/{ref}/distance.xlsx", ref = config["ref_ids_for_mapping"])
     output:
         "typing/core_{method}/summary.xlsx"
     script:
