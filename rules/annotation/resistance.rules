@@ -98,7 +98,7 @@ rule summary_csv_excel_file:
 
 rule merge_summary_xlsx_files:
     conda:
-        "env/pandas-openpyxl.yaml"
+        "env/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         expand("strains/{sample}/resistance/summary.xlsx", sample = read_naming.keys())
     output:
