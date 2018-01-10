@@ -2,4 +2,4 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
- - vcftools = 0.1.15
+ - bcftools = 1.6
