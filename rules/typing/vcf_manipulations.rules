@@ -1,14 +1,17 @@
 rule extract_snps_core:
     conda:
-        "env/vcftools.yaml"
+        "env/bcftools.yaml"
     input:
         "core_genome/{ref}_core_parsnp_sorted.bed",
         "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz"
     output:
-        "strains/{sample}/core/{ref}/snps.vcf.gz"
+        "strains/{sample}/core/{ref}/snps.vcf.gz",
+        "strains/{sample}/core/{ref}/snps.vcf.gz.tbi"
     shell:
         """
-        vcftools --gzvcf {input[1]} --bed {input[0]} --recode --stdout | bgzip -c > {output[0]}
+        bcftools view -R {input[0]} -O z {input[1]} > {output[0]}.tmp
+        bcftools sort {output[0]}.tmp | sed "s/\\tsnps\\b/\\t{wildcards.sample}/" | bgzip -c > {output[0]}
+        rm {output[0]}.tmp
         tabix -f -p vcf {output[0]}
         """
 
@@ -17,27 +20,39 @@ rule merge_vcf_files:
     params:
         sample=sorted(read_naming.keys())[0]
     conda:
-        "env/vcftools.yaml"
+        "env/bcftools.yaml"
     input:
         expand("strains/{sample}/core/{{ref}}/snps.vcf.gz", sample=sorted(read_naming.keys()))
     output:
-        "typing/core_parsnp/{ref}/snps_merged.vcf"
+        "typing/core_parsnp/{ref}/merged.vcf"
     shell:
         """
-        vcf-merge {input} | sed "s/\\tsnps\\t/\\t{params.sample}\\t/" | sed "s/\/core\/{wildcards.ref}\/snps_snps\\t/\\t/g" | sed "s/\/core\/{wildcards.ref}\/snps_snps$//g" > {output[0]}
+        bcftools merge {input} > {output[0]}
         """
 
-    
+
+rule extract_only_snps:
+    conda:
+        "env/bcftools.yaml"
+    input:
+        "typing/core_{method}/{ref}/merged.vcf"
+    output:
+        "typing/core_{method}/{ref}/merged_snps_only.vcf"
+    shell:
+        """
+        bcftools view -i 'type="snp"' {input[0]} > {output[0]}
+        """
+        
 
 rule extract_genotype_info_no_indels:
     conda:
-        "env/vcftools.yaml"
+        "env/bcftools.yaml"
     input:
-        "typing/core_{method}/{ref}/snps_merged.vcf"
+        "typing/core_{method}/{ref}/merged_snps_only.vcf"
     output:
-        "typing/core_{method}/{ref}/genotype.GT.FORMAT"
+        "typing/core_{method}/{ref}/genotype.GT.FORMAT",
     shell:
         """
-        vcftools --remove-indels --vcf {input[0]} --extract-FORMAT-info GT --stdout | sed "s/\\t\.\\t/\\t0\\t/g" |  sed "s/\\t\.$/\\t0/" | sed "s/\\t\.\\t/\\t0\\t/g" > {output[0]}
+        bcftools query -H -f "%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n" {input[0]} | tr "\s.\s" "0" | tr -d ":GT\s" | sed "s/\[[0-9]\+\]//g" > {output[0]}
         """
         
