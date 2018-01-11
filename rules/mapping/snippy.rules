@@ -48,11 +48,14 @@ rule snippy_core:
         "typing/core_snippy/{ref}/core.aln",
         "typing/core_snippy/{ref}/core.vcf",
         "typing/core_snippy/{ref}/merged.vcf",
+        "typing/core_snippy/{ref}/core.vcf.gz",
+        "typing/core_snippy/{ref}/core.vcf.gz.tbi"
         
     shell:
         """
         snippy-core --prefix $(dirname {output[0]})/core $(dirname {input})
-        tabix -f -p vcf {output[1]}
-        bcftools view --samples ^Reference {output[1]} > {output[2]}
+        bgzip -c {output[1]} > {output[3]}
+        tabix -f -p vcf {output[3]}
+        bcftools view --samples ^Reference {output[3]} > {output[2]}
         """
         
