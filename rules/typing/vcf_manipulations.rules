@@ -9,12 +9,9 @@ rule extract_snps_core:
         "strains/{sample}/core/{ref}/snps.vcf.gz.tbi"
     shell:
         """
-        bcftools view -R {input[0]} -O z {input[1]} > {output[0]}.tmp
-        bcftools sort {output[0]}.tmp | sed "s/\\tsnps\\b/\\t{wildcards.sample}/" | bgzip -c > {output[0]}
-        rm {output[0]}.tmp
+        bcftools view -R {input[0]} -Ou {input[1]} | bcftools sort -O z - | sed "s/\\tsnps\\b/\\t{wildcards.sample}/" > {output[0]}
         tabix -f -p vcf {output[0]}
         """
-
 
 rule merge_vcf_files:
     params:
@@ -30,29 +27,29 @@ rule merge_vcf_files:
         bcftools merge {input} > {output[0]}
         """
 
-
-rule extract_only_snps:
+rule split_mnps_into_snps:
     conda:
-        "env/bcftools.yaml"
+        "env/vt-bcftools.yaml"
     input:
         "typing/core_{method}/{ref}/merged.vcf"
     output:
-        "typing/core_{method}/{ref}/merged_snps_only.vcf"
+        "typing/core_{method}/{ref}/merged_mnps_decomposed_to_snps.vcf.gz",
+        "typing/core_{method}/{ref}/merged_mnps_decomposed_to_snps.vcf.gz.tbi",
     shell:
         """
-        bcftools view -i 'type="snp"' {input[0]} > {output[0]}
+        bcftools view -Ou -i 'type="snps"||type="mnps"' {input[0]} | bcftools norm -m -both - | vt decompose_blocksub - | bcftools norm -m +both - | bcftools sort -O z - > {output[0]}
+        tabix -f -p vcf {output[0]}
         """
-        
 
 rule extract_genotype_info_no_indels:
     conda:
         "env/bcftools.yaml"
     input:
-        "typing/core_{method}/{ref}/merged_snps_only.vcf"
+        "typing/core_{method}/{ref}/merged_mnps_decomposed_to_snps.vcf.gz"
     output:
         "typing/core_{method}/{ref}/genotype.GT.FORMAT",
     shell:
         """
-        bcftools query -H -f "%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n" {input[0]} | tr "\s.\s" "0" | tr -d ":GT\s" | sed "s/\[[0-9]\+\]//g" > {output[0]}
+        bcftools query -H -f "%CHROM\\t%POS\\t%REF\\t%ALT[\\t%GT]\n" {input[0]}  > {output[0]}
         """
         

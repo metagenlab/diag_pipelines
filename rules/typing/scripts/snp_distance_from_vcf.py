@@ -42,13 +42,18 @@ def highlight_max(row):
 
 def get_mapping_result_at_position(bam_file, position, sample):
     counts = get_acgt_count(bam_file, position)
-    results = [ counts[x]/sum(counts.values()) for x in ["A", "C", "G", "T"] ]
+    if sum(counts.values()):
+        results = [ counts[x]/sum(counts.values()) for x in ["A", "C", "G", "T"] ]
+    else:
+        results = [0]*4
     return [sample, position] + results + [sum(counts.values())]
     
 
 acc=re.sub("\..*", "", list(SeqIO.parse(snakemake.input["gbk"], "genbank"))[0].id)
 
 snps = pandas.read_csv(snakemake.input["genotype"], sep="\t", header=0)
+snps.rename(axis="columns", mapper= lambda x: re.sub("\[[0-9]+\]", "", x.replace(":GT", "")), inplace=True)
+snps.replace(to_replace=".", value=0, inplace=True)
 
 ref = snakemake.wildcards["ref"]
 all_samples = snakemake.params["samples"]
@@ -80,6 +85,7 @@ for i, j in itertools.combinations(all_samples, 2):
             mapping_at_snps.append(get_mapping_result_at_position([s for s in bam_files if i in s][0], k, i))
             mapping_at_snps.append(get_mapping_result_at_position([s for s in bam_files if j in s][0], k, j))
 
+            
 df = pandas.DataFrame(mapping_at_snps, columns=['Strain', 'Position in reference genome', 'A', 'C', 'G', 'T', 'Total Coverage'])
 
 out_csv_distances = snakemake.output[0]
