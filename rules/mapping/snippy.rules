@@ -6,11 +6,13 @@ rule snippy_to_gbk_paired:
         ancient("reads/raw/{sample}_R2.fastq.gz"),
         ancient("references/{ref}/genome.gbk")
     output:
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam.bai",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz.tbi"
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.bam",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.bam.bai",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz.tbi",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/reference/ref.fa",
+        
     log:
         "strains/{sample}/mapping/snippy.log"
     shell:
@@ -26,11 +28,11 @@ rule snippy_to_gbk_single:
         "reads/raw/{sample}_single.fastq",
         "references/{ref}/genome.gbk"
     output:
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam.bai",
-        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.vcf.gz.tbi"
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.bam",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.bam.bai",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz.tbi"
     log:
         "mapping/snippy/{ref}/{sample}/snps.log"
     shell:
@@ -50,7 +52,6 @@ rule snippy_core:
         "typing/core_snippy/{ref}/merged.vcf",
         "typing/core_snippy/{ref}/core.vcf.gz",
         "typing/core_snippy/{ref}/core.vcf.gz.tbi"
-        
     shell:
         """
         snippy-core --prefix $(dirname {output[0]})/core $(dirname {input})
