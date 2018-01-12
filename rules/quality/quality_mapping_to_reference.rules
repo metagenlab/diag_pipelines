@@ -1,0 +1,12 @@
+rule qualimap_mapping_to_reference:
+    conda:
+        "env/qualimap.yaml"
+    input:
+        "strains/{sample}/mapping/snippy/{ref}/{sample}/snps.bam"
+    output:
+        "strains/{sample}/quality/mapping/{ref}/qualimap/qualimapReport.html",
+        "strains/{sample}/quality/mapping/{ref}/qualimap/genome_results.txt"
+    shell:
+        """
+        qualimap bamqc -bam {input[0]} -outdir $(dirname {output})
+        """
