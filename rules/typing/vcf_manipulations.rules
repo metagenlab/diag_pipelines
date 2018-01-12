@@ -24,7 +24,6 @@ rule fix_naming_vcf_file:
         """
 
 
-
 rule merge_vcf_files:
     params:
         sample=sorted(read_naming.keys())[0]
@@ -53,7 +52,7 @@ rule split_mnps_into_snps:
         tabix -f -p vcf {output[0]}
         """
 
-rule extract_genotype_info_no_indels:
+rule extract_genotype_info:
     conda:
         "env/bcftools.yaml"
     input:

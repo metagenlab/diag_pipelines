@@ -16,7 +16,6 @@ import helper_scripts.get_species_and_sample_correspondance as get_species_sampl
 link_directory="links/"
 
 
-
 if config["sample_naming_type"] == "molis":
     read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns_molis)
 else:
@@ -41,7 +40,7 @@ resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
 species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
 
-if isinstance(config["currated_genes"], str):
+if isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
     genes = []
     with open(config["currated_genes"]) as csvfile:
         reader = csv.reader(csvfile, delimiter="\t")
@@ -109,6 +108,9 @@ include:
     prefix + "typing/mlst.rules"
 
 include:
+    prefix + "typing/vcf_manipulations.rules"
+    
+include:
     prefix + "typing/snps_distance.rules"
     
 include:
@@ -120,16 +122,9 @@ include:
 include:
     prefix + "core_genome_calculations/parsnp.rules"
 
-include:
-    prefix + "core_genome_calculations/extract_snps_core.rules"
-
     
 rule something:
     input:
-        expand("strains/{sample}/resistance/summary.xlsx", sample= read_naming.keys()),
-        "quality/multiqc_report.html",
-        "typing/mlst/summary.out",
-        expand("strains/{sample}/closest_genome.txt", sample=read_naming.keys()),
-        expand("strains/{sample}/cgmlst/alleles.txt", sample = read_naming.keys())
+        expand("strains/{sample}/core/32428/snps.vcf.gz", sample = read_naming.keys())
 
     
