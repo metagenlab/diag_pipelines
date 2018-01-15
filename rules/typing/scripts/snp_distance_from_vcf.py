@@ -76,25 +76,19 @@ for sample1, sample2 in itertools.combinations(all_samples, 2):
     matrix_distances.loc[sample2, sample1] = number_of_snps[frozenset((sample1,sample2))]
     
 bam_files=str(snakemake.input["bams"]).split(" ")
-snps_bed_outfiles = str(snakemake.output["snps"]).split(" ")
+snps_bed_outfile = str(snakemake.output["snps_pos"])
+
+with open(snps_bed_outfile, "w") as bedfile:
+    for i in snps.loc[:,"POS"]:
+        bedfile.write(acc+"\t"+str(int(i)-1)+"\t"+str(i)+"\n")
+
 
 mapping_at_snps = []
-
-for i in all_samples:
-    with open([s for s in snps_bed_outfiles if i in s][0], "w"):
-        pass
-
 for i, j in itertools.combinations(all_samples, 2):
-    file1 = [s for s in snps_bed_outfiles if i in s][0]
-    file2 = [s for s in snps_bed_outfiles if j in s][0]
-    with open(file1, "a") as f1:
-        with open(file2, "a") as f2:
-            for k in position_of_snps[frozenset((i,j))]:
-                f1.write(acc+"\t"+str(k)+"\t"+str(k)+"\n")
-                f2.write(acc+"\t"+str(k)+"\t"+str(k)+"\n")
-                if number_of_snps[frozenset((i,j))] < snakemake.params["dist_thre"]:
-                    mapping_at_snps.append(get_mapping_result_at_position([s for s in bam_files if i in s][0], k, i))
-                    mapping_at_snps.append(get_mapping_result_at_position([s for s in bam_files if j in s][0], k, j))
+    for k in position_of_snps[frozenset((i,j))]:
+        if number_of_snps[frozenset((i,j))] < snakemake.params["dist_thre"]:
+            mapping_at_snps.append(get_mapping_result_at_position([s for s in bam_files if i in s][0], k, i))
+            mapping_at_snps.append(get_mapping_result_at_position([s for s in bam_files if j in s][0], k, j))
 
 df = pandas.DataFrame(mapping_at_snps, columns=['Strain', 'Position in reference genome', 'A', 'C', 'G', 'T', 'Total Coverage'])
 
