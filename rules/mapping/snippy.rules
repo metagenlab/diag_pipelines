@@ -25,7 +25,7 @@ rule snippy_to_gbk_single:
     conda:
         "env/snippy.yaml"
     input:
-        "reads/raw/{sample}_single.fastq",
+        "reads/raw/{sample}_single.fastq.gz",
         "references/{ref}/genome.gbk"
     output:
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf",
