@@ -35,6 +35,7 @@ else:
         read_naming = read_correct
         folders = folders_correct
 
+print(read_naming)
 
 resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
@@ -77,6 +78,9 @@ include:
 include:
     prefix + "mapping/find_closest_genomes.rules"
 
+include:
+    prefix + "phylogeny/generate_alignments.rules"
+    
 include:
     prefix + "phylogeny/raxml.rules"
 
