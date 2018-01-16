@@ -85,9 +85,7 @@ rule summary_csv_excel_file:
     conda:
         "env/pandas-openpyxl.yaml"
     input:
-        "strains/{sample}/resistance/mykrobe.tsv",
-        "strains/{sample}/resistance/abricate.txt",
-        "strains/{sample}/resistance/rgi.tsv"
+        expand("strains/{{sample}}/resistance/{software}.tsv", software = config["resistance_prediction_softwares"])
     output:
         "strains/{sample}/resistance/summary.csv",
         "strains/{sample}/resistance/summary.xlsx"
