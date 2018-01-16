@@ -1,6 +1,8 @@
 sample_naming_type: molis
 
 
+snakemake_path: /home/sacha/Documents/new_strain/
+
 # Currated genes associated with resistance phenotype
 # Can be a file as defined in mycobacterium/db/resistance_genes.csv or simply a list with the names of the genes
 currated_genes: /home/sacha/Documents/new_strain/mycobacterium/db/resistance_genes.csv

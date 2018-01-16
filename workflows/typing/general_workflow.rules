@@ -2,7 +2,7 @@ import csv
 import shutil
 import sys
 
-snakemake_path = "/home/sacha/Documents/new_strain/"
+snakemake_path = config["snakemake_path"]
 
 sys.path.insert(0, snakemake_path)
 
