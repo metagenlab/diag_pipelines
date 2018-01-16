@@ -34,7 +34,9 @@ snps_distance_threshold: 15
 # The following regex must match the naming of your reads : 
 # _(R)?(1|2)(_|.) for paired reads
 # Your sample name will be defined with every character before the regex _(R)(1|2)
-# If you do not like this sample naming, create a tab seperated file with two columns, the first one with the sample naming previously defined and the second one with your desired names. Put this file on the folder where you will run snakemake and the sample_names value below should be the name of this file. If wish to keep the automatic naming, set the value of this variable to empty
+# If you do not like this sample naming, create a tab seperated file with two columns, the first one with the sample naming previously defined and the second one with your desired names.
+# Put this file on the folder where you will run snakemake and the sample_names value below should be the name of this file. 
+# If wish to keep the automatic naming, set the value of this variable to empty
 
 sample_names: sample_names.tsv
 
