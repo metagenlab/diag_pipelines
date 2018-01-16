@@ -1,4 +1,4 @@
-#GENERAL USE
+# GENERAL USE
 
 ```
 snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml
