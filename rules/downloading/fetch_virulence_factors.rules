@@ -1,6 +1,6 @@
 rule fetch_from_uniprot_accession:
     input:
-        "virulence_factors.tsv"
+        config["virulence_factors"]
     output:
         "virulence/log.txt"
     shell:

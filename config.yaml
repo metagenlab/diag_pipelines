@@ -1,5 +1,31 @@
 sample_naming_type: molis
+
+# Read naming schemas:
+# Read names must end with ".fastq" or ".fastq.gz" or ".fq" or ".fg.gz"
+# The following regex must match the naming of your reads : 
+# _(R)?(1|2)(_|.) for paired reads
+# Your sample name will be defined with every character before the regex _(R)(1|2)
+# If you do not like this sample naming, create a tab seperated file with two columns, the first one with the sample naming previously defined and the second one with your desired names. Put this file on the folder where you will run snakemake and the sample_names value below should be the name of this file. If wish to keep the automatic naming, set the value of this variable to empty
+
 sample_names: sample_names.tsv
+
+
+# Tab separated file with three columns: sample name (as aumatically defined or according to your own sample naming file), genus, species
+species_names_correspondance_file: species.csv
+
+#List of currated genes for the annotation of the resistance genes
+currated_genes: /home/sacha/Documents/new_strain/mycobacterium/db/resistance_genes.csv
+
+#File listing currated genes for virulence factors, with uniprot accession number:
+virulence_factors: /home/sacha/Documents/new_strain/staph/db/virulence_factors.tsv
+
+
+#Ontology files from the card database. Should be changed 
+ontology_file_aro: aro.obo
+ontology_file_mo: mo.obo
+ontology_file_ro: ro.obo
+
+
 spec_for_mykrobe: tb
 resistance_prediction_softwares: 
  - mykrobe
@@ -12,13 +38,16 @@ ref_ids_for_mapping:
 cov_cutoff: 5
 snps_distance_threshold: 15
 
-species_names_correspondance_file: species.csv
 
-currated_genes: /home/sacha/Documents/new_strain/mycobacterium/db/resistance_genes.csv
 
-ontology_file_aro: aro.obo
-ontology_file_mo: mo.obo
-ontology_file_ro: ro.obo
+
+
+
+
+
+
+
+
 
 
 #Internal pipeline parameters
