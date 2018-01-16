@@ -3,3 +3,4 @@ channels:
  - conda-forge
 dependencies:
  - snippy = 3.1
+ - snpeff = 4.3.1t
