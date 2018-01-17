@@ -16,26 +16,26 @@ import helper_scripts.get_species_and_sample_correspondance as get_species_sampl
 link_directory="links/"
 
 
-if config["sample_naming_type"] == "molis":
-    read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns_molis)
-else:
-    read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns_general)
-    if config["sample_names"]:
-        sample_correspondance = get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"])
-        read_correct = {}
-        original_correct = {}
-        folders_correct = {}
+read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
+
+if config["sample_names"]:
+    sample_correspondance = get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"])
+    for i in read_naming.keys():
+        if i not in sample_correspondance.keys():
+            sample_correspondance[i] = i
+    read_correct = {}
+    original_correct = {}
+    folders_correct = {}
+    if folders.keys():
         for i in folders.keys():
             folders_correct[sample_correspondance[i]] = folders[i]
         for i in original_name.keys():
             original_correct[sample_correspondance[i]] = original_name[i]
         for i in read_naming.keys():
             read_correct[sample_correspondance[i]] = read_naming[i]
-        original_name = original_correct
-        read_naming = read_correct
-        folders = folders_correct
-
-print(read_naming)
+    original_name = original_correct
+    read_naming = read_correct
+    folders = folders_correct
 
 resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
@@ -47,10 +47,10 @@ if isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
         reader = csv.reader(csvfile, delimiter="\t")
         for row in reader:
             genes.append(row[1])
-elif isinstance(config["currated_genes"], list):
+elif isinstance(config["currated_genes"], list) or config["currated_genes"] =="":
     genes=config["currated_genes"]
 else:
-    raise ValueError("Currated gene variable ill defined : {}".format(config["currated_genes"]))
+    raise ValueError("currated_genes variable ill defined : {}".format(config["currated_genes"]))
 
 
     
@@ -127,8 +127,5 @@ include:
     prefix + "core_genome_calculations/parsnp.rules"
 
     
-rule something:
-    input:
-        expand("strains/{sample}/core/32428/snps.vcf.gz", sample = read_naming.keys())
 
     
