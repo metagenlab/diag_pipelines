@@ -79,6 +79,15 @@ include:
     prefix + "mapping/find_closest_genomes.rules"
 
 include:
+    prefix + "mapping/bwa.rules"
+
+include:
+    prefix + "snp_calling/freebayes.rules"
+    
+include:
+    prefix + "snp_calling/gatk.rules"
+    
+include:
     prefix + "phylogeny/generate_alignments.rules"
     
 include:
