@@ -1,0 +1,52 @@
+rule mapping_to_reference_with_bwa:
+    conda:
+        "env/bwa.yaml"
+    input:
+        "reads/raw/{sample}_R1.fastq.gz",
+        "reads/raw/{sample}_R2.fastq.gz",
+        "references/all_complete_genomes/{ref}_genome.fasta"
+    output:
+        "strains/{sample}/mapping/bwa/{ref}/mapping.bam",
+        "strains/{sample}/mapping/bwa/{ref}/mapping.bam.bai"
+    log:
+        "strains/{sample}/logs/mapping/{ref}/log.txt"
+    shell:
+        """
+        if [ ! -f {input[2]}.fai ]; then
+            samtools faidx {input[0]}
+            bwa index {input[0]}
+        fi
+        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[2]} {input[0]} {input[1]} -v 1 | samtools view -b -u -T {input[2]} | samtools sort -O bam -o {output[0]}) &> {log}
+        samtools index {output[0]} 
+        """
+        
+rule remove_duplicates_from_mapping:
+    conda:
+        "../snp_calling/env/gatk.yaml"
+    input:
+        "strains/{sample}/mapping/bwa/{ref}/mapping.bam",
+    output:
+        "strains/{sample}/mapping/bwa/{ref}/mapping_deduplicated.bam",
+        "strains/{sample}/mapping/bwa/{ref}/mapping_deduplicated.bai",
+    log:
+        "strains/{sample}/mapping/bwa/{ref}/metrics_deduplicated.bam",
+    shell:
+        """
+        gatk-launch MarkDuplicates -I {input[0]} -O {output[0]} -M {log}
+        gatk-launch BuildBamIndex -I {output[0]}        
+        """
+
+
+rule index_reference:
+    conda:
+        "env/bwa.yaml"
+    input:
+        "references/all_complete_genomes/{ref}_genome.fasta"
+    output:
+        "references/all_complete_genomes/{ref}_genome.fasta.fai"
+    shell:
+        """
+        samtools faidx {input[0]}
+        bwa index {input[0]}
+        """
+    

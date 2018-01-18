@@ -1,0 +1,19 @@
+rule call_variants_freebayes:
+    conda:
+        "../mapping/env/snippy.yaml"
+    input:
+        "strains/{sample}/mapping/bwa/{ref}/mapping.bam",
+        "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
+        "references/all_complete_genomes/{ref}_genome.fasta",
+        
+    output:
+        "strains/{sample}/snps/freebayes/{ref}/core_parsnp/before_validation/snps.vcf",
+        "strains/{sample}/snps/freebayes/{ref}/core_parsnp/before_validation/snps.vcf.gz",
+        "strains/{sample}/snps/freebayes/{ref}/core_parsnp/before_validation/snps.vcf.gz.tbi",
+    shell:
+        """
+        freebayes --no-population-priors --no-indels --min-coverage 5 -p 1 -t {input[1]} -f {input[2]} {input[0]} > {output[0]}
+        bgzip -c {output[0]} > {output[1]}
+        tabix -f -p vcf {output[1]}
+        """
+        
