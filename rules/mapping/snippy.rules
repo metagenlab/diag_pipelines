@@ -12,13 +12,27 @@ rule snippy_to_gbk_paired:
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.bam.bai",
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz.tbi",
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/reference/ref.fa",
-        
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.raw.vcf",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.raw.vcf.gz",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.raw.vcf.gz.tbi",
+        "strains/{sample}/snps/snippy/{ref}/full_genome/snps.vcf",
+        "strains/{sample}/snps/snippy/{ref}/full_genome/snps.vcf.gz",
+        "strains/{sample}/snps/snippy/{ref}/full_genome/snps.vcf.gz.tbi",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/{sample}.bam",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/{sample}.bam.bai",
     log:
-        "strains/{sample}/mapping/snippy.log"
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{ref}/snippy.log"
     shell:
         """
         snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]} 2> {log}
         tabix -f -p vcf {output[1]}
+        bgzip -c {output[6]} > {output[7]}
+        tabix -f -p vcf {output[7]}
+        cp {output[0]} {output[9]}
+        cp {output[1]} {output[10]}
+        cp {output[8]} {output[11]}
+        ln -s {output[2]} {output[12]}
+        ln -s {output[3]} {output[13]}
         """
         
 rule snippy_to_gbk_single:
@@ -34,7 +48,7 @@ rule snippy_to_gbk_single:
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.bam.bai",
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz.tbi"
     log:
-        "mapping/snippy/{ref}/{sample}/snps.log"
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{ref}/snippy.log"
     shell:
         """
         snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[1]} --se {input[0]} 2> {log}
@@ -45,7 +59,7 @@ rule snippy_core:
     conda:
         "env/snippy-bcftools.yaml"
     input:
-        ancient(expand("strains/{sample}/mapping/snippy/{{ref}}/{sample}/snps.vcf", sample=list(read_naming.keys())))
+        ancient(expand("strains/{sample}/mapping/snippy/{{ref}}/before_validation/{sample}/snps.vcf", sample=list(read_naming.keys())))
     output:
         "typing/core_snippy/{ref}/before_validation/core.aln",
         "typing/core_snippy/{ref}/before_validation/core.vcf",

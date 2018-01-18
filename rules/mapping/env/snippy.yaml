@@ -4,3 +4,4 @@ channels:
 dependencies:
  - snippy = 3.1
  - snpeff = 4.3.1t
+ - perl-vcftools-vcf = 0.953
