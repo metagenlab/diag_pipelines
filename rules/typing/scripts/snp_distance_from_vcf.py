@@ -2,6 +2,7 @@ import pandas
 import itertools
 import pysam
 import re
+import numpy
 
 from collections import defaultdict
 from Bio import SeqIO
@@ -52,8 +53,13 @@ def get_mapping_result_at_position(bam_file, position, sample):
 acc=re.sub("\..*", "", list(SeqIO.parse(snakemake.input["gbk"], "genbank"))[0].id)
 
 snps = pandas.read_csv(snakemake.input["genotype"], sep="\t", header=0)
-snps.rename(axis="columns", mapper= lambda x: re.sub("\[[0-9]+\]", "", x.replace(":GT", "")), inplace=True)
+snps.rename(axis="columns", mapper= lambda x: re.sub("\[[0-9]+\]", "", x.replace(":GT", "").replace("# ", "")), inplace=True)
 snps.replace(to_replace=".", value=0, inplace=True)
+numeric = snps.drop(["CHROM", "REF", "ALT"], axis=1).apply(pandas.to_numeric).reset_index(drop=True)
+
+pandas.concat([snps.loc[:,["CHROM"]], numeric.loc[:,["POS"]]], axis=1)
+snps=pandas.concat([snps.loc[:,["CHROM"]], numeric.loc[:,["POS"]], snps.loc[:, ["REF", "ALT"]].reset_index(drop=True), numeric.drop(["POS"], axis=1)], axis=1)
+
 
 ref = snakemake.wildcards["ref"]
 all_samples = snakemake.params["samples"]
@@ -78,10 +84,12 @@ for sample1, sample2 in itertools.combinations(all_samples, 2):
 bam_files=str(snakemake.input["bams"]).split(" ")
 snps_bed_outfile = str(snakemake.output["snps_pos"])
 
-with open(snps_bed_outfile, "w") as bedfile:
-    for i in snps.loc[:,"POS"]:
-        bedfile.write(acc+"\t"+str(int(i)-1)+"\t"+str(i)+"\n")
+vcf=pandas.read_csv(snakemake.input["vcf_before_decomposition"], comment="#", sep="\t", header=None)
 
+
+with open(snps_bed_outfile, "w") as bedfile:
+    for i in sorted(set(list(vcf.iloc[:,1])+(list(snps.loc[:,"POS"])))):
+        bedfile.write(acc+"\t"+str(int(i)-1)+"\t"+str(i)+"\n")
 
 mapping_at_snps = []
 for i, j in itertools.combinations(all_samples, 2):

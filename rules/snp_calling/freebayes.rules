@@ -1,6 +1,6 @@
 rule call_variants_freebayes:
     conda:
-        "../mapping/env/snippy.yaml"
+        "env/freebayes.yaml"
     input:
         "strains/{sample}/mapping/bwa/{ref}/mapping.bam",
         "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
