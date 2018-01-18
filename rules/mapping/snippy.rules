@@ -2,9 +2,9 @@ rule snippy_to_gbk_paired:
     conda:
         "env/snippy.yaml"
     input:
-        ancient("reads/raw/{sample}_R1.fastq.gz"),
-        ancient("reads/raw/{sample}_R2.fastq.gz"),
-        ancient("references/{ref}/genome.gbk")
+        "reads/raw/{sample}_R1.fastq.gz",
+        "reads/raw/{sample}_R2.fastq.gz",
+        "references/{ref}/genome.gbk"
     output:
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf",
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz",
@@ -18,21 +18,17 @@ rule snippy_to_gbk_paired:
         "strains/{sample}/snps/snippy/{ref}/full_genome/snps.vcf",
         "strains/{sample}/snps/snippy/{ref}/full_genome/snps.vcf.gz",
         "strains/{sample}/snps/snippy/{ref}/full_genome/snps.vcf.gz.tbi",
-        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/{sample}.bam",
-        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/{sample}.bam.bai",
     log:
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{ref}/snippy.log"
     shell:
         """
-        snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]} 2> {log}
+        snippy --rgid {wildcards.sample} --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]} 2> {log}
         tabix -f -p vcf {output[1]}
         bgzip -c {output[6]} > {output[7]}
         tabix -f -p vcf {output[7]}
         cp {output[0]} {output[9]}
         cp {output[1]} {output[10]}
         cp {output[8]} {output[11]}
-        ln -s {output[2]} {output[12]}
-        ln -s {output[3]} {output[13]}
         """
         
 rule snippy_to_gbk_single:
