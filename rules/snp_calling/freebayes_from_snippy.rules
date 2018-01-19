@@ -1,0 +1,18 @@
+rule merge_freebayes_from_snippy_filter_core_genome:
+    conda:
+        "env/bcftools.yaml"
+    input:
+        bed="core_genome/{ref}_core_parsnp_sorted.bed",
+        vcfs=expand("strains/{sample}/mapping/snippy/{{ref}}/before_validation/{sample}/snps.raw.vcf.gz", sample=read_naming.keys())
+    output:
+        "typing/freebayes_from_snippy/core_parsnp/{ref}/snippy/{validation}/merged.vcf",
+        "typing/freebayes_from_snippy/core_parsnp/{ref}/snippy/{validation}/merged.vcf.gz",
+        "typing/freebayes_from_snippy/core_parsnp/{ref}/snippy/{validation}/merged.vcf.gz.tbi",
+    shell:
+        """
+        bcftools merge {input[vcfs]} | bcftools view -R {input[bed]} -Ou {input[1]} | bcftools sort -O v - > {output[0]}
+        bgzip -c {output[0]} > {output[1]}
+        tabix -f -p vcf {output[1]}
+        """
+
+
