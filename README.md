@@ -1,4 +1,4 @@
-# Dependencies
+# DEPENDENCIES
   Snakemake 4.0.0 and up
   Miniconda, preferably python 3.5
 
