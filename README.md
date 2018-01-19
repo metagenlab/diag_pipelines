@@ -14,7 +14,7 @@ snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.ru
 
 Update the config file for your needs.
 
-# GENERATIGN FILES OF INTEREST
+# GENERATING FILES OF INTEREST
 
 The pipeline works by asking the generation of the files of interest for a particular analysis. This assumes knowing what their locations is going to be.
 
