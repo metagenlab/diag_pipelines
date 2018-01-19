@@ -83,6 +83,9 @@ include:
 
 include:
     prefix + "snp_calling/freebayes.rules"
+
+include:
+    prefix + "snp_calling/freebayes_from_snippy.rules"
     
 include:
     prefix + "snp_calling/gatk.rules"
@@ -138,3 +141,10 @@ include:
     
 
     
+rule all:
+    input:
+        "typing/freebayes_from_snippy/core_parsnp/34528/snippy/before_validation/distance.xlsx",
+        "typing/snippy/core_parsnp/34528/snippy/before_validation/distance.xlsx",
+        "typing/gatk/core_parsnp/34528/bwa/before_validation/distance.xlsx",
+        "typing/freebayes/core_parsnp/34528/bwa/before_validation/distance.xlsx",
+        

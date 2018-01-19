@@ -2,17 +2,33 @@ rule call_variants_freebayes:
     conda:
         "env/freebayes.yaml"
     input:
-        "strains/{sample}/mapping/bwa/{ref}/mapping.bam",
+        "strains/{sample}/mapping/{mapping_method}/{ref}/before_validation/{sample}/snps_deduplicated.bam",
         "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
-        "references/all_complete_genomes/{ref}_genome.fasta",
-        
+        "references/{ref}/genome.fasta",
     output:
-        "strains/{sample}/snps/freebayes/{ref}/core_parsnp/before_validation/snps.vcf",
-        "strains/{sample}/snps/freebayes/{ref}/core_parsnp/before_validation/snps.vcf.gz",
-        "strains/{sample}/snps/freebayes/{ref}/core_parsnp/before_validation/snps.vcf.gz.tbi",
+        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.vcf",
+        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.vcf.gz",
+        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.vcf.gz.tbi",
     shell:
         """
-        freebayes --no-population-priors --no-indels --min-coverage 5 -p 1 -t {input[1]} -f {input[2]} {input[0]} > {output[0]}
+        freebayes --no-population-priors --no-indels --min-coverage 5 -p 1 -t {input[1]} -f {input[2]} {input[0]} | bcftools sort -O v - > {output[0]}
+        bgzip -c {output[0]} > {output[1]}
+        tabix -f -p vcf {output[1]}
+        """
+        
+rule merge_vcfs_freebayes_filter_core_genome:
+    conda:
+        "../typing/env/bcftools.yaml"
+    input:
+        bed =   "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
+        vcfs=expand("strains/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/before_validation/snps.vcf.gz", sample=read_naming.keys())
+    output:
+        "typing/freebayes/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf",
+        "typing/freebayes/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz",
+        "typing/freebayes/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz.tbi",
+    shell:
+        """
+        bcftools merge {input[vcfs]} | bcftools view -R {input[bed]} - | bcftools sort -O v - > {output[0]}
         bgzip -c {output[0]} > {output[1]}
         tabix -f -p vcf {output[1]}
         """

@@ -28,6 +28,7 @@ rule snippy_to_gbk_paired:
         tabix -f -p vcf {output[7]}
         cp {output[0]} {output[9]}
         cp {output[1]} {output[10]}
+        tabix -f -p vcf {output[10]}
         cp {output[8]} {output[11]}
         """
         
@@ -42,13 +43,26 @@ rule snippy_to_gbk_single:
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz",
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.bam",
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.bam.bai",
-        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz.tbi"
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.vcf.gz.tbi",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/reference/ref.fa",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.raw.vcf",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.raw.vcf.gz",
+        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.raw.vcf.gz.tbi",
+        "strains/{sample}/snps/snippy/{ref}/full_genome/snps.vcf",
+        "strains/{sample}/snps/snippy/{ref}/full_genome/snps.vcf.gz",
+        "strains/{sample}/snps/snippy/{ref}/full_genome/snps.vcf.gz.tbi",
     log:
         "strains/{sample}/mapping/snippy/{ref}/before_validation/{ref}/snippy.log"
     shell:
         """
-        snippy --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[1]} --se {input[0]} 2> {log}
+        snippy --rgid {wildcards.sample} --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[1]}  --se {input[0]} 2> {log}
         tabix -f -p vcf {output[1]}
+        bgzip -c {output[6]} > {output[7]}
+        tabix -f -p vcf {output[7]}
+        cp {output[0]} {output[9]}
+        cp {output[1]} {output[10]}
+        tabix -f -p vcf {output[10]}
+        cp {output[8]} {output[11]}
         """
 
 rule snippy_core:
@@ -70,3 +84,22 @@ rule snippy_core:
         bcftools view --samples ^Reference {output[3]} > {output[2]}
         """
         
+
+rule merge_snippy_filter_core_genome:
+    conda:
+        "env/bcftools.yaml"
+    input:
+        bed = "core_genome/{ref}_core_parsnp_sorted.bed",
+        vcfs = expand("strains/{sample}/mapping/snippy/{{ref}}/{{validation}}/{sample}/snps.vcf.gz", sample = read_naming.keys())
+    output:
+        "typing/snippy/core_parsnp/{ref}/snippy/{validation}/merged.vcf",
+        "typing/snippy/core_parsnp/{ref}/snippy/{validation}/merged.vcf.gz",
+        "typing/snippy/core_parsnp/{ref}/snippy/{validation}/merged.vcf.gz.tbi",
+    shell:
+        """
+        bcftools merge {input[vcfs]} | bcftools view -R {input[bed]} - | bcftools sort -O v - > {output[0]}
+        bgzip -c {output[0]} > {output[1]}
+        tabix -f -p vcf {output[1]}
+        """
+
+

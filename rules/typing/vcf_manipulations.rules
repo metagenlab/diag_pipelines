@@ -1,71 +1,12 @@
-rule extract_snps_core:
-    conda:
-        "env/bcftools.yaml"
-    input:
-        "core_genome/{ref}_core_parsnp_sorted.bed",
-        "strains/{sample}/snps/{snp_caller}/{ref}/full_genome/snps.vcf.gz"
-    output:
-        "strains/{sample}/snps/{snp_caller}/{ref}/core_parsnp/before_validation/snps.vcf",
-    shell:
-        """
-        bcftools view -R {input[0]} -Ou {input[1]} | bcftools sort -O v - > {output[0]}
-        """
-
-rule fix_naming_vcf_file:
-    input:
-        "strains/{sample}/snps/{snp_caller}/{ref}/core_{method}/{validation}/snps.vcf"
-    output:
-        "strains/{sample}/snps/{snp_caller}/{ref}/core_{method}/{validation}/snps_renamed.vcf.gz",
-        "strains/{sample}/snps/{snp_caller}/{ref}/core_{method}/{validation}/snps_renamed.vcf.gz.tbi"
-    shell:
-        """
-        sed "s/\\tsnps\\b/\\t{wildcards.sample}/" {input[0]} | bgzip -c > {output[0]}
-        tabix -f -p vcf {output[0]}
-        """
-
-
-rule merge_vcf_snippy_files:
-    conda:
-        "env/bcftools.yaml"
-    input:
-        expand("strains/{sample}/snps/snippy/{{ref}}/core_parsnp/{{validation}}/snps_renamed.vcf.gz", sample=sorted(read_naming.keys()))
-    output:
-        "typing/snippy/core_parsnp/{ref}/{validation}/merged.vcf",
-        "typing/snippy/core_parsnp/{ref}/{validation}/merged.vcf.gz",
-        "typing/snippy/core_parsnp/{ref}/{validation}/merged.vcf.gz.tbi",
-    shell:
-        """
-        bcftools merge {input} > {output[0]}
-        bgzip -c {output[0]} > {output[1]}
-        tabix -f -p vcf {output[1]}
-        """
-
-
-rule merge_vcf_freebayes_files:
-    conda:
-        "env/bcftools.yaml"
-    input:
-        expand("strains/{sample}/snps/freebayes/{{ref}}/core_parsnp/{{validation}}/snps.vcf.gz", sample=sorted(read_naming.keys()))
-    output:
-        "typing/freebayes/core_parsnp/{ref}/{validation}/merged.vcf",
-        "typing/freebayes/core_parsnp/{ref}/{validation}/merged.vcf.gz",
-        "typing/freebayes/core_parsnp/{ref}/{validation}/merged.vcf.gz.tbi",
-    shell:
-        """
-        bcftools merge {input} > {output[0]}
-        bgzip -c {output[0]} > {output[1]}
-        tabix -f -p vcf {output[1]}
-        """
-
 rule exclude_indel_other_ref_mutations:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/merged.vcf"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged.vcf"
     output:
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/merged_mnp_snp_complex.vcf.gz",
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/merged_mnp_snp_complex.vcf.gz.tbi",
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/merged_mnp_snp_complex.vcf",
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged_mnp_snp_complex.vcf.gz",
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged_mnp_snp_complex.vcf.gz.tbi",
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged_mnp_snp_complex.vcf",
     shell:
         """
         bcftools view -Ou -e 'type="indel"||type="other"||type="ref"' {input[0]} | bcftools sort -O z - > {output[0]}
@@ -77,31 +18,31 @@ rule split_mnps_into_snps:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/merged_mnp_snp_complex.vcf.gz"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged_mnp_snp_complex.vcf.gz"
     output:
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/merged_mnp_decomposed_to_snp.vcf.gz",
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/merged_mnp_decomposed_to_snp.vcf.gz.tbi",
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/merged_mnp_decomposed_to_snp.vcf",
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged_mnp_decomposed_to_snp.vcf.gz",
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged_mnp_decomposed_to_snp.vcf.gz.tbi",
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged_mnp_decomposed_to_snp.vcf",
     shell:
         """
         bcftools norm -m -both {input[0]} | vt decompose_blocksub - | bcftools norm -m +both - | bcftools sort -O z - > {output[0]}
         tabix -f -p vcf {output[0]}
-        gzip -d -c {output[0]} > {output[2]}
+        bgzip -d -c {output[0]} > {output[2]}
         """
 
 rule extract_genotype_info:
     conda:
         "env/bcftools.yaml"
     input:
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/merged_mnp_decomposed_to_snp.vcf.gz"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged_mnp_decomposed_to_snp.vcf.gz"
     output:
-        "typing/{snp_caller}/core_{method}/{ref}/{validation}/genotype.GT.FORMAT",
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/genotype.GT.FORMAT",
     shell:
         """
         bcftools query -H -f "%CHROM\\t%POS\\t%REF\\t%ALT[\\t%GT]\n" {input[0]}  > {output[0]}
         """
         
-
+        
 
 
         

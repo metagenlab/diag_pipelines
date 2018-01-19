@@ -1,29 +1,61 @@
+rule create_dict_for_reference:
+    conda:
+        "env/gatk.yaml"
+    input:
+        "references/{ref}/genome.fasta"
+    output:
+        "references/{ref}/genome.dict"
+    shell:
+        """
+        samtools faidx {input[0]}
+        gatk-launch CreateSequenceDictionary -R {input[0]}
+        """
+
 rule haplotype_caller_vcf:
     conda:
         "env/gatk.yaml"
     input:
-        "strains/{sample}/mapping/bwa/{ref}/mapping.bam",
-        "references/all_complete_genomes/{ref}_genome.fasta",
-        "references/all_complete_genomes/{ref}_genome.dict"
+        "strains/{sample}/mapping/{mapping_method}/{ref}/before_validation/{sample}/snps_deduplicated.bam",
+        "references/{ref}/genome.fasta",
+        "references/{ref}/genome.dict"
     output:
-        "strains/{sample}/snps/gatk/{ref}/full_genome/snps.vcf",
-        "strains/{sample}/snps/gatk/{ref}/full_genome/snps.vcf.gz",
-        "strains/{sample}/snps/gatk/{ref}/full_genome/snps.vcf.idx",
-        "strains/{sample}/snps/gatk/{ref}/full_genome/snps.vcf.gz.tbi",
+        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/full_genome/snps.vcf",
+        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/full_genome/snps.vcf.gz",
+        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/full_genome/snps.vcf.idx",
+        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/full_genome/snps.vcf.gz.tbi",
     shell:
         """
         gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]}
         bgzip -c {output[0]} > {output[1]}
         tabix -f -p vcf {output[1]}
         """
+        
+rule merge_haplotype_caller_vcf_files_filter_core_genome:
+    conda:
+        "env/gatk.yaml"
+    input:
+        bed="core_genome/{ref}_core_parsnp_sorted_withdot.bed",
+        vcfs=expand("strains/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/full_genome/snps.vcf.gz", sample=read_naming.keys())
+    output:
+        "typing/gatk/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf",
+        "typing/gatk/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz",
+        "typing/gatk/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz.tbi",
+    shell:
+        """
+        bcftools merge {input[vcfs]} | bcftools view -R {input[bed]} - | bcftools sort -O v - > {output[0]}
+        bgzip -c {output[0]} > {output[1]}
+        tabix -f -p vcf {output[1]}
+        """
+
+
 
 rule haplotype_caller_gvcf:
     conda:
         "env/gatk.yaml"
     input:
         "strains/{sample}/mapping/bwa/{ref}/mapping_deduplicated.bam",
-        "references/all_complete_genomes/{ref}_genome.fasta",
-        "references/all_complete_genomes/{ref}_genome.dict"
+        "references/{ref}/genome.fasta",
+        "references/{ref}/genome.dict"
     output:
         "strains/{sample}/snps/gatk/{ref}/full_genome/snps.g.vcf",
         "strains/{sample}/snps/gatk/{ref}/full_genome/snps.g.vcf.gz",
@@ -36,14 +68,16 @@ rule haplotype_caller_gvcf:
         tabix -f -p vcf {output[1]}
         """
 
+
+        
 rule merge_gvcf_files:
     conda:
         "env/gatk.yaml"
     input:
-        ref="references/all_complete_genomes/{ref}_genome.fasta",
+        ref="references/{ref}/genome.fasta",
         gvcfs=expand("strains/{sample}/snps/gatk/{{ref}}/full_genome/snps.g.vcf.gz", sample=read_naming.keys())
     output:
-        "typing/gatk/core_{method}/{ref}/full_genome/genomics_db/vcfheader.vcf"
+        "typing/gatk_gvcfs/core_{method}/{ref}/full_genome/genomics_db/vcfheader.vcf"
     shell:
         """
         if [ -d $(dirname {output[0]}) ]; then
@@ -58,12 +92,12 @@ rule extract_gvcf_files:
     conda:
         "env/gatk.yaml"
     input:
-        "references/all_complete_genomes/{ref}_genome.fasta",
-        "typing/gatk/core_{method}/{ref}/full_genome/genomics_db/vcfheader.vcf"
+        "references/{ref}/genome.fasta",
+        "typing/gatk_gvfcs/core_{method}/{ref}/full_genome/genomics_db/vcfheader.vcf"
     output:
-        "typing/gatk/core_{method}/{ref}/full_genome/merged.vcf",
-        "typing/gatk/core_{method}/{ref}/full_genome/merged.vcf.gz",
-        "typing/gatk/core_{method}/{ref}/full_genome/merged.vcf.gz.tbi"
+        "typing/gatk_gvcfs/core_{method}/{ref}/full_genome/merged.vcf",
+        "typing/gatk_gvcfs/core_{method}/{ref}/full_genome/merged.vcf.gz",
+        "typing/gatk_gvcfs/core_{method}/{ref}/full_genome/merged.vcf.gz.tbi"
     shell:
         """
         gatk-launch GenotypeGVCFs -R {input[0]} -V gendb://$(dirname {input[1]}) -O {output[0]}
@@ -71,34 +105,6 @@ rule extract_gvcf_files:
         tabix -f -p vcf {output[1]}
         """
     
-rule create_dict_for_reference:
-    conda:
-        "env/gatk.yaml"
-    input:
-        "references/all_complete_genomes/{ref}_genome.fasta"
-    output:
-        "references/all_complete_genomes/{ref}_genome.dict"
-    shell:
-        """
-        samtools faidx {input[0]}
-        gatk-launch CreateSequenceDictionary -R {input[0]}
-        """
-
-
-rule extract_only_core_positions:
-    conda:
-        "../typing/env/bcftools.yaml"
-    input:
-        "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
-        "typing/gatk/core_{method}/{ref}/full_genome/merged.vcf.gz",
-    output:
-        "typing/gatk/core_{method}/{ref}/before_validation/merged.vcf",
-    shell:
-        """
-        bcftools view -R {input[0]} -Ou {input[1]} | bcftools sort -O v - > {output[0]}
-        """
-        
-        
 
         
 
