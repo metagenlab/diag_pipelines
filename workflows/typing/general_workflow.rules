@@ -73,13 +73,13 @@ include:
     prefix + "mapping/snippy.rules"
 
 include:
-    prefix + "mapping/align_reads_to_genome.rules"
+    prefix + "mapping/bwa_to_self_assembly.rules"
 
 include:
     prefix + "mapping/find_closest_genomes.rules"
 
 include:
-    prefix + "mapping/bwa.rules"
+    prefix + "mapping/bwa_to_reference.rules"
 
 include:
     prefix + "snp_calling/freebayes.rules"
