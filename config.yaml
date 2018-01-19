@@ -1,6 +1,3 @@
-sample_naming_type: molis
-
-
 snakemake_path: /home/sacha/Documents/new_strain/
 
 # Currated genes associated with resistance phenotype

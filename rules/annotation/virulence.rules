@@ -20,7 +20,7 @@ rule add_description:
         "env/xlwt.yaml"
     input:
         "strains/{sample}/virulence/results.tsv",
-        "virulence_factors.tsv"
+        config["virulence_factors"]
     output:
         "strains/{sample}/virulence/{sample}_virulence.tsv",
         "strains/{sample}/virulence/{sample}_virulence_summary.xlsx"
