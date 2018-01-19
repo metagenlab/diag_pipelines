@@ -1,7 +1,7 @@
 # DEPENDENCIES
-  Snakemake 4.0.0 and up
+  Snakemake (http://snakemake.readthedocs.io/en/latest/) 4.0.0 and up
   
-  Miniconda, preferably python 3.5
+  Miniconda (https://conda.io/miniconda.html) preferably version with python 3.6
 
 
 
