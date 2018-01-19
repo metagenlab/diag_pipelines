@@ -39,4 +39,4 @@ This will generate a summary excel file for the virulence factors of the strains
 snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml resistance_summary.xlsx
 ```
 
-This will generate a summary excel file for the resistance factors of the strains in the `links` folder, based on the software defined in the config file.
+This will generate a summary excel file for the resistance factors of the strains in the `links` folder, using the softwares defined in the config file.
