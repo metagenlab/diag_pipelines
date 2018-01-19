@@ -42,6 +42,18 @@ rule download_gbks_from_url:
         grep "\\b{wildcards.ref}\\b" {input[0]} | cut -f2 | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.gbff.gz/" | xargs wget -qO- | gzip -d > {output[0]}
         """
 
+
+rule download_fasta_from_url:
+    input:
+        "references/url_complete_genomes.txt"
+    output:
+        "references/{ref}/genome.fasta"
+    shell:
+        """
+        grep "\\b{wildcards.ref}\\b" {input[0]} | cut -f2 | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs wget -qO- | gzip -d > {output[0]}
+        """
+
+
         
 rule get_complete_genomes_urls:
     params:
