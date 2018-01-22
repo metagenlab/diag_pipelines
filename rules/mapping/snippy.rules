@@ -23,6 +23,7 @@ rule snippy_to_gbk_paired:
     shell:
         """
         snippy --rgid {wildcards.sample} --cpus 1 --force --outdir $(dirname {output[0]}) --reference {input[2]} --R1 {input[0]} --R2 {input[1]} 2> {log}
+        bgzip -c {output[0]} > {output[1]}
         tabix -f -p vcf {output[1]}
         bgzip -c {output[6]} > {output[7]}
         tabix -f -p vcf {output[7]}
@@ -71,11 +72,11 @@ rule snippy_core:
     input:
         ancient(expand("strains/{sample}/mapping/snippy/{{ref}}/before_validation/{sample}/snps.vcf", sample=list(read_naming.keys())))
     output:
-        "typing/core_snippy/{ref}/before_validation/core.aln",
-        "typing/core_snippy/{ref}/before_validation/core.vcf",
-        "typing/core_snippy/{ref}/before_validation/merged.vcf",
-        "typing/core_snippy/{ref}/before_validation/core.vcf.gz",
-        "typing/core_snippy/{ref}/before_validation/core.vcf.gz.tbi"
+        "typing/snippy/core_snippy/{ref}/snippy/before_validation/core.aln",
+        "typing/snippy/core_snippy/{ref}/snippy/before_validation/core.vcf",
+        "typing/snippy/core_snippy/{ref}/snippy/before_validation/merged.vcf",
+        "typing/snippy/core_snippy/{ref}/snippy/before_validation/core.vcf.gz",
+        "typing/snippy/core_snippy/{ref}/snippy/before_validation/core.vcf.gz.tbi"
     shell:
         """
         snippy-core --prefix $(dirname {output[0]})/core $(dirname {input})
@@ -97,9 +98,12 @@ rule merge_snippy_filter_core_genome:
         "typing/snippy/core_parsnp/{ref}/snippy/{validation}/merged.vcf.gz.tbi",
     shell:
         """
-        bcftools merge {input[vcfs]} | bcftools view -R {input[bed]} - | bcftools sort -O v - > {output[0]}
+        bcftools merge {input[vcfs]} -O z > {output[0]}.tmp
+        tabix -f -p vcf {output[0]}.tmp
+        bcftools view -R {input[bed]} {output[0]}.tmp | bcftools sort -O v - > {output[0]}
         bgzip -c {output[0]} > {output[1]}
         tabix -f -p vcf {output[1]}
+        rm {output[0]}.tmp*
         """
 
 
