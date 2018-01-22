@@ -13,7 +13,7 @@ rule mapping_to_reference_with_bwa:
         "strains/{sample}/logs/mapping/{ref}/bwa/log.txt"
     shell:
         """
-        if [ -f strains/{wildcards.sample}/mapping/bwa/{wildcards.ref}/before_validation/{wildcards.sample}/snps.bam.tmp* ]; then
+        if ls strains/{wildcards.sample}/mapping/bwa/{wildcards.ref}/before_validation/{wildcards.sample}/snps.bam.tmp* 1> /dev/null 2>&1; then
              rm strains/{wildcards.sample}/mapping/bwa/{wildcards.ref}/before_validation/{wildcards.sample}/snps.bam.tmp*
         fi 
         (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[2]} {input[0]} {input[1]} -v 1 | samtools view -b -u -T {input[2]} | samtools sort -O bam -o {output[0]}) 2> {log}
