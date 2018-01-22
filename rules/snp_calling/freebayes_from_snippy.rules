@@ -10,9 +10,13 @@ rule merge_freebayes_from_snippy_filter_core_genome:
         "typing/freebayes_from_snippy/core_parsnp/{ref}/snippy/{validation}/merged.vcf.gz.tbi",
     shell:
         """
-        bcftools merge {input[vcfs]} | bcftools view -R {input[bed]} -Ou {input[1]} | bcftools sort -O v - > {output[0]}
+        bcftools merge {input[vcfs]} -O z > {output[0]}.tmp
+        tabix -f -p vcf {output[0]}.tmp
+        bcftools view -R {input[bed]} {output[0]}.tmp | bcftools sort -O v - > {output[0]}
         bgzip -c {output[0]} > {output[1]}
         tabix -f -p vcf {output[1]}
+        rm {output[0]}.tmp*
         """
+
 
 
