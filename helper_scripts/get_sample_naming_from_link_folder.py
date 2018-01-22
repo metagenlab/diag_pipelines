@@ -7,7 +7,7 @@ def get_read_naming_patterns(directory):
     extension= {}
     for fname in os.listdir(directory):
         if fname.endswith("fastq.gz") or fname.endswith("fq.gz") or fname.endswith("fastq") or fname.endswith("fq"):
-            regex_str = '(_S[0-9]+)?(_L0+[1-9]+)?_(R)?(1|2)(\.|_)'
+            regex_str = '(_L0+[1-9]+)?_(R)?(1|2)(\.|_)'
             regex = re.compile(regex_str)
             ext = re.search(regex, fname)
             if ext is None:
