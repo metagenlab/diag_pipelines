@@ -47,7 +47,7 @@ if isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
         reader = csv.reader(csvfile, delimiter="\t")
         for row in reader:
             genes.append(row[1])
-elif isinstance(config["currated_genes"], list) or config["currated_genes"] =="":
+elif isinstance(config["currated_genes"], list) or config["currated_genes"] == "":
     genes=config["currated_genes"]
 else:
     raise ValueError("currated_genes variable ill defined : {}".format(config["currated_genes"]))
@@ -70,16 +70,19 @@ include:
     prefix + "downloading/fetch_virulence_factors.rules"
 
 include:
+    prefix + "core_genome/parsnp.rules"
+
+include:
     prefix + "mapping/snippy.rules"
 
 include:
     prefix + "mapping/bwa_to_self_assembly.rules"
 
 include:
-    prefix + "mapping/find_closest_genomes.rules"
+    prefix + "mapping/bwa_to_reference.rules"
 
 include:
-    prefix + "mapping/bwa_to_reference.rules"
+    prefix + "mapping/find_closest_genomes.rules"
 
 include:
     prefix + "snp_calling/freebayes.rules"
@@ -97,7 +100,7 @@ include:
     prefix + "phylogeny/raxml.rules"
 
 include:
-    prefix + "assembly/assembly.rules"
+    prefix + "assembly/spades.rules"
 
 include:
     prefix + "annotation/prokka.rules"
@@ -136,10 +139,7 @@ include:
     prefix + "typing/cgmlst.rules"
 
 include:
-    prefix + "core_genome_calculations/parsnp.rules"
-
-    
-
+    prefix + "typing/spa_typing.rules"
     
 rule all:
     input:
