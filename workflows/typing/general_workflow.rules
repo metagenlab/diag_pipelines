@@ -118,8 +118,11 @@ include:
     prefix + "quality/quality_assembly.rules"
 
 include:
-    prefix + "quality/quality_reads.rules"    
+    prefix + "quality/quality_reads.rules"
 
+include:
+    prefix + "quality/quality_mapping_to_reference.rules"
+        
 include:
     prefix + "quality/contamination.rules"
     
