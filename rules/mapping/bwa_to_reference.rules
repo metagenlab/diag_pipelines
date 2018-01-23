@@ -51,3 +51,15 @@ rule index_reference:
         bwa index {input[0]}
         """
     
+rule get_ninety_percent_interval_coverage:
+    conda:
+        "env/r-base.yaml"
+    input:
+        "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/raw_data_qualimapReport/coverage_histogram.txt"
+    output:
+        "strains/{sample}/quality/mapping/bwa/{ref}/min_cov.txt",
+        "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt",
+    script:
+        "scripts/get_max_min_cov.R"
+        
+        
