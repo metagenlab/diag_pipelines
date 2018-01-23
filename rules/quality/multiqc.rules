@@ -62,3 +62,30 @@ rule multiqc_all:
         """
         docker run -v ${{PWD}}:/data/ multiqc sh -c 'multiqc -f -o /data/quality/ /data/strains/*/multiqc/ && chmod 666 /data/quality/multiqc_report.html'
         """
+
+
+
+
+rule get_files_for_multiqc_to_reference:
+    input:
+        "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html"
+    output:
+        "strains/{sample}/multiqc/mapping_to_{ref}/log.txt"
+    shell:
+        """
+        mkdir -p $(dirname {output[0]})/{wildcards.sample}
+        cp -R $(dirname {input[0]})/* $(dirname {output[0]})/{wildcards.sample}
+        echo "okay" > {output}
+        """
+
+
+rule multiqc_all_to_reference:
+    input:
+        expand("strains/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = read_naming.keys())
+    output:
+        "quality/multiqc_mapping_to_{ref}/multiqc_report.html"
+    shell:
+        """
+        docker run -v ${{PWD}}:/data/ multiqc sh -c 'multiqc -f -o /data/quality/multiqc_mapping_to_{wildcards.ref} /data/strains/*/multiqc/ && chmod 666 /data/quality/multiqc_mapping_to_{wildcards.ref}/multiqc_report.html'
+        """
+
