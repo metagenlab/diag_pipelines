@@ -53,14 +53,16 @@ rule get_files_for_multiqc_single:
 
         
 
-rule multiqc_all:
+rule multiqc_all_to_self_genome:
+    conda:
+        "env/multiqc.yaml"
     input:
-        ancient(expand("strains/{sample}/multiqc/log.txt", sample = read_naming.keys()))
+        expand("strains/{sample}/multiqc/log.txt", sample = read_naming.keys())
     output:
         "quality/multiqc_report.html"
     shell:
         """
-        docker run -v ${{PWD}}:/data/ multiqc sh -c 'multiqc -f -o /data/quality/ /data/strains/*/multiqc/ && chmod 666 /data/quality/multiqc_report.html'
+        multiqc -f -o $(dirname {output[0]}) strains/*/multiqc/
         """
 
 
@@ -80,12 +82,14 @@ rule get_files_for_multiqc_to_reference:
 
 
 rule multiqc_all_to_reference:
+    conda:
+        "env/multiqc.yaml"
     input:
         expand("strains/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = read_naming.keys())
     output:
         "quality/multiqc_mapping_to_{ref}/multiqc_report.html"
     shell:
         """
-        docker run -v ${{PWD}}:/data/ multiqc sh -c 'multiqc -f -o /data/quality/multiqc_mapping_to_{wildcards.ref} /data/strains/*/multiqc/ && chmod 666 /data/quality/multiqc_mapping_to_{wildcards.ref}/multiqc_report.html'
+        multiqc -f -o $(dirname {output[0]}) strains/*/multiqc/mapping_to_{wildcards.ref}/
         """
 
