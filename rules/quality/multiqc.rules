@@ -7,7 +7,7 @@ rule get_files_for_multiqc_paired:
         ancient("strains/{sample}/logs/trimmomatic.log"),
 #        "strains/{sample}/contamination/blast_results_taxid_species.tsv"
     output:
-        "strains/{sample}/multiqc/log.txt"
+        "strains/{sample}/multiqc/self_genome/log.txt"
     shell:
         """
         mkdir -p $(dirname {output[0]})/{wildcards.sample}
@@ -54,15 +54,17 @@ rule get_files_for_multiqc_single:
         
 
 rule multiqc_all_to_self_genome:
+    params:
+        configfile = config["multiqc_configfile"]
     conda:
         "env/multiqc.yaml"
     input:
-        expand("strains/{sample}/multiqc/log.txt", sample = read_naming.keys())
+        expand("strains/{sample}/multiqc/self_genome/log.txt", sample = read_naming.keys())
     output:
-        "quality/multiqc_report.html"
+        "quality/multiqc/self_genome/multiqc_report.html"
     shell:
         """
-        multiqc -f -o $(dirname {output[0]}) strains/*/multiqc/
+        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/self_genome/
         """
 
 
@@ -82,14 +84,16 @@ rule get_files_for_multiqc_to_reference:
 
 
 rule multiqc_all_to_reference:
+    params:
+        configfile = config["multiqc_configfile"]
     conda:
         "env/multiqc.yaml"
     input:
         expand("strains/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = read_naming.keys())
     output:
-        "quality/multiqc_mapping_to_{ref}/multiqc_report.html"
+        "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
     shell:
         """
-        multiqc -f -o $(dirname {output[0]}) strains/*/multiqc/mapping_to_{wildcards.ref}/
+        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/mapping_to_{wildcards.ref}/
         """
 

@@ -12,6 +12,7 @@ ontology_file_aro: /home/sacha/Documents/new_strain/card/obo_files/aro.obo
 ontology_file_mo: /home/sacha/Documents/new_strain/card/obo_files/mo.obo
 ontology_file_ro: /home/sacha/Documents/new_strain/card/obo_files/ro.obo
 
+multiqc_configfile: /home/sacha/Documents/new_strain/configuration_files/multiqc/config.yaml
 
 spec_for_mykrobe: tb
 resistance_prediction_softwares: 
