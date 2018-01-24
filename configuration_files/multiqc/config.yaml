@@ -1,0 +1,8 @@
+quast_config:
+    contig_length_multiplier: 0.001
+    contig_length_suffix: 'Kbp'
+    total_length_multiplier: 0.000001
+    total_length_suffix: 'Mbp'
+    total_number_contigs_multiplier: 1
+    total_number_contigs_suffix: ''
+    
