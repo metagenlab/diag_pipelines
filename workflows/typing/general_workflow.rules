@@ -44,7 +44,7 @@ species_names = get_species_sample.get_species_from_file(config["species_names_c
 
 read_location="get_reads.rules"
 
-if "froms_sras" in config.keys()
+if "froms_sras" in config.keys():
     read_naming = {x:y for y,x in get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"]).items()}
     read_location="get_sras.rules"
 
