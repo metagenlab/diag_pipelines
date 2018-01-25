@@ -50,7 +50,7 @@ def get_mapping_result_at_position(bam_file, position, sample):
     return [sample, position] + results + [sum(counts.values())]
     
 
-acc=re.sub("\..*", "", list(SeqIO.parse(snakemake.input["gbk"], "genbank"))[0].id)
+acc=list(SeqIO.parse(snakemake.input["gbk"], "genbank"))[0].id
 
 snps = pandas.read_csv(snakemake.input["genotype"], sep="\t", header=0)
 snps.rename(axis="columns", mapper= lambda x: re.sub("\[[0-9]+\]", "", x.replace(":GT", "").replace("# ", "")), inplace=True)
