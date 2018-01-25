@@ -9,17 +9,17 @@ rule mapping_to_reference_with_bwa:
     output:
         "strains/{sample}/mapping/bwa/{ref}/before_validation/{sample}/snps.bam",
         "strains/{sample}/mapping/bwa/{ref}/before_validation/{sample}/snps.bam.bai",
-        "strains/{sample}/mapping/bwa/{ref}/before_validation/{sample}/snps.bam.tmp",
     log:
         "strains/{sample}/logs/mapping/{ref}/bwa/log.txt"
     shell:
         """
-        if ls strains/{wildcards.sample}/mapping/bwa/{wildcards.ref}/before_validation/{wildcards.sample}/snps.bam.tmp* 1> /dev/null 2>&1; then
-             rm strains/{wildcards.sample}/mapping/bwa/{wildcards.ref}/before_validation/{wildcards.sample}/snps.bam.tmp*
+        if ls {output[0]}.tmp* 1> /dev/null 2>&1; then
+             rm {output[0]}.tmp*
         fi 
-        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[2]} {input[0]} {input[1]} -v 1 > {output[2]}) 2> {log}
-        samtools view -q 60  -b -u -F 3844 -T {input[2]} {output[2]} | samtools sort -O bam -o {output[0]}
+        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[2]} {input[0]} {input[1]} -v 1 > {output[0]}.tmp) 2> {log}
+        samtools view -q 60  -b -u -F 3844 -T {input[2]} {output[0]}.tmp | samtools sort -O bam -o {output[0]}
         samtools index {output[0]} 
+        rm {output[0]}.tmp*
         """
         
 rule remove_duplicates_from_mapping:
