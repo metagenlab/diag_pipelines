@@ -26,13 +26,13 @@ rule snp_distance_from_vcf_and_positions_for_close_pairs:
         
 rule compute_minimum_spanning_tree:
     conda:
-        "env/networkx.yaml"
+        "env/igraph.yaml"
     input:
-        "typing/core_{method}/{ref}/{validation}/distance.csv"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/distance.csv"
     output:
-        "typing/core_{method}/{ref}/{validation}/minimum_spanning_tree.png"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/minimum_spanning_tree.pdf"
     script:
-        "scripts/minimum_spanning_tree.py"
+        "scripts/minimum_spanning_tree.R"
 
         
         
