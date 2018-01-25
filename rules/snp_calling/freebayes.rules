@@ -1,9 +1,8 @@
-rule call_variants_freebayes:
+rule call_variants_freebayes_vcf:
     conda:
-        "env/freebayes.yaml"
+        "../mapping/env/snippy.yaml"
     input:
         "strains/{sample}/mapping/{mapping_method}/{ref}/before_validation/{sample}/snps_deduplicated.bam",
-        "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
         "references/{ref}/genome.fasta",
     output:
         "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.vcf",
@@ -11,31 +10,32 @@ rule call_variants_freebayes:
         "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.vcf.gz.tbi",
     shell:
         """
-        freebayes --no-population-priors --no-indels --min-coverage 5 -p 1 -t {input[1]} -f {input[2]} {input[0]} | bcftools sort -O v - > {output[0]}
-        bgzip -c {output[0]} > {output[1]}
-        tabix -f -p vcf {output[1]}
-        """
-        
-rule merge_vcfs_freebayes_filter_core_genome:
-    conda:
-        "../typing/env/bcftools.yaml"
-    input:
-        bed =   "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
-        vcfs=expand("strains/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/before_validation/snps.vcf.gz", sample=read_naming.keys())
-    output:
-        "typing/freebayes/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf",
-        "typing/freebayes/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz",
-        "typing/freebayes/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz.tbi",
-    shell:
-        """
-        bcftools merge {input[vcfs]} -O z > {output[0]}.tmp
-        tabix -f -p vcf {output[0]}.tmp
-        bcftools view -R {input[bed]} {output[0]}.tmp | bcftools sort -O v - > {output[0]}
+        freebayes -O -p 1 -F 0.75 -f {input[1]} {input[0]} | bgzip -c > {output[0]}.tmp.gz
+        tabix -f -p vcf {output[0]}.tmp.gz 
+        bcftools sort -O v {output[0]}.tmp.gz > {output[0]}
         bgzip -c {output[0]} > {output[1]}
         tabix -f -p vcf {output[1]}
         rm {output[0]}.tmp*
         """
-
-
-
+        
+rule call_variants_freebayes_gvcf:
+    conda:
+        "env/freebayes.yaml"
+    input:
+        "strains/{sample}/mapping/{mapping_method}/{ref}/before_validation/{sample}/snps.bam",
+        "references/{ref}/genome.fasta",
+        "strains/{sample}/quality/mapping/bwa/{ref}/min_cov.txt",
+        "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt"
+    output:
+        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.g.vcf",
+        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.g.vcf.gz",
+        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.g.vcf.gz.tbi",
+    shell:
+        """
+        min=$(cat {input[2]})
+        max=$(cat {input[3]})
+        freebayes -f {input[1]} --gvcf --min-coverage ${{min}} --max-coverage ${{max}} -p 1 -F 0.95 {input[0]}  | sed  "s/FORMAT=<ID=GQ,Number=1,Type=Integer/FORMAT=<ID=GQ,Number=1,Type=Float/" | sed "s/FORMAT=<ID=QR,Number=1,Type=Integer/FORMAT=<ID=QR,Number=1,Type=Float/" | bcftools sort -O v - > {output[0]}
+        bgzip -c {output[0]} > {output[1]}
+        tabix -f -p vcf {output[1]}
+        """
         
