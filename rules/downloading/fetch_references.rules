@@ -33,6 +33,8 @@ rule get_reference_or_representative_or_complete_genome_urls:
 #        """
 
 rule download_gbks_from_url:
+    conda:
+        "env/entrez-direct.yaml"
     input:
         "references/url_complete_genomes.txt"
     output:
@@ -45,6 +47,8 @@ rule download_gbks_from_url:
 
 
 rule download_fasta_from_url:
+    conda:
+        "env/entrez-direct.yaml"
     input:
         "references/url_complete_genomes.txt"
     output:
