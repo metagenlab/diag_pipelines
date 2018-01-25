@@ -99,9 +99,6 @@ include:
     prefix + "snp_calling/freebayes_from_snippy.rules"
     
 include:
-    prefix + "snp_calling/gatk.rules"
-    
-include:
     prefix + "phylogeny/generate_alignments.rules"
     
 include:
@@ -150,12 +147,16 @@ include:
     prefix + "typing/cgmlst.rules"
 
 include:
+    prefix + "typing/filtering.rules"
+
+include:
     prefix + "typing/spa_typing.rules"
     
 rule all:
     input:
-        "typing/freebayes_from_snippy/core_parsnp/34528/snippy/before_validation/distance.xlsx",
-        "typing/snippy/core_parsnp/34528/snippy/before_validation/distance.xlsx",
-        "typing/gatk/core_parsnp/34528/bwa/before_validation/distance.xlsx",
-        "typing/freebayes/core_parsnp/34528/bwa/before_validation/distance.xlsx",
-        
+        "typing/freebayes/core_parsnp/34528/bwa/before_validation/soft_masked/distance.xlsx",
+        "typing/freebayes/core_parsnp/1241621/bwa/before_validation/soft_masked/distance.xlsx",
+        "typing/freebayes/core_parsnp/716441/bwa/before_validation/soft_masked/distance.xlsx",
+        "typing/freebayes/core_parsnp/1455771/bwa/before_validation/soft_masked/distance.xlsx",
+
+
