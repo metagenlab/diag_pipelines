@@ -1,0 +1,11 @@
+rule calculate_ani_on_downloaded_references:
+    conda:
+        "env/pyani.yaml"
+    input:
+        "references/all_complete_genomes_log.txt"
+    output:
+        "core_genome/ani/log.txt"
+    shell:
+        """
+         average_nucleotide_identity.py -i $(dirname {output}) -o $( dirname {output})/results/ -l {output} -g --gformat eps,png -f
+        """
