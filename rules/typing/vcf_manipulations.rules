@@ -1,47 +1,31 @@
-rule exclude_indel_other_ref_mutations:
+rule coverage_filtering:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/snps.vcf",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/snps.vcf",
+        "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt"
     output:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_snp_complex.vcf.gz",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_snp_complex.vcf.gz.tbi",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_snp_complex.vcf",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_to_snp_coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_to_snp_coverage_filtered.vcf.gz.tbi",
     shell:
         """
-        bcftools view -Ou -e 'type="indel"||type="other"||type="ref"' {input[0]} | bcftools sort -O z - > {output[0]}
+        min=10
+        max=$(cat {input[1]})
+        min_freq=0.75
+        bcftools filter -s "lowcov" -S "." -e "DP<${{min}}" {input[0]} | bcftools filter -s "hicov" -S "." -e "DP>${{max}}" | bcftools filter -s "freq" -S "." -e "(AO/DP)<${{min_freq}}" -O v - | bgzip > {output[0]}
         tabix -f -p vcf {output[0]}
-        gzip -d -c {output[0]} > {output[2]}
         """
-        
-rule split_mnps_into_snps:
-    conda:
-        "env/vt-bcftools.yaml"
-    input:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_snp_complex.vcf.gz",
-    output:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_decomposed_to_snp.vcf.gz",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_decomposed_to_snp.vcf.gz.tbi",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_decomposed_to_snp.vcf",
-    shell:
-        """
-        bcftools norm -m -both {input[0]} | vt decompose_blocksub - | bcftools norm -m +both - | bcftools sort -O z - > {output[0]}
-        tabix -f -p vcf {output[0]}
-        bgzip -d -c {output[0]} > {output[2]}
-        """
-
-
 
 rule filter_core_genome_parsnp:
     conda:
         "env/vt-bcftools.yaml"
     input:
         "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_decomposed_to_snp.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_to_snp_coverage_filtered.vcf.gz",
     output:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_decomposed_to_snp_core_parsnp.vcf.gz",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_decomposed_to_snp_core_parsnp.vcf.gz.tbi",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/before_validation/merged_mnp_decomposed_to_snp_core_parsnp.vcf",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz.tbi",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf",
     shell:
         """
         bcftools view -R {input[0]} {input[1]} | bcftools sort -O v - > {output[2]}
@@ -49,39 +33,55 @@ rule filter_core_genome_parsnp:
         tabix -f -p vcf {output[0]}
         """
 
-
-        
-rule merge_vcfs_filter_core_genome:
+rule stats_compared_to_reference:
     conda:
-        "../typing/env/bcftools.yaml"
+        "env/vt-bcftools.yaml"
     input:
-        bed = "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
-        vcfs=expand("strains/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/before_validation/merged_mnp_decomposed_to_snp_core_parsnp.vcf.gz", sample=read_naming.keys())
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz",
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz.tbi",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/final_stats.txt",
     shell:
         """
-        bcftools merge {input[vcfs]} -O v > {output[2]}
-        bgzip -c {output[2]} > {output[0]}
-        tabix -f -p vcf {output[0]}
+        bcftools stats -f PASS,. {input[0]} > {output[0]}
         """
-
-
-rule extract_genotype_info:
+        
+        
+rule stats_pairs_calculation:
     conda:
-        "env/bcftools.yaml"
+        "env/vt-bcftools.yaml"
     input:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged.vcf.gz"
+        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
+        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
     output:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/genotype.GT.FORMAT",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}.diff"
     shell:
         """
-        bcftools query -H -f "%CHROM\\t%POS\\t%REF\\t%ALT[\\t%GT]\n" {input[0]}  > {output[0]}
+        bcftools stats -e "GT='.'" {input} > {output[0]}
         """
         
-        
 
 
         
+rule merge_stats_pairs_calculation:
+    input:
+        expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}.diff", zip, sample1 = s1, sample2 = s2),
+        expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances.txt"
+    shell:
+        """
+        for i in {input}
+        do
+            if [[ $i == typing/* ]]
+            then
+                id=$(echo ${{i}} | sed "s/^.*\///" | sed "s/\.diff//" | sed "s/_/ /")
+            else
+                id="$(echo ${{i}} | sed "s/strains\///" | sed "s/\/.*//") {wildcards.ref}"
+            fi
+        
+            snps=$(grep "^SN" ${{i}} | grep "SNPs" | awk '$2 !=2 {{print $NF}}' | awk '{{count=count+$1}}END{{print count}}') 
+            echo ${{id}} ${{snps}} >> {output}
+        done
+        """
+
+
