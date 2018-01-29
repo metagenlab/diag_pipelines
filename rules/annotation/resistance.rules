@@ -7,7 +7,7 @@ rule rgi:
         "strains/{sample}/resistance/rgi.json"
     shell:
         """
-        rgi -t protein -i {input} -o strains/{wildcards.sample}/resistance/rgi
+        rgi -t protein -i {input[0]} -o $(dirname {output[0]})/rgi
         """
 
 rule rgi_json_to_tsv:
@@ -75,6 +75,8 @@ rule mykrobe_json_to_tsv:
     script:
         "scripts/mykrobe_json_to_tsv.py"
 
+
+
         
 rule summary_csv_excel_file:
     params:
@@ -83,7 +85,7 @@ rule summary_csv_excel_file:
         ontology_ro = config["ontology_file_ro"],
         currated_genes = genes
     conda:
-        "env/pandas-openpyxl.yaml"
+        "env/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         expand("strains/{{sample}}/resistance/{software}.tsv", software = config["resistance_prediction_softwares"])
     output:
