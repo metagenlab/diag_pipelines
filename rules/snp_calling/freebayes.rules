@@ -5,37 +5,15 @@ rule call_variants_freebayes_vcf:
         "strains/{sample}/mapping/{mapping_method}/{ref}/before_validation/{sample}/snps_deduplicated.bam",
         "references/{ref}/genome.fasta",
     output:
-        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.vcf",
-        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.vcf.gz",
-        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.vcf.gz.tbi",
+        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf",
+        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf.gz",
+        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf.gz.tbi",
     shell:
         """
-        freebayes -O -p 1 -F 0.75 -f {input[1]} {input[0]} | bgzip -c > {output[0]}.tmp.gz
+        freebayes -O -p 1 -F 0.50 -f {input[1]} {input[0]} | bgzip -c > {output[0]}.tmp.gz
         tabix -f -p vcf {output[0]}.tmp.gz 
         bcftools sort -O v {output[0]}.tmp.gz > {output[0]}
         bgzip -c {output[0]} > {output[1]}
         tabix -f -p vcf {output[1]}
         rm {output[0]}.tmp*
         """
-        
-rule call_variants_freebayes_gvcf:
-    conda:
-        "env/freebayes.yaml"
-    input:
-        "strains/{sample}/mapping/{mapping_method}/{ref}/before_validation/{sample}/snps.bam",
-        "references/{ref}/genome.fasta",
-        "strains/{sample}/quality/mapping/bwa/{ref}/min_cov.txt",
-        "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt"
-    output:
-        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.g.vcf",
-        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.g.vcf.gz",
-        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/before_validation/snps.g.vcf.gz.tbi",
-    shell:
-        """
-        min=$(cat {input[2]})
-        max=$(cat {input[3]})
-        freebayes -f {input[1]} --gvcf --min-coverage ${{min}} --max-coverage ${{max}} -p 1 -F 0.95 {input[0]}  | sed  "s/FORMAT=<ID=GQ,Number=1,Type=Integer/FORMAT=<ID=GQ,Number=1,Type=Float/" | sed "s/FORMAT=<ID=QR,Number=1,Type=Integer/FORMAT=<ID=QR,Number=1,Type=Float/" | bcftools sort -O v - > {output[0]}
-        bgzip -c {output[0]} > {output[1]}
-        tabix -f -p vcf {output[1]}
-        """
-        
