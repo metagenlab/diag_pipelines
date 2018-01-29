@@ -124,5 +124,8 @@ rule snp_distance_from_masked_vcf:
         out_csv_pos="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/soft_masked/positions.csv",
         out_xlsx_dist="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/soft_masked/distance.xlsx",
         out_xlsx_pos="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/soft_masked/positions.xlsx",
+        out_xlsx_unknowns="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/soft_masked/unkowns.xlsx",
+        out_csv_unknowns="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/soft_masked/unknowns.csv",
+
     script:
         "scripts/snp_distance_from_masked_vcf.py"
