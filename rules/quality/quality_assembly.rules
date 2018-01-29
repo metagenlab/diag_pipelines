@@ -18,7 +18,7 @@ rule extract_contig_coverage:
         "strains/{sample}/quality/contig_coverage.txt"
     shell:
         """
-        sed -ne '/Coverage per contig/,$ p'  {input[0]} | grep {wildcards.sample} | sed "s/^[ \\t]*//" > {output[0]}
+        sed -ne '/Coverage per contig/,$ p'  {input[0]} | grep contig_ | sed "s/^[ \\t]*//" > {output[0]}
         """
         
 rule quast:
