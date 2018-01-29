@@ -1,24 +1,14 @@
-rule snp_distance_from_vcf_and_positions_for_close_pairs:
+rule distance_columns_to_matrix:
+    params:
+        samples=list(read_naming.keys())
     conda:
         "env/pandas-biopython-pysam.yaml"
-    params:
-        samples=list(read_naming.keys()),
-        dist_thre=int(config["snps_distance_threshold"])
     input:
-        gbk=ancient("references/{ref}/genome.gbk"),
-        vcf_before_decomposition="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/merged_mnp_snp_complex.vcf",
-        genotype=ancient("typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/genotype.GT.FORMAT"),
-        bams=ancient(expand("strains/{sample}/mapping/{{mapping_method}}/{{ref}}/before_validation/{sample}/snps.bam", sample=read_naming.keys()))
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances.txt"
     output:
-        out_csv_dist="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/distance.csv",
-        out_csv_pos="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/positions.csv",
-        out_xlsx_dist="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/distance.xlsx",
-        out_xlsx_pos="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/positions.xlsx",
-        snps_pos="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/snps_pos.bed"
+        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances.xlsx"
     script:
-        "scripts/snp_distance_from_vcf.py"
-
-
+        "scripts/distance_columns_to_matrix.py"
 
 
 
@@ -36,26 +26,6 @@ rule compute_minimum_spanning_tree:
 
         
         
-rule revalidate_snps_with_freebayes:
-    conda:
-        "../mapping/env/snippy.yaml"
-    input:
-        "typing/snippy/core_{method}/{ref}/before_validation/snps_pos.bed",
-        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/snps.bam",
-        "strains/{sample}/mapping/snippy/{ref}/before_validation/{sample}/reference/ref.fa"
-    output:
-        "strains/{sample}/snps/snippy/{ref}/core_{method}/after_validation/snps.vcf",
-        "strains/{sample}/snps/snippy/{ref}/core_{method}/after_validation/snps.vcf.gz",
-        "strains/{sample}/snps/snippy/{ref}/core_{method}/after_validation/snps.vcf.gz.tbi"
-        
-    shell:
-        """
-        freebayes --min-coverage 5 -p 1 -t {input[0]} -f {input[2]} {input[1]} > {output[0]}
-        bgzip -c {output[0]} > {output[1]}
-        tabix -f -p vcf {output[1]}
-        """
-
-
 rule merge_snps_distance_xlsx:
     conda:
         "env/pandas-biopython-pysam.yaml"
