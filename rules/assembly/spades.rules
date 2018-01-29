@@ -129,5 +129,5 @@ rule rename_contigs:
     output:
         "strains/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
     shell:
-        "sed \"s/NODE_\\([0-9]\\+\\)_.*/{wildcards.sample}_\\1/\" {input} > {output}"
+        "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig_\\1/\" {input} > {output}"
 
