@@ -17,6 +17,19 @@ rule prokka:
     shell:
         "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}'"
 
+rule prokka_temporary_file:
+    conda:
+        "env/prokka.yaml"
+    input:
+        "strains/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
+    output:
+        "strains/{sample}/assembly/spades/temporary_annotation/{sample}.fsa"
+    params:
+        genus = lambda wildcards: species_names[wildcards.sample]["genus"],
+        spec = lambda wildcards: species_names[wildcards.sample]["species"]
+    shell:
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}'"
+
 
 rule hashing_genes:
     conda:
