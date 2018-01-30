@@ -4,9 +4,9 @@ rule distance_columns_to_matrix:
     conda:
         "env/pandas-biopython-pysam.yaml"
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances.txt"
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/complements_distances.txt"
     output:
-        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances.xlsx"
+        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/complements_distances.xlsx"
     script:
         "scripts/distance_columns_to_matrix.py"
 

@@ -1,6 +1,7 @@
 import csv
 import shutil
 import sys
+import itertools
 
 snakemake_path = config["snakemake_path"]
 
@@ -41,7 +42,6 @@ resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
 species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
 
-
 read_location="get_reads.rules"
 
 if "froms_sras" in config.keys():
@@ -59,11 +59,15 @@ elif isinstance(config["currated_genes"], list) or config["currated_genes"] == "
 else:
     raise ValueError("currated_genes variable ill defined : {}".format(config["currated_genes"]))
 
-print(read_naming)
+
     
 prefix = "../../rules/"
 
-print(read_location)
+s1=[]
+s2=[]
+for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
+    s1.append(i)
+    s2.append(j)
 
 include:
     prefix + "read_manipulation/"+read_location
@@ -81,7 +85,7 @@ include:
     prefix + "core_genome/parsnp.rules"
 
 include:
-    prefix + "mapping/snippy.rules"
+    prefix + "core_genome/ani.rules"
 
 include:
     prefix + "mapping/bwa_to_self_assembly.rules"
@@ -95,9 +99,6 @@ include:
 include:
     prefix + "snp_calling/freebayes.rules"
 
-include:
-    prefix + "snp_calling/freebayes_from_snippy.rules"
-    
 include:
     prefix + "phylogeny/generate_alignments.rules"
     
@@ -117,7 +118,7 @@ include:
     prefix + "annotation/virulence.rules"
     
 include:
-    prefix + "quality/multiqc.rules"
+    prefix + "report_generation/multiqc.rules"
 
 include:
     prefix + "quality/quality_assembly.rules"
@@ -145,9 +146,6 @@ include:
 
 include:
     prefix + "typing/cgmlst.rules"
-
-include:
-    prefix + "typing/filtering.rules"
 
 include:
     prefix + "typing/spa_typing.rules"

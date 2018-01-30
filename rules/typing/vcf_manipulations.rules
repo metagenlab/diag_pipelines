@@ -12,7 +12,21 @@ rule coverage_filtering:
         min=10
         max=$(cat {input[1]})
         min_freq=0.75
-        bcftools filter -s "lowcov" -S "." -e "DP<${{min}}" {input[0]} | bcftools filter -s "hicov" -S "." -e "DP>${{max}}" | bcftools filter -s "freq" -S "." -e "(AO/DP)<${{min_freq}}" -O v - | bgzip > {output[0]}
+        bcftools filter -s "lowcov" -S "." -e "DP<${{min}}" {input[0]} | bcftools filter -S "." -s "hicov" -e "DP>${{max}}" | bcftools filter -S "." -s "freq"  -e "(AO/DP)<${{min_freq}}" -O v - | bgzip > {output[0]}
+        tabix -f -p vcf {output[0]}
+        """
+
+rule indel_filtering:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered.vcf.gz",
+    output:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered.vcf.gz.tbi",
+    shell:
+        """
+        bcftools filter -S "." -s "indel" -e 'TYPE="indel"' {input[0]} -O v  | bgzip > {output[0]}
         tabix -f -p vcf {output[0]}
         """
 
@@ -20,11 +34,11 @@ rule vt_decompose_blocksub:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered.vcf.gz",
     output:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_coverage_filtered.vcf.gz",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_coverage_filtered.vcf.gz.tbi",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_coverage_filtered.vcf",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_indel_coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_indel_coverage_filtered.vcf.gz.tbi",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_indel_coverage_filtered.vcf",
     shell:
         """
         vt decompose_blocksub {input[0]} -o {output[2]}
@@ -37,7 +51,7 @@ rule filter_core_genome_parsnp:
         "env/vt-bcftools.yaml"
     input:
         "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_indel_coverage_filtered.vcf.gz",
     output:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz",
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz.tbi",
@@ -74,7 +88,7 @@ rule stats_pairs_calculation:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}_stats.txt"
     shell:
         """
-        bcftools stats -e "GT='.'" {input} > {output[0]}
+        bcftools stats {input} > {output[0]}
         """
         
 
@@ -96,6 +110,24 @@ rule complement_pairs_calculation:
         echo {wildcards.sample1} {wildcards.sample2} $(( $(wc -l < {output[0]}) + $(wc -l < {output[1]}) )) >> {output[2]}
         """
 
+
+
+rule merge_vcfs_filter_core_genome:
+    conda:
+        "env/bcftools.yaml"
+    input:
+        vcfs=expand("strains/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/{sample}.vcf.gz", sample=read_naming.keys())
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf.gz",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf.gz.tbi",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf",
+    shell:
+        """
+        bcftools merge {input[vcfs]} -0 -O v | bcftools filter -e "filter='indel'" > {output[2]}
+        bgzip -c {output[2]} > {output[0]}
+        tabix -f -p vcf {output[0]}
+        """
+
 rule merge_complement_pairs_calculation:
     input:
         pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_distance.txt", zip, sample1 = s1, sample2 = s2),
@@ -113,28 +145,22 @@ rule merge_complement_pairs_calculation:
         done
         """
 
-
         
-rule merge_stats_pairs_calculation:
+rule extract_alignment_for_phylogeny:
     input:
-        expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_stats.txt", zip, sample1 = s1, sample2 = s2),
-        expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf.gz",
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances.txt"
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
     shell:
         """
-        for i in {input}
+        printf ">{wildcards.ref}\\n" > {output[0]}
+        bcftools query -f %REF {input[0]} >> {output[0]}
+        printf "\\n" >> {output[0]}
+        for samp in $(bcftools query -l {input[0]} )
         do
-            if [[ $i == typing/* ]]
-            then
-                id=$(echo ${{i}} | sed "s/^.*\///" | sed "s/_stats\.txt//" | sed "s/_/ /")
-            else
-                id="$(echo ${{i}} | sed "s/strains\///" | sed "s/\/.*//") {wildcards.ref}"
-            fi
-        
-            snps=$(grep "^SN" ${{i}} | grep "SNPs" | awk '$2 !=2 {{print $NF}}' | awk '{{count=count+$1}}END{{print count}}') 
-            echo ${{id}} ${{snps}} >> {output}
-        done
+            printf '>'${{samp}}'\\n' 
+            bcftools query -s ${{samp}} -f '[%TGT]' {input[0]} | sed "s/\./N/g"
+            printf '\\n'
+        done >> {output[0]}
         """
-
 

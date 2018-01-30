@@ -2,18 +2,20 @@ rule raxml_on_alignment_to_ref:
     conda:
         "env/raxml.yaml"
     input:
-        "alignments/core_{method}/{ref}/{validation}/alignment.fa"
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
     output:
-        "phylogeny/core_{method}/{ref}/{validation}/RAxML_bestTree.nw"
+        "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/RAxML_bestTree.nw"
     log:
         "logs/phylogeny/RAxML_log.{ref}"
     shell:
         """
-        if ls phylogeny/core_{wildcards.method}/{wildcards.ref}/{wildcards.validation}/RAxML_*.{wildcards.ref} 1> /dev/null 2>&1; then
-             rm phylogeny/core_{wildcards.method}/{wildcards.ref}/{wildcards.validation}/*
+        if [ -d $(dirname {output[0]}) ];
+        then
+            rm -rf $(dirname {output[0]})
+            mkdir -p $(dirname {output[0]})
         fi
         raxmlHPC -V -m GTRCAT -n {wildcards.ref} -s {input[0]} -w $(dirname $(readlink -f {output[0]})) -p 123 > {log} 
-        cp phylogeny/core_{wildcards.method}/{wildcards.ref}/{wildcards.validation}/RAxML_bestTree.{wildcards.ref} phylogeny/core_{wildcards.method}/{wildcards.ref}/{wildcards.validation}/RAxML_bestTree.nw
+        cp $(dirname {output[0]})/RAxML_bestTree.{wildcards.ref} $(dirname {output[0]})/RAxML_bestTree.nw 
         """
 
 rule raxml_bootstrap:
