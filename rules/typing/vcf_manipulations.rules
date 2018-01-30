@@ -5,8 +5,8 @@ rule coverage_filtering:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/snps.vcf",
         "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt"
     output:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_to_snp_coverage_filtered.vcf.gz",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_to_snp_coverage_filtered.vcf.gz.tbi",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered.vcf.gz.tbi",
     shell:
         """
         min=10
@@ -16,12 +16,28 @@ rule coverage_filtering:
         tabix -f -p vcf {output[0]}
         """
 
+rule vt_decompose_blocksub:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered.vcf.gz",
+    output:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_coverage_filtered.vcf.gz.tbi",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_coverage_filtered.vcf",
+    shell:
+        """
+        vt decompose_blocksub {input[0]} -o {output[2]}
+        bgzip -c {output[2]} > {output[0]}
+        tabix -f -p vcf {output[0]}
+        """
+
 rule filter_core_genome_parsnp:
     conda:
         "env/vt-bcftools.yaml"
     input:
         "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_to_snp_coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_coverage_filtered.vcf.gz",
     output:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz",
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz.tbi",
@@ -33,6 +49,8 @@ rule filter_core_genome_parsnp:
         tabix -f -p vcf {output[0]}
         """
 
+
+        
 rule stats_compared_to_reference:
     conda:
         "env/vt-bcftools.yaml"
@@ -53,18 +71,53 @@ rule stats_pairs_calculation:
         "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
         "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}.diff"
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}_stats.txt"
     shell:
         """
         bcftools stats -e "GT='.'" {input} > {output[0]}
         """
         
 
+        
+rule complement_pairs_calculation:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
+        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}_complements.txt",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample2}_{sample1}_complements.txt",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample2}_{sample1}_distance.txt",
+    shell:
+        """
+        bcftools isec -C -e "filter!='PASS'" -e- {input[0]} {input[1]} > {output[0]}
+        bcftools isec -C -e "filter!='PASS'" -e- {input[1]} {input[0]} > {output[1]}
+        echo {wildcards.sample1} {wildcards.sample2} $(( $(wc -l < {output[0]}) + $(wc -l < {output[1]}) )) >> {output[2]}
+        """
+
+rule merge_complement_pairs_calculation:
+    input:
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_distance.txt", zip, sample1 = s1, sample2 = s2),
+        to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/complements_distances.txt"
+    shell:
+        """
+        cat {input[pairs]} > {output[0]}
+        for i in {input[to_ref]}
+        do
+            id="$(echo ${{i}} | sed "s/strains\///" | sed "s/\/.*//") {wildcards.ref}"
+            snps=$(grep "^SN" ${{i}} | grep "SNPs" | awk '$2 !=2 {{print $NF}}' | awk '{{count=count+$1}}END{{print count}}') 
+            echo ${{id}} ${{snps}} >> {output[0]}
+        done
+        """
+
 
         
 rule merge_stats_pairs_calculation:
     input:
-        expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}.diff", zip, sample1 = s1, sample2 = s2),
+        expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_stats.txt", zip, sample1 = s1, sample2 = s2),
         expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances.txt"
@@ -74,7 +127,7 @@ rule merge_stats_pairs_calculation:
         do
             if [[ $i == typing/* ]]
             then
-                id=$(echo ${{i}} | sed "s/^.*\///" | sed "s/\.diff//" | sed "s/_/ /")
+                id=$(echo ${{i}} | sed "s/^.*\///" | sed "s/_stats\.txt//" | sed "s/_/ /")
             else
                 id="$(echo ${{i}} | sed "s/strains\///" | sed "s/\/.*//") {wildcards.ref}"
             fi
