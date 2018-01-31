@@ -2,12 +2,12 @@ rule rgi:
     conda:
         "env/rgi.yaml"
     input:
-        "strains/{sample}/annotation/{sample}.faa"
+        "strains/{sample}/annotation/{sample}.fsa"
     output:
         "strains/{sample}/resistance/rgi.json"
     shell:
         """
-        rgi -t protein -i {input[0]} -o $(dirname {output[0]})/rgi
+        rgi -t contig -i {input[0]} -o $(dirname {output[0]})/rgi
         """
 
 rule rgi_json_to_tsv:
@@ -49,7 +49,7 @@ rule mykrobe_paired:
         species = config["spec_for_mykrobe"]
     shell:
         """
-        mykrobe predict "{wildcards.sample}" "{params.species}" -1 {input[0]} --min_variant_conf 100  > {output[0]} 
+        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf 100  > {output[0]} 
         """
 
 rule mykrobe_single:
@@ -63,7 +63,7 @@ rule mykrobe_single:
         species = config["spec_for_mykrobe"]
     shell:
         """
-        mykrobe predict "{wildcards.sample}" "{params.species}" -1 {input[0]} --min_variant_conf 100  > {output[0]} 
+        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf 100  > {output[0]} 
         """
 
 
@@ -75,9 +75,6 @@ rule mykrobe_json_to_tsv:
     script:
         "scripts/mykrobe_json_to_tsv.py"
 
-
-
-        
 rule summary_csv_excel_file:
     params:
         ontology_aro = config["ontology_file_aro"],
@@ -90,7 +87,10 @@ rule summary_csv_excel_file:
         expand("strains/{{sample}}/resistance/{software}.tsv", software = config["resistance_prediction_softwares"])
     output:
         "strains/{sample}/resistance/summary.csv",
-        "strains/{sample}/resistance/summary.xlsx"
+        "strains/{sample}/resistance/summary.xlsx",
+        "strains/{sample}/resistance/sequences.ffn",
+        "strains/{sample}/resistance/sequences.faa",
+        
     script:
         "scripts/summary_csv_xlsx.py"
 
@@ -105,4 +105,12 @@ rule merge_summary_xlsx_files:
         "resistance_summary.xlsx"
     script:
         "scripts/merge_summary_xlsx.py"
+        
+rule extract_resistance_genes:
+    conda:
+        ""
+    input:
+        "strains/{sample}/resistance/summary.csv"
+    output:
+        ""
         
