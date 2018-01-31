@@ -26,7 +26,7 @@ rule indel_filtering:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered.vcf.gz.tbi",
     shell:
         """
-        bcftools filter -S "." -s "indel" -e 'TYPE="indel"' {input[0]} -O v  | bgzip > {output[0]}
+        bcftools filter -S "." -s "indel" -e 'STRLEN(REF)!=STRLEN(ALT)' -O z {input[0]} > {output[0]}
         tabix -f -p vcf {output[0]}
         """
 
@@ -62,8 +62,6 @@ rule filter_core_genome_parsnp:
         bgzip -c {output[2]} > {output[0]}
         tabix -f -p vcf {output[0]}
         """
-
-
         
 rule stats_compared_to_reference:
     conda:
@@ -74,7 +72,7 @@ rule stats_compared_to_reference:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/final_stats.txt",
     shell:
         """
-        bcftools stats -f PASS,. {input[0]} > {output[0]}
+        bcftools stats -f PASS {input[0]} > {output[0]}
         """
         
         
@@ -111,6 +109,42 @@ rule complement_pairs_calculation:
         """
 
 
+rule merge_vcf_pairs:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
+        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}.vcf",
+    shell:
+        """
+        bcftools merge {input} -0 -O v > {output[0]}
+        """
+
+rule calculate_distances_from_merged_pairs:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}.vcf", zip, sample1 = s1, sample2 = s2),
+        to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/other_distances.txt"
+    shell:
+        """
+        for i in {input[pairs]}
+        do
+            snps=$(bcftools stats -f PASS ${{i}} | grep "^SiS" | cut -f 4)
+            id="$(echo ${{i}} | sed "s/.*\///" | sed "s/\.vcf//" | sed "s/_/ /") "
+            echo ${{id}} ${{snps}} >> {output[0]}
+        done
+        for i in {input[to_ref]}
+        do
+            id="$(echo ${{i}} | sed "s/strains\///" | sed "s/\/.*//") {wildcards.ref}"
+            snps=$(grep "^SN" ${{i}} | grep "SNPs" | awk '$2 !=2 {{print $NF}}' | awk '{{count=count+$1}}END{{print count}}') 
+            echo ${{id}} ${{snps}} >> {output[0]}
+        done
+        """
 
 rule merge_vcfs_filter_core_genome:
     conda:
@@ -127,6 +161,7 @@ rule merge_vcfs_filter_core_genome:
         bgzip -c {output[2]} > {output[0]}
         tabix -f -p vcf {output[0]}
         """
+        
 
 rule merge_complement_pairs_calculation:
     input:
