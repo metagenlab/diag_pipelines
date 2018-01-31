@@ -9,7 +9,8 @@ rule calculate_statistics_from_vcf_to_reference:
         """
         bcftools stats -f PASS {input[0]} > {output[0]}
         """
-        
+
+     
         
 rule calculate_statistics_from_pairs_of_vcf:
     conda:
@@ -33,7 +34,7 @@ rule calculate_complement_sites_from_pairs_of_vcf:
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}_complements.txt",
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample2}_{sample1}_complements.txt",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample2}_{sample1}_distance.txt",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample2}_{sample1}_complements_distance.txt",
     shell:
         """
         bcftools isec -C -e "filter!='PASS'" -e- {input[0]} {input[1]} > {output[0]}
@@ -41,12 +42,26 @@ rule calculate_complement_sites_from_pairs_of_vcf:
         echo {wildcards.sample1} {wildcards.sample2} $(( $(wc -l < {output[0]}) + $(wc -l < {output[1]}) )) >> {output[2]}
         """
 
-
 rule calculate_distances_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}.vcf", zip, sample1 = s1, sample2 = s2),
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}.vcf",
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}_merged_distance.txt",
+    shell:
+        """
+        snps=$(bcftools stats -f PASS {input[0]} | grep "^SiS" | cut -f 4)
+        echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[0]}
+        """
+
+        
+
+rule agregate_distances_from_merged_pairs_of_vcf:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_merged_distance.txt", zip, sample1 = s1, sample2 = s2),
         to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/other_distances.txt"
@@ -54,9 +69,7 @@ rule calculate_distances_from_merged_pairs_of_vcf:
         """
         for i in {input[pairs]}
         do
-            snps=$(bcftools stats -f PASS ${{i}} | grep "^SiS" | cut -f 4)
-            id="$(echo ${{i}} | sed "s/.*\///" | sed "s/\.vcf//" | sed "s/_/ /") "
-            echo ${{id}} ${{snps}} >> {output[0]}
+            cat ${{i}} >> {output[0]}
         done
         for i in {input[to_ref]}
         do
