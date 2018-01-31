@@ -4,13 +4,12 @@ rule distance_columns_to_matrix:
     conda:
         "env/pandas-biopython-pysam.yaml"
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/other_distances.txt"
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.txt",
+        "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
     output:
-        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/other_distances.xlsx"
+        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.xlsx"
     script:
         "scripts/distance_columns_to_matrix.py"
-
-
 
 
         
