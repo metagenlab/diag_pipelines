@@ -1,4 +1,4 @@
-snakemake_path: /home/sacha/Documents/new_strain/
+absolute_path_of_pipeline_folder: /home/sacha/Documents/new_strain/
 
 # Currated genes associated with resistance phenotype
 # Can be a file as defined in mycobacterium/db/resistance_genes.csv or simply a list with the names of the genes
@@ -8,11 +8,6 @@ currated_genes: /home/sacha/Documents/new_strain/mycobacterium/db/resistance_gen
 virulence_factors: /home/sacha/Documents/new_strain/staph/db/virulence_factors.tsv
 
 #Ontology files from the card database. Should be changed to automatically fetch the files from the db
-ontology_file_aro: /home/sacha/Documents/new_strain/card/obo_files/aro.obo
-ontology_file_mo: /home/sacha/Documents/new_strain/card/obo_files/mo.obo
-ontology_file_ro: /home/sacha/Documents/new_strain/card/obo_files/ro.obo
-
-multiqc_configfile: /home/sacha/Documents/new_strain/configuration_files/multiqc/config.yaml
 
 spec_for_mykrobe: tb
 resistance_prediction_softwares: 
@@ -24,8 +19,10 @@ taxid: 1773
 
 ref_ids_for_mapping: 
 cov_cutoff: 5
-snps_distance_threshold: 15
 
+
+# If you wish to include samples from sras, list them in a tab separated file with the name of the sample and the sra accession number
+sra_samples: example_sras.tsv
 
 # Those file are specific to each analysis:
 
@@ -38,11 +35,11 @@ snps_distance_threshold: 15
 # Put this file on the folder where you will run snakemake and the sample_names value below should be the name of this file. 
 # If wish to keep the automatic naming, set the value of this variable to empty
 
-sample_names: sample_names.tsv
+sample_names: example_sample_names.tsv
 
 
 # Tab separated file with three columns: sample name (as automatically defined or according to your own sample naming file), genus, species
-species_names_correspondance_file: species.tsv
+species_names_correspondance_file: example_species.tsv
 
 
 #Internal pipeline parameters
