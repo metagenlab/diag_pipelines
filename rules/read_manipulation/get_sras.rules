@@ -2,13 +2,9 @@ rule get_sra:
     conda:
         "env/sra-tools.yaml"
     output:
-        temp("reads/raw/{sample}_R1.fastq.gz"),
-        temp("reads/raw/{sample}_R2.fastq.gz")
-    params:
-        sra = lambda wildcards: read_naming[str(wildcards.sample)]
+        temp("links/./{sample}_1.fastq.gz"),
+        temp("links/./{sample}_2.fastq.gz")
     shell:
         """
-        fastq-dump --split-files --gzip --outdir reads/raw/ {params.sra}
-        mv reads/raw/{params.sra}_1.fastq.gz reads/raw/{wildcards.sample}_R1.fastq.gz 
-        mv reads/raw/{params.sra}_2.fastq.gz reads/raw/{wildcards.sample}_R2.fastq.gz 
+        fastq-dump --split-files --gzip --outdir links/ {wildcards.sample}
         """

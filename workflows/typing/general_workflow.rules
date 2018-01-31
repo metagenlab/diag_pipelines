@@ -3,7 +3,14 @@ import shutil
 import sys
 import itertools
 
-snakemake_path = config["snakemake_path"]
+prefix_folder = config["absolute_path_of_pipeline_folder"]
+snakemake_path = prefix_folder
+
+ontology_file_aro = prefix_folder + "/card/obo_files/aro.obo"
+ontology_file_mo = prefix_folder + "/card/obo_files/mo.obo"
+ontology_file_ro = prefix_folder + "/card/obo_files/ro.obo"
+
+multiqc_configfile = prefix_folder + "/configuration_files/multiqc/config.yaml"
 
 sys.path.insert(0, snakemake_path)
 
@@ -13,15 +20,13 @@ from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_
 
 import helper_scripts.get_species_and_sample_correspondance as get_species_sample
 
-
 link_directory="links/"
 
-
-read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
+reads_local, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
 
 if config["sample_names"]:
     sample_correspondance = get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"])
-    for i in read_naming.keys():
+    for i in reads_local.keys():
         if i not in sample_correspondance.keys():
             sample_correspondance[i] = i
     read_correct = {}
@@ -32,21 +37,23 @@ if config["sample_names"]:
             folders_correct[sample_correspondance[i]] = folders[i]
         for i in original_name.keys():
             original_correct[sample_correspondance[i]] = original_name[i]
-        for i in read_naming.keys():
-            read_correct[sample_correspondance[i]] = read_naming[i]
+        for i in reads_local.keys():
+            read_correct[sample_correspondance[i]] = reads_local[i]
     original_name = original_correct
-    read_naming = read_correct
+    reads_local = read_correct
     folders = folders_correct
 
 resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
-species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
+sras_ext = {}
+sras_folder = {}
+reads_sra = {}
+if "sra_samples" in config.keys():
+    reads_sra = {x:y for y,x in get_species_sample.get_sample_names_correspondance_from_file(config["sra_samples"]).items()}
+    for i,j in reads_sra.items():
+        sras_ext[i]=["1.fastq.gz", "2.fastq.gz"]
+        sras_folder[i]="."
 
-read_location="get_reads.rules"
-
-if "froms_sras" in config.keys():
-    read_naming = {x:y for y,x in get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"]).items()}
-    read_location="get_sras.rules"
 
 if isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
     genes = []
@@ -59,9 +66,18 @@ elif isinstance(config["currated_genes"], list) or config["currated_genes"] == "
 else:
     raise ValueError("currated_genes variable ill defined : {}".format(config["currated_genes"]))
 
+read_naming = { **reads_local, **sras_ext}
 
-    
-prefix = "../../rules/"
+original_name = { **original_name, **reads_sra}
+
+folders = { **folders, **sras_folder}
+
+
+print(original_name, read_naming, folders)
+
+species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
+
+
 
 s1=[]
 s2=[]
@@ -69,8 +85,13 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
     s1.append(i)
     s2.append(j)
 
+prefix = "../../rules/"
+    
 include:
-    prefix + "read_manipulation/"+read_location
+    prefix + "read_manipulation/get_reads.rules"
+
+include:
+    prefix + "read_manipulation/get_sras.rules"
 
 include:
     prefix + "downloading/fetch_references.rules"
@@ -136,7 +157,13 @@ include:
     prefix + "typing/mlst.rules"
 
 include:
-    prefix + "typing/vcf_manipulations.rules"
+    prefix + "typing/vcf_filtering.rules"
+    
+include:
+    prefix + "typing/vcf_merging.rules"
+    
+include:
+    prefix + "typing/vcf_calculations.rules"
     
 include:
     prefix + "typing/snps_distance.rules"
