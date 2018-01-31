@@ -55,7 +55,7 @@ rule get_files_for_multiqc_single:
 
 rule multiqc_all_to_self_genome:
     params:
-        configfile = config["multiqc_configfile"]
+        configfile = multiqc_configfile
     conda:
         "env/multiqc.yaml"
     input:
@@ -85,7 +85,7 @@ rule get_files_for_multiqc_to_reference:
 
 rule multiqc_all_to_reference:
     params:
-        configfile = config["multiqc_configfile"]
+        configfile = multiqc_configfile
     conda:
         "env/multiqc.yaml"
     input:
