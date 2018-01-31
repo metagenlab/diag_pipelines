@@ -7,7 +7,7 @@ rule mlst_samples:
         "typing/mlst/summary.out"
     shell:
         """
-        mlst {input} > {output[0]}
+        mlst {input} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
         """
 
 rule mlst_all_complete_genomes_fasta:
@@ -16,8 +16,8 @@ rule mlst_all_complete_genomes_fasta:
     input:
         "references/all_complete_genomes_log.txt"
     output:
-        "references/mlst_summary.txt"
+        "typing/mlst/references.out"
     shell:
         """
-        mlst $(dirname {input[0]})/all_complete_genomes/*.fasta | sed "s/references\/all_complete_genomes\///" | sed "s/_genome\.fasta//" > {output[0]}
+        mlst $(dirname {input[0]})/all_complete_genomes/*.fasta | sed "s/.*\///" | sed "s/_genome\.fasta//" > {output[0]}
         """
