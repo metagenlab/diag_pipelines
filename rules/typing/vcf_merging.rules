@@ -1,0 +1,30 @@
+rule merge_vcf_pairs:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
+        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}.vcf",
+    shell:
+        """
+        bcftools merge {input} -0 -O v > {output[0]}
+        """
+
+
+rule merge_all_vcfs_remove_indels:
+    conda:
+        "env/bcftools.yaml"
+    input:
+        vcfs=expand("strains/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/{sample}.vcf.gz", sample=read_naming.keys())
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf.gz",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf.gz.tbi",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf",
+    shell:
+        """
+        bcftools merge {input[vcfs]} -0 -O v | bcftools filter -e "filter='indel'" > {output[2]}
+        bgzip -c {output[2]} > {output[0]}
+        tabix -f -p vcf {output[0]}
+        """
+        

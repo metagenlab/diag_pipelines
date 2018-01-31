@@ -1,0 +1,64 @@
+rule coverage_filtering:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/snps.vcf",
+        "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt"
+    output:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered.vcf.gz.tbi",
+    shell:
+        """
+        min=3
+        max=$(cat {input[1]})
+        min_freq=0.75
+        bcftools filter -s "lowcov" -S "." -e "DP<${{min}}" {input[0]} | bcftools filter -S "." -s "hicov" -e "DP>${{max}}" | bcftools filter -S "." -s "freq"  -e "(AO/DP)<${{min_freq}}" -O v - | bgzip > {output[0]}
+        tabix -f -p vcf {output[0]}
+        """
+
+rule indel_filtering:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered.vcf.gz",
+    output:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered.vcf.gz.tbi",
+    shell:
+        """
+        bcftools filter -S "." -s "indel" -e 'STRLEN(REF)!=STRLEN(ALT)' -O z {input[0]} > {output[0]}
+        tabix -f -p vcf {output[0]}
+        """
+
+rule vt_decompose_blocksub:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered.vcf.gz",
+    output:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_indel_coverage_filtered.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_indel_coverage_filtered.vcf.gz.tbi",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_indel_coverage_filtered.vcf",
+    shell:
+        """
+        vt decompose_blocksub {input[0]} -o {output[2]}
+        bgzip -c {output[2]} > {output[0]}
+        tabix -f -p vcf {output[0]}
+        """
+
+rule filter_core_genome_parsnp:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed_indel_coverage_filtered.vcf.gz",
+    output:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz.tbi",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf",
+    shell:
+        """
+        bcftools view -R {input[0]} {input[1]} | bcftools sort -O v - > {output[2]}
+        bgzip -c {output[2]} > {output[0]}
+        tabix -f -p vcf {output[0]}
+        """
