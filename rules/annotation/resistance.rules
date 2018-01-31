@@ -77,9 +77,9 @@ rule mykrobe_json_to_tsv:
 
 rule summary_csv_excel_file:
     params:
-        ontology_aro = config["ontology_file_aro"],
-        ontology_mo = config["ontology_file_mo"],
-        ontology_ro = config["ontology_file_ro"],
+        ontology_aro = ontology_file_aro,
+        ontology_mo = ontology_file_mo,
+        ontology_ro = ontology_file_ro,
         currated_genes = genes
     conda:
         "env/pandas-openpyxl-pronto-xlrd.yaml"

@@ -2,7 +2,7 @@ rule qualimap_mapping_to_reference:
     conda:
         "env/qualimap.yaml"
     input:
-        "strains/{sample}/mapping/bwa/{ref}/before_validation/{sample}/snps_deduplicated.bam",
+        "strains/{sample}/mapping/bwa/{ref}/{sample}/snps_deduplicated.bam",
     output:
         "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html",
         "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/genome_results.txt",
