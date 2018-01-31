@@ -7,8 +7,8 @@ rule mapping_to_reference_with_bwa:
         "references/{ref}/genome.fasta",
         "references/{ref}/genome.fasta.bwt",
     output:
-        "strains/{sample}/mapping/bwa/{ref}/before_validation/{sample}/snps.bam",
-        "strains/{sample}/mapping/bwa/{ref}/before_validation/{sample}/snps.bam.bai",
+        "strains/{sample}/mapping/bwa/{ref}/{sample}/snps.bam",
+        "strains/{sample}/mapping/bwa/{ref}/{sample}/snps.bam.bai",
     log:
         "strains/{sample}/logs/mapping/{ref}/bwa/log.txt"
     shell:
@@ -26,10 +26,10 @@ rule remove_duplicates_from_mapping:
     conda:
         "../snp_calling/env/gatk.yaml"
     input:
-        "strains/{sample}/mapping/bwa/{ref}/before_validation/{sample}/snps.bam",
+        "strains/{sample}/mapping/bwa/{ref}/{sample}/snps.bam",
     output:
-        "strains/{sample}/mapping/bwa/{ref}/before_validation/{sample}/snps_deduplicated.bam",
-        "strains/{sample}/mapping/bwa/{ref}/before_validation/{sample}/snps_deduplicated.bai",
+        "strains/{sample}/mapping/bwa/{ref}/{sample}/snps_deduplicated.bam",
+        "strains/{sample}/mapping/bwa/{ref}/{sample}/snps_deduplicated.bai",
     log:
         "strains/{sample}/mapping/bwa/{ref}/metrics_deduplicated.txt",
     shell:

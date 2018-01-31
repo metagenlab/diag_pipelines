@@ -2,7 +2,7 @@ rule call_variants_freebayes_vcf:
     conda:
         "../mapping/env/snippy.yaml"
     input:
-        "strains/{sample}/mapping/{mapping_method}/{ref}/before_validation/{sample}/snps_deduplicated.bam",
+        "strains/{sample}/mapping/{mapping_method}/{ref}/{sample}/snps_deduplicated.bam",
         "references/{ref}/genome.fasta",
     output:
         "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf",
