@@ -2,7 +2,7 @@ rule fetch_from_uniprot_accession:
     input:
         config["virulence_factors"]
     output:
-        "virulence/log.txt"
+        "virulence/protein_log.txt"
     shell:
         """
         mkdir -p $(dirname {output[0]})/fastas/
@@ -20,3 +20,49 @@ rule fetch_from_uniprot_accession:
 
         
 
+rule fetch_xml_from_uniprot_accession:
+    input:
+        config["virulence_factors"]
+    output:
+        "virulence/xmls_log.txt"
+    shell:
+        """
+        if [ -d $(dirname {output[0]})/xmls/ ]
+        then
+            rm -rf $(dirname {output[0]})/xmls/
+            mkdir -p $(dirname {output[0]})/xmls/
+        fi
+        sed 1d {input[0]} | while read gene id description; do
+            wget -qO- http://www.uniprot.org/uniprot/${{id}}.xml > $(dirname {output[0]})/xmls/${{gene}}_${{id}}.xml
+            if [ ! -s  $(dirname {output[0]})/xmls/${{gene}}_${{id}}.xml ]; then
+                 echo "Error, ${{id}} not found on uniprot" 1>&2
+                 exit 1
+            fi
+        done
+        echo "okay" > {output[0]}
+        """
+        
+rule fetch_ENA_ids_with_xml_extraction:
+    input:
+        "virulence/xmls_log.txt"
+    output:
+        "virulence/cds_list.txt"
+    script:
+        "scripts/get_ENA_accession_from_xml.py"
+
+        
+rule fetch_cds_fastas_from_ENA_ids:
+    input:
+        "virulence/cds_list.txt"
+    output:
+        "virulence/cds_log.txt"
+    shell:
+        """
+        mkdir -p $(dirname {output[0]})/cds_fasta/
+        while read gene id;
+        do
+            echo ${{gene}} ${{id}}
+            wget -qO- https://www.ebi.ac.uk/ena/data/view/${{id}}\&display=fasta | sed "s/^>.*|${{id}}/>${{gene}}_${{id}}/" > $(dirname {output[0]})/cds_fasta/${{gene}}.fasta
+        done < {input[0]}
+        echo "okay" > {output[0]}
+        """
