@@ -6,7 +6,7 @@ rule align_paired_reads_to_assembled_genome:
         "reads/raw/{sample}_R1.fastq.gz",
         "reads/raw/{sample}_R2.fastq.gz"
     output:
-        "strains/{sample}/mapping/bwa/{sample}.bam"
+        temp("strains/{sample}/mapping/bwa/{sample}.bam")
     log:
         "strains/{sample}/logs/mapping_bwa_self.log"
     shell:
@@ -25,7 +25,7 @@ rule align_single_reads_to_assembled_genome:
         "strains/{sample}/assembly/spades/contigs.fasta.fsa",
         "reads/raw/{sample}_single.fastq.gz"
     output:
-        "strains/{sample}/mapping/{sample}.bam"
+        temp("strains/{sample}/mapping/{sample}.bam")
     log:
         "strains/{sample}/logs/mapping_bwa_self.log"
     shell:
