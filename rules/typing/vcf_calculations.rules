@@ -61,7 +61,7 @@ rule agregate_distances_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_merged_distance.txt", zip, sample1 = s1, sample2 = s2),
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_merged_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/other_distances.txt"
@@ -81,7 +81,7 @@ rule agregate_distances_from_merged_pairs_of_vcf:
 
 rule calculate_distances_from_complement_files:
     input:
-        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_distance.txt", zip, sample1 = s1, sample2 = s2),
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/complements_distances.txt"

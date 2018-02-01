@@ -48,12 +48,12 @@ resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 sras_ext = {}
 sras_folder = {}
 reads_sra = {}
-if "sra_samples" in config.keys():
+
+if "sra_samples" in config.keys() and config["sra_samples"]:
     reads_sra = {x:y for y,x in get_species_sample.get_sample_names_correspondance_from_file(config["sra_samples"]).items()}
     for i,j in reads_sra.items():
         sras_ext[i]=["1.fastq.gz", "2.fastq.gz"]
         sras_folder[i]="."
-
 
 if isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
     genes = []
@@ -67,23 +67,18 @@ else:
     raise ValueError("currated_genes variable ill defined : {}".format(config["currated_genes"]))
 
 read_naming = { **reads_local, **sras_ext}
-
 original_name = { **original_name, **reads_sra}
-
 folders = { **folders, **sras_folder}
-
 
 print(original_name, read_naming, folders)
 
 species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
 
+all_combined_1, all_combined_2 = [], []
 
-
-s1=[]
-s2=[]
 for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
-    s1.append(i)
-    s2.append(j)
+    all_combined_1.append(i)
+    all_combined_2.append(j)
 
 prefix = "../../rules/"
     
@@ -108,6 +103,9 @@ include:
 include:
     prefix + "core_genome/ani.rules"
 
+include:
+    prefix + "quality/read_trimming.rules"
+    
 include:
     prefix + "mapping/bwa_to_self_assembly.rules"
 
@@ -179,7 +177,7 @@ include:
     
 rule all:
     input:
-        "typing/freebayes/core_parsnp/34528/bwa/before_validation/soft_masked/distance.xlsx",
+        "typing/freebayes/core_parsnp/34528/bwa/other_distances.xlsx",
         "typing/freebayes/core_parsnp/1241621/bwa/before_validation/soft_masked/distance.xlsx",
         "typing/freebayes/core_parsnp/716441/bwa/before_validation/soft_masked/distance.xlsx",
         "typing/freebayes/core_parsnp/1455771/bwa/before_validation/soft_masked/distance.xlsx",
