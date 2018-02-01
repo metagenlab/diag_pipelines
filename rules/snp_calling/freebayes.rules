@@ -4,6 +4,7 @@ rule call_variants_freebayes_vcf:
     input:
         "strains/{sample}/mapping/{mapping_method}/{ref}/{sample}/snps_deduplicated.bam",
         "references/{ref}/genome.fasta",
+        "strains/{sample}/mapping/{mapping_method}/{ref}/{sample}/snps_deduplicated.bai",
     output:
         "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf",
         "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf.gz",

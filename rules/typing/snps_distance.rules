@@ -37,3 +37,15 @@ rule merge_snps_distance_xlsx:
 
 
         
+rule calculate_number_of_differences_from_alignment:
+    conda:
+        "env/pandas-biopython-pysam.yaml"
+    input:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distance_from_alignment.txt"
+    script:
+        "scripts/calculate_distances_from_alignment.py"
+    
+
+    
