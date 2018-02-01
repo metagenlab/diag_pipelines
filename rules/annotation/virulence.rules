@@ -50,8 +50,8 @@ rule blast_virulence_cds:
         """
         makeblastdb -dbtype nucl -in {input[1]}
         echo "Virulence factor ID\tContigID\tPercentage identity\tCoverage of the Virulence factor cds on the alignement\tE-value" > {output[0]}
-        for i in $(ls $(dirname {input[0]})/cds_fasta/*.fasta); do
-            blastn -query ${{i}} -db {input[1]} -outfmt "6 qseqid sseqid pident qcovs evalue" | awk '$3>90' >> {output[0]}
+        for i in $(ls $(dirname {input[0]})/fastas/*.fasta); do
+            tblastn -query ${{i}} -db {input[1]} -outfmt 6 | awk '$3>70' | head -n 1 >> {output[0]}
         done
         """
     
