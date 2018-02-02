@@ -1,36 +1,57 @@
 rule mapping_to_reference_with_bwa:
     conda:
-        "env/bwa.yaml"
+        "env/bwa-samtools.yaml"
     input:
         "strains/{sample}/reads/trimmed/R1_paired.fastq",
         "strains/{sample}/reads/trimmed/R2_paired.fastq",        
         "references/{ref}/genome.fasta",
         "references/{ref}/genome.fasta.bwt",
     output:
-        temp("strains/{sample}/mapping/bwa/{ref}/{sample}/snps.bam"),
-        temp("strains/{sample}/mapping/bwa/{ref}/{sample}/snps.bam.bai"),
+        temp("strains/{sample}/mapping/bwa/{ref}/{sample}.bam"),
+        temp("strains/{sample}/mapping/bwa/{ref}/{sample}.bam.bai"),
     log:
         "strains/{sample}/logs/mapping/{ref}/bwa/log.txt"
     shell:
         """
-        if ls {output[0]}.tmp* 1> /dev/null 2>&1; then
+        if ls {output[0]}.tmp* 1> /dev/null 2>&1
+        then
              rm {output[0]}.tmp*
         fi 
-        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[2]} {input[0]} {input[1]} -v 1 > {output[0]}.tmp) 2> {log}
-        samtools view -q 60  -b -u -F 3844 -T {input[2]} {output[0]}.tmp | samtools sort -O bam -o {output[0]}
+        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[2]} {input[0]} {input[1]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
+        samtools index {output[0]}
+        """
+
+
+rule filter_reads_after_bwa:
+    conda:
+        "env/bwa-samtools.yaml"
+    input:
+        "strains/{sample}/mapping/bwa/{ref}/{sample}.bam",
+        "strains/{sample}/mapping/bwa/{ref}/{sample}.bam.bai",
+        "references/{ref}/genome.fasta",
+        "references/{ref}/genome.fasta.bwt",
+    output:
+        temp("strains/{sample}/mapping/bwa/{ref}/filtered.bam"),
+        temp("strains/{sample}/mapping/bwa/{ref}/filtered.bam.bai")
+    shell:
+        """
+        if ls {output[0]}.tmp* 1> /dev/null 2>&1
+        then
+            rm {output[0]}.tmp*
+        fi 
+        samtools view -q 60 -b -u -F 3844 -T {input[2]} {input[0]} | samtools sort -O bam -o {output[0]}
         samtools index {output[0]} 
-        rm {output[0]}.tmp*
         """
         
 rule remove_duplicates_from_mapping:
     conda:
         "../snp_calling/env/gatk.yaml"
     input:
-        "strains/{sample}/mapping/bwa/{ref}/{sample}/snps.bam",
-        "strains/{sample}/mapping/bwa/{ref}/{sample}/snps.bam.bai",
+        "strains/{sample}/mapping/bwa/{ref}/filtered.bam",
+        "strains/{sample}/mapping/bwa/{ref}/filtered.bam.bai",
     output:
-        temp("strains/{sample}/mapping/bwa/{ref}/{sample}/snps_deduplicated.bam"),
-        temp("strains/{sample}/mapping/bwa/{ref}/{sample}/snps_deduplicated.bai"),
+        temp("strains/{sample}/mapping/bwa/{ref}/deduplicated_filtered.bam"),
+        temp("strains/{sample}/mapping/bwa/{ref}/deduplicated_filtered.bai"),
     log:
         "strains/{sample}/mapping/bwa/{ref}/metrics_deduplicated.txt",
     shell:
