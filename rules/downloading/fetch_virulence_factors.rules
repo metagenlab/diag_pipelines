@@ -2,21 +2,21 @@ rule fetch_from_uniprot_accession:
     input:
         config["virulence_factors"]
     output:
-        "virulence/protein_log.txt"
+        "virulence/protein_fastas/log.txt"
     shell:
         """
-        if [ -d $(dirname {output[0]})/fastas/ ]
+        if [ -d $(dirname {output[0]}) ]
         then
-            rm -rf $(dirname {output[0]})/fastas/
-            mkdir -p $(dirname {output[0]})/fastas/
+            rm -rf $(dirname {output[0]})
+            mkdir -p $(dirname {output[0]})
         fi
         sed 1d {input[0]} | while read gene id description; do
-            wget -qO- http://www.uniprot.org/uniprot/${{id}}.fasta > $(dirname {output[0]})/fastas/${{gene}}_${{id}}.fasta
-            if [ ! -s  $(dirname {output[0]})/fastas/${{gene}}_${{id}}.fasta ]; then
+            wget -qO- http://www.uniprot.org/uniprot/${{id}}.fasta > $(dirname {output[0]})/${{gene}}_${{id}}.fasta
+            if [ ! -s  $(dirname {output[0]})/${{gene}}_${{id}}.fasta ]; then
                  echo "Error, ${{id}} not found on uniprot" 1>&2
                  exit 1
             else
-                sed -i "s/^>.*|${{id}}|/>${{gene}} ${{id}}|/" $(dirname {output[0]})/fastas/${{gene}}_${{id}}.fasta
+                sed -i "s/^>.*|${{id}}|/>${{gene}}_${{id}} /" $(dirname {output[0]})/${{gene}}_${{id}}.fasta
             fi
         done
         echo "okay" > {output}
