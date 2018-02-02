@@ -11,7 +11,6 @@ rule merge_vcf_pairs:
         bcftools merge {input} -0 -O v > {output[0]}
         """
 
-
 rule merge_all_vcfs_remove_indels:
     conda:
         "env/bcftools.yaml"
@@ -23,7 +22,7 @@ rule merge_all_vcfs_remove_indels:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf",
     shell:
         """
-        bcftools merge {input[vcfs]} -0 -O v | bcftools filter -e "filter='indel'" > {output[2]}
+        bcftools merge -0 -O v {input[vcfs]} | bcftools filter -e "filter='indel'" > {output[2]}
         bgzip -c {output[2]} > {output[0]}
         tabix -f -p vcf {output[0]}
         """

@@ -9,9 +9,7 @@ rule calculate_statistics_from_vcf_to_reference:
         """
         bcftools stats -f PASS {input[0]} > {output[0]}
         """
-
-     
-        
+       
 rule calculate_statistics_from_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
@@ -39,7 +37,8 @@ rule calculate_complement_sites_from_pairs_of_vcf:
         """
         bcftools isec -C -e "filter!='PASS'" -e- {input[0]} {input[1]} > {output[0]}
         bcftools isec -C -e "filter!='PASS'" -e- {input[1]} {input[0]} > {output[1]}
-        echo {wildcards.sample1} {wildcards.sample2} $(( $(wc -l < {output[0]}) + $(wc -l < {output[1]}) )) >> {output[2]}
+        diff=$(cat {output[0]} {output[1]} | sort | uniq | wc -l) || :
+        echo {wildcards.sample1} {wildcards.sample2} ${{dif}} >> {output[2]}
         """
 
 rule calculate_distances_from_merged_pairs_of_vcf:
@@ -51,11 +50,9 @@ rule calculate_distances_from_merged_pairs_of_vcf:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}_merged_distance.txt",
     shell:
         """
-        snps=$(bcftools stats -f PASS {input[0]} | grep "^SiS" | cut -f 4)
+        snps=$(grep "AC=1" {input[0]} | grep -c "PASS" ) || :
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[0]}
         """
-
-        
 
 rule agregate_distances_from_merged_pairs_of_vcf:
     conda:
@@ -74,7 +71,7 @@ rule agregate_distances_from_merged_pairs_of_vcf:
         for i in {input[to_ref]}
         do
             id="$(echo ${{i}} | sed "s/strains\///" | sed "s/\/.*//") {wildcards.ref}"
-            snps=$(grep "^SN" ${{i}} | grep "SNPs" | awk '$2 !=2 {{print $NF}}' | awk '{{count=count+$1}}END{{print count}}') 
+            snps=$(grep "^SN" ${{i}} | grep "SNPs" | awk '$2 !=2 {{print $NF}}' | awk '{{count=count+$1}}END{{print count}}')
             echo ${{id}} ${{snps}} >> {output[0]}
         done
         """
@@ -96,7 +93,6 @@ rule calculate_distances_from_complement_files:
         done
         """
 
-        
 rule extract_alignment_for_phylogeny:
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf.gz",
