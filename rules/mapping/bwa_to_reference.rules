@@ -63,7 +63,7 @@ rule remove_duplicates_from_mapping:
 
 rule index_reference:
     conda:
-        "env/bwa.yaml"
+        "env/bwa-samtools.yaml"
     input:
         "references/{ref}/genome.fasta"
     output:
