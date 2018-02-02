@@ -3,8 +3,6 @@
   
   Miniconda (https://conda.io/miniconda.html) preferably version with python 3.6
   
-  Docker
-
 
 # GENERAL USE
 
@@ -22,7 +20,7 @@ The pipeline works by asking the generation of the files of interest for a parti
 Some examples:
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml quality/multiqc_report.html
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml quality/multiqc/self_genome/multiqc_report.html
 ```
 
 This will assemble and annotate every samples present in the `links` folder, and generate a multiqc report.
@@ -44,15 +42,15 @@ This will generate a summary excel file for the resistance factors of the strain
 
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/gatk/core_parsnp/34528/bwa/before_validation/distance.xlsx
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/freebayes/core_parsnp/34528/bwa/other_distances.xlsx
 ```
 
 This will generate a snp-distance matrix of all samples present in `links`, only on the core genome calculated with parsnp and with all complete genomes of the species defined in the `taxid` variable of the config file, mapped on the assembly (from https://www.ncbi.nlm.nih.gov/assembly/) whose `id` is 34528 (nctc 8325, *Staphylococcus aureus* reference genome) with bwa
 
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/mlst/summary.out
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/mlst/summary.xlsx
 ```
 
-This will generate a summary file of the MLST of all samples present in `links`, based on the software mlst (https://github.com/tseemann/mlst)
+This will generate an Excel summary file of the MLST of all samples present in `links`, based on the software mlst (https://github.com/tseemann/mlst)
 
