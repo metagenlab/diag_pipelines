@@ -4,7 +4,7 @@ rule mlst_samples:
     input:
         expand("strains/{sample}/annotation/{sample}.fsa", sample=read_naming.keys())
     output:
-        "typing/mlst/summary.out"
+        "typing/mlst/summary.csv"
     shell:
         """
         mlst {input} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
@@ -16,8 +16,18 @@ rule mlst_all_complete_genomes_fasta:
     input:
         "references/all_complete_genomes_log.txt"
     output:
-        "typing/mlst/references.out"
+        "typing/mlst/references.csv"
     shell:
         """
         mlst $(dirname {input[0]})/all_complete_genomes/*.fasta | sed "s/.*\///" | sed "s/_genome\.fasta//" > {output[0]}
         """
+
+rule mlst_to_excel:
+    conda:
+        "env/pandas-biopython-pysam.yaml"
+    input:
+        "typing/mlst/{file}.csv"
+    output:
+        "typing/mlst/{file}.xlsx"
+    script:
+        "scripts/csv_to_xlsx.py"
