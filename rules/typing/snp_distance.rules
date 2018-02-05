@@ -7,7 +7,8 @@ rule distance_columns_to_matrix:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.txt",
         "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
     output:
-        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.xlsx"
+        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.xlsx",
+        out_tsv_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.tsv"
     script:
         "scripts/distance_columns_to_matrix.py"
 
@@ -17,9 +18,9 @@ rule compute_minimum_spanning_tree:
     conda:
         "env/igraph.yaml"
     input:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/distance.csv"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}.tsv"
     output:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{validation}/minimum_spanning_tree.pdf"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.pdf"
     script:
         "scripts/minimum_spanning_tree.R"
 
