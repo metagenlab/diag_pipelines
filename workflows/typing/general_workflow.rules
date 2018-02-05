@@ -22,7 +22,7 @@ import helper_scripts.get_species_and_sample_correspondance as get_species_sampl
 
 link_directory="links/"
 
-reads_local, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
+reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
 
 if config["sample_names"]:
     sample_correspondance = get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"])
@@ -70,7 +70,7 @@ read_naming = { **reads_local, **sras_ext}
 original_name = { **original_name, **reads_sra}
 folders = { **folders, **sras_folder}
 
-print(original_name, read_naming, folders)
+
 
 species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
 
@@ -119,12 +119,6 @@ include:
     prefix + "snp_calling/freebayes.rules"
 
 include:
-    prefix + "phylogeny/generate_alignments.rules"
-    
-include:
-    prefix + "phylogeny/raxml.rules"
-
-include:
     prefix + "assembly/spades.rules"
 
 include:
@@ -164,7 +158,7 @@ include:
     prefix + "typing/vcf_calculations.rules"
     
 include:
-    prefix + "typing/snps_distance.rules"
+    prefix + "typing/snp_distance.rules"
     
 include:
     prefix + "typing/compare_methods.rules"
@@ -174,6 +168,17 @@ include:
 
 include:
     prefix + "typing/spa_typing.rules"
+
+include:
+    prefix + "phylogeny/generate_alignments.rules"
+    
+include:
+    prefix + "phylogeny/raxml.rules"
+
+include:
+    prefix + "phylogeny/image_creation.rules"
+
+    
     
 rule all:
     input:
