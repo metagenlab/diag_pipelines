@@ -5,7 +5,7 @@ rule merge_vcf_pairs:
         "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
         "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}.vcf",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf",
     shell:
         """
         bcftools merge {input} -0 -O v > {output[0]}
@@ -17,9 +17,9 @@ rule merge_all_vcfs_remove_indels:
     input:
         vcfs=expand("strains/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/{sample}.vcf.gz", sample=read_naming.keys())
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf.gz",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf.gz.tbi",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz.tbi",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf",
     shell:
         """
         bcftools merge -0 -O v {input[vcfs]} | bcftools filter -e "filter='indel'" > {output[2]}

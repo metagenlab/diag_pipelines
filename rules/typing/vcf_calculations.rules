@@ -17,7 +17,7 @@ rule calculate_statistics_from_pairs_of_vcf:
         "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
         "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}_stats.txt"
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}_stats.txt"
     shell:
         """
         bcftools stats {input} > {output[0]}
@@ -45,12 +45,12 @@ rule calculate_distances_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}.vcf",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf",
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{sample1}_{sample2}_merged_distance.txt",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}_merged_distance.txt",
     shell:
         """
-        snps=$(grep "AC=1" {input[0]} | grep -c "PASS" ) || :
+        snps=$(bcftools view -f PASS {input[0]} | bcftools query -f '[%GT ]\n' - | awk '$1!=$2' | wc -l)
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[0]}
         """
 
@@ -58,10 +58,10 @@ rule agregate_distances_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_merged_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/vcfs/{sample1}_{sample2}_merged_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/other_distances.txt"
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances_from_merged_pairs_of_vcf.txt"
     shell:
         """
         for i in {input[pairs]}
@@ -78,10 +78,10 @@ rule agregate_distances_from_merged_pairs_of_vcf:
 
 rule calculate_distances_from_complement_files:
     input:
-        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/{sample1}_{sample2}_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/vcfs/{sample1}_{sample2}_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/complements_distances.txt"
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances_from_complement.txt"
     shell:
         """
         cat {input[pairs]} > {output[0]}
@@ -95,7 +95,7 @@ rule calculate_distances_from_complement_files:
 
 rule extract_alignment_for_phylogeny:
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/merged.vcf.gz",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz",
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
     shell:
