@@ -81,12 +81,10 @@ rule download_all_complete_genomes_fasta:
         """
         mkdir -p $(dirname {output[0]})/all_complete_genomes/
         while read id ftp; do
-            if [ ! -f references/all_complete_genomes/${{id}}_genome.fasta ]; then
-                 echo ${{id}}
-                 nucl_id=$(echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_assembly_report.txt/" | xargs wget -qO- | sed '/^#.*/ d'  | awk ' $4 == "Chromosome" {{print $7}}')
-                 echo ${{nucl_id}}
-                 efetch -db nucleotide -id ${{nucl_id}} -format fasta > references/all_complete_genomes/${{id}}_genome.fasta
-        fi
+            echo ${{id}}
+            nucl_id=$(echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_assembly_report.txt/" | xargs wget -qO- | sed '/^#.*/ d'  | awk ' $4 == "Chromosome" {{print $7}}')
+            echo ${{nucl_id}}
+            efetch -db nucleotide -id ${{nucl_id}} -format fasta > references/all_complete_genomes/${{id}}_genome.fasta
         done < "{input[0]}"
         echo 'ok' > {output[0]}
         """
