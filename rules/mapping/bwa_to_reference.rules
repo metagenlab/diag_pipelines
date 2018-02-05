@@ -74,7 +74,8 @@ rule index_reference:
         samtools faidx {input[0]}
         bwa index {input[0]}
         """
-    
+
+
 rule get_ninety_percent_interval_coverage:
     conda:
         "env/r-base.yaml"
@@ -85,5 +86,3 @@ rule get_ninety_percent_interval_coverage:
         "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt",
     script:
         "scripts/get_max_min_cov.R"
-        
-        
