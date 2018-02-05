@@ -42,9 +42,9 @@ rule spades_paired:
     conda:
         "env/spades.yaml"
     input:
-        ancient("strains/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz"),
-        ancient("strains/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
-        ancient("strains/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz")
+        "strains/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
+        "strains/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
+        "strains/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz"
     output:
         "strains/{sample}/assembly/spades/contigs.fasta"
     log:
