@@ -1,5 +1,7 @@
 
 rule convert_phylogeny_to_image:
+    params:
+        size=config["phylogeny_image_size"]
     conda:
         "env/newick-utils.yaml"
     input:
@@ -18,5 +20,5 @@ rule convert_phylogeny_to_image:
         st_ref=$(grep "^{wildcards.ref}"$'\\t' {input[3]} | cut -f3)
         id=$(grep ">" {input[4]} | cut -f1 -d' ' | sed "s/>//")
         echo {wildcards.ref}'\t'${{id}}"_ST_"${{st_ref}} >> {output[0]}
-        nw_support {input[0]} {input[1]} | nw_rename - {output[0]} | nw_display -S -s -b 'opacity:0' -w -1600 -I m -W 20 -v 15 - > {output[1]}
+        nw_support {input[0]} {input[1]} | nw_rename - {output[0]} | nw_display -S -s -b 'opacity:0' -w -{params.size} -I m -W 20 -v 15 - > {output[1]}
         """

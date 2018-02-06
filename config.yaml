@@ -20,11 +20,13 @@ taxid: 1773
 ref_ids_for_mapping: 
 cov_cutoff: 5
 
+phylogeny_image_size: 800
+
+# Those file are specific to each analysis:
 
 # If you wish to include samples from sras, list them in a tab separated file with the name of the sample and the sra accession number
 sra_samples: example_sras.tsv
 
-# Those file are specific to each analysis:
 
 # Read naming schemas:
 # Read names must end with ".fastq" or ".fastq.gz" or ".fq" or ".fg.gz"
@@ -45,6 +47,8 @@ species_names_correspondance_file: example_species.tsv
 #Internal pipeline parameters
 
 #These are the parameters for read trimming 
+minimum_quality_base: 35
+minimum_read_length: 60
 crop_to_read_length_from_end: 230
 
 adapter_file_name: NexteraPE-PE.fa
