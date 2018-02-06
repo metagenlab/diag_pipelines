@@ -24,6 +24,8 @@ rule compute_minimum_spanning_tree:
         "references/complete_genomes_subvalues.tsv"
     output:
         "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.pdf"
+    log:
+        "logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.txt"
     script:
         "scripts/minimum_spanning_tree.R"
 
@@ -50,6 +52,3 @@ rule calculate_number_of_differences_from_alignment:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances_from_alignment.txt"
     script:
         "scripts/calculate_distances_from_alignment.py"
-    
-
-    

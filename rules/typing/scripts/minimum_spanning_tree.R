@@ -1,7 +1,8 @@
-library(igraph)
+sink(snakemake@log[[1]])
+
+library(igraph, warn.conflicts=FALSE)
 
 set.seed(1)
-
 
 sample_sts <- read.csv(snakemake@input[[2]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
 refs_sts <- read.csv(snakemake@input[[3]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
