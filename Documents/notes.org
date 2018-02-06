@@ -3,11 +3,6 @@
 * Pipeline Dev
 
 ** Problems to fix before running
-*** Snippy
-1. Problem in the bwa header with tabs are not fixed and can occur: fix line 214 of snippy, double escape tabs needed
-2. Check which vcftool version is used
-3. Otherwise just remove the sanity check from vcftool 
-4. Problem in freebayes-parallel. Localize which freebayes-parallel binary is used in the snippy log file, remove the path before vcffirstheader and vcfstreamsort
 *** Mykrobe
 1. Included --min_variant_conf 100 in the shell command
 2. The file mykatlas/typing/typer/presence.py in the conda environment has to be fixed: add on line 160 sequence_coverages=list(sequence_coverages) (see fix https://github.com/Phelimb/atlas/commit/9160ec0a8873494c859775045d1dcf2ada8941e4#diff-997723f7231c49eacf527406b95678d2)
