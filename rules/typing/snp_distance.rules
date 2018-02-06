@@ -18,7 +18,10 @@ rule compute_minimum_spanning_tree:
     conda:
         "env/igraph.yaml"
     input:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}.tsv"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}.tsv",
+        "typing/mlst/summary.tsv",
+        "typing/mlst/references.tsv",
+        "references/complete_genomes_subvalues.tsv"
     output:
         "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.pdf"
     script:
@@ -44,7 +47,7 @@ rule calculate_number_of_differences_from_alignment:
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distance_from_alignment.txt"
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances_from_alignment.txt"
     script:
         "scripts/calculate_distances_from_alignment.py"
     
