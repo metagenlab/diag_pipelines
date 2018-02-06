@@ -42,7 +42,7 @@ This will generate a summary excel file for the resistance factors of the strain
 
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/freebayes/core_parsnp/34528/bwa/other_distances.xlsx
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/freebayes/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf.xlsx
 ```
 
 This will generate a snp-distance matrix of all samples present in `links`, only on the core genome calculated with parsnp and with all complete genomes of the species defined in the `taxid` variable of the config file, mapped on the assembly (from https://www.ncbi.nlm.nih.gov/assembly/) whose `id` is 34528 (nctc 8325, *Staphylococcus aureus* reference genome) with bwa
