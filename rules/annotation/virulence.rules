@@ -3,7 +3,8 @@ rule tblastn_virulence_protein:
         "env/blast.yaml"
     input:
         "virulence/protein_fastas/log.txt",
-        "strains/{sample}/annotation/{sample}.fsa"
+        "strains/{sample}/annotation/{sample}.fsa",
+        "strains/{sample}/annotation/{sample}.fsa.nhr",
     output:
         "strains/{sample}/virulence/results_tblastn.tsv",
         "strains/{sample}/virulence/results_tblastn.fasta",
@@ -25,7 +26,7 @@ rule add_description:
     conda:
         "env/xlwt.yaml"
     input:
-        "strains/{sample}/virulence/results.tsv",
+        "strains/{sample}/virulence/results_tblastn.tsv",
         config["virulence_factors"]
     output:
         "strains/{sample}/virulence/{sample}_virulence.tsv",
