@@ -53,3 +53,16 @@ rule create_database_from_protein_sequences:
         """
         makeblastdb -dbtype prot -in {input[0]}
         """
+
+
+rule create_database_from_contig_sequences:
+    conda:
+        "env/blast.yaml"
+    input:
+        "strains/{sample}/annotation/{sample}.fsa",
+    output:
+        "strains/{sample}/annotation/{sample}.fsa.phr",
+    shell:
+        """
+        makeblastdb -dbtype nucl -in {input[0]}
+        """
