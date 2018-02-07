@@ -5,7 +5,7 @@ rule merge_vcf_pairs:
         "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
         "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf",
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf"),
     shell:
         """
         bcftools merge {input} -0 -O v > {output[0]}
