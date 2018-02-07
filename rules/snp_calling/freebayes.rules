@@ -1,6 +1,6 @@
 rule call_variants_freebayes_vcf:
     conda:
-        "../mapping/env/snippy.yaml"
+        "env/freebayes.yaml"
     input:
         "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome.fasta",
@@ -11,7 +11,7 @@ rule call_variants_freebayes_vcf:
         "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf.gz.tbi",
     shell:
         """
-        freebayes --min-coverage 0 --min-alternate-count 2 --dont-left-align-indels --ploidy 1 --min-alternate-fraction 0.50 --min-base-quality 20 -f {input[1]} {input[0]} | bgzip -c > {output[0]}.tmp.gz
+        freebayes --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.50 --min-base-quality 20 -f {input[1]} {input[0]} | bgzip -c > {output[0]}.tmp.gz
         tabix -f -p vcf {output[0]}.tmp.gz 
         bcftools sort -O v {output[0]}.tmp.gz > {output[0]}
         bgzip -c {output[0]} > {output[1]}
