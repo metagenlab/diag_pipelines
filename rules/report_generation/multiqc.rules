@@ -64,7 +64,7 @@ rule multiqc_all_to_self_genome:
         "quality/multiqc/self_genome/multiqc_report.html"
     shell:
         """
-        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/self_genome/
+        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/self_genome/ &> {log[0]}
         """
 
 
@@ -92,8 +92,10 @@ rule multiqc_all_to_reference:
         expand("strains/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = read_naming.keys())
     output:
         "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
+    log:
+        "logs/quality/multiqc/mapping_to_{ref}.txt"
     shell:
         """
-        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/mapping_to_{wildcards.ref}/
+        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/mapping_to_{wildcards.ref}/ &> {log[0]}
         """
 
