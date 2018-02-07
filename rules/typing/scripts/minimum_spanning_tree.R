@@ -1,4 +1,4 @@
-sink(snakemake@log[[1]])
+
 
 library(igraph, warn.conflicts=FALSE)
 
@@ -14,12 +14,11 @@ ref_convinient_name <- paste(reference_names[snakemake@wildcards[["ref"]],], " (
 
 
 #If the ST types files are empty : no MLST schema for the species under consideration
-if (dim(all_sts)[1]>0){
-    sts_exist <- TRUE
-} else {
+if (all(all_sts[,1]=="-")){
     sts_exist <- FALSE
+} else {
+    sts_exist <- TRUE
 }
-
 
 matrix <- as.matrix(read.csv(snakemake@input[[1]], sep="\t", header=TRUE, row.names=1))
 #We set the zero distance (clones) to a small value, otherwise no links exist between clones
@@ -82,7 +81,7 @@ for (i in E(graph)[E(graph)$weight<100]){
 mst_graph <- set_edge_attr(mst_graph, "label", value=edge_attr(mst_graph, "weight"))
 
 #We transform the weight so that smaller distances weight more. I tried an inverse square root and inverse log transformations, inverse log appears better.
-mst_graph <- set_edge_attr(mst_graph, "weight", value=1/log(edge_attr(mst_graph, "weight")))
+mst_graph <- set_edge_attr(mst_graph, "weight", value=1/log(0.5+edge_attr(mst_graph, "weight")))
 
 vertices_sizes <- sapply(vertex_attr(mst_graph, "name"), length, simplify=TRUE)*5
 #Vertices sizes are proportional to the number of sample they represent
@@ -92,21 +91,28 @@ vertices_sizes <- sapply(vertex_attr(mst_graph, "name"), length, simplify=TRUE)*
 mst_graph <- set_vertex_attr(mst_graph, "name", value=lapply(vertex_attr(mst_graph, "name"), paste, collapse="\n"))
 mst_graph <- set_vertex_attr(mst_graph, "ST", value=lapply(vertex_attr(mst_graph, "ST"), unique))
 
-vertex_col = rep("NA", nb_vertex)
+vertices_colors = rep(NA, nb_vertex)
+
+
 
 if (sts_exist){
     uniq_sts = unique(sts[!is.na(sts)])
     number_cols <- length(uniq_sts)
     colors <- rainbow(number_cols)
     for (i in 1:length(uniq_sts)){
-    vertex_col[vertex_attr(mst_graph, "ST")==uniq_sts[i]] <- colors[i]
+    vertices_colors[vertex_attr(mst_graph, "ST")==uniq_sts[i]] <- colors[i]
     }
 }
 
-pdf(snakemake@output[[1]], height=10, width=10)
-if (sts_exist) {par(mar=c(0,8,0,0))}
 
-plot(mst_graph, elab=TRUE, vertex.size=vertices_sizes, edge.label.dist=35, vertex.label.dist=0, node.label.cex=0.5, vertex.color=vertex_col, vertex.label=vertex_attr(mst_graph, "label"), vertex.label.color=rep("black", nb_vertex), vertex.label.family="sans", edge.label.family="sans")
+pdf(snakemake@output[[1]], height=10, width=10)
+if (sts_exist) {
+    par(mar=c(0,8,0,0))
+}
+
+
+
+plot(mst_graph, vertex.size=vertices_sizes, edge.label.dist=35, vertex.label.dist=0, node.label.cex=0.5, vertex.color=vertices_colors, vertex.label=vertex_attr(mst_graph, "label"), vertex.label.color=rep("black", nb_vertex), vertex.label.family="sans", edge.label.family="sans")
 
 if (sts_exist){
     par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
