@@ -7,9 +7,11 @@ rule vt_decompose_blocksub:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf.gz",
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf.gz.tbi",
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf",
+    log:
+        "strains/{sample}/logs/snps/{snp_caller}/{ref}/{mapping_method}/vt_decompose_blocksub.txt"
     shell:
         """
-        vt decompose_blocksub -a {input[0]} -o {output[2]}
+        vt decompose_blocksub -a {input[0]} -o {output[2]} &> {log[0]}
         bgzip -c {output[2]} > {output[0]}
         tabix -f -p vcf {output[0]}
         """
