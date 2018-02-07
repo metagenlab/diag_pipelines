@@ -28,7 +28,7 @@ for i in dist:
 
 out_xlsx_distances = snakemake.output["out_xlsx_distance"]
 writer = pandas.ExcelWriter(out_xlsx_distances)
-matrix_distances.to_excel(writer, snakemake.wildcards["ref"], index=True)
+matrix_distances.to_excel(writer, snakemake.wildcards["distance_type"], index=True)
 writer.save()
 
 matrix_distances.to_csv(snakemake.output["out_tsv_distance"], sep="\t", index=True)
