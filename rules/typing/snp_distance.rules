@@ -12,7 +12,19 @@ rule distance_columns_to_matrix:
     script:
         "scripts/distance_columns_to_matrix.py"
 
+rule agregate_all_unknown_position:
+    conda:
+        "../annotation/env/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_hicov_from_merged_pairs_of_vcf.xlsx",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_lowcov_from_merged_pairs_of_vcf.xlsx",
+          "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_freq_from_merged_pairs_of_vcf.xlsx",
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
+    script:
+        "scripts/merge_xlsx_files.py"
 
+        
         
 rule compute_minimum_spanning_tree:
     conda:
@@ -21,7 +33,8 @@ rule compute_minimum_spanning_tree:
         "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}.tsv",
         "typing/mlst/summary.tsv",
         "typing/mlst/references.tsv",
-        "references/complete_genomes_subvalues.tsv"
+        "references/complete_genomes_subvalues.tsv",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
     output:
         "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.pdf"
     log:

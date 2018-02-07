@@ -9,7 +9,21 @@ rule calculate_statistics_from_vcf_to_reference:
         """
         bcftools stats -f PASS {input[0]} > {output[0]}
         """
-       
+
+        
+rule calculate_unknowns_from_vcf_to_reference:
+    input:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf",
+    output:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/final_stats_unknown_{filter}.txt",
+    shell:
+        """
+        diff=$(grep -v "^\#" {input[0]} | grep -c "{wildcards.filter}") || :
+        echo {wildcards.sample} {wildcards.ref} ${{diff}} > {output[0]}
+        """
+
+
+        
 rule calculate_statistics_from_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
@@ -54,6 +68,32 @@ rule calculate_distances_from_merged_pairs_of_vcf:
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[0]}
         """
 
+rule calculate_unknown_positions_from_merged_pairs_of_vcf:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf",
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}_unknown_{filter}.txt",
+    shell:
+        """
+        snps=$(grep -v "^#" {input[0]} | grep -c {wildcards.filter}) || :
+        echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[0]}
+        """
+        
+rule agregate_unknowns_from_merged_pairs_of_vcf:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/vcfs/{sample1}_{sample2}_unknown_{{filter}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
+        to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats_unknown_{{filter}}.txt", sample=read_naming.keys())
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_{filter}_from_merged_pairs_of_vcf.txt"
+    shell:
+        """
+        cat {input} >> {output[0]}
+        """
+        
 rule agregate_distances_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
