@@ -49,7 +49,6 @@ rule extract_protein_sequences_from_blast:
     input:
         "strains/{sample}/virulence/results_blast_not_redundant.tsv",
         "strains/{sample}/annotation/{sample}.faa",
-
     output:
         "strains/{sample}/virulence/proteins.fasta",
     shell:
@@ -70,7 +69,7 @@ rule add_description:
     conda:
         "env/xlwt.yaml"
     input:
-        "strains/{sample}/virulence/results_tblastn.tsv",
+        "strains/{sample}/virulence/results_blast_not_redundant.tsv",
         config["virulence_factors"]
     output:
         "strains/{sample}/virulence/{sample}_virulence.tsv",
