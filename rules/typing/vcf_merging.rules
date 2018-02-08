@@ -17,9 +17,9 @@ rule merge_all_vcfs_no_indels:
     input:
         vcfs=expand("strains/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/{sample}.vcf.gz", sample=read_naming.keys())
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz.tbi",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf",
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz"),
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz.tbi"),
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf"),
     shell:
         """
         bcftools merge -f PASS,hicov,lowcov,freq -0 -O v {input[vcfs]} > {output[2]}
