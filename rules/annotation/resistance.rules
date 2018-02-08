@@ -41,8 +41,8 @@ rule mykrobe_paired:
     conda:
         "env/mykrobe.yaml"
     input:
-        "reads/raw/{sample}_R1.fastq.gz",
-        "reads/raw/{sample}_R2.fastq.gz",
+        "strains/{sample}/reads/trimmed/R1_paired.fastq",
+        "strains/{sample}/reads/trimmed/R2_paired.fastq",
     output:
         "strains/{sample}/resistance/mykrobe.json"
     params:
@@ -90,7 +90,6 @@ rule summary_csv_excel_file:
         "strains/{sample}/resistance/summary.xlsx",
         "strains/{sample}/resistance/sequences.ffn",
         "strains/{sample}/resistance/sequences.faa",
-        
     script:
         "scripts/summary_csv_xlsx.py"
 
@@ -105,12 +104,6 @@ rule merge_summary_xlsx_files:
         "resistance_summary.xlsx"
     script:
         "scripts/merge_summary_xlsx.py"
+
         
-rule extract_resistance_genes:
-    conda:
-        ""
-    input:
-        "strains/{sample}/resistance/summary.csv"
-    output:
-        ""
         
