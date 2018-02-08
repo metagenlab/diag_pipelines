@@ -15,7 +15,7 @@ rule prokka:
         genus = lambda wildcards: species_names[wildcards.sample]["genus"],
         spec = lambda wildcards: species_names[wildcards.sample]["species"]
     shell:
-        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}'"
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
 
 rule prokka_temporary_file:
     conda:
@@ -28,7 +28,7 @@ rule prokka_temporary_file:
         genus = lambda wildcards: species_names[wildcards.sample]["genus"],
         spec = lambda wildcards: species_names[wildcards.sample]["species"]
     shell:
-        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}'"
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
 
 
 rule hashing_genes:
@@ -61,7 +61,7 @@ rule create_database_from_contig_sequences:
     input:
         "strains/{sample}/annotation/{sample}.fsa",
     output:
-        "strains/{sample}/annotation/{sample}.fsa.phr",
+        "strains/{sample}/annotation/{sample}.fsa.nhr",
     shell:
         """
         makeblastdb -dbtype nucl -in {input[0]}
