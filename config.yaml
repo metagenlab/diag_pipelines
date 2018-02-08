@@ -27,6 +27,8 @@ phylogeny_image_size: 800
 # If you wish to include samples from sras, list them in a tab separated file with the name of the sample and the sra accession number
 sra_samples: example_sras.tsv
 
+virulence_percentage_identity_cutoff: 80
+virulence_coverage_cutoff: 70
 
 # Read naming schemas:
 # Read names must end with ".fastq" or ".fastq.gz" or ".fq" or ".fg.gz"
