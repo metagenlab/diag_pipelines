@@ -1,0 +1,168 @@
+include: "../assembly/assembly.rules"
+configfile: "config.yaml"
+
+rule gff_to_embl:
+    conda:
+        "env/gff3toembl.yaml"
+    input:
+        "{sample}/annotation/{sample}.gff",
+        "{sample}.yaml"
+    output:
+        "{sample}/ena_submission/flatfile.embl"
+    params:
+        publ=config["publication"],
+        PRJ=config["EBI_project_number"],
+        aut="'"+" ".join(config["authors"])+"'",
+        tt=config["translation_table"],
+    shell:
+        """
+        name=$(grep "taxon_name:" {input[1]} | cut -f2 -d':')
+        desc=$(grep "description_of_the_genome_sequence:" {input[1]} | cut -f2 -d':')
+        id=$(grep "taxon_id_number:" {input[1]} | cut -f2 -d':')
+        pre=$(grep "prefix_locus_tag:" {input[1]} | cut -f2 -d':')
+        gff3_to_embl --translation_table {params.tt} --locus_tag ${{pre}} --authors {params.aut} --classification PROK --publication {params.publ} --output_filename {output} "${{name}}" "${{id}}" "{params.PRJ}" "${{desc}}" {input[0]}
+        """
+
+rule validate_gff_for_ena_submission:
+    conda:
+        "env/validator_ena.yaml"
+    input:
+        "{sample}/ena_submission/flatfile.embl"
+    output:
+        "{sample}/ena_submission/VAL_SUMMARY.txt",
+        "{sample}/ena_submission/VAL_ERROR.txt"
+        
+    shell:
+        "cd $( dirname {input}) && embl-api-validator $( basename {input}) || true "
+
+
+
+ule report_assembly:
+    input:
+        trim = "{sample}/logs/trimmomatic.log",
+        fastqc1 = "{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        fastqc2 = "{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt",
+        fastqc1html = "{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
+        fastqc2html = "{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html",
+        spades = "{sample}/assembly/spades/spades.log",
+        low_cov_names = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.txt",
+        low_cov = "{sample}/assembly/spades/contigs_500bp_low_kmer_coverage.fasta",        
+        quast = "{sample}/assembly/spades/quast/report.txt",
+        prokka = "{sample}/annotation/{sample}.txt",
+        ena_validator_summary = "{sample}/ena_submission/VAL_SUMMARY.txt",
+        ena_validator_error = "{sample}/ena_submission/VAL_ERROR.txt",
+        cov_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png",
+        GC_plot = "{sample}/assembly/spades/quast/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png",
+        kraken = "{sample}/logs/kraken.log"
+    output:
+        "{sample}/report.html"
+    run:
+        trim_result = extract_report_trimmomatic(input["trim"])
+        trim_result_percent = [ x / float(trim_result[0]) for x in trim_result ]
+        trim_result_percent_strings = [ "{:2.1f}".format(x*100) for x in trim_result_percent ]
+        warn = re.compile(r"WARN")
+        fail = re.compile(r"FAIL")
+        error = re.compile(r"ERROR")
+        test2 = extract_report(input["fastqc2"], fail)
+        assembly = extract_report_quast(input["quast"]).split("\n")
+        ncontigs = extract_info_quast(assembly, 0)
+        largest_contig = extract_info_quast(assembly, 2)
+        total_length = extract_info_quast(assembly, 4)
+        gc = extract_info_quast(assembly, 6)
+        n50 = extract_info_quast(assembly, 8)
+        r1f = format_table(extract_report(input["fastqc1"], fail))
+        r1w = format_table(extract_report(input["fastqc1"], warn))
+        r2f = format_table(extract_report(input["fastqc2"], fail))
+        r2w = format_table(extract_report(input["fastqc2"], warn))
+        spw = extract_report(input["spades"], warn)
+        spw = "    " + "\n    ".join([ x for x in spw.split("\n") if "*" in x ])
+        if spw.isspace():
+            spw = "    No warnings nor errors"
+        contigs_excluded = "    "+"    ".join(open(input["low_cov_names"]).readlines()).replace("_", " ")
+        if contigs_excluded.isspace():
+            contigs_excluded = "    No low kmer coverage contig"
+        kraken = "    "+"     ".join(open(input["kraken"]).readlines()).replace("\t\t", " ")
+        prokka_annot = extract_info_prokka(input["prokka"])
+        rRNA = prokka_annot["rRNA"]
+        CDS = prokka_annot["CDS"]
+        tRNA = prokka_annot["tRNA"]
+        enavalidator_warn = format_table(extract_report(input["ena_validator_summary"], warn))
+        enavalidator_err = format_table(extract_report(input["ena_validator_summary"], error))
+        cov_plot=input["cov_plot"]
+        GC_plot = input["GC_plot"]
+        report("""
+        Report of the assembly and annotation of the strain {wildcards.sample}
+        ===========================================================================================
+        Reads were trimmed using Trimmomatic.\n
+        ====================================== =================================
+        Total number of pairs                  {trim_result[0]}
+        Total of pairs passing trimming        {trim_result[1]} ({trim_result_percent_strings[1]} %)
+        Forward read only surviving            {trim_result[2]} ({trim_result_percent_strings[2]} %)
+        Reverse read only surviving            {trim_result[3]} ({trim_result_percent_strings[3]} %)
+        Both reads dropped                     {trim_result[4]} ({trim_result_percent_strings[4]} %)
+        ====================================== =================================
+        
+        (File trim_)\n
+        The quality check on the pairs with both reads passing trimming was performed using fastqc. Fastqc reported the following warnings and failures:\n
+        For forward reads::        
+            
+        {r1w}
+        {r1f}
+        
+        (File fastqc1html_) \n
+
+        For reverse reads::
+
+        {r2w}
+        {r2f}
+        
+        (File fastqc2html_) \n
+        Check the html fastqc files for the details of the quality checks.
+
+        Read classification per species (in %)::
+
+        {kraken}
+        
+        The genome was assembled using spades. Spades reported the following warnings::
+        
+        {spw}
+        
+        (File spades_) \n
+
+        The contigs were filtered based on their kmer coverage and those that had too low coverage (less than 5) were excluded from the analysis. The excluded contigs were::
+        
+        {contigs_excluded}
+        
+        Try blasting their sequences (in file low_cov_) to check their origin.
+        
+        The statistics of the assembly, without the excluded contigs, were obtained with quast: 
+        
+        ================================= ==============================
+        Number of contigs                 {ncontigs}
+        Largest contig                    {largest_contig} bps
+        Total length                      {total_length} bps
+        GC content                        {gc} %
+        N50                               {n50} bps
+        ================================= ==============================
+        
+        The histogram for GC content and kmer coverage can indicate contamination if outlier values are observed:
+        
+        .. image:: {cov_plot}
+        .. image:: {GC_plot}
+
+        Genes were annotated using prokka in local. 
+
+        ================================= ==============================
+        Number of CDS                     {CDS}
+        Number of rRNA genes              {rRNA}
+        Number of tRNA genes              {tRNA}
+        ================================= ==============================
+        
+        The European Nucleotide Archive (ENA) submission file was prepared and checked using their validator. The reports of the validator were::
+
+        {enavalidator_warn}
+        {enavalidator_err}
+
+        Check files ena_validator_summary_ and ena_validator_error_
+ 
+        """, output[0], **input)
