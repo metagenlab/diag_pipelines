@@ -1,6 +1,0 @@
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - bwa = 0.7.17=pl5.22.0_1
- - samtools = 1.7=0
