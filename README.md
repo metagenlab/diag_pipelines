@@ -1,13 +1,13 @@
 # DEPENDENCIES
-  Snakemake (http://snakemake.readthedocs.io/en/latest/) 4.0.0 and up
+  Snakemake (http:/snakemake.readthedocs.io/en/latest/) 4.0.0 and up
   
-  Miniconda (https://conda.io/miniconda.html) preferably version with python 3.6
+  Miniconda (https:/conda.io/miniconda.html) preferably version with python 3.6
   
 
 # GENERAL USE
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml
 ```
 
 
@@ -20,14 +20,14 @@ The pipeline works by asking the generation of the files of interest for a parti
 Some examples:
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml quality/multiqc/self_genome/multiqc_report.html
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml quality/multiqc/self_genome/multiqc_report.html
 ```
 
 This will assemble and annotate every samples present in the `links` folder, and generate a multiqc report.
 
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml virulence_summary.xlsx
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml virulence_summary.xlsx
 ```
 
 This will generate a summary excel file for the virulence factors of the strains in the `links` folder, based on the virulence factors annotated in the file defined on the config file.
@@ -35,22 +35,22 @@ This will generate a summary excel file for the virulence factors of the strains
 
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml resistance_summary.xlsx
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml resistance_summary.xlsx
 ```
 
 This will generate a summary excel file for the resistance factors of the strains in the `links` folder, using the softwares defined in the config file.
 
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/freebayes/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf.xlsx
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml /freebayes/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf.xlsx
 ```
 
-This will generate a snp-distance matrix of all samples present in `links`, only on the core genome calculated with parsnp and with all complete genomes of the species defined in the `taxid` variable of the config file, mapped on the assembly (from https://www.ncbi.nlm.nih.gov/assembly/) whose `id` is 34528 (nctc 8325, *Staphylococcus aureus* reference genome) with bwa
+This will generate a snp-distance matrix of all samples present in `links`, only on the core genome calculated with parsnp and with all complete genomes of the species defined in the `taxid` variable of the config file, mapped on the assembly (from https:/www.ncbi.nlm.nih.gov/assembly/) whose `id` is 34528 (nctc 8325, *Staphylococcus aureus* reference genome) with bwa
 
 
 ```
-snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/mlst/summary.xlsx
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml /mlst/summary.xlsx
 ```
 
-This will generate an Excel summary file of the MLST of all samples present in `links`, based on the software mlst (https://github.com/tseemann/mlst)
+This will generate an Excel summary file of the MLST of all samples present in `links`, based on the software mlst (https:/github.com/tseemann/mlst)
 
