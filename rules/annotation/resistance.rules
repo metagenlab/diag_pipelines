@@ -9,6 +9,7 @@ rule rgi:
         """
         rgi -t contig -i {input[0]} -o $(dirname {output[0]})/rgi
         """
+        
 
 rule rgi_json_to_tsv:
     conda:
@@ -22,7 +23,8 @@ rule rgi_json_to_tsv:
         rgi_jsontab -v ON -i {input[0]} -o {output[0]}
         mv {output[0]}.txt {output[0]}
         """
-    
+
+        
 rule abricate:
     conda:
         "env/abricate.yaml"
@@ -36,6 +38,7 @@ rule abricate:
         """
         abricate --nopath --db resfinder {input[0]} 2> {log} 1> {output[0]} 
         """
+        
 
 rule mykrobe_paired:
     conda:
@@ -52,6 +55,7 @@ rule mykrobe_paired:
         mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf 100  > {output[0]} 
         """
 
+        
 rule mykrobe_single:
     conda:
         "env/mykrobe.yaml"
@@ -75,6 +79,7 @@ rule mykrobe_json_to_tsv:
     script:
         "scripts/mykrobe_json_to_tsv.py"
 
+
 rule summary_csv_excel_file:
     params:
         ontology_aro = ontology_file_aro,
@@ -86,13 +91,23 @@ rule summary_csv_excel_file:
     input:
         expand("strains/{{sample}}/resistance/{software}.tsv", software = config["resistance_prediction_softwares"])
     output:
-        "strains/{sample}/resistance/summary.csv",
+        "strains/{sample}/resistance/summary.tsv",
         "strains/{sample}/resistance/summary.xlsx",
-        "strains/{sample}/resistance/sequences.ffn",
-        "strains/{sample}/resistance/sequences.faa",
     script:
         "scripts/summary_csv_xlsx.py"
 
+
+rule write_congruent_results_fasta:
+    conda:
+        "env/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        "strains/{sample}/resistance/summary.tsv",
+        "strains/{sample}/resistance/rgi.tsv",
+    output:
+        "strains/{sample}/resistance/sequences.ffn",
+        "strains/{sample}/resistance/sequences.faa",
+    script:
+        "scripts/summary_to_fasta.py"
 
 
 rule merge_summary_xlsx_files:

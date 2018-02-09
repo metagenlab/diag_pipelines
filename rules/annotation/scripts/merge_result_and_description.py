@@ -4,7 +4,6 @@ res = pandas.read_csv(snakemake.input[0], delimiter="\t")
 db = pandas.read_csv(snakemake.input[1], delimiter="\t")
 
 db2 = pandas.DataFrame({"gene_uniprot":db[["gene", "uniprot_accession"]].apply(lambda x: '_'.join(x), axis=1), "description":db["description"], "gene":db["gene"]})
-print(db2)
 
 merged = pandas.merge(res, db2, left_on="virulence_factor_ID", right_on="gene_uniprot")
 

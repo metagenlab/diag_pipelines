@@ -3,11 +3,7 @@ import pronto
 import csv
 import re
 
-import Bio
-from Bio import SeqIO
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
-from Bio.Alphabet import generic_dna
+
 
 out_csv = snakemake.output[0]
 out_xlsx = snakemake.output[1]
@@ -29,8 +25,6 @@ def extract_rgi(row, aro_ont, gene_list):
     if row["SNP"] != "n/a":
         best_hit = row["Best_Hit_ARO"].split()
         genes = list(set(best_hit))
-#        genes = list(set(best_hit).intersection(set(gene_list)))
-
         if len(genes) == 1:
             gene = genes[0]
             terms = row["ARO"].split(",")
@@ -108,23 +102,6 @@ for file_tsv in snakemake.input:
 
             
 df = pandas.DataFrame(all_res, columns= ["Software", "Gene", "Resistance Type", "Variant", "Antibiotic resistance prediction"])
-
-
-rgi_res = pandas.read_csv([filename for filename in snakemake.input if re.search("rgi", filename)][0], sep="\t")
-
-with open(snakemake.output[3], "w") as f_p, open(snakemake.output[2], "w") as f_dna:
-        for i in df.loc[df['Software'] == "mykrobe", "Gene"]:
-            match=set([string for string in df.loc[df['Software'] == "rgi", "Gene"] if re.search(i, string.replace("(",""))])
-            for j in match:
-                seq=Seq(rgi_res.loc[rgi_res["Best_Hit_ARO"]==j.replace("_", " "), "Predicted_DNA"].values[0], generic_dna)
-                record= SeqRecord(seq, id=snakemake.wildcards["sample"]+"_"+j, description="")
-                SeqIO.write(record, f_dna, "fasta")
-                prot_record=SeqRecord(seq.translate(table="Bacterial", cds=True), id=snakemake.wildcards["sample"]+"_"+j, description="")
-                SeqIO.write(prot_record, f_p, "fasta")
-
-
-
-
 
 writer = pandas.ExcelWriter(out_xlsx)
 df.to_excel(writer, snakemake.wildcards["sample"], index=False)
