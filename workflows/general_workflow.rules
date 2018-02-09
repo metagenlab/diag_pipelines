@@ -6,11 +6,11 @@ import itertools
 prefix_folder = config["absolute_path_of_pipeline_folder"]
 snakemake_path = prefix_folder
 
-ontology_file_aro = prefix_folder + "/card/obo_files/aro.obo"
-ontology_file_mo = prefix_folder + "/card/obo_files/mo.obo"
-ontology_file_ro = prefix_folder + "/card/obo_files/ro.obo"
+ontology_file_aro = prefix_folder + "/data/card/obo_files/aro.obo"
+ontology_file_mo = prefix_folder + "/data/card/obo_files/mo.obo"
+ontology_file_ro = prefix_folder + "/data/card/obo_files/ro.obo"
 
-multiqc_configfile = prefix_folder + "/configuration_files/multiqc/config.yaml"
+multiqc_configfile = prefix_folder + "/data/configuration_files/multiqc/config.yaml"
 
 sys.path.insert(0, snakemake_path)
 

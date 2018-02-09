@@ -2,10 +2,10 @@ absolute_path_of_pipeline_folder: /home/sacha/Documents/new_strain/
 
 # Currated genes associated with resistance phenotype
 # Can be a file as defined in mycobacterium/db/resistance_genes.csv or simply a list with the names of the genes
-currated_genes: /home/sacha/Documents/new_strain/mycobacterium/db/resistance_genes.csv
+currated_genes: /home/sacha/Documents/new_strain/data/mycobacterium/db/resistance_genes.csv
 
 #File listing currated genes for virulence factors, with uniprot accession number:
-virulence_factors: /home/sacha/Documents/new_strain/staph/db/virulence_factors.tsv
+virulence_factors: /home/sacha/Documents/new_strain/data/staph/db/virulence_factors.tsv
 
 #Ontology files from the card database. Should be changed to automatically fetch the files from the db
 
