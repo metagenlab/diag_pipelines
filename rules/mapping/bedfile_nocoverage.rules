@@ -1,0 +1,58 @@
+rule get_total_genome_coverage:
+    conda:
+        "env/bedtools.yaml"
+    input:
+        "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
+    output:
+        "strains/{sample}/mapping/{mapping_method}/{ref}/genome_coverage.bed"
+    shell:
+        """
+        bedtools genomecov -bga -ibam {input[0]} > {output[0]}
+        """
+
+
+rule get_really_low_coverage_regions:
+    input:
+        "strains/{sample}/mapping/{mapping_method}/{ref}/genome_coverage.bed"
+    output:
+        "strains/{sample}/mapping/{mapping_method}/{ref}/low_genome_coverage.bed"
+    shell:
+        """
+        min=2
+        awk -v min="${{min}}" '{{if($4 < min) {{print}}}}' {input[0]} > {output[0]}
+        """
+
+
+rule intersect_filter_genome_coverage:
+    conda:
+        "env/bedtools.yaml"
+    input:
+        "core_genome/{ref}_core_parsnp_sorted.bed",
+        "strains/{sample}/mapping/{mapping_method}/{ref}/low_genome_coverage.bed"
+    output:
+        "strains/{sample}/mapping/{mapping_method}/{ref}/low_genome_coverage_intersect_core_parsnp.bed"
+    shell:
+        """
+        bedtools intersect -a {input[0]} -b {input[1]}  > {output[0]}.tmp
+        bedtools sort -i {output[0]}.tmp > {output[0]}.tmp.tmp
+        bedtools merge -i {output[0]}.tmp.tmp > {output[0]}
+        rm {output[0]}.tmp*
+        """
+
+
+        
+rule union_bedtools_of_pair_of_samples:
+    conda:
+        "env/bedtools.yaml"
+    input:
+        "strains/{sample1}/mapping/{mapping_method}/{ref}/low_genome_coverage_intersect_core_parsnp.bed",
+        "strains/{sample2}/mapping/{mapping_method}/{ref}/low_genome_coverage_intersect_core_parsnp.bed",
+    output:
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/beds/{sample1}_{sample2}_low_coverage_regions.bed"),
+    shell:
+        """
+        cat {input} > {output[0]}.tmp
+        bedtools sort -i {output[0]}.tmp > {output[0]}.tmp.tmp
+        bedtools merge -i {output[0]}.tmp.tmp > {output[0]}
+        rm {output[0]}.tmp*
+        """
