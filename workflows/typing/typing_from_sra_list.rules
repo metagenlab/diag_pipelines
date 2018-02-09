@@ -1,0 +1,31 @@
+read_naming = {}
+sample_correspondance = {}
+
+with open("sras.txt") as myfile:
+    for f in myfile:
+        if f.strip():
+            read_naming[f.strip()] = f.strip()
+            sample_correspondance[f.strip()] = f.strip()
+
+prefix = "../../rules/"
+
+include:
+    prefix + "read_manipulation/get_sras.rules"
+
+include:
+    prefix + "downloading/fetch_references.rules"
+
+include:
+    prefix + "mapping/snippy.rules"
+
+include:
+    prefix + "phylogeny/raxml.rules"
+
+include:
+    prefix + "assembly/assembly.rules"
+
+include:
+    prefix + "typing/mlst.rules"
+
+include:
+    prefix + "typing/snps_distance.rules"

@@ -1,0 +1,67 @@
+rule distance_columns_to_matrix:
+    params:
+        samples=list(read_naming.keys())
+    conda:
+        "env/pandas-biopython-pysam.yaml"
+    input:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.txt",
+        "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
+    output:
+        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.xlsx",
+        out_tsv_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.tsv"
+    script:
+        "scripts/distance_columns_to_matrix.py"
+
+rule agregate_all_unknown_position:
+    conda:
+        "../annotation/env/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_hicov_from_merged_pairs_of_vcf.xlsx",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_lowcov_from_merged_pairs_of_vcf.xlsx",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_freq_from_merged_pairs_of_vcf.xlsx",
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
+    script:
+        "scripts/merge_xlsx_files.py"
+
+        
+        
+rule compute_minimum_spanning_tree:
+    conda:
+        "env/igraph.yaml"
+    input:
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}.tsv",
+        "typing/mlst/summary.tsv",
+        "typing/mlst/references.tsv",
+        "references/complete_genomes_subvalues.tsv",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
+    output:
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.pdf"
+    log:
+        "logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.txt"
+    script:
+        "scripts/minimum_spanning_tree.R"
+
+        
+        
+rule merge_snps_distance_xlsx:
+    conda:
+        "env/pandas-biopython-pysam.yaml"
+    input:
+        expand("typing/core_{{method}}/{ref}/distance.xlsx", ref = config["ref_ids_for_mapping"])
+    output:
+        "typing/core_{method}/summary.xlsx"
+    script:
+        "scripts/merge_typing_xlsx.py"
+
+
+        
+rule calculate_number_of_differences_from_alignment:
+    conda:
+        "env/pandas-biopython-pysam.yaml"
+    input:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
+    output:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances_from_alignment.txt"
+    script:
+        "scripts/calculate_distances_from_alignment.py"

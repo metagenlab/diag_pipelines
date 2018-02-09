@@ -1,0 +1,43 @@
+rule fetch_resistance_from_db:
+    conda:
+        "env/python-mysql.yaml"
+    output:
+        "resistance/phenotype_summary.tsv"
+    params:
+        conf = mysql_conf_file,
+        id = db_to_use,
+        soft = resistance_prediction_softwares
+    script:
+        "scripts/fetch_resistance_from_db.py"
+        
+        
+rule fetch_mutations_from_db:
+    input:
+        "strains/{sample}/logs/rgi_db.txt",
+        "strains/{sample}/logs/mykrobe_db.txt",
+        "strains/{sample}/logs/abricate_db.txt"
+    conda:
+        "env/python-mysql-pandas.yaml"
+    output:
+        "strains/{sample}/resistance/{sample}_summary.tsv",
+    params:
+        conf = mysql_conf_file,
+        id = db_to_use,
+        soft = resistance_prediction_softwares
+    script:
+        "scripts/fetch_mutations_from_db.py"
+
+
+rule fetch_resistance_genes_from_db:
+    conda:
+        "env/python-mysql.yaml"
+    output:
+        "strains/{sample}/resistance/genes_summary.tsv"
+    params:
+        conf = mysql_conf_file,
+        id = db_to_use,
+        soft = resistance_prediction_softwares
+    script:
+        "scripts/fetch_genes_from_db.py"
+
+

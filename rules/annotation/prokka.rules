@@ -1,0 +1,68 @@
+rule prokka:
+    conda:
+        "env/prokka.yaml"
+    input:
+        "strains/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
+    output:
+        "strains/{sample}/annotation/{sample}.log",
+        "strains/{sample}/annotation/{sample}.gff",
+        "strains/{sample}/annotation/{sample}.faa",
+        "strains/{sample}/annotation/{sample}.fsa",
+        "strains/{sample}/annotation/{sample}.txt",
+        "strains/{sample}/annotation/{sample}.gbk",
+        "strains/{sample}/annotation/{sample}.ffn"
+    params:
+        genus = lambda wildcards: species_names[wildcards.sample]["genus"],
+        spec = lambda wildcards: species_names[wildcards.sample]["species"]
+    shell:
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
+
+rule prokka_temporary_file:
+    conda:
+        "env/prokka.yaml"
+    input:
+        "strains/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
+    output:
+        "strains/{sample}/assembly/spades/temporary_annotation/{sample}.fsa"
+    params:
+        genus = lambda wildcards: species_names[wildcards.sample]["genus"],
+        spec = lambda wildcards: species_names[wildcards.sample]["species"]
+    shell:
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
+
+
+rule hashing_genes:
+    conda:
+        "env/biopython.yaml"
+    input:
+        "strains/{sample}/annotation/{sample}.ffn"
+    output:
+        "strains/{sample}/annotation/{sample}_hashes.txt"
+    script:
+        "scripts/hashing_genes.py"
+    
+
+rule create_database_from_protein_sequences:
+    conda:
+        "env/blast.yaml"
+    input:
+        "strains/{sample}/annotation/{sample}.faa",
+    output:
+        "strains/{sample}/annotation/{sample}.faa.phr",
+    shell:
+        """
+        makeblastdb -dbtype prot -in {input[0]}
+        """
+
+
+rule create_database_from_contig_sequences:
+    conda:
+        "env/blast.yaml"
+    input:
+        "strains/{sample}/annotation/{sample}.fsa",
+    output:
+        "strains/{sample}/annotation/{sample}.fsa.nhr",
+    shell:
+        """
+        makeblastdb -dbtype nucl -in {input[0]}
+        """

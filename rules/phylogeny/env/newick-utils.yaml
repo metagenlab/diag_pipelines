@@ -1,0 +1,6 @@
+name: tree_figure
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - newick_utils = 1.6 1

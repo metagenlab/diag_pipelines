@@ -1,0 +1,7 @@
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - pronto = 0.10.2
+ - mysql-connector-python = 2.2.2
+

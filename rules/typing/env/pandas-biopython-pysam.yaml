@@ -1,0 +1,9 @@
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - pandas = 0.22.0
+ - pysam = 0.13.0
+ - biopython = 1.70
+ - openpyxl = 2.5.0b1
+ - xlrd = 1.1.0

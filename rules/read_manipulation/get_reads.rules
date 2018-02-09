@@ -1,0 +1,23 @@
+rule copy_fastq_paired_from_link:
+    input:
+        ancient(lambda wildcards: expand("links/{fold}/{orig}_{ext}", fold=folders[wildcards.sample], orig=original_name[wildcards.sample], ext=read_naming[wildcards.sample]))
+    output:
+        temp("reads/raw/{sample}_R1.fastq.gz"),
+        temp("reads/raw/{sample}_R2.fastq.gz")
+    shell:
+        """
+        cp {input[0]} {output[0]}
+        cp {input[1]} {output[1]}
+        """
+        
+rule copy_fastq_single_from_link:
+    input:
+        ancient(lambda wildcards: "links/"+folders[wildcards.sample]+ "/" +original_name[wildcards.sample]+ "." +read_naming[wildcards.sample][0])
+    output:
+        temp("reads/raw/{sample}_single.fastq.gz")
+    shell:
+        """
+        cp {input[0]} {output[0]}
+        """
+        
+        

@@ -1,0 +1,104 @@
+rule get_reference_or_representative_or_complete_genome_urls:
+    conda:
+        "env/entrez-direct.yaml"
+    output:
+        "references/{ref}_url.txt"
+    params:
+        id = config["taxid"]
+    shell:
+        """
+        search=$( echo {wildcards.ref} | tr '_' ' ')
+        esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if RefSeq_category -equals "reference genome" -if SpeciesTaxid -equals {params.id} -element FtpPath_RefSeq  > {output[0]}
+        if [  ! -s {output[0]} ]; then 
+             echo here
+             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if RefSeq_category -equals "representative genome" -if SpeciesTaxid -equals {params.id} -element FtpPath_RefSeq > {output[0]}
+        if [ ! -s {output[0]} ]; then
+             echo there
+             esearch -db assembly -query "${{search}}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -element FtpPath_RefSeq  > {output[0]}
+        fi
+       fi
+        """
+
+
+#rule download_gbks_from_closest_genomes:
+#    params:
+#        id = taxid
+#    input:
+#        "closest_genomes.txt"
+#    output:
+#        dynamic("references/{ref}_url.txt")
+#    shell:
+#        """
+#        xargs -a {input[0]} -I % sh -c 'esearch -db assembly -query "%" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -element FtpPath_RefSeq > references/%_url.txt'
+#        """
+
+rule download_gbks_from_url:
+    conda:
+        "env/entrez-direct.yaml"
+    input:
+        "references/url_complete_genomes.txt"
+    output:
+        "references/{ref}/genome.gbk"
+    shell:
+        """
+        nucl_id=$(grep "\\b{wildcards.ref}\\b" {input[0]} | cut -f2 |  sed  "s/\(\/GCF_.*\)/\\1\\1_assembly_report.txt/" | xargs wget -qO- | sed '/^#.*/ d'  | awk ' $4 == "Chromosome" {{print $7}}')
+        efetch -db nucleotide -id ${{nucl_id}} -format gb > {output[0]} 
+        """
+
+
+rule download_fasta_from_url:
+    conda:
+        "env/entrez-direct.yaml"
+    input:
+        "references/url_complete_genomes.txt"
+    output:
+        "references/{ref}/genome.fasta"
+    shell:
+        """
+        nucl_id=$(grep "\\b{wildcards.ref}\\b" {input[0]} | cut -f2 |  sed  "s/\(\/GCF_.*\)/\\1\\1_assembly_report.txt/" | xargs wget -qO- | sed '/^#.*/ d'  | awk ' $4 == "Chromosome" {{print $7}}')
+        efetch -db nucleotide -id ${{nucl_id}} -format fasta > {output[0]} 
+        """
+        
+rule get_complete_genomes_urls:
+    params:
+        id = config["taxid"],
+        spec= config["species"]
+    conda:
+        "env/entrez-direct.yaml"
+    output:
+        "references/url_complete_genomes.txt"
+    shell:
+        """
+        esearch -db assembly -query "{params.spec}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -if FtpPath_RefSeq -element Id FtpPath_RefSeq > {output[0]}
+        """         
+        
+rule download_all_complete_genomes_fasta:
+    input:
+        "references/url_complete_genomes.txt"
+    output:
+        "references/all_complete_genomes_log.txt"
+    shell:
+        """
+        mkdir -p $(dirname {output[0]})/all_complete_genomes/
+        while read id ftp; do
+            echo ${{id}}
+            nucl_id=$(echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_assembly_report.txt/" | xargs wget -qO- | sed '/^#.*/ d'  | awk ' $4 == "Chromosome" {{print $7}}')
+            echo ${{nucl_id}}
+            efetch -db nucleotide -id ${{nucl_id}} -format fasta > references/all_complete_genomes/${{id}}_genome.fasta
+        done < "{input[0]}"
+        echo 'ok' > {output[0]}
+        """
+
+        #sed "s/-/_/g" because parsnp does not like "-" in sequence headers
+rule get_complete_genomes_subvalues:
+    params:
+        id = config["taxid"],
+        spec= config["species"]
+    conda:
+        "env/entrez-direct.yaml"
+    output:
+        "references/complete_genomes_subvalues.tsv"
+    shell:
+        """
+        esearch -db assembly -query "{params.spec}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -if FtpPath_RefSeq -element Id Sub_value > {output[0]}
+        """         

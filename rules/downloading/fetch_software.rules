@@ -1,0 +1,20 @@
+rule fetch_parsnp:
+    output:
+        "bin/parsnp"
+    shell:
+        """
+        wget  https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz
+        tar -xvf parsnp-Linux64-v1.2.tar.gz
+        mv Parsnp-Linux64-v1.2/parsnp bin/parsnp
+        rm -rf  Parsnp-Linux64-v1.2
+        rm parsnp-Linux64-v1.2.tar.gz*
+        """
+
+
+rule fetch_mash_sketch:
+    output:
+        "references/mash_sketch.msh"
+    shell:
+        """
+        wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > {output}
+        """

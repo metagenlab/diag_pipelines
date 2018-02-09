@@ -1,0 +1,40 @@
+rule raxml_on_alignment_to_ref:
+    conda:
+        "env/raxml.yaml"
+    input:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
+    output:
+        "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw"
+    log:
+        "logs/phylogeny/RAxML_log.{ref}"
+    shell:
+        """
+        if [ -d $(dirname {output[0]}) ];
+        then
+            rm -rf $(dirname {output[0]})
+            mkdir -p $(dirname {output[0]})
+        fi
+        raxmlHPC -V -m GTRCAT -n {wildcards.ref} -s {input[0]} -w $(dirname $(readlink -f {output[0]})) -p 123 > {log} 
+        cp $(dirname {output[0]})/RAxML_bestTree.{wildcards.ref} $(dirname {output[0]})/RAxML_bestTree.nw 
+        """
+
+rule raxml_bootstrap:
+    conda:
+        "env/raxml.yaml"
+    input:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
+    output:
+        "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw"
+    log:
+        "logs/phylogeny/RAxML_log.{ref}_boot"
+    shell:
+        """
+        if [ -d $(dirname {output[0]}) ];
+        then
+            rm -rf $(dirname {output[0]})
+            mkdir -p $(dirname {output[0]})
+        fi
+        raxmlHPC -m GTRCAT -V -n {wildcards.ref} -s {input[0]} -b 123 -w $(dirname $(readlink -f {output[0]})) -N 100 -p 123 > {log} 
+        cp $(dirname {output[0]})/RAxML_bootstrap.{wildcards.ref} $(dirname {output[0]})/RAxML_bootstrap.nw 
+        """
+

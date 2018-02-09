@@ -1,0 +1,193 @@
+import csv
+import shutil
+import sys
+import itertools
+
+prefix_folder = config["absolute_path_of_pipeline_folder"]
+snakemake_path = prefix_folder
+
+ontology_file_aro = prefix_folder + "/card/obo_files/aro.obo"
+ontology_file_mo = prefix_folder + "/card/obo_files/mo.obo"
+ontology_file_ro = prefix_folder + "/card/obo_files/ro.obo"
+
+multiqc_configfile = prefix_folder + "/configuration_files/multiqc/config.yaml"
+
+sys.path.insert(0, snakemake_path)
+
+import helper_scripts.get_sample_naming_from_link_folder as sample_naming
+
+from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
+
+import helper_scripts.get_species_and_sample_correspondance as get_species_sample
+
+link_directory="links/"
+
+reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
+
+if config["sample_names"]:
+    sample_correspondance = get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"])
+    for i in reads_local.keys():
+        if i not in sample_correspondance.keys():
+            sample_correspondance[i] = i
+    read_correct = {}
+    original_correct = {}
+    folders_correct = {}
+    if folders.keys():
+        for i in folders.keys():
+            folders_correct[sample_correspondance[i]] = folders[i]
+        for i in original_name.keys():
+            original_correct[sample_correspondance[i]] = original_name[i]
+        for i in reads_local.keys():
+            read_correct[sample_correspondance[i]] = reads_local[i]
+    original_name = original_correct
+    reads_local = read_correct
+    folders = folders_correct
+
+resistance_prediction_sofwares = config["resistance_prediction_softwares"]
+
+sras_ext = {}
+sras_folder = {}
+reads_sra = {}
+
+if "sra_samples" in config.keys() and config["sra_samples"]:
+    reads_sra = {x:y for y,x in get_species_sample.get_sample_names_correspondance_from_file(config["sra_samples"]).items()}
+    for i,j in reads_sra.items():
+        sras_ext[i]=["1.fastq.gz", "2.fastq.gz"]
+        sras_folder[i]="."
+
+if isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
+    genes = []
+    with open(config["currated_genes"]) as csvfile:
+        reader = csv.reader(csvfile, delimiter="\t")
+        for row in reader:
+            genes.append(row[1])
+elif isinstance(config["currated_genes"], list) or config["currated_genes"] == "":
+    genes=config["currated_genes"]
+else:
+    raise ValueError("currated_genes variable ill defined : {}".format(config["currated_genes"]))
+
+read_naming = { **reads_local, **sras_ext}
+original_name = { **original_name, **reads_sra}
+folders = { **folders, **sras_folder}
+
+
+
+species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
+
+all_combined_1, all_combined_2 = [], []
+
+for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
+    all_combined_1.append(i)
+    all_combined_2.append(j)
+
+prefix = "../../rules/"
+    
+include:
+    prefix + "read_manipulation/get_reads.rules"
+
+include:
+    prefix + "read_manipulation/get_sras.rules"
+
+include:
+    prefix + "downloading/fetch_references.rules"
+    
+include:
+    prefix + "downloading/fetch_software.rules"
+
+include:
+    prefix + "downloading/fetch_virulence_factors.rules"
+
+include:
+    prefix + "core_genome/parsnp.rules"
+
+include:
+    prefix + "core_genome/ani.rules"
+
+include:
+    prefix + "quality/read_trimming.rules"
+    
+include:
+    prefix + "mapping/bwa_to_self_assembly.rules"
+
+include:
+    prefix + "mapping/bwa_to_reference.rules"
+
+include:
+    prefix + "mapping/find_closest_genomes.rules"
+
+include:
+    prefix + "snp_calling/freebayes.rules"
+
+include:
+    prefix + "assembly/spades.rules"
+
+include:
+    prefix + "annotation/prokka.rules"
+
+include:
+    prefix + "annotation/resistance.rules"
+
+include:
+    prefix + "annotation/virulence.rules"
+    
+include:
+    prefix + "report_generation/multiqc.rules"
+
+include:
+    prefix + "quality/quality_assembly.rules"
+
+include:
+    prefix + "quality/quality_reads.rules"
+
+include:
+    prefix + "quality/quality_mapping_to_reference.rules"
+        
+include:
+    prefix + "quality/contamination.rules"
+    
+include:
+    prefix + "typing/mlst.rules"
+
+include:
+    prefix + "typing/vcf_filtering.rules"
+    
+include:
+    prefix + "typing/vcf_merging.rules"
+    
+include:
+    prefix + "typing/vcf_calculations.rules"
+    
+include:
+    prefix + "typing/snp_distance.rules"
+    
+include:
+    prefix + "typing/compare_methods.rules"
+
+include:
+    prefix + "typing/cgmlst.rules"
+
+include:
+    prefix + "typing/spa_typing.rules"
+
+include:
+    prefix + "phylogeny/generate_alignments.rules"
+    
+include:
+    prefix + "phylogeny/raxml.rules"
+
+include:
+    prefix + "phylogeny/image_creation.rules"
+
+    
+    
+rule all:
+    input:
+        "typing/freebayes/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        "typing/freebayes/core_parsnp/34528/bwa/distances_from_alignment_mst.pdf",
+        "typing/freebayes/core_parsnp/1241621/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        "typing/freebayes/core_parsnp/1455771/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        "typing/freebayes/core_parsnp/692481/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        "typing/freebayes/core_parsnp/716441/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        
+
+

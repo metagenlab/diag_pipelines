@@ -1,0 +1,45 @@
+rule fastqc_single:
+    conda:
+        "env/fastqc.yaml"
+    input:
+        "strains/{sample}/reads/trimmed/single.fastq",
+    output:
+        "strains/{sample}/reads/trimmed/fastqc/single_fastqc.zip",
+        "strains/{sample}/reads/trimmed/fastqc/single_fastqc.html",
+    shell:
+        "fastqc {input} -o $( dirname {output[0]})"
+
+        
+rule fastqc_paired:
+    conda:
+        "env/fastqc.yaml"
+    input:
+        "strains/{sample}/reads/trimmed/R1_paired.fastq",
+        "strains/{sample}/reads/trimmed/R2_paired.fastq"
+    output:
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
+        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.zip",
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
+        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html"
+    shell:
+        "fastqc {input} -o $( dirname {output[0]})"
+
+
+rule unzip_fastqc_single:
+    input:
+        "strains/{sample}/reads/trimmed/fastqc/single_fastqc.zip",
+    output:
+        "strains/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
+    shell:
+        "unzip -D -u {input[0]} -d $( dirname {input[0]})  && touch {output[0]}"
+
+    
+rule unzip_fastqc_paired:
+    input:
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
+        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.zip"
+    output:
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        "strains/{sample}/reads/trimmed/fastqc/R2_paired_fastqc/summary.txt"
+    shell:
+        "unzip -D -u {input[0]} -d $( dirname {input[0]}) && unzip -D -u {input[1]} -d $( dirname {input[0]}) && touch {output[0]} &&  touch {output[1]}"

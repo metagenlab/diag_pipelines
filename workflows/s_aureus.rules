@@ -1,0 +1,111 @@
+import csv
+import shutil
+import sys
+
+snakemake_path = "/home/sacha/Documents/new_strain/"
+
+sys.path.insert(0, snakemake_path)
+
+from helper_scripts.get_sample_naming_from_folder_molis import get_read_naming_patterns
+
+from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
+
+link_directory="links/"
+
+read_naming, folders, original_name  = get_folders_structure_with_sample_naming(link_directory, get_read_naming_patterns)
+
+sample_correspondance = { x:x for x in read_naming.keys()} 
+
+spec_for_mykrobe = 'staph'
+taxid=1280
+species="Staphylococcus aureus"
+db_to_use = "saureus"
+mysql_conf_file = "/home/sacha/.my.cnf"
+resistance_prediction_softwares = ["mykrobe", "rgi", "abricate"]
+
+ontology_file_aro = 'aro.obo'
+ontology_file_mo = 'mo.obo'
+ontology_file_ro = 'ro.obo'
+
+
+sample_names=""
+
+
+genes =["gyrA", "grlA"]
+
+
+prefix = "../rules/"
+
+include:
+    prefix + "read_manipulation/get_reads.rules"
+
+include:
+    prefix + "downloading/fetch_references.rules"
+    
+include:
+    prefix + "downloading/fetch_virulence_factors.rules"
+
+include:
+    prefix + "mapping/snippy.rules"
+
+include:
+    prefix + "mapping/align_reads_to_genome.rules"
+
+include:
+    prefix + "phylogeny/raxml.rules"
+
+include:
+    prefix + "assembly/assembly.rules"
+
+include:
+    prefix + "db_management/creation.rules"
+
+include:
+    prefix + "db_management/insert_data.rules"
+    
+include:
+    prefix + "db_management/fetch_data.rules"
+
+include:
+    prefix + "annotation/prokka.rules"
+
+include:
+    prefix + "annotation/resistance.rules"
+
+include:
+    prefix + "annotation/virulence.rules"
+    
+include:
+    prefix + "quality/multiqc.rules"
+
+include:
+    prefix + "quality/quality_assembly.rules"
+
+include:
+    prefix + "quality/quality_reads.rules"    
+    
+include:
+    prefix + "typing/mlst.rules"
+
+include:
+    prefix + "typing/snps_distance.rules"
+    
+include:
+    prefix + "typing/compare_methods.rules"
+
+
+
+rule something:
+    input:
+        expand("strains/{sample}/resistance/{sample}_resistance_summary.xlsx", sample= read_naming.keys()),
+        expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample= read_naming.keys()),
+        "quality/multiqc_report.html",
+        "typing/mlst/summary_nctc_8325.out"
+
+    output:
+        "report.html"
+    shell:
+        """
+        echo "" > {output[0]}
+        """
+    

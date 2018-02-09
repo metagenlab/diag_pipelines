@@ -1,38 +1,56 @@
-# Pipeline for assembling a set of pair read sequecing files and performing comparative genomics analysis
+# DEPENDENCIES
+  Snakemake (http://snakemake.readthedocs.io/en/latest/) 4.0.0 and up
+  
+  Miniconda (https://conda.io/miniconda.html) preferably version with python 3.6
+  
 
-This pipeline is composed of two modules. The first one assembles paired reads, checks the identity of the species, annotates the genome, controls for contamination and generates an EMBL file ready to be submitted to the European Nucleotide Archive.
-
-The second module uses the assembled genomes, and downloads from requested species or genera already sequenced genomes to perform an orthologous gene search, an ANI calculation, and a phylogeny based on one to one orthologous protein coding genes. It accomodates any number of sequenced genome. 
-
-The pipeline uses the conda package manager, and will run provided snakemake (version >=4) and Miniconda3 are available on the osX or Linux computer.
-Setting up a minikraken database is also needed : 
-```
-wget -O - https://ccb.jhu.edu/software/kraken/dl/minikraken.tgz > krakendb.tgz
-tar xzf krakendb.tgz
-mv minikraken_* krakendb/
-rm -rf krakendb.tgz
-```
-
-The paired reads files have to be uncompressed, stored in the folder reads/raw/ relative from where the snakemake command is called and their names be `${ISOLATE_NAME}_R1_001.fastq` and `${ISOLATE_NAME}_R2_001.fastq`. For each isolate, a file called `${ISOLATE_NAME}.yaml` must be present in the main folder (see example in `strain_name.yaml`)
-
-Modify config.yaml and copy it in the folder from which the analysis will be run. For the RefSeq genome search, do not include large genera or too many genomes will be added.   
-
-Check every thing is order by performing first a dry run :
+# GENERAL USE
 
 ```
-snakemake --snakefile ${PATH_TO_COMPARATIVE_RULES_FILE} --dryrun --use-conda --conda-prefix=${PATH_WHERE_CONDA_ENV_WILL_BE_STORED} report.html
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml
 ```
 
-A directed acyclic graph (dag) of the run can be generated to visualize all jobs that will be performed :
+
+Update the config file for your needs.
+
+# GENERATING FILES OF INTEREST
+
+The pipeline works by asking the generation of the files of interest for a particular analysis. This assumes knowing what their locations is going to be.
+
+Some examples:
 
 ```
-snakemake --snakefile ${PATH_TO_COMPARATIVE_RULES_FILE} --use-conda --conda-prefix=${PATH_WHERE_CONDA_ENV_WILL_BE_STORED} --dag report.html | dot -Tsvg > dag.svg
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml quality/multiqc/self_genome/multiqc_report.html
 ```
 
-Finally run the full pipeline : 
+This will assemble and annotate every samples present in the `links` folder, and generate a multiqc report.
+
 
 ```
-snakemake --snakefile ${PATH_TO_COMPARATIVE_RULES_FILE} --use-conda --conda-prefix=${PATH_WHERE_CONDA_ENV_WILL_BE_STORED} report.html 
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml virulence_summary.xlsx
 ```
 
-You can find in `dag.svg` an example of the pipeline with 4 strains that are assembled and then compared to RefSeq genomes.
+This will generate a summary excel file for the virulence factors of the strains in the `links` folder, based on the virulence factors annotated in the file defined on the config file.
+
+
+
+```
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml resistance_summary.xlsx
+```
+
+This will generate a summary excel file for the resistance factors of the strains in the `links` folder, using the softwares defined in the config file.
+
+
+```
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/freebayes/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf.xlsx
+```
+
+This will generate a snp-distance matrix of all samples present in `links`, only on the core genome calculated with parsnp and with all complete genomes of the species defined in the `taxid` variable of the config file, mapped on the assembly (from https://www.ncbi.nlm.nih.gov/assembly/) whose `id` is 34528 (nctc 8325, *Staphylococcus aureus* reference genome) with bwa
+
+
+```
+snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/typing/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/mlst/summary.xlsx
+```
+
+This will generate an Excel summary file of the MLST of all samples present in `links`, based on the software mlst (https://github.com/tseemann/mlst)
+

@@ -1,0 +1,24 @@
+
+rule convert_phylogeny_to_image:
+    params:
+        size=config["phylogeny_image_size"]
+    conda:
+        "env/newick-utils.yaml"
+    input:
+        "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw",
+        "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
+        "typing/mlst/summary.csv",
+        "typing/mlst/references.csv",
+        "references/{ref}/genome.fasta",                
+    output:
+        "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/renaming.txt",
+        "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/phylogeny.svg",
+    shell:
+        """
+        cut -f1,3 {input[2]} | sed "s/\\t/_ST_/" > {output[0]}.tmp
+        cut -f 1 {input[2]} | paste - {output[0]}.tmp > {output[0]}
+        st_ref=$(grep "^{wildcards.ref}"$'\\t' {input[3]} | cut -f3)
+        id=$(grep ">" {input[4]} | cut -f1 -d' ' | sed "s/>//")
+        echo {wildcards.ref}'\t'${{id}}"_ST_"${{st_ref}} >> {output[0]}
+        nw_support {input[0]} {input[1]} | nw_rename - {output[0]} | nw_display -S -s -b 'opacity:0' -w -{params.size} -I m -W 20 -v 15 - > {output[1]}
+        """

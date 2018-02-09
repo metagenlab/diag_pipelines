@@ -1,0 +1,92 @@
+rule blast_virulence_protein:
+    params:
+        perc_id_cutoff=config["virulence_percentage_identity_cutoff"],
+        cov_cutoff=config["virulence_coverage_cutoff"],
+    conda:
+        "env/blast.yaml"
+    input:
+        "virulence/protein_fastas/log.txt",
+        "strains/{sample}/annotation/{sample}.fsa",
+        "strains/{sample}/annotation/{sample}.fsa.nhr",
+        "strains/{sample}/annotation/{sample}.faa",
+        "strains/{sample}/annotation/{sample}.faa.phr",
+    output:
+        "strains/{sample}/virulence/results_blast.tsv",
+    shell:
+        """
+        echo "virulence_factor_ID\tmatching_sequence\tpercentage_identity\talignment_length\tmismatch_number\tgap_number\talignment_start_on_virulence_factor\talignment_end_on_virulence_factor\talignment_start_on_matching_sequence\taligment_end_on_matching_sequence\te-value\tbitscore\tamino_acid_sequence_of_matching_sequence\tquery_coverage\talgorithm" > {output[0]}
+        for i in $(ls $(dirname {input[0]})/*.fasta); do
+            result=""
+            seq_prot_virulence=$(grep -v "^>" ${{i}} | tr -d '[:space:]' )
+            if [ "${{#seq_prot_virulence}}" -gt "50" ]
+            then                                             
+                result=$(blastp -query ${{i}} -db {input[3]} -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore sseq qcovs" | awk '$3>{params.perc_id_cutoff}' | awk '$14>{params.cov_cutoff}' | head -n 1)
+                if [ ! -z "${{result}}" ]
+                then
+                    echo ${{result}} blastp | sed "s/ /\\t/g" >> {output[0]}
+                fi
+            else
+                result=$(tblastn -seg no -word_size 3 -gapextend 1 -gapopen 9 -matrix PAM30 -query ${{i}} -db {input[1]} -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore sseq qcovs" | awk '$3>{params.perc_id_cutoff}' | awk '$14>{params.cov_cutoff}' | head -n 1)
+                if [ ! -z "${{result}}" ]
+                then
+                   echo ${{result}} tblastn | sed "s/ /\\t/g" >> {output[0]}
+                fi
+            fi 
+        done
+        """
+
+rule remove_redundancy_from_blast_results:
+    input:
+        "strains/{sample}/virulence/results_blast.tsv",
+    output:
+        "strains/{sample}/virulence/results_blast_not_redundant.tsv",
+    script:
+        "scripts/remove_overlap_from_blast_results.py"
+
+        
+rule extract_protein_sequences_from_blast:
+    conda:
+        "env/samtools.yaml"
+    input:
+        "strains/{sample}/virulence/results_blast_not_redundant.tsv",
+        "strains/{sample}/annotation/{sample}.faa",
+    output:
+        "strains/{sample}/virulence/proteins.fasta",
+    shell:
+        """
+        grep "blastp" {input[0]} | cut -f1,2 > {output[0]}.tmp
+        grep "blastp" {input[0]} | cut -f 2 | xargs -n 1 samtools faidx {input[1]} > {output[0]}
+        while read hit prokka
+        do 
+           sed -i "s/${{prokka}}/{wildcards.sample}_${{prokka}}_(${{hit}}_homolog)/" {output[0]}
+        done < {output[0]}.tmp
+        grep "tblastn" {input[0]} | cut -f 13 | sed "s/-//g" > {output[0]}.tmp
+        grep "tblastn" {input[0]} | cut -f1 | sed "s/^/>{wildcards.sample}_/" | sed "s/$/_homolog/" | paste -d"\\n" - {output[0]}.tmp >> {output[0]}
+        rm {output[0]}.tmp
+        """
+        
+rule add_description:
+    conda:
+        "env/xlwt.yaml"
+    input:
+        "strains/{sample}/virulence/results_blast_not_redundant.tsv",
+        config["virulence_factors"]
+    output:
+        "strains/{sample}/virulence/{sample}_virulence.tsv",
+        "strains/{sample}/virulence/{sample}_virulence_summary.xlsx"
+    script:
+        "scripts/merge_result_and_description.py"
+        
+    
+rule merge_description_files:
+    conda:
+        "env/pandas-openpyxl-pronto-xlrd.yaml",
+    input:
+        xlsx=expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys()),
+        fasta=expand("strains/{sample}/virulence/proteins.fasta", sample = read_naming.keys()),
+    output:
+        "virulence_summary.xlsx"
+    script:
+        "scripts/merge_summary_xlsx.py"
+
+    

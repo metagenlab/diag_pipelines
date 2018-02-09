@@ -1,0 +1,49 @@
+rule trimmomatic_PE:
+    conda:
+        "env/trim.yaml"
+    input:
+        ancient("reads/raw/{sample}_R1.fastq.gz"),
+        ancient("reads/raw/{sample}_R2.fastq.gz")
+    params:
+        minlength = config["minimum_read_length"],
+        minqual = config["minimum_quality_base"],
+        croplength = config["crop_to_read_length_from_end"],
+        adapter_file_name = config["adapter_file_name"],
+        adapter_removal_param1 = config["adapter_removal_param1"],
+        adapter_removal_param2 = config["adapter_removal_param2"],
+        adapter_removal_param3 = config["adapter_removal_param3"],
+    output:
+        "strains/{sample}/reads/trimmed/R1_paired.fastq",
+        temp("strains/{sample}/reads/trimmed/R1_unpaired.fastq"),
+        "strains/{sample}/reads/trimmed/R2_paired.fastq",
+        temp("strains/{sample}/reads/trimmed/R2_unpaired.fastq"),
+    log:
+        "strains/{sample}/logs/trimmomatic.log"
+    shell:
+        """
+        trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} CROP:{params.croplength} &> {log}
+        """        
+
+
+
+rule trimmomatic_SE:
+    conda:
+        "env/trim.yaml"
+    input:
+        "reads/raw/{sample}_single.fastq.gz"
+    params:
+        minlength = config["minimum_read_length"],
+        minqual = config["minimum_quality_base"],
+        croplength = config["crop_to_read_length_from_end"],
+        adapter_file_name = config["adapter_file_name"],
+        adapter_removal_param1 = config["adapter_removal_param1"],
+        adapter_removal_param2 = config["adapter_removal_param2"],
+        adapter_removal_param3 = config["adapter_removal_param3"],
+    output:
+        temp("strains/{sample}/reads/trimmed/single.fastq"),
+    log:
+        "strains/{sample}/logs/trimmomatic.log"
+    shell:
+        """
+        trimmomatic SE {input[0]} {output[0]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} CROP:{params.croplength} &> {log}
+        """

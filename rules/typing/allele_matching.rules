@@ -1,0 +1,12 @@
+rule blast_against_alleles:
+    input:
+        "strains/{sample}/annotation/{sample}.fsa",
+        "alleles/{allele}.fasta"
+    output:
+        "strains/{sample}/typing/{allele}.txt"
+    shell:
+        """
+        makeblastdb -dbtype nucl -query {input[1]}
+        blastn -query {input[0]} -db {input[0]} -outfmt 6 | awk '$5 == 0' | awk '$6 == 0' | awk '{print $2}' > {output[0]}
+        """
+        
