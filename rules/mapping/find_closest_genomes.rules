@@ -33,3 +33,20 @@ rule get_all_closest_genomes:
         """
         head {input} | sed "/^$/ d" | awk '{{ORS = (NR%2 ? FS : RS)}} 1' | sed "s/==> strains\///" | sed "s/\/closest_genome.txt <==//" | sort -k2   > {output}
         """
+
+
+rule get_fastas_closest_genomes:
+    input:
+        "closest_genomes.txt",
+        "references/url_complete_genomes.txt"
+    output:
+        dynamic("reference/closest/{ref}/genome.fasta")
+    shell:
+        """
+        while read strain id
+        do
+            nucl_id=$(grep "\\b${{id}}\\b" {input[1]} | cut -f2 |  sed  "s/\(\/GCF_.*\)/\\1\\1_assembly_report.txt/" | xargs wget -qO- | sed '/^#.*/ d'  | awk ' $4 == "Chromosome" {{print $7}}')
+            echo ${{nucl_id}}
+            efetch -db nucleotide -id ${{nucl_id}} -format fasta > {output[0]} 
+        done < {input[0]}
+        """
