@@ -7,8 +7,8 @@ rule convert_phylogeny_to_image:
     input:
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw",
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
-        "typing/mlst/summary.csv",
-        "typing/mlst/references.csv",
+        "typing/mlst/summary.tsv",
+        "typing/mlst/references.tsv",
         "references/{ref}/genome.fasta",                
     output:
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/renaming.txt",

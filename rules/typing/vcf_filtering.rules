@@ -57,7 +57,7 @@ rule filter_core_genome_parsnp:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        "core_genome/{ref}_core_parsnp_sorted_withdot.bed",
+        "core_genome/{ref}_core_parsnp_sorted.bed",
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered_mnp_decomposed.vcf.gz",
     output:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz",
