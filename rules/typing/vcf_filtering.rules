@@ -69,3 +69,5 @@ rule filter_core_genome_parsnp:
         bgzip -c {output[2]} > {output[0]}
         tabix -f -p vcf {output[0]}
         """
+
+

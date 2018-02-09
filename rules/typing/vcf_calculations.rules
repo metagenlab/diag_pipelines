@@ -23,20 +23,6 @@ rule calculate_unknowns_from_vcf_to_reference:
         """
 
 
-        
-rule calculate_statistics_from_pairs_of_vcf:
-    conda:
-        "env/vt-bcftools.yaml"
-    input:
-        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
-        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
-    output:
-        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}_stats.txt)")
-    shell:
-        """
-        bcftools stats {input} > {output[0]}
-        """
-        
 rule calculate_distances_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
@@ -46,7 +32,7 @@ rule calculate_distances_from_merged_pairs_of_vcf:
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}_merged_distance.txt"),
     shell:
         """
-        snps=$(bcftools view -f PASS {input[0]} | bcftools query -f '[%GT ]\n' - | awk '$1!=$2' | wc -l)
+        snps=$(bcftools view -f PASS -R {input[0]} | bcftools query -f '[%GT ]\n' - | awk '$1!=$2' | wc -l)
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[0]}
         """
 
@@ -63,6 +49,20 @@ rule calculate_unknown_positions_from_merged_pairs_of_vcf:
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[0]}
         """
         
+rule calculate_statistics_from_pairs_of_vcf:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
+        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
+    output:
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}_stats.txt)")
+    shell:
+        """
+        bcftools stats {input} > {output[0]}
+        """
+
+        
 rule agregate_unknowns_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
@@ -75,6 +75,7 @@ rule agregate_unknowns_from_merged_pairs_of_vcf:
         """
         cat {input} >> {output[0]}
         """
+        
         
 rule agregate_distances_from_merged_pairs_of_vcf:
     conda:

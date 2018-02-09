@@ -20,6 +20,7 @@ rule agregate_all_unknown_position:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_hicov_from_merged_pairs_of_vcf.xlsx",
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_lowcov_from_merged_pairs_of_vcf.xlsx",
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_freq_from_merged_pairs_of_vcf.xlsx",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_nocov_from_merged_pairs_of_vcf.xlsx",
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
     script:
