@@ -4,6 +4,7 @@ import sys
 import itertools
 
 prefix_folder = config["absolute_path_of_pipeline_folder"]
+
 snakemake_path = prefix_folder
 
 ontology_file_aro = prefix_folder + "/data/card/obo_files/aro.obo"
@@ -80,7 +81,7 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
     all_combined_1.append(i)
     all_combined_2.append(j)
 
-prefix = "../../rules/"
+prefix = "../rules/"
     
 include:
     prefix + "read_manipulation/get_reads.rules"
