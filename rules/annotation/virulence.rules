@@ -16,8 +16,8 @@ rule blast_virulence_protein:
         """
         echo "virulence_factor_ID\tmatching_sequence\tpercentage_identity\talignment_length\tmismatch_number\tgap_number\talignment_start_on_virulence_factor\talignment_end_on_virulence_factor\talignment_start_on_matching_sequence\taligment_end_on_matching_sequence\te-value\tbitscore\tamino_acid_sequence_of_matching_sequence\tquery_coverage\talgorithm" > {output[0]}
         for i in $(ls $(dirname {input[0]})/*.fasta); do
-            seq_prot_virulence=$(grep -v "^>" ${{i}} | tr -d '[:space:]' )
             result=""
+            seq_prot_virulence=$(grep -v "^>" ${{i}} | tr -d '[:space:]' )
             if [ "${{#seq_prot_virulence}}" -gt "50" ]
             then                                             
                 result=$(blastp -query ${{i}} -db {input[3]} -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore sseq qcovs" | awk '$3>{params.perc_id_cutoff}' | awk '$14>{params.cov_cutoff}' | head -n 1)
@@ -43,6 +43,7 @@ rule remove_redundancy_from_blast_results:
     script:
         "scripts/remove_overlap_from_blast_results.py"
 
+        
 rule extract_protein_sequences_from_blast:
     conda:
         "env/samtools.yaml"
@@ -57,13 +58,12 @@ rule extract_protein_sequences_from_blast:
         grep "blastp" {input[0]} | cut -f 2 | xargs -n 1 samtools faidx {input[1]} > {output[0]}
         while read hit prokka
         do 
-           sed -i "s/${{prokka}}/${{prokka}}_(${{hit}}_homolog)/" {output[0]}
+           sed -i "s/${{prokka}}/{wildcards.sample}_${{prokka}}_(${{hit}}_homolog)/" {output[0]}
         done < {output[0]}.tmp
         grep "tblastn" {input[0]} | cut -f 13 | sed "s/-//g" > {output[0]}.tmp
-        grep "tblastn" {input[0]} | cut -f1 | sed "s/^/>/" | sed "s/$/_homolog/" | paste -d"\\n" - {output[0]}.tmp >> {output[0]}
+        grep "tblastn" {input[0]} | cut -f1 | sed "s/^/>{wildcards.sample}_/" | sed "s/$/_homolog/" | paste -d"\\n" - {output[0]}.tmp >> {output[0]}
         rm {output[0]}.tmp
         """
-        
         
 rule add_description:
     conda:
@@ -80,7 +80,7 @@ rule add_description:
     
 rule merge_description_files:
     conda:
-        "env/pandas-openpyxl-pronto-xlrd.yaml"
+        "env/pandas-openpyxl-pronto-xlrd.yaml",
     input:
         expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys())
     output:
@@ -88,20 +88,4 @@ rule merge_description_files:
     script:
         "scripts/merge_summary_xlsx.py"
 
-rule blast_virulence_cds:
-    conda:
-        "env/blast.yaml"
-    input:
-        "virulence/protein_log.txt",
-        "strains/{sample}/annotation/{sample}.fsa"
-    output:
-        "strains/{sample}/virulence/cds_results.tsv"
-    shell:
-        """
-        makeblastdb -dbtype nucl -in {input[1]}
-        echo "Virulence factor ID\tContigID\tPercentage identity\tCoverage of the Virulence factor cds on the alignement\tE-value" > {output[0]}
-        for i in $(ls $(dirname {input[0]})/fastas/*.fasta); do
-            tblastn -query ${{i}} -db {input[1]} -outfmt 6 | awk '$3>70' | head -n 1 >> {output[0]}
-        done
-        """
     
