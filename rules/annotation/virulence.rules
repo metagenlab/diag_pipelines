@@ -82,7 +82,8 @@ rule merge_description_files:
     conda:
         "env/pandas-openpyxl-pronto-xlrd.yaml",
     input:
-        expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys())
+        xlsx=expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys()),
+        fasta=expand("strains/{sample}/virulence/proteins.fasta", sample = read_naming.keys()),
     output:
         "virulence_summary.xlsx"
     script:

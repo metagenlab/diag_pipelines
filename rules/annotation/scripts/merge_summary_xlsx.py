@@ -13,7 +13,7 @@ snakemake.input.sort(key=natural_keys)
 
 out_xlsx = snakemake.output[0]
 
-excels = [pandas.ExcelFile(name) for name in snakemake.input]
+excels = [pandas.ExcelFile(name) for name in snakemake.input["xlsx"]]
 
 writer = pandas.ExcelWriter(out_xlsx)
 

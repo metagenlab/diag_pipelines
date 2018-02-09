@@ -31,7 +31,7 @@ def remove_redundancy_from_tblastn(results):
             for i in itertools.combinations(matching_rows.index, 2):
                 # get list with the ranges of the two hits
                 list_start_end = [ sorted((int(x[0]),int(x[1]))) for x in matching_rows.loc[i, ["alignment_start_on_matching_sequence", "aligment_end_on_matching_sequence"]].values ]
-                ranges = [ ranges(x[0], x[1]) for x in list_start_end ]
+                ranges = [ range(x[0], x[1]) for x in list_start_end ]
                 # if the ranges overlap, we mark the best hit for keeping and the worst for deleting
                 if set(ranges[0]) & set(ranges[1]):
                     to_be_kept.append(matching_rows.loc[i, "percentage_identity"].idxmax())
