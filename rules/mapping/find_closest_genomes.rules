@@ -9,7 +9,6 @@ rule mash_sketch_complete_genomes:
         """
         mash sketch -o {output[0]} $(dirname {input[0]})/all_complete_genomes/*.fasta
         """
-
     
 rule mash_dist_sample:
     conda:
@@ -34,6 +33,7 @@ rule get_all_closest_genomes:
         head {input} | sed "/^$/ d" | awk '{{ORS = (NR%2 ? FS : RS)}} 1' | sed "s/==> strains\///" | sed "s/\/closest_genome.txt <==//" | sort -k2   > {output}
         """
 
+        
 
 rule get_fastas_closest_genomes:
     input:

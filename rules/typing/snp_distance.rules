@@ -2,7 +2,7 @@ rule distance_columns_to_matrix:
     params:
         samples=list(read_naming.keys())
     conda:
-        "env/pandas-biopython-pysam.yaml"
+        "env/pandas-openpyxl-xlrd.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.txt",
         "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
@@ -12,9 +12,10 @@ rule distance_columns_to_matrix:
     script:
         "scripts/distance_columns_to_matrix.py"
 
+        
 rule agregate_all_unknown_position:
     conda:
-        "../annotation/env/pandas-openpyxl-pronto-xlrd.yaml"
+        "env/pandas-openpyxl-xlrd.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_hicov_from_merged_pairs_of_vcf.xlsx",
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_lowcov_from_merged_pairs_of_vcf.xlsx",
@@ -46,7 +47,7 @@ rule compute_minimum_spanning_tree:
         
 rule merge_snps_distance_xlsx:
     conda:
-        "env/pandas-biopython-pysam.yaml"
+        "env/pandas-openpyxl-xlrd.yaml"
     input:
         expand("typing/core_{{method}}/{ref}/distance.xlsx", ref = config["ref_ids_for_mapping"])
     output:
@@ -58,7 +59,7 @@ rule merge_snps_distance_xlsx:
         
 rule calculate_number_of_differences_from_alignment:
     conda:
-        "env/pandas-biopython-pysam.yaml"
+        "env/pandas-openpyxl-xlrd.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
     output:

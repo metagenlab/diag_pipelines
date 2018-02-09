@@ -52,5 +52,5 @@ This will generate a snp-distance matrix of all samples present in `links`, only
 snakemake --snakefile ${PATH_TO_GIT_FOLDER}/workflows/general_workflow.rules --use-conda --conda-prefix ${PATH_TO_CONDA_INSTALLATION} --configfile config.yaml typing/mlst/summary.xlsx
 ```
 
-This will generate an Excel summary file of the MLST of all samples present in `links`, based on the software mlst ( https:/github.com/tseemann/mlst )
+This will generate an Excel summary file of the MLST of all samples present in `links`, based on the software mlst (https:/github.com/tseemann/mlst)
 

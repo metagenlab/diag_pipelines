@@ -19,19 +19,6 @@ rule get_reference_or_representative_or_complete_genome_urls:
        fi
         """
 
-
-#rule download_gbks_from_closest_genomes:
-#    params:
-#        id = taxid
-#    input:
-#        "closest_genomes.txt"
-#    output:
-#        dynamic("references/{ref}_url.txt")
-#    shell:
-#        """
-#        xargs -a {input[0]} -I % sh -c 'esearch -db assembly -query "%" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if FtpPath_RefSeq -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -element FtpPath_RefSeq > references/%_url.txt'
-#        """
-
 rule download_gbks_from_url:
     conda:
         "env/entrez-direct.yaml"
@@ -90,6 +77,9 @@ rule download_all_complete_genomes_fasta:
         """
 
         #sed "s/-/_/g" because parsnp does not like "-" in sequence headers
+
+
+        
 rule get_complete_genomes_subvalues:
     params:
         id = config["taxid"],

@@ -2,5 +2,5 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
- - raxml = 8.2.10
+ - raxml = 8.2.10=0
 

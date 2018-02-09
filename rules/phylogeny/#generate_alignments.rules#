@@ -1,0 +1,12 @@
+rule create_alignment_from_genotype:
+    conda:
+        "../typing/env/pandas-biopython-pysam.yaml"
+    params:
+        samples=list(read_naming.keys())
+    input:
+        genotype="typing/core_{method}/{ref}/{validation}/genotype.GT.FORMAT",
+        gbk="references/{ref}/genome.gbk"
+    output:
+        "alignments/core_{method}/{ref}/{validation}/alignment.fa"
+    script:
+        "scripts/create_alignment_from_genotype.py"

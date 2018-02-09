@@ -2,4 +2,5 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
- - blast = 2.7.1
+ - blast = 2.7.1=boost1.64_2
+

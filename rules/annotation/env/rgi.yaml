@@ -2,4 +2,4 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
- - rgi = 3.2.1
+ - rgi = 3.2.1=py27_2

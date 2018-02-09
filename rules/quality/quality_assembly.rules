@@ -33,20 +33,6 @@ rule quast:
     shell:
         "quast.py {input} -o $( dirname {output})"
 
-        
-rule convert_quast_images:
-    conda:
-        "env/imagemagick.yaml"
-    input:
-        "strains/{sample}/quality/quast/report.txt"
-    output:
-        "strains/{sample}/quality/quast/basic_stats/contigs_500bp_renamed_GC_content_plot.png",
-        "strains/{sample}/quality/quast/basic_stats/contigs_500bp_renamed_coverage_histogram.png"
-    shell:
-        """
-        convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_coverage_histogram.png
-        convert $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.pdf $(dirname {input[0]})/basic_stats/contigs_500bp_high_kmer_coverage_GC_content_plot.png
-        """
 
 
 rule filter_contigs_on_coverage:

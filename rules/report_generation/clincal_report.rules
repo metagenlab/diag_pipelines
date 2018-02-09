@@ -1,0 +1,11 @@
+rule clinical_report_word:
+    input:
+        "typing/freebayes/core_parsnp/{ref}/bwa/distances_from_merged_pairs_of_vcf.tsv",
+    output:
+        "typing/freebayes/core_parsnp/{ref}/bwa/report.doc",
+    script:
+        "scripts/generate_clinical_report.py"
+        
+        
+    
+        

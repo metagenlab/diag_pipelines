@@ -1,0 +1,3 @@
+rule clinical_report_word:
+    input:
+        "typing/

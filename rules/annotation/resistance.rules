@@ -114,7 +114,7 @@ rule merge_summary_xlsx_files:
     conda:
         "env/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        expand("strains/{sample}/resistance/summary.xlsx", sample = read_naming.keys())
+        xlsx=expand("strains/{sample}/resistance/summary.xlsx", sample = read_naming.keys())
     output:
         "resistance_summary.xlsx"
     script:

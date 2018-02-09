@@ -7,7 +7,6 @@ rule qualimap_mapping_to_reference:
         "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html",
         "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/genome_results.txt",
         "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/raw_data_qualimapReport/coverage_histogram.txt",
-
     log:
         "strains/{sample}/log/mapping/bwa/{ref}/qualimap.txt"
     shell:

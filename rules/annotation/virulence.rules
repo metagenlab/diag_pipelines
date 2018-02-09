@@ -67,7 +67,7 @@ rule extract_protein_sequences_from_blast:
         
 rule add_description:
     conda:
-        "env/xlwt.yaml"
+        "env/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         "strains/{sample}/virulence/results_blast_not_redundant.tsv",
         config["virulence_factors"]
