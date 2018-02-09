@@ -103,7 +103,7 @@ include:
 
 include:
     prefix + "core_genome/ani.rules"
-
+    
 include:
     prefix + "quality/read_trimming.rules"
     
@@ -132,9 +132,6 @@ include:
     prefix + "annotation/virulence.rules"
     
 include:
-    prefix + "report_generation/multiqc.rules"
-
-include:
     prefix + "quality/quality_assembly.rules"
 
 include:
@@ -162,22 +159,14 @@ include:
     prefix + "typing/snp_distance.rules"
     
 include:
-    prefix + "typing/compare_methods.rules"
-
-include:
-    prefix + "typing/cgmlst.rules"
-
-include:
-    prefix + "typing/spa_typing.rules"
-
-include:
-    prefix + "phylogeny/generate_alignments.rules"
-    
-include:
     prefix + "phylogeny/raxml.rules"
 
 include:
     prefix + "phylogeny/image_creation.rules"
+
+include:
+    prefix + "report_generation/multiqc.rules"
+
 
     
     
@@ -189,6 +178,14 @@ rule all:
         "typing/freebayes/core_parsnp/1455771/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
         "typing/freebayes/core_parsnp/692481/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
         "typing/freebayes/core_parsnp/716441/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        "virulence_summary.xlsx",
+        "resistance_summary.xlsx",
+        "phylogeny/freebayes/core_parsnp/34528/bwa/phylogeny.svg",
+        "phylogeny/freebayes/core_parsnp/1241621/bwa/phylogeny.svg",
+        "phylogeny/freebayes/core_parsnp/1455771/bwa/phylogeny.svg",
+        "phylogeny/freebayes/core_parsnp/692481/bwa/phylogeny.svg",
+        "phylogeny/freebayes/core_parsnp/716441/bwa/phylogeny.svg",
+        
         
 
 
