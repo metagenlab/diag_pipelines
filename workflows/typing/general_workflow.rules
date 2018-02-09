@@ -182,9 +182,12 @@ include:
     
 rule all:
     input:
-        "typing/freebayes/core_parsnp/34528/bwa/other_distances.xlsx",
-        "typing/freebayes/core_parsnp/1241621/bwa/before_validation/soft_masked/distance.xlsx",
-        "typing/freebayes/core_parsnp/716441/bwa/before_validation/soft_masked/distance.xlsx",
-        "typing/freebayes/core_parsnp/1455771/bwa/before_validation/soft_masked/distance.xlsx",
+        "typing/freebayes/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        "typing/freebayes/core_parsnp/34528/bwa/distances_from_alignment_mst.pdf",
+        "typing/freebayes/core_parsnp/1241621/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        "typing/freebayes/core_parsnp/1455771/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        "typing/freebayes/core_parsnp/692481/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        "typing/freebayes/core_parsnp/716441/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
+        
 
 
