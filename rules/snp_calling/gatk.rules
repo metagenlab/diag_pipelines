@@ -5,10 +5,12 @@ rule create_dict_for_reference:
         "references/{ref}/genome.fasta"
     output:
         "references/{ref}/genome.dict"
+    log:
+        "logs/references/{ref}/create_dictionnary.txt"
     shell:
         """
         samtools faidx {input[0]}
-        gatk-launch CreateSequenceDictionary -R {input[0]}
+        gatk-launch CreateSequenceDictionary -R {input[0]} &> {log}
         """
 
 rule haplotype_caller_vcf:
@@ -17,15 +19,18 @@ rule haplotype_caller_vcf:
     input:
         "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome.fasta",
-        "references/{ref}/genome.dict"
+        "references/{ref}/genome.dict",
+        "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
     output:
         "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf",
         "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf.gz",
         "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf.idx",
         "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf.gz.tbi",
+    log:
+        "strains/{sample}/logs/snps/gatk/haplotypecaller.txt",
     shell:
         """
-        gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]}
+        gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]} &> {log[0]}
         bgzip -c {output[0]} > {output[1]}
         tabix -f -p vcf {output[1]}
         """
@@ -90,6 +95,7 @@ rule merge_gvcf_files:
         gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[0]}) -V ${{var}} --intervals ${{acc}}
         """
 
+        
 rule extract_gvcf_files:
     conda:
         "env/gatk.yaml"
