@@ -2,4 +2,4 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
- - gatk4 = 4.0.0.0
+ - gatk4 = 4.0.1.1=py36_0

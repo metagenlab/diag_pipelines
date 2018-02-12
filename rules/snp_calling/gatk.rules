@@ -15,14 +15,14 @@ rule haplotype_caller_vcf:
     conda:
         "env/gatk.yaml"
     input:
-        "strains/{sample}/mapping/{mapping_method}/{ref}/before_validation/{sample}/snps_deduplicated.bam",
+        "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome.fasta",
         "references/{ref}/genome.dict"
     output:
-        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/full_genome/snps.vcf",
-        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/full_genome/snps.vcf.gz",
-        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/full_genome/snps.vcf.idx",
-        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/full_genome/snps.vcf.gz.tbi",
+        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf",
+        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf.gz",
+        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf.idx",
+        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf.gz.tbi",
     shell:
         """
         gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]}
