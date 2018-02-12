@@ -7,7 +7,7 @@ rule mlst_samples:
         "typing/mlst/summary.tsv"
     shell:
         """
-        mlst {input} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
+        mlst --quiet! {input} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
         """
 
 rule mlst_all_complete_genomes_fasta:
@@ -19,7 +19,7 @@ rule mlst_all_complete_genomes_fasta:
         "typing/mlst/references.tsv"
     shell:
         """
-        mlst $(dirname {input[0]})/all_complete_genomes/*.fasta | sed "s/.*\///" | sed "s/_genome\.fasta//" > {output[0]}
+        mlst --quiet! $(dirname {input[0]})/all_complete_genomes/*.fasta | sed "s/.*\///" | sed "s/_genome\.fasta//" > {output[0]}
         """
 
 rule mlst_to_excel:
