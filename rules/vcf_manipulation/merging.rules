@@ -4,6 +4,8 @@ rule merge_vcf_pairs:
     input:
         "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
         "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
+        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz.tbi",
+        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz.tbi",
     output:
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf.gz"),
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf.gz.tbi"),

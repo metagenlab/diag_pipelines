@@ -3,6 +3,7 @@ rule vt_decompose_blocksub:
         "env/vt-bcftools.yaml"
     input:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/snps.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/snps.vcf.gz.tbi",
     output:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf",
     log:
@@ -17,7 +18,8 @@ rule coverage_filtering:
         "env/vt-bcftools.yaml"
     input:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf.gz",    
-        "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt"
+        "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf.gz.tbi",    
     output:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed.vcf",
     shell:
@@ -33,11 +35,13 @@ rule indel_filtering:
         "env/vt-bcftools.yaml"
     input:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed.vcf.gz.tbi",
+        
     output:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered_mnp_decomposed.vcf",
     shell:
         """
-        bcftools filter -S "." -s "indel" -e 'STRLEN(REF)!=STRLEN(ALT)' -O z {input[0]} > {output[0]}
+        bcftools filter -S "." -s "indel" -e 'STRLEN(REF)!=STRLEN(ALT)' -O v {input[0]} > {output[0]}
         """
 
 
@@ -47,6 +51,8 @@ rule filter_core_genome_parsnp:
     input:
         "core_genome/{ref}_core_parsnp_sorted.bed",
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered_mnp_decomposed.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered_mnp_decomposed.vcf.gz.tbi",
+        
     output:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf",
     shell:
