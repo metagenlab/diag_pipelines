@@ -71,3 +71,18 @@ rule filter_core_genome_parsnp:
         """
 
 
+rule exclude_very_low_coverage_regions:
+    conda:
+        "env/bedtools.yaml"
+    input:
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf.gz",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/beds/{sample1}_{sample2}_low_coverage_regions.bed",        
+    output:
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/final_vcfs/{sample1}_{sample2}.vcf.gz"),
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/final_vcfs/{sample1}_{sample2}.vcf"),
+    shell:
+        """
+        bedtools intersect -header -v -a {input[0]} -b {input[1]} -wa > {output[1]}
+        bgzip -c {output[1]} > {output[0]}
+        """
+    

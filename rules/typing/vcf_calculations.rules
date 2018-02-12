@@ -27,12 +27,12 @@ rule calculate_distances_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/final_vcfs/{sample1}_{sample2}.vcf.gz",
     output:
-        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}_merged_distance.txt"),
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/final_vcfs/{sample1}_{sample2}_merged_distance.txt"),
     shell:
         """
-        snps=$(bcftools view -f PASS -R {input[0]} | bcftools query -f '[%GT ]\n' - | awk '$1!=$2' | wc -l)
+        snps=$(bcftools view -f PASS {input[0]} | bcftools query -f '[%GT ]\\n' - | awk '$1!=$2' | wc -l)
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[0]}
         """
 
@@ -40,9 +40,9 @@ rule calculate_unknown_positions_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/final_vcfs/{sample1}_{sample2}.vcf",
     output:
-        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}_unknown_{filter}.txt"),
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/final_vcfs/{sample1}_{sample2}_unknown_{filter}.txt"),
     shell:
         """
         snps=$(grep -v "^#" {input[0]} | grep -c {wildcards.filter}) || :
@@ -56,7 +56,7 @@ rule calculate_statistics_from_pairs_of_vcf:
         "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
         "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
     output:
-        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}_stats.txt)")
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/final_vcfs/{sample1}_{sample2}_stats.txt)")
     shell:
         """
         bcftools stats {input} > {output[0]}
@@ -67,7 +67,7 @@ rule agregate_unknowns_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/vcfs/{sample1}_{sample2}_unknown_{{filter}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/final_vcfs/{sample1}_{sample2}_unknown_{{filter}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats_unknown_{{filter}}.txt", sample=read_naming.keys())
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_{filter}_from_merged_pairs_of_vcf.txt"
@@ -81,7 +81,7 @@ rule agregate_distances_from_merged_pairs_of_vcf:
     conda:
         "env/vt-bcftools.yaml"
     input:
-        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/vcfs/{sample1}_{sample2}_merged_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
+        pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/final_vcfs/{sample1}_{sample2}_merged_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances_from_merged_pairs_of_vcf.txt"

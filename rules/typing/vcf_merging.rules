@@ -6,10 +6,14 @@ rule merge_vcf_pairs:
         "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/beds/{sample1}_{sample2}_low_coverage_regions.bed",        
     output:
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf.gz"),
+        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf.gz.tbi"),
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf"),
     shell:
         """
-        bcftools merge {input} -0 -O v | bcftools filter --regions-file {input[1]} --soft-filter "nocov" --set-GTs "." > {output[0]}
+        bcftools merge {input[0]} {input[1]} -0 -O v > {output[2]}
+        bgzip -c {output[2]} > {output[0]}
+        tabix -f -p vcf {output[0]}
         """
 
 rule merge_all_vcfs_no_indels:
