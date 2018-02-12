@@ -3,6 +3,8 @@
   
   Miniconda (https:/conda.io/miniconda.html) preferably version with python 3.6
   
+  Apply changes listed in documents/notes.org
+  
 
 # GENERAL USE
 
