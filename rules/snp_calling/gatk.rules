@@ -23,16 +23,12 @@ rule haplotype_caller_vcf:
         "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
     output:
         "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf",
-        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf.gz",
-        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf.idx",
-        "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf.gz.tbi",
+        temp("strains/{sample}/mapping/{mapping_method}/{ref}/gatk-haplotypecaller.bam"),
     log:
         "strains/{sample}/logs/snps/gatk/haplotypecaller.txt",
     shell:
         """
-        gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]} &> {log[0]}
-        bgzip -c {output[0]} > {output[1]}
-        tabix -f -p vcf {output[1]}
+        gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]} --bam-output {output[1]} &> {log[0]}
         """
         
 rule merge_haplotype_caller_vcf_files_filter_core_genome:

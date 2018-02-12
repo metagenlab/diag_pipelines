@@ -1,0 +1,13 @@
+rule index_vcf:
+    conda:
+        "env/vt-bcftools.yaml"
+    input:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{snp_name}.vcf",
+    output:
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{snp_name}.vcf.gz",
+        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{snp_name}.vcf.gz.tbi",
+    shell:
+        """
+        bgzip -c {input[0]} > {output[0]}
+        tabix -f -p vcf {output[0]}
+        """
