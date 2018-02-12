@@ -1,0 +1,21 @@
+rule pilon_snp_calling:
+    conda:
+        "env/pilon.yaml"
+    input:
+        "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
+        "references/{ref}/genome.fasta",
+        "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
+    output:
+        "strains/{sample}/snps/pilon/{ref}/{mapping_method}/snps.vcf.gz",
+    log:
+        "strains/{sample}/logs/snps/pillon/snp_calling.txt"
+    shell:
+        """
+        pilon --genome {input[1]} --frags {input[0]} --variant --outdir $(dirname {output[0]}) &> {log[0]}
+        mv $(dirname {output[0]})/pilon.vcf {output[2]}
+        """
+        
+
+        
+
+
