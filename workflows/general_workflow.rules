@@ -126,6 +126,9 @@ include:
     prefix + "snp_calling/gatk.rules"
 
 include:
+    prefix + "snp_calling/pilon.rules"
+
+include:
     prefix + "assembly/spades.rules"
 
 include:
@@ -153,14 +156,17 @@ include:
     prefix + "typing/mlst.rules"
 
 include:
-    prefix + "typing/vcf_filtering.rules"
+    prefix + "vcf_manipulation/filtering.rules"
     
 include:
-    prefix + "typing/vcf_merging.rules"
+    prefix + "vcf_manipulation/merging.rules"
     
 include:
-    prefix + "typing/vcf_calculations.rules"
-    
+    prefix + "vcf_manipulation/indexing.rules"
+
+include:
+    prefix + "vcf_manipulation/calculate_differences.rules"
+
 include:
     prefix + "typing/snp_distance.rules"
     
@@ -172,7 +178,6 @@ include:
 
 include:
     prefix + "report_generation/multiqc.rules"
-
 
     
     
