@@ -1,16 +1,14 @@
 FROM continuumio/miniconda3
 
-USER pipeline
-
 RUN /bin/bash -c "conda config --add channels defaults"
 RUN /bin/bash -c "conda config --add channels conda-forge"
 RUN /bin/bash -c "conda config --add channels bioconda"
 
-RUN apt-get install fontconfig
+RUN useradd -ms /bin/bash pipeline
 
-RUN mkdir pipeline/
+RUN apt-get install -y fontconfig
 
-RUN git clone https://github.com/metagenlab/diag_pipelines /home/pipeline/
+RUN git clone https://github.com/metagenlab/diag_pipelines /snakemake_pipeline/
 
 RUN conda install snakemake=4.6.0=py36_0
 
@@ -18,7 +16,7 @@ RUN mkdir /opt/conda/envs/
 
 ENV conda_folder=/opt/conda/envs/
 
-ENV pipeline_folder=/home/pipeline/
+ENV pipeline_folder=/snakemake_pipeline/
 
 WORKDIR /usr/local/bin
 
@@ -40,8 +38,6 @@ RUN cp ${pipeline_folder}/*.tsv .
 
 RUN cp ${pipeline_folder}/config.yaml .
 
-RUN echo '' > example_sras.tsv
-
 RUN echo '' > links/Staaur-10_S10_L001_R1.fastq.gz
 
 RUN echo '' > links/Staaur-10_S10_L001_R2.fastq.gz
@@ -51,3 +47,7 @@ RUN snakemake --snakefile ${pipeline_folder}/workflows/general_workflow.rules --
 RUN patch /opt/conda/envs/356da27d/lib/python3.6/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
 RUN rm links/*
+
+RUN rm config.yaml
+
+RUN rm *.tsv
