@@ -185,7 +185,6 @@ rule all:
     input:
         "typing/freebayes/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
         "typing/gatk/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/freebayes/core_parsnp/34528/bwa/distances_from_alignment_mst.pdf",
         "typing/freebayes/core_parsnp/1241621/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
         "typing/gatk/core_parsnp/1241621/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
         "typing/freebayes/core_parsnp/1455771/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
@@ -201,7 +200,3 @@ rule all:
         "phylogeny/freebayes/core_parsnp/1455771/bwa/phylogeny.svg",
         "phylogeny/freebayes/core_parsnp/692481/bwa/phylogeny.svg",
         "phylogeny/freebayes/core_parsnp/716441/bwa/phylogeny.svg",
-        
-        
-
-
