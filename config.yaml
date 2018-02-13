@@ -5,7 +5,7 @@ absolute_path_of_pipeline_folder: /home/pipeline/
 currated_genes: /home/pipeline/data/mycobacterium/db/resistance_genes.csv
 
 #File listing currated genes for virulence factors, with uniprot accession number:
-virulence_factors: /home/home/pipeline/data/staph/db/virulence_factors.tsv
+virulence_factors: /home/pipeline/data/staph/db/virulence_factors.tsv
 
 #Ontology files from the card database. Should be changed to automatically fetch the files from the db
 
