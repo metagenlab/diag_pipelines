@@ -2,8 +2,7 @@ rule calculate_core_genome_parsnp:
     conda:
         "env/inotify.yaml"
     input:
-        "bin/parsnp",
-        ancient("references/all_complete_genomes_log.txt")
+        "references/all_complete_genomes_log.txt"
     output:
         "core_genome/parsnp/parsnp.xmfa"
     log:
@@ -11,7 +10,7 @@ rule calculate_core_genome_parsnp:
     shell:
         """
         echo "begining" > {output[0]}
-        cmd="bin/parsnp -r ! -c -d $(dirname {input[1]})/all_complete_genomes/ -o $(dirname {output[0]})" 
+        cmd="parsnp -r ! -c -d $(dirname {input[1]})/all_complete_genomes/ -o $(dirname {output[0]})" 
         echo ${{cmd}}
         ${{cmd}} &
         pid=$!
