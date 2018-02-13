@@ -60,6 +60,8 @@ rule get_complete_genomes_urls:
         """         
         
 rule download_all_complete_genomes_fasta:
+    conda:
+        "env/entrez-direct.yaml"
     input:
         "references/url_complete_genomes.txt"
     output:
