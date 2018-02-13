@@ -4,7 +4,7 @@ RUN /bin/bash -c "conda config --add channels defaults"
 RUN /bin/bash -c "conda config --add channels conda-forge"
 RUN /bin/bash -c "conda config --add channels bioconda"
 
-RUN useradd -ms /bin/bash pipeline_user
+RUN useradd -r -u 1080 pipeline_user
 
 RUN apt-get install -y fontconfig
 
@@ -34,7 +34,7 @@ RUN rm parsnp-Linux64-v1.2.tar.gz*
 
 RUN mkdir -p ${main}/links/
 
-WORKDIR  ${main}
+WORKDIR ${main}
 
 RUN cp ${pipeline_folder}/*.tsv . 
 
@@ -53,3 +53,5 @@ RUN rm links/*
 RUN rm config.yaml
 
 RUN rm *.tsv
+
+USER pipeline_user
