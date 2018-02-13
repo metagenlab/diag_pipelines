@@ -7,8 +7,6 @@ rule call_variants_freebayes_vcf:
         "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
     output:
         "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf",
-        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf.gz",
-        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf.gz.tbi",
     shell:
         """
         freebayes --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.50 --min-base-quality 20 -f {input[1]} {input[0]} > {output[0]}
