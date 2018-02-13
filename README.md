@@ -1,11 +1,5 @@
 # DEPENDENCIES
-  Miniconda (https:/conda.io/miniconda.html) preferably version with python 3.6
-
-  Snakemake (http:/snakemake.readthedocs.io/en/latest/) 4.6.0 and up (install with conda after having installed Miniconda)
-  
-  
-  Apply changes listed in `documents/notes.org`
-  
+  Docker  
 
 # GENERAL USE
 
