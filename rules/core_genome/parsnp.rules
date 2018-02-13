@@ -10,7 +10,7 @@ rule calculate_core_genome_parsnp:
     shell:
         """
         echo "begining" > {output[0]}
-        cmd="parsnp -r ! -c -d $(dirname {input[1]})/all_complete_genomes/ -o $(dirname {output[0]})" 
+        cmd="parsnp -r ! -c -d $(dirname {input[0]})/all_complete_genomes/ -o $(dirname {output[0]})" 
         echo ${{cmd}}
         ${{cmd}} &
         pid=$!
