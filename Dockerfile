@@ -4,7 +4,7 @@ RUN /bin/bash -c "conda config --add channels defaults"
 RUN /bin/bash -c "conda config --add channels conda-forge"
 RUN /bin/bash -c "conda config --add channels bioconda"
 
-RUN useradd -ms /bin/bash pipeline
+RUN useradd -ms /bin/bash pipeline_user
 
 RUN apt-get install -y fontconfig
 
@@ -18,6 +18,8 @@ ENV conda_folder=/opt/conda/envs/
 
 ENV pipeline_folder=/snakemake_pipeline/
 
+ENV main=/home/pipeline_user/
+
 WORKDIR /usr/local/bin
 
 RUN wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz
@@ -30,9 +32,9 @@ RUN rm -rf Parsnp-Linux64-v1.2
 	
 RUN rm parsnp-Linux64-v1.2.tar.gz*
 
-RUN mkdir -p /data/links/
+RUN mkdir -p ${main}/links/
 
-WORKDIR /data/ 
+WORKDIR  ${main}
 
 RUN cp ${pipeline_folder}/*.tsv . 
 
