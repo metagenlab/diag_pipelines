@@ -100,6 +100,8 @@ rule agregate_distances_from_merged_pairs_of_vcf:
         """
 
 rule extract_alignment_for_phylogeny:
+    conda:
+        "env/vt-bcftools.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz",
     output:

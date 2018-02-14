@@ -8,21 +8,17 @@ RUN useradd -r -u 1080 pipeline_user
 
 RUN apt-get install -y fontconfig
 
-RUN git clone https://github.com/metagenlab/diag_pipelines /snakemake_pipeline/
+ENV main=/home/pipeline_user/
+
+ENV pipeline_folder=${main}/snakemake_pipeline/
+
+RUN git clone https://github.com/metagenlab/diag_pipelines $pipeline_folder
 
 RUN conda install snakemake=4.6.0=py36_0
 
-RUN mkdir /opt/conda/envs/
+RUN mkdir -p ${main}/data/links
 
-ENV conda_folder=/opt/conda/envs/
-
-ENV pipeline_folder=/snakemake_pipeline/
-
-ENV main=/home/pipeline_user/
-
-WORKDIR ${main}
-
-RUN mkdir -p links/
+WORKDIR ${main}/data/
 
 RUN cp ${pipeline_folder}/*.tsv . 
 
@@ -35,6 +31,10 @@ RUN echo '' > links/Staaur-10_S10_L001_R2.fastq.gz
 RUN mkdir -p core_genome/parsnp
 
 RUN echo '' > core_genome/parsnp/parsnp.xmfa
+
+RUN mkdir /opt/conda/envs/
+
+ENV conda_folder=/opt/conda/envs/
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/ring_trial/target_files.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml
 
