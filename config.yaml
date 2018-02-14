@@ -1,11 +1,11 @@
-absolute_path_of_pipeline_folder: /snakemake_pipeline/
+absolute_path_of_pipeline_folder: /home/pipeline_user/snakemake_pipeline/
 
 # Currated genes associated with resistance phenotype
 # Can be a file as defined in mycobacterium/db/resistance_genes.csv or simply a list with the names of the genes
-currated_genes: /snakemake_pipeline/data/mycobacterium/db/resistance_genes.csv
+currated_genes: /home/pipeline_user/snakemake_pipeline/data/mycobacterium/db/resistance_genes.csv
 
 #File listing currated genes for virulence factors, with uniprot accession number:
-virulence_factors: /snakemake_pipeline/data/staph/db/virulence_factors.tsv
+virulence_factors: /home/pipeline_user/snakemake_pipeline/data/staph/db/virulence_factors.tsv
 
 #Ontology files from the card database. Should be changed to automatically fetch the files from the db
 
