@@ -20,21 +20,9 @@ ENV pipeline_folder=/snakemake_pipeline/
 
 ENV main=/home/pipeline_user/
 
-WORKDIR /usr/local/bin
-
-RUN wget https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz
-
-RUN tar -xf parsnp-Linux64-v1.2.tar.gz
-
-RUN mv Parsnp-Linux64-v1.2/parsnp parsnp
-
-RUN rm -rf Parsnp-Linux64-v1.2
-	
-RUN rm parsnp-Linux64-v1.2.tar.gz*
-
-RUN mkdir -p ${main}/links/
-
 WORKDIR ${main}
+
+RUN mkdir -p links/
 
 RUN cp ${pipeline_folder}/*.tsv . 
 
@@ -44,7 +32,11 @@ RUN echo '' > links/Staaur-10_S10_L001_R1.fastq.gz
 
 RUN echo '' > links/Staaur-10_S10_L001_R2.fastq.gz
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/general_workflow.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml
+RUN mkdir -p core_genome/parsnp
+
+RUN echo '' > core_genome/parsnp/parsnp.xmfa
+
+RUN snakemake --snakefile ${pipeline_folder}/workflows/ring_trial/target_files.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml
 
 RUN patch /opt/conda/envs/356da27d/lib/python3.6/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
@@ -53,5 +45,7 @@ RUN rm links/*
 RUN rm config.yaml
 
 RUN rm *.tsv
+
+RUN rm core_genome/parsnp/parsnp.xmfa
 
 USER pipeline_user
