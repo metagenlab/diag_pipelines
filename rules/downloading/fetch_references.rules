@@ -59,29 +59,6 @@ rule get_complete_genomes_urls:
         esearch -db assembly -query "{params.spec}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -if FtpPath_RefSeq -element Id FtpPath_RefSeq > {output[0]}
         """         
         
-rule download_all_complete_genomes_fasta:
-    conda:
-        "env/entrez-direct.yaml"
-    input:
-        "references/url_complete_genomes.txt"
-    output:
-        "references/all_complete_genomes_log.txt"
-    shell:
-        """
-        mkdir -p $(dirname {output[0]})/all_complete_genomes/
-        while read id ftp; do
-            echo ${{id}}
-            nucl_id=$(echo ${{ftp}} |  sed  "s/\(\/GCF_.*\)/\\1\\1_assembly_report.txt/" | xargs wget -qO- | sed '/^#.*/ d'  | awk ' $4 == "Chromosome" {{print $7}}')
-            echo ${{nucl_id}}
-            efetch -db nucleotide -id ${{nucl_id}} -format fasta > references/all_complete_genomes/${{id}}_genome.fasta
-        done < "{input[0]}"
-        echo 'ok' > {output[0]}
-        """
-
-        #sed "s/-/_/g" because parsnp does not like "-" in sequence headers
-
-
-        
 rule get_complete_genomes_subvalues:
     params:
         id = config["taxid"],
@@ -94,3 +71,5 @@ rule get_complete_genomes_subvalues:
         """
         esearch -db assembly -query "{params.spec}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -if FtpPath_RefSeq -element Id Sub_value > {output[0]}
         """         
+
+

@@ -1,7 +1,0 @@
-rule fetch_mash_sketch:
-    output:
-        "references/mash_sketch.msh"
-    shell:
-        """
-        wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > {output}
-        """

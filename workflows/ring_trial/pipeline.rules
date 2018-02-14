@@ -81,7 +81,7 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
     all_combined_1.append(i)
     all_combined_2.append(j)
 
-prefix = "../rules/"
+prefix = "../../rules/"
     
 include:
     prefix + "read_manipulation/get_reads.rules"
@@ -93,16 +93,10 @@ include:
     prefix + "downloading/fetch_references.rules"
     
 include:
-    prefix + "downloading/fetch_software.rules"
-
-include:
     prefix + "downloading/fetch_virulence_factors.rules"
 
 include:
-    prefix + "core_genome/parsnp.rules"
-
-include:
-    prefix + "core_genome/ani.rules"
+    prefix + "core_genome/bed_creation.rules"
     
 include:
     prefix + "quality/read_trimming.rules"
@@ -180,23 +174,3 @@ include:
     prefix + "report_generation/multiqc.rules"
 
     
-    
-rule all:
-    input:
-        "typing/freebayes/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/gatk/core_parsnp/34528/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/freebayes/core_parsnp/1241621/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/gatk/core_parsnp/1241621/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/freebayes/core_parsnp/1455771/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/gatk/core_parsnp/1455771/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/freebayes/core_parsnp/692481/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/gatk/core_parsnp/692481/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/freebayes/core_parsnp/716441/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "typing/gatk/core_parsnp/716441/bwa/distances_from_merged_pairs_of_vcf_mst.pdf",
-        "virulence_summary.xlsx",
-        "resistance_summary.xlsx",
-        "phylogeny/freebayes/core_parsnp/34528/bwa/phylogeny.svg",
-        "phylogeny/freebayes/core_parsnp/1241621/bwa/phylogeny.svg",
-        "phylogeny/freebayes/core_parsnp/1455771/bwa/phylogeny.svg",
-        "phylogeny/freebayes/core_parsnp/692481/bwa/phylogeny.svg",
-        "phylogeny/freebayes/core_parsnp/716441/bwa/phylogeny.svg",
