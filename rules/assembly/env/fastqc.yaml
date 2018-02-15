@@ -1,6 +1,5 @@
-name: fastqc
 channels:
  - bioconda
  - conda-forge
 dependencies:
- - fastqc = 0.11.5
+ - fastqc = 0.11.5=pl5.22.0_3

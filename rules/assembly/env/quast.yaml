@@ -1,7 +1,6 @@
-name: quast
 channels:
  - bioconda
  - conda-forge
 dependencies:
- - quast = 4.5
+ - quast = 4.5=boost1.61_1
 
