@@ -100,6 +100,18 @@ include:
     
 include:
     prefix + "quality/read_trimming.rules"
+
+include:
+    prefix + "quality/quality_assembly.rules"
+
+include:
+    prefix + "quality/quality_reads.rules"
+
+include:
+    prefix + "quality/quality_mapping_to_reference.rules"
+        
+include:
+    prefix + "quality/contamination.rules"
     
 include:
     prefix + "mapping/bwa_to_self_assembly.rules"
@@ -135,20 +147,11 @@ include:
     prefix + "annotation/virulence.rules"
     
 include:
-    prefix + "quality/quality_assembly.rules"
-
-include:
-    prefix + "quality/quality_reads.rules"
-
-include:
-    prefix + "quality/quality_mapping_to_reference.rules"
-        
-include:
-    prefix + "quality/contamination.rules"
-    
-include:
     prefix + "typing/mlst.rules"
 
+include:
+    prefix + "typing/snp_distance.rules"
+    
 include:
     prefix + "vcf_manipulation/filtering.rules"
     
@@ -161,9 +164,6 @@ include:
 include:
     prefix + "vcf_manipulation/calculate_differences.rules"
 
-include:
-    prefix + "typing/snp_distance.rules"
-    
 include:
     prefix + "phylogeny/raxml.rules"
 
