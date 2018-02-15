@@ -1,6 +1,6 @@
 rule get_sra:
     conda:
-        "env/sra-tools.yaml"
+        "../../envs/sra-tools.yaml"
     output:
         temp("links/./{sample}_1.fastq.gz"),
         temp("links/./{sample}_2.fastq.gz")

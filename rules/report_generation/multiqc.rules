@@ -57,7 +57,7 @@ rule multiqc_all_to_self_genome:
     params:
         configfile = multiqc_configfile
     conda:
-        "env/multiqc.yaml"
+        "../../envs/multiqc.yaml"
     input:
         expand("strains/{sample}/multiqc/self_genome/log.txt", sample = read_naming.keys())
     output:
@@ -87,7 +87,7 @@ rule multiqc_all_to_reference:
     params:
         configfile = multiqc_configfile
     conda:
-        "env/multiqc.yaml"
+        "../../envs/multiqc.yaml"
     input:
         expand("strains/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = read_naming.keys())
     output:

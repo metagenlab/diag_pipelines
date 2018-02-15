@@ -1,6 +1,6 @@
 rule get_reference_or_representative_or_complete_genome_urls:
     conda:
-        "env/entrez-direct.yaml"
+        "../../envs/entrez-direct.yaml"
     output:
         "references/{ref}_url.txt"
     params:
@@ -21,7 +21,7 @@ rule get_reference_or_representative_or_complete_genome_urls:
 
 rule download_gbks_from_url:
     conda:
-        "env/entrez-direct.yaml"
+        "../../envs/entrez-direct.yaml"
     input:
         "references/url_complete_genomes.txt"
     output:
@@ -35,7 +35,7 @@ rule download_gbks_from_url:
 
 rule download_fasta_from_url:
     conda:
-        "env/entrez-direct.yaml"
+        "../../envs/entrez-direct.yaml"
     input:
         "references/url_complete_genomes.txt"
     output:
@@ -51,7 +51,7 @@ rule get_complete_genomes_urls:
         id = config["taxid"],
         spec= config["species"]
     conda:
-        "env/entrez-direct.yaml"
+        "../../envs/entrez-direct.yaml"
     output:
         "references/url_complete_genomes.txt"
     shell:
@@ -64,7 +64,7 @@ rule get_complete_genomes_subvalues:
         id = config["taxid"],
         spec= config["species"]
     conda:
-        "env/entrez-direct.yaml"
+        "../../envs/entrez-direct.yaml"
     output:
         "references/complete_genomes_subvalues.tsv"
     shell:
@@ -84,7 +84,7 @@ rule fetch_mash_sketch:
 
 rule download_all_complete_genomes_fasta:
     conda:
-        "env/entrez-direct.yaml"
+        "../../envs/entrez-direct.yaml"
     input:
         "references/url_complete_genomes.txt"
     output:

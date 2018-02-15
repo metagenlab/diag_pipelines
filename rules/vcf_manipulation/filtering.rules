@@ -1,6 +1,6 @@
 rule vt_decompose_blocksub:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/snps.vcf.gz",
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/snps.vcf.gz.tbi",
@@ -15,7 +15,7 @@ rule vt_decompose_blocksub:
 
 rule coverage_filtering:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf.gz",    
         "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt",
@@ -32,7 +32,7 @@ rule coverage_filtering:
 
 rule indel_filtering:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed.vcf.gz",
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed.vcf.gz.tbi",
@@ -47,7 +47,7 @@ rule indel_filtering:
 
 rule filter_core_genome_parsnp:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "core_genome/{ref}_core_parsnp_sorted.bed",
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered_mnp_decomposed.vcf.gz",
@@ -62,7 +62,7 @@ rule filter_core_genome_parsnp:
 
 rule exclude_very_low_coverage_regions:
     conda:
-        "env/bedtools.yaml"
+        "../../envs/bedtools.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf.gz",
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/beds/{sample1}_{sample2}_low_coverage_regions.bed",        

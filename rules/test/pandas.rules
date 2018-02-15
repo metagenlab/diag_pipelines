@@ -1,0 +1,10 @@
+rule pandas:
+    conda:
+        "pandas.yaml"
+    output:
+        "panda_version.txt"
+    script:
+        "pandas.py"
+
+
+        

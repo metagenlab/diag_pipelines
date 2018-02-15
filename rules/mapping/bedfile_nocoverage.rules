@@ -1,6 +1,6 @@
 rule get_total_genome_coverage:
     conda:
-        "env/bedtools.yaml"
+        "../../envs/bedtools.yaml"
     input:
         "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
     output:
@@ -25,7 +25,7 @@ rule get_really_low_coverage_regions:
 
 rule intersect_filter_genome_coverage:
     conda:
-        "env/bedtools.yaml"
+        "../../envs/bedtools.yaml"
     input:
         "core_genome/{ref}_core_parsnp_sorted.bed",
         "strains/{sample}/mapping/{mapping_method}/{ref}/low_genome_coverage.bed"
@@ -43,7 +43,7 @@ rule intersect_filter_genome_coverage:
         
 rule union_bedtools_of_pair_of_samples:
     conda:
-        "env/bedtools.yaml"
+        "../../envs/bedtools.yaml"
     input:
         "strains/{sample1}/mapping/{mapping_method}/{ref}/low_genome_coverage_intersect_core_parsnp.bed",
         "strains/{sample2}/mapping/{mapping_method}/{ref}/low_genome_coverage_intersect_core_parsnp.bed",

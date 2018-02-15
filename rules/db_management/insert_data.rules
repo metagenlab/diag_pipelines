@@ -1,6 +1,6 @@
 rule load_rgi_results_into_db:
     conda:
-        "env/mysql-pronto.yaml"
+        "../../envs/mysql-pronto.yaml"
     input:
         ancient("strains/{sample}/resistance/rgi.tsv")
     output:
@@ -18,7 +18,7 @@ rule load_rgi_results_into_db:
 
 rule load_abricate_results_into_db:
     conda:
-        "env/python-mysql.yaml"
+        "../../envs/python-mysql.yaml"
     input:
         "strains/{sample}/resistance/abricate.txt",
     output:
@@ -34,7 +34,7 @@ rule load_abricate_results_into_db:
         
 rule load_mykrobe_into_db:
     conda:
-        "env/python-mysql.yaml"
+        "../../envs/python-mysql.yaml"
     input:
         "strains/{sample}/resistance/mykrobe.tsv"
     output:

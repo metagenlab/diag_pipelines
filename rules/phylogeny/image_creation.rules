@@ -3,7 +3,7 @@ rule convert_phylogeny_to_image:
     params:
         size=config["phylogeny_image_size"]
     conda:
-        "env/newick-utils.yaml"
+        "../../envs/newick-utils.yaml"
     input:
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw",
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",

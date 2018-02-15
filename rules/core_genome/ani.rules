@@ -1,6 +1,6 @@
 rule calculate_ani_on_downloaded_references:
     conda:
-        "env/pyani.yaml"
+        "../../envs/pyani.yaml"
     input:
         "references/all_complete_genomes_log.txt"
     output:

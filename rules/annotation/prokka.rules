@@ -1,6 +1,6 @@
 rule prokka:
     conda:
-        "env/prokka.yaml"
+        "../../envs/prokka.yaml"
     input:
         "strains/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
     output:
@@ -19,7 +19,7 @@ rule prokka:
 
 rule prokka_temporary_file:
     conda:
-        "env/prokka.yaml"
+        "../../envs/prokka.yaml"
     input:
         "strains/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
     output:
@@ -33,7 +33,7 @@ rule prokka_temporary_file:
 
 rule hashing_genes:
     conda:
-        "env/biopython.yaml"
+        "../../envs/biopython.yaml"
     input:
         "strains/{sample}/annotation/{sample}.ffn"
     output:
@@ -44,7 +44,7 @@ rule hashing_genes:
 
 rule create_database_from_protein_sequences:
     conda:
-        "env/blast.yaml"
+        "../../envs/blast.yaml"
     input:
         "strains/{sample}/annotation/{sample}.faa",
     output:
@@ -57,7 +57,7 @@ rule create_database_from_protein_sequences:
 
 rule create_database_from_contig_sequences:
     conda:
-        "env/blast.yaml"
+        "../../envs/blast.yaml"
     input:
         "strains/{sample}/annotation/{sample}.fsa",
     output:

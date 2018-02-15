@@ -1,6 +1,6 @@
 rule merge_vcf_pairs:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
         "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
@@ -19,7 +19,7 @@ rule merge_vcf_pairs:
 
 rule merge_all_vcfs_no_indels:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         vcfs=expand("strains/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/{sample}.vcf.gz", sample=read_naming.keys())
     output:

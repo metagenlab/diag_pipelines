@@ -1,6 +1,6 @@
 rule calculate_statistics_from_vcf_to_reference:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz",
     output:
@@ -25,7 +25,7 @@ rule calculate_unknowns_from_vcf_to_reference:
 
 rule calculate_distances_from_merged_pairs_of_vcf:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_-_{sample2}.vcf.gz",
     output:
@@ -38,7 +38,7 @@ rule calculate_distances_from_merged_pairs_of_vcf:
 
 rule calculate_unknown_positions_from_merged_pairs_of_vcf:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_-_{sample2}.vcf",
     output:
@@ -51,7 +51,7 @@ rule calculate_unknown_positions_from_merged_pairs_of_vcf:
         
 rule calculate_statistics_from_pairs_of_vcf:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
         "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
@@ -65,7 +65,7 @@ rule calculate_statistics_from_pairs_of_vcf:
         
 rule agregate_unknowns_from_merged_pairs_of_vcf:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/vcfs/{sample1}_-_{sample2}_unknown_{{filter}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats_unknown_{{filter}}.txt", sample=read_naming.keys())
@@ -79,7 +79,7 @@ rule agregate_unknowns_from_merged_pairs_of_vcf:
         
 rule agregate_distances_from_merged_pairs_of_vcf:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/vcfs/{sample1}_-_{sample2}_merged_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
@@ -101,7 +101,7 @@ rule agregate_distances_from_merged_pairs_of_vcf:
 
 rule extract_alignment_for_phylogeny:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz",
     output:

@@ -1,6 +1,6 @@
 rule qualimap_mapping:
     conda:
-        "env/qualimap.yaml"
+        "../../envs/qualimap.yaml"
     input:
         "strains/{sample}/mapping/bwa/{sample}.bam"
     output:
@@ -25,7 +25,7 @@ rule extract_contig_coverage:
         
 rule quast:
     conda:
-        "env/quast.yaml"
+        "../../envs/quast.yaml"
     input:
         "strains/{sample}/annotation/{sample}.fsa"
     output:

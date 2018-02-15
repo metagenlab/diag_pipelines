@@ -1,6 +1,6 @@
 rule mapping_to_reference_with_bwa:
     conda:
-        "env/bwa-samtools.yaml"
+        "../../envs/bwa-samtools.yaml"
     input:
         "strains/{sample}/reads/trimmed/R1_paired.fastq",
         "strains/{sample}/reads/trimmed/R2_paired.fastq",        
@@ -24,7 +24,7 @@ rule mapping_to_reference_with_bwa:
 
 rule filter_reads_after_bwa:
     conda:
-        "env/bwa-samtools.yaml"
+        "../../envs/bwa-samtools.yaml"
     input:
         "strains/{sample}/mapping/bwa/{ref}/{sample}.bam",
         "strains/{sample}/mapping/bwa/{ref}/{sample}.bam.bai",
@@ -45,7 +45,7 @@ rule filter_reads_after_bwa:
         
 rule remove_duplicates_from_mapping:
     conda:
-        "../snp_calling/env/gatk.yaml"
+        "../../envs/gatk.yaml"
     input:
         "strains/{sample}/mapping/bwa/{ref}/filtered.bam",
         "strains/{sample}/mapping/bwa/{ref}/filtered.bam.bai",
@@ -64,7 +64,7 @@ rule remove_duplicates_from_mapping:
 
 rule index_reference:
     conda:
-        "env/bwa-samtools.yaml"
+        "../../envs/bwa-samtools.yaml"
     input:
         "references/{ref}/genome.fasta"
     output:
@@ -79,7 +79,7 @@ rule index_reference:
 
 rule get_ninety_percent_interval_coverage:
     conda:
-        "env/r-base.yaml"
+        "../../envs/r-base.yaml"
     input:
         "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/raw_data_qualimapReport/coverage_histogram.txt"
     output:

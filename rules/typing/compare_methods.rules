@@ -1,6 +1,6 @@
 rule flatten_distance_matrix:
     conda:
-        "env/R.yaml"
+        "../../envs/r-base.yaml"
     input:
         "alignments/distance_{ref}.txt"
     output:
@@ -11,7 +11,7 @@ rule flatten_distance_matrix:
     
 rule merge_flat_distance_files:
     conda:
-        "env/R.yaml"
+        "../../envs/r-base.yaml"
     input: lambda wildcards: expand("alignments/flat_distance_{ref}.txt", ref=wildcards.refs.split("_and_"))
     output:
        "alignments/comparison_{refs}.pdf"

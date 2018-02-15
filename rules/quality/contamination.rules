@@ -1,6 +1,6 @@
 rule blast_low_coverage_contigs:
     conda:
-        "env/blast.yaml"
+        "../../envs/blast.yaml"
     input:
         "strains/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta"
     output:
@@ -16,7 +16,7 @@ rule blast_low_coverage_contigs:
 
 rule fetch_taxonomy_from_blast_results:
     conda:
-        "env/blast.yaml"
+        "../../envs/blast.yaml"
     input:
         "strains/{sample}/contamination/blast_results.tsv"
     output:
@@ -31,7 +31,7 @@ rule fetch_taxonomy_from_blast_results:
 
 rule mash_paired_reads:
     conda:
-        "env/mash.yaml"
+        "../../envs/mash.yaml"
     input:
         "references/mash_sketch.msh",
         "reads/raw/{sample}_R1.fastq.gz",
@@ -46,7 +46,7 @@ rule mash_paired_reads:
 
 rule get_taxonomy_from_mash_results:
     conda:
-        "env/entrez-direct.yaml"
+        "../../envs/entrez-direct.yaml"
     input:
         "strains/{sample}/contamination/mash/distances.tsv"
     output:

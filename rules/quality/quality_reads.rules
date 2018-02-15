@@ -1,6 +1,6 @@
 rule fastqc_single:
     conda:
-        "env/fastqc.yaml"
+        "../../envs/fastqc.yaml"
     input:
         "strains/{sample}/reads/trimmed/single.fastq",
     output:
@@ -12,7 +12,7 @@ rule fastqc_single:
         
 rule fastqc_paired:
     conda:
-        "env/fastqc.yaml"
+        "../../envs/fastqc.yaml"
     input:
         "strains/{sample}/reads/trimmed/R1_paired.fastq",
         "strains/{sample}/reads/trimmed/R2_paired.fastq"

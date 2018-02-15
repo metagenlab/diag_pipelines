@@ -1,6 +1,6 @@
 rule rgi:
     conda:
-        "env/rgi.yaml"
+        "../../envs/rgi.yaml"
     input:
         "strains/{sample}/annotation/{sample}.fsa"
     output:
@@ -13,7 +13,7 @@ rule rgi:
 
 rule rgi_json_to_tsv:
     conda:
-        "env/rgi.yaml"
+        "../../envs/rgi.yaml"
     input:
         "strains/{sample}/resistance/rgi.json"
     output:
@@ -27,7 +27,7 @@ rule rgi_json_to_tsv:
         
 rule abricate:
     conda:
-        "env/abricate.yaml"
+        "../../envs/abricate.yaml"
     input:
         "strains/{sample}/annotation/{sample}.gbk"
     output:
@@ -42,7 +42,7 @@ rule abricate:
 
 rule mykrobe_paired:
     conda:
-        "env/mykrobe.yaml"
+        "../../envs/mykrobe.yaml"
     input:
         "strains/{sample}/reads/trimmed/R1_paired.fastq",
         "strains/{sample}/reads/trimmed/R2_paired.fastq",
@@ -58,7 +58,7 @@ rule mykrobe_paired:
         
 rule mykrobe_single:
     conda:
-        "env/mykrobe.yaml"
+        "../../envs/mykrobe.yaml"
     input:
         "reads/raw/{sample}_single.fastq.gz",
     output:
@@ -87,7 +87,7 @@ rule summary_csv_excel_file:
         ontology_ro = ontology_file_ro,
         currated_genes = genes
     conda:
-        "env/pandas-openpyxl-pronto-xlrd.yaml"
+        "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         expand("strains/{{sample}}/resistance/{software}.tsv", software = config["resistance_prediction_softwares"])
     output:
@@ -99,7 +99,7 @@ rule summary_csv_excel_file:
 
 rule write_congruent_results_fasta:
     conda:
-        "env/pandas-openpyxl-pronto-xlrd.yaml"
+        "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         "strains/{sample}/resistance/summary.tsv",
         "strains/{sample}/resistance/rgi.tsv",
@@ -112,7 +112,7 @@ rule write_congruent_results_fasta:
 
 rule merge_summary_xlsx_files:
     conda:
-        "env/pandas-openpyxl-pronto-xlrd.yaml"
+        "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         xlsx=expand("strains/{sample}/resistance/summary.xlsx", sample = read_naming.keys())
     output:

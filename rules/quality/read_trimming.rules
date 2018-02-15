@@ -1,6 +1,6 @@
 rule trimmomatic_PE:
     conda:
-        "env/trim.yaml"
+        "../../envs/trimmomatic.yaml"
     input:
         ancient("reads/raw/{sample}_R1.fastq.gz"),
         ancient("reads/raw/{sample}_R2.fastq.gz")
@@ -28,7 +28,7 @@ rule trimmomatic_PE:
 
 rule trimmomatic_SE:
     conda:
-        "env/trim.yaml"
+        "../../envs/trimmomatic.yaml"
     input:
         "reads/raw/{sample}_single.fastq.gz"
     params:

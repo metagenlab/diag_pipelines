@@ -1,6 +1,6 @@
 rule call_variants_freebayes_vcf:
     conda:
-        "env/freebayes.yaml"
+        "../../envs/freebayes.yaml"
     input:
         "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome.fasta",

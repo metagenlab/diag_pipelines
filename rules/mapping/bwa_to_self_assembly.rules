@@ -1,6 +1,6 @@
 rule align_paired_reads_to_assembled_genome:
     conda:
-        "env/bwa-samtools.yaml"
+        "../../envs/bwa-samtools.yaml"
     input:
         "strains/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
         "reads/raw/{sample}_R1.fastq.gz",
@@ -20,7 +20,7 @@ rule align_paired_reads_to_assembled_genome:
 
 rule align_single_reads_to_assembled_genome:
     conda:
-        "env/bwa-samtools.yaml"
+        "../../envs/bwa-samtools.yaml"
     input:
         "strains/{sample}/assembly/spades/contigs.fasta.fsa",
         "reads/raw/{sample}_single.fastq.gz"

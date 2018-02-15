@@ -1,7 +1,7 @@
 
 rule extract_core_genome_from_ref:
     conda:
-        "env/bedtools.yaml"
+        "../../envs/bedtools.yaml"
     input:
         "core_genome/parsnp/parsnp.xmfa",
         "references/{ref}/genome.fasta"

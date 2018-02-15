@@ -1,6 +1,6 @@
 rule fetch_resistance_from_db:
     conda:
-        "env/python-mysql.yaml"
+        "../../envs/python-mysql.yaml"
     output:
         "resistance/phenotype_summary.tsv"
     params:
@@ -17,7 +17,7 @@ rule fetch_mutations_from_db:
         "strains/{sample}/logs/mykrobe_db.txt",
         "strains/{sample}/logs/abricate_db.txt"
     conda:
-        "env/python-mysql-pandas.yaml"
+        "../../envs/python-mysql-pandas.yaml"
     output:
         "strains/{sample}/resistance/{sample}_summary.tsv",
     params:
@@ -30,7 +30,7 @@ rule fetch_mutations_from_db:
 
 rule fetch_resistance_genes_from_db:
     conda:
-        "env/python-mysql.yaml"
+        "../../envs/python-mysql.yaml"
     output:
         "strains/{sample}/resistance/genes_summary.tsv"
     params:

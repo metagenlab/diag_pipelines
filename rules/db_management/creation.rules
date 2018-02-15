@@ -1,6 +1,6 @@
 rule create_dbs:
     conda:
-        "env/python-mysql.yaml"
+        "../../envs/python-mysql.yaml"
     output:
         "logs/db_mysql.txt"
     params:

@@ -1,6 +1,6 @@
 rule raxml_on_alignment_to_ref:
     conda:
-        "env/raxml.yaml"
+        "../../envs/raxml.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
     output:
@@ -20,7 +20,7 @@ rule raxml_on_alignment_to_ref:
 
 rule raxml_bootstrap:
     conda:
-        "env/raxml.yaml"
+        "../../envs/raxml.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
     output:

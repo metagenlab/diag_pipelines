@@ -1,6 +1,6 @@
 rule qualimap_mapping_to_reference:
     conda:
-        "env/qualimap.yaml"
+        "../../envs/qualimap.yaml"
     input:
         "strains/{sample}/mapping/bwa/{ref}/{sample}.bam",
     output:

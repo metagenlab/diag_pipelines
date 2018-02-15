@@ -1,6 +1,6 @@
 rule create_dict_for_reference:
     conda:
-        "env/gatk.yaml"
+        "../../envs/gatk.yaml"
     input:
         "references/{ref}/genome.fasta"
     output:
@@ -15,7 +15,7 @@ rule create_dict_for_reference:
 
 rule haplotype_caller_vcf:
     conda:
-        "env/gatk.yaml"
+        "../../envs/gatk.yaml"
     input:
         "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome.fasta",
@@ -33,7 +33,7 @@ rule haplotype_caller_vcf:
         
 rule merge_haplotype_caller_vcf_files_filter_core_genome:
     conda:
-        "env/gatk.yaml"
+        "../../envs/gatk.yaml"
     input:
         bed="core_genome/{ref}_core_parsnp_sorted_withdot.bed",
         vcfs=expand("strains/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/full_genome/snps.vcf.gz", sample=read_naming.keys())
@@ -54,7 +54,7 @@ rule merge_haplotype_caller_vcf_files_filter_core_genome:
 
 rule haplotype_caller_gvcf:
     conda:
-        "env/gatk.yaml"
+        "../../envs/gatk.yaml"
     input:
         "strains/{sample}/mapping/bwa/{ref}/mapping_deduplicated.bam",
         "references/{ref}/genome.fasta",
@@ -75,7 +75,7 @@ rule haplotype_caller_gvcf:
         
 rule merge_gvcf_files:
     conda:
-        "env/gatk.yaml"
+        "../../envs/gatk.yaml"
     input:
         ref="references/{ref}/genome.fasta",
         gvcfs=expand("strains/{sample}/snps/gatk/{{ref}}/full_genome/snps.g.vcf.gz", sample=read_naming.keys())
@@ -94,7 +94,7 @@ rule merge_gvcf_files:
         
 rule extract_gvcf_files:
     conda:
-        "env/gatk.yaml"
+        "../../envs/gatk.yaml"
     input:
         "references/{ref}/genome.fasta",
         "typing/gatk_gvfcs/core_{method}/{ref}/full_genome/genomics_db/vcfheader.vcf"

@@ -1,6 +1,6 @@
 rule calculate_core_genome_parsnp:
     conda:
-        "env/inotify.yaml"
+        "../../envs/inotify.yaml"
     input:
         "references/all_complete_genomes_log.txt"
     output:

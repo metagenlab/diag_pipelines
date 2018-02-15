@@ -1,6 +1,6 @@
 rule index_vcf:
     conda:
-        "env/vt-bcftools.yaml"
+        "../../envs/vt-bcftools.yaml"
     input:
         "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{snp_name}.vcf",
     output:

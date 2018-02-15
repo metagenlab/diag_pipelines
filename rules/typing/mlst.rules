@@ -1,6 +1,6 @@
 rule mlst_samples:
     conda:
-        "env/mlst.yaml"
+        "../../envs/mlst.yaml"
     input:
         expand("strains/{sample}/annotation/{sample}.fsa", sample=read_naming.keys())
     output:
@@ -12,7 +12,7 @@ rule mlst_samples:
 
 rule mlst_all_complete_genomes_fasta:
     conda:
-        "env/mlst.yaml"
+        "../../envs/mlst.yaml"
     input:
         "references/all_complete_genomes_log.txt"
     output:
@@ -24,7 +24,7 @@ rule mlst_all_complete_genomes_fasta:
 
 rule mlst_to_excel:
     conda:
-        "env/pandas-openpyxl-xlrd.yaml"
+        "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         "typing/mlst/{file}.tsv"
     output:
