@@ -62,6 +62,8 @@ rule multiqc_all_to_self_genome:
         expand("strains/{sample}/multiqc/self_genome/log.txt", sample = read_naming.keys())
     output:
         "quality/multiqc/self_genome/multiqc_report.html"
+    log:
+        "logs/multiqc/self_genome.txt"
     shell:
         """
         multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/self_genome/ &> {log[0]}

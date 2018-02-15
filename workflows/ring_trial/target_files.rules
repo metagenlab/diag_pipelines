@@ -21,4 +21,5 @@ rule all:
         "phylogeny/freebayes/core_parsnp/1455771/bwa/phylogeny.svg",
         "phylogeny/freebayes/core_parsnp/692481/bwa/phylogeny.svg",
         "phylogeny/freebayes/core_parsnp/716441/bwa/phylogeny.svg",
+        "quality/multiqc/self_genome/multiqc_report.html",
 
