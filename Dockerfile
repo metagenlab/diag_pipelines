@@ -12,7 +12,7 @@ ENV main=/home/pipeline_user/
 
 ENV pipeline_folder=${main}/snakemake_pipeline/
 
-RUN git clone --branch v0.1.2 https://github.com/metagenlab/diag_pipelines $pipeline_folder
+RUN git clone --branch v0.1.3 https://github.com/metagenlab/diag_pipelines $pipeline_folder
 
 RUN conda install snakemake=4.6.0=py36_0
 
