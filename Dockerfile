@@ -48,4 +48,6 @@ RUN rm *.tsv
 
 RUN rm core_genome/parsnp/parsnp.xmfa
 
+RUN chown pipeline_user -R ${main}
+
 USER pipeline_user
