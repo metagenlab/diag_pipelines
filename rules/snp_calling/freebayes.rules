@@ -1,4 +1,4 @@
-rule call_variants_freebayes_vcf:
+rule call_variants_freebayes_vcf_one_sample:
     conda:
         "../../envs/freebayes.yaml"
     input:
@@ -10,4 +10,19 @@ rule call_variants_freebayes_vcf:
     shell:
         """
         freebayes --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.50 --min-base-quality 20 -f {input[1]} {input[0]} > {output[0]}
+        """
+
+    
+rule call_variants_freebayes_vcf_all_samples:
+    conda:
+        "../../envs/freebayes.yaml"
+    input:
+        bams=expand("strains/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", sample=read_naming.keys()),
+        ref="references/{ref}/genome.fasta",
+        bais=expand("strains/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bai", sample=read_naming.keys()),
+    output:
+        "typing/freebayes/core_parsnp/{ref}/{mapping_method}/all_samples.vcf"
+    shell:
+        """
+        freebayes --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.50 --min-base-quality 20 -f {input[ref]} {input[bams]} > {output[0]}
         """
