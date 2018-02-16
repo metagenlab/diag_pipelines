@@ -31,56 +31,32 @@ rule haplotype_caller_vcf:
         gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]} --bam-output {output[1]} &> {log[0]}
         """
         
-rule merge_haplotype_caller_vcf_files_filter_core_genome:
-    conda:
-        "../../envs/gatk.yaml"
-    input:
-        bed="core_genome/{ref}_core_parsnp_sorted_withdot.bed",
-        vcfs=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/full_genome/snps.vcf.gz", sample=read_naming.keys())
-    output:
-        "typing/gatk/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf",
-        "typing/gatk/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz",
-        "typing/gatk/core_parsnp/{ref}/{mapping_method}/before_validation/merged.vcf.gz.tbi",
-    shell:
-        """
-        bcftools merge {input[vcfs]} -O z > {output[0]}.tmp
-        tabix -f -p vcf {output[0]}.tmp
-        bcftools view -R {input[bed]} {output[0]}.tmp | bcftools sort -O v - > {output[0]}
-        bgzip -c {output[0]} > {output[1]}
-        tabix -f -p vcf {output[1]}
-        rm {output[0]}.tmp*
-        """
-
-
 rule haplotype_caller_gvcf:
     conda:
         "../../envs/gatk.yaml"
     input:
-        "samples/{sample}/mapping/bwa/{ref}/mapping_deduplicated.bam",
+        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome.fasta",
-        "references/{ref}/genome.dict"
+        "references/{ref}/genome.dict",
+        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
     output:
-        "samples/{sample}/snps/gatk/{ref}/full_genome/snps.g.vcf",
-        "samples/{sample}/snps/gatk/{ref}/full_genome/snps.g.vcf.gz",
-        "samples/{sample}/snps/gatk/{ref}/full_genome/snps.g.vcf.idx",
-        "samples/{sample}/snps/gatk/{ref}/full_genome/snps.g.vcf.gz.tbi",
+        "samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf",
+        "samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf.idx",
+    log:
+        logging_folder+"/samples/{sample}/logs/snps/gatk/haplotypecaller_gvcf.txt",
     shell:
         """
-        gatk-launch HaplotypeCaller -ploidy 1 --output {output[0]} --input {input[0]} --reference {input[1]} -ERC GVCF
-        bgzip -c {output[0]} > {output[1]}
-        tabix -f -p vcf {output[1]}
+        gatk-launch HaplotypeCaller -ploidy 1 --output {output[0]} --input {input[0]} --reference {input[1]} -ERC GVCF &> {log[0]}
         """
 
-
-        
 rule merge_gvcf_files:
     conda:
         "../../envs/gatk.yaml"
     input:
         ref="references/{ref}/genome.fasta",
-        gvcfs=expand("samples/{sample}/snps/gatk/{{ref}}/full_genome/snps.g.vcf.gz", sample=read_naming.keys())
+        gvcfs=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys())
     output:
-        "typing/gatk_gvcfs/core_{method}/{ref}/full_genome/genomics_db/vcfheader.vcf"
+        "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
     shell:
         """
         if [ -d $(dirname {output[0]}) ]; then
@@ -91,23 +67,23 @@ rule merge_gvcf_files:
         gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[0]}) -V ${{var}} --intervals ${{acc}}
         """
 
-        
-rule extract_gvcf_files:
+rule gatk_joint_genotyping_on_gvcf_files:
     conda:
         "../../envs/gatk.yaml"
     input:
         "references/{ref}/genome.fasta",
-        "typing/gatk_gvfcs/core_{method}/{ref}/full_genome/genomics_db/vcfheader.vcf"
+        "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
     output:
-        "typing/gatk_gvcfs/core_{method}/{ref}/full_genome/merged.vcf",
-        "typing/gatk_gvcfs/core_{method}/{ref}/full_genome/merged.vcf.gz",
-        "typing/gatk_gvcfs/core_{method}/{ref}/full_genome/merged.vcf.gz.tbi"
+        "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/merged.vcf",
     shell:
         """
         gatk-launch GenotypeGVCFs -R {input[0]} -V gendb://$(dirname {input[1]}) -O {output[0]}
-        bgzip -c {output[0]} > {output[1]}
-        tabix -f -p vcf {output[1]}
         """
+
+        
+
+        
+
     
 
         
