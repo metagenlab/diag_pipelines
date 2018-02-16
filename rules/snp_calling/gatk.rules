@@ -54,7 +54,8 @@ rule merge_gvcf_files:
         "../../envs/gatk.yaml"
     input:
         ref="references/{ref}/genome.fasta",
-        gvcfs=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys())
+        gvcfs=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
+        gvcfs_tbi=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
     output:
         "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
     shell:
