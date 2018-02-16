@@ -6,6 +6,8 @@ rule fastqc_single:
     output:
         "samples/{sample}/reads/trimmed/fastqc/single_fastqc.zip",
         "samples/{sample}/reads/trimmed/fastqc/single_fastqc.html",
+    log:
+        logging_folder+"/samples/{sample}/reads/trimmed/fastqc.txt",
     shell:
         "fastqc {input} -o $( dirname {output[0]})"
 
@@ -20,7 +22,9 @@ rule fastqc_paired:
         "samples/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.zip",
         "samples/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.zip",
         "samples/{sample}/reads/trimmed/fastqc/R1_paired_fastqc.html",
-        "samples/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html"
+        "samples/{sample}/reads/trimmed/fastqc/R2_paired_fastqc.html",
+    log:
+        logging_folder+"/samples/{sample}/reads/trimmed/fastqc.txt",
     shell:
         "fastqc {input} -o $( dirname {output[0]})"
 
@@ -31,7 +35,7 @@ rule unzip_fastqc_single:
     output:
         "samples/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
     shell:
-        "unzip -D -u {input[0]} -d $( dirname {input[0]})  && touch {output[0]}"
+        "unzip -q -D -u {input[0]} -d $( dirname {input[0]})  && touch {output[0]}"
 
     
 rule unzip_fastqc_paired:

@@ -6,14 +6,15 @@ rule align_paired_reads_to_assembled_genome:
         "samples/{sample}/reads/trimmed/R1_paired.fastq",
         "samples/{sample}/reads/trimmed/R2_paired.fastq",
     output:
-        temp("samples/{sample}/mapping/bwa/{sample}.bam")
+        temp("samples/{sample}/mapping/bwa/{sample}.bam"),
+        temp("samples/{sample}/mapping/bwa/{sample}.bam.bai"),
     log:
         logging_folder+"/samples/{sample}/logs/mapping_bwa_self.log"
     shell:
         """
-        bwa index {input[0]}
-        bwa mem -v 1 {input} -o {output[0]}.tmp &> {log}
-        samtools sort -O BAM -o {output} {output[0]}.tmp
+        bwa index {input[0]} &> {log}
+        bwa mem -v 1 {input} -o {output[0]}.tmp &>> {log}
+        samtools sort -O BAM -o {output[0]} {output[0]}.tmp
         rm {output[0]}.tmp
         samtools index {output[0]}
         """
@@ -25,12 +26,15 @@ rule align_single_reads_to_assembled_genome:
         "samples/{sample}/assembly/spades/contigs.fasta.fsa",
         "samples/{sample}/reads/trimmed/single.fastq",
     output:
-        temp("samples/{sample}/mapping/{sample}.bam")
+        temp("samples/{sample}/mapping/bwa/{sample}.bam"),
+        temp("samples/{sample}/mapping/bwa/{sample}.bam.bai"),
     log:
         logging_folder+"/samples/{sample}/logs/mapping_bwa_self.log"
     shell:
         """
-        bwa index {input[0]}
-        bwa mem -v 1 {input} | samtools sort -O BAM -o {output} - > {log}
+        bwa index {input[0]} &> {log}
+        bwa mem -v 1 {input} -o {output}.tmp &>> {log}
+        samtools sort -O BAM -o {output[0]} {output[0]}.tmp
+        rm {output[0]}.tmp
         samtools index {output[0]}
         """

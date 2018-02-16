@@ -30,6 +30,8 @@ rule quast:
         "samples/{sample}/annotation/{sample}.fsa"
     output:
         "samples/{sample}/quality/quast/report.txt"
+    log:
+        logging_folder+"/samples/{sample}/logs/assembly/quast.txt",
     shell:
         "quast.py {input[0]} -o $( dirname {output[0]})"
 
