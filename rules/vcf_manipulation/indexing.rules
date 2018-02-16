@@ -2,10 +2,10 @@ rule index_vcf:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{snp_name}.vcf",
+        "{any_vcf}.vcf",
     output:
-        temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{snp_name}.vcf.gz"),
-        temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{snp_name}.vcf.gz.tbi"),
+        temp("{any_vcf}.vcf.gz"),
+        temp("{any_vcf}.vcf.gz.tbi"),
     shell:
         """
         bgzip -c {input[0]} > {output[0]}

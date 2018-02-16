@@ -2,12 +2,12 @@ rule vt_decompose_blocksub:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/snps.vcf.gz",
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/snps.vcf.gz.tbi",
+        "{any_vcf}.vcf.gz",
+        "{any_vcf}.vcf.gz.tbi",
     output:
-        temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf"),
+        temp("{any_vcf}_mnp_decomposed.vcf"),
     log:
-        logging_folder+"/samples/{sample}/logs/snps/{snp_caller}/{ref}/{mapping_method}/vt_decompose_blocksub.txt"
+        logging_folder+"/{any_vcf}_vt_decompose_blocksub.txt"
     shell:
         """
         vt decompose_blocksub -a {input[0]} -o {output[0]} &> {log[0]}
@@ -34,14 +34,13 @@ rule indel_filtering:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed.vcf.gz",
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed.vcf.gz.tbi",
-        
+        "{any_vcf}.vcf.gz",
+        "{any_vcf}.vcf.gz.tbi",
     output:
-        temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered_mnp_decomposed.vcf"),
+        temp("{any_vcf}_indel_filtered.vcf"),
     shell:
         """
-        bcftools filter -S "." -s "indel" -e 'STRLEN(REF)!=STRLEN(ALT)' -O v {input[0]} > {output[0]}
+        bcftools filter -s "indel" -e 'STRLEN(REF)!=STRLEN(ALT)' -O v {input[0]} > {output[0]}
         """
 
 
@@ -49,29 +48,12 @@ rule filter_core_genome_parsnp:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "core_genome/{ref}_core_parsnp_sorted.bed",
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered_mnp_decomposed.vcf.gz",
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/indel_coverage_filtered_mnp_decomposed.vcf.gz.tbi",
-        
+        "{any_vcf}.vcf.gz",
+        "{any_vcf}.vcf.gz.tbi",
     output:
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf",
+        "{any_vcf}_core_filtered_{ref}.vcf",
     shell:
         """
         bcftools view -R {input[0]} {input[1]} | bcftools sort -O v - > {output[0]}
         """
 
-rule exclude_very_low_coverage_regions:
-    conda:
-        "../../envs/bedtools.yaml"
-    input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_{sample2}.vcf.gz",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/beds/{sample1}_{sample2}_low_coverage_regions.bed",        
-    output:
-        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/final_vcfs/{sample1}_{sample2}.vcf.gz"),
-        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/final_vcfs/{sample1}_{sample2}.vcf"),
-    shell:
-        """
-        bedtools intersect -header -v -a {input[0]} -b {input[1]} -wa > {output[1]}
-        bgzip -c {output[1]} > {output[0]}
-        """
-    

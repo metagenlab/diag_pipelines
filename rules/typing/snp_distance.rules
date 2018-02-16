@@ -5,7 +5,7 @@ rule distance_columns_to_matrix:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.txt",
-        "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
+#        "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
     output:
         out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.xlsx",
         out_tsv_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.tsv"
