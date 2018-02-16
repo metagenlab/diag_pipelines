@@ -8,7 +8,7 @@ rule qualimap_mapping_to_reference:
         "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/genome_results.txt",
         "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/raw_data_qualimapReport/coverage_histogram.txt",
     log:
-        "strains/{sample}/logs/mapping/bwa/{ref}/qualimap.txt"
+        logging_folder+"/strains/{sample}/logs/mapping/bwa/{ref}/qualimap.txt"
     shell:
         """
         qualimap bamqc -bam {input[0]} -outdir $(dirname {output}) > {log[0]}

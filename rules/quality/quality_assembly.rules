@@ -7,7 +7,7 @@ rule qualimap_mapping:
         "strains/{sample}/quality/qualimap/qualimapReport.html",
         "strains/{sample}/quality/qualimap/genome_results.txt",
     log:
-        "strains/{sample}/logs/assembly/qualimap.txt",
+        logging_folder+"/strains/{sample}/logs/assembly/qualimap.txt",
     shell:
         """
         qualimap bamqc -bam {input[0]} -outdir $(dirname {output}) > {log[0]}

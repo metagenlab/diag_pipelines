@@ -7,7 +7,7 @@ rule vt_decompose_blocksub:
     output:
         temp("strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf"),
     log:
-        "strains/{sample}/logs/snps/{snp_caller}/{ref}/{mapping_method}/vt_decompose_blocksub.txt"
+        logging_folder+"/strains/{sample}/logs/snps/{snp_caller}/{ref}/{mapping_method}/vt_decompose_blocksub.txt"
     shell:
         """
         vt decompose_blocksub -a {input[0]} -o {output[0]} &> {log[0]}

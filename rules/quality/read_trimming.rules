@@ -2,8 +2,8 @@ rule trimmomatic_PE:
     conda:
         "../../envs/trimmomatic.yaml"
     input:
-        "reads/raw/{sample}_R1.fastq.gz",
-        "reads/raw/{sample}_R2.fastq.gz"
+        "strains/{sample}/reads/raw/{sample}_R1.fastq.gz",
+        "strains/{sample}/reads/raw/{sample}_R2.fastq.gz"
     params:
         minlength = config["minimum_read_length"],
         minqual = config["minimum_quality_base"],
@@ -19,7 +19,7 @@ rule trimmomatic_PE:
         temp("strains/{sample}/reads/trimmed/R2_unpaired.fastq"),
         "strains/{sample}/reads/trimmed/summary.txt",
     log:
-        "strains/{sample}/logs/trimmomatic.log"
+        logging_folder+"/strains/{sample}/logs/trimmomatic.log"
     shell:
         """
         trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} CROP:{params.croplength} &> {log}
@@ -32,7 +32,7 @@ rule trimmomatic_SE:
     conda:
         "../../envs/trimmomatic.yaml"
     input:
-        "reads/raw/{sample}_single.fastq.gz"
+        "strains/{sample}/reads/raw/{sample}_single.fastq.gz"
     params:
         minlength = config["minimum_read_length"],
         minqual = config["minimum_quality_base"],
@@ -45,7 +45,7 @@ rule trimmomatic_SE:
         temp("strains/{sample}/reads/trimmed/single.fastq"),
         "strains/{sample}/reads/trimmed/summary.txt",
     log:
-        "strains/{sample}/logs/trimmomatic.log"
+        logging_folder+"/strains/{sample}/logs/trimmomatic.log"
     shell:
         """
         trimmomatic SE {input[0]} {output[0]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} CROP:{params.croplength} &> {log}

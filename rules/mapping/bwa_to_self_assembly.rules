@@ -3,12 +3,12 @@ rule align_paired_reads_to_assembled_genome:
         "../../envs/bwa-samtools.yaml"
     input:
         "strains/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
-        "reads/raw/{sample}_R1.fastq.gz",
-        "reads/raw/{sample}_R2.fastq.gz"
+        "strains/{sample}/reads/trimmed/R1_paired.fastq",
+        "strains/{sample}/reads/trimmed/R2_paired.fastq",
     output:
         temp("strains/{sample}/mapping/bwa/{sample}.bam")
     log:
-        "strains/{sample}/logs/mapping_bwa_self.log"
+        logging_folder+"/strains/{sample}/logs/mapping_bwa_self.log"
     shell:
         """
         bwa index {input[0]}
@@ -23,11 +23,11 @@ rule align_single_reads_to_assembled_genome:
         "../../envs/bwa-samtools.yaml"
     input:
         "strains/{sample}/assembly/spades/contigs.fasta.fsa",
-        "reads/raw/{sample}_single.fastq.gz"
+        "strains/{sample}/reads/trimmed/single.fastq",
     output:
         temp("strains/{sample}/mapping/{sample}.bam")
     log:
-        "strains/{sample}/logs/mapping_bwa_self.log"
+        logging_folder+"/strains/{sample}/logs/mapping_bwa_self.log"
     shell:
         """
         bwa index {input[0]}

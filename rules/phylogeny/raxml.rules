@@ -6,7 +6,7 @@ rule raxml_on_alignment_to_ref:
     output:
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw"
     log:
-        "logs/phylogeny/RAxML_log.{ref}"
+        logging_folder+"/logs/phylogeny/RAxML_log.{ref}"
     shell:
         """
         if [ -d $(dirname {output[0]}) ];
@@ -26,7 +26,7 @@ rule raxml_bootstrap:
     output:
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw"
     log:
-        "logs/phylogeny/RAxML_log.{ref}_boot"
+        logging_folder+"/logs/phylogeny/RAxML_log.{ref}_boot"
     shell:
         """
         if [ -d $(dirname {output[0]}) ];

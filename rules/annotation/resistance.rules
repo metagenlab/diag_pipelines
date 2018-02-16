@@ -33,7 +33,7 @@ rule abricate:
     output:
         "strains/{sample}/resistance/abricate.txt"
     log:
-        "strains/{sample}/logs/abricate.txt"
+        logging_folder+"/strains/{sample}/logs/abricate.txt"
     shell:
         """
         abricate --nopath --db resfinder {input[0]} 2> {log} 1> {output[0]} 
@@ -60,7 +60,7 @@ rule mykrobe_single:
     conda:
         "../../envs/mykrobe.yaml"
     input:
-        "reads/raw/{sample}_single.fastq.gz",
+        "strains/{sample}/reads/raw/{sample}_single.fastq.gz",
     output:
         "strains/{sample}/resistance/mykrobe.json"
     params:

@@ -95,7 +95,7 @@ rule multiqc_all_to_reference:
     output:
         "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
     log:
-        "logs/quality/multiqc/mapping_to_{ref}.txt"
+        logging_folder+"/logs/quality/multiqc/mapping_to_{ref}.txt"
     shell:
         """
         multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/mapping_to_{wildcards.ref}/ &> {log[0]}

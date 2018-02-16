@@ -8,7 +8,7 @@ rule pilon_snp_calling:
     output:
         "strains/{sample}/snps/pilon/{ref}/{mapping_method}/snps.vcf.gz",
     log:
-        "strains/{sample}/logs/snps/pillon/snp_calling.txt"
+        logging_folder+"/strains/{sample}/logs/snps/pillon/snp_calling.txt"
     shell:
         """
         pilon --genome {input[1]} --frags {input[0]} --variant --outdir $(dirname {output[0]}) &> {log[0]}

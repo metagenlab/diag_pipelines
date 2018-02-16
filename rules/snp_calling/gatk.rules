@@ -6,7 +6,7 @@ rule create_dict_for_reference:
     output:
         "references/{ref}/genome.dict"
     log:
-        "logs/references/{ref}/create_dictionnary.txt"
+        logging_folder+"/logs/references/{ref}/create_dictionnary.txt"
     shell:
         """
         samtools faidx {input[0]}
@@ -25,7 +25,7 @@ rule haplotype_caller_vcf:
         "strains/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf",
         temp("strains/{sample}/mapping/{mapping_method}/{ref}/gatk-haplotypecaller.bam"),
     log:
-        "strains/{sample}/logs/snps/gatk/haplotypecaller.txt",
+        logging_folder+"/strains/{sample}/logs/snps/gatk/haplotypecaller.txt",
     shell:
         """
         gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]} --bam-output {output[1]} &> {log[0]}

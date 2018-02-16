@@ -6,7 +6,7 @@ rule calculate_core_genome_parsnp:
     output:
         "core_genome/parsnp/parsnp.xmfa"
     log:
-        "core_genome/parsnp/log.txt"
+        logging_folder+"/core_genome/parsnp/log.txt"
     shell:
         """
         echo "begining" > {output[0]}

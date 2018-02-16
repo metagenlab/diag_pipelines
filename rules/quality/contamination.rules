@@ -34,8 +34,8 @@ rule mash_paired_reads:
         "../../envs/mash.yaml"
     input:
         "references/mash_sketch.msh",
-        "reads/raw/{sample}_R1.fastq.gz",
-        "reads/raw/{sample}_R2.fastq.gz"
+        "strains/{sample}/reads/raw/{sample}_R1.fastq",
+        "strains/{sample}/reads/raw/{sample}_R2.fastq",
     output:
         "strains/{sample}/contamination/mash/distances.tsv"
     shell:
@@ -43,6 +43,20 @@ rule mash_paired_reads:
         cat {input[1]} {input[2]} | mash screen -w  {input[0]} - > {output[0]}
         """
 
+
+
+rule mash_single_reads:
+    conda:
+        "../../envs/mash.yaml"
+    input:
+        "references/mash_sketch.msh",
+        "strains/{sample}/reads/raw/single.fastq",
+    output:
+        "strains/{sample}/contamination/mash/distances.tsv"
+    shell:
+        """
+        cat {input[1]} | mash screen -w  {input[0]} - > {output[0]}
+        """
 
 rule get_taxonomy_from_mash_results:
     conda:
