@@ -17,11 +17,13 @@ rule trimmomatic_PE:
         temp("strains/{sample}/reads/trimmed/R1_unpaired.fastq"),
         "strains/{sample}/reads/trimmed/R2_paired.fastq",
         temp("strains/{sample}/reads/trimmed/R2_unpaired.fastq"),
+        "strains/{sample}/reads/trimmed/summary.txt",
     log:
         "strains/{sample}/logs/trimmomatic.log"
     shell:
         """
         trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} CROP:{params.croplength} &> {log}
+        cp {log} {output[4]}
         """        
 
 
@@ -41,9 +43,11 @@ rule trimmomatic_SE:
         adapter_removal_param3 = config["adapter_removal_param3"],
     output:
         temp("strains/{sample}/reads/trimmed/single.fastq"),
+        "strains/{sample}/reads/trimmed/summary.txt",
     log:
         "strains/{sample}/logs/trimmomatic.log"
     shell:
         """
         trimmomatic SE {input[0]} {output[0]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} CROP:{params.croplength} &> {log}
+        cp {log} {output[1]}
         """

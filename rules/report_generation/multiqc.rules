@@ -1,10 +1,10 @@
 rule get_files_for_multiqc_paired:
     input:
-        ancient("strains/{sample}/quality/qualimap/qualimapReport.html"),
-        ancient("strains/{sample}/quality/quast/report.txt"),
-        ancient("strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt"),
-        ancient("strains/{sample}/annotation/{sample}.txt"),
-        ancient("strains/{sample}/logs/trimmomatic.log"),
+        "strains/{sample}/quality/qualimap/qualimapReport.html",
+        "strains/{sample}/quality/quast/report.txt",
+        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        "strains/{sample}/annotation/{sample}.txt",
+        "strains/{sample}/reads/trimmed/summary.txt",
 #        "strains/{sample}/contamination/blast_results_taxid_species.tsv"
     output:
         "strains/{sample}/multiqc/self_genome/log.txt"
@@ -30,7 +30,7 @@ rule get_files_for_multiqc_single:
         "strains/{sample}/quality/quast/report.txt",
         "strains/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
         "strains/{sample}/annotation/{sample}.txt",
-        "strains/{sample}/logs/trimmomatic.log",
+        "strains/{sample}/reads/trimmed/summary.txt",
 #        "strains/{sample}/contamination/blast_results_taxid_species.tsv"
 
     output:
