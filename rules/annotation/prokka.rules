@@ -2,15 +2,15 @@ rule prokka:
     conda:
         "../../envs/prokka.yaml"
     input:
-        "strains/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
+        "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
     output:
-        "strains/{sample}/annotation/{sample}.log",
-        "strains/{sample}/annotation/{sample}.gff",
-        "strains/{sample}/annotation/{sample}.faa",
-        "strains/{sample}/annotation/{sample}.fsa",
-        "strains/{sample}/annotation/{sample}.txt",
-        "strains/{sample}/annotation/{sample}.gbk",
-        "strains/{sample}/annotation/{sample}.ffn"
+        "samples/{sample}/annotation/{sample}.log",
+        "samples/{sample}/annotation/{sample}.gff",
+        "samples/{sample}/annotation/{sample}.faa",
+        "samples/{sample}/annotation/{sample}.fsa",
+        "samples/{sample}/annotation/{sample}.txt",
+        "samples/{sample}/annotation/{sample}.gbk",
+        "samples/{sample}/annotation/{sample}.ffn"
     params:
         genus = lambda wildcards: species_names[wildcards.sample]["genus"],
         spec = lambda wildcards: species_names[wildcards.sample]["species"]
@@ -21,9 +21,9 @@ rule prokka_temporary_file:
     conda:
         "../../envs/prokka.yaml"
     input:
-        "strains/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
+        "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
     output:
-        "strains/{sample}/assembly/spades/temporary_annotation/{sample}.fsa"
+        "samples/{sample}/assembly/spades/temporary_annotation/{sample}.fsa"
     params:
         genus = lambda wildcards: species_names[wildcards.sample]["genus"],
         spec = lambda wildcards: species_names[wildcards.sample]["species"]
@@ -35,9 +35,9 @@ rule hashing_genes:
     conda:
         "../../envs/biopython.yaml"
     input:
-        "strains/{sample}/annotation/{sample}.ffn"
+        "samples/{sample}/annotation/{sample}.ffn"
     output:
-        "strains/{sample}/annotation/{sample}_hashes.txt"
+        "samples/{sample}/annotation/{sample}_hashes.txt"
     script:
         "scripts/hashing_genes.py"
     
@@ -46,9 +46,9 @@ rule create_database_from_protein_sequences:
     conda:
         "../../envs/blast.yaml"
     input:
-        "strains/{sample}/annotation/{sample}.faa",
+        "samples/{sample}/annotation/{sample}.faa",
     output:
-        "strains/{sample}/annotation/{sample}.faa.phr",
+        "samples/{sample}/annotation/{sample}.faa.phr",
     shell:
         """
         makeblastdb -dbtype prot -in {input[0]}
@@ -59,9 +59,9 @@ rule create_database_from_contig_sequences:
     conda:
         "../../envs/blast.yaml"
     input:
-        "strains/{sample}/annotation/{sample}.fsa",
+        "samples/{sample}/annotation/{sample}.fsa",
     output:
-        "strains/{sample}/annotation/{sample}.fsa.nhr",
+        "samples/{sample}/annotation/{sample}.fsa.nhr",
     shell:
         """
         makeblastdb -dbtype nucl -in {input[0]}

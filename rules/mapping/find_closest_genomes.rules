@@ -15,9 +15,9 @@ rule mash_dist_sample:
         "../quality/env/mash.yaml"
     input:
         "references/all_complete_genomes.msh",
-        "strains/{sample}/annotation/{sample}.fsa"
+        "samples/{sample}/annotation/{sample}.fsa"
     output:
-        "strains/{sample}/closest_genome.txt"
+        "samples/{sample}/closest_genome.txt"
     shell:
         """
         mash dist {input} | sort -gk3 | sed -n 1p | cut -f1 | sed "s/references\/all_complete_genomes\///" | sed "s/_genome\.fasta//" > {output[0]}
@@ -25,12 +25,12 @@ rule mash_dist_sample:
 
 rule get_all_closest_genomes:
     input:
-        expand("strains/{sample}/closest_genome.txt", sample=read_naming.keys())
+        expand("samples/{sample}/closest_genome.txt", sample=read_naming.keys())
     output:
         "closest_genomes.txt"
     shell:
         """
-        head {input} | sed "/^$/ d" | awk '{{ORS = (NR%2 ? FS : RS)}} 1' | sed "s/==> strains\///" | sed "s/\/closest_genome.txt <==//" | sort -k2   > {output}
+        head {input} | sed "/^$/ d" | awk '{{ORS = (NR%2 ? FS : RS)}} 1' | sed "s/==> samples\///" | sed "s/\/closest_genome.txt <==//" | sort -k2   > {output}
         """
 
         

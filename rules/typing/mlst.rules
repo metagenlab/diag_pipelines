@@ -2,7 +2,7 @@ rule mlst_samples:
     conda:
         "../../envs/mlst.yaml"
     input:
-        expand("strains/{sample}/annotation/{sample}.fsa", sample=read_naming.keys())
+        expand("samples/{sample}/annotation/{sample}.fsa", sample=read_naming.keys())
     output:
         "typing/mlst/summary.tsv"
     shell:

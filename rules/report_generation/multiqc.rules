@@ -1,13 +1,13 @@
 rule get_files_for_multiqc_paired:
     input:
-        "strains/{sample}/quality/qualimap/qualimapReport.html",
-        "strains/{sample}/quality/quast/report.txt",
-        "strains/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-        "strains/{sample}/annotation/{sample}.txt",
-        "strains/{sample}/reads/trimmed/summary.txt",
-#        "strains/{sample}/contamination/blast_results_taxid_species.tsv"
+        "samples/{sample}/quality/qualimap/qualimapReport.html",
+        "samples/{sample}/quality/quast/report.txt",
+        "samples/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        "samples/{sample}/annotation/{sample}.txt",
+        "samples/{sample}/reads/trimmed/summary.txt",
+#        "samples/{sample}/contamination/blast_results_taxid_species.tsv"
     output:
-        "strains/{sample}/multiqc/self_genome/log.txt"
+        "samples/{sample}/multiqc/self_genome/log.txt"
     shell:
         """
         mkdir -p $(dirname {output[0]})/{wildcards.sample}
@@ -26,15 +26,15 @@ rule get_files_for_multiqc_paired:
 
 rule get_files_for_multiqc_single:
     input:
-        "strains/{sample}/quality/qualimap/qualimapReport.html",
-        "strains/{sample}/quality/quast/report.txt",
-        "strains/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
-        "strains/{sample}/annotation/{sample}.txt",
-        "strains/{sample}/reads/trimmed/summary.txt",
-#        "strains/{sample}/contamination/blast_results_taxid_species.tsv"
+        "samples/{sample}/quality/qualimap/qualimapReport.html",
+        "samples/{sample}/quality/quast/report.txt",
+        "samples/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
+        "samples/{sample}/annotation/{sample}.txt",
+        "samples/{sample}/reads/trimmed/summary.txt",
+#        "samples/{sample}/contamination/blast_results_taxid_species.tsv"
 
     output:
-        "strains/{sample}/multiqc/log.txt"
+        "samples/{sample}/multiqc/log.txt"
     shell:
         """
         mkdir -p $(dirname {output[0]})/{wildcards.sample}
@@ -59,14 +59,14 @@ rule multiqc_all_to_self_genome:
     conda:
         "../../envs/multiqc.yaml"
     input:
-        expand("strains/{sample}/multiqc/self_genome/log.txt", sample = read_naming.keys())
+        expand("samples/{sample}/multiqc/self_genome/log.txt", sample = read_naming.keys())
     output:
         "quality/multiqc/self_genome/multiqc_report.html"
     log:
         "logs/multiqc/self_genome.txt"
     shell:
         """
-        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/self_genome/ &> {log[0]}
+        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) samples/*/multiqc/self_genome/ &> {log[0]}
         """
 
 
@@ -74,9 +74,9 @@ rule multiqc_all_to_self_genome:
 
 rule get_files_for_multiqc_to_reference:
     input:
-        "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html"
+        "samples/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html"
     output:
-        "strains/{sample}/multiqc/mapping_to_{ref}/log.txt"
+        "samples/{sample}/multiqc/mapping_to_{ref}/log.txt"
     shell:
         """
         mkdir -p $(dirname {output[0]})/{wildcards.sample}
@@ -91,13 +91,13 @@ rule multiqc_all_to_reference:
     conda:
         "../../envs/multiqc.yaml"
     input:
-        expand("strains/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = read_naming.keys())
+        expand("samples/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = read_naming.keys())
     output:
         "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
     log:
         logging_folder+"/logs/quality/multiqc/mapping_to_{ref}.txt"
     shell:
         """
-        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) strains/*/multiqc/mapping_to_{wildcards.ref}/ &> {log[0]}
+        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) samples/*/multiqc/mapping_to_{wildcards.ref}/ &> {log[0]}
         """
 

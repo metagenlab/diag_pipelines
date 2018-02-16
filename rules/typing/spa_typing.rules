@@ -20,10 +20,10 @@ rule get_repeats_from_ridom:
 rule blast_protein_on_annotation:
     input:
         "typing/spa_typing/references/protein_A.fasta",
-        "strains/{sample}/annotation/{sample}.faa",
-        "strains/{sample}/annotation/{sample}.faa.phr",
+        "samples/{sample}/annotation/{sample}.faa",
+        "samples/{sample}/annotation/{sample}.faa.phr",
     output:
-        "strains/{sample}/typing/spa/spa_gene.txt"
+        "samples/{sample}/typing/spa/spa_gene.txt"
     shell:
         """
         blastp -query {input[0]} -db {input[1]} -outfmt 6 | head -n 1 | cut -f2 > {output[0]}

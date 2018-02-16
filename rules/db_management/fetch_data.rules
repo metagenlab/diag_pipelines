@@ -13,13 +13,13 @@ rule fetch_resistance_from_db:
         
 rule fetch_mutations_from_db:
     input:
-        "strains/{sample}/logs/rgi_db.txt",
-        "strains/{sample}/logs/mykrobe_db.txt",
-        "strains/{sample}/logs/abricate_db.txt"
+        "samples/{sample}/logs/rgi_db.txt",
+        "samples/{sample}/logs/mykrobe_db.txt",
+        "samples/{sample}/logs/abricate_db.txt"
     conda:
         "../../envs/python-mysql-pandas.yaml"
     output:
-        "strains/{sample}/resistance/{sample}_summary.tsv",
+        "samples/{sample}/resistance/{sample}_summary.tsv",
     params:
         conf = mysql_conf_file,
         id = db_to_use,
@@ -32,7 +32,7 @@ rule fetch_resistance_genes_from_db:
     conda:
         "../../envs/python-mysql.yaml"
     output:
-        "strains/{sample}/resistance/genes_summary.tsv"
+        "samples/{sample}/resistance/genes_summary.tsv"
     params:
         conf = mysql_conf_file,
         id = db_to_use,

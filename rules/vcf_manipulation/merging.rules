@@ -2,10 +2,10 @@ rule merge_vcf_pairs:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
-        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
-        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz.tbi",
-        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz.tbi",
+        "samples/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
+        "samples/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
+        "samples/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz.tbi",
+        "samples/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz.tbi",
     output:
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_-_{sample2}.vcf.gz"),
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_-_{sample2}.vcf.gz.tbi"),
@@ -21,7 +21,7 @@ rule merge_all_vcfs_no_indels:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        vcfs=expand("strains/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/{sample}.vcf.gz", sample=read_naming.keys())
+        vcfs=expand("samples/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/{sample}.vcf.gz", sample=read_naming.keys())
     output:
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz"),
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz.tbi"),

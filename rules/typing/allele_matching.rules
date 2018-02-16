@@ -1,9 +1,9 @@
 rule blast_against_alleles:
     input:
-        "strains/{sample}/annotation/{sample}.fsa",
+        "samples/{sample}/annotation/{sample}.fsa",
         "alleles/{allele}.fasta"
     output:
-        "strains/{sample}/typing/{allele}.txt"
+        "samples/{sample}/typing/{allele}.txt"
     shell:
         """
         makeblastdb -dbtype nucl -query {input[1]}

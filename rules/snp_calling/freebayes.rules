@@ -2,11 +2,11 @@ rule call_variants_freebayes_vcf_one_sample:
     conda:
         "../../envs/freebayes.yaml"
     input:
-        "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
+        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome.fasta",
-        "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
+        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
     output:
-        "strains/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf",
+        "samples/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf",
     shell:
         """
         freebayes --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.50 --min-base-quality 20 -f {input[1]} {input[0]} > {output[0]}
@@ -17,9 +17,9 @@ rule call_variants_freebayes_vcf_all_samples:
     conda:
         "../../envs/freebayes.yaml"
     input:
-        bams=expand("strains/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", sample=read_naming.keys()),
+        bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", sample=read_naming.keys()),
         ref="references/{ref}/genome.fasta",
-        bais=expand("strains/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bai", sample=read_naming.keys()),
+        bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bai", sample=read_naming.keys()),
     output:
         "typing/freebayes/core_parsnp/{ref}/{mapping_method}/all_samples.vcf"
     shell:

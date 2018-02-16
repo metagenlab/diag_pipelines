@@ -10,9 +10,9 @@ rule split_xmfa_file:
 rule find_common_hashes:
     input:
         "references/cgmlst/all_alleles_hashes.txt",
-        "strains/{sample}/annotation/{sample}_hashes.txt"
+        "samples/{sample}/annotation/{sample}_hashes.txt"
     output:
-        "strains/{sample}/cgmlst/alleles.txt"
+        "samples/{sample}/cgmlst/alleles.txt"
     shell:
         """
         cat {input[1]} | xargs -I % grep -m 1 % {input[0]} | cut -f 1 | sed "s/_/\\t/" | sort >  {output[0]} || true

@@ -2,15 +2,15 @@ rule mapping_to_reference_with_bwa:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
-        "strains/{sample}/reads/trimmed/R1_paired.fastq",
-        "strains/{sample}/reads/trimmed/R2_paired.fastq",        
+        "samples/{sample}/reads/trimmed/R1_paired.fastq",
+        "samples/{sample}/reads/trimmed/R2_paired.fastq",        
         "references/{ref}/genome.fasta",
         "references/{ref}/genome.fasta.bwt",
     output:
-        temp("strains/{sample}/mapping/bwa/{ref}/{sample}.bam"),
-        temp("strains/{sample}/mapping/bwa/{ref}/{sample}.bam.bai"),
+        temp("samples/{sample}/mapping/bwa/{ref}/{sample}.bam"),
+        temp("samples/{sample}/mapping/bwa/{ref}/{sample}.bam.bai"),
     log:
-        logging_folder+"/strains/{sample}/logs/mapping/{ref}/bwa/log.txt"
+        logging_folder+"/samples/{sample}/logs/mapping/{ref}/bwa/log.txt"
     shell:
         """
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
@@ -26,13 +26,13 @@ rule filter_reads_after_bwa:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
-        "strains/{sample}/mapping/bwa/{ref}/{sample}.bam",
-        "strains/{sample}/mapping/bwa/{ref}/{sample}.bam.bai",
+        "samples/{sample}/mapping/bwa/{ref}/{sample}.bam",
+        "samples/{sample}/mapping/bwa/{ref}/{sample}.bam.bai",
         "references/{ref}/genome.fasta",
         "references/{ref}/genome.fasta.bwt",
     output:
-        temp("strains/{sample}/mapping/bwa/{ref}/filtered.bam"),
-        temp("strains/{sample}/mapping/bwa/{ref}/filtered.bam.bai")
+        temp("samples/{sample}/mapping/bwa/{ref}/filtered.bam"),
+        temp("samples/{sample}/mapping/bwa/{ref}/filtered.bam.bai")
     shell:
         """
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
@@ -47,14 +47,14 @@ rule remove_duplicates_from_mapping:
     conda:
         "../../envs/gatk.yaml"
     input:
-        "strains/{sample}/mapping/bwa/{ref}/filtered.bam",
-        "strains/{sample}/mapping/bwa/{ref}/filtered.bam.bai",
+        "samples/{sample}/mapping/bwa/{ref}/filtered.bam",
+        "samples/{sample}/mapping/bwa/{ref}/filtered.bam.bai",
     output:
-        temp("strains/{sample}/mapping/bwa/{ref}/deduplicated_filtered.bam"),
-        temp("strains/{sample}/mapping/bwa/{ref}/deduplicated_filtered.bai"),
+        temp("samples/{sample}/mapping/bwa/{ref}/deduplicated_filtered.bam"),
+        temp("samples/{sample}/mapping/bwa/{ref}/deduplicated_filtered.bai"),
     log:
-         logging_folder+"/strains/{sample}/mapping/bwa/{ref}/metrics_deduplicated.txt",
-         logging_folder+"/strains/{sample}/logs/mapping/bwa/{ref}/markduplicates.txt"
+         logging_folder+"/samples/{sample}/mapping/bwa/{ref}/metrics_deduplicated.txt",
+         logging_folder+"/samples/{sample}/logs/mapping/bwa/{ref}/markduplicates.txt"
     shell:
         """
         gatk-launch MarkDuplicates --REMOVE_DUPLICATES true -I {input[0]} -O {output[0]} -M {log[0]} &> {log[1]}
@@ -81,9 +81,9 @@ rule get_ninety_percent_interval_coverage:
     conda:
         "../../envs/r-base.yaml"
     input:
-        "strains/{sample}/quality/mapping/bwa/{ref}/qualimap/raw_data_qualimapReport/coverage_histogram.txt"
+        "samples/{sample}/quality/mapping/bwa/{ref}/qualimap/raw_data_qualimapReport/coverage_histogram.txt"
     output:
-        "strains/{sample}/quality/mapping/bwa/{ref}/min_cov.txt",
-        "strains/{sample}/quality/mapping/bwa/{ref}/max_cov.txt",
+        "samples/{sample}/quality/mapping/bwa/{ref}/min_cov.txt",
+        "samples/{sample}/quality/mapping/bwa/{ref}/max_cov.txt",
     script:
         "scripts/get_max_min_cov.R"

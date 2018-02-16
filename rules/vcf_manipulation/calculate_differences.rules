@@ -2,9 +2,9 @@ rule calculate_statistics_from_vcf_to_reference:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz",
+        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf.gz",
     output:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/final_stats.txt",
+        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/final_stats.txt",
     shell:
         """
         bcftools stats -f PASS {input[0]} > {output[0]}
@@ -13,9 +13,9 @@ rule calculate_statistics_from_vcf_to_reference:
         
 rule calculate_unknowns_from_vcf_to_reference:
     input:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf",
+        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/{sample}.vcf",
     output:
-        "strains/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/final_stats_unknown_{filter}.txt",
+        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/final_stats_unknown_{filter}.txt",
     shell:
         """
         diff=$(grep -v "^\#" {input[0]} | grep -c "{wildcards.filter}") || :
@@ -53,8 +53,8 @@ rule calculate_statistics_from_pairs_of_vcf:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "strains/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
-        "strains/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
+        "samples/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/{sample1}.vcf.gz",
+        "samples/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/{sample2}.vcf.gz",
     output:
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_-_{sample2}_stats.txt)")
     shell:
@@ -68,7 +68,7 @@ rule agregate_unknowns_from_merged_pairs_of_vcf:
         "../../envs/vt-bcftools.yaml"
     input:
         pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/vcfs/{sample1}_-_{sample2}_unknown_{{filter}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
-        to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats_unknown_{{filter}}.txt", sample=read_naming.keys())
+        to_ref=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats_unknown_{{filter}}.txt", sample=read_naming.keys())
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_{filter}_from_merged_pairs_of_vcf.txt"
     shell:
@@ -82,7 +82,7 @@ rule agregate_distances_from_merged_pairs_of_vcf:
         "../../envs/vt-bcftools.yaml"
     input:
         pairs=expand("typing/{{snp_caller}}/core_parsnp/{{ref}}/{{mapping_method}}/vcfs/{sample1}_-_{sample2}_merged_distance.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
-        to_ref=expand("strains/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
+        to_ref=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/final_stats.txt", sample=read_naming.keys())
     output:
         "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances_from_merged_pairs_of_vcf.txt"
     shell:
@@ -93,7 +93,7 @@ rule agregate_distances_from_merged_pairs_of_vcf:
         done
         for i in {input[to_ref]}
         do
-            id="$(echo ${{i}} | sed "s/strains\///" | sed "s/\/.*//") {wildcards.ref}"
+            id="$(echo ${{i}} | sed "s/samples\///" | sed "s/\/.*//") {wildcards.ref}"
             snps=$(grep "^SN" ${{i}} | grep "SNPs" | awk '$2 !=2 {{print $NF}}' | awk '{{count=count+$1}}END{{print count}}')
             echo ${{id}} ${{snps}} >> {output[0]}
         done

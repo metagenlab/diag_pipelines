@@ -2,13 +2,13 @@ rule pilon_snp_calling:
     conda:
         "../../envs/pilon.yaml"
     input:
-        "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
+        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome.fasta",
-        "strains/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
+        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
     output:
-        "strains/{sample}/snps/pilon/{ref}/{mapping_method}/snps.vcf.gz",
+        "samples/{sample}/snps/pilon/{ref}/{mapping_method}/snps.vcf.gz",
     log:
-        logging_folder+"/strains/{sample}/logs/snps/pillon/snp_calling.txt"
+        logging_folder+"/samples/{sample}/logs/snps/pillon/snp_calling.txt"
     shell:
         """
         pilon --genome {input[1]} --frags {input[0]} --variant --outdir $(dirname {output[0]}) &> {log[0]}

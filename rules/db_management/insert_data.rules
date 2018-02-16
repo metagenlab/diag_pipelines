@@ -2,9 +2,9 @@ rule load_rgi_results_into_db:
     conda:
         "../../envs/mysql-pronto.yaml"
     input:
-        ancient("strains/{sample}/resistance/rgi.tsv")
+        ancient("samples/{sample}/resistance/rgi.tsv")
     output:
-        "strains/{sample}/logs/rgi_db.txt"
+        "samples/{sample}/logs/rgi_db.txt"
     params:
         db = db_to_use,
         id = sample_correspondance,
@@ -20,9 +20,9 @@ rule load_abricate_results_into_db:
     conda:
         "../../envs/python-mysql.yaml"
     input:
-        "strains/{sample}/resistance/abricate.txt",
+        "samples/{sample}/resistance/abricate.txt",
     output:
-        "strains/{sample}/logs/abricate_db.txt"
+        "samples/{sample}/logs/abricate_db.txt"
     params:
         db = db_to_use,
         id = sample_correspondance,
@@ -36,9 +36,9 @@ rule load_mykrobe_into_db:
     conda:
         "../../envs/python-mysql.yaml"
     input:
-        "strains/{sample}/resistance/mykrobe.tsv"
+        "samples/{sample}/resistance/mykrobe.tsv"
     output:
-        "strains/{sample}/logs/mykrobe_db.txt"
+        "samples/{sample}/logs/mykrobe_db.txt"
     params:
         db = db_to_use,
         id = sample_correspondance,

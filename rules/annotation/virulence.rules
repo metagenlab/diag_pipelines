@@ -6,12 +6,12 @@ rule blast_virulence_protein:
         "../../envs/blast.yaml"
     input:
         "virulence/protein_fastas/log.txt",
-        "strains/{sample}/annotation/{sample}.fsa",
-        "strains/{sample}/annotation/{sample}.fsa.nhr",
-        "strains/{sample}/annotation/{sample}.faa",
-        "strains/{sample}/annotation/{sample}.faa.phr",
+        "samples/{sample}/annotation/{sample}.fsa",
+        "samples/{sample}/annotation/{sample}.fsa.nhr",
+        "samples/{sample}/annotation/{sample}.faa",
+        "samples/{sample}/annotation/{sample}.faa.phr",
     output:
-        "strains/{sample}/virulence/results_blast.tsv",
+        "samples/{sample}/virulence/results_blast.tsv",
     shell:
         """
         echo "virulence_factor_ID\tmatching_sequence\tpercentage_identity\talignment_length\tmismatch_number\tgap_number\talignment_start_on_virulence_factor\talignment_end_on_virulence_factor\talignment_start_on_matching_sequence\taligment_end_on_matching_sequence\te-value\tbitscore\tamino_acid_sequence_of_matching_sequence\tquery_coverage\talgorithm" > {output[0]}
@@ -37,9 +37,9 @@ rule blast_virulence_protein:
 
 rule remove_redundancy_from_blast_results:
     input:
-        "strains/{sample}/virulence/results_blast.tsv",
+        "samples/{sample}/virulence/results_blast.tsv",
     output:
-        "strains/{sample}/virulence/results_blast_not_redundant.tsv",
+        "samples/{sample}/virulence/results_blast_not_redundant.tsv",
     script:
         "scripts/remove_overlap_from_blast_results.py"
 
@@ -48,10 +48,10 @@ rule extract_protein_sequences_from_blast:
     conda:
         "../../envs/samtools.yaml"
     input:
-        "strains/{sample}/virulence/results_blast_not_redundant.tsv",
-        "strains/{sample}/annotation/{sample}.faa",
+        "samples/{sample}/virulence/results_blast_not_redundant.tsv",
+        "samples/{sample}/annotation/{sample}.faa",
     output:
-        "strains/{sample}/virulence/proteins.fasta",
+        "samples/{sample}/virulence/proteins.fasta",
     shell:
         """
         grep "blastp" {input[0]} | cut -f1,2 > {output[0]}.tmp
@@ -69,11 +69,11 @@ rule add_description:
     conda:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        "strains/{sample}/virulence/results_blast_not_redundant.tsv",
+        "samples/{sample}/virulence/results_blast_not_redundant.tsv",
         config["virulence_factors"]
     output:
-        "strains/{sample}/virulence/{sample}_virulence.tsv",
-        "strains/{sample}/virulence/{sample}_virulence_summary.xlsx"
+        "samples/{sample}/virulence/{sample}_virulence.tsv",
+        "samples/{sample}/virulence/{sample}_virulence_summary.xlsx"
     script:
         "scripts/merge_result_and_description.py"
         
@@ -82,8 +82,8 @@ rule merge_description_files:
     conda:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml",
     input:
-        xlsx=expand("strains/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys()),
-        fasta=expand("strains/{sample}/virulence/proteins.fasta", sample = read_naming.keys()),
+        xlsx=expand("samples/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys()),
+        fasta=expand("samples/{sample}/virulence/proteins.fasta", sample = read_naming.keys()),
     output:
         "virulence_summary.xlsx"
     script:
