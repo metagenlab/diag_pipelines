@@ -2,8 +2,8 @@ rule trimmomatic_PE:
     conda:
         "../../envs/trimmomatic.yaml"
     input:
-        ancient("reads/raw/{sample}_R1.fastq.gz"),
-        ancient("reads/raw/{sample}_R2.fastq.gz")
+        "reads/raw/{sample}_R1.fastq.gz",
+        "reads/raw/{sample}_R2.fastq.gz"
     params:
         minlength = config["minimum_read_length"],
         minqual = config["minimum_quality_base"],

@@ -6,7 +6,7 @@ RUN /bin/bash -c "conda config --add channels bioconda"
 
 RUN useradd -r -u 1080 pipeline_user
 
-RUN apt-get install -y fontconfig
+RUN apt-get install -y fontconfig unzip
 
 ENV main=/home/pipeline_user/
 
