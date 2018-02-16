@@ -58,6 +58,8 @@ rule merge_gvcf_files:
         gvcfs_tbi=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
     output:
         "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
+    log:
+        logging_folder+"/logs/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
         if [ -d $(dirname {output[0]}) ]; then
@@ -75,7 +77,9 @@ rule gatk_joint_genotyping_on_gvcf_files:
         "references/{ref}/genome.fasta",
         "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
     output:
-        "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/merged.vcf",
+        "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/all_samples.vcf",
+    log:
+        logging_folder+"/logs/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
         gatk-launch GenotypeGVCFs -R {input[0]} -V gendb://$(dirname {input[1]}) -O {output[0]}
