@@ -7,6 +7,7 @@ docker pull metagenlab/diag_pipelines:ring_trial_v0.1.3
 
 # GENERAL USE
 Once you have pulled the docker image on your computer: 
+
 ```
 docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:ring_trial_v0.1.3 sh -c 'snakemake --snakefile $pipeline_folder/workflows/ring_trial/pipeline.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 ```
