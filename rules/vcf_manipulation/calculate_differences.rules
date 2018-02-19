@@ -1,37 +1,63 @@
-rule calculate_pairwise_distances_from_joint_genotyping:
+rule extract_allele_type_from_joint_genotyping_gatk:
+    conda:
+        "../../envs/gatk.yaml"
+    input:
+        joint_genotype_vcf="typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz",
+        bed="core_genome/{ref}_core_parsnp_sorted.bed",
+        joint_genotype_vcf_tbi="typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz.tbi",
+    output:
+        vcf_mutation_type="typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/all_samples_{type}.vcf",
+    shell:
+        """
+        gatk-launch SelectVariants --output {output[vcf_mutation_type]} --variant {input[joint_genotype_vcf]} -select-type {wildcards.type} 
+        """
+
+rule extract_allele_type_from_joint_genotyping_freebayes:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        joint_genotype_vcf="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz",
+        joint_genotype_vcf="typing/freebayes_joint_genotyping/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz",
         bed="core_genome/{ref}_core_parsnp_sorted.bed",
-        joint_genotype_vcf_tbi="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz.tbi",
+        joint_genotype_vcf_tbi="typing/freebayes_joint_genotyping/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz.tbi",
+    output:
+        vcf_mutation_type="typing/freebayes_joint_genotyping/core_parsnp/{ref}/{mapping_method}/all_samples_{type}.vcf",
+    shell:
+        """
+        bcftools view -i 'type="{wildcards.type}"' {input[joint_genotype_vcf]} > {output[vcf_mutation_type]}
+        """
+        
+rule calculate_pairwise_distances_by_type:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        joint_genotype_vcf="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
+        bed="core_genome/{ref}_core_parsnp_sorted.bed",
+        joint_genotype_vcf_tbi="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
     output:
         dist_pair=temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances/{sample1}_-_{sample2}_distance_in_{type}_from_joint_genotyping.txt"),
     shell:
         """
-        snps=$(bcftools view -i 'type="{wildcards.type}"' -R {input[bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | awk '$1!=$2' | wc -l)
+        snps=$(bcftools view -R {input[bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | awk '$1!=$2' | wc -l) || :
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[dist_pair]}   
         """
 
-
-rule calculate_distance_with_ref_from_joint_genotyping:
+rule calculate_distance_with_ref_by_type:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        joint_genotype_vcf="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz",
+        joint_genotype_vcf="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
         bed="core_genome/{ref}_core_parsnp_sorted.bed",
-        joint_genotype_vcf_tbi="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz.tbi",
+        joint_genotype_vcf_tbi="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
     output:
         dist_ref=temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/distances/{type}.txt")
     shell:
         """
-        snps=$(bcftools view -i 'type="{wildcards.type}"' -R {input[bed]} -s {wildcards.sample} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | grep -v "0" | wc -l)
+        snps=$(bcftools view -R {input[bed]} -s {wildcards.sample} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | grep -v "0" | wc -l) || :
         echo {wildcards.ref} {wildcards.sample} ${{snps}} > {output[dist_ref]}
         """
 
-
         
-rule agregate_distances_from_joint_genotyping:
+rule agregate_distances_from_joint_genotyping_by_type:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
@@ -50,35 +76,6 @@ rule agregate_distances_from_joint_genotyping:
             cat ${{i}} >> {output[0]}
         done
         """
-
-#rule calculate_distances_from_joint_genotyping:
-#    params:
-#        all_samples=list(read_naming.keys()),
-#        samples1=all_combined_1,
-#        samples2=all_combined_2,
-#    conda:
-#        "../../envs/vt-bcftools.yaml"
-#    input:
-#        joint_genotype_vcf="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz",
-#        bed="core_genome/{ref}_core_parsnp_sorted.bed",
-#        joint_genotype_vcf_tbi="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples.vcf.gz.tbi",
-#    output:
-#        dist="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/distances_in_{type}_from_joint_genotyping.txt"
-#    shell:
-#        """
-#        declare -a arr1=({params.samples1})
-#        declare -a arr2=({params.samples2})
-#        for i in {params.all_samples}
-#        do
-#            snps=$(bcftools view -i 'type="{wildcards.type}"' -R {input[bed]} -s ${{i}} {input[joint_genotype_vcf]} | bcftools query -f '[%GT]\\n' | grep -v "\." | grep -c -v "0")
-#            echo ${{i}} {wildcards.ref} ${{snps}} >> {output[dist]}
-#        done
-#        for i in "${{!arr1[@]}}"
-#        do
-#            snps=$(bcftools view -i 'type="{wildcards.type}"' -R {input[bed]} -s ${{arr1[${{i}}]}},${{arr2[${{i}}]}} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | awk '$1!=$2' | wc -l)
- #           echo ${{arr1[${{i}}]}} ${{arr2[${{i}}]}} ${{snps}}  >> {output[dist]}
-  #      done
-   #     """
 
 
 rule calculate_statistics_from_vcf_to_reference:

@@ -3,8 +3,8 @@ rule align_paired_reads_to_assembled_genome:
         "../../envs/bwa-samtools.yaml"
     input:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
-        "samples/{sample}/reads/trimmed/R1_paired.fastq",
-        "samples/{sample}/reads/trimmed/R2_paired.fastq",
+        ancient("samples/{sample}/reads/trimmed/R1_paired.fastq"),
+        ancient("samples/{sample}/reads/trimmed/R2_paired.fastq"),
     output:
         temp("samples/{sample}/mapping/bwa/{sample}.bam"),
         temp("samples/{sample}/mapping/bwa/{sample}.bam.bai"),

@@ -4,8 +4,8 @@ rule mapping_to_reference_with_bwa:
     input:
         "samples/{sample}/reads/trimmed/R1_paired.fastq",
         "samples/{sample}/reads/trimmed/R2_paired.fastq",        
-        "references/{ref}/genome.fasta",
-        "references/{ref}/genome.fasta.bwt",
+        "references/{ref}/genome_fasta.fasta",
+        "references/{ref}/genome_fasta.fasta.bwt",
     output:
         temp("samples/{sample}/mapping/bwa/{ref}/{sample}.bam"),
         temp("samples/{sample}/mapping/bwa/{ref}/{sample}.bam.bai"),
@@ -28,8 +28,8 @@ rule filter_reads_after_bwa:
     input:
         "samples/{sample}/mapping/bwa/{ref}/{sample}.bam",
         "samples/{sample}/mapping/bwa/{ref}/{sample}.bam.bai",
-        "references/{ref}/genome.fasta",
-        "references/{ref}/genome.fasta.bwt",
+        "references/{ref}/genome_fasta.fasta",
+        "references/{ref}/genome_fasta.fasta.bwt",
     output:
         temp("samples/{sample}/mapping/bwa/{ref}/filtered.bam"),
         temp("samples/{sample}/mapping/bwa/{ref}/filtered.bam.bai")
@@ -66,10 +66,10 @@ rule index_reference:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
-        "references/{ref}/genome.fasta"
+        "{any_genome}.fasta"
     output:
-        "references/{ref}/genome.fasta.fai",
-        "references/{ref}/genome.fasta.bwt",
+        "{any_genome}.fasta.fai",
+        "{any_genome}.fasta.bwt",
     shell:
         """
         samtools faidx {input[0]}
