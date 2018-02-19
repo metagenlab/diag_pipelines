@@ -9,7 +9,7 @@ rule convert_phylogeny_to_image:
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
         "typing/mlst/summary.tsv",
         "typing/mlst/references.tsv",
-        "references/{ref}/genome.fasta",                
+        "references/{ref}/genome_fasta.fasta",                
     output:
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/renaming.txt",
         "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/phylogeny.svg",

@@ -10,8 +10,8 @@ rule error_correction_spades_paired:
     conda:
         "../../envs/spades.yaml"
     input:
-        "samples/{sample}/reads/trimmed/R1_paired.fastq",
-        "samples/{sample}/reads/trimmed/R2_paired.fastq"
+        ancient("samples/{sample}/reads/trimmed/R1_paired.fastq"),
+        ancient("samples/{sample}/reads/trimmed/R2_paired.fastq")
     output:
         temp("samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz"),
         temp("samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
