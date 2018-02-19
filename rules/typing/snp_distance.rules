@@ -4,11 +4,11 @@ rule distance_columns_to_matrix:
     conda:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.txt",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{type}/{distance_type}.txt",
 #        "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
     output:
-        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.xlsx",
-        out_tsv_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{distance_type}.tsv"
+        out_xlsx_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{type}/{distance_type}.xlsx",
+        out_tsv_distance="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/{type}/{distance_type}.tsv"
     script:
         "scripts/distance_columns_to_matrix.py"
 
