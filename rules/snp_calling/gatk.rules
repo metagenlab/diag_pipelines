@@ -2,9 +2,9 @@ rule create_dict_for_reference:
     conda:
         "../../envs/gatk.yaml"
     input:
-        "references/{ref}/genome.fasta"
+        "references/{ref}/genome_fasta.fasta"
     output:
-        "references/{ref}/genome.dict"
+        "references/{ref}/genome_fasta.dict"
     log:
         logging_folder+"/logs/references/{ref}/create_dictionnary.txt"
     shell:
@@ -18,8 +18,8 @@ rule haplotype_caller_vcf:
         "../../envs/gatk.yaml"
     input:
         "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
-        "references/{ref}/genome.fasta",
-        "references/{ref}/genome.dict",
+        "references/{ref}/genome_fasta.fasta",
+        "references/{ref}/genome_fasta.dict",
         "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
     output:
         "samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf",
@@ -36,8 +36,8 @@ rule haplotype_caller_gvcf:
         "../../envs/gatk.yaml"
     input:
         "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
-        "references/{ref}/genome.fasta",
-        "references/{ref}/genome.dict",
+        "references/{ref}/genome_fasta.fasta",
+        "references/{ref}/genome_fasta.dict",
         "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
     output:
         "samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf",
@@ -53,7 +53,7 @@ rule merge_gvcf_files:
     conda:
         "../../envs/gatk.yaml"
     input:
-        ref="references/{ref}/genome.fasta",
+        ref="references/{ref}/genome_fasta.fasta",
         gvcfs=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
         gvcfs_tbi=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
     output:
@@ -74,7 +74,7 @@ rule gatk_joint_genotyping_on_gvcf_files:
     conda:
         "../../envs/gatk.yaml"
     input:
-        "references/{ref}/genome.fasta",
+        "references/{ref}/genome_fasta.fasta",
         "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
     output:
         "typing/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/all_samples.vcf",
