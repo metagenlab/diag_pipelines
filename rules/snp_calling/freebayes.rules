@@ -19,11 +19,11 @@ rule call_variants_freebayes_vcf_all_samples:
         "../../envs/freebayes.yaml"
     input:
         bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", sample=read_naming.keys()),
-        ref="references/{ref}/genome_fasta.fasta",
-        ref_fai="references/{ref}/genome_fasta.fasta.fai",
+        ref=ancient("references/{ref}/genome_fasta.fasta"),
+        ref_fai=ancient("references/{ref}/genome_fasta.fasta.fai"),
         bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bai", sample=read_naming.keys()),
     output:
-        "typing/freebayes_joint_genotyping/core_parsnp/{ref}/{mapping_method}/all_samples.vcf"
+        "typing/freebayes_joint_genotyping/core_parsnp/{ref}/{mapping_method}/raw/all_samples.vcf"
     shell:
         """
         freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads}  --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.750 --min-base-quality 20 -f {input[ref]} {input[bams]} > {output[0]} 2>> /dev/null

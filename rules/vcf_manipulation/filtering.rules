@@ -1,16 +1,17 @@
-rule vt_decompose_blocksub:
+rule normalize_and_vt_decompose_from_freebayes:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "{any_vcf}.vcf.gz",
-        "{any_vcf}.vcf.gz.tbi",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/raw/all_samples.vcf.gz",
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/raw/all_samples.vcf.gz.tbi",
+        ref=ancient("references/{ref}/genome_fasta.fasta"),
     output:
-        temp("{any_vcf}_mnp_decomposed.vcf"),
+        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples.vcf"
     log:
-        logging_folder+"/{any_vcf}_vt_decompose_blocksub.txt"
+        logging_folder+"/typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vt_normalize.txt"
     shell:
         """
-        vt decompose_blocksub -a {input[0]} -o {output[0]} &> {log[0]}
+        bcftools norm -f {input[ref]} -m -any {input[0]} | vt decompose_blocksub - | bcftools norm -m +any > {output[0]}
         """
 
 rule coverage_filtering:
@@ -40,7 +41,7 @@ rule indel_filtering:
         temp("{any_vcf}_indel_filtered.vcf"),
     shell:
         """
-        bcftools filter -s "indel" -e 'STRLEN(REF)!=STRLEN(ALT)' -O v {input[0]} > {output[0]}
+        bcftools filter -s "indel" -S "." -e 'STRLEN(REF)!=STRLEN(ALT)' -O v {input[0]} > {output[0]}
         """
 
 
