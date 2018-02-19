@@ -18,13 +18,12 @@ if "--dryrun" not in sys.argv and "-n" not in sys.argv:
     with open(cmd_file, "w") as f:
         f.write(" ".join(sys.argv)+"\n")
     copyfile(workflow.overwrite_configfile, logging_folder+"/config.yaml")
-    if config["sample_names"]:
+    if "sample_names" in config.keys():
         copyfile(config["sample_names"], logging_folder+"/sample_names.tsv")
-    if config["sras_samples"]:
+    if "sras_samples" in config.keys():
         copyfile(config["sras_samples"], logging_folder+"/sras_samples.tsv")
     copyfile(config["species_names_correspondance_file"], logging_folder+"/species.tsv")
     copyfile(workflow.snakefile, logging_folder+"/snakefile.rules")
-    print(logging_folder)
 else:
     logging_folder=""
 
@@ -49,7 +48,13 @@ link_directory="links/"
 
 reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
 
-if config["sample_names"]:
+
+if "taxid_to_exclude" not in config.keys():
+    excl_id=""
+else:
+    excl_id=config["taxid_to_exclude"]
+
+if "sample_names" in config.keys():
     sample_correspondance = get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"])
     for i in reads_local.keys():
         if i not in sample_correspondance.keys():
@@ -80,7 +85,9 @@ if "sra_samples" in config.keys() and config["sra_samples"]:
         sras_ext[i]=["1.fastq.gz", "2.fastq.gz"]
         sras_folder[i]="."
 
-if isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
+if not "currated_genes" in config.keys():
+    genes=""
+elif isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
     genes = []
     with open(config["currated_genes"]) as csvfile:
         reader = csv.reader(csvfile, delimiter="\t")
