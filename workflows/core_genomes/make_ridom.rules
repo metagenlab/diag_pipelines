@@ -15,3 +15,7 @@ include:
     prefix + "downloading/fetch_references.rules"
 
 
+rule all:
+    input:
+        "core_genomes/"+config["species"].replace(" ", "_")+"/ridom/"+ridom.loc[config["species"], "reference_genome"]+".bed"
+        
