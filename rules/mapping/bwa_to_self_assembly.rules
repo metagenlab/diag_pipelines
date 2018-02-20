@@ -2,9 +2,10 @@ rule align_paired_reads_to_assembled_genome:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
-        "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
-        ancient("samples/{sample}/reads/trimmed/R1_paired.fastq"),
-        ancient("samples/{sample}/reads/trimmed/R2_paired.fastq"),
+        ref="samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
+        ref_index="samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta.bwt",
+        R1=ancient("samples/{sample}/reads/trimmed/R1_paired.fastq"),
+        R2=ancient("samples/{sample}/reads/trimmed/R2_paired.fastq"),
     output:
         temp("samples/{sample}/mapping/bwa/{sample}.bam"),
         temp("samples/{sample}/mapping/bwa/{sample}.bam.bai"),
@@ -12,11 +13,11 @@ rule align_paired_reads_to_assembled_genome:
         logging_folder+"/samples/{sample}/logs/mapping_bwa_self.log"
     shell:
         """
-        bwa index {input[0]} &> {log}
-        bwa mem -v 1 {input} -o {output[0]}.tmp &>> {log}
-        samtools sort -O BAM -o {output[0]} {output[0]}.tmp
-        rm {output[0]}.tmp
-        samtools index {output[0]}
+        if ls {output[0]}.tmp* 1> /dev/null 2>&1
+        then
+             rm {output[0]}.tmp*
+        fi 
+        (bwa mem {input[ref]} {input[R1]} {input[R2]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
 
 rule align_single_reads_to_assembled_genome:

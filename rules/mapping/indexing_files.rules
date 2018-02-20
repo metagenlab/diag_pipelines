@@ -1,0 +1,26 @@
+
+rule index_reference:
+    conda:
+        "../../envs/bwa-samtools.yaml"
+    input:
+        "{any_genome}.fasta"
+    output:
+        "{any_genome}.fasta.fai",
+        "{any_genome}.fasta.bwt",
+    shell:
+        """
+        samtools faidx {input[0]}
+        bwa index {input[0]}
+        """
+
+rule index_bam:
+    conda:
+        "../../envs/bwa-samtools.yaml"
+    input:
+        "{any_bam}.bam"
+    output:
+        temp("{any_bam}.bam.bai"),
+    shell:
+        """
+        samtools index {input[0]}
+        """

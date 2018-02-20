@@ -2,7 +2,8 @@ rule qualimap_mapping:
     conda:
         "../../envs/qualimap.yaml"
     input:
-        "samples/{sample}/mapping/bwa/{sample}.bam"
+        "samples/{sample}/mapping/bwa/{sample}.bam",
+        "samples/{sample}/mapping/bwa/{sample}.bam.bai"
     output:
         "samples/{sample}/quality/qualimap/qualimapReport.html",
         "samples/{sample}/quality/qualimap/genome_results.txt",
