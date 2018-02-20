@@ -101,7 +101,6 @@ rule download_all_complete_genomes_fasta:
         done < "{input[0]}"
         echo 'ok' > {output[0]}
         """
-
         #sed "s/-/_/g" because parsnp does not like "-" in sequence headers
 
         
