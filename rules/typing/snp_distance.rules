@@ -32,13 +32,13 @@ rule compute_minimum_spanning_tree:
     conda:
         "../../envs/igraph.yaml"
     input:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}.tsv",
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{type}/{distance_type}.tsv",
         "typing/mlst/summary.tsv",
         "typing/mlst/references.tsv",
         "references/complete_genomes_subvalues.tsv",
 #        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
     output:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.pdf"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{type}/{distance_type}_mst.pdf"
     log:
         logging_folder+"/logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.txt"
     script:

@@ -12,6 +12,7 @@ reference_names <-  read.csv(snakemake@input[[4]], sep="\t", header=FALSE, row.n
 
 ref_convinient_name <- paste(reference_names[snakemake@wildcards[["ref"]],], " (", snakemake@wildcards[["ref"]], ")", sep="")
 
+print(ref_convinient_name)
 
 #If the ST types files are empty : no MLST schema for the species under consideration
 if (all(all_sts[,1]=="-")){
@@ -87,7 +88,7 @@ vertices_sizes <- sapply(vertex_attr(mst_graph, "name"), length, simplify=TRUE)*
 #Vertices sizes are proportional to the number of sample they represent
 
 
-#Concatanating the names of the vertices to represent every clonal sample
+#Concatanating the names of the vertices to represent every clonal samples
 mst_graph <- set_vertex_attr(mst_graph, "name", value=lapply(vertex_attr(mst_graph, "name"), paste, collapse="\n"))
 mst_graph <- set_vertex_attr(mst_graph, "ST", value=lapply(vertex_attr(mst_graph, "ST"), unique))
 
