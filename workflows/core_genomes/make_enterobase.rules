@@ -1,0 +1,24 @@
+import pandas
+
+enterobase = pandas.read_csv("/home/sacha/Documents/new_strain/data/enterobase_database.tsv", sep="\t", index_col=0)
+
+
+if "taxid_to_exclude" not in config.keys():
+    excl_id=""
+else:
+    excl_id=config["taxid_to_exclude"]
+
+
+logging_folder=config["logging_folder"]
+
+
+prefix = "../../rules/"
+
+
+include:
+    prefix + "core_genome/enterobase.rules"
+    
+include:
+    prefix + "downloading/fetch_references.rules"
+
+

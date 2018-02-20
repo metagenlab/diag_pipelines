@@ -1,0 +1,23 @@
+prefix = "../../rules/"
+
+logging_folder=config["logging_folder"]
+
+
+if "taxid_to_exclude" not in config.keys():
+    excl_id=""
+else:
+    excl_id=config["taxid_to_exclude"]
+
+
+prefix = "../rules/"
+
+logging_folder=config["logging_folder"]
+
+
+include:
+    prefix + "core_genome/parsnp.rules"
+    
+include:
+    prefix + "downloading/fetch_references.rules"
+
+
