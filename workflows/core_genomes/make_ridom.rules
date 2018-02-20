@@ -17,5 +17,5 @@ include:
 
 rule all:
     input:
-        "core_genomes/"+config["species"].replace(" ", "_")+"/ridom/"+ridom.loc[config["species"], "reference_genome"]+".bed"
+        "core_genomes/"+config["species"].replace(" ", "_")+"/ridom/"+str(ridom.loc[config["species"], "reference_genome"])+".bed"
         
