@@ -1,0 +1,17 @@
+import pandas
+
+ridom = pandas.read_csv("../../data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
+
+excl_id=""
+
+prefix = "../../rules/"
+
+logging_folder=config["logging_folder"]
+
+include:
+    prefix + "core_genome/ridom.rules"
+    
+include:
+    prefix + "downloading/fetch_references.rules"
+
+
