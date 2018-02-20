@@ -1,12 +1,11 @@
-
-rule extract_core_genome_from_ref:
+rule extract_core_genome_parsnp_from_ref:
     conda:
         "../../envs/bedtools.yaml"
     input:
         "core_genome/parsnp/parsnp.xmfa",
         "references/{ref}/genome_fasta.fasta"
     output:
-        "core_genome/{ref}_core_parsnp_sorted.bed",
+        "core_genome/parsnp/{ref}.bed",
     shell:
         """
         header=$(head -n 1 {input[1]})
@@ -18,8 +17,8 @@ rule extract_core_genome_from_ref:
         """
 
 
-# we create a bed file from the xmfa file. First we look for the identifier corresponding to the reference used for mapping
-# the xmfa indexing starts as 0, as the bed file specifications, however we need to add 1 for the end of the region (done with awk)
+# We create a bed file from the xmfa file. First we look for the identifier corresponding to the reference used for mapping
+# The xmfa indexing starts as 0, as the bed file specifications, however we need to add 1 for the end of the region (done with awk)
 
 
 
