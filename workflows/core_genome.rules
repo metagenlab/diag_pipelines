@@ -1,0 +1,25 @@
+import pandas
+
+prefix = "../rules/"
+
+logging_folder=config["logging_folder"]
+
+ridom = pandas.read_csv("/home/sacha/Documents/new_strain/data/ridom_database.tsv", sep="\t", index_col=0)
+
+print(ridom)
+
+if "taxid_to_exclude" not in config.keys():
+    excl_id=""
+else:
+    excl_id=config["taxid_to_exclude"]
+
+include:
+    prefix + "core_genome/parsnp.rules"
+
+include:
+    prefix + "core_genome/ridom.rules"
+    
+include:
+    prefix + "downloading/fetch_references.rules"
+
+
