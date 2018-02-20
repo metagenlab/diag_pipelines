@@ -17,6 +17,5 @@ rule create_bed_from_schema:
     shell:
         """    
         accession=$(head -n 1 {input[genome]} | cut -f1 -d ' ' | sed "s/>//") 
-        echo ${{accession}}
         tail -n +2 {input[schema]} | cut -f4,5 | awk -v acc="${{accession}}" '{{print acc "\011" ($1 - 1) "\011" ($1 -1 + $2)}}' > {output[bed]}
         """
