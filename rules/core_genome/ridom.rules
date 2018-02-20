@@ -1,11 +1,12 @@
 rule get_scheme_from_ridom:
     params:
-        id_ridom=str(ridom.loc[config["species"], "id_number"])
+        id_ridom=str(ridom.loc[config["species"], "id_number"]),
+        spec=config["species"].replace(" ", "_")
     output:
-        "core_genome/ridom/schemas.tsv"
+        "core_genome/ridom/{species}.tsv"
     shell:
         """
-        wget -qO- http://www.cgmlst.org/ncs/schema/{params.id_ridom}/locus/?content-type=csv > {output[0]}
+        wget -qO- http://www.cgmlst.org/ncs/schema/{params.id_ridom}/locus/?content-type=csv > $(dirname{output[0]})/{params.spec}.tsv
         """
     
 rule create_bed_from_schema:
