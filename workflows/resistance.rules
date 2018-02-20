@@ -1,0 +1,31 @@
+import csv
+
+prefix = "./"
+
+include:
+    prefix + "assembly_quality.rules"
+    
+ontology_file_aro = config["absolute_path_of_pipeline_folder"]+"data/card/obo_files/aro.obo"
+ontology_file_mo = config["absolute_path_of_pipeline_folder"]+"data/card/obo_files/mo.obo"
+ontology_file_ro = config["absolute_path_of_pipeline_folder"]+"data/card/obo_files/ro.obo"
+
+resistance_prediction_sofwares = config["resistance_prediction_softwares"]
+
+if not "currated_genes" in config.keys():
+    genes=""
+elif isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
+    genes = []
+    with open(config["currated_genes"]) as csvfile:
+        reader = csv.reader(csvfile, delimiter="\t")
+        for row in reader:
+            genes.append(row[1])
+elif isinstance(config["currated_genes"], list) or config["currated_genes"] == "":
+    genes=config["currated_genes"]
+else:
+    raise ValueError("currated_genes variable ill defined : {}".format(config["currated_genes"]))
+
+
+prefix = "../rules/"
+
+include:
+    prefix + "annotation/resistance.rules"

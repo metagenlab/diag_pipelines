@@ -1,0 +1,57 @@
+import sys
+import itertools
+
+
+sys.path.insert(0, config["absolute_path_of_pipeline_folder"])
+
+import helper_scripts.get_sample_naming_from_link_folder as sample_naming
+
+from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
+
+import helper_scripts.get_species_and_sample_correspondance as get_species_sample
+
+link_directory="links/"
+
+reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
+
+if "sample_names" in config.keys():
+    sample_correspondance = get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"])
+    for i in reads_local.keys():
+        if i not in sample_correspondance.keys():
+            sample_correspondance[i] = i
+    read_correct = {}
+    original_correct = {}
+    folders_correct = {}
+    if folders.keys():
+        for i in folders.keys():
+            folders_correct[sample_correspondance[i]] = folders[i]
+        for i in original_name.keys():
+            original_correct[sample_correspondance[i]] = original_name[i]
+        for i in reads_local.keys():
+            read_correct[sample_correspondance[i]] = reads_local[i]
+    original_name = original_correct
+    reads_local = read_correct
+    folders = folders_correct
+
+sras_ext = {}
+sras_folder = {}
+reads_sra = {}
+
+if "sra_samples" in config.keys() and config["sra_samples"]:
+    reads_sra = {x:y for y,x in get_species_sample.get_sample_names_correspondance_from_file(config["sra_samples"]).items()}
+    for i,j in reads_sra.items():
+        sras_ext[i]=["1.fastq.gz", "2.fastq.gz"]
+        sras_folder[i]="."
+
+read_naming = { **reads_local, **sras_ext}
+original_name = { **original_name, **reads_sra}
+folders = { **folders, **sras_folder}
+
+species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
+
+
+all_combined_1, all_combined_2 = [], []
+
+for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
+    all_combined_1.append(i)
+    all_combined_2.append(j)

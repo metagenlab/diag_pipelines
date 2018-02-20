@@ -1,0 +1,12 @@
+prefix = "./"
+
+include:
+    prefix + "assembly_quality.rules"
+
+prefix = "../rules/"
+
+include:
+    prefix + "downloading/fetch_virulence_factors.rules"
+
+include:
+    prefix + "annotation/virulence.rules"

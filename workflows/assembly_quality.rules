@@ -1,0 +1,43 @@
+include:
+    "logging.rules"
+    
+include:
+    "making_sample_dataset.rules"
+
+
+multiqc_configfile = "../../data/configuration_files/multiqc/config.yaml"
+
+
+prefix = "../rules/"
+
+
+include:
+    prefix + "read_manipulation/get_reads.rules"
+
+include:
+    prefix + "read_manipulation/get_sras.rules"
+    
+include:
+    prefix + "quality/read_trimming.rules"
+
+include:
+    prefix + "quality/quality_assembly.rules"
+
+include:
+    prefix + "quality/quality_reads.rules"
+    
+include:
+    prefix + "quality/contamination.rules"
+    
+include:
+    prefix + "mapping/bwa_to_self_assembly.rules"
+
+include:
+    prefix + "assembly/spades.rules"
+
+include:
+    prefix + "annotation/prokka.rules"
+
+include:
+    prefix + "report_generation/multiqc.rules"
+
