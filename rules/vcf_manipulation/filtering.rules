@@ -2,59 +2,14 @@ rule normalize_and_vt_decompose_from_freebayes:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/raw/all_samples.vcf.gz",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/raw/all_samples.vcf.gz.tbi",
+        "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf.gz",
+        "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf.gz.tbi",
         ref=ancient("references/{ref}/genome_fasta.fasta"),
     output:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_samples.vcf"
+        normalized="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples.vcf"
     log:
-        logging_folder+"/typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vt_normalize.txt"
+        logging_folder+"/typing/{snp_caller}/full_genome/{ref}/{mapping_method}/vt_normalize.txt"
     shell:
         """
-        bcftools norm -f {input[ref]} -m -any {input[0]} | vt decompose_blocksub - | bcftools norm -m +any > {output[0]}
+        bcftools norm -f {input[ref]} -m -any {input[0]} | vt decompose_blocksub - | bcftools norm -m +any > {output[normalized]}
         """
-
-rule coverage_filtering:
-    conda:
-        "../../envs/vt-bcftools.yaml"
-    input:
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf.gz",    
-        "samples/{sample}/quality/mapping/bwa/{ref}/max_cov.txt",
-        "samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/mnp_decomposed.vcf.gz.tbi",    
-    output:
-        temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed.vcf"),
-    shell:
-        """
-        min=10
-        max=$(cat {input[1]})
-        min_freq=0.75
-        bcftools filter -s "lowcov" -S "." -e "DP<${{min}}" {input[0]} | bcftools filter -S "." -s "hicov" -e "DP>${{max}}" | bcftools filter -S "." -s "freq"  -e "(AD[1]/(AD[1]+AD[0]))<${{min_freq}}" -O v - > {output[0]}
-        """
-
-rule indel_filtering:
-    conda:
-        "../../envs/vt-bcftools.yaml"
-    input:
-        "{any_vcf}.vcf.gz",
-        "{any_vcf}.vcf.gz.tbi",
-    output:
-        temp("{any_vcf}_indel_filtered.vcf"),
-    shell:
-        """
-        bcftools filter -s "indel" -S "." -e 'STRLEN(REF)!=STRLEN(ALT)' -O v {input[0]} > {output[0]}
-        """
-
-
-rule filter_core_genome_parsnp:
-    conda:
-        "../../envs/vt-bcftools.yaml"
-    input:
-        "{any_vcf}.vcf.gz",
-        "{any_vcf}.vcf.gz.tbi",
-    output:
-        "{any_vcf}_core_filtered_{ref}.vcf",
-    shell:
-        """
-        bcftools view -R {input[0]} {input[1]} | bcftools sort -O v - > {output[0]}
-        """
-
