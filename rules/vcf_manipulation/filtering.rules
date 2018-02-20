@@ -2,8 +2,8 @@ rule normalize_and_vt_decompose_from_freebayes:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf.gz",
-        "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf.gz.tbi",
+        "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_raw.vcf.gz",
+        "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_raw.vcf.gz.tbi",
         ref=ancient("references/{ref}/genome_fasta.fasta"),
     output:
         normalized="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples.vcf"

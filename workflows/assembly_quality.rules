@@ -33,6 +33,9 @@ include:
     prefix + "mapping/bwa_to_self_assembly.rules"
 
 include:
+    prefix + "mapping/indexing_files.rules"
+
+include:
     prefix + "assembly/spades.rules"
 
 include:
