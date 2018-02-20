@@ -1,0 +1,36 @@
+rule get_scheme_from_ridom:
+    params:
+        id_ridom=str(ridom.loc[config["species"], "id_number"])
+    output:
+        "core_genome/ridom/schemas.tsv"
+    shell:
+        """
+        wget -qO- http://www.cgmlst.org/ncs/schema/{params.id_ridom}/locus/?content-type=csv > {output[0]}
+        """
+    
+rule get_reference_genome_from_ridom:
+    conda:
+        "../../envs/entrez-direct.yaml"
+    params:
+        id_genome=str(ridom.loc[config["species"], "reference_genome"])
+    output:
+        "core_genome/ridom/genome_{format}.{format}"
+    shell:
+        """
+        ftp=$(efetch -db assembly -id {params.id_genome} -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -element FtpPath_RefSeq)
+        nucl_id=$(echo ${{ftp}} | sed  "s/\(\/GCF_.*\)/\\1\\1_assembly_report.txt/" | xargs wget -qO- | sed '/^#.*/ d'  | awk ' $4 == "Chromosome" {{print $7}}')
+        efetch -db nucleotide -id ${{nucl_id}} -format {wildcards.format} > {output[0]} 
+        """
+
+rule create_bed_from_schema:
+    input:
+        schema="core_genome/ridom/schemas.tsv",
+        genome="core_genome/ridom/genome_fasta.fasta",
+    output:
+        bed="core_genome/ridom/schemas.bed",
+    shell:
+        """    
+        accession=$(head -n 1 {input[genome]} | cut -f1 -d ' ' | sed "s/>//") 
+        echo ${{accession}}
+        tail -n +2 {input[schema]} | cut -f4,5 | awk -v acc="${{accession}}" '{{print acc "\011" ($1 - 1) "\011" ($1 -1 + $2)}}' > {output[bed]}
+        """
