@@ -20,7 +20,7 @@ rule haplotype_caller_vcf:
         "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome_fasta.fasta",
         "references/{ref}/genome_fasta.dict",
-        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
+        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",
     output:
         "samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf",
         temp("samples/{sample}/mapping/{mapping_method}/{ref}/gatk-haplotypecaller.bam"),
@@ -38,7 +38,7 @@ rule haplotype_caller_gvcf:
         "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         "references/{ref}/genome_fasta.fasta",
         "references/{ref}/genome_fasta.dict",
-        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bai",
+        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",
     output:
         "samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf",
         "samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf.idx",
@@ -67,7 +67,7 @@ rule merge_gvcf_files:
         fi
         acc=$(grep ">" {input[ref]} | sed "s/ .*//" | sed "s/>//")
         var=$(echo {input[gvcfs]} | sed "s/ / -V /g")
-        gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[0]}) -V ${{var}} --intervals ${{acc}}
+        gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[0]}) -V ${{var}} --intervals ${{acc}} &> {log}
         """
 
 rule gatk_joint_genotyping_on_gvcf_files:
@@ -82,7 +82,7 @@ rule gatk_joint_genotyping_on_gvcf_files:
         logging_folder+"/logs/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
-        gatk-launch GenotypeGVCFs -R {input[0]} -V gendb://$(dirname {input[1]}) -O {output[0]}
+        gatk-launch GenotypeGVCFs -R {input[0]} -V gendb://$(dirname {input[1]}) -O {output[0]} &> {log}
         """
 
         
