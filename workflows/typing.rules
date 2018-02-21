@@ -1,12 +1,25 @@
+import itertools
+
+species_taxid = config["taxid"]
+
 prefix = "./"
 
 include:
     prefix + "assembly_quality.rules"
 
+all_combined_1, all_combined_2 = [], []
+for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
+    all_combined_1.append(i)
+    all_combined_2.append(j)
+
+
 prefix = "../rules/"
     
 include:
     prefix + "core_genome/bed_creation.rules"
+
+include:
+    prefix + "downloading/fetch_single_reference.rules"
     
 include:
     prefix + "quality/quality_mapping_to_reference.rules"
@@ -47,4 +60,5 @@ include:
 include:
     prefix + "phylogeny/image_creation.rules"
 
-    
+include:
+    prefix + "report_generation/multiqc_reference.rules"
