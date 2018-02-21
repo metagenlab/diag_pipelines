@@ -5,17 +5,48 @@ enterobase = pandas.read_csv(config["absolute_path_of_pipeline_folder"]+"/data/c
 
 logging_folder=config["logging_folder"]
 
+species_taxid=int(enterobase.loc[config["species"], "taxid"])
+
 
 prefix = "../../rules/"
 
-species_taxid=int(enterobase.loc[config["species"], "taxid"])
-
-include:
-    prefix + "core_genome/enterobase.rules"
-    
 include:
     prefix + "downloading/fetch_single_reference.rules"
 
+rule get_schema_from_enterobase:
+    params:
+        enterobase_scheme=enterobase.loc[config["species"], "scheme"],
+        enterobase_species=enterobase.loc[config["species"], "species_id"],
+    output:
+        gene_list="core_genomes/{spec}/enterobase/genes.txt",
+    shell:
+        """
+        wget -qO- http://enterobase.warwick.ac.uk/download_data?allele=profiles\&scheme={params.enterobase_scheme}\&species={params.enterobase_species} | gzip -d | head -n 1 | tr '[:space:]' '\\n' | tail -n +2 > {output[gene_list]} || :
+        """
+
+rule fetch_gene_entries_from_locus_tag:
+    input:
+        gff="references/{ref}/genome.gff",
+        gene_list="core_genomes/{spec}/enterobase/genes.txt",
+    output:
+        bed="core_genomes/{spec}/enterobase/{ref}.bed",
+        problematic="core_genomes/{spec}/enterobase/{ref}_missing.txt",
+    shell:
+        """
+        while read locus_tag
+        do
+            match=$(grep -c "${{locus_tag}}\>" {input[gff]}) || :
+            if [[ "${{match}}" -eq 1 ]]
+            then 
+                grep "${{locus_tag}}\>" {input[gff]} | cut -f1,4,5 | awk '{{print $1 "\011" ($2 - 1) "\011" $3}}' >> {output[bed]}
+            elif [[ "${{match}}" -eq 0 ]]
+            then
+                echo ${{locus_tag}} >> {output[problematic]}
+            else
+                echo ${{locus_tag}} >> {output[problematic]}
+            fi
+        done < {input[gene_list]}
+        """
 
 rule all:
     input:
