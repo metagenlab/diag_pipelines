@@ -42,5 +42,5 @@ include:
     prefix + "annotation/prokka.rules"
 
 include:
-    prefix + "report_generation/multiqc.rules"
+    prefix + "report_generation/multiqc_self_assembly.rules"
 

@@ -5,7 +5,7 @@ rule extract_allele_type_from_joint_genotyping_gatk:
         joint_genotype_vcf="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples.vcf.gz",
         joint_genotype_vcf_tbi="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples.vcf.gz.tbi",
     output:
-        vcf_mutation_type="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/{type}/all_samples.vcf",
+        vcf_mutation_type="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf",
     shell:
         """
         type=$(echo {wildcards.type}  | tr '[:lower:]' '[:upper:]')
@@ -19,7 +19,7 @@ rule extract_allele_type_from_joint_genotyping_freebayes:
         joint_genotype_vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples.vcf.gz",
         joint_genotype_vcf_tbi="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples.vcf.gz.tbi",
     output:
-        vcf_mutation_type="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/{type}/all_samples.vcf",
+        vcf_mutation_type="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf",
     shell:
         """
         bcftools view -i 'type="{wildcards.type}"' {input[joint_genotype_vcf]} > {output[vcf_mutation_type]}
@@ -29,8 +29,8 @@ rule calculate_pairwise_distances_by_type:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/{type}/all_samples.vcf.gz",
-        joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/{type}/all_samples.vcf.gz.tbi",
+        joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
+        joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
         bed="core_genome/{core_method}/{ref}.bed",
     output:
         dist_pair=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances/{sample1}_-_{sample2}_distance_in_{type}.txt"),
@@ -44,8 +44,8 @@ rule calculate_distance_with_ref_by_type:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/{type}/all_samples.vcf.gz",
-        joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/{type}/all_samples.vcf.gz.tbi",
+        joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
+        joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
         bed="core_genome/{core_method}/{ref}.bed",
     output:
         dist_ref=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances/to_ref/{sample}_distance_in_{type}.txt"),
@@ -63,7 +63,7 @@ rule agregate_distances_from_joint_genotyping_by_type:
         pairs=expand("typing/{{snp_caller}}/core_{{core_method}}/{{ref}}/{{mapping_method}}/distances/{sample1}_-_{sample2}_distance_in_{{type}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("typing/{{snp_caller}}/core_{{core_method}}/{{ref}}/{{mapping_method}}/distances/to_ref/{sample}_distance_in_{{type}}.txt", sample=read_naming.keys())
     output:
-        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/{type}/distances.txt"
+        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances_{type}.txt"
     shell:
         """
         for i in {input[pairs]}
@@ -74,4 +74,27 @@ rule agregate_distances_from_joint_genotyping_by_type:
         do
             cat ${{i}} >> {output[0]}
         done
+        """
+
+
+rule extract_alignment_for_phylogeny:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_snp.vcf.gz",
+        vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_snp.vcf.gz.tbi",
+        bed="core_genome/{core_method}/{ref}.bed",
+    output:
+        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
+    shell:
+        """
+        printf ">{wildcards.ref}\\n" > {output[0]}
+        bcftools query -R {input[bed]} -f %REF {input[0]} >> {output[0]}
+        printf "\\n" >> {output[0]}
+        for samp in $(bcftools query -l {input[0]})
+        do
+            printf '>'${{samp}}'\\n' 
+            bcftools query -R {input[bed]} -s ${{samp}} -f '[%TGT]' {input[0]} | sed "s/\./N/g"
+            printf '\\n'
+        done >> {output[0]}
         """
