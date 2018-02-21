@@ -1,77 +1,3 @@
-rule get_files_for_multiqc_paired:
-    input:
-        "samples/{sample}/quality/qualimap/qualimapReport.html",
-        "samples/{sample}/quality/quast/report.txt",
-        "samples/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-        "samples/{sample}/annotation/{sample}.txt",
-        "samples/{sample}/reads/trimmed/summary.txt",
-#        "samples/{sample}/contamination/blast_results_taxid_species.tsv"
-    output:
-        "samples/{sample}/multiqc/self_genome/log.txt"
-    shell:
-        """
-        mkdir -p $(dirname {output[0]})/{wildcards.sample}
-        cp -R $(dirname {input[0]})/* $(dirname {output[0]})/{wildcards.sample}
-        sed "s/_R1\.fastq/\.fastq/g" {input[4]} | sed "s/_R2\.fastq/\.fastq/g" > $(dirname {output[0]})/trimmomatic.log
-        cp {input[3]} $(dirname {output[0]})
-        cp -R $(dirname {input[2]})/* $(dirname {output[0]})/{wildcards.sample}
-        sed -i.bak "s/R1_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
-        sed -i.bak "s/R2_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
-        sed "s/{wildcards.sample}\.fsa/{wildcards.sample}/g" {input[1]} > $(dirname {output[0]})/quast.log
-        cp -R $(dirname {input[1]}) $(dirname {output[0]})
-        sed -i.bak "s/.fsa//g" $(dirname {output[0]})/quast/report.tsv
-        echo "okay" > {output}
-        """
-
-
-rule get_files_for_multiqc_single:
-    input:
-        "samples/{sample}/quality/qualimap/qualimapReport.html",
-        "samples/{sample}/quality/quast/report.txt",
-        "samples/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
-        "samples/{sample}/annotation/{sample}.txt",
-        "samples/{sample}/reads/trimmed/summary.txt",
-#        "samples/{sample}/contamination/blast_results_taxid_species.tsv"
-
-    output:
-        "samples/{sample}/multiqc/log.txt"
-    shell:
-        """
-        mkdir -p $(dirname {output[0]})/{wildcards.sample}
-        cp -R $(dirname {input[0]})/* $(dirname {output[0]})/{wildcards.sample}
-        sed "s/_R1\.fastq/\.fastq/g" {input[4]} | sed "s/_R2\.fastq/\.fastq/g" > $(dirname {output[0]})/trimmomatic.log
-        cp {input[3]} $(dirname {output[0]})
-        cp -R $(dirname {input[2]})/* $(dirname {output[0]})/{wildcards.sample}
-        sed -i.bak "s/R1_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
-        sed -i.bak "s/R2_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
-        sed "s/{wildcards.sample}\.fsa/{wildcards.sample}/g" {input[1]} > $(dirname {output[0]})/quast.log
-        cp -R $(dirname {input[1]}) $(dirname {output[0]})
-        sed -i.bak "s/.fsa//g" $(dirname {output[0]})/quast/report.tsv
-        echo "okay" > {output}
-        """
-
-
-        
-
-rule multiqc_all_to_self_genome:
-    params:
-        configfile = multiqc_configfile
-    conda:
-        "../../envs/multiqc.yaml"
-    input:
-        expand("samples/{sample}/multiqc/self_genome/log.txt", sample = read_naming.keys())
-    output:
-        "quality/multiqc/self_genome/multiqc_report.html"
-    log:
-        "logs/multiqc/self_genome.txt"
-    shell:
-        """
-        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) samples/*/multiqc/self_genome/ &> {log[0]}
-        """
-
-
-
-
 rule get_files_for_multiqc_to_reference:
     input:
         "samples/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html"
@@ -91,7 +17,7 @@ rule multiqc_all_to_reference:
     conda:
         "../../envs/multiqc.yaml"
     input:
-        expand("samples/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = read_naming.keys())
+        expand("samples/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = list(read_naming.keys()))
     output:
         "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
     log:
@@ -101,3 +27,5 @@ rule multiqc_all_to_reference:
         multiqc -c {params.configfile} -f -o $(dirname {output[0]}) samples/*/multiqc/mapping_to_{wildcards.ref}/ &> {log[0]}
         """
 
+
+        
