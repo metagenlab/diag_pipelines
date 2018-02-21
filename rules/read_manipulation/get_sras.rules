@@ -1,10 +1,25 @@
-rule get_sra:
+rule get_sra_single:
+    conda:
+        "../../envs/sra-tools.yaml"
+    output:
+        temp("links/./{sample}.single.fastq.gz"),
+    shell:
+        """
+        fastq-dump --gzip --stdout {wildcards.sample} > {output[0]}
+        """
+
+
+rule get_sra_paired:
     conda:
         "../../envs/sra-tools.yaml"
     output:
         temp("links/./{sample}_1.fastq.gz"),
-        temp("links/./{sample}_2.fastq.gz")
+        temp("links/./{sample}_2.fastq.gz"),
     shell:
         """
         fastq-dump --split-files --gzip --outdir links/ {wildcards.sample}
         """
+
+
+
+
