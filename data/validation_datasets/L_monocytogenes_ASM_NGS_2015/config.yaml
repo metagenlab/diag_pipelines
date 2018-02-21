@@ -3,7 +3,7 @@ absolute_path_of_pipeline_folder: /home/pipeline_user/snakemake_pipeline/
 logging_folder: /home/pipeline_user/snakemake_pipeline/pipeline_logging/
 
 species: Listeria monocytogenes
-
+taxid: 1639
 cov_cutoff: 5
 
 phylogeny_image_size: 800
