@@ -1,4 +1,4 @@
-rule mapping_to_reference_with_bwa:
+rule mapping_to_reference_with_bwa_paired:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
@@ -17,6 +17,26 @@ rule mapping_to_reference_with_bwa:
              rm {output[0]}.tmp*
         fi 
         (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[2]} {input[0]} {input[1]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
+        """
+        
+rule mapping_to_reference_with_bwa_single:
+    conda:
+        "../../envs/bwa-samtools.yaml"
+    input:
+        "samples/{sample}/reads/trimmed/single.fastq",
+        ancient("references/{ref}/genome_fasta.fasta"),
+        ancient("references/{ref}/genome_fasta.fasta.bwt"),
+    output:
+        temp("samples/{sample}/mapping/bwa/{ref}/{sample}.bam"),
+    log:
+        logging_folder+"/samples/{sample}/logs/mapping/{ref}/bwa/log.txt"
+    shell:
+        """
+        if ls {output[0]}.tmp* 1> /dev/null 2>&1
+        then
+             rm {output[0]}.tmp*
+        fi 
+        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[1]} {input[0]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
 
 
