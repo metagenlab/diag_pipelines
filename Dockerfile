@@ -8,23 +8,35 @@ ENV conda_folder=/opt/conda/envs/
 
 WORKDIR ${main}
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Staphylococcus aureus"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Staphylococcus aureus" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Mycobacterium tuberculosis"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Mycobacterium tuberculosis" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Listeria monocytogenes"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Listeria monocytogenes" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Escherichia coli"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Escherichia coli" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Klebsiella pneumoniae"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Klebsiella pneumoniae" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Enterococcus faecium"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Enterococcus faecium" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Acinetobacter baumannii"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Acinetobacter baumannii" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Legionella pneumophila"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Legionella pneumophila" -f all
 
-WORKDIR ${main}/data/
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} --config absolute_path_of_pipeline_folder=/home/pipeline_user/snakemake_pipeline/ logging_folder=/home/pipeline_user/logging/ species="Salmonella enterica" -f all
+
+RUN mkdir -p ${main}/validation/Listeria_monocytogenes/
+
+WORKDIR ${main}/validation/Listeria_monocytogenes/
+
+RUN ln -s /home/pipeline_user/core_genomes/Listeria_monocytogenes/ core_genome
+
+RUN cp /home/pipeline_user/snakemake_pipeline/data/validation_datasets/L_monocytogenes_ASM_NGS_2015/* .
+
+RUN mkdir links
+       
+RUN snakemake --snakefile targets.rules --use-conda --conda-prefix ${conda_folder} --configfile config.yaml --config ref_ids_for_mapping="" -j 4 
 
 RUN mkdir -p ${main}/data/links
 
