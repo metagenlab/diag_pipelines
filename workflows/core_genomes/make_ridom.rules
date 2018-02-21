@@ -10,6 +10,8 @@ logging_folder=config["logging_folder"]
 
 species_taxid = int(ridom.loc[config["species"], "taxid"])
 
+print(species_taxid)
+
 include:
     prefix + "core_genome/ridom.rules"
     
