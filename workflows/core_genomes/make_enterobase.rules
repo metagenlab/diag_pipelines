@@ -1,12 +1,6 @@
 import pandas
 
-enterobase = pandas.read_csv("/home/sacha/Documents/new_strain/data/enterobase_database.tsv", sep="\t", index_col=0)
-
-
-if "taxid_to_exclude" not in config.keys():
-    excl_id=""
-else:
-    excl_id=config["taxid_to_exclude"]
+enterobase = pandas.read_csv(config["absolute_path_of_pipeline_folder"]+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 
 logging_folder=config["logging_folder"]
@@ -14,11 +8,18 @@ logging_folder=config["logging_folder"]
 
 prefix = "../../rules/"
 
+species_taxid=int(enterobase.loc[config["species"], "taxid"])
 
 include:
     prefix + "core_genome/enterobase.rules"
     
 include:
-    prefix + "downloading/fetch_references.rules"
+    prefix + "downloading/fetch_single_reference.rules"
+
+
+rule all:
+    input:
+        "core_genomes/"+config["species"].replace(" ", "_")+"/enterobase/"+str(enterobase.loc[config["species"], "reference_genome"])+".bed"
+        
 
 

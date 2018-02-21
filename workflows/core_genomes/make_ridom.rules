@@ -2,22 +2,17 @@ import pandas
 
 ridom = pandas.read_csv(config["absolute_path_of_pipeline_folder"]+"/data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
 
-excl_id=""
+logging_folder=config["logging_folder"]
 
 prefix = "../../rules/"
 
-logging_folder=config["logging_folder"]
-
-species_taxid = int(ridom.loc[config["species"], "taxid"])
-
-print(species_taxid)
+species_taxid=int(ridom.loc[config["species"], "taxid"])
 
 include:
     prefix + "core_genome/ridom.rules"
     
 include:
     prefix + "downloading/fetch_single_reference.rules"
-
 
 rule all:
     input:
