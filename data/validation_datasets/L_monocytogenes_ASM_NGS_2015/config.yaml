@@ -8,6 +8,7 @@ cov_cutoff: 5
 
 phylogeny_image_size: 800
 
+ref_ids_for_mapping:
 # Those file are specific to each analysis:
 
 # Read naming schemas:
