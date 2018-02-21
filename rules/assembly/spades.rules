@@ -20,7 +20,7 @@ rule error_correction_spades_paired:
         logging_folder+"/samples/{sample}/logs/spades_read_correction.txt"
     shell:
          """
-         spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]})) --phred-offset 33 > {log} 
+         spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]})) > {log} 
          """
 
 rule error_correction_spades_single:
@@ -34,7 +34,7 @@ rule error_correction_spades_single:
         logging_folder+"/samples/{sample}/logs/spades_read_correction.txt"
     shell:
          """
-         spades.py -s {input[0]} --only-error-correction -o $( dirname $(dirname {output[0]})) --phred-offset 33 > {log} 
+         spades.py -s {input[0]} --only-error-correction -o $( dirname $(dirname {output[0]})) > {log} 
          """
 
          
@@ -51,7 +51,7 @@ rule spades_paired:
         logging_folder+"/samples/{sample}/logs/spades_assembly.txt"
     shell:
         """
-        spades.py --only-assembler -1 {input[0]} -2 {input[1]} -s {input[2]} -o $( dirname {output[0]}) --phred-offset 33 > {log}
+        spades.py --only-assembler -1 {input[0]} -2 {input[1]} -s {input[2]} -o $( dirname {output[0]}) > {log}
         mv $(dirname {output[0]})/contigs.fasta $(dirname $(dirname {output[0]}))
         rm -rf $( dirname {output[0]})/*
         mv $(dirname $(dirname {output[0]}))/contigs.fasta $(dirname {output[0]})/
@@ -68,7 +68,7 @@ rule spades_single:
         logging_folder+"/samples/{sample}/logs/spades_assembly.txt",
     shell:
         """
-        spades.py --only-assembler -s {input[0]} -o $( dirname {output[0]}) --phred-offset 33 > {log}
+        spades.py --only-assembler -s {input[0]} -o $( dirname {output[0]}) > {log}
         mv $(dirname {output[0]})/contigs.fasta $(dirname $(dirname {output[0]}))
         rm -rf $( dirname {output[0]})/*
         mv $(dirname $(dirname {output[0]}))/contigs.fasta $(dirname {output[0]})/
