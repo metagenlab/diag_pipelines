@@ -1,6 +1,5 @@
 import sys
-import itertools
-
+import pandas
 
 sys.path.insert(0, config["absolute_path_of_pipeline_folder"])
 
@@ -8,50 +7,59 @@ import helper_scripts.get_sample_naming_from_link_folder as sample_naming
 
 from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
 
-import helper_scripts.get_species_and_sample_correspondance as get_species_sample
-
 link_directory="links/"
 
 reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
 
-if "sample_names" in config.keys():
-    sample_correspondance = get_species_sample.get_sample_names_correspondance_from_file(config["sample_names"])
+if "sample_names" in config.keys() and config["sample_names"]:
+    sample_correspondance = pandas.read_csv(config["sample_names"], sep="\t", index_col=0)
+    all_samples= "".join(list(str(sample_correspondance["new_id"])))
+    if "(" in all_samples or ")" in all_samples or "_-_" in all_samples:
+        raise ValueError("Forbidden character in sample name in sample name file") 
     for i in reads_local.keys():
-        if i not in sample_correspondance.keys():
-            sample_correspondance[i] = i
+        if i not in sample_correspondance.index:
+            sample_correspondance.loc[i] = i
     read_correct = {}
     original_correct = {}
     folders_correct = {}
     if folders.keys():
         for i in folders.keys():
-            folders_correct[sample_correspondance[i]] = folders[i]
+            folders_correct[str(sample_correspondance.loc[i, "new_id"])] = folders[i]
         for i in original_name.keys():
-            original_correct[sample_correspondance[i]] = original_name[i]
+            original_correct[str(sample_correspondance.loc[i, "new_id"])] = original_name[i]
         for i in reads_local.keys():
-            read_correct[sample_correspondance[i]] = reads_local[i]
+            read_correct[str(sample_correspondance.loc[i, "new_id"])] = reads_local[i]
     original_name = original_correct
     reads_local = read_correct
     folders = folders_correct
+
 
 sras_ext = {}
 sras_folder = {}
 reads_sra = {}
 
 if "sra_samples" in config.keys() and config["sra_samples"]:
-    reads_sra = {x:y for y,x in get_species_sample.get_sample_names_correspondance_from_file(config["sra_samples"]).items()}
-    for i,j in reads_sra.items():
-        sras_ext[i]=["1.fastq.gz", "2.fastq.gz"]
-        sras_folder[i]="."
-
+    reads_sra_pandas = pandas.read_csv(config["sra_samples"], sep="\t", index_col=0)
+    all_samples= "".join(list(reads_sra_pandas["sample_name"]))
+    if "(" in all_samples or ")" in all_samples or "_-_" in all_samples:
+        raise ValueError("Forbidden character in sample name in sra file") 
+    for i in reads_sra_pandas.index:
+        sample_name=reads_sra_pandas.loc[i, "sample_name"]
+        reads_sra[sample_name]=str(i)
+        sras_folder[sample_name]="."
+        if reads_sra_pandas.loc[i, "type"]=="paired":
+            sras_ext[sample_name]=["1.fastq.gz", "2.fastq.gz"]
+        elif reads_sra_pandas.loc[i, "type"]=="single":
+            sras_ext[sample_name]=["single.fastq.gz"]
+        else:
+            raise ValueError("Problem in the sra file") 
+            
 read_naming = { **reads_local, **sras_ext}
 original_name = { **original_name, **reads_sra}
 folders = { **folders, **sras_folder}
 
-species_names = get_species_sample.get_species_from_file(config["species_names_correspondance_file"])
+
+species_names = pandas.read_csv(config["species_names_correspondance_file"], sep="\t", index_col=0)
 
 
-all_combined_1, all_combined_2 = [], []
 
-for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
-    all_combined_1.append(i)
-    all_combined_2.append(j)
