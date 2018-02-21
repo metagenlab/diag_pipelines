@@ -34,8 +34,8 @@ rule compute_minimum_spanning_tree:
     input:
         "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{type}/{distance_type}.tsv",
         "typing/mlst/summary.tsv",
-        "typing/mlst/references.tsv",
-        "references/complete_genomes_subvalues.tsv",
+        "references/{ref}/mlst.tsv",
+        "references/{ref}/genome_subvalue.txt",
 #        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
     output:
         "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{type}/{distance_type}_mst.pdf"

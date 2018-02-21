@@ -10,16 +10,16 @@ rule mlst_samples:
         mlst --quiet {input} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
         """
 
-rule mlst_all_complete_genomes_fasta:
+rule mlst_reference_fasta:
     conda:
         "../../envs/mlst.yaml"
     input:
-        "references/all_complete_genomes_log.txt"
+        genome="references/{ref}/genome_fasta.fasta"
     output:
-        "typing/mlst/references.tsv"
+        "references/{ref}/mlst.tsv"
     shell:
         """
-        mlst --quiet $(dirname {input[0]})/all_complete_genomes/*.fasta | sed "s/.*\///" | sed "s/_genome\.fasta//" > {output[0]}
+        mlst --quiet {input[genome]}  | sed "s/.*\///" | sed "s/_genome\.fasta//" > {output[0]}
         """
 
 rule mlst_to_excel:

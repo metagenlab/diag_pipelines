@@ -8,9 +8,9 @@ sample_sts <- read.csv(snakemake@input[[2]], sep="\t", header=FALSE, row.names=1
 refs_sts <- read.csv(snakemake@input[[3]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
 all_sts <- rbind(sample_sts, refs_sts)
 
-reference_names <-  read.csv(snakemake@input[[4]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
+reference_name <-  read.csv(snakemake@input[[4]], sep="\t", header=FALSE, stringsAsFactors=FALSE)[1,1]
 
-ref_convinient_name <- paste(reference_names[snakemake@wildcards[["ref"]],], " (", snakemake@wildcards[["ref"]], ")", sep="")
+ref_convinient_name <- paste(reference_name, " (", snakemake@wildcards[["ref"]], ")", sep="")
 
 print(ref_convinient_name)
 

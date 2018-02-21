@@ -8,11 +8,13 @@ prefix = "../../rules/"
 
 logging_folder=config["logging_folder"]
 
+species_taxid = int(ridom.loc[config["species"], "taxid"])
+
 include:
     prefix + "core_genome/ridom.rules"
     
 include:
-    prefix + "downloading/fetch_references.rules"
+    prefix + "downloading/fetch_single_reference.rules"
 
 
 rule all:
