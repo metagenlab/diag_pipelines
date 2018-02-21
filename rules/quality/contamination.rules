@@ -50,7 +50,7 @@ rule mash_single_reads:
         "../../envs/mash.yaml"
     input:
         "references/mash_sketch.msh",
-        "samples/{sample}/reads/raw/single.fastq",
+        "samples/{sample}/reads/raw/{sample}_single.fastq",
     output:
         "samples/{sample}/contamination/mash/distances.tsv"
     shell:
