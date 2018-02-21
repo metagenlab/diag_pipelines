@@ -47,9 +47,9 @@ if "sra_samples" in config.keys() and config["sra_samples"]:
         sample_name=reads_sra_pandas.loc[i, "sample_name"]
         reads_sra[sample_name]=str(i)
         sras_folder[sample_name]="."
-        if reads_sra_pandas.loc[i, "type"]=="paired":
+        if reads_sra_pandas.loc[i, "type"].lower()=="paired":
             sras_ext[sample_name]=["1.fastq.gz", "2.fastq.gz"]
-        elif reads_sra_pandas.loc[i, "type"]=="single":
+        elif reads_sra_pandas.loc[i, "type"].lower()=="single":
             sras_ext[sample_name]=["single.fastq.gz"]
         else:
             raise ValueError("Problem in the sra file") 
