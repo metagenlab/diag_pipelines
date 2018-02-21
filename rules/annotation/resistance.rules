@@ -44,8 +44,8 @@ rule mykrobe_paired:
     conda:
         "../../envs/mykrobe.yaml"
     input:
-        "samples/{sample}/reads/trimmed/R1_paired.fastq",
-        "samples/{sample}/reads/trimmed/R2_paired.fastq",
+        "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
+        "samples/{sample}/reads/raw/{sample}_R2.fastq.gz",
     output:
         "samples/{sample}/resistance/mykrobe.json"
     params:
