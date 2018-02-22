@@ -40,6 +40,20 @@ rule calculate_pairwise_distances_by_type:
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[dist_pair]}   
         """
 
+rule get_snps_positions_by_type:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
+        joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
+        bed="core_genome/{core_method}/{ref}.bed",
+    output:
+        snp_pos="typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/positions/{sample1}_-_{sample2}_in_{type}.txt"
+    shell:
+        """
+        bcftools view -R {input[bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '%POS [%GT ]\\n' | grep -v "\." | awk '$3!=$2' > {output[snp_pos]}
+        """
+
 rule calculate_distance_with_ref_by_type:
     conda:
         "../../envs/vt-bcftools.yaml"
@@ -55,7 +69,7 @@ rule calculate_distance_with_ref_by_type:
         echo {wildcards.ref} {wildcards.sample} ${{snps}} > {output[dist_ref]}
         """
 
-        
+    
 rule agregate_distances_from_joint_genotyping_by_type:
     conda:
         "../../envs/vt-bcftools.yaml"
