@@ -18,7 +18,8 @@ if "--dryrun" not in sys.argv and "-n" not in sys.argv:
         copyfile(config["sample_names"], logging_folder+"/sample_names.tsv")
     if "sras_samples" in config.keys():
         copyfile(config["sras_samples"], logging_folder+"/sras_samples.tsv")
-    copyfile(config["species_names_correspondance_file"], logging_folder+"/species.tsv")
+    if "species_names_correspondance_file" in config.keys():
+        copyfile(config["species_names_correspondance_file"], logging_folder+"/species.tsv")
     copyfile(workflow.snakefile, logging_folder+"/snakefile.rules")
 else:
     logging_folder=""

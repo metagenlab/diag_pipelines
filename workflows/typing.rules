@@ -1,6 +1,8 @@
 import itertools
-
-species_taxid = config["taxid"]
+try:
+    species_taxid
+except NameError:
+    species_taxid = config["taxid"]
 
 prefix = "./"
 

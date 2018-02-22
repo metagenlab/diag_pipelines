@@ -1,21 +1,25 @@
-if config["species"]="Salmonella enterica":
+import pandas
+
+if config["species"]=="Salmonella enterica":
     core="enterobase"
     species_taxid=int(enterobase.loc[config["species"], "taxid"])
     ref_id=str(enterobase.loc[config["species"], "ref_id"])
 
 else:
     core="ridom"
+    ridom = pandas.read_csv(config["absolute_path_of_pipeline_folder"]+"/data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
     species_taxid=int(ridom.loc[config["species"], "taxid"])
-    ref_id=str(ridom.loc[config["species"], "ref_id"])
+    ref_id=str(ridom.loc[config["species"], "reference_genome"])
+    ref_ids_for_mapping = ref_id
 
 
 include:
-    config["absolute_path_of_pipeline_folder"]+"/workflows/typing.rules"
+    "typing.rules"
 
 
 rule all:
     input:
         "typing/freebayes_joint_genotyping/core_"+core+"/"+ref_id+"/bwa/distances_snp_mst.pdf",
         "typing/gatk_gvcfs/core_"+core+"/"+ref_id+"/bwa/distances_snp_mst.pdf",
-        "typing/freebayes_joint_genotyping/core_"+core+"/"+ref_id+"/bwa/phylogeny.svg"
+        "phylogeny/freebayes_joint_genotyping/core_"+core+"/"+ref_id+"/bwa/phylogeny.svg"
         

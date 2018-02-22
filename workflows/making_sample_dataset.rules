@@ -37,29 +37,36 @@ if "sample_names" in config.keys() and config["sample_names"]:
 sras_ext = {}
 sras_folder = {}
 reads_sra = {}
+species_names = pandas.DataFrame(columns=["genus", "species"])
 
 if "sra_samples" in config.keys() and config["sra_samples"]:
     reads_sra_pandas = pandas.read_csv(config["sra_samples"], sep="\t", index_col=0)
-    all_samples= "".join(list(reads_sra_pandas["sample_name"]))
+    all_samples= "".join(list(reads_sra_pandas["SampleName"]))
     if "(" in all_samples or ")" in all_samples or "_-_" in all_samples:
         raise ValueError("Forbidden character in sample name in sra file") 
     for i in reads_sra_pandas.index:
-        sample_name=reads_sra_pandas.loc[i, "sample_name"]
+        sample_name=reads_sra_pandas.loc[i, "SampleName"]
         reads_sra[sample_name]=str(i)
         sras_folder[sample_name]="."
-        if reads_sra_pandas.loc[i, "type"].lower()=="paired":
+        if reads_sra_pandas.loc[i, "LibraryLayout"].lower()=="paired":
             sras_ext[sample_name]=["1.fastq.gz", "2.fastq.gz"]
-        elif reads_sra_pandas.loc[i, "type"].lower()=="single":
+        elif reads_sra_pandas.loc[i, "LibraryLayout"].lower()=="single":
             sras_ext[sample_name]=["single.fastq.gz"]
         else:
-            raise ValueError("Problem in the sra file") 
+            raise ValueError("Problem in the sra file")
+        species_names.loc[sample_name]=[reads_sra_pandas.loc[i, "ScientificName"].split(" ")[0],reads_sra_pandas.loc[i, "ScientificName"].split(" ")[1]]
+                        
             
 read_naming = { **reads_local, **sras_ext}
 original_name = { **original_name, **reads_sra}
 folders = { **folders, **sras_folder}
 
+if "species_names_correspondance_file" in config.keys() and config["species_names_correspondance_file"]:
+    csv=pandas.read_csv(config["species_names_correspondance_file"], sep="\t", index_col=0)
+    csv.index = [str(x) for x in csv.index]
+    species_names = pandas.concat([csv, species_names])
+    print(species_names.index)
 
-species_names = pandas.read_csv(config["species_names_correspondance_file"], sep="\t", index_col=0)
 
 
 
