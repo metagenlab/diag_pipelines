@@ -1,0 +1,19 @@
+absolute_path_of_pipeline_folder: /home/pipeline_user/snakemake_pipeline/
+
+logging_folder: /home/pipeline_user/snakemake_pipeline/pipeline_logging/
+
+cov_cutoff: 5
+
+phylogeny_image_size: 800
+
+#Internal pipeline parameters
+minimum_quality_base: 35
+minimum_read_length: 0
+adapter_file_name: NexteraPE-PE.fa
+adapter_removal_param1: 3
+adapter_removal_param2: 25
+adapter_removal_param3: 6
+
+
+
+
