@@ -1,32 +1,49 @@
-rule call_variants_freebayes_vcf_one_sample:
+rule call_variants_freebayes_one_sample_first_pass:
     conda:
         "../../envs/freebayes.yaml"
     input:
-        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
-        "references/{ref}/genome_fasta.fasta",
-        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",
+        bam="samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", 
+        ref="references/{ref}/genome_fasta.fasta",
+        ref_fai="references/{ref}/genome_fasta.fasta.fai",
+        bai="samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam.bai",
     output:
-        "samples/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf",
+        first_pass="samples/{sample}/snps/freebayes/{ref}/{mapping_method}/single_snps.raw.vcf",
     shell:
         """
-        freebayes --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.50 --min-base-quality 20 -f {input[1]} {input[0]} > {output[0]}
+        freebayes --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.750 --min-base-quality 20 -f {input[ref]} {input[bam]} > {output[first_pass]}
         """
 
-    
-rule call_variants_freebayes_vcf_all_samples:
-    threads: 4
+rule call_variants_freebayes_second_pass:
     conda:
         "../../envs/freebayes.yaml"
     input:
-        bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", sample=read_naming.keys()),
-        ref=ancient("references/{ref}/genome_fasta.fasta"),
-        ref_fai=ancient("references/{ref}/genome_fasta.fasta.fai"),
-        bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam.bai", sample=read_naming.keys()),
+        bam="samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", 
+        ref="references/{ref}/genome_fasta.fasta",
+        ref_fai="references/{ref}/genome_fasta.fasta.fai",
+        bai="samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam.bai",
+        variant_vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/merged.vcf"
     output:
-        "typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples_raw.vcf"
-    log:
-        logging_folder+"logs/freebayes_joint_genotyping/all_samples.txt"
+        second_pass="samples/{sample}/snps/freebayes_joint_genotyping/{ref}/{mapping_method}/snps.vcf",
     shell:
         """
-        freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads}  --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.750 --min-base-quality 20 -f {input[ref]} {input[bams]} > {output[0]} 2>> {log}
+        freebayes --variant-input {input[variant_vcf]} --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.750 --min-base-quality 20 -f {input[ref]} {input[bam]} > {output[second_pass]}
         """
+        
+    
+#rule call_variants_freebayes_vcf_all_samples:
+#    threads: 4
+#    conda:
+#        "../../envs/freebayes.yaml"
+#    input:
+#        bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", sample=read_naming.keys()),
+#        ref=ancient("references/{ref}/genome_fasta.fasta"),
+#        ref_fai=ancient("references/{ref}/genome_fasta.fasta.fai"),
+#        bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam.bai", sample=read_naming.keys()),
+#    output:
+#        "typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples_raw.vcf"
+#    log:
+#        logging_folder+"logs/freebayes_joint_genotyping/all_samples.txt"
+#    shell:
+#        """
+#        freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads}  --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.750 --min-base-quality 20 -f {input[ref]} {input[bams]} > {output[0]} 2>> {log}
+#        """

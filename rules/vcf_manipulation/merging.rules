@@ -27,3 +27,30 @@ rule merge_all_vcfs_no_indels:
         
 
 
+rule merge_vcf_freebayes_first_pass:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        vcfs=expand("samples/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/single_snps.vcf.gz", sample=read_naming.keys())
+        vcfs_tbi=expand("samples/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/single_snps.vcf.gz.tbi", sample=read_naming.keys())
+    output:
+        all_variants="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/merged.vcf"),
+    shell:
+        """
+        bcftools merge -0 -O v {input[vcfs]} > {output[all_variants]}
+        """
+
+
+rule merge_vcf_freebayes_second_pass:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        vcfs=expand("samples/{sample}/snps/freebayes_joint_genotyping/{{ref}}/{{mapping_method}}/snps.vcf.gz", sample=read_naming.keys())
+        vcfs_tbi=expand("samples/{sample}/snps/freebayes_joint_genotyping/{{ref}}/{{mapping_method}}/snps.vcf.gz.tbi", sample=read_naming.keys())
+    output:
+        final_vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples.raw.vcf"),
+    shell:
+        """
+        bcftools merge -0 -O v {input[vcfs]} > {output[all_variants]}
+        """
+

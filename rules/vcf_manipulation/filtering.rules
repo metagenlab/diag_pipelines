@@ -2,14 +2,14 @@ rule normalize_and_vt_decompose_from_freebayes:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_raw.vcf.gz",
-        "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_raw.vcf.gz.tbi",
+        vcf="{any_vcf}.raw.vcf.gz",
+        vcf_tbi="{any_vcf}.raw.vcf.gz.tbi",
         ref=ancient("references/{ref}/genome_fasta.fasta"),
     output:
-        normalized="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples.vcf"
+        normalized="{any_vcf}.vcf"
     log:
-        logging_folder+"/typing/{snp_caller}/full_genome/{ref}/{mapping_method}/vt_normalize.txt"
+        logging_folder+"/{any_vcf}_vt_normalize.txt"
     shell:
         """
-        bcftools norm -f {input[ref]} -m -any {input[0]} | vt decompose_blocksub - | bcftools norm -m +any > {output[normalized]}
+        bcftools norm -f {input[ref]} -m -any {input[vcf]} | vt decompose_blocksub - | bcftools norm -m +any > {output[normalized]}
         """
