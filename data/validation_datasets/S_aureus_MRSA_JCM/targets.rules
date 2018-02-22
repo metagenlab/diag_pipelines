@@ -1,0 +1,9 @@
+include:
+    config["absolute_path_of_pipeline_folder"]+"/workflows/typing.rules"
+
+
+rule all:
+    input:
+        "typing/freebayes_joint_genotyping/core_ridom/33148/bwa/distances_snp_mst.pdf",
+        "typing/gatk_gvcfs/core_ridom/33148/bwa/distances_snp_mst.pdf"
+        
