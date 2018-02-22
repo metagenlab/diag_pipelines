@@ -50,7 +50,7 @@ rule merge_snps_distance_xlsx:
     conda:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        expand("typing/core_{{method}}/{ref}/distance.xlsx", ref = config["ref_ids_for_mapping"])
+        expand("typing/core_{{method}}/{ref}/distance.xlsx", ref = ref_ids_for_mapping)
     output:
         "typing/core_{method}/summary.xlsx"
     script:

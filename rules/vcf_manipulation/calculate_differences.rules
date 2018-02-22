@@ -48,7 +48,7 @@ rule get_snps_positions_by_type:
         joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
         bed="core_genome/{core_method}/{ref}.bed",
     output:
-        snp_pos="typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/positions/{sample1}_-_{sample2}_in_{type}.txt"
+        snp_pos=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/positions/{sample1}_-_{sample2}_in_{type}.txt")
     shell:
         """
         bcftools view -R {input[bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '%POS [%GT ]\\n' | grep -v "\." | awk '$3!=$2' > {output[snp_pos]}
@@ -99,16 +99,16 @@ rule extract_alignment_for_phylogeny:
         vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_snp.vcf.gz.tbi",
         bed="core_genome/{core_method}/{ref}.bed",
     output:
-        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
+        alignment="typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
     shell:
         """
-        printf ">{wildcards.ref}\\n" > {output[0]}
-        bcftools query -R {input[bed]} -f %REF {input[0]} >> {output[0]}
-        printf "\\n" >> {output[0]}
-        for samp in $(bcftools query -l {input[0]})
+        printf ">{wildcards.ref}\\n" > {output[alignment]}
+        bcftools query -R {input[bed]} -f %REF {input[vcf]} >> {output[alignment]}
+        printf "\\n" >> {output[alignment]}
+        for samp in $(bcftools query -l {input[vcf]})
         do
             printf '>'${{samp}}'\\n' 
-            bcftools query -R {input[bed]} -s ${{samp}} -f '[%TGT]' {input[0]} | sed "s/\./N/g"
+            bcftools query -R {input[bed]} -s ${{samp}} -f '[%TGT]' {input[vcf]} | sed "s/\./N/g"
             printf '\\n'
-        done >> {output[0]}
+        done >> {output[alignment]}
         """
