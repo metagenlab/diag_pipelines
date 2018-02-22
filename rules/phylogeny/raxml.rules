@@ -2,9 +2,9 @@ rule raxml_on_alignment_to_ref:
     conda:
         "../../envs/raxml.yaml"
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
+        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
     output:
-        "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw"
+        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw"
     log:
         logging_folder+"/logs/phylogeny/RAxML_log.{ref}"
     shell:
@@ -22,9 +22,9 @@ rule raxml_bootstrap:
     conda:
         "../../envs/raxml.yaml"
     input:
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/alignment.fa"
+        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
     output:
-        "phylogeny/{snp_caller}/core_parsnp/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw"
+        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw"
     log:
         logging_folder+"/logs/phylogeny/RAxML_log.{ref}_boot"
     shell:
