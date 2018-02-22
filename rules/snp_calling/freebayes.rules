@@ -28,5 +28,5 @@ rule call_variants_freebayes_vcf_all_samples:
         logging_folder+"logs/freebayes_joint_genotyping/all_samples.txt"
     shell:
         """
-        freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads}  --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.750 --min-base-quality 20 -f {input[ref]} {input[bams]} > {output[0]} 2>> {log}
+        freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads}  --min-coverage 0 --min-alternate-count 2 --ploidy 1 --min-alternate-fraction 0.750 --min-base-quality 20 -f {input[ref]} {input[bams]}  --vcf {output[0]} > {log}
         """
