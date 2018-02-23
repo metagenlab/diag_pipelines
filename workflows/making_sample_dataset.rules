@@ -47,7 +47,7 @@ if "sra_samples" in config.keys() and config["sra_samples"]:
     for i in reads_sra_pandas.index:
         sample_name=reads_sra_pandas.loc[i, "SampleName"]
         if sample_name in reads_sra.keys():
-            sample_name=sample_name+"_"+str(reads_sra.count(sample_name))
+            sample_name=sample_name+"_"+str(list(reads_sra.keys()).count(sample_name))
         reads_sra[sample_name]=str(i)
         sras_folder[sample_name]="."
         if reads_sra_pandas.loc[i, "LibraryLayout"].lower()=="paired":
