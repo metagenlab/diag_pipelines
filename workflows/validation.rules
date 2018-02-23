@@ -1,16 +1,18 @@
 import pandas
 
+species = config["species"].split(" ")[0]+" "+config["species"].split(" ")[1].split("_")[0]
+
 if config["species"]=="Salmonella enterica":
     core="enterobase"
     enterobase = pandas.read_csv(config["absolute_path_of_pipeline_folder"]+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
-    species_taxid=int(enterobase.loc[config["species"], "taxid"])
-    ref_id=str(enterobase.loc[config["species"], "reference_genome"])
+    species_taxid=int(enterobase.loc[species, "taxid"])
+    ref_id=str(enterobase.loc[species, "reference_genome"])
 
 else:
     core="ridom"
     ridom = pandas.read_csv(config["absolute_path_of_pipeline_folder"]+"/data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
-    species_taxid=int(ridom.loc[config["species"], "taxid"])
-    ref_id=str(ridom.loc[config["species"], "reference_genome"])
+    species_taxid=int(ridom.loc[species, "taxid"])
+    ref_id=str(ridom.loc[species, "reference_genome"])
     ref_ids_for_mapping = ref_id
 
 

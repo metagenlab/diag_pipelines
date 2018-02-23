@@ -1,7 +1,10 @@
 import itertools
 
+try:
+    ref_ids_for_mapping
+except NameError:
+    ref_ids_for_mapping = config["ref_ids_for_mapping"]
 
-ref_ids_for_mapping= config["ref_ids_for_mapping"]
 try:
     species_taxid
 except NameError:
