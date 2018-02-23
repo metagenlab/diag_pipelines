@@ -2,8 +2,9 @@ import pandas
 
 if config["species"]=="Salmonella enterica":
     core="enterobase"
+    enterobase = pandas.read_csv(config["absolute_path_of_pipeline_folder"]+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
     species_taxid=int(enterobase.loc[config["species"], "taxid"])
-    ref_id=str(enterobase.loc[config["species"], "ref_id"])
+    ref_id=str(enterobase.loc[config["species"], "reference_genome"])
 
 else:
     core="ridom"
