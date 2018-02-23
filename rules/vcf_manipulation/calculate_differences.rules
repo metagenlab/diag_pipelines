@@ -48,10 +48,12 @@ rule get_snps_positions_by_type:
         joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
         bed="core_genome/{core_method}/{ref}.bed",
     output:
-        snp_pos=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/positions/{sample1}_-_{sample2}_in_{type}.txt")
+        snp_pos=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/positions/{sample1}_-_{sample2}_in_{type}.txt"),
+        variant_vcf=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/vcf/{sample1}_-_{sample2}_in_{type}.vcf")
     shell:
         """
-        bcftools view -R {input[bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '%POS [%GT ]\\n' | grep -v "\." | awk '$3!=$2' > {output[snp_pos]}
+        bcftools view -R {input[bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '%CHROM %POS [%GT ]\\n' | awk '$3!=$4' | cut -f 1,2 -d' ' | sed "s/ /\\t/g" > {output[snp_pos]}
+        bcftools view -R {output[snp_pos]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} > {output[variant_vcf]}
         """
 
 rule calculate_distance_with_ref_by_type:
