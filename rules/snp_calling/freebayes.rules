@@ -29,7 +29,7 @@ rule call_variants_freebayes_vcf_all_samples:
         ref_fai=ancient("references/{ref}/genome_fasta.fasta.fai"),
         bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam.bai", sample=read_naming.keys()),
     output:
-        vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples_raw.vcf"
+        vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf"
     log:
         logging_folder+"/logs/freebayes_joint_genotyping/all_samples.txt"
     shell:
