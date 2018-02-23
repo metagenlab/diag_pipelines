@@ -1,4 +1,7 @@
 import itertools
+
+
+ref_ids_for_mapping= config["ref_ids_for_mapping"]
 try:
     species_taxid
 except NameError:
@@ -56,6 +59,7 @@ include:
 include:
     prefix + "typing/mlst.rules"
 
+    
 include:
     prefix + "phylogeny/raxml.rules"
 
