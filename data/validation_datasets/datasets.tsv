@@ -2,7 +2,7 @@ ProjectAccession	Species	Description	DOI
 PRJNA295367	Listeria monocytogenes	ASM challenge 2015	https://github.com/katholt/NGSchallenge
 PRJNA251379 	Acinetobacter baumannii	JCM study	10.1128/JCM.03385-14
 PRJEB3006	Clostridium difficile	benchmarking of benchtop sequencing	10.1136/bmjopen-2012-001124
-PRJEB22358	Mycobacterium tuberculosis	MDR migrants 2018	10.1016/S1473-3099(18)30004-5
+PRJEB22358	Mycobacterium tuberculosis_complex	MDR migrants 2018	10.1016/S1473-3099(18)30004-5
 PRJNA295366	Salmonella enterica	ASM challenge 2015	https://github.com/katholt/NGSchallenge
 PRJEB7847	Staphylococcus aureus	luxembourg food outbreak	10.2807/1560-7917.ES.2015.20.45.30059
 PRJEB9867	Staphylococcus aureus	neonate intensive care unit outbreak	10.1016/j.ijmm.2015.08.033
