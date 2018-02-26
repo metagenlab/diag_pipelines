@@ -1,8 +1,8 @@
 FROM continuumio/miniconda3
 
-RUN /bin/bash -c "conda config --add channels defaults"
-RUN /bin/bash -c "conda config --add channels conda-forge"
-RUN /bin/bash -c "conda config --add channels bioconda"
+RUN conda config --add channels defaults
+RUN conda config --add channels conda-forge
+RUN conda config --add channels bioconda
 
 RUN useradd -r -u 1080 pipeline_user
 
