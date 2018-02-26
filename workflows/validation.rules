@@ -25,5 +25,5 @@ rule all:
     input:
         "typing/freebayes_joint_genotyping/core_"+core+"/"+ref_id+"/bwa/distances_snp_mst.pdf",
         "typing/gatk_gvcfs/core_"+core+"/"+ref_id+"/bwa/distances_snp_mst.pdf",
-        "phylogeny/freebayes_joint_genotyping/core_"+core+"/"+ref_id+"/bwa/phylogeny.svg"
+        "typing/freebayes_joint_genotyping/core_"+core+"/"+ref_id+"/bwa/distances_snp.txt"
         
