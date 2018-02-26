@@ -13,7 +13,7 @@ reads_local, folders, original_name = get_folders_structure_with_sample_naming(l
 
 if "sample_names" in config.keys() and config["sample_names"]:
     sample_correspondance = pandas.read_csv(config["sample_names"], sep="\t", index_col=0)
-    all_samples= "".join(list(str(sample_correspondance["sample_name"])))
+    all_samples= "".join(list(str(sample_correspondance["SampleName"])))
     if "(" in all_samples or ")" in all_samples or "_-_" in all_samples:
         raise ValueError("Forbidden character in sample name in sample name file") 
     for i in reads_local.keys():
@@ -24,11 +24,11 @@ if "sample_names" in config.keys() and config["sample_names"]:
     folders_correct = {}
     if folders.keys():
         for i in folders.keys():
-            folders_correct[str(sample_correspondance.loc[i, "sample_name"])] = folders[i]
+            folders_correct[str(sample_correspondance.loc[i, "SampleName"])] = folders[i]
         for i in original_name.keys():
-            original_correct[str(sample_correspondance.loc[i, "sample_name"])] = original_name[i]
+            original_correct[str(sample_correspondance.loc[i, "SampleName"])] = original_name[i]
         for i in reads_local.keys():
-            read_correct[str(sample_correspondance.loc[i, "sample_name"])] = reads_local[i]
+            read_correct[str(sample_correspondance.loc[i, "SampleName"])] = reads_local[i]
     original_name = original_correct
     reads_local = read_correct
     folders = folders_correct
