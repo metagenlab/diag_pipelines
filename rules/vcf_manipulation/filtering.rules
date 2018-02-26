@@ -11,5 +11,64 @@ rule normalize_and_vt_decompose_from_freebayes:
         logging_folder+"/typing/{snp_caller}/full_genome/{ref}/{mapping_method}/vt_normalize.txt"
     shell:
         """
-        bcftools norm -f {input[ref]} -m -any {input[0]} | vt decompose_blocksub - | bcftools norm -m +any > {output[normalized]}
+        bcftools norm -f {input[ref]} -m -any {input[0]} | vt decompose_blocksub - | bcftools norm -f {input[ref]} -m +any > {output[normalized]}
         """
+
+rule coverage_filtering:
+    params:
+        min_cov=minimum_coverage,
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples.vcf",
+    output:
+        vcf_cov="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/cov_all_samples.vcf",
+    shell:
+        """
+        bcftools filter -s "lowcov" -S "." -e '(FORMAT/DP)<{params.min_cov}' {input[vcf]} > {output[vcf_cov]}
+        """
+        
+rule frequency_filtering:
+    params:
+        min_alt=minimum_alternate_frac,
+    conda:
+        "../../envs/vt-bcftools.yaml",
+    input:
+        vcf_cov="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/cov_all_samples.vcf",
+        ref=ancient("references/{ref}/genome_fasta.fasta"),
+    output:
+        vcf_cov_freq="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/freq_cov_all_samples.vcf",
+    shell:
+        """
+        bcftools norm -f {input[ref]} -m -any {input[vcf_cov]} | bcftools filter -s "freq" -S "." -e "GT='a' & FORMAT/AD[1]/(FORMAT/DP) < {params.min_alt}" | bcftools norm -m +any -f {input[ref]} > {output[vcf_cov_freq]}
+        """
+
+rule extract_allele_type_from_joint_genotyping_gatk:
+    conda:
+        "../../envs/gatk.yaml"
+    input:
+        joint_genotype_vcf="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtered/freq_cov_all_samples.vcf.gz",
+        joint_genotype_vcf_tbi="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtered/freq_cov_all_samples.vcf.gz.tbi",
+    output:
+        vcf_mutation_type="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.vcf",
+    shell:
+        """
+        type=$(echo {wildcards.type}  | tr '[:lower:]' '[:upper:]')
+        gatk-launch SelectVariants --output {output[vcf_mutation_type]} --variant {input[joint_genotype_vcf]} -select-type ${{type}}
+        """
+
+rule extract_allele_type_from_joint_genotyping_freebayes:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        joint_genotype_vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtered/freq_cov_all_samples.vcf.gz",
+        joint_genotype_vcf_tbi="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtered/freq_cov_all_samples.vcf.gz.tbi",
+    output:
+        vcf_mutation_type="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.vcf",
+    shell:
+        """
+        bcftools view -i 'type="{wildcards.type}"' {input[joint_genotype_vcf]} > {output[vcf_mutation_type]}
+        """
+
+
+
