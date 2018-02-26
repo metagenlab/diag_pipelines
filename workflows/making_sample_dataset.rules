@@ -11,33 +11,31 @@ link_directory="links/"
 
 reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
 
-if "sample_names" in config.keys() and config["sample_names"]:
-    sample_correspondance = pandas.read_csv(config["sample_names"], sep="\t", index_col=0)
-    all_samples= "".join(list(str(sample_correspondance["SampleName"])))
-    if "(" in all_samples or ")" in all_samples or "_-_" in all_samples:
-        raise ValueError("Forbidden character in sample name in sample name file") 
-    for i in reads_local.keys():
-        if i not in sample_correspondance.index:
-            sample_correspondance.loc[i] = i
-    read_correct = {}
-    original_correct = {}
-    folders_correct = {}
-    if folders.keys():
-        for i in folders.keys():
-            folders_correct[str(sample_correspondance.loc[i, "SampleName"])] = folders[i]
-        for i in original_name.keys():
-            original_correct[str(sample_correspondance.loc[i, "SampleName"])] = original_name[i]
-        for i in reads_local.keys():
-            read_correct[str(sample_correspondance.loc[i, "SampleName"])] = reads_local[i]
-    original_name = original_correct
-    reads_local = read_correct
-    folders = folders_correct
 
-
+samples_data = pandas.read_csv(config["sample_names"], sep="\t", index_col=0)
+samples_data.index = [str(x) for x in samples_data.index]
+all_samples= "".join(list(samples_data.index))
+if "(" in all_samples or ")" in all_samples or "_-_" in all_samples:
+    raise ValueError("Forbidden character in sample name in sample name file") 
+read_correct = {}
+original_correct = {}
+folders_correct = {}
+if folders.keys():
+    for i in folders.keys():
+        match = [ i.startswith(str(x)) for x in list(samples_data.index)]
+        if sum(match) > 1:
+            raise ValueError("Problem matching SampleNames to read file names")
+        sample=str(samples_data.index[match.index(True)])
+        folders_correct[sample] = folders[i]
+        original_correct[sample] = original_name[i]
+        read_correct[sample] = reads_local[i]
+original_name = original_correct
+reads_local = read_correct
+folders = folders_correct
+    
 sras_ext = {}
 sras_folder = {}
 reads_sra = {}
-species_names = pandas.DataFrame(columns=["genus", "species"])
 
 if "sra_samples" in config.keys() and config["sra_samples"]:
     reads_sra_pandas = pandas.read_csv(config["sra_samples"], sep="\t", index_col=0)
@@ -56,19 +54,11 @@ if "sra_samples" in config.keys() and config["sra_samples"]:
             sras_ext[sample_name]=["single.fastq.gz"]
         else:
             raise ValueError("Problem in the sra file")
-        species_names.loc[sample_name]=[reads_sra_pandas.loc[i, "ScientificName"].split(" ")[0],reads_sra_pandas.loc[i, "ScientificName"].split(" ")[1].split("_")[0]]
+        samples_data.loc[sample_name, "ScientificName"]=reads_sra_pandas.loc[i, "ScientificName"]
                         
-            
+
+
 read_naming = { **reads_local, **sras_ext}
 original_name = { **original_name, **reads_sra}
 folders = { **folders, **sras_folder}
-
-if "species_names_correspondance_file" in config.keys() and config["species_names_correspondance_file"]:
-    csv=pandas.read_csv(config["species_names_correspondance_file"], sep="\t", index_col=0)
-    csv.index = [str(x) for x in csv.index]
-    species_names = pandas.concat([csv, species_names])
-    print(species_names.index)
-
-
-
 
