@@ -1,7 +1,4 @@
 rule call_variants_freebayes_vcf_one_sample:
-    params:
-        min_cov=minimum_coverage,
-        min_alt=minimum_alternate_frac
     conda:
         "../../envs/freebayes.yaml"
     input:
@@ -12,15 +9,12 @@ rule call_variants_freebayes_vcf_one_sample:
         "samples/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf",
     shell:
         """
-        freebayes --min-coverage {params.min_cov} --ploidy 1 --min-alternate-fraction {min_alternate_frac} --min-base-quality 20 -f {input[1]} {input[0]} > {output[0]}
+        freebayes  --ploidy 1 --min-base-quality 20 -f {input[1]} {input[0]} > {output[0]}
         """
 
     
 rule call_variants_freebayes_vcf_all_samples:
     threads: 4
-    params:
-        min_cov=minimum_coverage,
-        min_alt=minimum_alternate_frac,
     conda:
         "../../envs/freebayes.yaml"
     input:
@@ -34,5 +28,5 @@ rule call_variants_freebayes_vcf_all_samples:
         logging_folder+"/logs/freebayes_joint_genotyping/all_samples.txt"
     shell:
         """
-        freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads}  --min-coverage {params.min_cov} --ploidy 1 --min-alternate-fraction {params.min_alt} --min-base-quality 20 -f {input[ref]} {input[bams]}  > {output[vcf]} 2> {log}
+        freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads} --min-alternate-fraction 0.50  --ploidy 1 --min-base-quality 20 -f {input[ref]} {input[bams]}  > {output[vcf]} 2> {log}
         """
