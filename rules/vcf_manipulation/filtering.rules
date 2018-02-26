@@ -8,7 +8,7 @@ rule normalize_and_vt_decompose_from_freebayes:
     output:
         normalized="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples.vcf"
     log:
-        logging_folder+"/typing/{snp_caller}/full_genome/{ref}/{mapping_method}/vt_normalize.txt"
+        logging_folder+"/typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/vt_normalize.txt"
     shell:
         """
         bcftools norm -f {input[ref]} -m -any {input[0]} | vt decompose_blocksub - | bcftools norm -f {input[ref]} -m +any > {output[normalized]}
