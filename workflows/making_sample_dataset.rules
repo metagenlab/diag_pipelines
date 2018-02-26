@@ -7,28 +7,39 @@ import helper_scripts.get_sample_naming_from_link_folder as sample_naming
 
 from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
 
+
+all_samples=pandas.DataFrame()
+
 link_directory="links/"
 
-reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
+    
+sras_ext = {}
+sras_folder = {}
+reads_sra = {}
+
+reads_local = {}
+folders = {}
+original_name = {}
 
 try:
-    samples_data = pandas.read_csv(config["sample_names"], sep="\t", index_col=0)
-    samples_data.index = [str(x) for x in samples_data.index]
-    all_samples= "".join(list(samples_data.index))
-    if "(" in all_samples or ")" in all_samples or "_-_" in all_samples:
-        raise ValueError("Forbidden character in sample name in sample name file") 
+    local_data = pandas.read_csv(config["local_samples"], sep="\t", index_col=0)
+    local_data.index = [str(x) for x in local_data.index]
+    all_local_sample_names= "".join(list(local_data.index))
+    if "(" in all_local_sample_names or ")" in all_local_sample_names or "_-_" in all_local_sample_names:
+        raise ValueError("Forbidden character in sample name in sample name file")
+    reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
     read_correct = {}
     original_correct = {}
     folders_correct = {}
     if folders.keys():
         for i in folders.keys():
-            if "OldSampleName" not in list(samples_data):
-                match = [ i.startswith(str(x)) for x in list(samples_data.index)]
+            if "OldSampleName" not in list(local_data):
+                match = [ i.startswith(str(x)) for x in list(local_data.index)]
                 if sum(match) > 1:
                     raise ValueError("Problem matching SampleNames to read file names")
-                sample=str(samples_data.index[match.index(True)])
+                sample=str(local_data.index[match.index(True)])
             else:
-                sample=samples_data.index[samples_data['OldSampleName'] == i].tolist()
+                sample=local_data.index[samples_data['OldSampleName'] == i].tolist()
                 if len(sample) > 1:
                     raise ValueError("Problem matching OldSampleName")
                 sample=sample[0]
@@ -38,31 +49,28 @@ try:
     original_name = original_correct
     reads_local = read_correct
     folders = folders_correct
+    all_samples=local_data
 except KeyError:
     pass
-    
-sras_ext = {}
-sras_folder = {}
-reads_sra = {}
 
 try: 
-    reads_sra_pandas = pandas.read_csv(config["sra_samples"], sep="\t", index_col=0)
-    all_samples= "".join(list(reads_sra_pandas["SampleName"]))
-    if "(" in all_samples or ")" in all_samples or "_-_" in all_samples:
+    sra_data = pandas.read_csv(config["sra_samples"], sep="\t", index_col=0)
+    all_sra_sample_names =  "".join(list(sra_data["SampleName"]))
+    if "(" in all_sra_sample_names or ")" in all_sra_sample_names or "_-_" in all_sra_sample_names:
         raise ValueError("Forbidden character in sample name in sra file") 
-    for i in reads_sra_pandas.index:
-        sample_name=reads_sra_pandas.loc[i, "SampleName"]
+    for i in sra_data.index:
+        sample_name=sra_data.loc[i, "SampleName"]
         if sample_name in reads_sra.keys():
             sample_name=sample_name+"_"+str(list(reads_sra.keys()).count(sample_name))
         reads_sra[sample_name]=str(i)
         sras_folder[sample_name]="."
-        if reads_sra_pandas.loc[i, "LibraryLayout"].lower()=="paired":
+        if sra_data.loc[i, "LibraryLayout"].lower()=="paired":
             sras_ext[sample_name]=["1.fastq.gz", "2.fastq.gz"]
-        elif reads_sra_pandas.loc[i, "LibraryLayout"].lower()=="single":
+        elif sra_data.loc[i, "LibraryLayout"].lower()=="single":
             sras_ext[sample_name]=["single.fastq.gz"]
         else:
             raise ValueError("Problem in the sra file")
-        samples_data.loc[sample_name, "ScientificName"]=reads_sra_pandas.loc[i, "ScientificName"]
+        all_samples.loc[sample_name, "ScientificName"]=sra_data.loc[i, "ScientificName"]
 except KeyError:
     pass
 
