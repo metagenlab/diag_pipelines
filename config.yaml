@@ -15,6 +15,9 @@ resistance_prediction_softwares:
  - mykrobe
  - rgi
 
+minimum_coverage_for_calling: 10
+minimum_alternate_fraction_for_calling: 0.75
+
 species: Mycobacterium tuberculosis
 taxid: 1773
 
