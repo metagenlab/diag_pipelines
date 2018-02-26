@@ -7,7 +7,7 @@ cov_cutoff: 5
 phylogeny_image_size: 800
 
 minimum_coverage_for_calling: 10
-minimum_alternate_fraction_for_calling: 75
+minimum_alternate_fraction_for_calling: 0.75
 
 
 #Internal pipeline parameters
