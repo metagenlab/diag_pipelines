@@ -26,13 +26,14 @@ cov_cutoff: 5
 
 phylogeny_image_size: 800
 
+virulence_percentage_identity_cutoff: 80
+virulence_coverage_cutoff: 70
+
+
 # Those file are specific to each analysis:
 
 # If you wish to include samples from sras, list them in a tab separated file with the name of the sample and the sra accession number
 sra_samples: example_sras.tsv
-
-virulence_percentage_identity_cutoff: 80
-virulence_coverage_cutoff: 70
 
 # Read naming schemas:
 # Read names must end with ".fastq" or ".fastq.gz" or ".fq" or ".fg.gz"
@@ -43,11 +44,11 @@ virulence_coverage_cutoff: 70
 # Put this file on the folder where you will run snakemake and the sample_names value below should be the name of this file. 
 # If wish to keep the automatic naming, set the value of this variable to empty
 
-sample_names: example_sample_names.tsv
+local_samples: example_sample_names.tsv
 
 
 # Tab separated file with three columns: sample name (as automatically defined or according to your own sample naming file), genus, species
-species_names_correspondance_file: example_species.tsv
+
 
 
 #Internal pipeline parameters
