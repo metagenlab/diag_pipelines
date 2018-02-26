@@ -12,8 +12,8 @@ rule prokka:
         "samples/{sample}/annotation/{sample}.gbk",
         "samples/{sample}/annotation/{sample}.ffn"
     params:
-        genus = lambda wildcards: species_names.loc[wildcards.sample,"genus"],
-        spec = lambda wildcards: species_names.loc[wildcards.sample,"species"],
+        genus = lambda wildcards: samples_data.loc[wildcards.sample, "ScientificName"].split(" ")[0],
+        spec = lambda wildcards: samples_data.loc[wildcards.sample, "ScientificName"].split(" ")[1]
     shell:
         "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
 
@@ -25,8 +25,8 @@ rule prokka_temporary_file:
     output:
         "samples/{sample}/assembly/spades/temporary_annotation/{sample}.fsa"
     params:
-        genus = lambda wildcards: species_names[wildcards.sample]["genus"],
-        spec = lambda wildcards: species_names[wildcards.sample]["species"]
+        genus = lambda wildcards: samples_data.loc[wildcards.sample, "ScientificName"].split(" ")[0],
+        spec = lambda wildcards: samples_data.loc[wildcards.sample, "ScientificName"].split(" ")[1],
     shell:
         "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
 
