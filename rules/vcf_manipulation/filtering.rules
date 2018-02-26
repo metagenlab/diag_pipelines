@@ -6,7 +6,7 @@ rule normalize_and_vt_decompose_from_freebayes:
         "typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf.gz.tbi",
         ref=ancient("references/{ref}/genome_fasta.fasta"),
     output:
-        normalized="typing/freebayes_joint_genotype/full_genome/{ref}/{mapping_method}/all_samples.vcf"
+        normalized="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples.vcf"
     log:
         logging_folder+"/typing/{snp_caller}/full_genome/{ref}/{mapping_method}/vt_normalize.txt"
     shell:
