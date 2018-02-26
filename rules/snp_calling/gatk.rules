@@ -46,7 +46,7 @@ rule haplotype_caller_gvcf:
         logging_folder+"/samples/{sample}/logs/snps/gatk/haplotypecaller_gvcf.txt",
     shell:
         """
-        gatk-launch HaplotypeCaller -ploidy 1 --output {output[0]} --input {input[0]} --reference {input[1]} --min_base_quality_score 20 -ERC BP_RESOLUTION &> {log[0]}
+        gatk-launch HaplotypeCaller -ploidy 1 --output {output[0]} --input {input[0]} --reference {input[1]} -ERC BP_RESOLUTION &> {log[0]}
         """
 
 rule merge_gvcf_files:
