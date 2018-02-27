@@ -29,6 +29,8 @@ rule agregate_all_unknown_position:
         
         
 rule compute_minimum_spanning_tree:
+    params:
+        threshold=config["snp_threshold"]
     conda:
         "../../envs/igraph.yaml"
     input:

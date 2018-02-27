@@ -72,7 +72,7 @@ mst_graph <- mst(graph, algorithm="prim")
 
 
 #We keep all distances that are less than a particular threshold
-for (i in E(graph)[E(graph)$weight<100]){
+for (i in E(graph)[E(graph)$weight<snakemake@params["threshold"]]){
     vert <- get.edges(graph, i)
     if (!are_adjacent(mst_graph, vert[,1], vert[,2]) && (vert[,1]!=vert[,2])){
         mst_graph <- add_edges(mst_graph, vert, weight=edge_attr(graph, "weight")[i])
