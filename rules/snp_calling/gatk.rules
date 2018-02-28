@@ -75,14 +75,14 @@ rule gatk_joint_genotyping_on_gvcf_files:
         "../../envs/gatk.yaml"
     input:
         "references/{ref}/genome_fasta.fasta",
-        "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
+        ancient("typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf")
     output:
         "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples.vcf",
     log:
-        logging_folder+"/logs/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/merge_gvcf.txt",
+        logging_folder+"/logs/gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
-        gatk-launch GenotypeGVCFs --java-options Xmx 23G -ploidy 1 -R {input[0]} --annotate-with-num-discovered-alleles true --annotations-to-exclude InbreedingCoeff -V gendb://$(dirname {input[1]}) -O {output[0]} &> {log}
+        gatk-launch GenotypeGVCFs --java-options -Xmx 23G -ploidy 1 -R {input[0]} --annotate-with-num-discovered-alleles true --annotations-to-exclude InbreedingCoeff -V gendb://$(dirname {input[1]}) -O {output[0]} &> {log}
         """
 
         
