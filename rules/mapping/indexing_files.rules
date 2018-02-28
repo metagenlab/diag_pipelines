@@ -7,10 +7,12 @@ rule index_reference:
     output:
         "{any_genome}.fasta.fai",
         "{any_genome}.fasta.bwt",
+    log:
+        logging_folder+"/{any_genome}.txt"
     shell:
         """
-        samtools faidx {input[0]}
-        bwa index {input[0]}
+        samtools faidx {input[0]} &> {log}
+        bwa index {input[0]} &>> {log}
         """
 
 rule index_bam:
