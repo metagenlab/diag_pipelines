@@ -82,7 +82,7 @@ rule gatk_joint_genotyping_on_gvcf_files:
         logging_folder+"/logs/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
-        gatk-launch GenotypeGVCFs -ploidy 1 -R {input[0]} --annotate-with-num-discovered-alleles true --annotations-to-exclude InbreedingCoeff -V gendb://$(dirname {input[1]}) -O {output[0]} &> {log}
+        gatk-launch GenotypeGVCFs --java-options Xmx 23G -ploidy 1 -R {input[0]} --annotate-with-num-discovered-alleles true --annotations-to-exclude InbreedingCoeff -V gendb://$(dirname {input[1]}) -O {output[0]} &> {log}
         """
 
         
