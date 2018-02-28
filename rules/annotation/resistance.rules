@@ -115,7 +115,7 @@ rule merge_summary_xlsx_files:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         xlsx=expand("samples/{sample}/resistance/summary.xlsx", sample = read_naming.keys()),
-        fastas=expand("samples/{sample}/resistance/sequences.faa", sample = read_naming.keys()),
+#        fastas=expand("samples/{sample}/resistance/sequences.faa", sample = read_naming.keys()),
     output:
         "resistance_summary.xlsx"
     script:

@@ -24,7 +24,7 @@ def extract_rgi(row, aro_ont, gene_list):
     res = []
     if row["SNP"] != "n/a":
         best_hit = row["Best_Hit_ARO"].split()
-        genes = list(set(best_hit))
+        genes = list(set(best_hit).intersection(set(gene_list)))
         if len(genes) == 1:
             gene = genes[0]
             terms = row["ARO"].split(",")

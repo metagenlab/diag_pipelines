@@ -1,4 +1,4 @@
-import csv
+import pandas
 
 prefix = "./"
 
@@ -11,18 +11,15 @@ ontology_file_ro = config["absolute_path_of_pipeline_folder"]+"data/card/obo_fil
 
 resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
-if not "currated_genes" in config.keys():
-    genes=""
-elif isinstance(config["currated_genes"], str) and config["currated_genes"] != "":
-    genes = []
-    with open(config["currated_genes"]) as csvfile:
-        reader = csv.reader(csvfile, delimiter="\t")
-        for row in reader:
-            genes.append(row[1])
-elif isinstance(config["currated_genes"], list) or config["currated_genes"] == "":
-    genes=config["currated_genes"]
-else:
-    raise ValueError("currated_genes variable ill defined : {}".format(config["currated_genes"]))
+try:
+    if isinstance(config["currated_genes"], str):
+        with open(config["currated_genes"]) as csvfile:
+            reader = pandas.read_csv(csvfile, sep="\t", index_col=0)
+            currated_genes = list(reader["Gene"])
+    elif isinstance(config["currated_genes"], list):
+        currated_genes=config["currated_genes"]
+except KeyError:
+    raise ValueError("Please define a list of currated genes or a path to a file of a list to currated genes in the variable 'currated_genes'")
 
 
 prefix = "../rules/"
