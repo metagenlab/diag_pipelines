@@ -46,8 +46,6 @@ rule calculate_distance_with_ref_by_type:
 
     
 rule agregate_distances_from_joint_genotyping_by_type:
-    conda:
-        "../../envs/vt-bcftools.yaml"
     input:
         pairs=expand("typing/{{snp_caller}}/core_{{core_method}}/{{ref}}/{{mapping_method}}/distances/{sample1}_-_{sample2}_distance_in_{{type}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("typing/{{snp_caller}}/core_{{core_method}}/{{ref}}/{{mapping_method}}/distances/to_ref/{sample}_distance_in_{{type}}.txt", sample=read_naming.keys())
