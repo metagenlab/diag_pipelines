@@ -28,7 +28,7 @@ rule coverage_filtering_from_freebayes:
         bcftools filter -s "lowcov" -S "." -e '(FORMAT/DP)<{params.min_cov}' {input[vcf]} > {output[vcf_cov]}
         """
 
-rule genotype_filtering_from_gatk:
+rule genotype_quality_filtering_from_gatk:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
@@ -59,7 +59,8 @@ rule remerge_all_samples_vcf:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        vfcs=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/filtered/freq_cov.vcf", sample=list(read_naming.keys())),
+        vfcs=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/filtered/freq_cov.vcf.gz", sample=list(read_naming.keys())),
+        vfcs_tbi=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/filtered/freq_cov.vcf.gz.tbi", sample=list(read_naming.keys())),
     output:
         joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/freq_cov_all_samples.vcf",
     shell:

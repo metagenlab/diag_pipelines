@@ -57,7 +57,7 @@ rule agregate_distances_from_joint_genotyping_by_type:
                 with open(fname) as infile:
                     outfile.write(infile.read())
 
-
+#we aggregate the files with python because sometimes bash can't handle the high number of files 
 
 rule extract_alignment_for_phylogeny:
     conda:
