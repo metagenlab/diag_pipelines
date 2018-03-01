@@ -14,6 +14,32 @@ rule normalize_and_vt_decompose_from_freebayes:
         bcftools norm -f {input[ref]} -m -any {input[0]} | vt decompose_blocksub - | bcftools norm -f {input[ref]} -m +any > {output[normalized]}
         """
 
+rule coverage_filtering_from_freebayes:
+    params:
+        min_cov=minimum_coverage,
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples.vcf",
+    output:
+        vcf_cov="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtered/cov_all_samples.vcf",
+    shell:
+        """
+        bcftools filter -s "lowcov" -S "." -e '(FORMAT/DP)<{params.min_cov}' {input[vcf]} > {output[vcf_cov]}
+        """
+
+rule genotype_quality_filtering_from_gatk:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        vcf="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples.vcf",
+    output:
+        vcf_cov="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtered/cov_all_samples.vcf",
+    shell:
+        """
+        bcftools filter -s "lowgq" -S "." -e '(FORMAT/GQ)<99' {input[vcf]} > {output[vcf_cov]}
+        """
+        
 rule frequency_filtering_per_sample:
     params:
         min_alt=minimum_alternate_frac,
@@ -25,7 +51,7 @@ rule frequency_filtering_per_sample:
         vcf_cov_freq=temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/filtered/freq_cov.vcf"),
     shell:
         """
-        bcftools view -s {wildcards.sample} {input[vcf_cov]} | bcftools filter -s "freq" -S "." -e "GT='a' & MAX(FORMAT/AD[*])/FORMAT/DP < {params.min_alt}" > {output[vcf_cov_freq]}
+        bcftools view -s {wildcards.sample} {input[vcf_cov]} | bcftools filter -s "freq" -S "." -e "GT='alt' & MAX(FORMAT/AD[*])/FORMAT/DP < {params.min_alt}" > {output[vcf_cov_freq]}
         """
 
 rule remerge_all_samples_vcf:
@@ -64,6 +90,8 @@ rule extract_allele_type_from_joint_genotyping_freebayes:
         joint_genotype_vcf_tbi="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtered/freq_cov_all_samples.vcf.gz.tbi",
     output:
         vcf_mutation_type="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.vcf",
+    log:
+        logging_folder+"/typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.txt"
     shell:
         """
         bcftools view -i 'type="{wildcards.type}"' {input[joint_genotype_vcf]} > {output[vcf_mutation_type]}
