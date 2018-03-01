@@ -46,6 +46,9 @@ include:
     prefix + "mapping/find_closest_genomes.rules"
 
 include:
+    prefix + "mapping/bedfile_nocoverage.rules"
+
+include:
     prefix + "snp_calling/freebayes.rules"
 
 include:
