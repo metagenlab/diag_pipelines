@@ -55,14 +55,10 @@ rule agregate_distances_from_joint_genotyping_by_type:
         "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances_{type}.txt"
     shell:
         """
-        for i in {input[pairs]}
-        do
-            cat ${{i}} >> {output[0]}
-        done
-        for i in {input[to_ref]}
-        do
-            cat ${{i}} >> {output[0]}
-        done
+        xargs cat > {output[0]} << 'EOF'\n
+        {input[pairs]}\n
+        {input[to_ref]}\n
+        EOF\n
         """
 
 
