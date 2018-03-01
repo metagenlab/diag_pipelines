@@ -52,7 +52,7 @@ rule agregate_distances_from_joint_genotyping_by_type:
     output:
         "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances_{type}.txt"
     run:
-        with open(output, "w") as outfile:
+        with open(output[0], "w") as outfile:
             for fname in list(input.pairs) + list(input.to_ref):
                 with open(fname) as infile:
                     outfile.write(infile.read())
