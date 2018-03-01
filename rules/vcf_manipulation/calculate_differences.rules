@@ -53,13 +53,12 @@ rule agregate_distances_from_joint_genotyping_by_type:
         to_ref=expand("typing/{{snp_caller}}/core_{{core_method}}/{{ref}}/{{mapping_method}}/distances/to_ref/{sample}_distance_in_{{type}}.txt", sample=read_naming.keys())
     output:
         "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances_{type}.txt"
-    shell:
-        """
-        xargs cat > {output[0]} << 'EOF'\n
-        {input[pairs]}\n
-        {input[to_ref]}\n
-        EOF\n
-        """
+    run:
+        with open(output, "w") as outfile:
+            for fname in list(input.pairs) + list(input.to_ref):
+                with open(fname) as infile:
+                    outfile.write(infile.read())
+
 
 
 rule extract_alignment_for_phylogeny:
