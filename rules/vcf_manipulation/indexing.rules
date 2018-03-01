@@ -1,13 +1,37 @@
-rule index_vcf:
+rule compress_vcf:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
         "{any_vcf}.vcf",
     output:
         temp("{any_vcf}.vcf.gz"),
-        temp("{any_vcf}.vcf.gz.tbi"),
     shell:
         """
         bgzip -c {input[0]} > {output[0]}
-        tabix -f -p vcf {output[0]}
+        """
+
+
+
+rule index_vcf:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        "{any_vcf}.vcf.gz",
+    output:
+        temp("{any_vcf}.vcf.gz.tbi"),
+    shell:
+        """
+        tabix -f -p vcf {input[0]}
+        """
+        
+rule sort_vcf:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        "{any_vcf}.vcf.gz",
+    output:
+        temp("{any_vcf}_sorted.vcf"),
+    shell:
+        """
+        bcftools sort {input[0]}  > {output[0]}
         """

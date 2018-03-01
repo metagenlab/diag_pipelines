@@ -4,55 +4,70 @@ rule get_total_genome_coverage:
     input:
         "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
     output:
-        "samples/{sample}/mapping/{mapping_method}/{ref}/genome_coverage.bed"
+        temp("samples/{sample}/mapping/{mapping_method}/{ref}/genome_coverage.bed")
     shell:
         """
         bedtools genomecov -bga -ibam {input[0]} > {output[0]}
         """
 
 
-rule get_really_low_coverage_regions:
+rule get_high_low_regions:
+    params:
+        min_cov=minimum_coverage
     input:
         "samples/{sample}/mapping/{mapping_method}/{ref}/genome_coverage.bed"
     output:
-        "samples/{sample}/mapping/{mapping_method}/{ref}/low_genome_coverage.bed"
+        temp("samples/{sample}/mapping/{mapping_method}/{ref}/low_genome_coverage.bed")
     shell:
         """
-        min=2
-        awk -v min="${{min}}" '{{if($4 < min) {{print}}}}' {input[0]} > {output[0]}
+        awk -v min="{params.min_cov}" '{{if($4 < min) {{print}}}}' {input[0]} > {output[0]}
         """
 
-
-rule intersect_filter_genome_coverage:
-    conda:
-        "../../envs/bedtools.yaml"
+rule get_high_coverage_regions:
+    params:
+        min_cov=minimum_coverage
     input:
-        "core_genome/{ref}_core_parsnp_sorted.bed",
-        "samples/{sample}/mapping/{mapping_method}/{ref}/low_genome_coverage.bed"
+        "samples/{sample}/mapping/{mapping_method}/{ref}/genome_coverage.bed"
     output:
-        "samples/{sample}/mapping/{mapping_method}/{ref}/low_genome_coverage_intersect_core_parsnp.bed"
+        temp("samples/{sample}/mapping/{mapping_method}/{ref}/high_genome_coverage.bed")
     shell:
         """
-        bedtools intersect -a {input[0]} -b {input[1]}  > {output[0]}.tmp
-        bedtools sort -i {output[0]}.tmp > {output[0]}.tmp.tmp
-        bedtools merge -i {output[0]}.tmp.tmp > {output[0]}
-        rm {output[0]}.tmp*
+        awk -v min="{params.min_cov}" '{{if($4 >= min) {{print}}}}' {input[0]} > {output[0]}
         """
 
-
-        
 rule union_bedtools_of_pair_of_samples:
     conda:
         "../../envs/bedtools.yaml"
     input:
-        "samples/{sample1}/mapping/{mapping_method}/{ref}/low_genome_coverage_intersect_core_parsnp.bed",
-        "samples/{sample2}/mapping/{mapping_method}/{ref}/low_genome_coverage_intersect_core_parsnp.bed",
+        bed1="samples/{sample1}/mapping/{mapping_method}/{ref}/high_genome_coverage_sorted_merged.bed",
+        bed2="samples/{sample2}/mapping/{mapping_method}/{ref}/high_genome_coverage_sorted_merged.bed",
     output:
         temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/beds/{sample1}_{sample2}_low_coverage_regions.bed"),
     shell:
         """
-        cat {input} > {output[0]}.tmp
-        bedtools sort -i {output[0]}.tmp > {output[0]}.tmp.tmp
-        bedtools merge -i {output[0]}.tmp.tmp > {output[0]}
-        rm {output[0]}.tmp*
+        bedtools intersect -a {input[bed1]} -b {input[bed2]} > {output[0]}
+        """
+
+rule sort_bed_file:
+    conda:
+        "../../envs/bedtools.yaml",
+    input:
+        "{any_bed}.bed"
+    output:
+        temp("{any_bed}_sorted.bed")
+    shell:
+        """
+        bedtools sort -i {input[0]} > {output[0]}
+        """
+
+rule merge_bed_file:
+    conda:
+        "../../envs/bedtools.yaml",
+    input:
+        "{any_bed}.bed"
+    output:
+        temp("{any_bed}_merged.bed")
+    shell:
+        """
+        bedtools merge -i {input[0]} > {output[0]}
         """

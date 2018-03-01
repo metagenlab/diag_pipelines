@@ -1,15 +1,16 @@
-rule calculate_pairwise_distances_by_type:
+rule calculate_pairwise_distances_by_type_over_coregenome_and_high_coverage_regions:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
         joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.vcf.gz",
         joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.vcf.gz.tbi",
-        bed="core_genome/{core_method}/{ref}.bed",
+        core_genome_bed="core_genome/{core_method}/{ref}.bed",
+        high_coverage_bed="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/beds/{sample1}_{sample2}_low_coverage_regions_sorted.bed"
     output:
         dist_pair=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances/{sample1}_-_{sample2}_distance_in_{type}.txt"),
     shell:
         """
-        snps=$(bcftools view -R {input[bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | awk '$1!=$2' | wc -l) || :
+        snps=$(bcftools view -R {input[core_genome_bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools view -R {input[high_coverage_bed]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | awk '$1!=$2' | wc -l) || :
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[dist_pair]}   
         """
 
@@ -19,13 +20,14 @@ rule get_snps_positions_by_type:
     input:
         joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.vcf.gz",
         joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.vcf.gz.tbi",
-        bed="core_genome/{core_method}/{ref}.bed",
+        core_genome_bed="core_genome/{core_method}/{ref}.bed",
+        high_coverage_bed="typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/beds/{sample1}_{sample2}_low_coverage_regions_sorted.bed"
     output:
         snp_pos=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/positions/{sample1}_-_{sample2}_in_{type}.txt"),
         variant_vcf=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/vcf/{sample1}_-_{sample2}_in_{type}.vcf")
     shell:
         """
-        bcftools view -R {input[bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '%CHROM %POS [%GT ]\\n' | awk '$3!=$4 && $3!="." && $4!="."' | cut -f 1,2 -d' ' | sed "s/ /\\t/g" > {output[snp_pos]}
+        bcftools view -R {input[bed]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools view -R {input[high_coverage_bed]} | bcftools query -f '%CHROM %POS [%GT ]\\n' | awk '$3!=$4 && $3!="." && $4!="."' | cut -f 1,2 -d' ' | sed "s/ /\\t/g" > {output[snp_pos]}
         bcftools view -R {output[snp_pos]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} > {output[variant_vcf]}
         """
 
@@ -33,14 +35,14 @@ rule calculate_distance_with_ref_by_type:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.vcf.gz",
-        joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_{type}.vcf.gz.tbi",
-        bed="core_genome/{core_method}/{ref}.bed",
+        high_coverage_vcf="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/high_genome_coverage.vcf.gz",
+        high_coverage_tbi="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/high_genome_coverage.vcf.gz.tbi",
+        core_genome_bed="core_genome/{core_method}/{ref}.bed",
     output:
         dist_ref=temp("typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances/to_ref/{sample}_distance_in_{type}.txt"),
     shell:
         """
-        snps=$(bcftools view -R {input[bed]} -s {wildcards.sample} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | grep -v "0" | wc -l) || :
+        snps=$(bcftools query -f '[%GT ]\\n' {input[high_coverage_vcf]} | grep -v "\." | grep -v "0" | wc -l) || :
         echo {wildcards.ref} {wildcards.sample} ${{snps}} > {output[dist_ref]}
         """
 
@@ -58,25 +60,62 @@ rule agregate_distances_from_joint_genotyping_by_type:
                     outfile.write(infile.read())
 
 #we aggregate the files with python because sometimes bash can't handle the high number of files 
-
-rule extract_alignment_for_phylogeny:
+rule get_sample_vcf_over_core_genome:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
         vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_snp.vcf.gz",
         vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_snp.vcf.gz.tbi",
-        bed="core_genome/core_{core_method}/{ref}.bed",
+        core_genome_bed="core_genome/{core_method}/{ref}.bed",
     output:
-        alignment="typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
+        vcf="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/snps.vcf",
     shell:
         """
-        printf ">{wildcards.ref}\\n" > {output[alignment]}
-        bcftools query -R {input[bed]} -f %REF {input[vcf]} >> {output[alignment]}
-        printf "\\n" >> {output[alignment]}
-        for samp in $(bcftools query -l {input[vcf]})
-        do
-            printf '>'${{samp}}'\\n' 
-            bcftools query -R {input[bed]} -s ${{samp}} -f '[%TGT]' {input[vcf]} | sed "s/\./N/g"
-            printf '\\n'
-        done >> {output[alignment]}
+        bcftools view -R {input[core_genome_bed]} -s {wildcards.sample} {input[vcf]} > {output[vcf]}
+        """
+
+
+rule split_low_high_coverage_vcfs:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        vcf="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/snps.vcf.gz",
+        vcf_tbi="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/snps.vcf.gz.tbi",
+        high_coverage_bed="samples/{sample}/mapping/{mapping_method}/{ref}/high_genome_coverage_sorted_merged.bed",
+        low_coverage_bed="samples/{sample}/mapping/{mapping_method}/{ref}/low_genome_coverage_sorted_merged.bed",
+    output:
+        low_coverage="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/low_genome_coverage.vcf",
+        high_coverage="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/high_genome_coverage.vcf",
+    shell:
+        """
+        bcftools filter -R {input[low_coverage_bed]} -e "GT='ref' || GT ='alt'" -S "."  {input[vcf]} > {output[low_coverage]}
+        bcftools filter -R {input[high_coverage_bed]} {input[vcf]} > {output[high_coverage]}
+        """
+
+rule merge_low_high_coverage_vcfs:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        low_coverage="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/low_genome_coverage_sorted.vcf.gz",
+        low_coverage_tbi="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/low_genome_coverage_sorted.vcf.gz.tbi",
+        high_coverage="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/high_genome_coverage_sorted.vcf.gz",
+        high_coverage_tbi="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/high_genome_coverage_sorted.vcf.gz.tbi",
+    output:
+        high_coverage="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/all_snps.vcf",
+    shell:
+        """
+        bcftools concat {input[high_coverage]} {input[low_coverage]} > {output[high_coverage]}
+        """
+        
+rule extract_alignment_for_vcfs:
+    conda:
+        "../../envs/vt-bcftools.yaml"
+    input:
+        all_vcf="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/all_snps_sorted.vcf.gz",
+        all_tbi="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/all_snps_sorted.vcf.gz.tbi",
+    output:
+        alignment="samples/{sample}/alignment/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa",
+    shell:
+        """
+        bcftools query -f '[%TGT]' {input[all_vcf]} | sed "s/\./N/g" > {output[alignment]}
         """

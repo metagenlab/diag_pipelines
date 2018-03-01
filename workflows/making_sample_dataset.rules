@@ -40,7 +40,7 @@ try:
                 sample=str(local_data.index[match.index(True)])
             else:
                 sample=local_data.index[local_data['OldSampleName'] == i].tolist()
-                if len(sample) > 1:
+                if len(sample) != 1:
                     raise ValueError("Problem matching OldSampleName")
                 sample=sample[0]
             folders_correct[sample] = folders[i]
