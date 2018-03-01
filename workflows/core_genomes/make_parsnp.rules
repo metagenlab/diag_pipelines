@@ -2,14 +2,13 @@ prefix = "../../rules/"
 
 logging_folder=config["logging_folder"]
 
-
-if "taxid_to_exclude" not in config.keys():
-    excl_id=""
-else:
+try:
     excl_id=config["taxid_to_exclude"]
+except KeyError:
+    excl_id=""
 
 
-prefix = "../rules/"
+prefix = "../../rules/"
 
 logging_folder=config["logging_folder"]
 

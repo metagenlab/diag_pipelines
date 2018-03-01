@@ -24,7 +24,6 @@ rule get_complete_genomes_urls:
         id = config["species_taxid"],
         spec= config["species"],
         excluded_id = excl_id,
-
     conda:
         "../../envs/entrez-direct.yaml"
     output:
@@ -37,7 +36,6 @@ rule get_complete_genomes_urls:
         else
             var=$(echo {params.excluded_id} | sed "s/ / -unless Taxid -equals /g" | sed "s/^/-unless Taxid -equals /")
         fi
-        var=$(echo {params.excluded_id} | sed "s/ / -unless Taxid -equals /g" | sed "s/^/-unless Taxid -equals /")
         esearch -db assembly -query "{params.spec}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.id} -if FtpPath_RefSeq ${{var}} -element Id FtpPath_RefSeq > {output[0]}
         """         
         
