@@ -12,6 +12,7 @@ rule create_dict_for_reference:
         samtools faidx {input[0]}
         gatk-launch CreateSequenceDictionary -R {input[0]} &> {log}
         """
+        
 
 rule haplotype_caller_vcf:
     conda:
@@ -59,7 +60,7 @@ rule merge_gvcf_files:
     output:
         "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
     log:
-        logging_folder+"/logs/gatk_gvcfs/core_parsnp/{ref}/{mapping_method}/merge_gvcf.txt",
+        logging_folder+"/logs/gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
         if [ -d $(dirname {output[0]}) ]; then
@@ -79,19 +80,8 @@ rule gatk_joint_genotyping_on_gvcf_files:
     output:
         "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples.vcf",
     log:
-        logging_folder+"/logs/gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
+        logging_folder+"/logs/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genotype_gvcf.txt",
     shell:
         """
-        gatk-launch GenotypeGVCFs -ploidy 1 -R {input[0]} --annotate-with-num-discovered-alleles true --annotations-to-exclude InbreedingCoeff -V gendb://$(dirname {input[1]}) -O {output[0]} &> {log}
+        gatk-launch GenotypeGVCFs --java-options -Xmx23g -ploidy 1 -R {input[0]} --annotate-with-num-discovered-alleles true --annotations-to-exclude InbreedingCoeff -V gendb://$(dirname {input[1]}) -O {output[0]} &> {log}
         """
-
-        
-
-        
-
-    
-
-        
-
-        
-    
