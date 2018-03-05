@@ -83,5 +83,5 @@ rule gatk_joint_genotyping_on_gvcf_files:
         logging_folder+"/logs/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genotype_gvcf.txt",
     shell:
         """
-        gatk-launch GenotypeGVCFs -ploidy 1 -R {input[0]} --annotations-to-exclude InbreedingCoeff -V gendb://$(dirname {input[1]}) -O {output[0]} &> {log}
+        gatk-launch GenotypeGVCFs --use-new-qual-calculator -ploidy 1 -R {input[0]} --annotations-to-exclude InbreedingCoeff --variant gendb://$(dirname {input[1]}) --output {output[0]} &> {log}
         """
