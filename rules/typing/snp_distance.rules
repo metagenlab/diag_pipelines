@@ -40,7 +40,7 @@ rule compute_minimum_spanning_tree:
         "references/{ref}/genome_subvalue.txt",
 #        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
     output:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.pdf"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.svg"
     log:
         logging_folder+"/logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.txt"
     script:

@@ -106,7 +106,7 @@ if (sts_exist){
 }
 
 
-pdf(snakemake@output[[1]], height=10, width=10)
+svg(snakemake@output[[1]], height=10, width=10)
 if (sts_exist) {
     par(mar=c(0,8,0,0))
 }
