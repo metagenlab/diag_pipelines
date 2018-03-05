@@ -50,7 +50,7 @@ rule haplotype_caller_gvcf:
         gatk-launch HaplotypeCaller -ploidy 1 --output {output[0]} --input {input[0]} --reference {input[1]} -ERC GVCF &> {log[0]}
         """
 
-rule merge_gvcf_files:
+rule merge_gvcf_files_genomicsDBimport:
     conda:
         "../../envs/gatk.yaml"
     input:
@@ -71,12 +71,30 @@ rule merge_gvcf_files:
         gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[0]}) -V ${{var}} --intervals ${{acc}} &> {log}
         """
 
+rule merge_gvcf_files_combinegvcfs:
+    conda:
+        "../../envs/gatk.yaml"
+    input:
+        ref="references/{ref}/genome_fasta.fasta",
+        gvcfs=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
+        gvcfs_tbi=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
+    output:
+        gvcf_all="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/combined/all_samples.vcf"
+    log:
+        logging_folder+"/logs/gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
+    shell:
+        """
+        acc=$(grep ">" {input[ref]} | sed "s/ .*//" | sed "s/>//")
+        var=$(echo {input[gvcfs]} | sed "s/ / --variant /g")
+        gatk-launch CombineGVCFs --output {output[gvcf_all]} --variant ${{var}} --reference {input[ref]} &> {log}
+        """
+
 rule gatk_joint_genotyping_on_gvcf_files:
     conda:
         "../../envs/gatk.yaml"
     input:
         "references/{ref}/genome_fasta.fasta",
-        ancient("typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf")
+        "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/combined/all_samples.vcf")
     output:
         "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples.vcf",
     log:
