@@ -65,7 +65,7 @@ rule extract_alignment_for_phylogeny:
     input:
         vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_snp.vcf.gz",
         vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/all_samples_snp.vcf.gz.tbi",
-        bed="core_genome/core_{core_method}/{ref}.bed",
+        bed="core_genome/{core_method}/{ref}.bed",
     output:
         alignment="typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
     shell:
