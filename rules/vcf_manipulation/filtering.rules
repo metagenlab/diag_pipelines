@@ -20,26 +20,14 @@ rule coverage_filtering_from_freebayes:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples.vcf",
+        vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples.vcf",
     output:
-        vcf_cov="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtered/cov_all_samples.vcf",
+        vcf_cov="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtered/cov_all_samples.vcf",
     shell:
         """
         bcftools filter -s "lowcov" -S "." -e '(FORMAT/DP)<{params.min_cov}' {input[vcf]} > {output[vcf_cov]}
         """
 
-rule genotype_quality_filtering_from_gatk:
-    conda:
-        "../../envs/vt-bcftools.yaml"
-    input:
-        vcf="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples.vcf",
-    output:
-        vcf_cov="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtered/cov_all_samples.vcf",
-    shell:
-        """
-        bcftools filter -s "lowgq" -S "." -e '(FORMAT/GQ)<99' {input[vcf]} > {output[vcf_cov]}
-        """
-        
 rule frequency_filtering_per_sample:
     params:
         min_alt=minimum_alternate_frac,
