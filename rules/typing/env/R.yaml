@@ -1,4 +1,0 @@
-channels:
- - conda-forge
-dependencies:
- - r-base = 3.4.1=1

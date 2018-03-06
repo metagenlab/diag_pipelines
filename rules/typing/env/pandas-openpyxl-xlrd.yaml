@@ -1,7 +1,0 @@
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - openpyxl = 2.5.0=py36_0
- - pandas = 0.22.0=py36_0
- - xlrd = 1.1.0=py_2

@@ -1,5 +1,0 @@
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - snp-sites=2.3.3

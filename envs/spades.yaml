@@ -1,5 +1,0 @@
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - spades = 3.11.1=py36_zlib1.2.8_0

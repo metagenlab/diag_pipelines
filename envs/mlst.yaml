@@ -1,5 +1,0 @@
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - mlst = 2.9=pl5.22.0_0

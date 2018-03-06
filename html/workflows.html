@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Workflows &#8212; diag_pipelines  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Logging functions" href="general_processes.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="workflows">
+<h1>Workflows<a class="headerlink" href="#workflows" title="Permalink to this headline">¶</a></h1>
+<p>Current available workflows are implemented in the folder <strong>workflows</strong>. Each workflow will depend on <strong>rules</strong> and can also depend on other workflows. <strong>Rules</strong> are sorted with respect to their general function in different folders.</p>
+<p>Higher level functions are also included in <strong>workflows</strong>:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">logging.rules</span></code> archives all logs, commands, and configuration files used every time snakemake is run (excluding dry runs)</li>
+<li><code class="docutils literal"><span class="pre">making_sample_dataset.rules</span></code> determines which local samples and sra are going to be used on the run, based on the configuration files and the fastq read files present</li>
+</ul>
+<p><strong>Workflows</strong> for generating <strong>core genomes</strong> of species are also included. They can have three different origins:</p>
+<ul class="simple">
+<li>The cgMLST scheme of <a class="reference external" href="http://www.cgmlst.org/ncs">ridom</a></li>
+<li>The cgMLST scheme of <a class="reference external" href="http://enterobase.warwick.ac.uk/">enterobase</a></li>
+<li>For species unavailable on either resource, core genome can be calculated using parsnp and the complete genomes of the species available on RefSeq</li>
+</ul>
+<div class="section" id="assembly-and-quality">
+<span id="assembly-quality"></span><h2>Assembly and quality<a class="headerlink" href="#assembly-and-quality" title="Permalink to this headline">¶</a></h2>
+<p>Aggregates rules for assembling genomes and performing various quality control checks.
+Required parameters:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">cov_cutoff</span></code>: contigs whose coverage is below this cutoff will be excluded from the final assembly</li>
+<li><code class="docutils literal"><span class="pre">adapter_file_name</span></code>: look for the adaptor for this library preparation kit (possible <a class="reference external" href="https://github.com/timflutre/trimmomatic/tree/master/adapters">values</a>)</li>
+<li><code class="docutils literal"><span class="pre">adapter_removal_param1</span></code>, <code class="docutils literal"><span class="pre">adapter_removal_param2</span></code>, <code class="docutils literal"><span class="pre">adapter_removal_param3</span></code>: parameters for adapter trimming (<a class="reference external" href="http://www.usadellab.org/cms/index.php?page=trimmomatic">reference</a>)</li>
+<li><code class="docutils literal"><span class="pre">minimum_quality_base</span></code>: leading and trailing bases below this quality will be removed</li>
+<li><code class="docutils literal"><span class="pre">minimum_read_length</span></code>: reads shorter than this threshold after trimming will be discarded (be careful when using reads from SRA!)</li>
+</ul>
+<p>Deliverables:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">quality/multiqc/self_genome/multiqc_report.html</span></code>: quality control report based on the results of <strong>fastqc</strong>, <strong>trimmomatic</strong>, <strong>qualimap</strong>, <strong>quast</strong> and <strong>prokka</strong> for every sample</li>
+<li><code class="docutils literal"><span class="pre">samples/{sample_name}/annotation/</span></code>: folder containing all annotation files from the <code class="docutils literal"><span class="pre">prokka</span></code> software</li>
+</ul>
+</div>
+<div class="section" id="resistance">
+<span id="id1"></span><h2>Resistance<a class="headerlink" href="#resistance" title="Permalink to this headline">¶</a></h2>
+<p>Depends on the <strong>assembly and quality</strong> workflow.
+Required parameters:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">resistance_prediction_softwares</span></code>: list of software for genetic resistance assessment. Possible values: <code class="docutils literal"><span class="pre">mykrobe</span></code> and <code class="docutils literal"><span class="pre">rgi</span></code>.</li>
+</ul>
+<p>Deliverables:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">samples/{sample_name}/annotation/resistance/rgi.tsv</span></code>: results files for RGI</li>
+<li><code class="docutils literal"><span class="pre">samples/{sample_name}/annotation/resistance/mykrobe.tsv</span></code>: results file for mykrobe</li>
+</ul>
+</div>
+<div class="section" id="virulence">
+<span id="id2"></span><h2>Virulence<a class="headerlink" href="#virulence" title="Permalink to this headline">¶</a></h2>
+<p>Depends on the <strong>assembly and quality</strong> workflow.
+Required parameters:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">virulence_factors</span></code>: file with list of uniprot accession of virulence factors. An example is available in the folder <code class="docutils literal"><span class="pre">data/staph/db/</span></code></li>
+</ul>
+<p>Deliverables:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">virulence_summary.xlsx</span></code>: summary of virulence proteins found in every samples.</li>
+</ul>
+</div>
+<div class="section" id="epidemiology">
+<span id="id3"></span><h2>Epidemiology<a class="headerlink" href="#epidemiology" title="Permalink to this headline">¶</a></h2>
+<p>Depends on the <strong>assembly and quality</strong> workflow (for ST assessment).
+Required parameters:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">species_taxid</span></code>: ID from the NCBI Taxonomy database of the species</li>
+</ul>
+<p>Deliverables:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">typing/{snp_caller}/core_{ridom</span> <span class="pre">or</span> <span class="pre">enterobase}/{reference_genome}/bwa/distance_snp_mst_no_st.svg</span></code>: Minimum spanning tree of the distance in snps between every sample over the core genome as defined by ridom or enterobase. Available species and values for reference genomes are listed in the files in <code class="docutils literal"><span class="pre">data/core_genome_dbs/</span></code>. If the species under consideration has a multiple locus sequence type available, <code class="docutils literal"><span class="pre">typing/{snp_caller}/core_{ridom</span> <span class="pre">or</span> <span class="pre">enterobase}/{reference_genome}/bwa/distance_snp_mst_with_st.svg</span></code> can be generated with the ST of each sample.</li>
+<li><code class="docutils literal"><span class="pre">phylogeny/{snp_caller}/core_{ridom</span> <span class="pre">or</span> <span class="pre">enterobase}/{reference_genome}/bwa/phylogeny_no_st.svg</span></code>: A phylogeny based on the alignments of the core SNPs, using RAxML. Available species and values for reference genomes are listed in the files in <code class="docutils literal"><span class="pre">data/core_genome_dbs/</span></code>. If the species under consideration has a multiple locus sequence type available, <code class="docutils literal"><span class="pre">phylogeny/{snp_caller}/core_{ridom</span> <span class="pre">or</span> <span class="pre">enterobase}/{reference_genome}/bwa/phylogeny_with_st.svg</span></code> can be generated with the ST of each sample.</li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Workflows</a><ul>
+<li><a class="reference internal" href="#assembly-and-quality">Assembly and quality</a></li>
+<li><a class="reference internal" href="#resistance">Resistance</a></li>
+<li><a class="reference internal" href="#virulence">Virulence</a></li>
+<li><a class="reference internal" href="#epidemiology">Epidemiology</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="general_processes.html" title="previous chapter">Logging functions</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/workflows.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Sacha Laurent.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/workflows.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

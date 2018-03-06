@@ -1,7 +1,0 @@
-name: validator
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - embl-api-validator = 1.1.173
-

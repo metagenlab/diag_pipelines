@@ -1,9 +1,0 @@
-#+OPTIONS: ^:nil
-
-* Pipeline Dev
-
-** Problems to fix before running
-*** Mykrobe
-1. The file =lib/python3.6/site-packages/mykatlas/typing/typer/presence.py= in the conda environment has to be fixed: add on line 160 =sequence_coverages=list(sequence_coverages)= (see fix https://github.com/Phelimb/atlas/commit/9160ec0a8873494c859775045d1dcf2ada8941e4#diff-997723f7231c49eacf527406b95678d2)
-
-   

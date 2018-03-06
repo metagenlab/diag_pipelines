@@ -1,7 +1,0 @@
-channels:
- - bioconda
- - conda-forge
-dependencies:
- - mysql-connector-python = 2.2.2
- - openpyxl = 2.5.0b1
- - pandas = 0.21.1
