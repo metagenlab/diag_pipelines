@@ -4,14 +4,9 @@
 Workflows
 ---------
 
-Current available workflows are implemented in the folder **workflows**. Each workflow will depend on **rules** and can also depend on other workflows. **Rules** are sorted with respect to their general function in different folders.
+Current available workflows are implemented in the folder ``workflows``. Each workflow will depend on ``rules``, stored in the folder of the same name, and can also depend on other workflows. ``rules`` are sorted with respect to their general function in different folders.
 
-Higher level functions are also included in **workflows**:
-
-* ``logging.rules`` archives all logs, commands, and configuration files used every time snakemake is run (excluding dry runs)
-* ``making_sample_dataset.rules`` determines which local samples and sra are going to be used on the run, based on the configuration files and the fastq read files present
-   
-**Workflows** for generating **core genomes** of species are also included. They can have three different origins:
+``workflows`` for generating **core genomes** of species are also included. They can have three different origins:
 
 * The cgMLST scheme of `ridom <http://www.cgmlst.org/ncs>`_
 * The cgMLST scheme of `enterobase <http://enterobase.warwick.ac.uk/>`_
@@ -40,7 +35,8 @@ Deliverables:
 
 Resistance
 ----------
-Depends on the **assembly and quality** workflow.
+Depends on the :ref:`assembly_quality` workflow.
+
 Required parameters:
 
 * ``resistance_prediction_softwares``: list of software for genetic resistance assessment. Possible values: ``mykrobe`` and ``rgi``.
@@ -57,7 +53,8 @@ Deliverables:
   
 Virulence
 ---------
-Depends on the **assembly and quality** workflow.
+Depends on the :ref:`assembly_quality` workflow.
+
 Required parameters:
 
 * ``virulence_factors``: file with list of uniprot accession of virulence factors. An example is available in the folder ``data/staph/db/``
@@ -71,10 +68,12 @@ Deliverables:
    
 Epidemiology
 ------------
-Depends on the **assembly and quality** workflow (for ST assessment).
+Depends on the :ref:`assembly_quality` workflow (for ST assessment).
+
 Required parameters:
 
-* ``species_taxid``: ID from the NCBI Taxonomy database of the species
+* ``minimum_coverage_for_calling``: minimum of coverage for considering a genomic position when counting differences between samples. Any position (SNP or non-SNP when compared to the reference) having a lower coverage will be masked
+* ``minimum_alternate_fraction_for_calling``: minimum ratio of observations favouring a SNP over observations not favouring a SNP. Any SNPs not meeting this criteria will also be masked
   
 .. * ``ref_ids_for``
 
@@ -83,5 +82,6 @@ Deliverables:
 * ``typing/{snp_caller}/core_{ridom or enterobase}/{reference_genome}/bwa/distance_snp_mst_no_st.svg``: Minimum spanning tree of the distance in snps between every sample over the core genome as defined by ridom or enterobase. Available species and values for reference genomes are listed in the files in ``data/core_genome_dbs/``. If the species under consideration has a multiple locus sequence type available, ``typing/{snp_caller}/core_{ridom or enterobase}/{reference_genome}/bwa/distance_snp_mst_with_st.svg`` can be generated with the ST of each sample.
 * ``phylogeny/{snp_caller}/core_{ridom or enterobase}/{reference_genome}/bwa/phylogeny_no_st.svg``: A phylogeny based on the alignments of the core SNPs, using RAxML. Available species and values for reference genomes are listed in the files in ``data/core_genome_dbs/``. If the species under consideration has a multiple locus sequence type available, ``phylogeny/{snp_caller}/core_{ridom or enterobase}/{reference_genome}/bwa/phylogeny_with_st.svg`` can be generated with the ST of each sample.
   
-   
+* ``quality/multiqc/mapping_to_{reference_genome}/multiqc_report.html``: multiqc report of **qualimap**, **fastqc** and **trimmomatic** of every samples when mapping against the reference. Check for quality control.
+  
 .. toctree::
