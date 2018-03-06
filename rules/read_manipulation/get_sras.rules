@@ -5,7 +5,8 @@ rule get_sra_single:
         temp("links/./{sample}.single.fastq.gz"),
     shell:
         """
-        fastq-dump --gzip --stdout {wildcards.sample} > {output[0]}
+        fastq-dump --gzip --outdir $(dirname {output[0]}) {wildcards.sample} &> /dev/null
+        mv $(dirname {output[0]})/{wildcards.sample}.fastq.gz {output[0]}
         """
 
 
@@ -17,7 +18,7 @@ rule get_sra_paired:
         temp("links/./{sample}_2.fastq.gz"),
     shell:
         """
-        fastq-dump --split-files --gzip --outdir links/ {wildcards.sample}
+        fastq-dump --split-files --gzip --outdir $(dirname {output[0]}) {wildcards.sample} &> /dev/null
         """
 
 
