@@ -1,5 +1,6 @@
 import sys
 import pandas
+import re
 
 sys.path.insert(0, config["absolute_path_of_pipeline_folder"])
 
@@ -21,7 +22,7 @@ reads_local = {}
 folders = {}
 original_name = {}
 
-try:
+if "local_samples" in config.keys():
     local_data = pandas.read_csv(config["local_samples"], sep="\t", index_col=0)
     local_data.index = [str(x) for x in local_data.index]
     all_local_sample_names= "".join(list(local_data.index))
@@ -31,29 +32,34 @@ try:
     read_correct = {}
     original_correct = {}
     folders_correct = {}
-    if folders.keys():
-        for i in folders.keys():
-            if "OldSampleName" not in list(local_data):
-                match = [i.startswith(str(x)) for x in list(local_data.index)]
-                if sum(match) > 1:
-                    raise ValueError("Problem matching SampleNames to read file names")
-                sample=str(local_data.index[match.index(True)])
-            else:
-                sample=local_data.index[local_data['OldSampleName'] == i].tolist()
-                if len(sample) != 1:
-                    raise ValueError("Problem matching OldSampleName")
-                sample=sample[0]
-            folders_correct[sample] = folders[i]
-            original_correct[sample] = original_name[i]
-            read_correct[sample] = reads_local[i]
+    if "OldSampleName" not in list(local_data):
+        for i in list(local_data.index):
+            regex = re.compile(r'%s([^a-zA-Z0-9]|$)' % i)
+            match = [bool(re.match(regex, x)) for x in sorted(list(folders.keys()))]
+            if sum(match) != 1:
+                raise ValueError("Problem matching SampleNames to read file names")
+            sample=str(sorted(list(folders.keys()))[match.index(True)])
+            folders_correct[i] = folders[sample]
+            original_correct[i] = original_name[sample]
+            read_correct[i] = reads_local[sample]
+    else:
+        for i in list(local_data["OldSampleName"]):
+            regex = re.compile(r'%s([^a-zA-Z0-9]|$)' % i)
+            match = [ bool(re.match(regex, x)) for x in sorted(list(folders.keys()))]
+            if sum(match) != 1:
+                raise ValueError("Problem matching OldSampleName to read file names")
+            old_sample_name=str(sorted(list(folders.keys()))[match.index(True)])
+            sample=str(local_data.index[local_data['OldSampleName'] == i][0])
+            folders_correct[sample] = folders[old_sample_name]
+            original_correct[sample] = original_name[old_sample_name]
+            read_correct[sample] = reads_local[old_sample_name]
     original_name = original_correct
     reads_local = read_correct
     folders = folders_correct
     all_samples=local_data
-except KeyError:
-    pass
 
-try: 
+
+if "sra_samples" in config.keys():
     sra_data = pandas.read_csv(config["sra_samples"], sep="\t", index_col=0)
     all_sra_sample_names =  "".join(list(sra_data["SampleName"]))
     if "(" in all_sra_sample_names or ")" in all_sra_sample_names or "_-_" in all_sra_sample_names:
@@ -71,8 +77,7 @@ try:
         else:
             raise ValueError("Problem in the sra file")
         all_samples.loc[sample_name, "ScientificName"]=sra_data.loc[i, "ScientificName"]
-except KeyError:
-    pass
+
 
 
 
@@ -80,4 +85,4 @@ read_naming = { **reads_local, **sras_ext}
 original_name = { **original_name, **reads_sra}
 folders = { **folders, **sras_folder}
 
-print(read_naming)
+print(read_naming, original_name)
