@@ -19,6 +19,7 @@ As a general rules, any ``variable`` referenced in this documentation must be ei
 .. toctree::
    general_processes.rst
    workflows.rst
+   includeme
    :maxdepth: 2
    :caption: Contents:
    
