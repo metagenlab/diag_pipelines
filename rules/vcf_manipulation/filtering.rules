@@ -14,7 +14,7 @@ rule normalize_and_vt_decompose_from_freebayes:
         bcftools norm -f {input[ref]} -m -any {input[0]} | vt decompose_blocksub - | bcftools norm -f {input[ref]} -m +any > {output[normalized]}
         """
 
-rule coverage_filtering_from_freebayes:
+rule coverage_filtering:
     params:
         min_cov=minimum_coverage,
     conda:
