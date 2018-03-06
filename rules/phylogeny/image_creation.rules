@@ -46,6 +46,6 @@ rule convert_phylogeny_to_image_no_st:
     shell:
         """
         id=$(grep ">" {input[genome_ref]} | cut -f1 -d' ' | sed "s/>//")
-        echo {wildcards.ref}'\t'${{id}}"_ST_"${{st_ref}} >> {output[0]}
+        echo {wildcards.ref}'\t'${{id}} >> {output[0]}
         nw_support {input[0]} {input[1]} | nw_rename - {output[0]} | nw_display -S -s -b 'opacity:0' -w -{params.size} -I m -W 20 -v 15 - > {output[1]}
         """
