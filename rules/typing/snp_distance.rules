@@ -40,11 +40,11 @@ rule compute_minimum_spanning_tree_with_st:
         "references/{ref}/genome_subvalue.txt",
 #        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
     output:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst_st.svg"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst_with_st.svg"
     log:
-        logging_folder+"/logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.txt"
+        logging_folder+"/logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst_with_st.txt"
     script:
-        "scripts/minimum_spanning_tree.R"
+        "scripts/minimum_spanning_tree_with_st.R"
 
         
 rule compute_minimum_spanning_tree_no_st:

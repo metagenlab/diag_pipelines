@@ -11,8 +11,8 @@ rule convert_phylogeny_to_image_st:
         st_ref="references/{ref}/mlst.tsv",
         genome_ref="references/{ref}/genome_fasta.fasta",                
     output:
-        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/renaming.txt",
-        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/phylogeny.svg",
+        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/renaming_with_st.txt",
+        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/phylogeny_with_st.svg",
     shell:
         """
         cut -f1,3 {input[2]} | sed "s/\\t/_ST_/" > {output[0]}.tmp
