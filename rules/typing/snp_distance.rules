@@ -28,7 +28,7 @@ rule agregate_all_unknown_position:
 
         
         
-rule compute_minimum_spanning_tree:
+rule compute_minimum_spanning_tree_with_st:
     params:
         threshold=config["snp_threshold"]
     conda:
@@ -40,11 +40,27 @@ rule compute_minimum_spanning_tree:
         "references/{ref}/genome_subvalue.txt",
 #        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
     output:
-        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.svg"
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst_st.svg"
     log:
         logging_folder+"/logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst.txt"
     script:
         "scripts/minimum_spanning_tree.R"
+
+        
+rule compute_minimum_spanning_tree_no_st:
+    params:
+        threshold=config["snp_threshold"]
+    conda:
+        "../../envs/igraph.yaml"
+    input:
+        dist="typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}.tsv",
+        subvalue="references/{ref}/genome_subvalue.txt",
+    output:
+        "typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst_no_st.svg"
+    log:
+        logging_folder+"/logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst_no_st.txt"
+    script:
+        "scripts/minimum_spanning_tree_no_st.R"
 
         
         
