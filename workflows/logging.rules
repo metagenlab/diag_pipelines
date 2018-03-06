@@ -14,10 +14,10 @@ if "--dryrun" not in sys.argv and "-n" not in sys.argv:
     with open(cmd_file, "w") as f:
         f.write(" ".join(sys.argv)+"\n")
     copyfile(workflow.overwrite_configfile, logging_folder+"/config.yaml")
-    if "sample_names" in config.keys():
-        copyfile(config["sample_names"], logging_folder+"/sample_names.tsv")
-    if "sras_samples" in config.keys():
-        copyfile(config["sras_samples"], logging_folder+"/sras_samples.tsv")
+    if "local_samples" in config.keys():
+        copyfile(config["sample_names"], logging_folder+"/local_samples.tsv")
+    if "sra_samples" in config.keys():
+        copyfile(config["sras_samples"], logging_folder+"/sra_samples.tsv")
     if "species_names_correspondance_file" in config.keys():
         copyfile(config["species_names_correspondance_file"], logging_folder+"/species.tsv")
     copyfile(workflow.snakefile, logging_folder+"/snakefile.rules")
