@@ -1,4 +1,3 @@
-
 library(igraph, warn.conflicts=FALSE)
 
 set.seed(1)

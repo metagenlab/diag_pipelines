@@ -78,7 +78,7 @@ rule gatk_joint_genotyping_on_gvcf_files:
         "references/{ref}/genome_fasta.fasta",
         "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
     output:
-        "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples.vcf",
+        "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf",
     log:
         logging_folder+"/logs/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genotype_gvcf.txt",
     shell:
