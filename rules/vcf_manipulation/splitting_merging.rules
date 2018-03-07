@@ -1,29 +1,24 @@
-rule merge_vcf_pairs:
+rule split_every_sample:
+    conda:
+        "../../envs/vt-bcftools.yaml",
+    input:
+        vcf_cov="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf",
+    output:
+        vcf_sample=temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/raw.vcf"),
+    shell:
+        """
+        bcftools view -s {wildcards.sample} {input[vcf_cov]} > {output[vcf_sample]}
+        """
+
+rule remerge_all_samples_vcf:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        "samples/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed_indel_filtered.vcf.gz",
-        "samples/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed_indel_filtered.vcf.gz",
-        "samples/{sample1}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed_indel_filtered.vcf.gz.tbi",
-        "samples/{sample2}/snps/{snp_caller}/{ref}/{mapping_method}/coverage_filtered_mnp_decomposed_indel_filtered.vcf.gz.tbi",
+        vfcs=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/annotated_am.vcf.gz", sample=list(read_naming.keys())),
+        vfcs_tbi=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/annotated_am.vcf.gz.tbi", sample=list(read_naming.keys())),
     output:
-        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/{sample1}_-_{sample2}.vcf"),
+        joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/raw/annotated_am_all_samples.vcf",
     shell:
         """
-        bcftools merge {input[0]} {input[1]} -0 -O v > {output[0]}
+        bcftools merge {input[vfcs]} > {output[joint_genotype_vcf]}
         """
-
-rule merge_all_vcfs_no_indels:
-    conda:
-        "../../envs/vt-bcftools.yaml"
-    input:
-        vcfs=expand("samples/{sample}/snps/freebayes/{{ref}}/{{mapping_method}}/{sample}.vcf.gz", sample=read_naming.keys())
-    output:
-        temp("typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/vcfs/merged.vcf.gz"),
-    shell:
-        """
-        bcftools merge -f PASS,hicov,lowcov,freq -0 -O v {input[vcfs]} > {output[0]}
-        """
-        
-
-
