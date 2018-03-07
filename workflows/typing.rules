@@ -57,13 +57,16 @@ include:
     prefix + "vcf_manipulation/filtering.rules"
     
 include:
-    prefix + "vcf_manipulation/merging.rules"
+    prefix + "vcf_manipulation/splitting_merging.rules"
     
 include:
     prefix + "vcf_manipulation/indexing.rules"
 
 include:
     prefix + "vcf_manipulation/calculate_differences.rules"
+
+include:
+    prefix + "vcf_manipulation/add_annotation.rules"
 
 include:
     prefix + "typing/mlst.rules"
