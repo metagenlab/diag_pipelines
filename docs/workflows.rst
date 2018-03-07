@@ -68,7 +68,7 @@ Deliverables:
    
 Epidemiology
 ------------
-Depends on the :ref:`assembly_quality` workflow (for ST assessment).
+Depends on the :ref:`assembly_quality` workflow (for determining the Sequence Types).
 
 Required parameters:
 

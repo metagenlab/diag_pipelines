@@ -7,19 +7,10 @@
 Documentation for the genomics and metagenomics workflows
 =========================================================
 
-Routine procedures for diagnostic purposes using microbial genomics and metagenomics.
-
-Workflows for epidemiology, anti-microbial resistance genotyping and virulence factors identification have been implemented using the `Snakemake <http://snakemake.readthedocs.io/en/stable/>`_ workflow management system with `bioconda <https://bioconda.github.io/>`_ integration for software dependency. `Docker <https://hub.docker.com/r/metagenlab/diag_pipelines/>`_ images of main releases are available.
-
-As a general rules, any ``variable`` referenced in this documentation must be either:
-
-* Defined in the yaml config file that is passed to snakemake by ``--configfile``
-* Defined directly in the snakemake command by ``--config variable=$value``
-
 .. toctree::
+   includeme.rst
    general_processes.rst
    workflows.rst
-   includeme
    :maxdepth: 2
    :caption: Contents:
    
