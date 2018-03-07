@@ -13,21 +13,6 @@ rule distance_columns_to_matrix:
         "scripts/distance_columns_to_matrix.py"
 
         
-rule agregate_all_unknown_position:
-    conda:
-        "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
-    input:
-        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/unknown_hicov_from_merged_pairs_of_vcf.xlsx",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_lowcov_from_merged_pairs_of_vcf.xlsx",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_freq_from_merged_pairs_of_vcf.xlsx",
-        "typing/{snp_caller}/core_parsnp/{ref}/{mapping_method}/unknown_nocov_from_merged_pairs_of_vcf.xlsx",
-    output:
-        "typing/{snp_caller}/core_{core_method}parsnp/{ref}/{mapping_method}/all_unknown.xlsx",
-    script:
-        "scripts/merge_xlsx_files.py"
-
-        
-        
 rule compute_minimum_spanning_tree_with_st:
     params:
         threshold=config["snp_threshold"]
