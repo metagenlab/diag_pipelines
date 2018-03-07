@@ -85,4 +85,3 @@ read_naming = { **reads_local, **sras_ext}
 original_name = { **original_name, **reads_sra}
 folders = { **folders, **sras_folder}
 
-print(read_naming, original_name)
