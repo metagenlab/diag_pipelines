@@ -2,11 +2,11 @@ rule query_AD_for_sample:
     conda:
         "../../envs/vt-bcftools.yaml",
     input:
-        vcf_sample="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/cov.vcf.gz",
-        vcf_sample_tbi="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/cov.vcf.gz.tbi",      
+        vcf_sample="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/raw.vcf.gz",
+        vcf_sample_tbi="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/raw.vcf.gz.tbi",
     output:
         ad_pos_vcf=temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/ad_pos.vcf"),
-        ad_values_vcf=temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/ad_values.vcf"),      
+        ad_values_vcf=temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/ad_values.vcf"),
     shell:
         """
         bcftools query -f "%CHROM %POS\\n" {input[vcf_sample]} > {output[ad_pos_vcf]}
@@ -53,10 +53,10 @@ rule add_annotation_to_sample:
         annotation="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/annotation.vcf.gz",
         annotation_tbi="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/annotation.vcf.gz.tbi",
         header="typing/misc/header_AM.txt",
-        vcf_sample="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/cov.vcf.gz",
-        vcf_sample_tbi="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/cov.vcf.gz.tbi",
+        vcf_sample="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/raw.vcf.gz",
+        vcf_sample_tbi="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/raw.vcf.gz.tbi",
     output:
-        vcf_sample="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/am_cov.vcf",
+        vcf_sample="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/annotated_am.vcf",
     shell:
         """
         bcftools annotate {input[vcf_sample]} --annotations {input[annotation]} -c CHROM,POS,FORMAT/AM --header-lines {input[header]} > {output[vcf_sample]}
