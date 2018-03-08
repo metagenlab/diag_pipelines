@@ -52,10 +52,10 @@ rule normalize_from_gatk:
     output:
         normalized="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtering/normalized_freq_cov_all_samples.vcf"
     log:
-        logging_folder+"/typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/vt_normalize.txt"
+        logging_folder+"/typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/normalize.txt"
     shell:
         """
-        bcftools norm -f {input[ref]} > {output[normalized]}
+        bcftools norm -f {input[ref]} {input[joint_genotype_vcf]} > {output[normalized]}
         """
 
 rule extract_allele_type_from_joint_genotyping_gatk:
@@ -66,10 +66,12 @@ rule extract_allele_type_from_joint_genotyping_gatk:
         joint_genotype_vcf_tbi="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtering/normalized_freq_cov_all_samples.vcf.gz.tbi",
     output:
         vcf_mutation_type="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf",
+    log:
+        logging_folder+"/typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples_{type}.txt"
     shell:
         """
         type=$(echo {wildcards.type}  | tr '[:lower:]' '[:upper:]')
-        gatk-launch SelectVariants --output {output[vcf_mutation_type]} --variant {input[joint_genotype_vcf]} -select-type ${{type}}
+        gatk-launch SelectVariants --output {output[vcf_mutation_type]} --variant {input[joint_genotype_vcf]} -select-type ${{type}} &> /dev/null
         """
 
 rule extract_allele_type_from_joint_genotyping_freebayes:
