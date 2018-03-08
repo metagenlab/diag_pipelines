@@ -9,7 +9,7 @@ if "--dryrun" not in sys.argv and "-n" not in sys.argv:
     time = today.strftime('%H_%M_%S_%f')[:-4]
     logging_folder = config["logging_folder"]+"/"+date+"/"+time
     logging_folder = logging_folder.replace("//", "/")
-    os.makedirs(logging_folder)
+    os.makedirs(logging_folder, exist_ok=True)
     cmd_file = logging_folder + "/cmd.txt"
     with open(cmd_file, "w") as f:
         f.write(" ".join(sys.argv)+"\n")
