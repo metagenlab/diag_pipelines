@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 rgi = pandas.read_csv("../db/rgi_annotated_full_2_0_0.csv", sep="\t")
 rgi["MutatedAminoAcidOrNucleotide"]=rgi["MutatedAminoAcidOrNucleotide"].str.upper().str.strip()
 rgi["WildTypeAminoAcidOrNucleotide"]=rgi["WildTypeAminoAcidOrNucleotide"].str.upper().str.strip()
-miotto = pandas.read_csv("../db/miotto_high_confidence_annotated.csv", sep="\t")
+miotto = pandas.read_csv("../db/miotto_high_moderate_minimum_confidence_annotated.csv", sep="\t")
 miotto["MutatedAminoAcidOrNucleotide"]=miotto["MutatedAminoAcidOrNucleotide"].str.upper().str.strip()
 miotto["WildTypeAminoAcidOrNucleotide"]=miotto["WildTypeAminoAcidOrNucleotide"].str.upper().str.strip()
 mykrobe = pandas.read_csv("../db/mykrobe_annotated.tsv", sep="\t")
