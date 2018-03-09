@@ -39,7 +39,7 @@ rule normalize_and_vt_decompose_from_freebayes:
         logging_folder+"/typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/vt_normalize.txt"
     shell:
         """
-        bcftools norm -f {input[ref]} -m -any {input[joint_genotype_vcf]} | vt decompose_blocksub -a - | bcftools norm -m +any > {output[normalized]}
+        bcftools norm -f {input[ref]} > {output[normalized]}
         """
 
 rule normalize_from_gatk:
