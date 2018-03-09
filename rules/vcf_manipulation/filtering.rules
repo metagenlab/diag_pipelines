@@ -26,36 +26,20 @@ rule frequency_filtering:
         bcftools filter -s "freq" -S "." -e "GT='alt' & FORMAT/AM/FORMAT/DP < {params.min_alt}" {input[vcf_sample]} > {output[vcf_cov_freq]}
         """
 
-rule normalize_and_vt_decompose_from_freebayes:
+rule normalize:
     conda:
         "../../envs/vt-bcftools.yaml"
     input:
-        joint_genotype_vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtering/freq_cov_all_samples.vcf.gz",
-        joint_genotype_vcf_tbi="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtering/freq_cov_all_samples.vcf.gz.tbi",
+        joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/freq_cov_all_samples.vcf.gz",
+        joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/freq_cov_all_samples.vcf.gz.tbi",
         ref=ancient("references/{ref}/genome_fasta.fasta"),
     output:
-        normalized="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtering/normalized_freq_cov_all_samples.vcf"
+        normalized="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/normalized_freq_cov_all_samples.vcf"
     log:
-        logging_folder+"/typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/vt_normalize.txt"
+        logging_folder+"/typing/{snp_caller}/full_genome/{ref}/{mapping_method}/normalize.txt"
     shell:
         """
         bcftools norm -f {input[ref]} > {output[normalized]}
-        """
-
-rule normalize_from_gatk:
-    conda:
-        "../../envs/vt-bcftools.yaml"
-    input:
-        joint_genotype_vcf="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtering/freq_cov_all_samples.vcf.gz",
-        joint_genotype_vcf_tbi="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtering/freq_cov_all_samples.vcf.gz.tbi",
-        ref=ancient("references/{ref}/genome_fasta.fasta"),
-    output:
-        normalized="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtering/normalized_freq_cov_all_samples.vcf"
-    log:
-        logging_folder+"/typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/normalize.txt"
-    shell:
-        """
-        bcftools norm -f {input[ref]} {input[joint_genotype_vcf]} > {output[normalized]}
         """
 
 rule extract_allele_type_from_joint_genotyping_gatk:
