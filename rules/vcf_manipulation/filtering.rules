@@ -39,7 +39,7 @@ rule normalize:
         logging_folder+"/typing/{snp_caller}/full_genome/{ref}/{mapping_method}/normalize.txt"
     shell:
         """
-        bcftools norm -f {input[ref]} > {output[normalized]}
+        bcftools norm -f {input[ref]} {input[joint_genotype_vcf]} > {output[normalized]}
         """
 
 rule extract_allele_type_from_joint_genotyping_gatk:
