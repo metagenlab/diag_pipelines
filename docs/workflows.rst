@@ -1,22 +1,67 @@
 .. workflows
 
----------
+=========
 Workflows
----------
+=========
 
 Current available workflows are implemented in the folder ``workflows``. Each workflow will depend on ``rules``, stored in the folder of the same name, and can also depend on other workflows. ``rules`` are sorted with respect to their general function in different folders.
 
-``workflows`` for generating **core genomes** of species are also included. They can have three different origins:
 
-* The cgMLST scheme of `ridom <http://www.cgmlst.org/ncs>`_
-* The cgMLST scheme of `enterobase <http://enterobase.warwick.ac.uk/>`_
-* For species unavailable on either resource, core genome can be calculated using parsnp and the complete genomes of the species available on RefSeq
+.. _core_genome:
+
+Core genome determination
+=========================
+
+Core genomes can be calculated by three different means.
+
+
+-----
+Ridom
+-----
+
+cgMLST scheme from `ridom <http://www.cgmlst.org/ncs>`_ can be extracted directly for theses species
+  
+.. csv-table:: Available cgMLST schemes from ridom
+   :header: "Species", "Taxonomy ID", "Ridom ID", "Reference genome assembly ID"
+
+   "*Staphylococcus aureus*","1280","141106","33148"
+   "*Mycobacterium tuberculosis*","1773","741110","538048"
+   "*Listeria monocytogenes*","1639","690488","264498"
+   "*Escherichia coli*","562","5064703","79781"
+   "*Klebsiella pneumoniae*","573","2187931","31388"
+   "*Enterococcus faecium*","1352","991893","526908"
+   "*Acinetobacter baumannii*","470","3956907","39528"
+   "*Legionella pneumophila*","446","1025099","30068"
+
+A bed file is constructed from the locus target file, constructing coordinates from the start and length columns of the csv file file available on the `ridom website <http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv>`_. 
+
+----------
+Enterobase
+----------
+
+cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted for *Salmonella enterica*:
+
+
+.. csv-table:: Available cgMLST schemes from enterobase
+   :header: "Species", "Taxonomy ID", "Enterobase ID", "Reference genome assembly ID", "Scheme"
+
+   "*Salmonella enterica*","28901","SALwgMLST","359488","cgMLSTv1"
+
+A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/>`_, based on the locus tag present in this genome is constructed. For instance, over the 3002 locus of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488.
+
+------   
+ParSNP
+------
+
+For species unavailable on either resource, core genome can be calculated using parsnp and the complete genomes of the species available on RefSeq
 
 
 .. _assembly_quality:
      
 Assembly and quality
---------------------
+====================
+
+
 Aggregates rules for assembling genomes and performing various quality control checks.
 Required parameters:
 
@@ -34,7 +79,8 @@ Deliverables:
 .. _resistance:
 
 Resistance
-----------
+==========
+
 Depends on the :ref:`assembly_quality` workflow.
 
 Required parameters:
@@ -52,7 +98,8 @@ Deliverables:
 .. _virulence:
   
 Virulence
----------
+=========
+
 Depends on the :ref:`assembly_quality` workflow.
 
 Required parameters:
@@ -67,7 +114,8 @@ Deliverables:
 .. _epidemiology:
    
 Epidemiology
-------------
+============
+
 Depends on the :ref:`assembly_quality` workflow (for determining the Sequence Types).
 
 Required parameters:
