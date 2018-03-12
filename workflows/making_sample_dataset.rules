@@ -69,9 +69,8 @@ if "sra_samples" in config.keys():
         raise ValueError("Forbidden character in sample name in sra file") 
     for i in sra_data.index:
         if "size_MB" in list(sra_data):
-            print(sra_data.loc[i, "size_MB"])
             if sra_data.loc[i, "size_MB"] < 20:
-                pass
+                break
         sample_name=sra_data.loc[i, "SampleName"].replace(" ", "_").replace("&", "and")
         if sample_name in reads_sra.keys():
             sample_name=sample_name+"_"+str(list(reads_sra.keys()).count(sample_name))
@@ -86,10 +85,10 @@ if "sra_samples" in config.keys():
         all_samples.loc[sample_name, "ScientificName"]=sra_data.loc[i, "ScientificName"]
 
 
-print(len(read_naming))
-
 read_naming = { **reads_local, **sras_ext}
 original_name = { **original_name, **reads_sra}
 folders = { **folders, **sras_folder}
+print(len(read_naming))
+
 
 
