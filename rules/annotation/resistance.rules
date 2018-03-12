@@ -25,21 +25,6 @@ rule rgi_json_to_tsv:
         """
 
         
-rule abricate:
-    conda:
-        "../../envs/abricate.yaml"
-    input:
-        "samples/{sample}/annotation/{sample}.gbk"
-    output:
-        "samples/{sample}/resistance/abricate.txt"
-    log:
-        logging_folder+"/samples/{sample}/logs/abricate.txt"
-    shell:
-        """
-        abricate --nopath --db resfinder {input[0]} 2> {log} 1> {output[0]} 
-        """
-        
-
 rule mykrobe_paired:
     conda:
         "../../envs/mykrobe.yaml"
