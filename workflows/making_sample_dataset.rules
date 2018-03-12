@@ -70,7 +70,7 @@ if "sra_samples" in config.keys():
     for i in sra_data.index:
         if "size_MB" in list(sra_data):
             if sra_data.loc[i, "size_MB"] < 20:
-                break
+                continue
         sample_name=sra_data.loc[i, "SampleName"].replace(" ", "_").replace("&", "and")
         if sample_name in reads_sra.keys():
             sample_name=sample_name+"_"+str(list(reads_sra.keys()).count(sample_name))
