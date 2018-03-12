@@ -22,6 +22,9 @@ reads_local = {}
 folders = {}
 original_name = {}
 
+if "local_samples" not in config.keys() and "sra_samples" not in config.keys():
+    raise ValueError("No samples defined in the config file")
+
 if "local_samples" in config.keys():
     local_data = pandas.read_csv(config["local_samples"], sep="\t", index_col=0)
     local_data.index = [str(x) for x in local_data.index]
@@ -65,6 +68,9 @@ if "sra_samples" in config.keys():
     if "(" in all_sra_sample_names or ")" in all_sra_sample_names or "_-_" in all_sra_sample_names:
         raise ValueError("Forbidden character in sample name in sra file") 
     for i in sra_data.index:
+        if "size_MB" in list(sra_data):
+            if sra_data.loc[i, "size_MB"] < 20:
+                pass
         sample_name=sra_data.loc[i, "SampleName"]
         if sample_name in reads_sra.keys():
             sample_name=sample_name+"_"+str(list(reads_sra.keys()).count(sample_name))
