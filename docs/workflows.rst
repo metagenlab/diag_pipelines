@@ -35,14 +35,13 @@ cgMLST scheme from `ridom <http://www.cgmlst.org/ncs>`_ can be extracted directl
 
 A bed file is constructed from the locus target file, constructing coordinates from the start and length columns of the csv file file available on the `ridom website <http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv>`_. 
 
+For example, the command:
 
-Example target file:
+.. code-block:: console
 
-.. code-block:: none
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules --use-conda --conda-prefix $conda_folder --config species="Staphylococcus aureus"
 
-   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules core_genomes/Staphylococcus_aureus/ridom/33148.bed
-
-will create the BED file defining the core genomic regions in the genome of the assembly ID 33148 (*Staphylococcus aureus* COL) 
+will create a BED file in ``core_genomes/Staphylococcus_aureus/ridom/33148.bed`` which defines the core genomic regions in the genome of the assembly ID 33148 (*Staphylococcus aureus* COL). 
 
 ----------
 Enterobase
@@ -58,12 +57,15 @@ cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted
    "*Salmonella enterica*","28901","SALwgMLST","359488","cgMLSTv1"
 
 A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/>`_, based on the locus tag present in this genome is constructed. For instance, over the 3002 locus of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488.
-	    
+
+For example, the command:
+
 .. code-block:: none
 
-   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules core_genomes/Salmonella_enterica/ridom/359488.bed
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules --use-conda --conda-prefix $conda_folder --config species="Salmonella enterica"
 
-will create the BED file defining the core genomic regions in the genome of the assembly ID 359488 (*Salmonella enterica* subsp. enterica serovar Typhimurium str. D23580) 
+will create a BED file in ``core_genomes/Salmonella_enterica/enterobase/359488.bed`` defining the core genomic regions in the genome of the assembly ID 359488 (*Salmonella enterica* subsp. enterica serovar Typhimurium str. D23580).
+   
 
 ------   
 ParSNP
@@ -90,7 +92,7 @@ Required parameters:
 Deliverables:
  
 * ``quality/multiqc/self_genome/multiqc_report.html``: quality control report based on the results of **fastqc**, **trimmomatic**, **qualimap**, **quast** and **prokka** for every sample
-* ``samples/{sample_name}/annotation/``: folder containing all annotation files from the ``prokka`` software
+* ``samples/{sample_name}/annotation/``: folder containing all annotation files from **prokka**
 
 .. _resistance:
 
