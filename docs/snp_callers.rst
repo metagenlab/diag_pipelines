@@ -1,6 +1,12 @@
+.. _snp_callers:
+
+===========
+SNP callers
+===========
+
 .. _freebayes:
 
-=========
+
 Freebayes
 =========
 .. _freebayes_dag:
@@ -12,6 +18,5 @@ Freebayes
 .. _gatk:
 
 
-====
 GATK
 ====

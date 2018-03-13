@@ -35,7 +35,8 @@ cgMLST scheme from `ridom <http://www.cgmlst.org/ncs>`_ can be extracted directl
 
 A bed file is constructed from the locus target file, constructing coordinates from the start and length columns of the csv file file available on the `ridom website <http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv>`_. 
 
-For example, the command:
+Example
+-------
 
 .. code-block:: console
 
@@ -58,7 +59,8 @@ cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted
 
 A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/>`_, based on the locus tag present in this genome is constructed. For instance, over the 3002 locus of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488.
 
-For example, the command:
+Example
+-------
 
 .. code-block:: console
 
@@ -73,7 +75,8 @@ ParSNP
 
 For species unavailable on either resource, core genome can be calculated using parsnp and the complete genomes of the species available on RefSeq. As ParSNP is not available on bioconda, the binary must be downloaded from the `ParSNP website <http://harvest.readthedocs.io/en/latest/content/parsnp/quickstart.html>`_ and placed in your $PATH. 
 
-For example, the command:
+Example
+-------
 
 .. code-block:: console
 		
@@ -88,7 +91,10 @@ Assembly and quality
 
 
 Aggregates rules for assembling genomes and performing various quality control checks.
-Required parameters:
+
+----------
+Parameters
+----------
 
 * ``cov_cutoff``: contigs whose coverage is below this cutoff will be excluded from the final assembly
 * ``adapter_file_name``: look for the adaptor for this library preparation kit (possible `values <https://github.com/timflutre/trimmomatic/tree/master/adapters>`_)
@@ -96,7 +102,9 @@ Required parameters:
 * ``minimum_quality_base``: leading and trailing bases below this quality will be removed
 * ``minimum_read_length``: reads shorter than this threshold after trimming will be discarded (be careful when using reads from SRA!)
 
-Deliverables:
+------------
+Deliverables
+------------
  
 * ``quality/multiqc/self_genome/multiqc_report.html``: quality control report based on the results of **fastqc**, **trimmomatic**, **qualimap**, **quast** and **prokka** for every sample
 * ``samples/{sample_name}/annotation/``: folder containing all annotation files from **prokka**
@@ -108,13 +116,17 @@ Resistance
 
 Depends on the :ref:`assembly_quality` workflow.
 
-Required parameters:
+----------
+Parameters
+----------
 
 * ``resistance_prediction_softwares``: list of software for genetic resistance assessment. Possible values: ``mykrobe`` and ``rgi``.
   
 .. * ``currated_resistance_genes``: file of trusted genes involved in resistance. An example is available in the folder ``data/mycobacterium/db/``
-    
-Deliverables:
+
+------------
+Deliverables
+------------
 
 * ``samples/{sample_name}/annotation/resistance/rgi.tsv``: results files for RGI 
 * ``samples/{sample_name}/annotation/resistance/mykrobe.tsv``: results file for mykrobe
@@ -127,11 +139,15 @@ Virulence
 
 Depends on the :ref:`assembly_quality` workflow.
 
-Required parameters:
+----------
+Parameters
+----------
 
 * ``virulence_factors``: file with list of uniprot accession of virulence factors. An example is available in the folder ``data/staph/db/``
-  
-Deliverables:
+
+------------
+Deliverables
+------------
 
 *  ``virulence_summary.xlsx``: summary of virulence proteins found in every samples.
 
@@ -143,9 +159,9 @@ Epidemiology
 
 Depends on the :ref:`assembly_quality` workflow (for determining the Sequence Types).
 
--------------------
-Required parameters
--------------------
+----------
+Parameters
+----------
 
 * ``minimum_coverage_for_calling``: minimum of coverage for considering a genomic position when counting differences between samples. Any position (SNP or non-SNP when compared to the reference) having a lower coverage will be masked
 * ``minimum_alternate_fraction_for_calling``: minimum ratio of observations favouring a SNP over observations not favouring a SNP. Any SNPs not meeting this criteria will also be masked
