@@ -16,9 +16,13 @@ except KeyError:
 
 prefix = "../../rules/"
 
+
+rule all:
+    input:
+        "core_genomes/"+config["species"].replace(" ", "_")+"/parsnp/parsnp.xmfa"
+
 include:
     prefix + "downloading/fetch_references.rules"
-
 
 rule calculate_core_genome_parsnp:
     conda:
@@ -46,7 +50,4 @@ rule calculate_core_genome_parsnp:
         done
         """
 
-rule all:
-    input:
-        "core_genomes/"+config["species"].replace(" ", "_")+"/parsnp/parsnp.xmfa"
         
