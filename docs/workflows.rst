@@ -39,7 +39,7 @@ For example, the command:
 
 .. code-block:: console
 
-   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules --use-conda --conda-prefix $conda_folder --config species="Staphylococcus aureus"
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules --use-conda --conda-prefix $conda_folder --config species="Staphylococcus aureus" -f all
 
 will create a BED file in ``core_genomes/Staphylococcus_aureus/ridom/33148.bed`` which defines the core genomic regions in the genome of the assembly ID 33148 (*Staphylococcus aureus* COL). 
 
@@ -60,9 +60,9 @@ A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assemb
 
 For example, the command:
 
-.. code-block:: none
+.. code-block:: console
 
-   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules --use-conda --conda-prefix $conda_folder --config species="Salmonella enterica"
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules --use-conda --conda-prefix $conda_folder --config species="Salmonella enterica" -f all
 
 will create a BED file in ``core_genomes/Salmonella_enterica/enterobase/359488.bed`` defining the core genomic regions in the genome of the assembly ID 359488 (*Salmonella enterica* subsp. enterica serovar Typhimurium str. D23580).
    
@@ -73,6 +73,13 @@ ParSNP
 
 For species unavailable on either resource, core genome can be calculated using parsnp and the complete genomes of the species available on RefSeq. As ParSNP is not available on bioconda, the binary must be downloaded from the `ParSNP website <http://harvest.readthedocs.io/en/latest/content/parsnp/quickstart.html>`_ and placed in your $PATH. 
 
+For example, the command:
+
+.. code-block:: console
+		
+   snakemake --config species="Morganella morganii" taxid="582" --snakefile $pipeline_folder/workflows/core_genomes/make_parsnp.rules --use-conda --conda-prefix ~/miniconda3/ -f all
+
+will calculate the core genome with parSNP with every complete genome of *Morganella morganii* available in `RefSeq <https://www.ncbi.nlm.nih.gov/refseq/>`_. The ``taxid`` value must be the `taxonomy ID <https://www.ncbi.nlm.nih.gov/taxonomy/>`_ for the species defined. The resulting file will be located in ``core_genomes/Morganella_morganii/parsnp/parsnp.xmfa``.
 
 .. _assembly_quality:
      
