@@ -1,6 +1,12 @@
-prefix = "../../rules/"
+if "absolute_path_of_pipeline_folder" not in config.keys():
+    absolute_path = "/home/pipeline_user/snakemake_pipeline/"
+else:
+    absolute_path = config["absolute_path_of_pipeline_folder"]
 
-logging_folder=config["logging_folder"]
+if "logging_folder" not in config.keys():
+    logging_folder = "."
+else:
+    logging_folder=config["logging_folder"]
 
 try:
     excl_id=config["taxid_to_exclude"]
@@ -10,13 +16,37 @@ except KeyError:
 
 prefix = "../../rules/"
 
-logging_folder=config["logging_folder"]
-
-
-include:
-    prefix + "core_genome/parsnp.rules"
-    
 include:
     prefix + "downloading/fetch_references.rules"
 
 
+rule calculate_core_genome_parsnp:
+    conda:
+        "../../envs/inotify.yaml"
+    input:
+        "references/{spec}/all_complete_genomes_log.txt"
+    output:
+        "core_genomes/{spec}/parsnp/parsnp.xmfa"
+    log:
+        logging_folder+"/core_genome/parsnp/log.txt"
+    shell:
+        """
+        echo "begining" > {output[0]}
+        cmd="parsnp -r ! -c -d $(dirname {input[0]})/all_complete_genomes/ -o $(dirname {output[0]})" 
+        echo ${{cmd}}
+        ${{cmd}} &
+        pid=$!
+        echo ${{pid}}
+        while inotifywait -e close_write {output[0]}
+        do
+           echo "detected"
+           sleep 5
+           pstree -p ${{pid}} | grep -o "([0-9]\+)" | grep -o "[0-9]\+"
+           pstree -p ${{pid}} | grep -o "([0-9]\+)" | grep -o "[0-9]\+" | xargs -I % kill % || :
+        done
+        """
+
+rule all:
+    input:
+        "core_genomes/"+config["species"].replace(" ", "_")+"/parsnp/parsnp.xmfa"
+        
