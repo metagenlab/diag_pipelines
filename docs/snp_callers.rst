@@ -13,10 +13,17 @@ Freebayes
 
 .. figure:: freebayes_dag.svg
 
-   Directed Acyclic Graph for Freebayes SNP calling and distance calculation
+   Simplified Directed Acyclic Graph (DAG) for Freebayes SNP calling and distance calculation
 	    
 .. _gatk:
 
 
 GATK
 ====
+.. _gatk_dag:
+
+.. figure:: gatk_dag.svg
+
+   Simplified Directed Acyclic Graph (DAG) for GATK (HaplotypeCaller and GenotypeGVCFs) SNP calling and distance calculation
+	    
+
