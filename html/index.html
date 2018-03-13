@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Logging functions" href="general_processes.html" />
+    <link rel="next" title="Cookbook" href="includeme.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -44,23 +44,23 @@
             
   <div class="section" id="documentation-for-the-genomics-and-metagenomics-workflows">
 <h1>Documentation for the genomics and metagenomics workflows<a class="headerlink" href="#documentation-for-the-genomics-and-metagenomics-workflows" title="Permalink to this headline">¶</a></h1>
-<p>Routine procedures for diagnostic purposes using microbial genomics and metagenomics.</p>
-<p>Workflows for epidemiology, anti-microbial resistance genotyping and virulence factors identification have been implemented using the <a class="reference external" href="http://snakemake.readthedocs.io/en/stable/">Snakemake</a> workflow management system with <a class="reference external" href="https://bioconda.github.io/">bioconda</a> integration for software dependency. <a class="reference external" href="https://hub.docker.com/r/metagenlab/diag_pipelines/">Docker</a> images of main releases are available.</p>
-<p>As a general rules, any <code class="docutils literal"><span class="pre">variable</span></code> referenced in this documentation must be either:</p>
-<ul class="simple">
-<li>Defined in the yaml config file that is passed to snakemake by <code class="docutils literal"><span class="pre">--configfile</span></code></li>
-<li>Defined directly in the snakemake command by <code class="docutils literal"><span class="pre">--config</span> <span class="pre">variable=$value</span></code></li>
-</ul>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="general_processes.html">Logging functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="general_processes.html#determining-sample-names">Determining sample names</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="general_processes.html#local-samples">Local samples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="general_processes.html#sra-samples">SRA samples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="includeme.html">Cookbook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="includeme.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includeme.html#general-use">General use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="includeme.html#generating-files-of-interest">Generating files of interest</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="general_processes.html">Generalities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="general_processes.html#defining-variables">Defining variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general_processes.html#logging-functions">Logging functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general_processes.html#determining-sample-names">Determining sample names</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="workflows.html">Workflows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="workflows.html#core-genome-determination">Core genome determination</a></li>
 <li class="toctree-l2"><a class="reference internal" href="workflows.html#assembly-and-quality">Assembly and quality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="workflows.html#resistance">Resistance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="workflows.html#virulence">Virulence</a></li>
@@ -96,7 +96,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="general_processes.html" title="next chapter">Logging functions</a></li>
+      <li>Next: <a href="includeme.html" title="next chapter">Cookbook</a></li>
   </ul></li>
 </ul>
 </div>

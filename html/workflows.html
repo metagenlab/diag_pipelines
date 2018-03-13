@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Logging functions" href="general_processes.html" />
+    <link rel="prev" title="Generalities" href="general_processes.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -44,18 +44,112 @@
             
   <div class="section" id="workflows">
 <h1>Workflows<a class="headerlink" href="#workflows" title="Permalink to this headline">¶</a></h1>
-<p>Current available workflows are implemented in the folder <strong>workflows</strong>. Each workflow will depend on <strong>rules</strong> and can also depend on other workflows. <strong>Rules</strong> are sorted with respect to their general function in different folders.</p>
-<p>Higher level functions are also included in <strong>workflows</strong>:</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">logging.rules</span></code> archives all logs, commands, and configuration files used every time snakemake is run (excluding dry runs)</li>
-<li><code class="docutils literal"><span class="pre">making_sample_dataset.rules</span></code> determines which local samples and sra are going to be used on the run, based on the configuration files and the fastq read files present</li>
-</ul>
-<p><strong>Workflows</strong> for generating <strong>core genomes</strong> of species are also included. They can have three different origins:</p>
-<ul class="simple">
-<li>The cgMLST scheme of <a class="reference external" href="http://www.cgmlst.org/ncs">ridom</a></li>
-<li>The cgMLST scheme of <a class="reference external" href="http://enterobase.warwick.ac.uk/">enterobase</a></li>
-<li>For species unavailable on either resource, core genome can be calculated using parsnp and the complete genomes of the species available on RefSeq</li>
-</ul>
+<p>Current available workflows are implemented in the folder <code class="docutils literal"><span class="pre">workflows</span></code>. Each workflow will depend on <code class="docutils literal"><span class="pre">rules</span></code>, stored in the folder of the same name, and can also depend on other workflows. <code class="docutils literal"><span class="pre">rules</span></code> are sorted with respect to their general function in different folders.</p>
+<div class="section" id="core-genome-determination">
+<span id="core-genome"></span><h2>Core genome determination<a class="headerlink" href="#core-genome-determination" title="Permalink to this headline">¶</a></h2>
+<p>Core genomes can be calculated by three different means.</p>
+<div class="section" id="ridom">
+<h3>Ridom<a class="headerlink" href="#ridom" title="Permalink to this headline">¶</a></h3>
+<p>cgMLST scheme from <a class="reference external" href="http://www.cgmlst.org/ncs">ridom</a> can be extracted directly for theses species</p>
+<table border="1" class="docutils" id="id7">
+<caption><span class="caption-text">Available cgMLST schemes from ridom</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Species</th>
+<th class="head">Taxonomy ID</th>
+<th class="head">Ridom ID</th>
+<th class="head">Reference genome assembly ID</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Staphylococcus aureus</em></td>
+<td>1280</td>
+<td>141106</td>
+<td>33148</td>
+</tr>
+<tr class="row-odd"><td><em>Mycobacterium tuberculosis</em></td>
+<td>1773</td>
+<td>741110</td>
+<td>538048</td>
+</tr>
+<tr class="row-even"><td><em>Listeria monocytogenes</em></td>
+<td>1639</td>
+<td>690488</td>
+<td>264498</td>
+</tr>
+<tr class="row-odd"><td><em>Escherichia coli</em></td>
+<td>562</td>
+<td>5064703</td>
+<td>79781</td>
+</tr>
+<tr class="row-even"><td><em>Klebsiella pneumoniae</em></td>
+<td>573</td>
+<td>2187931</td>
+<td>31388</td>
+</tr>
+<tr class="row-odd"><td><em>Enterococcus faecium</em></td>
+<td>1352</td>
+<td>991893</td>
+<td>526908</td>
+</tr>
+<tr class="row-even"><td><em>Acinetobacter baumannii</em></td>
+<td>470</td>
+<td>3956907</td>
+<td>39528</td>
+</tr>
+<tr class="row-odd"><td><em>Legionella pneumophila</em></td>
+<td>446</td>
+<td>1025099</td>
+<td>30068</td>
+</tr>
+</tbody>
+</table>
+<p>A bed file is constructed from the locus target file, constructing coordinates from the start and length columns of the csv file file available on the <a class="reference external" href="http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv">ridom website</a>.</p>
+<p>Example target file:</p>
+<p><code class="docutils literal"><span class="pre">snakemake</span> <span class="pre">--snakefile</span> <span class="pre">$pipeline_folder/workflows/core_genome/make_ridom.rules</span> <span class="pre">core_genomes/Staphylococcus_aureus/ridom/33148.bed</span></code> will create the BED file defining the core genomic regions in the genome of the assembly ID 33148 (<em>Staphylococcus aureus</em> COL)</p>
+</div>
+<div class="section" id="enterobase">
+<h3>Enterobase<a class="headerlink" href="#enterobase" title="Permalink to this headline">¶</a></h3>
+<p>cgMLST scheme from <a class="reference external" href="http://enterobase.warwick.ac.uk/">enterobase</a> is extracted for <em>Salmonella enterica</em>:</p>
+<table border="1" class="docutils" id="id8">
+<caption><span class="caption-text">Available cgMLST schemes from enterobase</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Species</th>
+<th class="head">Taxonomy ID</th>
+<th class="head">Enterobase ID</th>
+<th class="head">Reference genome assembly ID</th>
+<th class="head">Scheme</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Salmonella enterica</em></td>
+<td>28901</td>
+<td>SALwgMLST</td>
+<td>359488</td>
+<td>cgMLSTv1</td>
+</tr>
+</tbody>
+</table>
+<p>A bed file for the reference genome <a class="reference external" href="https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/">359488</a>, based on the locus tag present in this genome is constructed. For instance, over the 3002 locus of the <em>Salmonella</em> cgMLSTv1, 69 come from a different genome than the reference 359488.</p>
+<p><code class="docutils literal"><span class="pre">snakemake</span> <span class="pre">--snakefile</span> <span class="pre">$pipeline_folder/workflows/core_genome/make_enterobase.rules</span> <span class="pre">core_genomes/Salmonella_enterica/ridom/359488.bed</span></code> will create the BED file defining the core genomic regions in the genome of the assembly ID 359488 (<em>Salmonella enterica</em> subsp. enterica serovar Typhimurium str. D23580)</p>
+</div>
+<div class="section" id="parsnp">
+<h3>ParSNP<a class="headerlink" href="#parsnp" title="Permalink to this headline">¶</a></h3>
+<p>For species unavailable on either resource, core genome can be calculated using parsnp and the complete genomes of the species available on RefSeq. As ParSNP is not available on bioconda, the binary must be downloaded from the <a class="reference external" href="http://harvest.readthedocs.io/en/latest/content/parsnp/quickstart.html">ParSNP website</a> and placed in your $PATH.</p>
+</div>
+</div>
 <div class="section" id="assembly-and-quality">
 <span id="assembly-quality"></span><h2>Assembly and quality<a class="headerlink" href="#assembly-and-quality" title="Permalink to this headline">¶</a></h2>
 <p>Aggregates rules for assembling genomes and performing various quality control checks.
@@ -74,9 +168,9 @@ Required parameters:</p>
 </ul>
 </div>
 <div class="section" id="resistance">
-<span id="id1"></span><h2>Resistance<a class="headerlink" href="#resistance" title="Permalink to this headline">¶</a></h2>
-<p>Depends on the <strong>assembly and quality</strong> workflow.
-Required parameters:</p>
+<span id="id4"></span><h2>Resistance<a class="headerlink" href="#resistance" title="Permalink to this headline">¶</a></h2>
+<p>Depends on the <a class="reference internal" href="#assembly-quality"><span class="std std-ref">Assembly and quality</span></a> workflow.</p>
+<p>Required parameters:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">resistance_prediction_softwares</span></code>: list of software for genetic resistance assessment. Possible values: <code class="docutils literal"><span class="pre">mykrobe</span></code> and <code class="docutils literal"><span class="pre">rgi</span></code>.</li>
 </ul>
@@ -87,9 +181,9 @@ Required parameters:</p>
 </ul>
 </div>
 <div class="section" id="virulence">
-<span id="id2"></span><h2>Virulence<a class="headerlink" href="#virulence" title="Permalink to this headline">¶</a></h2>
-<p>Depends on the <strong>assembly and quality</strong> workflow.
-Required parameters:</p>
+<span id="id5"></span><h2>Virulence<a class="headerlink" href="#virulence" title="Permalink to this headline">¶</a></h2>
+<p>Depends on the <a class="reference internal" href="#assembly-quality"><span class="std std-ref">Assembly and quality</span></a> workflow.</p>
+<p>Required parameters:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">virulence_factors</span></code>: file with list of uniprot accession of virulence factors. An example is available in the folder <code class="docutils literal"><span class="pre">data/staph/db/</span></code></li>
 </ul>
@@ -99,16 +193,18 @@ Required parameters:</p>
 </ul>
 </div>
 <div class="section" id="epidemiology">
-<span id="id3"></span><h2>Epidemiology<a class="headerlink" href="#epidemiology" title="Permalink to this headline">¶</a></h2>
-<p>Depends on the <strong>assembly and quality</strong> workflow (for ST assessment).
-Required parameters:</p>
+<span id="id6"></span><h2>Epidemiology<a class="headerlink" href="#epidemiology" title="Permalink to this headline">¶</a></h2>
+<p>Depends on the <a class="reference internal" href="#assembly-quality"><span class="std std-ref">Assembly and quality</span></a> workflow (for determining the Sequence Types).</p>
+<p>Required parameters:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">species_taxid</span></code>: ID from the NCBI Taxonomy database of the species</li>
+<li><code class="docutils literal"><span class="pre">minimum_coverage_for_calling</span></code>: minimum of coverage for considering a genomic position when counting differences between samples. Any position (SNP or non-SNP when compared to the reference) having a lower coverage will be masked</li>
+<li><code class="docutils literal"><span class="pre">minimum_alternate_fraction_for_calling</span></code>: minimum ratio of observations favouring a SNP over observations not favouring a SNP. Any SNPs not meeting this criteria will also be masked</li>
 </ul>
 <p>Deliverables:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">typing/{snp_caller}/core_{ridom</span> <span class="pre">or</span> <span class="pre">enterobase}/{reference_genome}/bwa/distance_snp_mst_no_st.svg</span></code>: Minimum spanning tree of the distance in snps between every sample over the core genome as defined by ridom or enterobase. Available species and values for reference genomes are listed in the files in <code class="docutils literal"><span class="pre">data/core_genome_dbs/</span></code>. If the species under consideration has a multiple locus sequence type available, <code class="docutils literal"><span class="pre">typing/{snp_caller}/core_{ridom</span> <span class="pre">or</span> <span class="pre">enterobase}/{reference_genome}/bwa/distance_snp_mst_with_st.svg</span></code> can be generated with the ST of each sample.</li>
 <li><code class="docutils literal"><span class="pre">phylogeny/{snp_caller}/core_{ridom</span> <span class="pre">or</span> <span class="pre">enterobase}/{reference_genome}/bwa/phylogeny_no_st.svg</span></code>: A phylogeny based on the alignments of the core SNPs, using RAxML. Available species and values for reference genomes are listed in the files in <code class="docutils literal"><span class="pre">data/core_genome_dbs/</span></code>. If the species under consideration has a multiple locus sequence type available, <code class="docutils literal"><span class="pre">phylogeny/{snp_caller}/core_{ridom</span> <span class="pre">or</span> <span class="pre">enterobase}/{reference_genome}/bwa/phylogeny_with_st.svg</span></code> can be generated with the ST of each sample.</li>
+<li><code class="docutils literal"><span class="pre">quality/multiqc/mapping_to_{reference_genome}/multiqc_report.html</span></code>: multiqc report of <strong>qualimap</strong>, <strong>fastqc</strong> and <strong>trimmomatic</strong> of every samples when mapping against the reference. Check for quality control.</li>
 </ul>
 <div class="toctree-wrapper compound">
 </div>
@@ -124,6 +220,12 @@ Required parameters:</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Workflows</a><ul>
+<li><a class="reference internal" href="#core-genome-determination">Core genome determination</a><ul>
+<li><a class="reference internal" href="#ridom">Ridom</a></li>
+<li><a class="reference internal" href="#enterobase">Enterobase</a></li>
+<li><a class="reference internal" href="#parsnp">ParSNP</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#assembly-and-quality">Assembly and quality</a></li>
 <li><a class="reference internal" href="#resistance">Resistance</a></li>
 <li><a class="reference internal" href="#virulence">Virulence</a></li>
@@ -135,7 +237,7 @@ Required parameters:</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="general_processes.html" title="previous chapter">Logging functions</a></li>
+      <li>Previous: <a href="general_processes.html" title="previous chapter">Generalities</a></li>
   </ul></li>
 </ul>
 </div>

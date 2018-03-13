@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Logging functions &#8212; diag_pipelines  documentation</title>
+    <title>Generalities &#8212; diag_pipelines  documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Workflows" href="workflows.html" />
-    <link rel="prev" title="Documentation for the genomics and metagenomics workflows" href="index.html" />
+    <link rel="prev" title="Cookbook" href="includeme.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -43,22 +43,33 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="logging-functions">
-<h1>Logging functions<a class="headerlink" href="#logging-functions" title="Permalink to this headline">¶</a></h1>
-<p>Archiving processes are defined in the file <code class="file docutils literal"><span class="pre">../workflows/logging.rules</span></code>. The variable <code class="docutils literal"><span class="pre">logging_folder</span></code> must be defined in the <code class="docutils literal"><span class="pre">config.yaml</span></code> or passed to snakemake with <code class="docutils literal"><span class="pre">--config</span></code>. Each time an effective snakemake run is started, a folder named with the current UTC datetime. A different number of files will be copied there, so that replication of the run is possible:</p>
+  <div class="section" id="generalities">
+<h1>Generalities<a class="headerlink" href="#generalities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="defining-variables">
+<h2>Defining variables<a class="headerlink" href="#defining-variables" title="Permalink to this headline">¶</a></h2>
+<p>As a general rules, any <code class="docutils literal"><span class="pre">variable</span></code> referenced in this documentation must be either:</p>
+<ul class="simple">
+<li>Defined in the yaml config file that is passed to snakemake by <code class="docutils literal"><span class="pre">--configfile</span></code></li>
+<li>Defined directly in the snakemake command by <code class="docutils literal"><span class="pre">--config</span> <span class="pre">variable=$value</span></code></li>
+</ul>
+</div>
+<div class="section" id="logging-functions">
+<h2>Logging functions<a class="headerlink" href="#logging-functions" title="Permalink to this headline">¶</a></h2>
+<p>Archiving processes are defined in the file <code class="file docutils literal"><span class="pre">workflows/logging.rules</span></code>. The variable <code class="docutils literal"><span class="pre">logging_folder</span></code> must be defined in the <code class="docutils literal"><span class="pre">config.yaml</span></code> or passed to snakemake with <code class="docutils literal"><span class="pre">--config</span></code>. Each time an effective snakemake run is started, a folder named with the current UTC datetime is created. A variable number of files will be copied there, so that replication of the run is possible:</p>
 <ul class="simple">
 <li>The snakefile passed to snakemake</li>
 <li>The config file</li>
 <li>The full command used, copied into the file <code class="docutils literal"><span class="pre">cmd.txt</span></code></li>
-<li>The parameter files defined the SRA and the local samples, if they exist</li>
+<li>The parameter files defining the SRA and the local samples, if they exist</li>
 </ul>
+<p>The logs of every command run during the execution of the workflow will then be stored in this folder.</p>
 </div>
 <div class="section" id="determining-sample-names">
-<h1>Determining sample names<a class="headerlink" href="#determining-sample-names" title="Permalink to this headline">¶</a></h1>
-<p>Samples for the run will be determined in the file <code class="file docutils literal"><span class="pre">../workflows/making_sample_dataset.rules</span></code>.</p>
+<h2>Determining sample names<a class="headerlink" href="#determining-sample-names" title="Permalink to this headline">¶</a></h2>
+<p>Sample naming and matching to fastq files are handled in the file <code class="file docutils literal"><span class="pre">workflows/making_sample_dataset.rules</span></code>.</p>
 <div class="section" id="local-samples">
-<h2>Local samples<a class="headerlink" href="#local-samples" title="Permalink to this headline">¶</a></h2>
-<p>Local samples will be determined based on the tabulated file whose full path must be passed to the variable <code class="docutils literal"><span class="pre">local_samples</span></code> in the <code class="docutils literal"><span class="pre">config.yaml</span></code> or through <code class="docutils literal"><span class="pre">--config</span></code> on the snakemake command. It must contain at least two columns: <cite>SampleName</cite> and <cite>ScientificName</cite>.</p>
+<h3>Local samples<a class="headerlink" href="#local-samples" title="Permalink to this headline">¶</a></h3>
+<p>Local samples will be determined based on a tabulated file whose full path must be passed to the variable <code class="docutils literal"><span class="pre">local_samples</span></code> in the <code class="docutils literal"><span class="pre">config.yaml</span></code> or through <code class="docutils literal"><span class="pre">--config</span></code> on the snakemake command. It must contain at least two columns: <cite>SampleName</cite> and <cite>ScientificName</cite>.</p>
 <table border="1" class="docutils" id="id1">
 <caption><span class="caption-text">Local data example</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
@@ -77,34 +88,10 @@
 <tr class="row-odd"><td>S1</td>
 <td>Staphylococcus aureus</td>
 </tr>
-<tr class="row-even"><td>S2</td>
-<td>Staphylococcus aureus</td>
-</tr>
-<tr class="row-odd"><td>S3</td>
-<td>Staphylococcus aureus</td>
-</tr>
-<tr class="row-even"><td>S4</td>
-<td>Staphylococcus aureus</td>
-</tr>
-<tr class="row-odd"><td>S5</td>
-<td>Staphylococcus aureus</td>
-</tr>
-<tr class="row-even"><td>S6</td>
-<td>Staphylococcus aureus</td>
-</tr>
-<tr class="row-odd"><td>S7</td>
-<td>Staphylococcus aureus</td>
-</tr>
-<tr class="row-even"><td>S8</td>
-<td>Staphylococcus aureus</td>
-</tr>
-<tr class="row-odd"><td>S9</td>
-<td>Staphylococcus aureus</td>
-</tr>
 </tbody>
 </table>
-<p>For each entry, there must be in the folder defined in variable <code class="docutils literal"><span class="pre">link_directory</span></code>, two files (for paired reads) or a single one (for single reads) whose filename starts with one and only one entry in the <cite>SampleName</cite> columns. For instance, the files <code class="docutils literal"><span class="pre">S10_001_R1_L001.fastq.gz</span></code> and <code class="docutils literal"><span class="pre">S10_001_R2_L001.fastq.gz</span></code> in the folder defined by <code class="docutils literal"><span class="pre">link_directory</span></code> folder will be matched to the sample name <code class="docutils literal"><span class="pre">S10</span></code>.</p>
-<p>If needed, an <cite>OldSampleName</cite> column can be added to the file, when the read file names and the desired new sample names can not be match simply by testing the identity at the start of both strings.</p>
+<p>For each entry, there must be in the folder defined by the <code class="docutils literal"><span class="pre">link_directory</span></code> variable, two files (for paired reads) or only one (for single reads) whose filename starts by one and only one entry of the <cite>SampleName</cite> columns. For instance, the files <code class="docutils literal"><span class="pre">S10_001_R1_L001.fastq.gz</span></code> and <code class="docutils literal"><span class="pre">S10_001_R2_L001.fastq.gz</span></code> in the folder defined by the <code class="docutils literal"><span class="pre">link_directory</span></code> variable will be matched to the sample name <code class="docutils literal"><span class="pre">S10</span></code>. The matching is performed by using regular expressions to end the search at non alphanumeric characters or by the end of the word, thus the sample name <code class="docutils literal"><span class="pre">S1</span></code> will actually not match <code class="docutils literal"><span class="pre">S10_001_R1_L001.fastq.gz</span></code> nor <code class="docutils literal"><span class="pre">S10_001_R2_L001.fastq.gz</span></code>.</p>
+<p>If needed, an <cite>OldSampleName</cite> column can be added to the file, when the read filenames and the desired new sample names can not be matched simply by testing the identity at the start of both names.</p>
 <table border="1" class="docutils" id="id2">
 <caption><span class="caption-text">Local data example with old sample names</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
@@ -127,45 +114,13 @@
 <td>Staphylococcus aureus</td>
 <td>Staaur-1</td>
 </tr>
-<tr class="row-even"><td>S2</td>
-<td>Staphylococcus aureus</td>
-<td>Staaur-2</td>
-</tr>
-<tr class="row-odd"><td>S3</td>
-<td>Staphylococcus aureus</td>
-<td>Staaur-3</td>
-</tr>
-<tr class="row-even"><td>S4</td>
-<td>Staphylococcus aureus</td>
-<td>Staaur-4</td>
-</tr>
-<tr class="row-odd"><td>S5</td>
-<td>Staphylococcus aureus</td>
-<td>Staaur-5</td>
-</tr>
-<tr class="row-even"><td>S6</td>
-<td>Staphylococcus aureus</td>
-<td>Staaur-6</td>
-</tr>
-<tr class="row-odd"><td>S7</td>
-<td>Staphylococcus aureus</td>
-<td>Staaur-7</td>
-</tr>
-<tr class="row-even"><td>S8</td>
-<td>Staphylococcus aureus</td>
-<td>Staaur-8</td>
-</tr>
-<tr class="row-odd"><td>S9</td>
-<td>Staphylococcus aureus</td>
-<td>Staaur-9</td>
-</tr>
 </tbody>
 </table>
-<p>In this case, the files <code class="docutils literal"><span class="pre">Staaur-10_S10_L001_R1_001.fastq.gz</span></code> and <code class="docutils literal"><span class="pre">Staaur-10_S10_L001_R2_001.fastq.gz</span></code> in the folder defined in <code class="docutils literal"><span class="pre">link_directory</span></code> will be matched to the sample name <code class="docutils literal"><span class="pre">S10</span></code>.</p>
+<p>In this case, the files <code class="docutils literal"><span class="pre">Staaur-10_S10_L001_R1_001.fastq.gz</span></code> and <code class="docutils literal"><span class="pre">Staaur-10_S10_L001_R2_001.fastq.gz</span></code> in the folder defined in <code class="docutils literal"><span class="pre">link_directory</span></code> will be matched to the sample name <code class="docutils literal"><span class="pre">S10</span></code>. Similarly, <code class="docutils literal"><span class="pre">Staaur-1</span></code> will actually not match <code class="docutils literal"><span class="pre">Staaur-10_S10_L001_R1_001.fastq.gz</span></code>.</p>
 </div>
 <div class="section" id="sra-samples">
-<h2>SRA samples<a class="headerlink" href="#sra-samples" title="Permalink to this headline">¶</a></h2>
-<p>SRA samples will be determined based on the tabulated file whose full path must be passed to the variable <code class="docutils literal"><span class="pre">sra_samples</span></code>. The RunInfo files that can be downloaded through the NCBI can be directly passed without any modification. Otherwise, four columns must be defined.</p>
+<h3>SRA samples<a class="headerlink" href="#sra-samples" title="Permalink to this headline">¶</a></h3>
+<p>SRA samples will be determined based on the tabulated file whose full path must be passed to the variable <code class="docutils literal"><span class="pre">sra_samples</span></code>. The RunInfo files that can be downloaded through the <a class="reference external" href="https://www.ncbi.nlm.nih.gov/sra/">SRA NCBI</a> database can be directly passed without any modification. Otherwise, four columns must be defined.</p>
 <table border="1" class="docutils" id="id3">
 <caption><span class="caption-text">SRA data example</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
@@ -192,28 +147,9 @@
 <td>single</td>
 <td>Mycobacterium tuberculosis</td>
 </tr>
-<tr class="row-even"><td>SRR022880</td>
-<td>Mycobacterium_tuberculosis_africanum_4141_04-Lineage_6</td>
-<td>single</td>
-<td>Mycobacterium tuberculosis</td>
-</tr>
-<tr class="row-odd"><td>ERR551336</td>
-<td>Mycobacterium_tuberculosis_11821-03-Lineage_5</td>
-<td>paired</td>
-<td>Mycobacterium tuberculosis</td>
-</tr>
-<tr class="row-even"><td>ERR756345</td>
-<td>Mycobacterium_tuberculosis_aethiop_vetus-Lineage_7</td>
-<td>paired</td>
-<td>Mycobacterium tuberculosis</td>
-</tr>
-<tr class="row-odd"><td>ERR238745</td>
-<td>Mycobacterium_tuberculosis_SG1-Lineage_3</td>
-<td>single</td>
-<td>Mycobacterium tuberculosis</td>
-</tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 
@@ -225,10 +161,14 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Logging functions</a></li>
+<li><a class="reference internal" href="#">Generalities</a><ul>
+<li><a class="reference internal" href="#defining-variables">Defining variables</a></li>
+<li><a class="reference internal" href="#logging-functions">Logging functions</a></li>
 <li><a class="reference internal" href="#determining-sample-names">Determining sample names</a><ul>
 <li><a class="reference internal" href="#local-samples">Local samples</a></li>
 <li><a class="reference internal" href="#sra-samples">SRA samples</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -236,7 +176,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Documentation for the genomics and metagenomics workflows</a></li>
+      <li>Previous: <a href="includeme.html" title="previous chapter">Cookbook</a></li>
       <li>Next: <a href="workflows.html" title="next chapter">Workflows</a></li>
   </ul></li>
 </ul>
