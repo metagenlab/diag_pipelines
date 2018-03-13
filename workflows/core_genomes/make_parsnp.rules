@@ -4,7 +4,7 @@ else:
     absolute_path = config["absolute_path_of_pipeline_folder"]
 
 if "logging_folder" not in config.keys():
-    logging_folder = "."
+    logging_folder = "logs"
 else:
     logging_folder=config["logging_folder"]
 
