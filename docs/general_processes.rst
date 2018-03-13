@@ -19,12 +19,12 @@ As a general rules, any ``variable`` referenced in this documentation must be ei
 Logging functions
 -----------------
 
-Archiving processes are defined in the file :file:`workflows/logging.rules`. The variable ``logging_folder`` must be defined in the ``config.yaml`` or passed to snakemake with ``--config``. Each time an effective snakemake run is started, a folder named with the current UTC datetime. A different number of files will be copied there, so that replication of the run is possible:
+Archiving processes are defined in the file :file:`workflows/logging.rules`. The variable ``logging_folder`` must be defined in the ``config.yaml`` or passed to snakemake with ``--config``. Each time an effective snakemake run is started, a folder named with the current UTC datetime is created. A variable number of files will be copied there, so that replication of the run is possible:
 
 * The snakefile passed to snakemake
 * The config file
 * The full command used, copied into the file ``cmd.txt``
-* The parameter files defining the SRA and local samples, if they exist
+* The parameter files defining the SRA and the local samples, if they exist
  
 The logs of every command run during the execution of the workflow will then be stored in this folder.
   
@@ -32,13 +32,13 @@ The logs of every command run during the execution of the workflow will then be 
 Determining sample names
 ------------------------
 
-Samples for the run will be determined in the file :file:`workflows/making_sample_dataset.rules`.
+Sample naming and matching to fastq files are handled in the file :file:`workflows/making_sample_dataset.rules`.
 
 
 Local samples
 -------------
 
-Local samples will be determined based on the tabulated file whose full path must be passed to the variable ``local_samples`` in the ``config.yaml`` or through ``--config`` on the snakemake command. It must contain at least two columns: `SampleName` and `ScientificName`.
+Local samples will be determined based on a tabulated file whose full path must be passed to the variable ``local_samples`` in the ``config.yaml`` or through ``--config`` on the snakemake command. It must contain at least two columns: `SampleName` and `ScientificName`.
 
 .. csv-table:: Local data example
    :header: "SampleName", "ScientificName"

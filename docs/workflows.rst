@@ -35,11 +35,21 @@ cgMLST scheme from `ridom <http://www.cgmlst.org/ncs>`_ can be extracted directl
 
 A bed file is constructed from the locus target file, constructing coordinates from the start and length columns of the csv file file available on the `ridom website <http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv>`_. 
 
+
+Example target file:
+
+.. code-block:: none
+
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules core_genomes/Staphylococcus_aureus/ridom/33148.bed
+
+will create the BED file defining the core genomic regions in the genome of the assembly ID 33148 (*Staphylococcus aureus* COL) 
+
 ----------
 Enterobase
 ----------
 
 cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted for *Salmonella enterica*:
+
 
 
 .. csv-table:: Available cgMLST schemes from enterobase
@@ -48,12 +58,18 @@ cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted
    "*Salmonella enterica*","28901","SALwgMLST","359488","cgMLSTv1"
 
 A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/>`_, based on the locus tag present in this genome is constructed. For instance, over the 3002 locus of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488.
+	    
+.. code-block:: none
+
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules core_genomes/Salmonella_enterica/ridom/359488.bed
+
+will create the BED file defining the core genomic regions in the genome of the assembly ID 359488 (*Salmonella enterica* subsp. enterica serovar Typhimurium str. D23580) 
 
 ------   
 ParSNP
 ------
 
-For species unavailable on either resource, core genome can be calculated using parsnp and the complete genomes of the species available on RefSeq
+For species unavailable on either resource, core genome can be calculated using parsnp and the complete genomes of the species available on RefSeq. As ParSNP is not available on bioconda, the binary must be downloaded from the `ParSNP website <http://harvest.readthedocs.io/en/latest/content/parsnp/quickstart.html>`_ and placed in your $PATH. 
 
 
 .. _assembly_quality:
