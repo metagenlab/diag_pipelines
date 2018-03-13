@@ -78,9 +78,9 @@ For species unavailable on either resource, core genome can be calculated using 
 Example
 -------
 
-.. code-block:: console
+.. code-block:: bash
 		
-   snakemake --config species="Morganella morganii" taxid="582" --snakefile $pipeline_folder/workflows/core_genomes/make_parsnp.rules --use-conda --conda-prefix ~/miniconda3/ -f all
+   snakemake --config species="Morganella morganii" taxid="582" --snakefile $pipeline_folder/workflows/core_genomes/make_parsnp.rules --use-conda --conda-prefix $conda_folder -f all
 
 will calculate the core genome with parSNP with every complete genome of *Morganella morganii* available in `RefSeq <https://www.ncbi.nlm.nih.gov/refseq/>`_. The ``taxid`` value must be the `taxonomy ID <https://www.ncbi.nlm.nih.gov/taxonomy/>`_ for the species defined. The resulting file will be located in ``core_genomes/Morganella_morganii/parsnp/parsnp.xmfa``.
 
