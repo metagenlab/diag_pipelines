@@ -11,15 +11,9 @@ Documentation for the genomics and metagenomics workflows
    includeme.rst
    general_processes.rst
    workflows.rst
+   snp_callers.rst
    :maxdepth: 2
    :caption: Contents:
    
 
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
