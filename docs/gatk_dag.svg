@@ -27,7 +27,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -42,17 +42,17 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1280"
-     inkscape:window-height="1000"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
      id="namedview1272"
      showgrid="false"
      inkscape:zoom="0.79969199"
-     inkscape:cx="610.56996"
-     inkscape:cy="1831.9899"
-     inkscape:window-x="1920"
+     inkscape:cx="554.83489"
+     inkscape:cy="430.04798"
+     inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="node61"
+     inkscape:current-layer="graph0"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
@@ -246,7 +246,7 @@
          y="-239.5"
          font-size="10.00"
          id="text160"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller:gatk_gvcfs</text>
       <text
          x="330"
          y="-228.5"
@@ -294,7 +294,7 @@
          y="-239.5"
          font-size="10.00"
          id="text184"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller:gatk_gvcfs</text>
       <text
          x="104"
          y="-228.5"
@@ -348,7 +348,7 @@
          y="-234"
          font-size="10.00"
          id="text210"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: gatk_gvcfs</text>
       <text
          x="556"
          y="-223"
@@ -397,7 +397,7 @@
          y="-720"
          font-size="10.00"
          id="text325"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller:gatk_gvcfs</text>
     </g>
     <!-- 6&#45;&gt;27 -->
     <!-- 32 -->
@@ -446,7 +446,7 @@
          y="-1085"
          font-size="10.00"
          id="text373"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: gatk_gvcfs</text>
     </g>
     <!-- 45 -->
     <g
@@ -661,7 +661,7 @@
          y="-1704"
          font-size="10.00"
          id="text277"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller:gatk_gvcfs</text>
     </g>
     <g
        id="node17"
@@ -739,7 +739,7 @@
          y="-1317"
          font-size="10.00"
          id="text416"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller:gatk_gvcfs</text>
     </g>
     <g
        id="node26"
@@ -787,7 +787,7 @@
          y="-1947"
          font-size="10.00"
          id="text937"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller:gatk_gvcfs</text>
     </g>
     <g
        id="node34-5"
@@ -1457,13 +1457,13 @@
            id="text275-1"
            font-size="10.00"
            y="-1715"
-           x="479">sample: S1</text>
+           x="479">sample: S2</text>
         <text
            style="font-size:10px;font-family:sans;text-anchor:middle"
            id="text277-8"
            font-size="10.00"
            y="-1704"
-           x="479">snp_caller: freebayes_joint_genotyping</text>
+           x="479">snp_caller:gatk_gvcfs</text>
       </g>
       <g
          transform="translate(582.0117,-156.01793)"
@@ -1535,13 +1535,13 @@
            id="text414-3"
            font-size="10.00"
            y="-1328"
-           x="453">sample: S1</text>
+           x="453">sample: S2</text>
         <text
            style="font-size:10px;font-family:sans;text-anchor:middle"
            id="text416-6"
            font-size="10.00"
            y="-1317"
-           x="453">snp_caller: freebayes_joint_genotyping</text>
+           x="453">snp_caller:gatk_gvcfs</text>
       </g>
       <g
          transform="translate(473.01169,-200.66063)"
@@ -1583,13 +1583,13 @@
            id="text935-8"
            font-size="10.00"
            y="-1958"
-           x="682">sample: S1</text>
+           x="682">sample: S2</text>
         <text
            style="font-size:10px;font-family:sans;text-anchor:middle"
            id="text937-4"
            font-size="10.00"
            y="-1947"
-           x="682">snp_caller: freebayes_joint_genotyping</text>
+           x="682">snp_caller: gatk_gvcfs</text>
       </g>
       <g
          style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
@@ -1669,7 +1669,7 @@
            id="text1034-6-6"
            font-size="10.00"
            y="-2605.5"
-           x="1215">sample: S1</text>
+           x="1215">sample: S2</text>
       </g>
       <g
          style="stroke-width:0.82092339"
