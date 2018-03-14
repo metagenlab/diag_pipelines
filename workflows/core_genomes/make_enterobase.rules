@@ -1,15 +1,19 @@
 import pandas
 
-enterobase = pandas.read_csv(config["absolute_path_of_pipeline_folder"]+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
+include:
+    "logging.rules"
 
-logging_folder=config["logging_folder"]
-
-species_taxid=int(enterobase.loc[config["species"], "taxid"])
+    
+enterobase = pandas.read_csv(absolute_path+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 
 prefix = "../../rules/"
 
+rule all:
+    input:
+        "core_genomes/"+config["species"].replace(" ", "_")+"/enterobase/"+str(enterobase.loc[config["species"], "reference_genome"])+".bed"
+        
 include:
     prefix + "downloading/fetch_single_reference.rules"
 
@@ -47,10 +51,6 @@ rule fetch_gene_entries_from_locus_tag:
             fi
         done < {input[gene_list]}
         """
-
-rule all:
-    input:
-        "core_genomes/"+config["species"].replace(" ", "_")+"/enterobase/"+str(enterobase.loc[config["species"], "reference_genome"])+".bed"
         
 
 

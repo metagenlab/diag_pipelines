@@ -1,21 +1,8 @@
-if "absolute_path_of_pipeline_folder" not in config.keys():
-    absolute_path = "/home/pipeline_user/snakemake_pipeline/"
-else:
-    absolute_path = config["absolute_path_of_pipeline_folder"]
-
-if "logging_folder" not in config.keys():
-    logging_folder = "logs"
-else:
-    logging_folder=config["logging_folder"]
-
-try:
-    excl_id=config["taxid_to_exclude"]
-except KeyError:
-    excl_id=""
+include:
+    "logging.rules"
 
 
 prefix = "../../rules/"
-
 
 rule all:
     input:

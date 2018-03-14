@@ -1,14 +1,7 @@
 import pandas
 
-if "absolute_path_of_pipeline_folder" not in config.keys():
-    absolute = "/home/pipeline_user/snakemake_pipeline/"
-else:
-    absolute = config["absolute_path_of_pipeline_folder"]
-
-if "logging_folder" not in config.keys():
-    logging_folder = "."
-else:
-    logging_folder=config["logging_folder"]
+include:
+    "logging.rules"
     
 ridom = pandas.read_csv(absolute+"/data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
 

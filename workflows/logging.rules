@@ -3,6 +3,17 @@ import sys
 import datetime
 import os
 
+
+if "absolute_path_of_pipeline_folder" not in config.keys():
+    absolute_path = "/home/pipeline_user/snakemake_pipeline/"
+else:
+    absolute_path = config["absolute_path_of_pipeline_folder"]
+
+if "logging_folder" not in config.keys():
+    logging_folder = "logs"
+else:
+    logging_folder=config["logging_folder"]
+
 if "--dryrun" not in sys.argv and "-n" not in sys.argv:
     today = datetime.datetime.now()
     date = today.strftime("%Y/%m/%d")
@@ -18,8 +29,5 @@ if "--dryrun" not in sys.argv and "-n" not in sys.argv:
         copyfile(config["local_samples"], logging_folder+"/local_samples.tsv")
     if "sra_samples" in config.keys():
         copyfile(config["sra_samples"], logging_folder+"/sra_samples.tsv")
-    if "species_names_correspondance_file" in config.keys():
-        copyfile(config["species_names_correspondance_file"], logging_folder+"/species.tsv")
-    copyfile(workflow.snakefile, logging_folder+"/snakefile.rules")
 else:
     logging_folder=""
