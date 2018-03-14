@@ -1,6 +1,6 @@
 rule compress_vcf:
     conda:
-        "../../envs/vt-bcftools.yaml"
+        "../../envs/bcftools.yaml"
     input:
         "{any_vcf}.vcf",
     output:
@@ -10,11 +10,9 @@ rule compress_vcf:
         bgzip -c {input[0]} > {output[0]}
         """
 
-
-
 rule index_vcf:
     conda:
-        "../../envs/vt-bcftools.yaml"
+        "../../envs/bcftools.yaml"
     input:
         "{any_vcf}.vcf.gz",
     output:
@@ -26,7 +24,7 @@ rule index_vcf:
         
 rule sort_vcf:
     conda:
-        "../../envs/vt-bcftools.yaml"
+        "../../envs/bcftools.yaml"
     input:
         "{any_vcf}.vcf.gz",
     output:
