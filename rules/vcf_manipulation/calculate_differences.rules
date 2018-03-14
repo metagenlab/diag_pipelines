@@ -1,6 +1,6 @@
 rule calculate_pairwise_distances_by_type:
     conda:
-        "../../envs/vt-bcftools.yaml"
+        "../../envs/bcftools.yaml"
     input:
         joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
         joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
@@ -15,7 +15,7 @@ rule calculate_pairwise_distances_by_type:
 
 rule get_snps_positions_by_type:
     conda:
-        "../../envs/vt-bcftools.yaml"
+        "../../envs/bcftools.yaml"
     input:
         joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
         joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
@@ -31,7 +31,7 @@ rule get_snps_positions_by_type:
 
 rule calculate_distance_with_ref_by_type:
     conda:
-        "../../envs/vt-bcftools.yaml"
+        "../../envs/bcftools.yaml"
     input:
         joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
         joint_genotype_vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
@@ -50,32 +50,72 @@ rule agregate_distances_from_joint_genotyping_by_type:
         pairs=expand("typing/{{snp_caller}}/core_{{core_method}}/{{ref}}/{{mapping_method}}/distances/{sample1}_-_{sample2}_distance_in_{{type}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
         to_ref=expand("typing/{{snp_caller}}/core_{{core_method}}/{{ref}}/{{mapping_method}}/distances/to_ref/{sample}_distance_in_{{type}}.txt", sample=read_naming.keys())
     output:
-        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances_{type}.txt"
+        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/distances_in_{type}.txt"
     run:
         with open(output[0], "w") as outfile:
             for fname in list(input.pairs) + list(input.to_ref):
                 with open(fname) as infile:
                     outfile.write(infile.read())
-#we aggregate the files with python because sometimes bash can't handle the high number of files 
+#we aggregate the files with python because sometimes bash can't handle the high number of files
 
-rule extract_alignment_for_phylogeny:
+
+rule merge_multiallelic_by_sample:
     conda:
-        "../../envs/vt-bcftools.yaml"
+        "../../envs/bcftools.yaml"
     input:
         vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_snp.vcf.gz",
         vcf_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_snp.vcf.gz.tbi",
+    output:
+        merged_multi="samples/{sample}/snps/{snp_caller}/full_genome/{ref}/{mapping_method}/snps.vcf",
+    shell:
+        """
+        bcftools view --samples {wildcards.sample} --trim-alt-alleles {input[vcf]} | bcftools norm -m +any --output {output[merged_multi]}
+        """
+
+
+rule extract_snps_on_core_genome:
+    conda:
+        "../../envs/bcftools.yaml"
+    input:
+        merged_multi="samples/{sample}/snps/{snp_caller}/full_genome/{ref}/{mapping_method}/snps.vcf.gz",
+        merged_multi_tbi="samples/{sample}/snps/{snp_caller}/full_genome/{ref}/{mapping_method}/snps.vcf.gz.tbi",
         bed="core_genome/{core_method}/{ref}.bed",
+    output:
+        alt="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/snps.vcf",
+        unknowns="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/unknowns.tab",
+    shell:
+        """
+        bcftools view --regions-file {input[bed]} -i 'GT="alt"' --samples {wildcards.sample} {input[merged_multi]} > {output[alt]} 
+        bcftools view --regions-file {input[bed]} -i 'GT="."' --samples {wildcards.sample} {input[merged_multi]} | bcftools query -f "%CHROM %POS\n" > {output[unknowns]}
+        """
+        
+
+rule create_consensus_sequence:
+    conda:
+        "../../envs/bcftools.yaml"
+    input:
+        alt="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/snps.vcf.gz",
+        alt_tbi="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/snps.vcf.gz.tbi",
+        unknowns="samples/{sample}/snps/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/unknowns.tab",
+        ref="references/{ref}/genome_fasta.fasta",
+    output:
+        alignment="samples/{sample}/alignment/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/consensus.fa",
+    shell:
+        """
+        bcftools consensus --mask {input[unknowns]} --fasta-ref {input[ref]} --output {output[alignment]} --sample {wildcards.sample} {input[alt]}
+        sed -i "s/^>.*/>{wildcards.sample}/" {output[alignment]} 
+        """
+
+
+rule concatenate_consensus_fasta_files:
+    input:
+        fasta=expand("samples/{sample}/alignment/{{snp_caller}}/core_{{core_method}}/{{ref}}/{{mapping_method}}/consensus.fa", sample=read_naming.keys()),
+        ref="references/{ref}/genome_fasta.fasta"
     output:
         alignment="typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
     shell:
         """
-        printf ">{wildcards.ref}\\n" > {output[alignment]}
-        bcftools query -R {input[bed]} -f %REF {input[vcf]} >> {output[alignment]}
-        printf "\\n" >> {output[alignment]}
-        for samp in $(bcftools query -l {input[vcf]})
-        do
-            printf '>'${{samp}}'\\n' 
-            bcftools query -R {input[bed]} -s ${{samp}} -f '[%TGT]' {input[vcf]} | sed "s/\./N/g"
-            printf '\\n'
-        done >> {output[alignment]}
+        sed "s/^>.*/>{wildcards.ref}/" {input[ref]} | cat {input[fasta]} - > {output[alignment]}
         """
+    
+
