@@ -19,14 +19,14 @@ rule call_variants_freebayes_vcf_all_samples:
         "../../envs/freebayes.yaml"
     input:
         bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", sample=read_naming.keys()),
-        ref=ancient("references/{ref}/genome_fasta.fasta"),
-        ref_fai=ancient("references/{ref}/genome_fasta.fasta.fai"),
         bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam.bai", sample=read_naming.keys()),
+        ref="references/{ref}/genome_fasta.fasta",
+        ref_fai="references/{ref}/genome_fasta.fasta.fai",
     output:
         vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf"
     log:
         logging_folder+"/logs/freebayes_joint_genotyping/all_samples.txt"
     shell:
         """
-        freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads} --ploidy 1 --min-base-quality 20 --genotype-qualities -f {input[ref]} {input[bams]}  > {output[vcf]} 2> {log}
+        freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads} --ploidy 1 --min-base-quality 20 --genotype-qualities --fasta-reference {input[ref]} --haplotype-length -1 {input[bams]}  > {output[vcf]} 2> {log}
         """
