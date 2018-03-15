@@ -66,9 +66,9 @@ rule merge_gvcf_files_with_GenomicsDBImport_gatk:
         if [ -d $(dirname {output[0]}) ]; then
             rm -rf $(dirname {output[0]})
         fi
-        acc=$(grep ">" {input[ref]} | sed "s/ .*//" | sed "s/>//")
-        var=$(echo {input[gvcfs]} | sed "s/ / -V /g")
-        gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[0]}) -V ${{var}} --intervals ${{acc}} &> {log}
+        acc=$(grep ">" {input[ref]} | sed "s/ .*//" | sed "s/>//" | tr -d "\n" | sed "s/ / --intervals /g")
+        var=$(echo {input[gvcfs]} | sed "s/ / --variant /g")
+        gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[0]}) --variant ${{var}} --intervals ${{acc}} &> {log}
         """
 
 rule genotype_with_genotypeGVCFs_gatk:

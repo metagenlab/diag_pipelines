@@ -12,7 +12,6 @@ from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_
 all_samples=pandas.DataFrame()
 
 link_directory="links/"
-
     
 sras_ext = {}
 sras_folder = {}
@@ -28,7 +27,7 @@ if "local_samples" not in config.keys() and "sra_samples" not in config.keys():
 if "local_samples" in config.keys():
     local_data = pandas.read_csv(config["local_samples"], sep="\t", index_col=0)
     local_data.index = [str(x) for x in local_data.index]
-    all_local_sample_names= "".join(list(local_data.index))
+    all_local_sample_names =  "".join(list(local_data.index))
     if "(" in all_local_sample_names or ")" in all_local_sample_names or "_-_" in all_local_sample_names:
         raise ValueError("Forbidden character in sample name in sample name file")
     reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, sample_naming.get_read_naming_patterns)
@@ -88,7 +87,5 @@ if "sra_samples" in config.keys():
 read_naming = { **reads_local, **sras_ext}
 original_name = { **original_name, **reads_sra}
 folders = { **folders, **sras_folder}
-print(len(read_naming))
-
 
 
