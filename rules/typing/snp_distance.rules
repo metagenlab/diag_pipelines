@@ -4,11 +4,11 @@ rule distance_columns_to_matrix:
     conda:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        "{any_analysis}/{distance_type}.txt",
+        "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.txt",
 #        "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
     output:
-        out_xlsx_distance="{any_analysis}/{distance_type}.xlsx",
-        out_tsv_distance="{any_analysis}/{distance_type}.tsv"
+        out_xlsx_distance="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.xlsx",
+        out_tsv_distance="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.tsv"
     script:
         "scripts/distance_columns_to_matrix.py"
 
@@ -19,14 +19,14 @@ rule compute_minimum_spanning_tree_with_st:
     conda:
         "../../envs/igraph.yaml"
     input:
-        "{any_analysis}/{distance_type}.tsv",
+        "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.tsv",
         "typing/mlst/summary.tsv",
         "references/{ref}/mlst.tsv",
         "references/{ref}/genome_subvalue.txt",
     output:
-        "{any_analysis}/{distance_type}_mst_with_st.svg"
+        "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_with_st.svg"
     log:
-        logging_folder+"/logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst_with_st.txt"
+        logging_folder+"/logs/typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_with_st.txt"
     script:
         "scripts/minimum_spanning_tree_with_st.R"
 
@@ -37,12 +37,12 @@ rule compute_minimum_spanning_tree_no_st:
     conda:
         "../../envs/igraph.yaml"
     input:
-        dist="{any_analysis}/{distance_type}.tsv",
+        dist="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.tsv",
         subvalue="references/{ref}/genome_subvalue.txt",
     output:
-        "{any_analysis}/{distance_type}_mst_no_st.svg"
+        "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_no_st.svg"
     log:
-        logging_folder+"/logs/typing/{snp_caller}/core_{method}/{ref}/{mapping_method}/{distance_type}_mst_no_st.txt"
+        logging_folder+"/logs/typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_no_st.txt"
     script:
         "scripts/minimum_spanning_tree_no_st.R"
 
