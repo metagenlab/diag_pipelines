@@ -71,7 +71,7 @@ for mutation_type in ["SNP"]:
         for pos in sorted(union_3):
             for i in source_db[mutation_type].keys():
 #                print(list(all_res[i].loc[all_res[i]["Gene"]==gene, "PositionMTB"]))
-                if pos in list(all_res[i].loc[all_res[i]["Gene"]==gene, "PositionMTB"]):
+                if pos in list(all_res[i].loc[(all_res[i]["Gene"]==gene) & (all_res[i]["MutationType"]==mutation_type), "PositionMTB"]):
                     if mutation_type=="SNP":
                         mutated=sorted(set(all_res[i].loc[(all_res[i]["MutationType"]==mutation_type) & (all_res[i]["Gene"]==gene) & (all_res[i]["PositionMTB"]==pos), "MutatedAminoAcidOrNucleotide"]))
                         wildtype=sorted(set(all_res[i].loc[(all_res[i]["MutationType"]==mutation_type) & (all_res[i]["Gene"]==gene) & (all_res[i]["PositionMTB"]==pos), "WildTypeAminoAcidOrNucleotide"]))
