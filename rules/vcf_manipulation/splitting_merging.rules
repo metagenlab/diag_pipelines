@@ -10,7 +10,7 @@ rule extract_sample_entry_from_vcf:
         bcftools view -s {wildcards.sample} {input[vcf_cov]} > {output[vcf_sample]}
         """
 
-rule remerge_all_samples_entries_into_vcf:
+rule merge_all_samples_entries_into_vcf:
     conda:
         "../../envs/bcftools.yaml"
     input:
