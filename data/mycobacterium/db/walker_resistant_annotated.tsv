@@ -1,4 +1,4 @@
-Gene	OriginalAnnotation	Position	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	MutationType
+Gene	OriginalAnnotation	PositionMTB	PositionAlternative	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	MutationType
 ahpC	ahpC_C-57T	-57	-57	C	T	SNP
 eis	eis_G-10A	-10	-10	G	A	SNP
 embB	embB_D354A	354	354	D	A	SNP
