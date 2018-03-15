@@ -40,7 +40,7 @@ rule map_single_reads_with_bwa:
         """
 
 
-rule filter_reads_on_quality_after_bwa:
+rule filter_reads_on_quality:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
