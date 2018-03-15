@@ -50,7 +50,7 @@ rule call_snps_with_HaplotypeCaller_gatk_bp_resolution:
         gatk-launch HaplotypeCaller -ploidy 1 --output {output[0]} --input {input[0]} --reference {input[1]} -ERC BP_RESOLUTION &> {log[0]}
         """
 
-rule merge_gvcf_files_with_GenomicsDBImport_gatk:
+rule merge_gvcf_files_with_CombineGVCFs:
     conda:
         "../../envs/gatk.yaml"
     input:
@@ -58,30 +58,26 @@ rule merge_gvcf_files_with_GenomicsDBImport_gatk:
         gvcfs=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
         gvcfs_tbi=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
     output:
-        "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
+        "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/combined.g.vcf"
     log:
         logging_folder+"/logs/gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
-        if [ -d $(dirname {output[0]}) ]; then
-            rm -rf $(dirname {output[0]})
-        fi
-        acc=$(grep ">" {input[ref]} | sed "s/ .*//" | sed "s/>//" | tr -d "\n" | sed "s/ / --intervals /g")
         var=$(echo {input[gvcfs]} | sed "s/ / --variant /g")
-        gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[0]}) --variant ${{var}} --intervals ${{acc}} &> {log}
+        gatk-launch CombineGVCFs --output {output[0]} --variant ${{var}} --reference {input[ref]} &> {log}
         """
 
 rule genotype_with_genotypeGVCFs_gatk:
     conda:
         "../../envs/gatk.yaml"
     input:
-        "references/{ref}/genome_fasta.fasta",
-        "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
+        ref="references/{ref}/genome_fasta.fasta",
+        combined="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/combined.g.vcf",
     output:
-        "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf",
+        raw="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf",
     log:
         logging_folder+"/logs/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genotype_gvcf.txt",
     shell:
         """
-        gatk-launch GenotypeGVCFs --use-new-qual-calculator -ploidy 1 -R {input[0]} --annotations-to-exclude InbreedingCoeff --variant gendb://$(dirname {input[1]}) --output {output[0]} &> {log}
+        gatk-launch GenotypeGVCFs --use-new-qual-calculator --sample-ploidy 1 --reference {input[0]} --annotations-to-exclude InbreedingCoeff --variant {input[combined]} --output {output[raw]} &> {log}
         """
