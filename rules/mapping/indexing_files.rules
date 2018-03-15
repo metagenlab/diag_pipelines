@@ -1,5 +1,4 @@
-
-rule index_reference:
+rule index_reference_fasta:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
@@ -15,7 +14,7 @@ rule index_reference:
         bwa index {input[0]} &>> {log}
         """
 
-rule index_bam:
+rule index_bam_file:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:

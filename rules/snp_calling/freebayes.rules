@@ -13,7 +13,7 @@ rule call_variants_freebayes_vcf_one_sample:
         """
 
     
-rule call_variants_freebayes_vcf_all_samples:
+rule call_variants_with_freebayes_on_all_samples:
     threads: 4
     conda:
         "../../envs/freebayes.yaml"

@@ -1,4 +1,4 @@
-rule trimmomatic_PE:
+rule trim_paired_reads_with_trimmomatic:
     conda:
         "../../envs/trimmomatic.yaml"
     input:
@@ -27,7 +27,7 @@ rule trimmomatic_PE:
 
 
 
-rule trimmomatic_SE:
+rule trim_single_reads_with_trimmomatic:
     conda:
         "../../envs/trimmomatic.yaml"
     input:

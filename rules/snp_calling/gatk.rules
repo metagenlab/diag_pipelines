@@ -1,4 +1,4 @@
-rule create_dict_for_reference:
+rule create_dictionary_for_reference:
     conda:
         "../../envs/gatk.yaml"
     input:
@@ -14,7 +14,7 @@ rule create_dict_for_reference:
         """
         
 
-rule haplotype_caller_vcf:
+rule call_snps_with_haplotype_caller_gatk:
     conda:
         "../../envs/gatk.yaml"
     input:
@@ -32,7 +32,7 @@ rule haplotype_caller_vcf:
         gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]} --bam-output {output[1]} &> {log[0]}
         """
         
-rule haplotype_caller_gvcf:
+rule call_snps_with_HaplotypeCaller_gatk_bp_resolution:
     conda:
         "../../envs/gatk.yaml"
     input:
@@ -50,7 +50,7 @@ rule haplotype_caller_gvcf:
         gatk-launch HaplotypeCaller -ploidy 1 --output {output[0]} --input {input[0]} --reference {input[1]} -ERC BP_RESOLUTION &> {log[0]}
         """
 
-rule merge_gvcf_files_genomicsDBimport:
+rule merge_gvcf_files_with_GenomicsDBImport_gatk:
     conda:
         "../../envs/gatk.yaml"
     input:
@@ -71,7 +71,7 @@ rule merge_gvcf_files_genomicsDBimport:
         gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[0]}) -V ${{var}} --intervals ${{acc}} &> {log}
         """
 
-rule gatk_joint_genotyping_on_gvcf_files:
+rule genotype_with_genotypeGVCFs_gatk:
     conda:
         "../../envs/gatk.yaml"
     input:

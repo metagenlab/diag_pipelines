@@ -1,4 +1,4 @@
-rule mapping_to_reference_with_bwa_paired:
+rule map_paired_reads_with_bwa:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
@@ -19,7 +19,7 @@ rule mapping_to_reference_with_bwa_paired:
         (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[2]} {input[0]} {input[1]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
         
-rule mapping_to_reference_with_bwa_single:
+rule map_single_reads_with_bwa:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
@@ -40,7 +40,7 @@ rule mapping_to_reference_with_bwa_single:
         """
 
 
-rule filter_reads_after_bwa:
+rule filter_reads_on_quality_after_bwa:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
@@ -75,14 +75,3 @@ rule remove_duplicates_from_mapping:
         gatk-launch MarkDuplicates --REMOVE_DUPLICATES true -I {input[0]} -O {output[0]} -M {log[0]} &> {log[1]}
         """
 
-
-rule get_ninety_percent_interval_coverage:
-    conda:
-        "../../envs/r-base.yaml"
-    input:
-        "samples/{sample}/quality/mapping/bwa/{ref}/qualimap/raw_data_qualimapReport/coverage_histogram.txt"
-    output:
-        "samples/{sample}/quality/mapping/bwa/{ref}/min_cov.txt",
-        "samples/{sample}/quality/mapping/bwa/{ref}/max_cov.txt",
-    script:
-        "scripts/get_max_min_cov.R"
