@@ -15,23 +15,11 @@ Parameters
   
 .. * ``ref_ids_for``
 
---------------------
-Available Genotypers
---------------------
-
 Genotyping can be performed with two different softwares:
   
 .. toctree::
    genotypers.rst
 
-
-.. _filtering:
-
----------
-Filtering
----------
-
-Filtering is done identically on the resulting genotype calls made either by Freebayes or GATK.
 
 .. toctree::
    filtering.rst
