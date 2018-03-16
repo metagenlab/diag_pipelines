@@ -70,3 +70,11 @@ SRA samples will be determined based on the tabulated file whose full path must 
 	 
    "ERR1140788","Mycobacterium_tuberculosis_N0145-Lineage_2","paired","Mycobacterium tuberculosis"
    "SRR006916","Mycobacterium_tuberculosis_K21-Lineage_1","single","Mycobacterium tuberculosis"
+
+.. _workflows:
+
+---------
+Workflows
+---------
+
+Current available workflows are implemented in the folder ``workflows``. Each workflow will depend on ``rules``, stored in the folder of the same name, and can also depend on other workflows. ``rules`` are sorted with respect to their general function in different folders.

@@ -10,8 +10,11 @@ Documentation for the genomics and metagenomics workflows
 .. toctree::
    includeme.rst
    general_processes.rst
-   workflows.rst
-   snp_callers.rst
+   core_genomes.rst
+   assembly.rst
+   virulence.rst
+   resistance.rst
+   epidemiology.rst
    :maxdepth: 2
    :caption: Contents:
    
