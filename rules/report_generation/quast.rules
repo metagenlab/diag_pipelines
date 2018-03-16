@@ -1,0 +1,13 @@
+       
+rule calculate_assembly_statistics_with_quast:
+    conda:
+        "../../envs/quast.yaml"
+    input:
+        "samples/{sample}/annotation/{sample}.fsa"
+    output:
+        "samples/{sample}/quality/quast/report.txt"
+    log:
+        logging_folder+"/samples/{sample}/logs/assembly/quast.txt",
+    shell:
+        "quast.py {input[0]} -o $( dirname {output[0]})"
+
