@@ -1,4 +1,4 @@
-rule prokka:
+rule annotate_with_prokka:
     conda:
         "../../envs/prokka.yaml"
     input:
@@ -66,3 +66,12 @@ rule create_database_from_contig_sequences:
         """
         makeblastdb -dbtype nucl -in {input[0]}
         """
+
+rule remove_fasta_part_from_gff:
+    input:
+        "samples/{sample}/annotation/{sample}.gff"
+    output:
+        "samples/{sample}/annotation/{sample}_truncated.gff"
+    shell:
+        "sed '/^##FASTA$/,$d' {input} > {output}"
+    
