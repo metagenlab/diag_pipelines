@@ -7,6 +7,12 @@ Assembly and quality
 
 Aggregates rules for assembling genomes and performing various quality control checks.
 
+
+.. _assembly_dag:
+
+.. figure:: assembly.svg
+
+
 ----------
 Parameters
 ----------
