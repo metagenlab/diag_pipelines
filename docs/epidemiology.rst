@@ -27,11 +27,9 @@ Genotyping can be performed with two different softwares:
    genotypers/*
 
 
----------
-Filtering
----------
-
-Three filtering step are performed:
+----------------
+Quality controls
+----------------
 
 .. toctree::
    

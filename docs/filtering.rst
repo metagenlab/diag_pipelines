@@ -1,3 +1,8 @@
+=========
+Filtering
+=========
+
+
 .. _filtering_dag:
 
 .. figure:: filtering.svg
