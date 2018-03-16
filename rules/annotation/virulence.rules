@@ -1,4 +1,4 @@
-rule blast_virulence_protein:
+rule blast_virulence_protein_to_proteome:
     params:
         perc_id_cutoff=config["virulence_percentage_identity_cutoff"],
         cov_cutoff=config["virulence_coverage_cutoff"],
@@ -44,7 +44,7 @@ rule remove_redundancy_from_blast_results:
         "scripts/remove_overlap_from_blast_results.py"
 
         
-rule extract_protein_sequences_from_blast:
+rule extract_protein_sequences_from_blast_results:
     conda:
         "../../envs/samtools.yaml"
     input:
@@ -65,7 +65,7 @@ rule extract_protein_sequences_from_blast:
         rm {output[0]}.tmp
         """
         
-rule add_description:
+rule add_description_to_blast_results:
     conda:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
@@ -78,7 +78,7 @@ rule add_description:
         "scripts/merge_result_and_description.py"
         
     
-rule merge_description_files:
+rule merge_description_files_and_blast_results:
     conda:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml",
     input:

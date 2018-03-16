@@ -1,4 +1,4 @@
-rule raxml_on_alignment_to_ref:
+rule compute_phylogeny_with_raxml:
     conda:
         "../../envs/raxml.yaml"
     input:
@@ -18,7 +18,7 @@ rule raxml_on_alignment_to_ref:
         cp $(dirname {output[0]})/RAxML_bestTree.{wildcards.ref} $(dirname {output[0]})/RAxML_bestTree.nw 
         """
 
-rule raxml_bootstrap:
+rule compute_phylogeny_bootstraps_with_raxml:
     conda:
         "../../envs/raxml.yaml"
     input:

@@ -54,6 +54,9 @@ include:
     prefix + "vcf_manipulation/calculate_differences.rules"
 
 include:
+    prefix + "vcf_manipulation/create_alignment_for_phylogeny.rules"
+    
+include:
     prefix + "typing/snp_distance.rules"
 
 include:

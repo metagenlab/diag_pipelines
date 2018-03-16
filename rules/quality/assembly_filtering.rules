@@ -1,6 +1,6 @@
 rule copy_raw_assembly_to_reference_folder:
     input:
-        contigs="samples/{sample}/assembly/spades/contigs.fasta",
+        contigs="samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
     output:
         fasta=temp("references/{sample}_assembled_genome/genome_fasta.fasta"),
     shell:

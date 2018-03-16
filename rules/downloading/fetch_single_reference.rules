@@ -1,4 +1,4 @@
-rule download_reference_from_url:
+rule download_reference_from_refseq:
     conda:
         "../../envs/entrez-direct.yaml"
     output:
@@ -10,7 +10,7 @@ rule download_reference_from_url:
         efetch -db nucleotide -id ${{nucl_id}} -format {wildcards.format} > {output[genome]} 
         """
 
-rule get_reference_subvalue:
+rule get_strain_subvalue_identifier_reference:
     conda:
         "../../envs/entrez-direct.yaml"
     output:
@@ -21,7 +21,7 @@ rule get_reference_subvalue:
         """
 
     
-rule get_gff_for_reference:
+rule download_gff_for_reference_from_refseq:
     conda:
         "../../envs/entrez-direct.yaml"
     output:

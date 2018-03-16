@@ -17,7 +17,7 @@ rule annotate_with_prokka:
     shell:
         "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
 
-rule prokka_temporary_file:
+rule annotate_with_prokka_unfiltered_assembly:
     conda:
         "../../envs/prokka.yaml"
     input:
@@ -31,18 +31,7 @@ rule prokka_temporary_file:
         "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
 
 
-rule hashing_genes:
-    conda:
-        "../../envs/biopython.yaml"
-    input:
-        "samples/{sample}/annotation/{sample}.ffn"
-    output:
-        "samples/{sample}/annotation/{sample}_hashes.txt"
-    script:
-        "scripts/hashing_genes.py"
-    
-
-rule create_database_from_protein_sequences:
+rule create_blast_database_from_protein_sequences:
     conda:
         "../../envs/blast.yaml"
     input:
@@ -54,8 +43,7 @@ rule create_database_from_protein_sequences:
         makeblastdb -dbtype prot -in {input[0]}
         """
 
-
-rule create_database_from_contig_sequences:
+rule create_blast_database_from_contig_sequences:
     conda:
         "../../envs/blast.yaml"
     input:

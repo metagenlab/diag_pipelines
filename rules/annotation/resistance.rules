@@ -1,4 +1,4 @@
-rule rgi:
+rule search_resistance_with_rgi:
     conda:
         "../../envs/rgi.yaml"
     input:
@@ -11,7 +11,7 @@ rule rgi:
         """
         
 
-rule rgi_json_to_tsv:
+rule generate_rgi_tsv_file_from_json_file:
     conda:
         "../../envs/rgi.yaml"
     input:
@@ -25,7 +25,7 @@ rule rgi_json_to_tsv:
         """
 
         
-rule mykrobe_paired:
+rule search_resistance_paired_reads_with_mykrobe:
     conda:
         "../../envs/mykrobe.yaml"
     input:
@@ -41,7 +41,7 @@ rule mykrobe_paired:
         """
 
         
-rule mykrobe_single:
+rule search_resistance_single_reads_with_mykrobe:
     conda:
         "../../envs/mykrobe.yaml"
     input:
@@ -56,7 +56,7 @@ rule mykrobe_single:
         """
 
 
-rule mykrobe_json_to_tsv:
+rule generate_mykrobe_tsv_file_from_json_file:
     input:
         "samples/{sample}/resistance/mykrobe.json",
     output:

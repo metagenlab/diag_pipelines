@@ -1,4 +1,4 @@
-rule get_sra_single:
+rule download_sra_single:
     conda:
         "../../envs/sra-tools.yaml"
     output:
@@ -10,7 +10,7 @@ rule get_sra_single:
         """
 
 
-rule get_sra_paired:
+rule download_sra_paired:
     conda:
         "../../envs/sra-tools.yaml"
     output:

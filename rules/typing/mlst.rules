@@ -1,16 +1,29 @@
-rule mlst_samples:
+rule determine_mlst:
     conda:
         "../../envs/mlst.yaml"
     input:
-        expand("samples/{sample}/annotation/{sample}.fsa", sample=read_naming.keys())
+        fasta = "samples/{sample}/annotation/{sample}.fsa",
+    output:
+        mlst = "samples/typing/mlst.txt"
+    shell:
+        """
+        mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
+        """
+
+        
+rule merge_mlst_from_all_samples:
+    conda:
+        "../../envs/mlst.yaml"
+    input:
+        mlsts = expand("samples/{sample}/typing/mlst.txt", sample=read_naming.keys())
     output:
         "typing/mlst/summary.tsv"
     shell:
         """
-        mlst --quiet {input} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
+        cat {input[mlsts]} > {output}
         """
 
-rule mlst_reference_fasta:
+rule determine_mlst_reference_genome:
     conda:
         "../../envs/mlst.yaml"
     input:

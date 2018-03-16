@@ -17,7 +17,7 @@ rule create_multiqc_report_for_assembly:
         """
 
 
-rule create_multiqc_report_for_mapping_to_reference:
+rule create_multiqc_report_for_mapping:
     params:
         configfile = multiqc_configfile
     conda:
