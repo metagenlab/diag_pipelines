@@ -2,7 +2,7 @@ rule download_reference_from_url:
     conda:
         "../../envs/entrez-direct.yaml"
     output:
-        genome="references/{ref}/genome_{format}.{format}",
+        genome="references/{ref,[0-9]+}/genome_{format}.{format}",
     shell:
         """
         ftp=$(efetch -db assembly -id {wildcards.ref} -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -element FtpPath_RefSeq)
@@ -14,7 +14,7 @@ rule get_reference_subvalue:
     conda:
         "../../envs/entrez-direct.yaml"
     output:
-        subvalue="references/{ref}/genome_subvalue.txt",
+        subvalue="references/{ref,[0-9]+}/genome_subvalue.txt",
     shell:
         """
         efetch -db assembly -id {wildcards.ref} -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -element Sub_value > {output[subvalue]}
@@ -25,7 +25,7 @@ rule get_gff_for_reference:
     conda:
         "../../envs/entrez-direct.yaml"
     output:
-        gff="references/{ref}/genome.gff"
+        gff="references/{ref,[0-9]+}/genome.gff"
     shell:
         """
         ftp=$(efetch -db assembly -id {wildcards.ref} -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -element FtpPath_RefSeq)
