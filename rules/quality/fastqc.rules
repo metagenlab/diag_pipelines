@@ -1,4 +1,4 @@
-rule fastqc_single:
+rule assess_quality_single_reads_with_fastqc:
     conda:
         "../../envs/fastqc.yaml"
     input:
@@ -12,7 +12,7 @@ rule fastqc_single:
         "fastqc {input} -o $( dirname {output[0]}) &> {log}"
 
         
-rule fastqc_paired:
+rule assess_quality_paired_reads_with_fastqc:
     conda:
         "../../envs/fastqc.yaml"
     input:
