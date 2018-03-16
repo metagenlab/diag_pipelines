@@ -1,27 +1,21 @@
-rule qualimap_mapping:
-    conda:
-        "../../envs/qualimap.yaml"
+rule copy_raw_assembly_to_reference_folder:
     input:
-        "samples/{sample}/mapping/bwa/{sample}.bam",
-        "samples/{sample}/mapping/bwa/{sample}.bam.bai"
+        contigs="samples/{sample}/assembly/spades/contigs.fasta",
     output:
-        "samples/{sample}/quality/qualimap/qualimapReport.html",
-        "samples/{sample}/quality/qualimap/genome_results.txt",
-    log:
-        logging_folder+"/samples/{sample}/logs/assembly/qualimap.txt",
+        fasta=temp("references/{sample}_assembled_genome/genome_fasta.fasta"),
     shell:
         """
-        qualimap bamqc -bam {input[0]} -outdir $(dirname {output}) > {log[0]}
+        cp {input[contigs]} {output[fasta]}
         """
 
 rule extract_contig_coverage:
     input:
-        "samples/{sample}/quality/qualimap/genome_results.txt"
+        genome_cov="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/qualimap/genome_results.txt"
     output:
-        "samples/{sample}/quality/contig_coverage.txt"
+        extract="samples/{sample}/quality/contig_coverage.txt"
     shell:
         """
-        sed -ne '/Coverage per contig/,$ p'  {input[0]} | grep contig_ | sed "s/^[ \\t]*//" > {output[0]}
+        sed -ne '/Coverage per contig/,$ p'  {input[genome_cov]} | grep contig_ | sed "s/^[ \\t]*//" > {output[extract]}
         """
         
 rule quast:
