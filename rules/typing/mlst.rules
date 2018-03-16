@@ -35,7 +35,7 @@ rule determine_mlst_reference_genome:
         mlst --quiet {input[genome]}  | sed "s/.*\///" | sed "s/_genome\.fasta//" > {output[0]}
         """
 
-rule mlst_to_excel:
+rule generate_xlsx_file_from_mlst_results:
     conda:
         "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
