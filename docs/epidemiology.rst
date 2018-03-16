@@ -19,7 +19,7 @@ Parameters
 Available SNP callers
 ---------------------
 
-SNPs can be called with two different softwares:
+Genotyping can be performed with two different softwares:
   
 .. toctree::
    snp_callers.rst
@@ -28,7 +28,7 @@ SNPs can be called with two different softwares:
 Filtering
 ---------
 
-Filtering is done similarly on the resulting genotyping calls made by Freebayes or GATK.
+Filtering is done similarly on the resulting genotype calls made by Freebayes or GATK.
 
 .. toctree::
    filtering.rst
