@@ -18,10 +18,10 @@ rule call_snps_with_haplotype_caller_gatk:
     conda:
         "../../envs/gatk.yaml"
     input:
-        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
+        "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
         "references/{ref}/genome_fasta.fasta",
         "references/{ref}/genome_fasta.dict",
-        "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",
+        "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
     output:
         "samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf",
         temp("samples/{sample}/mapping/{mapping_method}/{ref}/gatk-haplotypecaller.bam"),
@@ -36,8 +36,8 @@ rule call_snps_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     conda:
         "../../envs/gatk.yaml"
     input:
-        bam="samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
-        bam_bai="samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",
+        bam="samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
+        bam_bai="samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
         ref="references/{ref}/genome_fasta.fasta",
         ref_dict="references/{ref}/genome_fasta.dict",
     output:
