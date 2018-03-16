@@ -1,3 +1,10 @@
+.. _genotypers:
+
+==========
+Genotypers
+==========
+
+
 .. _freebayes:
 
 

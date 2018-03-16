@@ -22,13 +22,13 @@ Available SNP callers
 Genotyping can be performed with two different softwares:
   
 .. toctree::
-   snp_callers.rst
+   genotypers.rst
 
 ---------
 Filtering
 ---------
 
-Filtering is done similarly on the resulting genotype calls made by Freebayes or GATK.
+Filtering is done identically on the resulting genotype calls made either by Freebayes or GATK.
 
 .. toctree::
    filtering.rst
