@@ -78,3 +78,7 @@ Workflows and Rules
 -------------------
 
 Current available workflows are implemented in the folder ``workflows``. Each workflow will depend on ``rules``, stored in the folder of the same name, and can also depend on other workflows. ``rules`` are sorted with respect to their general function in different folders.
+
+.. toctree::
+
+   all_rules.rst
