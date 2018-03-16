@@ -1,5 +1,3 @@
-
-
 .. _filtering_dag:
 
 .. figure:: filtering.svg

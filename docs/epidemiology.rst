@@ -15,13 +15,26 @@ Parameters
   
 .. * ``ref_ids_for``
 
+--------------------
+Available Genotypers
+--------------------
+
 Genotyping can be performed with two different softwares:
   
 .. toctree::
-   genotypers.rst
+   :glob:
 
+   genotypers/*
+
+
+---------
+Filtering
+---------
+
+Three filtering step are performed:
 
 .. toctree::
+   
    filtering.rst
 
 
