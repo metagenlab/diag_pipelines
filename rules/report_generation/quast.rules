@@ -9,5 +9,5 @@ rule calculate_assembly_statistics_with_quast:
     log:
         logging_folder+"/samples/{sample}/logs/assembly/quast.txt",
     shell:
-        "quast.py {input[0]} -o $( dirname {output[0]})"
+        "quast.py {input[0]} -o $( dirname {output[0]}) &> {log}"
 
