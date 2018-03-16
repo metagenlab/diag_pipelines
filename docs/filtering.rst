@@ -1,6 +1,5 @@
 .. _filtering:
 
-
 .. _filtering_dag:
 
 .. figure:: filtering.svg
@@ -11,7 +10,7 @@
 Coverage filtering
 ==================
 
-All positions in every sample are filtered simultaneously, whether the genotype if REF or ALT in VCF, will be masked (genotype is set to unknown, GT=``.``) will be masked if the coverage is lower than ``minimum_coverage_for_calling``.
+All positions in every sample are filtered simultaneously, whether the genotype if REF or ALT in VCF, will be masked (genotype is set to unknown, ``GT=.``) will be masked if the coverage is lower than ``minimum_coverage_for_calling``.
 
 
 ===================

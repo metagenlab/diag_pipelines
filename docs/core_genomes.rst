@@ -26,12 +26,12 @@ cgMLST scheme from `ridom <http://www.cgmlst.org/ncs>`_ can be extracted directl
    "*Acinetobacter baumannii*","470","3956907","39528"
    "*Legionella pneumophila*","446","1025099","30068"
 
-A bed file is constructed from the locus target file, constructing coordinates from the start and length columns of the csv file file available on the `ridom website <http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv>`_. 
+A bed file is constructed from the locus target file, using coordinates from the start and length columns of the csv file file available on the `ridom website <http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv>`_. 
 
 Example
 -------
 
-.. code-block:: console
+.. code-block:: bash
 
    snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules --use-conda --conda-prefix $conda_folder --config species="Staphylococcus aureus" -f all
 
@@ -55,7 +55,7 @@ A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assemb
 Example
 -------
 
-.. code-block:: console
+.. code-block:: bash
 
    snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules --use-conda --conda-prefix $conda_folder --config species="Salmonella enterica" -f all
 
