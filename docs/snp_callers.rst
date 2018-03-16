@@ -1,9 +1,3 @@
-.. _snp_callers:
-
-===========
-SNP callers
-===========
-
 .. _freebayes:
 
 

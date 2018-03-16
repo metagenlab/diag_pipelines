@@ -1,3 +1,5 @@
+.. _assembly_quality:
+
 ====================
 Assembly and quality
 ====================
