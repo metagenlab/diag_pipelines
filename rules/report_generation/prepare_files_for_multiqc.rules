@@ -1,55 +1,50 @@
-rule get_files_for_multiqc_to_reference_paired:
+rule copy_result_files_mapping_paired:
     input:
-        "samples/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html",
-        "samples/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-        "samples/{sample}/reads/trimmed/summary.txt",
+        qualimap_report = "samples/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html",
+        fastqc_report = "samples/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        trimmomatic_report = "samples/{sample}/reads/trimmed/summary.txt",
     output:
         "samples/{sample}/multiqc/mapping_to_{ref}/log.txt"
     shell:
         """
         mkdir -p $(dirname {output[0]})/{wildcards.sample}
-        cp -R $(dirname {input[0]})/* $(dirname {output[0]})/{wildcards.sample}
-        cp -R $(dirname {input[1]})/* $(dirname {output[0]})/{wildcards.sample}
-        sed "s/_R1\.fastq/\.fastq/g" {input[2]} | sed "s/_R2\.fastq/\.fastq/g" > $(dirname {output[0]})/trimmomatic.log
+        cp -R $(dirname {input[qualimap_report]})/* $(dirname {output[0]})/{wildcards.sample}
+        cp -R $(dirname {input[fastqc_report]})/* $(dirname {output[0]})/{wildcards.sample}
+        sed "s/_R1\.fastq/\.fastq/g" {input[trimmomatic_report]} | sed "s/_R2\.fastq/\.fastq/g" > $(dirname {output[0]})/trimmomatic.log
         sed -i.bak "s/R1_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
         sed -i.bak "s/R2_paired\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
         echo "okay" > {output}
         """
 
 
-rule get_files_for_multiqc_to_reference_single:
+rule copy_result_files_mapping_single:
     input:
-        "samples/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html",
-        "samples/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
-        "samples/{sample}/reads/trimmed/summary.txt",
+        qualimap_report = "samples/{sample}/quality/mapping/bwa/{ref}/qualimap/qualimapReport.html",
+        fastqc_report = "samples/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
+        trimmomatic_report = "samples/{sample}/reads/trimmed/summary.txt",
     output:
         "samples/{sample}/multiqc/mapping_to_{ref}/log.txt"
     shell:
         """
         mkdir -p $(dirname {output[0]})/{wildcards.sample}
-        cp -R $(dirname {input[0]})/* $(dirname {output[0]})/{wildcards.sample}
-        cp -R $(dirname {input[1]})/* $(dirname {output[0]})/{wildcards.sample}
-        sed "s/_single//g" {input[2]} > $(dirname {output[0]})/trimmomatic.log
+        cp -R $(dirname {input[qualimap_report]})/* $(dirname {output[0]})/{wildcards.sample}
+        cp -R $(dirname {input[fastqc_report]})/* $(dirname {output[0]})/{wildcards.sample}
+        sed "s/_single//g" {input[trimmomatic_report]} > $(dirname {output[0]})/trimmomatic.log
         sed -i.bak "s/single\.fastq/{wildcards.sample}/" $(dirname {output[0]})/{wildcards.sample}/fastqc_data.txt
-
         echo "okay" > {output}
         """
 
-rule multiqc_all_to_reference:
-    params:
-        configfile = multiqc_configfile
-    conda:
-        "../../envs/multiqc.yaml"
+rule copy_result_files_for_assembly:
     input:
-        expand("samples/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = list(read_naming.keys()))
+        quast_report = "samples/{sample}/quality/quast/report.txt",
+        annotation = "samples/{sample}/annotation/{sample}.txt",
     output:
-        "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
-    log:
-        logging_folder+"/logs/quality/multiqc/mapping_to_{ref}.txt"
+        "samples/{sample}/multiqc/self_genome/log.txt"
     shell:
         """
-        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) samples/*/multiqc/mapping_to_{wildcards.ref}/ &> {log[0]}
+        mkdir -p $(dirname {output[0]})/{wildcards.sample}
+        cp {input[annotation]} $(dirname {output[0]})
+        cp -R $(dirname {input[quast_report]}) $(dirname {output[0]})
+        sed -i.bak "s/.fsa//g" $(dirname {output[0]})/quast/report.tsv
+        echo "okay" > {output}
         """
-
-
-        
