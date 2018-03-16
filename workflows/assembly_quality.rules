@@ -18,16 +18,19 @@ include:
     prefix + "read_manipulation/get_sras.rules"
     
 include:
-    prefix + "quality/read_trimming.rules"
+    prefix + "quality/trimmomatic.rules"
 
 include:
-    prefix + "quality/quality_assembly.rules"
+    prefix + "quality/assembly_filtering.rules"
 
 include:
-    prefix + "quality/quality_reads.rules"
+    prefix + "quality/fastqc.rules"
     
 include:
     prefix + "quality/contamination.rules"
+
+include:
+    prefix + "quality/qualimap.rules"
     
 include:
     prefix + "mapping/bwa_to_self_assembly.rules"
