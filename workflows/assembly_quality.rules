@@ -33,7 +33,7 @@ include:
     prefix + "quality/qualimap.rules"
     
 include:
-    prefix + "mapping/bwa_to_self_assembly.rules"
+    prefix + "mapping/bwa.rules"
 
 include:
     prefix + "mapping/indexing_files.rules"

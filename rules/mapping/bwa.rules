@@ -4,10 +4,10 @@ rule map_paired_reads_with_bwa:
     input:
         "samples/{sample}/reads/trimmed/R1_paired.fastq",
         "samples/{sample}/reads/trimmed/R2_paired.fastq",        
-        ancient("references/{ref}/genome_fasta.fasta"),
-        ancient("references/{ref}/genome_fasta.fasta.bwt"),
+        "references/{ref}/genome_fasta.fasta",
+        "references/{ref}/genome_fasta.fasta.bwt",
     output:
-        temp("samples/{sample}/mapping/bwa/{ref}/{sample}.bam"),
+        temp("samples/{sample}/mapping/bwa/{ref}.bam"),
     log:
         logging_folder+"/samples/{sample}/logs/mapping/{ref}/bwa/log.txt"
     shell:
@@ -27,7 +27,7 @@ rule map_single_reads_with_bwa:
         ancient("references/{ref}/genome_fasta.fasta"),
         ancient("references/{ref}/genome_fasta.fasta.bwt"),
     output:
-        temp("samples/{sample}/mapping/bwa/{ref}/{sample}.bam"),
+        temp("samples/{sample}/mapping/bwa/{ref}.bam"),
     log:
         logging_folder+"/samples/{sample}/logs/mapping/{ref}/bwa/log.txt"
     shell:
@@ -44,12 +44,12 @@ rule filter_reads_on_quality:
     conda:
         "../../envs/bwa-samtools.yaml"
     input:
-        "samples/{sample}/mapping/bwa/{ref}/{sample}.bam",
-        "samples/{sample}/mapping/bwa/{ref}/{sample}.bam.bai",
+        "samples/{sample}/mapping/bwa/{ref}.bam",
+        "samples/{sample}/mapping/bwa/{ref}.bam.bai",
         ancient("references/{ref}/genome_fasta.fasta"),
         ancient("references/{ref}/genome_fasta.fasta.bwt"),
     output:
-        temp("samples/{sample}/mapping/bwa/{ref}/filtered.bam"),
+        temp("samples/{sample}/mapping/bwa/{ref}_filtered.bam"),
     shell:
         """
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
@@ -63,10 +63,10 @@ rule remove_duplicates_from_mapping:
     conda:
         "../../envs/gatk.yaml"
     input:
-        "samples/{sample}/mapping/bwa/{ref}/filtered.bam",
-        "samples/{sample}/mapping/bwa/{ref}/filtered.bam.bai",
+        "samples/{sample}/mapping/bwa/{ref}_filtered.bam",
+        "samples/{sample}/mapping/bwa/{ref}_filtered.bam.bai",
     output:
-        temp("samples/{sample}/mapping/bwa/{ref}/deduplicated_filtered.bam"),
+        temp("samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam"),
     log:
          logging_folder+"/samples/{sample}/mapping/bwa/{ref}/metrics_deduplicated.txt",
          logging_folder+"/samples/{sample}/logs/mapping/bwa/{ref}/markduplicates.txt"
