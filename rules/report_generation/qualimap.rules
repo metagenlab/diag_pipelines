@@ -12,5 +12,5 @@ rule assess_mapping_with_qualimap:
         logging_folder+"/samples/{sample}/logs/mapping/{ref}/qualimap.txt",
     shell:
         """
-        qualimap bamqc -bam {input[0]} -outdir $(dirname {output}) > {log[0]}
+        qualimap bamqc -bam {input[bam]} -outdir $(dirname {output}) > {log[0]}
         """
