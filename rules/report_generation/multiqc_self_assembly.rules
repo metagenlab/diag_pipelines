@@ -1,10 +1,10 @@
 rule get_files_for_multiqc_paired:
     input:
-        "samples/{sample}/quality/qualimap/qualimapReport.html",
-        "samples/{sample}/quality/quast/report.txt",
-        "samples/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
-        "samples/{sample}/annotation/{sample}.txt",
-        "samples/{sample}/reads/trimmed/summary.txt",
+        qualimap_report = "samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/qualimap/qualimapReport.html",
+        quast_report = "samples/{sample}/quality/quast/report.txt",
+        fastq_report = "samples/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
+        annotation = "samples/{sample}/annotation/{sample}.txt",
+        trimmomatic_report = "samples/{sample}/reads/trimmed/summary.txt",
     output:
         "samples/{sample}/multiqc/self_genome/log.txt"
     shell:
