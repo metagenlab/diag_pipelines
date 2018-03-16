@@ -36,14 +36,11 @@ include:
     prefix + "mapping/find_closest_genomes.rules"
 
 include:
-    prefix + "snp_calling/freebayes.rules"
+    prefix + "genotyping/freebayes.rules"
 
 include:
-    prefix + "snp_calling/gatk.rules"
+    prefix + "genotyping/gatk.rules"
 
-include:
-    prefix + "typing/snp_distance.rules"
-    
 include:
     prefix + "vcf_manipulation/filtering.rules"
     
@@ -57,7 +54,7 @@ include:
     prefix + "vcf_manipulation/calculate_differences.rules"
 
 include:
-    prefix + "vcf_manipulation/add_annotation.rules"
+    prefix + "typing/snp_distance.rules"
 
 include:
     prefix + "typing/mlst.rules"
@@ -68,5 +65,3 @@ include:
 include:
     prefix + "phylogeny/image_creation.rules"
 
-include:
-    prefix + "report_generation/multiqc_reference.rules"

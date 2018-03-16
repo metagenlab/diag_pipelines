@@ -24,14 +24,8 @@ include:
     prefix + "quality/assembly_filtering.rules"
 
 include:
-    prefix + "quality/fastqc.rules"
-    
-include:
     prefix + "quality/contamination.rules"
 
-include:
-    prefix + "quality/qualimap.rules"
-    
 include:
     prefix + "mapping/bwa.rules"
 
@@ -45,5 +39,17 @@ include:
     prefix + "annotation/prokka.rules"
 
 include:
-    prefix + "report_generation/multiqc_self_assembly.rules"
+    prefix + "report_generation/prepare_files_for_multiqc.rules"
+    
+include:
+    prefix + "report_generation/multiqc.rules"
 
+include:
+    prefix + "report_generation/fastqc.rules"
+
+include:
+    prefix + "report_generation/quast.rules"
+
+include:
+    prefix + "report_generation/qualimap.rules"
+    
