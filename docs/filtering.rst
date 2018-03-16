@@ -1,8 +1,4 @@
-.. _filtering:
 
-=========
-Filtering
-=========
 
 .. _filtering_dag:
 

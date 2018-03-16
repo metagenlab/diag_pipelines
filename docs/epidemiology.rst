@@ -15,14 +15,17 @@ Parameters
   
 .. * ``ref_ids_for``
 
----------------------
-Available SNP callers
----------------------
+--------------------
+Available Genotypers
+--------------------
 
 Genotyping can be performed with two different softwares:
   
 .. toctree::
    genotypers.rst
+
+
+.. _filtering:
 
 ---------
 Filtering

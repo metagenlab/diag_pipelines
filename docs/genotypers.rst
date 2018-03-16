@@ -1,9 +1,11 @@
 .. _genotypers:
 
+
 ==========
 Genotypers
 ==========
 
+Genotyping can be performed with two different softwares:
 
 .. _freebayes:
 
