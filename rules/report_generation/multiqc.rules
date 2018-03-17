@@ -4,7 +4,7 @@ rule create_multiqc_report_for_assembly:
     conda:
         "../../envs/multiqc.yaml"
     input:
-        assembly=expand("samples/{sample}/multiqc/self_genome/log.txt", sample = list(read_naming.keys())),
+        assembly=expand("samples/{sample}/multiqc/assembly/log.txt", sample = list(read_naming.keys())),
         mapping=expand("samples/{sample}/multiqc/mapping_to_{sample}_assembled_genome/log.txt", sample = list(read_naming.keys())),
         
     output:

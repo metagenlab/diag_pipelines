@@ -40,7 +40,7 @@ rule copy_result_files_assembly:
         quast_report = "samples/{sample}/quality/quast/report.txt",
         annotation = "samples/{sample}/annotation/{sample}.txt",
     output:
-        "samples/{sample}/multiqc/self_genome/log.txt"
+        "samples/{sample}/multiqc/assembly/log.txt"
     shell:
         """
         mkdir -p $(dirname {output[0]})/{wildcards.sample}
