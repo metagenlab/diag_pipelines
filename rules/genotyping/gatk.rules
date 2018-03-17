@@ -32,7 +32,7 @@ rule call_snps_with_haplotype_caller_gatk:
         gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]} --bam-output {output[1]} &> {log[0]}
         """
         
-rule call_snps_with_HaplotypeCaller_GATK_BP_RESOLUTION:
+rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     conda:
         "../../envs/gatk.yaml"
     input:
