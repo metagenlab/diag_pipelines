@@ -2,20 +2,20 @@ rule compute_phylogeny_with_raxml:
     conda:
         "../../envs/raxml.yaml"
     input:
-        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
+        alignment="typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
     output:
-        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw"
+        best_tree="phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw"
     log:
         logging_folder+"/logs/phylogeny/RAxML_log.{ref}"
     shell:
         """
-        if [ -d $(dirname {output[0]}) ];
+        if [ -d $(dirname {output[best_tree]}) ];
         then
-            rm -rf $(dirname {output[0]})
-            mkdir -p $(dirname {output[0]})
+            rm -rf $(dirname {output[best_tree]})
+            mkdir -p $(dirname {output[best_tree]})
         fi
-        raxmlHPC -V -m GTRCAT -n {wildcards.ref} -s {input[0]} -w $(dirname $(readlink -f {output[0]})) -p 123 > {log} 
-        cp $(dirname {output[0]})/RAxML_bestTree.{wildcards.ref} $(dirname {output[0]})/RAxML_bestTree.nw 
+        raxmlHPC -V -m GTRCAT -n {wildcards.ref} -s {input[alignment]} -w $(dirname $(readlink -f {output[best_tree]})) -p 123 > {log} 
+        cp $(dirname {output[best_tree]})/RAxML_bestTree.{wildcards.ref} $(dirname {output[best_tree]})/RAxML_bestTree.nw 
         """
 
 rule compute_phylogeny_bootstraps_with_raxml:
