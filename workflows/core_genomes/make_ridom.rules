@@ -1,7 +1,7 @@
 import pandas
 
 include:
-    "logging.rules"
+    "../logging.rules"
     
 ridom = pandas.read_csv(absolute+"/data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
 
