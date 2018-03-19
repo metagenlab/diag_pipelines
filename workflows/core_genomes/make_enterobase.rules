@@ -2,7 +2,7 @@ import pandas
 
 
 include:
-    "logging.rules"
+    "../logging.rules"
 
     
 enterobase = pandas.read_csv(absolute_path+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
@@ -29,28 +29,16 @@ rule get_schema_from_enterobase:
         """
 
 rule fetch_gene_entries_from_locus_tag:
+    conda:
+        "../../envs/biopython.yaml"
     input:
-        gff="references/{ref}/genome.gff",
-        gene_list="core_genomes/{spec}/enterobase/genes.txt",
+        gbk="references/{ref}/genome_gbwithparts.gbwithparts",
+        locus_list="core_genomes/{spec}/enterobase/genes.txt",
     output:
         bed="core_genomes/{spec}/enterobase/{ref}.bed",
         problematic="core_genomes/{spec}/enterobase/{ref}_missing.txt",
-    shell:
-        """
-        while read locus_tag
-        do
-            match=$(grep -c "${{locus_tag}}\>" {input[gff]}) || :
-            if [[ "${{match}}" -eq 1 ]]
-            then 
-                grep "${{locus_tag}}\>" {input[gff]} | cut -f1,4,5 | awk '{{print $1 "\011" ($2 - 1) "\011" $3}}' >> {output[bed]}
-            elif [[ "${{match}}" -eq 0 ]]
-            then
-                echo ${{locus_tag}} >> {output[problematic]}
-            else
-                echo ${{locus_tag}} >> {output[problematic]}
-            fi
-        done < {input[gene_list]}
-        """
+    script:
+        "../../rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
         
 
 
