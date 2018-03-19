@@ -12,7 +12,7 @@ rule calculate_pairwise_distances_by_type:
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[dist_pair]}   
         """
 
-rule get_snps_positions_by_type:
+rule get_pairwise_snps_positions_by_type:
     conda:
         "../../envs/bcftools.yaml"
     input:
