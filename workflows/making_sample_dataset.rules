@@ -2,12 +2,52 @@ import sys
 import pandas
 import re
 
-sys.path.insert(0, config["absolute_path_of_pipeline_folder"])
 
-import helper_scripts.get_sample_naming_from_link_folder as sample_naming
 
-from helper_scripts.get_folder_and_subfolders import get_folders_structure_with_sample_naming
+def get_folders_structure_with_sample_naming(link_dir, func):
+    folders = {}
+    samp_names = func(link_dir)
+    for key in samp_names.keys():
+        folders[key] = "."
+    original_name = { x : x for x in samp_names.keys()}
 
+    for i in os.listdir(link_dir):
+        if os.path.isdir(link_dir + "/" + i):
+            l = func(link_dir+"/"+i)
+            k = { i + "_" + x : y for x, y in l.items()}
+            u = { i + "_" + x : x for x in l.keys()}
+            for key in k.keys():
+                folders[key]=i
+            samp_names = { ** samp_names, **k}
+            original_name = { ** original_name, **u}
+    return(samp_names, folders, original_name)
+
+
+
+def get_read_naming_patterns(directory):
+    result = []
+    extension= {}
+    for fname in os.listdir(directory):
+        if fname.endswith("fastq.gz") or fname.endswith("fq.gz") or fname.endswith("fastq") or fname.endswith("fq"):
+            regex_str = '(_L0+[1-9]+)?_(R)?(1|2)(\.|_)'
+            regex = re.compile(regex_str)
+            ext = re.search(regex, fname)
+            if ext is None:
+                ext = re.search(r'f(?:ast)?q(?:\.gz)?', fname)
+                samp = re.sub("\.$", "", re.search(r'^([^\.]*)\.*', fname).group(0))
+                if samp in extension.keys():
+                    if ext.group(0).endswith(".gz"):
+                        extension[samp]=[ext.group(0)]
+                else:
+                    extension[samp]=[ext.group(0)]
+            else:
+                regex_after = re.compile(regex_str+".*")
+                regex_before = re.compile(".*"+regex_str)
+                read = re.compile(re.search(regex_after, fname).group(0))
+                samp = re.sub(regex, '', re.search(regex_before, fname).group(0))
+                extension.setdefault(samp, [])
+                extension[samp].append(re.sub("^_", "", read.pattern))
+    return(extension)
 
 all_samples=pandas.DataFrame()
 
