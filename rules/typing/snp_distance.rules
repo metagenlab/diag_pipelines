@@ -19,12 +19,12 @@ rule compute_minimum_spanning_tree_with_st:
     conda:
         "../../envs/igraph.yaml"
     input:
-        "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.tsv",
-        "typing/mlst/summary.tsv",
-        "references/{ref}/mlst.tsv",
-        "references/{ref}/genome_subvalue.txt",
+        dist = "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.tsv",
+        mlst_samples = "typing/mlst/summary.tsv",
+        mlst_ref = "references/{ref}/mlst.tsv",
+        subvalue = "references/{ref}/genome_subvalue.txt",
     output:
-        "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_with_st.svg"
+        mst = "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_with_st.svg"
     log:
         logging_folder+"/logs/typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_with_st.txt"
     script:
@@ -40,7 +40,7 @@ rule compute_minimum_spanning_tree_no_st:
         dist="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.tsv",
         subvalue="references/{ref}/genome_subvalue.txt",
     output:
-        "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_no_st.svg"
+        mst="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_no_st.svg"
     log:
         logging_folder+"/logs/typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_no_st.txt"
     script:

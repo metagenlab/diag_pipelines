@@ -2,14 +2,14 @@ library(igraph, warn.conflicts=FALSE)
 
 set.seed(1)
 
-reference_name <-  read.csv(snakemake@input[[4]], sep="\t", header=FALSE, stringsAsFactors=FALSE)[1,1]
+reference_name <-  read.csv(snakemake@input[["subvalue"]], sep="\t", header=FALSE, stringsAsFactors=FALSE)[1,1]
 
 ref_convinient_name <- paste(reference_name, " (", snakemake@wildcards[["ref"]], ")", sep="")
 
 print(ref_convinient_name)
 
 
-matrix <- as.matrix(read.csv(snakemake@input[[1]], sep="\t", header=TRUE, row.names=1))
+matrix <- as.matrix(read.csv(snakemake@input[["dist"]], sep="\t", header=TRUE, row.names=1))
 #We set the zero distance (clones) to a small value, otherwise no links exist between clones
 matrix[matrix==0] <- 0.01
 
@@ -79,7 +79,7 @@ vertices_colors = rep(NA, nb_vertex)
 
 
 
-svg(snakemake@output[[1]], height=10, width=10)
+svg(snakemake@output[["mst"]], height=10, width=10)
 
 plot(mst_graph, vertex.size=vertices_sizes, edge.label.dist=35, vertex.label.dist=0, node.label.cex=0.5, vertex.color=vertices_colors, vertex.label=vertex_attr(mst_graph, "label"), vertex.label.color=rep("black", nb_vertex), vertex.label.family="sans", edge.label.family="sans")
 

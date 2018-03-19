@@ -4,18 +4,18 @@ library(igraph, warn.conflicts=FALSE)
 
 set.seed(1)
 
-sample_sts <- read.csv(snakemake@input[[2]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
-refs_sts <- read.csv(snakemake@input[[3]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
+sample_sts <- read.csv(snakemake@input[["mlst_samples"]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
+refs_sts <- read.csv(snakemake@input[["mlst_ref"]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
 all_sts <- rbind(sample_sts, refs_sts)
 
-reference_name <-  read.csv(snakemake@input[[4]], sep="\t", header=FALSE, stringsAsFactors=FALSE)[1,1]
+reference_name <-  read.csv(snakemake@input[["subvalue"]], sep="\t", header=FALSE, stringsAsFactors=FALSE)[1,1]
 
 ref_convinient_name <- paste(reference_name, " (", snakemake@wildcards[["ref"]], ")", sep="")
 
 print(ref_convinient_name)
 
 
-matrix <- as.matrix(read.csv(snakemake@input[[1]], sep="\t", header=TRUE, row.names=1))
+matrix <- as.matrix(read.csv(snakemake@input[["dist"]], sep="\t", header=TRUE, row.names=1))
 #We set the zero distance (clones) to a small value, otherwise no links exist between clones
 matrix[matrix==0] <- 0.01
 
@@ -98,7 +98,7 @@ for (i in 1:length(uniq_sts)){
 
 
 
-svg(snakemake@output[[1]], height=10, width=10)
+svg(snakemake@output[["mst"]], height=10, width=10)
 par(mar=c(0,8,0,0))
 
 
