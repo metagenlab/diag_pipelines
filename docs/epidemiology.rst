@@ -27,13 +27,14 @@ Genotyping can be performed with two different softwares:
    genotypers/*
 
 
-----------------
-Quality controls
-----------------
+---------      
+Filtering   
+---------
 
 .. toctree::
+   :glob:
    
-   filtering.rst
+   filtering/*
 
 
 ------------
