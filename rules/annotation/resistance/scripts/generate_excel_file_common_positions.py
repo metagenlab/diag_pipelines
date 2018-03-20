@@ -1,18 +1,18 @@
 import pandas
-import matplotlib
 import itertools
-from matplotlib_venn import venn3
-from matplotlib_venn import venn2
-
-import matplotlib.pyplot as plt
+import csv
 
 source_db = {}
-source_db["SNP"] = {"CARD":"../db/rgi_annotated_full_2_0_0.csv" , "Miotto et al. 2017":"../db/miotto_high_moderate_minimum_confidence_annotated.csv", "Mykrobe":"../db/mykrobe_annotated.tsv", "Walker et al. 2015":"../db/walker_resistant_annotated.tsv"}
-source_db["INDEL"] = {"Mykrobe":"../db/mykrobe_annotated.tsv", "Walker et al. 2015":"../db/walker_resistant_annotated.tsv"}
+source_db["SNP"] = {"CARD": snakemake.input["card"], "Miotto et al. 2017": snakemake.input["miotto"], "Mykrobe": snakemake.input["mykrobe"], "Walker et al. 2015": snakemake.input["walker"]}
 
-gene_antibio = pandas.read_csv("../db/resistance_genes.csv", sep="\t")
-gene_antibio["Antibiotic"]=gene_antibio["Antibiotic"].str.strip()
-gene_antibio["Gene"]=gene_antibio["Gene"].str.strip()
+#source_db["INDEL"] = {"Mykrobe":"../db/mykrobe_annotated.tsv", "Walker et al. 2015":"../db/walker_resistant_annotated.tsv"}
+
+gene_antibio = pandas.read_csv(snakemake.input['resistance_genes'], sep="\t")
+gene_antibio["Antibiotic"] = gene_antibio["Antibiotic"].str.strip()
+gene_antibio["Gene"] = gene_antibio["Gene"].str.strip()
+
+locus_tags = pandas.read_csv(snakemake.input['locus_tag'], sep="\t", index_col=0)
+
 
 
 nb_sources = len(source_db)
@@ -33,7 +33,7 @@ for i in source_db["SNP"].keys():
 
 
 common_positions={}
-for j in ["4", "3", "2"]:
+for j in ["4", "3", "2", "1"]:
     common_positions[j] = {}
     for i in set(list(gene_antibio["Antibiotic"])):
         common_positions[j][i] = {}
@@ -57,12 +57,17 @@ for mutation_type in ["SNP"]:
         for db in itertools.combinations(source_db[mutation_type].keys(), 2):
             common_2.append(pos_each_db[db[0]].intersection(pos_each_db[db[1]]).difference(union_4).difference(union_3))
         union_2 = sorted(set([item for sublist in common_2 for item in sublist]))
+        common_1 = []
+        for db in source_db[mutation_type].keys():
+            common_1.append(pos_each_db[db].difference(union_4).difference(union_3).difference(union_2))
+        union_1 = sorted(set([item for sublist in common_1 for item in sublist]))
         unions = {}
         unions['4'] = union_4
         unions['3'] = union_3
         unions['2'] = union_2
+        unions['1'] = union_1
         for anti in set(gene_antibio.loc[gene_antibio["Gene"]==gene, "Antibiotic"]):
-            for number in ["4", "3", "2"]:
+            for number in ["4", "3", "2", "1"]:
                 for pos in unions[number]:
                     for i in source_db[mutation_type].keys():
                         if pos in list(all_res[i].loc[(all_res[i]["Gene"]==gene) & (all_res[i]["MutationType"]==mutation_type), "PositionMTB"]):
@@ -74,13 +79,12 @@ for mutation_type in ["SNP"]:
                                 annot=sorted(set(all_res[i].loc[(all_res[i]["MutationType"]==mutation_type) & (all_res[i]["Gene"]==gene) & (all_res[i]["PositionMTB"]==pos), "OriginalAnnotation"]))
                                 common_positions[number][anti][mutation_type].append([i, gene, int(pos), annot])
 
+                                
 def get_codon_start_from_aa_position(pos):
     return (pos-1)*3
 
 def get_codon_end_from_aa_position(pos):
     return (pos)*3
-
-
 
 def alternate_gray_background(row, numb):
     if row.empty:
@@ -89,8 +93,11 @@ def alternate_gray_background(row, numb):
     ret[[bool(x) for x in row.index//numb%2]]='background-color:#DCDCDC'
     ret[[not bool(x) for x in row.index//numb%2]]=''
     return(ret)
-  
-for j in ["4", "3", "2"]:
+
+
+print(locus_tags)
+
+for j in ["4", "3", "2", "1"]:
     writer = pandas.ExcelWriter("summary_common_to_"+j+"_dbs.xlsx")
     bed_panda = pandas.DataFrame()
     for i in sorted(set(list(gene_antibio["Antibiotic"]))):
@@ -99,11 +106,16 @@ for j in ["4", "3", "2"]:
         bed_panda = pandas.concat([bed_panda, res_panda_snp[["Gene", "Position"]].drop_duplicates().reset_index(drop=True)])
     all_mutations = bed_panda.drop_duplicates().reset_index(drop=True)
     only_cds = all_mutations.loc[(all_mutations["Gene"]!="rrs") & (all_mutations["Position"]>0)]
-    final_bed = pandas.DataFrame({"Gene":only_cds["Gene"], "Start":only_cds["Position"].apply(get_codon_start_from_aa_position), "End":only_cds["Position"].apply(get_codon_end_from_aa_position)})
+    final_bed = pandas.DataFrame({"Start":only_cds["Position"].apply(get_codon_start_from_aa_position), "End":only_cds["Position"].apply(get_codon_end_from_aa_position)}).set_index(only_cds["Gene"])
     rrs = all_mutations.loc[(all_mutations["Gene"]=="rrs")]
-    final_bed=pandas.concat([final_bed, pandas.DataFrame({"Gene":rrs["Gene"], "Start":rrs["Position"]-1, "End":rrs["Position"]})]).reset_index(drop=True)
-    final_bed[["Gene", "Start", "End"]].to_csv("mutation_common_to_"+j+".bed", header=False, index=False, sep="\t")
+    final_bed=pandas.concat([final_bed, pandas.DataFrame({"Start":rrs["Position"]-1, "End":rrs["Position"]}).set_index(rrs["Gene"])])
+    final_bed = final_bed.join(locus_tags)
+    final_bed[["LocusTag", "Start", "End"]].to_csv("mutation_common_to_"+j+".bed", header=False, index=False, sep="\t")
+    if j == "4":
+        final_bed[["LocusTag", "Start", "End"]].to_csv(snakemake.output["best"], header=False, index=False, sep="\t")
     writer.save()
 
-    
+
+
+
 #    res_panda_indel.style.apply(alternate_gray_background, axis=None).to_excel(writer, "INDEL", index=False)

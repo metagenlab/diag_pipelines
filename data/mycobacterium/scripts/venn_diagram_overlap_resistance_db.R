@@ -1,6 +1,6 @@
 library(VennDiagram)
 
-rgi <- read.table("../db/rgi_annotated_full_2_0_0.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
+rgi <- read.table("../db/rgi_annotated_full_2_0_0.tsv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
 rgi[,"MutatedAminoAcidOrNucleotide"] <- sapply(rgi[,"MutatedAminoAcidOrNucleotide"], toupper)
 rgi[,"WildTypeAminoAcidOrNucleotide"] <- sapply(rgi[,"WildTypeAminoAcidOrNucleotide"], toupper)
 
@@ -10,7 +10,7 @@ mykrobe[,"MutatedAminoAcidOrNucleotide"] <- sapply(mykrobe[,"MutatedAminoAcidOrN
 mykrobe[,"WildTypeAminoAcidOrNucleotide"] <- sapply(mykrobe[,"WildTypeAminoAcidOrNucleotide"], toupper)
 
 
-miotto=read.table("../db/miotto_high_moderate_minimum_confidence_annotated.csv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
+miotto=read.table("../db/miotto_high_moderate_minimum_confidence_annotated.tsv", sep="\t", header=TRUE, stringsAsFactors=FALSE)
 miotto[,"MutatedAminoAcidOrNucleotide"] <- sapply(miotto[,"MutatedAminoAcidOrNucleotide"], toupper)
 miotto[,"WildTypeAminoAcidOrNucleotide"] <- sapply(miotto[,"WildTypeAminoAcidOrNucleotide"], toupper)
 
