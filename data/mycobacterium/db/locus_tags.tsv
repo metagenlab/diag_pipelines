@@ -1,0 +1,180 @@
+Gene	LocusTag	RefGenome
+gyrB upstream	Rv0005 upstream	NC_000962.3
+gyrB	Rv0005	NC_000962.3
+gyrA upstream	Rv0006 upstream	NC_000962.3
+gyrA	Rv0006	NC_000962.3
+pbpA	Rv0016c	NC_000962.3
+ponA1 upstream	Rv0050 upstream	NC_000962.3
+ponA1	Rv0050	NC_000962.3
+ldtA	Rv0116c	NC_000962.3
+ldtA upstream	Rv0116c upstream	NC_000962.3
+Rv0191 upstream	Rv0191 upstream	NC_000962.3
+Rv0191	Rv0191	NC_000962.3
+ldtE upstream	Rv0192 upstream	NC_000962.3
+ldtE	Rv0192	NC_000962.3
+inbR	Rv0275c	NC_000962.3
+inbR upstream	Rv0275c upstream	NC_000962.3
+fgd1 upstream	Rv0407 upstream	NC_000962.3
+fgd1	Rv0407	NC_000962.3
+lprQ upstream	Rv0483 upstream	NC_000962.3
+lprQ	Rv0483	NC_000962.3
+mshA upstream	Rv0486 upstream	NC_000962.3
+mshA	Rv0486	NC_000962.3
+Rv0565c	Rv0565c	NC_000962.3
+Rv0565c upstream	Rv0565c upstream	NC_000962.3
+hadA upstream	Rv0635 upstream	NC_000962.3
+hadA	Rv0635	NC_000962.3
+hadB	Rv0636	NC_000962.3
+hadC	Rv0637	NC_000962.3
+mmaA4	Rv0642c	NC_000962.3
+mmaA4 upstream	Rv0642c upstream	NC_000962.3
+mmaA3	Rv0643c	NC_000962.3
+mmaA3 upstream	Rv0643c upstream	NC_000962.3
+mmaA2	Rv0644c	NC_000962.3
+mmaA2 upstream	Rv0644c upstream	NC_000962.3
+rpoB upstream	Rv0667 upstream	NC_000962.3
+rpoB	Rv0667	NC_000962.3
+rpoC upstream	Rv0668 upstream	NC_000962.3
+rpoC	Rv0668	NC_000962.3
+mmpL5	Rv0676c	NC_000962.3
+mmpS5	Rv0677c	NC_000962.3
+mmpR upstream	Rv0678 upstream	NC_000962.3
+mmpR	Rv0678	NC_000962.3
+rpsL upstream	Rv0682 upstream	NC_000962.3
+rpsL	Rv0682	NC_000962.3
+rplC upstream	Rv0701 upstream	NC_000962.3
+rplC	Rv0701	NC_000962.3
+rpfB upstream	Rv1009 upstream	NC_000962.3
+rpfB	Rv1009	NC_000962.3
+ksgA	Rv1010	NC_000962.3
+mshB upstream	Rv1170 upstream	NC_000962.3
+mshB	Rv1170	NC_000962.3
+fbiC upstream	Rv1173 upstream	NC_000962.3
+fbiC	Rv1173	NC_000962.3
+sigI upstream	Rv1189 upstream	NC_000962.3
+sigI	Rv1189	NC_000962.3
+folP2 upstream	Rv1207 upstream	NC_000962.3
+folP2	Rv1207	NC_000962.3
+tap	Rv1258c	NC_000962.3
+tap upstream	Rv1258c upstream	NC_000962.3
+embR	Rv1267c	NC_000962.3
+embR upstream	Rv1267c upstream	NC_000962.3
+atpE upstream	Rv1305 upstream	NC_000962.3
+atpE	Rv1305	NC_000962.3
+atpC upstream	Rv1311 upstream	NC_000962.3
+atpC	Rv1311	NC_000962.3
+rrs upstream	MTB000019 upstream	NC_000962.3
+rrs	MTB000019	NC_000962.3
+rrl upstream	MTB000020 upstream	NC_000962.3
+rrl	MTB000020	NC_000962.3
+ldtD upstream	Rv1433 upstream	NC_000962.3
+ldtD	Rv1433	NC_000962.3
+fabG1 upstream	Rv1483 upstream	NC_000962.3
+fabG1	Rv1483	NC_000962.3
+inhA upstream	Rv1484 upstream	NC_000962.3
+inhA	Rv1484	NC_000962.3
+pykA upstream	Rv1617 upstream	NC_000962.3
+pykA	Rv1617	NC_000962.3
+rpsA upstream	Rv1630 upstream	NC_000962.3
+rpsA	Rv1630	NC_000962.3
+Rv1667c	Rv1667c	NC_000962.3
+Rv1667c upstream	Rv1667c upstream	NC_000962.3
+tlyA	Rv1694	NC_000962.3
+cycA	Rv1704c	NC_000962.3
+cycA upstream	Rv1704c upstream	NC_000962.3
+eccB5 upstream	Rv1782 upstream	NC_000962.3
+eccB5	Rv1782	NC_000962.3
+eccC5	Rv1783	NC_000962.3
+ndh	Rv1854c	NC_000962.3
+ndh upstream	Rv1854c upstream	NC_000962.3
+katG	Rv1908c	NC_000962.3
+katG upstream	Rv1908c upstream	NC_000962.3
+furA	Rv1909c	NC_000962.3
+furA upstream	Rv1909c upstream	NC_000962.3
+Rv1979c	Rv1979c	NC_000962.3
+Rv1979c upstream	Rv1979c upstream	NC_000962.3
+erm(37) upstream	Rv1988 upstream	NC_000962.3
+erm(37)	Rv1988	NC_000962.3
+pncA	Rv2043c	NC_000962.3
+pncA upstream	Rv2043c upstream	NC_000962.3
+blaC	Rv2068c	NC_000962.3
+blaC upstream	Rv2068c upstream	NC_000962.3
+mshC	Rv2130c	NC_000962.3
+mshC upstream	Rv2130c upstream	NC_000962.3
+kasA	Rv2245	NC_000962.3
+eis	Rv2416c	NC_000962.3
+eis upstream	Rv2416c upstream	NC_000962.3
+crfA upstream	crfA upstream	NC_000962.3
+crfA	crfA	NC_000962.3
+ahpC upstream	Rv2428 upstream	NC_000962.3
+ahpC	Rv2428	NC_000962.3
+folC	Rv2447c	NC_000962.3
+ldtB	Rv2518c	NC_000962.3
+ldtB upstream	Rv2518c upstream	NC_000962.3
+pepQ	Rv2535c	NC_000962.3
+pepQ upstream	Rv2535c upstream	NC_000962.3
+Rv2671 upstream	Rv2671 upstream	NC_000962.3
+Rv2671	Rv2671	NC_000962.3
+Rv2731	Rv2731	NC_000962.3
+thyX	Rv2754c	NC_000962.3
+thyX upstream	Rv2754c upstream	NC_000962.3
+dfrA	Rv2763c	NC_000962.3
+dfrA upstream	Rv2763c upstream	NC_000962.3
+thyA	Rv2764c	NC_000962.3
+thyA upstream	Rv2764c upstream	NC_000962.3
+ald upstream	Rv2780 upstream	NC_000962.3
+ald	Rv2780	NC_000962.3
+gpsI	Rv2783c	NC_000962.3
+gpsI upstream	Rv2783c upstream	NC_000962.3
+dacB2 upstream	Rv2911 upstream	NC_000962.3
+dacB2	Rv2911	NC_000962.3
+ppsA upstream	Rv2931 upstream	NC_000962.3
+ppsA	Rv2931	NC_000962.3
+ppsB	Rv2932	NC_000962.3
+ppsC	Rv2933	NC_000962.3
+ppsD	Rv2934	NC_000962.3
+mas	Rv2940c	NC_000962.3
+mas upstream	Rv2940c upstream	NC_000962.3
+ddlA	Rv2981c	NC_000962.3
+ddlA upstream	Rv2981c upstream	NC_000962.3
+Rv3008 upstream	Rv3008 upstream	NC_000962.3
+Rv3008	Rv3008	NC_000962.3
+serB2	Rv3042c	NC_000962.3
+serB2 upstream	Rv3042c upstream	NC_000962.3
+mymA upstream	Rv3083 upstream	NC_000962.3
+mymA	Rv3083	NC_000962.3
+Rv3169	Rv3169	NC_000962.3
+whiB7	Rv3197A	NC_000962.3
+whiB7 upstream	Rv3197A upstream	NC_000962.3
+nudC	Rv3199c	NC_000962.3
+nudC upstream	Rv3199c upstream	NC_000962.3
+fbiA upstream	Rv3261 upstream	NC_000962.3
+fbiA	Rv3261	NC_000962.3
+fbiB	Rv3262	NC_000962.3
+alr	Rv3423c	NC_000962.3
+alr upstream	Rv3423c upstream	NC_000962.3
+rpoA	Rv3457c	NC_000962.3
+rpoA upstream	Rv3457c upstream	NC_000962.3
+ddn upstream	Rv3547 upstream	NC_000962.3
+ddn	Rv3547	NC_000962.3
+nat	Rv3566c	NC_000962.3
+nat upstream	Rv3566c upstream	NC_000962.3
+clpC1	Rv3596c	NC_000962.3
+clpC1 upstream	Rv3596c upstream	NC_000962.3
+panD	Rv3601c	NC_000962.3
+folP1	Rv3608c	NC_000962.3
+folP1 upstream	Rv3608c upstream	NC_000962.3
+proZ	Rv3756c	NC_000962.3
+proZ upstream	Rv3756c upstream	NC_000962.3
+aftA	Rv3792	NC_000962.3
+embC	Rv3793	NC_000962.3
+embA upstream	Rv3794 upstream	NC_000962.3
+embA	Rv3794	NC_000962.3
+embB	Rv3795	NC_000962.3
+ubiA	Rv3806c	NC_000962.3
+ubiA upstream	Rv3806c upstream	NC_000962.3
+ethA	Rv3854c	NC_000962.3
+ethA upstream	Rv3854c upstream	NC_000962.3
+ethR	Rv3855	NC_000962.3
+gidB	Rv3919c	NC_000962.3
+gidB upstream	Rv3919c upstream	NC_000962.3
