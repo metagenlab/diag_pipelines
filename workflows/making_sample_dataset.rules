@@ -1,8 +1,12 @@
+include:
+    "logging.rules"
+    
+
 import sys
 import pandas
 import re
 
-pipeline_path = workflow.basedir + "/../../"
+pipeline_path = workflow.basedir + "/../"
 
 def get_folders_structure_with_sample_naming(link_dir, func):
     folders = {}

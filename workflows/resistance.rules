@@ -1,12 +1,6 @@
-import pandas
-
-pipeline_path = workflow.basedir + "/../"
-
-
 include:
-    pipeline_path + "workflows/assembly_quality.rules"
+    "assembly_quality.rules"
 
-    
 ontology_file_aro = pipeline_path + "data/card/obo_files/aro.obo"
 ontology_file_mo =  pipeline_path + "data/card/obo_files/mo.obo"
 ontology_file_ro =  pipeline_path + "data/card/obo_files/ro.obo"

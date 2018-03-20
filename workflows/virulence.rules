@@ -1,12 +1,8 @@
-prefix = "./"
+include:
+    "assembly_quality.rules"
 
 include:
-    prefix + "assembly_quality.rules"
-
-prefix = "../rules/"
+    pipeline_path + "downloading/fetch_virulence_factors.rules"
 
 include:
-    prefix + "downloading/fetch_virulence_factors.rules"
-
-include:
-    prefix + "annotation/virulence.rules"
+    pipeline_path + "annotation/virulence.rules"

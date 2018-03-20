@@ -1,11 +1,8 @@
 include:
-    "logging.rules"
-    
-include:
     "making_sample_dataset.rules"
 
 
-multiqc_configfile = workflow.basedir + "../data/configuration_files/multiqc/config.yaml"
+multiqc_configfile = pipeline_path + "../data/configuration_files/multiqc/config.yaml"
 
 
 prefix = "../rules/"
