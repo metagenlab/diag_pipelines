@@ -1,6 +1,5 @@
-
-
 library(igraph, warn.conflicts=FALSE)
+library(svglite)
 
 set.seed(1)
 
@@ -11,9 +10,6 @@ all_sts <- rbind(sample_sts, refs_sts)
 reference_name <-  read.csv(snakemake@input[["subvalue"]], sep="\t", header=FALSE, stringsAsFactors=FALSE)[1,1]
 
 ref_convinient_name <- paste(reference_name, " (", snakemake@wildcards[["ref"]], ")", sep="")
-
-print(ref_convinient_name)
-
 
 matrix <- as.matrix(read.csv(snakemake@input[["dist"]], sep="\t", header=TRUE, row.names=1))
 #We set the zero distance (clones) to a small value, otherwise no links exist between clones
@@ -98,7 +94,7 @@ for (i in 1:length(uniq_sts)){
 
 
 
-svg(snakemake@output[["mst"]], height=10, width=10)
+svglite(snakemake@output[["mst"]], height=10, width=10)
 par(mar=c(0,8,0,0))
 
 
