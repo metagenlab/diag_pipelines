@@ -69,10 +69,18 @@ for mutation_type in ["SNP"]:
                             if mutation_type=="SNP":
                                 mutated=sorted(set(all_res[i].loc[(all_res[i]["MutationType"]==mutation_type) & (all_res[i]["Gene"]==gene) & (all_res[i]["PositionMTB"]==pos), "MutatedAminoAcidOrNucleotide"]))
                                 wildtype=sorted(set(all_res[i].loc[(all_res[i]["MutationType"]==mutation_type) & (all_res[i]["Gene"]==gene) & (all_res[i]["PositionMTB"]==pos), "WildTypeAminoAcidOrNucleotide"]))
-                                common_positions[number][anti][mutation_type].append([i, gene, str(pos), ",".join(wildtype), ",".join(mutated)])
+                                common_positions[number][anti][mutation_type].append([i, gene, int(pos), ",".join(wildtype), ",".join(mutated)])
                             elif mutation_type=="INDEL":
                                 annot=sorted(set(all_res[i].loc[(all_res[i]["MutationType"]==mutation_type) & (all_res[i]["Gene"]==gene) & (all_res[i]["PositionMTB"]==pos), "OriginalAnnotation"]))
-                                common_positions[number][anti][mutation_type].append([i, gene, str(pos), annot])
+                                common_positions[number][anti][mutation_type].append([i, gene, int(pos), annot])
+
+def get_codon_start_from_aa_position(pos):
+    return (pos-1)*3
+
+def get_codon_end_from_aa_position(pos):
+    return (pos)*3
+
+
 
 def alternate_gray_background(row, numb):
     if row.empty:
@@ -84,8 +92,18 @@ def alternate_gray_background(row, numb):
   
 for j in ["4", "3", "2"]:
     writer = pandas.ExcelWriter("summary_common_to_"+j+"_dbs.xlsx")
+    bed_panda = pandas.DataFrame()
     for i in sorted(set(list(gene_antibio["Antibiotic"]))):
         res_panda_snp=pandas.DataFrame(common_positions[j][i]["SNP"], columns=["Source", "Gene", "Position", "WildTypeAminoAcidorNucleotide", "MutatedAminoAcidOrNucleotide"])
         res_panda_snp.style.apply(alternate_gray_background, axis=None, numb=int(j)).to_excel(writer, i, index=False)
+        bed_panda = pandas.concat([bed_panda, res_panda_snp[["Gene", "Position"]].drop_duplicates().reset_index(drop=True)])
+    all_mutations = bed_panda.drop_duplicates().reset_index(drop=True)
+    only_cds = all_mutations.loc[(all_mutations["Gene"]!="rrs") & (all_mutations["Position"]>0)]
+    final_bed = pandas.DataFrame({"Gene":only_cds["Gene"], "Start":only_cds["Position"].apply(get_codon_start_from_aa_position), "End":only_cds["Position"].apply(get_codon_end_from_aa_position)})
+    rrs = all_mutations.loc[(all_mutations["Gene"]=="rrs")]
+    final_bed=pandas.concat([final_bed, pandas.DataFrame({"Gene":rrs["Gene"], "Start":rrs["Position"]-1, "End":rrs["Position"]})]).reset_index(drop=True)
+    final_bed[["Gene", "Start", "End"]].to_csv("mutation_common_to_"+j+".bed", header=False, index=False, sep="\t")
     writer.save()
+
+    
 #    res_panda_indel.style.apply(alternate_gray_background, axis=None).to_excel(writer, "INDEL", index=False)
