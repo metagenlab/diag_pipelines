@@ -1,13 +1,15 @@
 import pandas
 
-prefix = "./"
+pipeline_path = workflow.basedir + "/../"
+
 
 include:
-    prefix + "assembly_quality.rules"
+    pipeline_path + "workflows/assembly_quality.rules"
+
     
-ontology_file_aro = config["absolute_path_of_pipeline_folder"]+"data/card/obo_files/aro.obo"
-ontology_file_mo = config["absolute_path_of_pipeline_folder"]+"data/card/obo_files/mo.obo"
-ontology_file_ro = config["absolute_path_of_pipeline_folder"]+"data/card/obo_files/ro.obo"
+ontology_file_aro = pipeline_path + "data/card/obo_files/aro.obo"
+ontology_file_mo =  pipeline_path + "data/card/obo_files/mo.obo"
+ontology_file_ro =  pipeline_path + "data/card/obo_files/ro.obo"
 
 resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 

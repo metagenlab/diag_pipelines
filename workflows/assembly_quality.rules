@@ -5,7 +5,7 @@ include:
     "making_sample_dataset.rules"
 
 
-multiqc_configfile = config["absolute_path_of_pipeline_folder"]+"/data/configuration_files/multiqc/config.yaml"
+multiqc_configfile = workflow.basedir + "../data/configuration_files/multiqc/config.yaml"
 
 
 prefix = "../rules/"

@@ -3,12 +3,6 @@ import sys
 import datetime
 import os
 
-if "absolute_path_of_pipeline" not in config.keys():
-    absolute_path="/home/pipeline_user/snakemake_pipeline/"
-else:
-    absolute_path=config["absolute_path_of_pipeline"]
-
-
 if "logging_folder" not in config.keys():
     logging_folder = "logs"
 else:
