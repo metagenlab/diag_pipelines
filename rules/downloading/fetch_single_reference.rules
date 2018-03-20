@@ -18,7 +18,7 @@ rule download_reference_from_nucleotide:
         genome="references/NC{ref}/genome_{format}.{format}",
     shell:
         """
-        efetch -db nucleotide -id {wildcards.ref} -format {wildcards.format} > {output[genome]} 
+        efetch -db nucleotide -id NC{wildcards.ref} -format {wildcards.format} > {output[genome]} 
         """
 
 
