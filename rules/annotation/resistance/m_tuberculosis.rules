@@ -1,0 +1,54 @@
+rule create_reference_lists_from_databases:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        miotto = pipeline_path + "data/mycobacterium/db/miotto_high_moderate_minimum_confidence_annotated.tsv",
+        mykrobe = pipeline_path + "data/mycobacterium/db/mykrobe_annotated.tsv",
+        card = pipeline_path + "data/mycobacterium/db/rgi_annotated_full_2_0_0.tsv",
+        walker = pipeline_path +"data/mycobacterium/db/walker_resistant_annotated.tsv",
+        resistance_genes = pipeline_path + "data/mycobacterium/db/resistance_genes.tsv",
+        locus_tag = pipeline_path + "data/mycobacterium/db/locus_tags.tsv",
+    output:
+        best = "references/m_tuberculosis_resistance_genes_best_mutations.bed"
+    script:
+        "scripts/generate_excel_file_common_positions.py"
+
+
+rule extract_locus_tags:
+    input:
+        best = "references/{any}.bed"
+    output:
+        locus = "references/{any}/locus.txt"
+    shell:
+        """
+        cut -f1 {input.best} | sort | uniq > {output.locus}
+        """
+
+    
+rule fetch_locus_tag_with_accession:
+    conda:
+        pipeline_path + "envs/biopython.yaml"
+    input:
+        locus_list = "references/m_tuberculosis_resistance_genes_{any}/locus.txt",
+        gbk = "references/NC_000962.3/genome_gbwithparts.gbwithparts",
+    output:
+        genes = "references/m_tuberculosis_resistance_genes_{any}/genome_fasta.fasta"
+    script:
+        "scripts/get_cds_from_locus_tags.py"
+
+
+rule extract_annotated_position_from_vcf:
+    conda:
+        pipeline_path + "envs/bcftools.yaml"
+    input:
+        bed = "references/m_tuberculosis_resistance_genes_{any}.bed",
+        vcf = "typing/{snp_caller}/full_genome/m_tuberculosis_resistance_genes_{any}/bwa/all_samples_snps.vcf.gz",
+        vcf_tbi = "typing/{snp_caller}/full_genome/m_tuberculosis_resistance_genes_{any}/bwa/all_samples_snps.vcf.gz.tbi",
+    output:
+        mut = "samples/{sample}/resistance/{snp_caller}/{any}.vcf"
+    shell:
+        """
+        bcftools view --samples {wildcards.sample} --regions-file {input[bed]} --output-file {output[mut]} {input[vcf]}
+        """
+
+
