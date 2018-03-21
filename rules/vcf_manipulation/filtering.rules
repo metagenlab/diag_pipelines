@@ -7,9 +7,11 @@ rule decompose_multiallelics_and_normalize:
         ref="references/{ref}/genome_fasta.fasta",
     output:
         decomposed="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/decomposed_normalized.vcf",
+    log:
+        logging_folder+"/typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/decomposed_normalized.txt",
     shell:
         """
-        vt decompose -s {input[raw]} | vt normalize -r {input[ref]} -o {output[decomposed]} -
+        vt decompose -s {input[raw]} | vt normalize -r {input[ref]} -o {output[decomposed]} - &> {log}
         """
         
 rule filter_on_coverage:
