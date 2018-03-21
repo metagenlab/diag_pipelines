@@ -110,7 +110,10 @@ if "sra_samples" in config.keys():
         if "size_MB" in list(sra_data):
             if sra_data.loc[i, "size_MB"] < 20:
                 continue
-        sample_name=sra_data.loc[i, "SampleName"].replace(" ", "_").replace("&", "and")
+        if 'use_library_name' not in config.keys():
+            sample_name=sra_data.loc[i, "SampleName"].replace(" ", "_").replace("&", "and")
+        else:
+            sample_name=sra_data.loc[i, "LibraryName"].replace(" ", "_").replace("&", "and")
         if sample_name in reads_sra.keys():
             sample_name=sample_name+"_"+str(list(reads_sra.keys()).count(sample_name))
         reads_sra[sample_name]=str(i)
