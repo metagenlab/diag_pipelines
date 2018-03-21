@@ -4,51 +4,41 @@ import csv
 
 source_db = {}
 source_db["SNP"] = {"CARD": snakemake.input["card"], "Miotto et al. 2017": snakemake.input["miotto"], "Mykrobe": snakemake.input["mykrobe"], "Walker et al. 2015": snakemake.input["walker"]}
+nb_sources_snps = len(source_db["SNP"])
 
 #source_db["INDEL"] = {"Mykrobe":"../db/mykrobe_annotated.tsv", "Walker et al. 2015":"../db/walker_resistant_annotated.tsv"}
 
 gene_antibio = pandas.read_csv(snakemake.input['resistance_genes'], sep="\t")
 gene_antibio["Antibiotic"] = gene_antibio["Antibiotic"].str.strip()
 gene_antibio["Gene"] = gene_antibio["Gene"].str.strip()
+genes = sorted(set(list(gene_antibio["Gene"])))
 
 locus_tags = pandas.read_csv(snakemake.input['locus_tag'], sep="\t", index_col=0)
 
+db_combinations = {"4":"four", "3":"three", "2":"two", "1":"one"}
 
-
-nb_sources = len(source_db)
-
-genes = sorted(set(list(gene_antibio["Gene"])))
-
-
-print(set(list(gene_antibio["Antibiotic"])))
-
-print(genes)
-
-all_res = {}
+all_databases = {}
 for i in source_db["SNP"].keys():
-    all_res[i] = pandas.read_csv(source_db["SNP"][i], sep="\t")
-    all_res[i]["MutatedAminoAcidOrNucleotide"]=all_res[i]["MutatedAminoAcidOrNucleotide"].str.upper().str.strip()
-    all_res[i]["WildTypeAminoAcidOrNucleotide"]=all_res[i]["WildTypeAminoAcidOrNucleotide"].str.upper().str.strip()
-    all_res[i]["PositionMTB"]=pandas.to_numeric(all_res[i]["PositionMTB"])
-
+    all_databases[i] = pandas.read_csv(source_db["SNP"][i], sep="\t")
+    all_databases[i]["MutatedAminoAcidOrNucleotide"]=all_databases[i]["MutatedAminoAcidOrNucleotide"].str.upper().str.strip()
+    all_databases[i]["WildTypeAminoAcidOrNucleotide"]=all_databases[i]["WildTypeAminoAcidOrNucleotide"].str.upper().str.strip()
+    all_databases[i]["PositionMTB"]=pandas.to_numeric(all_databases[i]["PositionMTB"])
 
 common_positions={}
-for j in ["4", "3", "2", "1"]:
+for j in db_combinations.keys():
     common_positions[j] = {}
     for i in set(list(gene_antibio["Antibiotic"])):
         common_positions[j][i] = {}
         common_positions[j][i]["SNP"] = []
         common_positions[j][i]["INDEL"] = []
     
-    
 for mutation_type in ["SNP"]:
-    all_keys=sorted(list(source_db[mutation_type].keys()))
+    all_sources=sorted(list(source_db[mutation_type].keys()))
     for gene in genes:
-        print(gene)
         pos_each_db={}
-        for key in all_keys:
-            pos_each_db[key] = set(sorted([int(x) for x in all_res[key].loc[(all_res[key]["MutationType"]==mutation_type) & (all_res[key]["Gene"]==gene), "PositionMTB"]]))
-        union_4 = sorted(set(pos_each_db[all_keys[0]] & pos_each_db[all_keys[1]] & pos_each_db[all_keys[2]] & pos_each_db[all_keys[3]]))
+        for key in all_sources:
+            pos_each_db[key] = set(sorted([int(x) for x in all_databases[key].loc[(all_databases[key]["MutationType"]==mutation_type) & (all_databases[key]["Gene"]==gene), "PositionMTB"]]))
+        union_4 = sorted(set(pos_each_db[all_sources[0]] & pos_each_db[all_sources[1]] & pos_each_db[all_sources[2]] & pos_each_db[all_sources[3]]))
         common_3 = []
         for db in itertools.combinations(source_db[mutation_type].keys(), 3):
             common_3.append(pos_each_db[db[0]].intersection(pos_each_db[db[1]]).intersection(pos_each_db[db[2]]).difference(union_4))
@@ -70,22 +60,16 @@ for mutation_type in ["SNP"]:
             for number in ["4", "3", "2", "1"]:
                 for pos in unions[number]:
                     for i in source_db[mutation_type].keys():
-                        if pos in list(all_res[i].loc[(all_res[i]["Gene"]==gene) & (all_res[i]["MutationType"]==mutation_type), "PositionMTB"]):
+                        if pos in list(all_databases[i].loc[(all_databases[i]["Gene"]==gene) & (all_databases[i]["MutationType"]==mutation_type), "PositionMTB"]):
                             if mutation_type=="SNP":
-                                mutated=sorted(set(all_res[i].loc[(all_res[i]["MutationType"]==mutation_type) & (all_res[i]["Gene"]==gene) & (all_res[i]["PositionMTB"]==pos), "MutatedAminoAcidOrNucleotide"]))
-                                wildtype=sorted(set(all_res[i].loc[(all_res[i]["MutationType"]==mutation_type) & (all_res[i]["Gene"]==gene) & (all_res[i]["PositionMTB"]==pos), "WildTypeAminoAcidOrNucleotide"]))
+                                mutated=sorted(set(all_databases[i].loc[(all_databases[i]["MutationType"]==mutation_type) & (all_databases[i]["Gene"]==gene) & (all_databases[i]["PositionMTB"]==pos), "MutatedAminoAcidOrNucleotide"]))
+                                wildtype=sorted(set(all_databases[i].loc[(all_databases[i]["MutationType"]==mutation_type) & (all_databases[i]["Gene"]==gene) & (all_databases[i]["PositionMTB"]==pos), "WildTypeAminoAcidOrNucleotide"]))
                                 common_positions[number][anti][mutation_type].append([i, gene, int(pos), ",".join(wildtype), ",".join(mutated)])
                             elif mutation_type=="INDEL":
-                                annot=sorted(set(all_res[i].loc[(all_res[i]["MutationType"]==mutation_type) & (all_res[i]["Gene"]==gene) & (all_res[i]["PositionMTB"]==pos), "OriginalAnnotation"]))
+                                annot=sorted(set(all_databases[i].loc[(all_databases[i]["MutationType"]==mutation_type) & (all_databases[i]["Gene"]==gene) & (all_databases[i]["PositionMTB"]==pos), "OriginalAnnotation"]))
                                 common_positions[number][anti][mutation_type].append([i, gene, int(pos), annot])
 
                                 
-def get_codon_start_from_aa_position(pos):
-    return (pos-1)*3
-
-def get_codon_end_from_aa_position(pos):
-    return (pos)*3
-
 def alternate_gray_background(row, numb):
     if row.empty:
         return row
@@ -95,24 +79,23 @@ def alternate_gray_background(row, numb):
     return(ret)
 
 
-print(locus_tags)
-
-for j in ["4", "3", "2", "1"]:
-    writer = pandas.ExcelWriter("summary_common_to_"+j+"_dbs.xlsx")
+for j in db_combinations.keys():
+    writer = pandas.ExcelWriter(snakemake.output["summary_"+db_combinations[j]])
     bed_panda = pandas.DataFrame()
     for i in sorted(set(list(gene_antibio["Antibiotic"]))):
         res_panda_snp=pandas.DataFrame(common_positions[j][i]["SNP"], columns=["Source", "Gene", "Position", "WildTypeAminoAcidorNucleotide", "MutatedAminoAcidOrNucleotide"])
         res_panda_snp.style.apply(alternate_gray_background, axis=None, numb=int(j)).to_excel(writer, i, index=False)
-        bed_panda = pandas.concat([bed_panda, res_panda_snp[["Gene", "Position"]].drop_duplicates().reset_index(drop=True)])
-    all_mutations = bed_panda.drop_duplicates().reset_index(drop=True)
-    only_cds = all_mutations.loc[(all_mutations["Gene"]!="rrs") & (all_mutations["Position"]>0)]
-    final_bed = pandas.DataFrame({"Start":only_cds["Position"].apply(get_codon_start_from_aa_position), "End":only_cds["Position"].apply(get_codon_end_from_aa_position)}).set_index(only_cds["Gene"])
-    rrs = all_mutations.loc[(all_mutations["Gene"]=="rrs")]
-    final_bed=pandas.concat([final_bed, pandas.DataFrame({"Start":rrs["Position"]-1, "End":rrs["Position"]}).set_index(rrs["Gene"])])
-    final_bed = final_bed.join(locus_tags)
-    final_bed[["LocusTag", "Start", "End"]].to_csv("mutation_common_to_"+j+".bed", header=False, index=False, sep="\t")
-    if j == "4":
-        final_bed[["LocusTag", "Start", "End"]].to_csv(snakemake.output["best"], header=False, index=False, sep="\t")
+        bed_panda = pandas.concat([bed_panda, res_panda_snp[["Gene", "Position"]].drop_duplicates()])
+    bed_panda = bed_panda.set_index("Gene")
+    all_mutations = bed_panda.drop_duplicates().join(locus_tags)
+    only_cds = all_mutations.loc[(all_mutations.index!="rrs") & (all_mutations["Position"]>0)]
+    only_cds = only_cds.assign(Start= lambda x: (x.Position - 1)*3)
+    only_cds = only_cds.assign(End= lambda x: (x.Position*3))
+    rrs = all_mutations.loc[(all_mutations.index=="rrs")]
+    rrs = rrs.assign(Start = lambda x: (x.Position - 1))
+    rrs = rrs.assign(End = lambda x: (x.Position))
+    only_cds[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_cds"], header=False, index=False, sep="\t")
+    rrs[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_not_cds"], header=False, index=False, sep="\t")
     writer.save()
 
 
