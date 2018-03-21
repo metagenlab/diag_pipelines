@@ -35,9 +35,11 @@ rule search_resistance_paired_reads_with_mykrobe:
         "samples/{sample}/resistance/mykrobe.json"
     params:
         species = config["spec_for_mykrobe"]
+    log:
+        logging_folder + "/samples/{sample}/resistance/mykrobe.txt"
     shell:
         """
-        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf 100  > {output[0]} 
+        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf 100  > {output[0]} &> {log}
         """
 
         
