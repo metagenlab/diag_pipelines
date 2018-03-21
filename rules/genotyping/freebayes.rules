@@ -1,22 +1,26 @@
-rule genotype_with_freebayes_vcf_one_sample:
+rule genotype_with_freebayes_for_resistance:
     conda:
-        "../../envs/freebayes.yaml"
+        pipeline_path + "envs/freebayes.yaml"
     input:
-        "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
-        "references/{ref}/genome_fasta.fasta",
-        "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
+        bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
+        bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
+        ref = "references/{ref}/genome_fasta.fasta",
+        ref_fai = "references/{ref}/genome_fasta.fasta.fai",
+        targets = "references/{ref}/corrected.bed",
     output:
-        "samples/{sample}/snps/freebayes/{ref}/{mapping_method}/snps.vcf",
+        vcf="samples/{sample}/typing/freebayes_joint_genotyping/{mapping_method}/{ref}.vcf"
+    log:
+        logging_folder+"/samples/{sample}/mapping/{mapping_method}/{ref}.vcf"
     shell:
         """
-        freebayes  --ploidy 1 --min-base-quality 20 -f {input[1]} {input[0]} > {output[0]}
+        freebayes --ploidy 1 --min-base-quality 20 --targets {input[targets]} --genotype-qualities --fasta-reference {input[ref]} --haplotype-length -1 --bam {input[bam]}  --vcf {output[vcf]} &> {log}
         """
 
     
 rule genotype_with_freebayes_on_all_samples:
     threads: 4
     conda:
-        "../../envs/freebayes.yaml"
+        pipeline_path + "envs/freebayes.yaml"
     input:
         bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}_deduplicated_filtered.bam", sample=read_naming.keys()),
         bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}_deduplicated_filtered.bam.bai", sample=read_naming.keys()),
@@ -25,7 +29,7 @@ rule genotype_with_freebayes_on_all_samples:
     output:
         vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf"
     log:
-        logging_folder+"/logs/freebayes_joint_genotyping/all_samples.txt"
+        logging_folder+"/freebayes_joint_genotyping/all_samples.txt"
     shell:
         """
         freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads} --ploidy 1 --min-base-quality 20 --genotype-qualities --fasta-reference {input[ref]} --haplotype-length -1 {input[bams]}  > {output[vcf]} 2> {log}
