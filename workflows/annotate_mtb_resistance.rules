@@ -1,10 +1,9 @@
 include:
     "typing.rules"
 
-
 include:
-    pipeline_path+"rules/downloading/fetch_single_reference.rules"
-
+    "resistance.rules"
+    
 include:
     pipeline_path+"rules/annotation/resistance/m_tuberculosis.rules"
     
