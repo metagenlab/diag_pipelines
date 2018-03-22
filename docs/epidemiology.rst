@@ -10,9 +10,8 @@ Depends on the :ref:`assembly_quality` workflow (for determining the Sequence Ty
 Parameters
 ----------
 
-* ``minimum_coverage_for_calling``: minimum of coverage for considering a genomic position when counting differences between samples. Any position (SNP or non-SNP when compared to the reference) having a lower coverage will be masked
-* ``minimum_alternate_fraction_for_calling``: minimum ratio of observations favouring a SNP over observations not favouring a SNP. Any SNPs not meeting this criteria will also be masked
-  
+* ``minimum_coverage_for_calling``: minimum of coverage for considering a genomic position when counting differences between samples. Any position (whether the genotype is identical to the reference, ie `GT=0` in the vcf, or different, ie `GT=1`) having a lower coverage will be masked
+* ``minimum_alternate_fraction_for_calling``: minimum ratio of observations favouring a SNP over observations not favouring a SNP. Any position (`GT=0` or `GT=1`) not meeting this criteria will also be masked  
 .. * ``ref_ids_for``
 
 --------------------
