@@ -5,7 +5,7 @@ pipeline_path = workflow.basedir + "/../../"
 include:
     pipeline_path + "workflows/logging.rules"
     
-enterobase = pandas.read_csv(pipeline_path+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
+enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 rule all:
     input:
@@ -27,7 +27,7 @@ rule get_schema_from_enterobase:
 
 rule fetch_gene_entries_from_locus_tag:
     conda:
-        "../../envs/biopython.yaml"
+        pipeline_path + "envs/biopython.yaml"
     input:
         gbk="references/{ref}/genome_gbwithparts.gbwithparts",
         locus_list="core_genomes/{spec}/enterobase/genes.txt",
