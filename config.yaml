@@ -14,6 +14,8 @@ minimum_alternate_fraction_for_calling: 0.75
 species: Mycobacterium tuberculosis
 taxid: 1773
 
+snp_threshold: 0
+
 ref_ids_for_mapping: 
 cov_cutoff: 5
 

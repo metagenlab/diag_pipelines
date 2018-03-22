@@ -10,8 +10,13 @@ resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 if "shift_for_mapping" not in config.keys():
     shift = 300
 else:
-    shift = config["shift_for_mappin"]
+    shift = config["shift_for_mapping"]
 
+if "mykrobe_panel" not in config.keys():
+    mykrobe_panel = "bradley-2015"
+else:
+    mykrobe_panel = config["mykrobe_panel"]
+    
 
 genes = ''
 
