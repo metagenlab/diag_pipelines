@@ -4,7 +4,7 @@
 Resistance
 ==========
 
-Depends on the :ref:`assembly_quality` workflow.
+Depends on the :ref:`epidemiology` workflow (for genotyping samples)
 
 ----------
 Parameters
@@ -12,7 +12,15 @@ Parameters
 
 * ``resistance_prediction_softwares``: list of software for genetic resistance assessment. Possible values: ``mykrobe`` and ``rgi``.
   
-.. * ``currated_resistance_genes``: file of trusted genes involved in resistance. An example is available in the folder ``data/mycobacterium/db/``
+-------------------
+Available softwares
+-------------------
+
+.. toctree::
+   resistance_softwares/rgi.rst
+   resistance_softwares/mykrobe.rst
+
+
 
 ------------
 Deliverables
