@@ -75,7 +75,7 @@ rule extract_allele_by_type_from_freebayes_joint_genotyping:
 
 rule extract_core_genome:
     conda:
-        "../../envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
         vcf_mutation_type="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
         vcf_mutation_type_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
