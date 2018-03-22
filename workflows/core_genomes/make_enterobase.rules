@@ -5,7 +5,7 @@ include:
     "../logging.rules"
 
     
-enterobase = pandas.read_csv(absolute_path+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
+enterobase = pandas.read_csv(pipeline_path+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 
 prefix = "../../rules/"
