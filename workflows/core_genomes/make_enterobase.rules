@@ -12,7 +12,7 @@ rule all:
         "core_genomes/"+config["species"].replace(" ", "_")+"/enterobase/"+str(enterobase.loc[config["species"], "reference_genome"])+".bed"
         
 include:
-    pipeline_path + "downloading/fetch_single_reference.rules"
+    pipeline_path + "rules/downloading/fetch_single_reference.rules"
 
 rule get_schema_from_enterobase:
     params:
