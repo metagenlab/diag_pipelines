@@ -37,7 +37,7 @@ sra_samples: example_sras.tsv
 # Put this file on the folder where you will run snakemake and the sample_names value below should be the name of this file. 
 # If wish to keep the automatic naming, set the value of this variable to empty
 
-local_samples: example_sample_names.tsv
+local_samples: example_local_samples.tsv
 
 
 # Tab separated file with three columns: sample name (as automatically defined or according to your own sample naming file), genus, species
