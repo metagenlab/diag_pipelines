@@ -9,14 +9,14 @@ rule create_reference_lists_from_databases:
         resistance_genes = pipeline_path + "data/mycobacterium/db/resistance_genes.tsv",
         locus_tag = pipeline_path + "data/mycobacterium/db/locus_tags.tsv",
     output:
-        bed_four_cds = "references/m_tuberculosis_resistance_genes_4_db_mutations/cds.bed",
-        bed_three_cds = "references/m_tuberculosis_resistance_genes_3_db_mutations/cds.bed",
-        bed_two_cds = "references/m_tuberculosis_resistance_genes_2_db_mutations/cds.bed",
-        bed_one_cds = "references/m_tuberculosis_resistance_genes_1_db_mutations/cds.bed",
-        bed_four_not_cds = "references/m_tuberculosis_resistance_genes_4_db_mutations/not_cds.bed",
-        bed_three_not_cds = "references/m_tuberculosis_resistance_genes_3_db_mutations/not_cds.bed",
-        bed_two_not_cds = "references/m_tuberculosis_resistance_genes_2_db_mutations/not_cds.bed",
-        bed_one_not_cds = "references/m_tuberculosis_resistance_genes_1_db_mutations/not_cds.bed",
+        bed_four_cds = "references/m_tuberculosis_resistance_genes_4_db_mutations/codons.bed",
+        bed_three_cds = "references/m_tuberculosis_resistance_genes_3_db_mutations/codons.bed",
+        bed_two_cds = "references/m_tuberculosis_resistance_genes_2_db_mutations/codons.bed",
+        bed_one_cds = "references/m_tuberculosis_resistance_genes_1_db_mutations/codons.bed",
+        bed_four_not_cds = "references/m_tuberculosis_resistance_genes_4_db_mutations/nucleotides.bed",
+        bed_three_not_cds = "references/m_tuberculosis_resistance_genes_3_db_mutations/nucleotides.bed",
+        bed_two_not_cds = "references/m_tuberculosis_resistance_genes_2_db_mutations/nucleotides.bed",
+        bed_one_not_cds = "references/m_tuberculosis_resistance_genes_1_db_mutations/nucleotides.bed",
         summary_four = "references/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx",
         summary_three = "references/m_tuberculosis_resistance_genes_3_db_mutations/summary.xlsx",
         summary_two = "references/m_tuberculosis_resistance_genes_2_db_mutations/summary.xlsx",
@@ -27,41 +27,37 @@ rule create_reference_lists_from_databases:
         
 rule merge_cds_not_cds_bed_files:
     input:
-        cds = "references/{any}/cds.bed",
-        not_cds = "references/{any}/not_cds.bed",
+        cds = "references/{any}/codons.bed",
+        not_cds = "references/{any}/nucleotides.bed",
     output:
-        both = temp("references/{any}/cds_and_not_cds.bed")
+        both = temp("references/{any}/codons_and_nucleotides.bed")
     shell:
         """
         cat {input[cds]} {input[not_cds]} > {output[both]}
         """
 
-
 rule correct_merged_bed_files:
     params:
         upstream_downstream_size = 300
     input:
-        both = temp("references/{any}/cds_and_not_cds.bed")
+        both = "references/{any}/codons_and_nucleotides.bed"
     output:
         corrected = temp("references/{any}/corrected.bed")
     shell:
         """
-        awk -v shift="{params[upstream_downstream_size]}" '{{print $1 , "\011", ($2 + 300), "\011", ($3 + shift)}}' > {output[corrected]}
+        awk -v shift="{params[upstream_downstream_size]}" '{{print $1 , "\011", ($2 + shift), "\011", ($3 + shift)}}' > {output[corrected]}
         """
 
-# echo "a b c"|awk '{print $1,"\011",$2,"\011",$3}'
         
 rule extract_locus_tags:
     input:
-        cds = "references/{any}/cds.bed",
-        not_cds = "references/{any}/not_cds.bed",
+        annotated = "references/{any}/codons_and_nucleotides.bed",
     output:
         locus = "references/{any}/locus.txt"
     shell:
         """
-        cut -f1 <( cat {input[cds]} {input[not_cds]}) | sort | uniq > {output[locus]}
+        cut -f1 {input[annotated]} | sort | uniq > {output[locus]}
         """
-
         
 rule fetch_locus_tag_with_accession:
     conda:
@@ -81,14 +77,14 @@ rule apply_genotype_to_fasta:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        vcf = "samples/{sample}/typing/freebayes_joint_genotyping/{mapping_method}/{ref}.vcf.gz",
-        vcf_tbi = "samples/{sample}/typing/freebayes_joint_genotyping/{mapping_method}/{ref}.vcf.gz.tbi",
+        vcf = "samples/{sample}/typing/freebayes/bwa/{ref}.vcf.gz",
+        vcf_tbi = "samples/{sample}/typing/freebayes/bwa/{ref}.vcf.gz.tbi",
         ref = "references/{ref}/genome_fasta.fasta",
     output:
-        fasta="samples/{sample}/typing/freebayes_joint_genotyping/{mapping_method}/{ref}.fasta",
+        fasta="samples/{sample}/resistance/{ref}/mutated_genes.fasta",
     shell:
         """
-        bcftools consensus  --haplotype A --sample {wildcards.sample} --fasta-ref {input[ref]} --output {output[fasta]} {input[vcf]}
+        bcftools consensus  --sample {wildcards.sample} --fasta-ref {input[ref]} --output {output[fasta]} {input[vcf]} 
         """
 
 rule remove_shift_from_fasta_sequences:
@@ -109,61 +105,89 @@ rule extract_mutated_positions:
     conda:
         pipeline_path + "envs/bedtools.yaml"
     input:
-        trimmed = "samples/{sample}/typing/freebayes_joint_genotyping/bwa/{ref}_trimmed.fasta",
-        cds = "references/{ref}/cds.bed",
-        not_cds = "references/{ref}/not_cds.bed",
+        trimmed = "samples/{sample}/resistance/{ref}/mutated_genes_trimmed.fasta",
+        bed = "references/{ref}/{cds}.bed",
     output:
-        mutated_cds = "samples/{sample}/typing/freebayes_joint_genotyping/bwa/{ref}_codons.fasta",
-        mutated_not_cds = "samples/{sample}/typing/freebayes_joint_genotyping/bwa/{ref}_not_codons.fasta"
+        mutated_pos = "samples/{sample}/resistance/{ref}/mutated_{cds,[a-z]+}.fasta",
     shell:
         """
         rm -f {input[trimmed]}.fai 2> /dev/null
-        bedtools getfasta -fi {input[trimmed]} -bed {input[cds]} > {output[mutated_cds]}
-        bedtools getfasta -fi {input[trimmed]} -bed {input[not_cds]} > {output[mutated_not_cds]}
+        bedtools getfasta -fi {input[trimmed]} -bed {input[bed]} > {output[mutated_pos]}
         """
-
-rule extract_refernce_positions:
+        
+rule extract_reference_positions:
     conda:
         pipeline_path + "envs/bedtools.yaml"
     input:
         trimmed = "references/{ref}/genome_fasta_trimmed.fasta",
-        cds = "references/{ref}/cds.bed",
-        not_cds = "references/{ref}/not_cds.bed",
+        bed = "references/{ref}/{cds}.bed",
     output:
-        mutated_cds = "references/{ref}/codons.fasta",
-        mutated_not_cds = "references/{ref}/not_codons.fasta"
+        mutated_pos = "references/{ref}/annotated_{cds,[a-z]+}.fasta",
     shell:
         """
         rm -f {input[trimmed]}.fai 2> /dev/null
-        bedtools getfasta -fi {input[trimmed]} -bed {input[cds]} > {output[mutated_cds]}
-        bedtools getfasta -fi {input[trimmed]} -bed {input[not_cds]} > {output[mutated_not_cds]}
+        bedtools getfasta -fi {input[trimmed]} -bed {input[bed]} > {output[mutated_pos]}
         """
 
 rule format_resistance_results:
     input:
-        mutated = "samples/{sample}/typing/freebayes_joint_genotyping/{mapping_method}/{ref}_{codons}.fasta",
-        ref = "references/{ref}/{codons}.fasta",
-    output:
-        resistance = "samples/{sample}/typing/freebayes_joint_genotyping/{mapping_method}/{ref}_resistance_{codons}.tsv",
+        mutated = "samples/{sample}/resistance/{ref}/mutated_{cds}.fasta",
+        ref = "references/{ref}/annotated_{cds}.fasta",
+    output:          
+        resistance = "samples/{sample}/resistance/{ref}/mutated_{cds,[a-z]+}.tsv",
     shell:
         """
         diff -y {input[ref]} {input[mutated]} | grep "|" -B 1 | grep -v "\-\-" | sed "s/|//" | sed "s/\s>.*$//" | paste - - | tr -d  " " |  tr -s '\\t' '\\t'   > {output[resistance]} || :
         """
 
-rule add_codon_annotation_and_merge:
+rule add_translation_to_mutated_codons:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        resistance_codons = "samples/{sample}/typing/freebayes_joint_genotyping/{mapping_method}/{ref}_resistance_codons.tsv",
-        resistance_not_codons = "samples/{sample}/typing/freebayes_joint_genotyping/{mapping_method}/{ref}_resistance_not_codons.tsv",
-        locus_tag = pipeline_path + "data/mycobacterium/db/locus_tags.tsv",
+        resistance_codons = "samples/{sample}/resistance/{ref}/mutated_codons.tsv",
     output:
-        resistance = "samples/{sample}/typing/freebayes_joint_genotyping/{mapping_method}/{ref}.xlsx",
+        formated_aa = "samples/{sample}/resistance/{ref}/mutated_aa.xlsx",
     script:
-        "scripts/format_results_xlsx.py"
+        "scripts/add_translation_to_mutated_codons.py"
 
         
-rule all:
+rule format_mutated_nucleotides:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        expand("samples/{sample}/typing/freebayes_joint_genotyping/bwa/m_tuberculosis_resistance_genes_4_db_mutations.xlsx", sample=read_naming.keys())
+        resistance_nucleotides = "samples/{sample}/resistance/{ref}/mutated_nucleotides.tsv",
+    output:
+        formated_nucleotides = "samples/{sample}/resistance/{ref}/mutated_nucleotides.xlsx",
+    script:
+        "scripts/format_mutated_nucleotides.py"
+
+        
+rule merge_mutated_nucleotides_and_codons:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        formated_aa = "samples/{sample}/resistance/{ref}/mutated_aa.xlsx",
+        formated_nucleotides = "samples/{sample}/resistance/{ref}/mutated_nucleotides.xlsx",
+        locus_tag = pipeline_path + "data/mycobacterium/db/locus_tags.tsv",
+    output:
+        resistance = "samples/{sample}/resistance/{ref}/summary.xlsx",
+    script:
+        "scripts/merge_mutated_nucleotides_and_codons.py"
+
+        
+rule merge_non_empty_results:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        xlsx = expand("samples/{sample}/resistance/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx", sample=read_naming.keys()),
+    output:
+        summary = "resistance/summary.xlsx"
+    script:
+        "scripts/merge_non_empty_results.py"
+ 
+   
+        
+#rule all:
+ #   input:
+  #      expand("samples/{sample}/typing/freebayes_joint_genotyping/bwa/m_tuberculosis_resistance_genes_4_db_mutations.xlsx", sample=read_naming.keys())
 
