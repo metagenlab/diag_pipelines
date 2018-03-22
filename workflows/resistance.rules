@@ -1,5 +1,5 @@
 include:
-    "assembly_quality.rules"
+    "typing.rules"
 
 ontology_file_aro = pipeline_path + "data/card/obo_files/aro.obo"
 ontology_file_mo =  pipeline_path + "data/card/obo_files/mo.obo"
@@ -10,4 +10,11 @@ resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 genes = ''
 
 include:
-    pipeline_path + "rules/annotation/resistance.rules"
+    pipeline_path + "rules/annotation/resistance/rgi.rules"
+
+include:
+    pipeline_path + "rules/annotation/resistance/mykrobe.rules"
+
+include:
+    pipeline_path + "rules/annotation/resistance/m_tuberculosis.rules"
+    
