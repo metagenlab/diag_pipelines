@@ -7,6 +7,12 @@ ontology_file_ro =  pipeline_path + "data/card/obo_files/ro.obo"
 
 resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
+if "shift_for_mapping" not in config.keys():
+    shift = 300
+else:
+    shift = config["shift_for_mappin"]
+
+
 genes = ''
 
 include:
