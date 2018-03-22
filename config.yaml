@@ -26,7 +26,7 @@ virulence_coverage_cutoff: 70
 # Those file are specific to each analysis:
 
 # If you wish to include samples from sras, list them in a tab separated file with the name of the sample and the sra accession number
-sra_samples: example_sras.tsv
+sra_samples: example_sra_samples.tsv
 
 # Read naming schemas:
 # Read names must end with ".fastq" or ".fastq.gz" or ".fq" or ".fg.gz"
