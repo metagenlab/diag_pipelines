@@ -3,10 +3,13 @@ import sys
 import datetime
 import os
 
-pipeline_path = workflow.basedir + "/../"
+try:
+    pipeline_path = workflow.basedir + "/../"
+except NameError:
+    pass
 
 if "logging_folder" not in config.keys():
-    logging_folder = "logs"
+    logging_folder = "logs/"
 else:
     logging_folder=config["logging_folder"]
 

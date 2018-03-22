@@ -1,21 +1,18 @@
 import pandas
 
+pipeline_path = workflow.basedir + "/../../"
 
 include:
-    "../logging.rules"
-
+    pipeline_path + "workflows/logging.rules"
     
 enterobase = pandas.read_csv(pipeline_path+"/data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
-
-
-prefix = "../../rules/"
 
 rule all:
     input:
         "core_genomes/"+config["species"].replace(" ", "_")+"/enterobase/"+str(enterobase.loc[config["species"], "reference_genome"])+".bed"
         
 include:
-    prefix + "downloading/fetch_single_reference.rules"
+    pipeline_path + "downloading/fetch_single_reference.rules"
 
 rule get_schema_from_enterobase:
     params:
@@ -38,7 +35,7 @@ rule fetch_gene_entries_from_locus_tag:
         bed="core_genomes/{spec}/enterobase/{ref}.bed",
         problematic="core_genomes/{spec}/enterobase/{ref}_missing.txt",
     script:
-        "../../rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
+        pipeline_path + "rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
         
 
 
