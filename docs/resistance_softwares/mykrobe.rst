@@ -11,11 +11,11 @@ Parameters
 ----------
 For *M. tuberculosis*, two different panels of mutations can be analysed, by defining the variable `mykrobe_panel`. Two different values are possible:
 
-- `bradley-2015`, from  `Bradley et al. 2015, Nature Communications <http://www.mykrobe.com/wp-content/uploads/2014/04/ncomms10063.pdf>`_
-- `walker-2015`, from `Walker et al. 2015, Lancet Infectious Diseases <https://www.ncbi.nlm.nih.gov/pubmed/26116186>`_
+- ``bradley-2015``, from  `Bradley et al. 2015, Nature Communications <http://www.mykrobe.com/wp-content/uploads/2014/04/ncomms10063.pdf>`_
+- ``walker-2015``, from `Walker et al. 2015, Lancet Infectious Diseases <https://www.ncbi.nlm.nih.gov/pubmed/26116186>`_
 
   
-The variable `spec_for_mykrobe` must be set to either:
+The variable ``spec_for_mykrobe`` must be set to either:
 
-- `staph`
-- `tb`  
+- ``staph``
+- ``tb``
