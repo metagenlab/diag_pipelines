@@ -28,5 +28,4 @@ if "--dryrun" not in sys.argv and "-n" not in sys.argv:
         copyfile(config["local_samples"], logging_folder+"/local_samples.tsv")
     if "sra_samples" in config.keys():
         copyfile(config["sra_samples"], logging_folder+"/sra_samples.tsv")
-else:
-    logging_folder=""
+

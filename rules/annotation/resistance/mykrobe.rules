@@ -2,7 +2,7 @@ rule search_resistance_paired_reads_with_mykrobe:
     conda:
         pipeline_path + "envs/mykrobe.yaml"
     params:
-        panel = config["mykrobe_panel"],
+        panel = mykrobe_panel,
         species = config["spec_for_mykrobe"],
     input:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
@@ -10,7 +10,7 @@ rule search_resistance_paired_reads_with_mykrobe:
     output:
         "samples/{sample}/resistance/mykrobe.json"
     log:
-        logging_folder + "/samples/{sample}/resistance/mykrobe.txt"
+        logging_folder + "samples/{sample}/resistance/mykrobe.txt"
     shell:
         """
         mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf 100 --panel {params[panel]}  > {output[0]} 2> {log}
@@ -20,17 +20,17 @@ rule search_resistance_single_reads_with_mykrobe:
     conda:
         pipeline_path + "envs/mykrobe.yaml"
     params:
-        panel = config["mykrobe_panel"],
+        panel = mykrobe_panel,
         species = config["spec_for_mykrobe"],
     input:
         "samples/{sample}/reads/raw/{sample}_single.fastq.gz",
     output:
         "samples/{sample}/resistance/mykrobe.json"
     log:
-        logging_folder + "/samples/{sample}/resistance/mykrobe.txt"
+        logging_folder + "samples/{sample}/resistance/mykrobe.txt"
     shell:
         """
-        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf 100 -panel {params[panel]}  > {output[0]} 2> {log}
+        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf 100 --panel {params[panel]}  > {output[0]} 2> {log}
         """
 
 rule generate_mykrobe_tsv_file_from_json_file:
@@ -40,3 +40,8 @@ rule generate_mykrobe_tsv_file_from_json_file:
         "samples/{sample}/resistance/mykrobe.tsv"
     script:
         "scripts/mykrobe_json_to_tsv.py"
+
+   
+rule all_mykrobe:
+    input:
+        expand("samples/{sample}/resistance/mykrobe.tsv", sample=read_naming.keys())

@@ -19,7 +19,7 @@ rule get_schema_from_enterobase:
         enterobase_scheme=enterobase.loc[config["species"], "scheme"],
         enterobase_species=enterobase.loc[config["species"], "species_id"],
     output:
-        gene_list="core_genomes/{spec}/enterobase/genes.txt",
+        gene_list = "core_genomes/{spec}/enterobase/genes.txt",
     shell:
         """
         wget -qO- http://enterobase.warwick.ac.uk/download_data?allele=profiles\&scheme={params.enterobase_scheme}\&species={params.enterobase_species} | gzip -d | head -n 1 | tr '[:space:]' '\\n' | tail -n +2 > {output[gene_list]} || :
@@ -29,11 +29,11 @@ rule fetch_gene_entries_from_locus_tag:
     conda:
         pipeline_path + "envs/biopython.yaml"
     input:
-        gbk="references/{ref}/genome_gbwithparts.gbwithparts",
-        locus_list="core_genomes/{spec}/enterobase/genes.txt",
+        gbk = "references/{ref}/genome_gbwithparts.gbwithparts",
+        locus_list = "core_genomes/{spec}/enterobase/genes.txt",
     output:
-        bed="core_genomes/{spec}/enterobase/{ref}.bed",
-        problematic="core_genomes/{spec}/enterobase/{ref}_missing.txt",
+        bed = "core_genomes/{spec}/enterobase/{ref}.bed",
+        problematic = "core_genomes/{spec}/enterobase/{ref}_missing.txt",
     script:
         pipeline_path + "rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
         
