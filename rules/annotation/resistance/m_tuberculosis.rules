@@ -117,7 +117,7 @@ rule extract_mutated_positions:
         mutated_not_cds = "samples/{sample}/typing/freebayes_joint_genotyping/bwa/{ref}_not_codons.fasta"
     shell:
         """
-        rm {input[trimmed]}.fai
+        rm -f {input[trimmed]}.fai 2> /dev/null
         bedtools getfasta -fi {input[trimmed]} -bed {input[cds]} > {output[mutated_cds]}
         bedtools getfasta -fi {input[trimmed]} -bed {input[not_cds]} > {output[mutated_not_cds]}
         """
@@ -134,7 +134,7 @@ rule extract_refernce_positions:
         mutated_not_cds = "references/{ref}/not_codons.fasta"
     shell:
         """
-        rm {input[trimmed]}.fai
+        rm -f {input[trimmed]}.fai 2> /dev/null
         bedtools getfasta -fi {input[trimmed]} -bed {input[cds]} > {output[mutated_cds]}
         bedtools getfasta -fi {input[trimmed]} -bed {input[not_cds]} > {output[mutated_not_cds]}
         """
