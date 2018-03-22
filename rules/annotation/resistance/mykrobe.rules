@@ -1,0 +1,38 @@
+rule search_resistance_paired_reads_with_mykrobe:
+    conda:
+        pipeline_path + "envs/mykrobe.yaml"
+    input:
+        "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
+        "samples/{sample}/reads/raw/{sample}_R2.fastq.gz",
+    output:
+        "samples/{sample}/resistance/mykrobe.json"
+    params:
+        species = config["spec_for_mykrobe"]
+    log:
+        logging_folder + "/samples/{sample}/resistance/mykrobe.txt"
+    shell:
+        """
+        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf 100  > {output[0]} &> {log}
+        """
+        
+rule search_resistance_single_reads_with_mykrobe:
+    conda:
+        pipeline_path + "envs/mykrobe.yaml"
+    input:
+        "samples/{sample}/reads/raw/{sample}_single.fastq.gz",
+    output:
+        "samples/{sample}/resistance/mykrobe.json"
+    params:
+        species = config["spec_for_mykrobe"]
+    shell:
+        """
+        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf 100  > {output[0]} 
+        """
+
+rule generate_mykrobe_tsv_file_from_json_file:
+    input:
+        "samples/{sample}/resistance/mykrobe.json",
+    output:
+        "samples/{sample}/resistance/mykrobe.tsv"
+    script:
+        "scripts/mykrobe_json_to_tsv.py"
