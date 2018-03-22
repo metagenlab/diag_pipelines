@@ -1,7 +1,6 @@
 include:
     "../logging.rules"
 
-
 prefix = "../../rules/"
 
 rule all:
@@ -9,7 +8,7 @@ rule all:
         "core_genomes/"+config["species"].replace(" ", "_")+"/parsnp/parsnp.xmfa"
 
 include:
-    prefix + "downloading/fetch_references.rules"
+    pipeline_path + "rules/downloading/fetch_references.rules"
 
 rule calculate_core_genome_parsnp:
     conda:
