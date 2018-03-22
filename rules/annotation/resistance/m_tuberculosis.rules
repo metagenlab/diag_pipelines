@@ -101,7 +101,7 @@ rule apply_genotype_to_fasta:
         fasta = "samples/{sample}/resistance/{ref}/annotated_genes_with_mutations.fasta",
     shell:
         """
-        bcftools consensus  --sample {wildcards.sample} --fasta-ref {input[ref]} --output {output[fasta]} {input[vcf_shifted]}
+        bcftools consensus --include 'type="snp"' --sample {wildcards.sample} --fasta-ref {input[ref]} --output {output[fasta]} {input[vcf_shifted]}
         """
 
 rule extract_mutated_positions:
@@ -115,7 +115,7 @@ rule extract_mutated_positions:
     shell:
         """
         rm -f {input[trimmed]}.fai 2> /dev/null
-        bedtools getfasta -fi {input[trimmed]} -bed {input[bed]} > {output[mutated_pos]}
+        bedtools getfasta -fi {input[trimmed]} -bed {input[bed]} > {output[mutated_pos]} 2> /dev/null
         """
         
 rule extract_reference_positions:
@@ -129,7 +129,7 @@ rule extract_reference_positions:
     shell:
         """
         rm -f {input[trimmed]}.fai 2> /dev/null
-        bedtools getfasta -fi {input[trimmed]} -bed {input[bed]} > {output[mutated_pos]}
+        bedtools getfasta -fi {input[trimmed]} -bed {input[bed]} > {output[mutated_pos]} 2> /dev/null
         """
 
 rule format_resistance_results:
