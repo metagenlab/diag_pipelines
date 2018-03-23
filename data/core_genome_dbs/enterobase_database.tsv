@@ -1,2 +1,2 @@
-species	species_id	reference_genome	scheme	taxid
+Species	SpeciesId	ReferenceGenome	Scheme	Taxid
 Salmonella enterica	SALwgMLST	359488	cgMLSTv1	28901
