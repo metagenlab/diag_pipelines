@@ -1,7 +1,7 @@
-include:
-    "../logging.rules"
+pipeline_path = workflow.basedir + "/../../"
 
-prefix = "../../rules/"
+include:
+    pipeline_path + "workflows/logging.rules"
 
 rule all:
     input:
