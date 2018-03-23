@@ -9,7 +9,7 @@ rule map_paired_reads_with_bwa:
     output:
         temp("samples/{sample}/mapping/bwa/{ref}.bam"),
     log:
-        logging_folder+"/samples/{sample}/logs/mapping/{ref}/bwa/log.txt"
+        logging_folder+"samples/{sample}/logs/mapping/{ref}/bwa/log.txt"
     shell:
         """
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
@@ -29,7 +29,7 @@ rule map_single_reads_with_bwa:
     output:
         temp("samples/{sample}/mapping/bwa/{ref}.bam"),
     log:
-        logging_folder+"/samples/{sample}/logs/mapping/{ref}/bwa/log.txt"
+        logging_folder+"samples/{sample}/logs/mapping/{ref}/bwa/log.txt"
     shell:
         """
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
@@ -68,8 +68,8 @@ rule remove_duplicates_from_mapping:
     output:
         temp("samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam"),
     log:
-         logging_folder+"/samples/{sample}/mapping/bwa/{ref}/metrics_deduplicated.txt",
-         logging_folder+"/samples/{sample}/logs/mapping/bwa/{ref}/markduplicates.txt",
+         logging_folder+"samples/{sample}/mapping/bwa/{ref}/metrics_deduplicated.txt",
+         logging_folder+"samples/{sample}/logs/mapping/bwa/{ref}/markduplicates.txt",
     shell:
         """
         gatk-launch MarkDuplicates --REMOVE_DUPLICATES true -I {input[bam]} -O {output[0]} -M {log[0]} &> {log[1]}

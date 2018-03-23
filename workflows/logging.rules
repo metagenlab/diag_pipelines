@@ -18,6 +18,8 @@ if "--dryrun" not in sys.argv and "-n" not in sys.argv:
     date = today.strftime("%Y/%m/%d")
     time = today.strftime('%H_%M_%S_%f')[:-4]
     logging_folder = str(logging_folder+"/"+date+"/"+time).replace("//", "/")
+    if not logging_folder.endswith("/"):
+        logging_folder = logging_folder + "/"
     os.makedirs(logging_folder, exist_ok=True)
     cmd_file = logging_folder + "/cmd.txt"
     with open(cmd_file, "w") as f:

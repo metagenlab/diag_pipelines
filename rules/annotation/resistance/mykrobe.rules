@@ -42,6 +42,3 @@ rule generate_mykrobe_tsv_file_from_json_file:
         "scripts/mykrobe_json_to_tsv.py"
 
    
-rule all_mykrobe:
-    input:
-        expand("samples/{sample}/resistance/mykrobe.tsv", sample=read_naming.keys())

@@ -1,6 +1,6 @@
 rule trim_paired_reads_with_trimmomatic:
     conda:
-        "../../envs/trimmomatic.yaml"
+        pipeline_path + "envs/trimmomatic.yaml"
     input:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"
@@ -18,7 +18,7 @@ rule trim_paired_reads_with_trimmomatic:
         temp("samples/{sample}/reads/trimmed/R2_unpaired.fastq"),
         "samples/{sample}/reads/trimmed/summary.txt",
     log:
-        logging_folder+"/samples/{sample}/logs/trimmomatic.log"
+        logging_folder+"samples/{sample}/logs/trimmomatic.log"
     shell:
         """
         trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} &> {log}
@@ -29,7 +29,7 @@ rule trim_paired_reads_with_trimmomatic:
 
 rule trim_single_reads_with_trimmomatic:
     conda:
-        "../../envs/trimmomatic.yaml"
+        pipeline_path + "envs/trimmomatic.yaml"
     input:
         "samples/{sample}/reads/raw/{sample}_single.fastq.gz"
     params:
@@ -43,7 +43,7 @@ rule trim_single_reads_with_trimmomatic:
         temp("samples/{sample}/reads/trimmed/single.fastq"),
         "samples/{sample}/reads/trimmed/summary.txt",
     log:
-        logging_folder+"/samples/{sample}/logs/trimmomatic.log"
+        logging_folder+"samples/{sample}/logs/trimmomatic.log"
     shell:
         """
         trimmomatic SE {input[0]} {output[0]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} &> {log}

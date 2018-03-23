@@ -1,8 +1,8 @@
 rule annotate_with_prokka:
     conda:
-        "../../envs/prokka.yaml"
+        pipeline_path + "envs/prokka.yaml"
     input:
-        "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
+        contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
     output:
         "samples/{sample}/annotation/{sample}.log",
         "samples/{sample}/annotation/{sample}.gff",
@@ -10,30 +10,30 @@ rule annotate_with_prokka:
         "samples/{sample}/annotation/{sample}.fsa",
         "samples/{sample}/annotation/{sample}.txt",
         "samples/{sample}/annotation/{sample}.gbk",
-        "samples/{sample}/annotation/{sample}.ffn"
+        "samples/{sample}/annotation/{sample}.ffn",
     params:
         genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split(" ")[0],
         spec = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split(" ")[1]
     shell:
-        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
 
 rule annotate_with_prokka_unfiltered_assembly:
     conda:
-        "../../envs/prokka.yaml"
+        pipeline_path + "envs/prokka.yaml"
     input:
-        "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
+        contigs = "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
     output:
         "samples/{sample}/assembly/spades/temporary_annotation/{sample}.fsa"
     params:
         genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split(" ")[0],
         spec = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split(" ")[1],
     shell:
-        "prokka --quiet --outdir $( dirname {output[0]}) --force {input} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
+        "prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
 
 
 rule create_blast_database_from_protein_sequences:
     conda:
-        "../../envs/blast.yaml"
+        pipeline_path + "envs/blast.yaml"
     input:
         "samples/{sample}/annotation/{sample}.faa",
     output:
@@ -45,7 +45,7 @@ rule create_blast_database_from_protein_sequences:
 
 rule create_blast_database_from_contig_sequences:
     conda:
-        "../../envs/blast.yaml"
+        pipeline_path + "envs/blast.yaml"
     input:
         "samples/{sample}/annotation/{sample}.fsa",
     output:

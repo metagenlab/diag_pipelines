@@ -9,7 +9,7 @@ rule correct_error_paired_reads_with_spades:
         temp("samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
         temp("samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz")
     log:
-        logging_folder+"/samples/{sample}/logs/spades_read_correction.txt"
+        logging_folder+"samples/{sample}/logs/spades_read_correction.txt"
     shell:
          """
          spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]})) > {log} 
@@ -23,7 +23,7 @@ rule correct_error_single_reads_with_spades:
     output:
         temp("samples/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz")
     log:
-        logging_folder+"/samples/{sample}/logs/spades_read_correction.txt"
+        logging_folder+"samples/{sample}/logs/spades_read_correction.txt"
     shell:
          """
          spades.py -s {input[0]} --only-error-correction -o $( dirname $(dirname {output[0]})) > {log} 
@@ -40,7 +40,7 @@ rule assemble_genome_paired_reads_with_spades:
     output:
         "samples/{sample}/assembly/spades/contigs.fasta"
     log:
-        logging_folder+"/samples/{sample}/logs/spades_assembly.txt"
+        logging_folder+"samples/{sample}/logs/spades_assembly.txt"
     shell:
         """
         spades.py --only-assembler -1 {input[0]} -2 {input[1]} -s {input[2]} -o $( dirname {output[0]}) > {log}
@@ -57,7 +57,7 @@ rule assemble_genome_single_reads_with_spades:
     output:
         "samples/{sample}/assembly/spades/contigs.fasta"
     log:
-        logging_folder+"/samples/{sample}/logs/spades_assembly.txt",
+        logging_folder+"samples/{sample}/logs/spades_assembly.txt",
     shell:
         """
         spades.py --only-assembler -s {input[0]} -o $( dirname {output[0]}) > {log}
