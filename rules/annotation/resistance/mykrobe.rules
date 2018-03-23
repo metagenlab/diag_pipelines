@@ -3,7 +3,7 @@ rule search_resistance_paired_reads_with_mykrobe:
         pipeline_path + "envs/mykrobe.yaml"
     params:
         panel = mykrobe_panel,
-        species = config["spec_for_mykrobe"],
+        species = mykrobe_species[species],
     input:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         "samples/{sample}/reads/raw/{sample}_R2.fastq.gz",
@@ -21,7 +21,7 @@ rule search_resistance_single_reads_with_mykrobe:
         pipeline_path + "envs/mykrobe.yaml"
     params:
         panel = mykrobe_panel,
-        species = config["spec_for_mykrobe"],
+        species = mykrobe_species[species]
     input:
         "samples/{sample}/reads/raw/{sample}_single.fastq.gz",
     output:
