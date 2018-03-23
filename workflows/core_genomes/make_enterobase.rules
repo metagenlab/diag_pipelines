@@ -37,4 +37,4 @@ rule fetch_gene_entries_from_locus_tag:
         
 rule all:
     input:
-        "core_genomes/"+species+"/enterobase/"+str(enterobase.loc[config["species"], "reference_genome"])+".bed"
+        "core_genomes/"+species+"/enterobase.bed"
