@@ -1,10 +1,7 @@
-include:
-    "assembly_quality.rules"
-
-
-
 import itertools
 
+include:
+    "assembly_quality.rules"
 
 try:
     ref_ids_for_mapping
@@ -15,12 +12,10 @@ except NameError:
         ref_ids_for_mapping = ""
 
 
+species = config["species"]
 minimum_coverage = config["minimum_coverage_for_calling"]
-
 minimum_alternate_frac = config["minimum_alternate_fraction_for_calling"]
 
-
-prefix = "./"
 
 all_combined_1, all_combined_2 = [], []
 for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
@@ -28,47 +23,45 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
     all_combined_2.append(j)
 
 
-prefix = "../rules/"
+include:
+    pipeline_path + "core_genome/bed_creation.rules"
+
+include:
+    pipeline_path + "downloading/fetch_single_reference.rules"
     
 include:
-    prefix + "core_genome/bed_creation.rules"
+    pipeline_path + "mapping/find_closest_genomes.rules"
 
 include:
-    prefix + "downloading/fetch_single_reference.rules"
+    pipeline_path + "genotyping/freebayes.rules"
+
+include:
+    pipeline_path + "genotyping/gatk.rules"
+
+include:
+    pipeline_path + "vcf_manipulation/filtering.rules"
     
 include:
-    prefix + "mapping/find_closest_genomes.rules"
-
-include:
-    prefix + "genotyping/freebayes.rules"
-
-include:
-    prefix + "genotyping/gatk.rules"
-
-include:
-    prefix + "vcf_manipulation/filtering.rules"
+    pipeline_path + "vcf_manipulation/splitting_merging.rules"
     
 include:
-    prefix + "vcf_manipulation/splitting_merging.rules"
+    pipeline_path + "vcf_manipulation/indexing.rules"
+
+include:
+    pipeline_path + "vcf_manipulation/calculate_differences.rules"
+
+include:
+    pipeline_path + "vcf_manipulation/create_alignment_for_phylogeny.rules"
     
 include:
-    prefix + "vcf_manipulation/indexing.rules"
+    pipeline_path + "typing/snp_distance.rules"
 
 include:
-    prefix + "vcf_manipulation/calculate_differences.rules"
-
-include:
-    prefix + "vcf_manipulation/create_alignment_for_phylogeny.rules"
-    
-include:
-    prefix + "typing/snp_distance.rules"
-
-include:
-    prefix + "typing/mlst.rules"
+    pipeline_path + "typing/mlst.rules"
  
 include:
-    prefix + "phylogeny/raxml.rules"
+    pipeline_path + "phylogeny/raxml.rules"
 
 include:
-    prefix + "phylogeny/image_creation.rules"
+    pipeline_path + "phylogeny/image_creation.rules"
 
