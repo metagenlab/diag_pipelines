@@ -27,7 +27,7 @@ rule create_bed_from_schema:
         schema="core_genomes/{spec}/ridom/schemas.tsv",
         genome="references/{ref}/genome_fasta.fasta",
     output:
-        bed="core_genomes/{spec}/ridom/{ref}.bed",
+        bed="core_genomes/{spec}/ridom.bed",
     shell:
         """    
         accession=$(head -n 1 {input[genome]} | cut -f1 -d ' ' | sed "s/>//") 
