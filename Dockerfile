@@ -24,23 +24,23 @@ RUN mkdir -p ${main}/data/links
 
 WORKDIR ${main}/data/
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Staphylococcus aureus" -f all
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Staphylococcus_aureus" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Mycobacterium tuberculosis" -f all
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Mycobacterium_tuberculosis" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Listeria monocytogenes" -f all
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Listeria_monocytogenes" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Escherichia coli" -f all
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Escherichia_coli" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Klebsiella pneumoniae" -f all
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Klebsiella_pneumoniae" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Enterococcus faecium" -f all
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Enterococcus_faecium" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Acinetobacter baumannii" -f all
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Acinetobacter_baumannii" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Legionella pneumophila" -f all
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Legionella_pneumophila" -f all
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} --config species="Salmonella enterica" -f all
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} --config species="Salmonella_enterica" -f all
 
 RUN cp ${pipeline_folder}/*.tsv . 
 
@@ -50,7 +50,11 @@ RUN echo '' > links/Staaur-10_S10_L001_R1.fastq.gz
 
 RUN echo '' > links/Staaur-10_S10_L001_R2.fastq.gz
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml  quality/multiqc/assembly/multiqc_report.html samples/S10/resistance/mykrobe.tsv samples/S10/resistance/rgi.tsv typing/freebayes_joint_genotyping/core_ridom/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_ridom/bwa/distances_in_snp_mst_no_st.svg
+RUN mkdir -p core_genomes/parsnp/Staphylococcus_aureus/
+
+RUN echo '' > core_genomes/parsnp/Staphylococcus_aureus/parsnp.xmfa
+
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml  quality/multiqc/assembly/multiqc_report.html samples/S10/resistance/mykrobe.tsv samples/S10/resistance/rgi.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_34528/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome/S10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg 
 
 RUN patch /opt/conda/envs/356da27d/lib/python3.6/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
@@ -70,11 +74,12 @@ RUN mv Parsnp-Linux64-v1.2/parsnp .
 
 RUN rm -rf Parsnp-Linux64-v1.2/
 
-WORKDIR ${main}/data/
+RUN mkdir ${main}/data/analysis/
+
+WORKDIR ${main}/data/analysis
 
 RUN chown -R pipeline_user ${main}/
 
 USER pipeline_user
-
 
 
