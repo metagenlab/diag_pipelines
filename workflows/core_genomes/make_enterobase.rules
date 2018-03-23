@@ -30,11 +30,11 @@ rule fetch_gene_entries_from_locus_tag:
         gbk = lambda wildcards : "references/" + str(enterobase.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_gbwithparts.gbwithparts",
         locus_list = "core_genomes/{spec}/enterobase/genes.txt",
     output:
-        bed = "core_genomes/{spec}/enterobase.bed",
-        problematic = "core_genomes/{spec}/enterobase_missing.txt",
+        bed = "core_genomes/cgMLST/{spec}.bed",
+        problematic = "core_genomes/cgMLST/{spec}/enterobase_missing.txt",
     script:
         pipeline_path + "rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
         
 rule all:
     input:
-        "core_genomes/" + species + "/enterobase.bed"
+        "core_genomes/cgMLST/" + species + ".bed"
