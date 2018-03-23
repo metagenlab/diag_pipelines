@@ -5,13 +5,13 @@ pipeline_path = workflow.basedir + "/../../"
 include:
     pipeline_path + "workflows/logging.rules"
     
-ridom = pandas.read_csv(pipeline_path+"/data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
-
-prefix = "../../rules/"
-
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
 
+species = config["species"].replace(" ", "_")
+    
+ridom = pandas.read_csv(pipeline_path+"data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
+ 
 rule get_scheme_from_ridom:
     params:
         id_ridom=str(ridom.loc[config["species"], "id_number"]),
@@ -36,4 +36,4 @@ rule create_bed_from_schema:
 
 rule all:
     input:
-        "core_genomes/"+config["species"].replace(" ", "_")+"/ridom/"+str(ridom.loc[config["species"], "reference_genome"])+".bed"
+        "core_genomes/"+species+"/ridom/"+str(ridom.loc[config["species"], "reference_genome"])+".bed"

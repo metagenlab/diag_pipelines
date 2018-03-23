@@ -5,14 +5,12 @@ pipeline_path = workflow.basedir + "/../../"
 include:
     pipeline_path + "workflows/logging.rules"
     
-enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
-
-rule all:
-    input:
-        "core_genomes/"+config["species"].replace(" ", "_")+"/enterobase/"+str(enterobase.loc[config["species"], "reference_genome"])+".bed"
-        
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
+    
+species = config["species"].replace(" ", "_")
+
+enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 rule get_schema_from_enterobase:
     params:
@@ -37,5 +35,6 @@ rule fetch_gene_entries_from_locus_tag:
     script:
         pipeline_path + "rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
         
-
-
+rule all:
+    input:
+        "core_genomes/"+species+"/enterobase/"+str(enterobase.loc[config["species"], "reference_genome"])+".bed"

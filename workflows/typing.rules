@@ -12,7 +12,7 @@ except NameError:
         ref_ids_for_mapping = ""
 
 
-species = config["species"]
+species = config["species"].replace(" ", "_")
 minimum_coverage = config["minimum_coverage_for_calling"]
 minimum_alternate_frac = config["minimum_alternate_fraction_for_calling"]
 
