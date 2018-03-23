@@ -17,14 +17,14 @@ cgMLST scheme from `ridom <http://www.cgmlst.org/ncs>`_ can be extracted directl
 .. csv-table:: Available cgMLST schemes from ridom
    :header: "Species", "Taxonomy ID", "Ridom ID", "Reference genome assembly ID"
 
-   "*Staphylococcus aureus*","1280","141106","33148"
-   "*Mycobacterium tuberculosis*","1773","741110","538048"
-   "*Listeria monocytogenes*","1639","690488","264498"
-   "*Escherichia coli*","562","5064703","79781"
-   "*Klebsiella pneumoniae*","573","2187931","31388"
-   "*Enterococcus faecium*","1352","991893","526908"
-   "*Acinetobacter baumannii*","470","3956907","39528"
-   "*Legionella pneumophila*","446","1025099","30068"
+   "*Staphylococcus_aureus*","1280","141106","33148"
+   "*Mycobacterium_tuberculosis*","1773","741110","538048"
+   "*Listeria_monocytogenes*","1639","690488","264498"
+   "*Escherichia_coli*","562","5064703","79781"
+   "*Klebsiella_pneumoniae*","573","2187931","31388"
+   "*Enterococcus_faecium*","1352","991893","526908"
+   "*Acinetobacter_baumannii*","470","3956907","39528"
+   "*Legionella_pneumophila*","446","1025099","30068"
 
 A bed file is constructed from the locus target file, using coordinates from the start and length columns of the csv file file available on the `ridom website <http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv>`_. 
 
@@ -33,9 +33,9 @@ Example
 
 .. code-block:: bash
 
-   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules --use-conda --conda-prefix $conda_folder --config species="Staphylococcus aureus" -f all
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules --use-conda --conda-prefix $conda_folder --config species="Staphylococcus_aureus" -f all
 
-will create a BED file in ``core_genomes/Staphylococcus_aureus/ridom/33148.bed`` which defines the core genomic regions in the genome of the assembly ID 33148 (*Staphylococcus aureus* COL). 
+will create a BED file in ``core_genomes/cgMLST/Staphylococcus_aureus.bed`` which defines the core genomic regions in the genome of the assembly ID 33148 (*Staphylococcus aureus* COL). 
 
 ----------
 Enterobase
@@ -48,9 +48,9 @@ cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted
 .. csv-table:: Available cgMLST schemes from enterobase
    :header: "Species", "Taxonomy ID", "Enterobase ID", "Reference genome assembly ID", "Scheme"
 
-   "*Salmonella enterica*","28901","SALwgMLST","359488","cgMLSTv1"
+   "*Salmonella_enterica*","28901","SALwgMLST","359488","cgMLSTv1"
 
-A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/>`_, based on the locus tag present in this genome is constructed. For instance, over the 3002 locus of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488.
+A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/>`_, based on the locus tag present in this genome is constructed. For instance, over the 3002 loci of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488.
 
 Example
 -------
@@ -59,7 +59,7 @@ Example
 
    snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules --use-conda --conda-prefix $conda_folder --config species="Salmonella enterica" -f all
 
-will create a BED file in ``core_genomes/Salmonella_enterica/enterobase/359488.bed`` defining the core genomic regions in the genome of the assembly ID 359488 (*Salmonella enterica* subsp. enterica serovar Typhimurium str. D23580).
+will create a BED file in ``core_genomes/cgMLST/Salmonella_enterica.bed`` defining the core genomic regions in the genome of the assembly ID 359488 (*Salmonella enterica* subsp. enterica serovar Typhimurium str. D23580).
    
 
 ------   
@@ -75,4 +75,4 @@ Example
 		
    snakemake --config species="Morganella morganii" taxid="582" --snakefile $pipeline_folder/workflows/core_genomes/make_parsnp.rules --use-conda --conda-prefix $conda_folder -f all
 
-will calculate the core genome with parSNP with every complete genome of *Morganella morganii* available in `RefSeq <https://www.ncbi.nlm.nih.gov/refseq/>`_. The ``taxid`` value must be the `taxonomy ID <https://www.ncbi.nlm.nih.gov/taxonomy/>`_ for the species defined. The resulting file will be located in ``core_genomes/Morganella_morganii/parsnp/parsnp.xmfa``.
+will calculate the core genome with parSNP with every complete genome of *Morganella morganii* available in `RefSeq <https://www.ncbi.nlm.nih.gov/refseq/>`_. The ``taxid`` value must be the `taxonomy ID <https://www.ncbi.nlm.nih.gov/taxonomy/>`_ for the species defined. The resulting file will be located in ``core_genomes/parsnp/Morganella_morganii/parsnp.xmfa``.

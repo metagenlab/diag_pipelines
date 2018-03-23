@@ -63,7 +63,7 @@ In this case, the files ``Staaur-10_S10_L001_R1_001.fastq.gz`` and ``Staaur-10_S
 SRA samples
 -----------
 
-SRA samples will be determined based on the tabulated file whose full path must be passed to the variable ``sra_samples``. The RunInfo files that can be downloaded through the `SRA NCBI <https://www.ncbi.nlm.nih.gov/sra/>`_ database can be directly passed without any modification. Otherwise, four columns must be defined.
+SRA samples will be determined based on the tabulated file whose full path must be passed to the variable ``sra_samples``. The RunInfo files that can be downloaded through the `SRA NCBI <https://www.ncbi.nlm.nih.gov/sra/>`_ database can be directly passed without any modification. Otherwise, four columns must be defined. If the variable ``use_library_name`` with any value is passed during execution, the column `LibraryName` will be used for naming the samples, instead of `SampleName` (which can be useful for badly formatted Sra Run Info files).
 
 .. csv-table:: SRA data example
    :header: "Run","SampleName", "LibraryLayout", "ScientificName"
