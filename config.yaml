@@ -11,8 +11,8 @@ resistance_prediction_softwares:
 minimum_coverage_for_calling: 10
 minimum_alternate_fraction_for_calling: 0.75
 
-species: Mycobacterium tuberculosis
-taxid: 1773
+species: Staphylococcus aureus
+taxid: 1280
 
 snp_threshold: 0
 
