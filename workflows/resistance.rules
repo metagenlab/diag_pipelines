@@ -1,10 +1,6 @@
 include:
     "typing.rules"
 
-ontology_file_aro = pipeline_path + "data/card/obo_files/aro.obo"
-ontology_file_mo =  pipeline_path + "data/card/obo_files/mo.obo"
-ontology_file_ro =  pipeline_path + "data/card/obo_files/ro.obo"
-
 resistance_prediction_sofwares = config["resistance_prediction_softwares"]
 
 if "shift_for_mapping" not in config.keys():
@@ -17,7 +13,10 @@ if "mykrobe_panel" not in config.keys():
 else:
     mykrobe_panel = config["mykrobe_panel"]
     
-
+mykrobe_species = {}
+mykrobe_species["Mycobacterium_tuberculosis"]="tb"
+mykrobe_species["Staphylococcus_aureus"]="staph"
+    
 genes = ''
 
 include:
