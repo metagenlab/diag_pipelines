@@ -12,17 +12,21 @@ def natural_keys(text):
 
 
 dist = csv.reader(open(snakemake.input[0]), delimiter=' ')
-ref = snakemake.wildcards["ref"]
+ref = snakemake.wildcards["core_genome_or_full_genome"]
 all_samples = snakemake.params["samples"]
 all_samples.sort(key=natural_keys)
 
 
 matrix_distances = pandas.DataFrame(0, index=all_samples + [ref], columns = all_samples + [ref])
 
-
 for i in dist:
-    matrix_distances.loc[i[0], i[1]] = int(i[2])
-    matrix_distances.loc[i[1], i[0]] = int(i[2])
+    if i[0]=="ref":
+        matrix_distances.loc[ref, i[1]] = int(i[2])
+        matrix_distances.loc[i[1], ref] = int(i[2])
+    else:
+        matrix_distances.loc[i[0], i[1]] = int(i[2])
+        matrix_distances.loc[i[1], i[0]] = int(i[2])
+
 
 
 

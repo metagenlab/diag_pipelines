@@ -1,6 +1,6 @@
 rule calculate_pairwise_distances_by_type:
     conda:
-        "../../envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
         joint_genotype_vcf="{any_analysis}/all_samples_{type}.vcf.gz",
         joint_genotype_vcf_tbi="{any_analysis}/all_samples_{type}.vcf.gz.tbi",
@@ -14,7 +14,7 @@ rule calculate_pairwise_distances_by_type:
 
 rule get_pairwise_snps_positions_by_type:
     conda:
-        "../../envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
         joint_genotype_vcf="{any_analysis}/all_samples_{type}.vcf.gz",
         joint_genotype_vcf_tbi="{any_analysis}/all_samples_{type}.vcf.gz.tbi",
@@ -29,16 +29,16 @@ rule get_pairwise_snps_positions_by_type:
 
 rule calculate_distance_with_ref_by_type:
     conda:
-        "../../envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
-        joint_genotype_vcf="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/all_samples_{type}.vcf",
-        joint_genotype_vcf_tbi="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/all_samples_{type}.vcf",
+        joint_genotype_vcf="{any_analysis}/all_samples_{type}.vcf",
+        joint_genotype_vcf_tbi="{any_analysis}/all_samples_{type}.vcf",
     output:
-        dist_ref=temp("typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/distances/to_ref/{sample}_distance_in_{type}.txt"),
+        dist_ref=temp("{any_analysis}/distances/to_ref/{sample}_distance_in_{type}.txt"),
     shell:
         """
         snps=$(bcftools view --samples {wildcards.sample} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | grep -v "0" | wc -l) || :
-        echo {wildcards.ref} {wildcards.sample} ${{snps}} > {output[dist_ref]}
+        echo ref {wildcards.sample} ${{snps}} > {output[dist_ref]}
         """
 
     

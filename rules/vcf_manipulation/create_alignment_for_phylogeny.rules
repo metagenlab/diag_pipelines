@@ -2,10 +2,10 @@ rule merge_multiallelic_by_sample:
     conda:
         "../../envs/bcftools.yaml"
     input:
-        vcf="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/all_samples_snp.vcf",
-        vcf_tbi="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/all_samples_snp.vcf.tbi",
+        vcf="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/all_samples_snp.vcf",
+        vcf_tbi="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/all_samples_snp.vcf.tbi",
     output:
-        merged_multi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/snps.vcf",
+        merged_multi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf",
     shell:
         """
         bcftools view --samples {wildcards.sample} --trim-alt-alleles {input[vcf]} | bcftools norm -m +any --output {output[merged_multi]}
@@ -16,11 +16,11 @@ rule extract_snps:
     conda:
         "../../envs/bcftools.yaml"
     input:
-        merged_multi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/snps.vcf.gz",
-        merged_multi_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/snps.vcf.gz.tbi",
+        merged_multi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz",
+        merged_multi_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz.tbi",
     output:
-        alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/snps.vcf",
-        unknowns="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/unknowns.tab",
+        alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf",
+        unknowns="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/unknowns.tab",
     shell:
         """
         bcftools -i 'GT="alt"' --samples {wildcards.sample} {input[merged_multi]} > {output[alt]} 
@@ -28,16 +28,16 @@ rule extract_snps:
         """
         
 
-rule create_consensus_sequence:
+rule create_consensus_sequence_parsnp:
     conda:
         "../../envs/bcftools.yaml"
     input:
-        alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/snps.vcf.gz",
-        alt_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/snps.vcf.gz.tbi",
-        unknowns="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/unknowns.tab",
+        alt="samples/{sample}/snps/{snp_caller}/core_parsnp_{ref}/{mapping_method}/snps.vcf.gz",
+        alt_tbi="samples/{sample}/snps/{snp_caller}/core_parsnp_{ref}/{mapping_method}/snps.vcf.gz.tbi",
+        unknowns="samples/{sample}/snps/{snp_caller}/core_parsnp_{ref}/{mapping_method}/unknowns.tab",
         ref="references/{ref}/genome_fasta.fasta",
     output:
-        alignment="samples/{sample}/alignment/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/consensus.fa",
+        alignment="samples/{sample}/alignment/{snp_caller}/core_parsnp_{ref}/{mapping_method}/consensus.fa",
     shell:
         """
         bcftools consensus --mask {input[unknowns]} --fasta-ref {input[ref]} --output {output[alignment]} --sample {wildcards.sample} {input[alt]}
@@ -47,10 +47,10 @@ rule create_consensus_sequence:
 
 rule concatenate_consensus_fasta_files:
     input:
-        fasta=expand("samples/{sample}/alignment/{{snp_caller}}/{{core_genome_or_full_genome}}/{{ref}}/{{mapping_method}}/consensus.fa", sample=read_naming.keys()),
+        fasta=expand("samples/{sample}/alignment/{{snp_caller}}/core_parsnp_{{ref}}/{{mapping_method}}/consensus.fa", sample=read_naming.keys()),
         ref="references/{ref}/genome_fasta.fasta",
     output:
-        alignment="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/alignment.fa"
+        alignment="typing/{snp_caller}/core_parsnp_{ref}/{mapping_method}/alignment.fa"
     shell:
         """
         sed "s/^>.*/>{wildcards.ref}/" {input[ref]} | cat {input[fasta]} - > {output[alignment]}

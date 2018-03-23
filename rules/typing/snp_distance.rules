@@ -4,10 +4,10 @@ rule distance_columns_to_matrix:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.txt",
+        "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.txt",
     output:
-        out_xlsx_distance = "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.xlsx",
-        out_tsv_distance = "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.tsv"
+        out_xlsx_distance = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.xlsx",
+        out_tsv_distance = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv"
     script:
         "scripts/distance_columns_to_matrix.py"
 
@@ -18,14 +18,12 @@ rule compute_minimum_spanning_tree_with_st:
     conda:
         pipeline_path + "envs/igraph.yaml"
     input:
-        dist = "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.tsv",
+        dist = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
         mlst_samples = "typing/mlst/summary.tsv",
-        mlst_ref = "references/{ref}/mlst.tsv",
-        subvalue = "references/{ref}/genome_subvalue.txt",
     output:
-        mst = "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_with_st.svg"
+        mst = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_with_st.svg"
     log:
-        logging_folder + "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_with_st.txt"
+        logging_folder + "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_with_st.txt"
     script:
         "scripts/minimum_spanning_tree_with_st.R"
 
@@ -36,12 +34,11 @@ rule compute_minimum_spanning_tree_no_st:
     conda:
         pipeline_path + "envs/igraph.yaml"
     input:
-        dist="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}.tsv",
-        subvalue="references/{ref}/genome_subvalue.txt",
+        dist="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
     output:
-        mst="typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_no_st.svg"
+        mst="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_no_st.svg"
     log:
-        logging_folder + "typing/{snp_caller}/{core_genome_or_full_genome}/{ref}/{mapping_method}/{distance_type}_mst_no_st.txt"
+        logging_folder + "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_no_st.txt"
     script:
         "scripts/minimum_spanning_tree_no_st.R"
 

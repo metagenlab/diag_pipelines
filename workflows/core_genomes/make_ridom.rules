@@ -27,7 +27,7 @@ rule create_bed_from_schema:
         schema = lambda wildcards: "core_genomes/{spec}/ridom/schemas.tsv",
         genome = lambda wildcards: "references/"+ str(ridom.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_fasta.fasta",
     output:
-        bed="core_genomes/{spec}/ridom.bed",
+        bed="core_genomes/cgMLST/{spec}.bed",
     shell:
         """    
         accession=$(head -n 1 {input[genome]} | cut -f1 -d ' ' | sed "s/>//") 
@@ -36,4 +36,4 @@ rule create_bed_from_schema:
 
 rule all:
     input:
-        "core_genomes/" + species + "/ridom.bed"
+        "core_genomes/cgMLST/" + species + ".bed"

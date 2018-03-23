@@ -3,12 +3,6 @@ library(svglite)
 
 set.seed(1)
 
-reference_name <-  read.csv(snakemake@input[["subvalue"]], sep="\t", header=FALSE, stringsAsFactors=FALSE)[1,1]
-
-ref_convinient_name <- paste(reference_name, " (", snakemake@wildcards[["ref"]], ")", sep="")
-
-print(ref_convinient_name)
-
 
 matrix <- as.matrix(read.csv(snakemake@input[["dist"]], sep="\t", header=TRUE, row.names=1))
 #We set the zero distance (clones) to a small value, otherwise no links exist between clones
@@ -20,8 +14,6 @@ graph <- graph.adjacency(matrix, mode="undirected", weighted=TRUE, diag=FALSE)
 graph <- set_vertex_attr(graph, "name", value=gsub("X", "", vertex_attr(graph, "name")))
 
 
-
-graph <- set_vertex_attr(graph, "name", value=gsub(snakemake@wildcards[["ref"]], ref_convinient_name, vertex_attr(graph, "name")))
 
 mapping <- 1:nb_vertex
 

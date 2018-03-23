@@ -19,8 +19,10 @@ minimum_alternate_frac = config["minimum_alternate_fraction_for_calling"]
 ridom = pandas.read_csv(pipeline_path+"data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
 enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
+all_core_genome_dbs = pandas.concat([ridom, enterobase])
 
 all_combined_1, all_combined_2 = [], []
+
 for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
     all_combined_1.append(i)
     all_combined_2.append(j)
@@ -55,6 +57,10 @@ include:
 
 include:
     pipeline_path + "rules/vcf_manipulation/create_alignment_for_phylogeny.rules"
+
+if species in all_core_genome_dbs.index:
+    include:
+        pipeline_path + "rules/vcf_manipulation/extract_cgMLST.rules"
     
 include:
     pipeline_path + "rules/typing/snp_distance.rules"

@@ -2,10 +2,10 @@ rule extract_core_genome_parsnp_from_ref:
     conda:
         "../../envs/bedtools.yaml"
     input:
-        "core_genome/parsnp/parsnp.xmfa",
+        "core_genomes/parsnp/parsnp.xmfa",
         "references/{ref}/genome_fasta.fasta"
     output:
-        "core_genome/parsnp/{ref}.bed",
+        "core_genomes/parsnp/" + species + "/{ref}.bed",
     shell:
         """
         header=$(head -n 1 {input[1]})
