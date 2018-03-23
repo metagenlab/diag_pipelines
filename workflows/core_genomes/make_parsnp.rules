@@ -12,11 +12,11 @@ include:
 
 rule calculate_core_genome_parsnp:
     conda:
-        "../../envs/inotify.yaml"
+        pipeline_path + "envs/inotify.yaml"
     input:
         "references/{spec}/all_complete_genomes_log.txt"
     output:
-        "core_genomes/{spec}/parsnp/parsnp.xmfa"
+        "core_genomes/parsnp/{spec}/parsnp.xmfa"
     log:
         logging_folder+"/core_genome/parsnp/log.txt"
     shell:
