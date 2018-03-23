@@ -76,4 +76,4 @@ svglite(snakemake@output[["mst"]], height=10, width=10)
 
 plot(mst_graph, vertex.size=vertices_sizes, edge.label.dist=35, vertex.label.dist=0, node.label.cex=0.5, vertex.color=vertices_colors, vertex.label=vertex_attr(mst_graph, "label"), vertex.label.color=rep("black", nb_vertex), vertex.label.family="sans", edge.label.family="sans")
 
-dev.off()
+graphics.off()

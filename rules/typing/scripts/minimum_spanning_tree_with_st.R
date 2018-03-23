@@ -97,4 +97,4 @@ plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
 legend("left", legend=paste("ST ", uniq_sts), fill=colors, xpd=TRUE)
 
 
-dev.off()
+graphics.off()
