@@ -15,7 +15,4 @@ For *M. tuberculosis*, two different panels of mutations can be analysed, by def
 - ``walker-2015``, from `Walker et al. 2015, Lancet Infectious Diseases <https://www.ncbi.nlm.nih.gov/pubmed/26116186>`_
 
   
-The variable ``spec_for_mykrobe`` must be set to either:
-
-- ``staph``
-- ``tb``
+Results for each sample can be found in the file ``samples/{sample_name}/annotation/resistance/mykrobe.xlsx``.
