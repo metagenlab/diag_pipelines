@@ -24,44 +24,44 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
 
 
 include:
-    pipeline_path + "core_genome/bed_creation.rules"
+    pipeline_path + "rules/core_genome/bed_creation.rules"
 
 include:
-    pipeline_path + "downloading/fetch_single_reference.rules"
+    pipeline_path + "rules/downloading/fetch_single_reference.rules"
     
 include:
-    pipeline_path + "mapping/find_closest_genomes.rules"
+    pipeline_path + "rules/mapping/find_closest_genomes.rules"
 
 include:
-    pipeline_path + "genotyping/freebayes.rules"
+    pipeline_path + "rules/genotyping/freebayes.rules"
 
 include:
-    pipeline_path + "genotyping/gatk.rules"
+    pipeline_path + "rules/genotyping/gatk.rules"
 
 include:
-    pipeline_path + "vcf_manipulation/filtering.rules"
+    pipeline_path + "rules/vcf_manipulation/filtering.rules"
     
 include:
-    pipeline_path + "vcf_manipulation/splitting_merging.rules"
+    pipeline_path + "rules/vcf_manipulation/splitting_merging.rules"
     
 include:
-    pipeline_path + "vcf_manipulation/indexing.rules"
+    pipeline_path + "rules/vcf_manipulation/indexing.rules"
 
 include:
-    pipeline_path + "vcf_manipulation/calculate_differences.rules"
+    pipeline_path + "rules/vcf_manipulation/calculate_differences.rules"
 
 include:
-    pipeline_path + "vcf_manipulation/create_alignment_for_phylogeny.rules"
+    pipeline_path + "rules/vcf_manipulation/create_alignment_for_phylogeny.rules"
     
 include:
-    pipeline_path + "typing/snp_distance.rules"
+    pipeline_path + "rules/typing/snp_distance.rules"
 
 include:
-    pipeline_path + "typing/mlst.rules"
+    pipeline_path + "rules/typing/mlst.rules"
  
 include:
-    pipeline_path + "phylogeny/raxml.rules"
+    pipeline_path + "rules/phylogeny/raxml.rules"
 
 include:
-    pipeline_path + "phylogeny/image_creation.rules"
+    pipeline_path + "rules/phylogeny/image_creation.rules"
 
