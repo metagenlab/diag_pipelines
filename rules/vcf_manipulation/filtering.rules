@@ -77,8 +77,8 @@ rule extract_core_genome_ridom:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        vcf_mutation_type = lambda wildcards: "typing/{snp_caller}/full_genome/"+ridom.loc[wildcards.species, "ReferenceGenome"]+"/{mapping_method}/all_samples_{type}.vcf.gz",
-        vcf_mutation_type_tbi = lambda wildcards: "typing/{snp_caller}/full_genome/"+ridom.loc[wildcards.species, "ReferenceGenome"]+"/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
+        vcf_mutation_type = lambda wildcards: "typing/{snp_caller}/full_genome/" + str(ridom.loc[wildcards.species, "ReferenceGenome"]) + "/{mapping_method}/all_samples_{type}.vcf.gz",
+        vcf_mutation_type_tbi = lambda wildcards: "typing/{snp_caller}/full_genome/" + str(ridom.loc[wildcards.species, "ReferenceGenome"]) + "/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
         bed = "core_genomes/"+species+"/ridom.bed",
     output:
         core_genome_vcf = "typing/{snp_caller}/core_ridom/{mapping_method}/all_samples_{type}.vcf",
@@ -92,8 +92,8 @@ rule extract_core_genome_enterobase:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        vcf_mutation_type = lambda wildcards: "typing/{snp_caller}/full_genome/" + enterobase.loc[wildcards.species, "ReferenceGenome"] + "/{mapping_method}/all_samples_{type}.vcf.gz",
-        vcf_mutation_type_tbi = lambda wildcards: "typing/{snp_caller}/full_genome/" + enterobase.loc[wildcards.species, "ReferenceGenome"] + "/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
+        vcf_mutation_type = lambda wildcards: "typing/{snp_caller}/full_genome/" + str(enterobase.loc[wildcards.species, "ReferenceGenome"]) + "/{mapping_method}/all_samples_{type}.vcf.gz",
+        vcf_mutation_type_tbi = lambda wildcards: "typing/{snp_caller}/full_genome/" + str(enterobase.loc[wildcards.species, "ReferenceGenome"]) + "/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
         bed = "core_genomes/"+species+"/enterobase.bed",
     output:
         core_genome_vcf="typing/{snp_caller}/core_enterobase/{mapping_method}/all_samples_{type}.vcf",

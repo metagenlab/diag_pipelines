@@ -10,7 +10,7 @@ include:
 
 species = config["species"].replace(" ", "_")
     
-ridom = pandas.read_csv(pipeline_path+"data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
+ridom = pandas.read_csv(pipeline_path + "data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
  
 rule get_scheme_from_ridom:
     params:
@@ -25,7 +25,7 @@ rule get_scheme_from_ridom:
 rule create_bed_from_schema:
     input:
         schema = lambda wildcards: "core_genomes/{spec}/ridom/schemas.tsv",
-        genome = lambda wildcards: "references/"+ ridom.loc[wildcards.spec, "ReferenceGenome"] + "/genome_fasta.fasta",
+        genome = lambda wildcards: "references/"+ str(ridom.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_fasta.fasta",
     output:
         bed="core_genomes/{spec}/ridom.bed",
     shell:
