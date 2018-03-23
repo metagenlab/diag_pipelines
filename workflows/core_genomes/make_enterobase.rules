@@ -27,7 +27,7 @@ rule fetch_gene_entries_from_locus_tag:
     conda:
         pipeline_path + "envs/biopython.yaml"
     input:
-        gbk = "references/{ref}/genome_gbwithparts.gbwithparts",
+        gbk = lambda wildcards : "references/" + enterobase.loc[wildcards.spec, "ReferenceGenome"] + "/genome_gbwithparts.gbwithparts",
         locus_list = "core_genomes/{spec}/enterobase/genes.txt",
     output:
         bed = "core_genomes/{spec}/enterobase.bed",
@@ -37,4 +37,4 @@ rule fetch_gene_entries_from_locus_tag:
         
 rule all:
     input:
-        "core_genomes/"+species+"/enterobase.bed"
+        "core_genomes/" + species + "/enterobase.bed"
