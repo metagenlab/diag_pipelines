@@ -14,8 +14,8 @@ enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_da
 
 rule get_schema_from_enterobase:
     params:
-        enterobase_scheme=enterobase.loc[config["species"], "scheme"],
-        enterobase_species=enterobase.loc[config["species"], "species_id"],
+        enterobase_scheme=enterobase.loc[config["species"], "Scheme"],
+        enterobase_species=enterobase.loc[config["species"], "SpeciesId"],
     output:
         gene_list = "core_genomes/{spec}/enterobase/genes.txt",
     shell:

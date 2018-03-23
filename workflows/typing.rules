@@ -16,6 +16,9 @@ species = config["species"].replace(" ", "_")
 minimum_coverage = config["minimum_coverage_for_calling"]
 minimum_alternate_frac = config["minimum_alternate_fraction_for_calling"]
 
+ridom = pandas.read_csv(pipeline_path+"data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
+enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
+
 
 all_combined_1, all_combined_2 = [], []
 for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
