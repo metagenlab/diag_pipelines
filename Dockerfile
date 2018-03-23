@@ -20,7 +20,9 @@ RUN mkdir /opt/conda/envs/
 
 ENV conda_folder=/opt/conda/envs/
 
-WORKDIR ${main}
+RUN mkdir -p ${main}/data/links
+
+WORKDIR ${main}/data/
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} --config species="Staphylococcus aureus" -f all
 
@@ -40,10 +42,6 @@ RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.r
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} --config species="Salmonella enterica" -f all
 
-RUN mkdir -p ${main}/data/links
-
-WORKDIR ${main}/data/
-
 RUN cp ${pipeline_folder}/*.tsv . 
 
 RUN cp ${pipeline_folder}/config.yaml .
@@ -52,17 +50,29 @@ RUN echo '' > links/Staaur-10_S10_L001_R1.fastq.gz
 
 RUN echo '' > links/Staaur-10_S10_L001_R2.fastq.gz
 
-RUN ln -s ${main}/core_genomes/Staphylococcus_aureus/ core_genome
-
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml  quality/multiqc/assembly/multiqc_report.html samples/S10/resistance/mykrobe.tsv samples/S10/resistance/rgi.tsv typing/freebayes_joint_genotyping/core_ridom/33148/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_ridom/33148/bwa/distances_in_snp_mst_no_st.svg
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml  quality/multiqc/assembly/multiqc_report.html samples/S10/resistance/mykrobe.tsv samples/S10/resistance/rgi.tsv typing/freebayes_joint_genotyping/core_ridom/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_ridom/bwa/distances_in_snp_mst_no_st.svg
 
 RUN patch /opt/conda/envs/356da27d/lib/python3.6/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
-RUN rm links/*
+RUN rm -rf links/
 
 RUN rm config.yaml
 
 RUN rm *.tsv
+
+WORKDIR /usr/local/bin
+
+RUN wget -qO- https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz > parsnp.tar.gz
+
+RUN tar xf parsnp.tar.gz
+
+RUN mv Parsnp-Linux64-v1.2/parsnp .
+
+RUN rm -rf Parsnp-Linux64-v1.2/
+
+WORKDIR ${main}/data/
+
+RUN chown -R pipeline_user ${main}/
 
 USER pipeline_user
 

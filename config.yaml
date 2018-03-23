@@ -41,11 +41,6 @@ sra_samples: example_sra_samples.tsv
 
 local_samples: example_local_samples.tsv
 
-
-# Tab separated file with three columns: sample name (as automatically defined or according to your own sample naming file), genus, species
-
-
-
 #Internal pipeline parameters
 
 #These are the parameters for read trimming 
