@@ -28,7 +28,7 @@ rule fetch_gene_entries_from_locus_tag:
         pipeline_path + "envs/biopython.yaml"
     input:
         gbk = lambda wildcards : "references/" + str(enterobase.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_gbwithparts.gbwithparts",
-        locus_list = "core_genomes/{spec}/enterobase/genes.txt",
+        locus_list = "core_genomes/cgMLST/{spec}/genes.txt",
     output:
         bed = "core_genomes/cgMLST/{spec}.bed",
         problematic = "core_genomes/cgMLST/{spec}/enterobase_missing.txt",
