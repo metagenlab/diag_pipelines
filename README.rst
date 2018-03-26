@@ -43,7 +43,7 @@ This will generate a summary excel file for the virulence factors of the samples
 		
    docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:latest sh -c 'snakemake --snakefile $pipeline_folder/workflows/typing.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp.xlsx'
 
-This will generate a snp-distance matrix of all samples, only on the core genome defined by ridom of the species defined in the `species` variable of the config file, mapped on the reference genome defined by ridom (which is *Staphylococcus aureus* COL substrain, `id` 33148 from the `NCBI Assembly database <https:/www.ncbi.nlm.nih.gov/assembly/>`_) with bwa. 
+This will generate a snp-distance matrix of all samples, only on the core genome defined by ridom of the species defined in the `species` variable of the config file, mapped on the reference genome used by ridom (which is *Staphylococcus aureus* COL substrain, `id` 33148 from the `NCBI Assembly database <https:/www.ncbi.nlm.nih.gov/assembly/>`_) with bwa. 
 
 .. code-block:: bash
 		

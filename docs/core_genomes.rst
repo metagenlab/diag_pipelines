@@ -17,14 +17,13 @@ cgMLST scheme from `ridom <http://www.cgmlst.org/ncs>`_ can be extracted directl
 .. csv-table:: Available cgMLST schemes from ridom
    :header: "Species", "Taxonomy ID", "Ridom ID", "Reference genome assembly ID"
 
-   "*Staphylococcus_aureus*","1280","141106","33148"
-   "*Mycobacterium_tuberculosis*","1773","741110","538048"
-   "*Listeria_monocytogenes*","1639","690488","264498"
-   "*Escherichia_coli*","562","5064703","79781"
-   "*Klebsiella_pneumoniae*","573","2187931","31388"
-   "*Enterococcus_faecium*","1352","991893","526908"
    "*Acinetobacter_baumannii*","470","3956907","39528"
+   "*Enterococcus_faecium*","1352","991893","526908"
+   "*Klebsiella_pneumoniae*","573","2187931","31388"
+   "*Listeria_monocytogenes*","1639","690488","264498"
    "*Legionella_pneumophila*","446","1025099","30068"
+   "*Mycobacterium_tuberculosis*","1773","741110","538048"
+   "*Staphylococcus_aureus*","1280","141106","33148"
 
 A bed file is constructed from the locus target file, using coordinates from the start and length columns of the csv file file available on the `ridom website <http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv>`_. 
 
@@ -48,9 +47,11 @@ cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted
 .. csv-table:: Available cgMLST schemes from enterobase
    :header: "Species", "Taxonomy ID", "Enterobase ID", "Reference genome assembly ID", "Scheme"
 
+   "*Escherichia_coli*","562","ESCwgMLST","cgMLSTv1"
    "*Salmonella_enterica*","28901","SALwgMLST","359488","cgMLSTv1"
 
-A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/>`_, based on the locus tag present in this genome is constructed. For instance, over the 3002 loci of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488.
+
+A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/>`_, based on the locus tag present in this genome is constructed. For instance, over the 3002 loci of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488. For *E. coli*, only 15 loci are missing for the reference assembly, out of 2498.
 
 Example
 -------
