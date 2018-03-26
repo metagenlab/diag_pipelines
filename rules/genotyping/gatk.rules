@@ -13,38 +13,19 @@ rule create_dictionary_for_reference:
         gatk-launch CreateSequenceDictionary --reference {input[ref]} &> {log}
         """
         
-
-rule call_snps_with_haplotype_caller_gatk:
-    conda:
-        pipeline_path + "envs/gatk.yaml"
-    input:
-        "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
-        "references/{ref}/genome_fasta.fasta",
-        "references/{ref}/genome_fasta.dict",
-        "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
-    output:
-        "samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.vcf",
-        temp("samples/{sample}/mapping/{mapping_method}/{ref}/gatk-haplotypecaller.bam"),
-    log:
-        logging_folder+"samples/{sample}/logs/snps/gatk/haplotypecaller.txt",
-    shell:
-        """
-        gatk-launch HaplotypeCaller -ploidy 1 -output {output[0]} --input {input[0]} --reference {input[1]} --bam-output {output[1]} &> {log[0]}
-        """
-        
 rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     conda:
         pipeline_path + "envs/gatk.yaml"
     input:
-        bam="samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
-        bam_bai="samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
-        ref="references/{ref}/genome_fasta.fasta",
-        ref_dict="references/{ref}/genome_fasta.dict",
+        bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
+        bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
+        ref = "references/{ref}/genome_fasta.fasta",
+        ref_dict = "references/{ref}/genome_fasta.dict",
     output:
-        gvcf=temp("samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf"),
-        gvcf_index=temp("samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf.idx"),
+        gvcf = temp("samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf"),
+        gvcf_index = temp("samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf.idx"),
     log:
-        logging_folder+"samples/{sample}/logs/snps/gatk/haplotypecaller_gvcf.txt",
+        logging_folder + "samples/{sample}/logs/snps/gatk/haplotypecaller_gvcf.txt",
     shell:
         """
         gatk-launch HaplotypeCaller --sample-ploidy 1 --output {output[gvcf]} --input {input[bam]} --reference {input[ref]} -ERC BP_RESOLUTION &> {log[0]}
@@ -54,13 +35,13 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
     conda:
         pipeline_path + "envs/gatk.yaml"
     input:
-        ref="references/{ref}/genome_fasta.fasta",
-        gvcfs=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
-        gvcfs_tbi=expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
+        ref = "references/{ref}/genome_fasta.fasta",
+        gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
+        gvcfs_tbi = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
     output:
-        header="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
+        header = "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
     log:
-        logging_folder+"gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
+        logging_folder + "gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
         if [ -d $(dirname {output[0]}) ]; then
@@ -82,7 +63,7 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
     output:
         combined="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/combined.vcf"
     log:
-        logging_folder+"gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
+        logging_folder + "gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
         var=$(echo {input[gvcfs]} | sed "s/ / --variant /g")
@@ -94,11 +75,12 @@ rule genotype_with_GenotypeGVCFs_GATK:
         pipeline_path + "envs/gatk.yaml"
     input:
         ref="references/{ref}/genome_fasta.fasta",
-        combined="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/combined.vcf"
+        combined="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/combined.vcf",
+        quality = "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
     output:
         raw="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf",
     log:
-        logging_folder+"gatk_gvcfs/full_genome/{ref}/{mapping_method}/genotype_gvcf.txt",
+        logging_folder + "gatk_gvcfs/full_genome/{ref}/{mapping_method}/genotype_gvcf.txt",
     shell:
         """
         gatk-launch GenotypeGVCFs --use-new-qual-calculator --sample-ploidy 1 --reference {input[ref]} --annotations-to-exclude InbreedingCoeff --variant {input[combined]} --output {output[raw]} &> {log}
