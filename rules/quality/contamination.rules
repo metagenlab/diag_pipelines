@@ -1,4 +1,4 @@
-rule calculate_distance_paired_reads_with_refseq_genomes_with_mash:
+rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
     conda:
         pipeline_path + "envs/mash.yaml"
     input:
@@ -9,10 +9,10 @@ rule calculate_distance_paired_reads_with_refseq_genomes_with_mash:
         distances = "samples/{sample}/contamination/mash/distances.tsv"
     shell:
         """
-        cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_sketch]} - > {output[distances]}
+        cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_sketch]} - > {output[distances]} 2> /dev/null
         """
 
-rule calculate_distance_single_reads_with_refseq_genomes_with_mash:
+rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
     conda:
         pipeline_path + "envs/mash.yaml"
     input:
@@ -22,7 +22,7 @@ rule calculate_distance_single_reads_with_refseq_genomes_with_mash:
         distances = "samples/{sample}/contamination/mash/distances.tsv"
     shell:
         """
-        cat {input[single]} | mash screen -w  {input[mash_sketch]} - > {output[distances]}
+        cat {input[single]} | mash screen -w {input[mash_sketch]} - > {output[distances]} 2> /dev/null
         """
 
 rule get_taxonomy_from_mash_results:
@@ -42,8 +42,8 @@ rule format_distances_from_mash_results:
     input:
         distances = "samples/{sample}/contamination/mash/distances.tsv"
     output:
-        formated_distances = "samples/{sample}/contamination/mash/distances_taxonomy.tsv",
-        formated_distances_no_viruses = "samples/{sample}/contamination/mash/distances_taxonomy_no_virus.tsv"        
+        formated_distances = "samples/{sample}/contamination/mash/distances_formated.tsv",
+        formated_distances_no_viruses = "samples/{sample}/contamination/mash/distances_formatedtaxonomy_no_virus.tsv"        
     shell:
         """
         cat {input[taxonomy]}  | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | cut -f1,2,4,7 | sort -gr  > {output[formated_taxonomy]}

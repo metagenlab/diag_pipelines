@@ -6,7 +6,7 @@ rule create_multiqc_report_for_assembly:
     input:
         assembly=expand("samples/{sample}/multiqc/assembly/log.txt", sample = list(read_naming.keys())),
         mapping=expand("samples/{sample}/multiqc/mapping_to_{sample}_assembled_genome/log.txt", sample = list(read_naming.keys())),
-        mash_results = expand("samples/{sample}/contamination/mash/distances_taxonomy.xlsx", sample = list(read_naming.keys())),
+        mash_results = expand("samples/{sample}/contamination/mash/distances_formated.xlsx", sample = list(read_naming.keys())),
     output:
         "quality/multiqc/assembly/multiqc_report.html"
     log:
@@ -24,7 +24,7 @@ rule create_multiqc_report_for_mapping:
         pipeline_path + "envs/multiqc.yaml"
     input:
         mapping = expand("samples/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = list(read_naming.keys())),
-        mash_results = expand("samples/{sample}/contamination/mash/distances_taxonomy.xlsx", sample = list(read_naming.keys())),
+        mash_results = expand("samples/{sample}/contamination/mash/distances_formated.xlsx", sample = list(read_naming.keys())),
     output:
         "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
     log:
