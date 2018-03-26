@@ -10,7 +10,7 @@ rule create_multiqc_report_for_assembly:
     output:
         "quality/multiqc/assembly/multiqc_report.html"
     log:
-        logging_folder + "logs/multiqc/self_genome.txt"
+        logging_folder + "logs/quality/multiqc/assembly.txt"
     shell:
         """
         multiqc -c {params.configfile} -f -o $(dirname {output[0]}) $(dirname {input[assembly]} {input[mapping]} | tr "\n" " ") &> {log[0]}
