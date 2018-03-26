@@ -34,12 +34,3 @@ rule download_all_complete_genomes_fasta:
         echo 'ok' > {output[0]}
         """
         #sed "s/-/_/g" because parsnp does not like "-" in sequence headers
-
-        
-rule download_refseq_mash_sketches:
-    output:
-        sketch = "references/mash_sketch.msh"
-    shell:
-        """
-        wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > {output[sketch]}
-        """
