@@ -1,51 +1,51 @@
 rule calculate_distance_paired_reads_with_refseq_genomes_with_mash:
     conda:
-        "../../envs/mash.yaml"
+        pipeline_path + "envs/mash.yaml"
     input:
-        "references/mash_sketch.msh",
-        "samples/{sample}/reads/raw/{sample}_R1.fastq",
-        "samples/{sample}/reads/raw/{sample}_R2.fastq",
+        mash_sketch = "references/mash_sketch.msh",
+        R1 = "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
+        R2 = "samples/{sample}/reads/raw/{sample}_R2.fastq.gz",
     output:
-        "samples/{sample}/contamination/mash/distances.tsv"
+        distances = "samples/{sample}/contamination/mash/distances.tsv"
     shell:
         """
-        cat {input[1]} {input[2]} | mash screen -w  {input[0]} - > {output[0]}
+        cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_sketch]} - > {output[distances]}
         """
 
 rule calculate_distance_single_reads_with_refseq_genomes_with_mash:
     conda:
-        "../../envs/mash.yaml"
+        pipeline_path + "envs/mash.yaml"
     input:
-        "references/mash_sketch.msh",
-        "samples/{sample}/reads/raw/{sample}_single.fastq",
+        mash_sketch = "references/mash_sketch.msh",
+        single = "samples/{sample}/reads/raw/{sample}_single.fastq.gz",
     output:
-        "samples/{sample}/contamination/mash/distances.tsv"
+        distances = "samples/{sample}/contamination/mash/distances.tsv"
     shell:
         """
-        cat {input[1]} | mash screen -w  {input[0]} - > {output[0]}
+        cat {input[single]} | mash screen -w  {input[mash_sketch]} - > {output[distances]}
         """
 
 rule get_taxonomy_from_mash_results:
     conda:
-        "../../envs/entrez-direct.yaml"
+        pipeline_path + "envs/entrez-direct.yaml"
     input:
-        "samples/{sample}/contamination/mash/distances.tsv"
+        distances = "samples/{sample}/contamination/mash/distances.tsv"
     output:
-        "samples/{sample}/contamination/mash/taxonomy.txt"
+        taxonomy = "samples/{sample}/contamination/mash/taxonomy.txt"
     shell:
         """
-        sort -gr {input[0]}  | cut -f5  | sed "s/\(GCF_[0-9]\+\.[0-9]\+\)_.*/\\1/" | xargs -I % sh -c "esearch -db assembly -query % | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -element SpeciesName" > {output[0]} 
+        sort -gr {input[0]}  | cut -f5  | sed "s/\(GCF_[0-9]\+\.[0-9]\+\)_.*/\\1/" | xargs -I % sh -c "esearch -db assembly -query % | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -element SpeciesName" > {output[taxonomy]} 
         """
 
 
 rule format_taxonomy_from_mash_results:
     input:
-        "samples/{sample}/contamination/mash/distances.tsv"
+        taxonomy = "samples/{sample}/contamination/mash/distances.tsv"
     output:
-        "samples/{sample}/contamination/mash/distances_taxonomy.tsv",
-        "samples/{sample}/contamination/mash/distances_taxonomy_no_virus.tsv"        
+        formated_taxonomy = "samples/{sample}/contamination/mash/distances_taxonomy.tsv",
+        formated_taxonomy_no_viruses = "samples/{sample}/contamination/mash/distances_taxonomy_no_virus.tsv"        
     shell:
         """
-        cat {input[0]}  | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | cut -f1,2,4,7 | sort -gr  > {output[0]}
-        cat {input[0]} | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | grep -v "ViralProj" | grep -v "phage" | grep -v "virus" | cut -f1,2,4,7 | sort -gr  > {output[1]}
+        cat {input[taxonomy]}  | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | cut -f1,2,4,7 | sort -gr  > {output[formated_taxonomy]}
+        cat {input[taxonomy]} | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | grep -v "ViralProj" | grep -v "phage" | grep -v "virus" | cut -f1,2,4,7 | sort -gr  > {output[formated_taxonomy_no_viruses]}
         """
