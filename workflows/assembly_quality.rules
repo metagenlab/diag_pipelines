@@ -2,51 +2,48 @@ include:
     "making_sample_dataset.rules"
 
 
-multiqc_configfile = pipeline_path + "../data/configuration_files/multiqc/config.yaml"
-
-
-prefix = "../rules/"
+multiqc_configfile = pipeline_path + "data/configuration_files/multiqc/config.yaml"
 
 
 include:
-    prefix + "read_manipulation/get_reads.rules"
+    pipeline_path + "rules/read_manipulation/get_reads.rules"
 
 include:
-    prefix + "read_manipulation/get_sras.rules"
+    pipeline_path + "rules/read_manipulation/get_sras.rules"
     
 include:
-    prefix + "quality/trimmomatic.rules"
+    pipeline_path + "rules/quality/trimmomatic.rules"
 
 include:
-    prefix + "quality/assembly_filtering.rules"
+    pipeline_path + "rules/quality/assembly_filtering.rules"
 
 include:
-    prefix + "quality/contamination.rules"
+    pipeline_path + "rules/quality/contamination.rules"
 
 include:
-    prefix + "mapping/bwa.rules"
+    pipeline_path + "rules/mapping/bwa.rules"
 
 include:
-    prefix + "mapping/indexing_files.rules"
+    pipeline_path + "rules/mapping/indexing_files.rules"
 
 include:
-    prefix + "assembly/spades.rules"
+    pipeline_path + "rules/assembly/spades.rules"
 
 include:
-    prefix + "annotation/prokka.rules"
+    pipeline_path + "rules/annotation/prokka.rules"
 
 include:
-    prefix + "report_generation/prepare_files_for_multiqc.rules"
+    pipeline_path + "rules/report_generation/prepare_files_for_multiqc.rules"
     
 include:
-    prefix + "report_generation/multiqc.rules"
+    pipeline_path + "rules/report_generation/multiqc.rules"
 
 include:
-    prefix + "report_generation/fastqc.rules"
+    pipeline_path + "rules/report_generation/fastqc.rules"
 
 include:
-    prefix + "report_generation/quast.rules"
+    pipeline_path + "rules/report_generation/quast.rules"
 
 include:
-    prefix + "report_generation/qualimap.rules"
+    pipeline_path + "rules/report_generation/qualimap.rules"
     
