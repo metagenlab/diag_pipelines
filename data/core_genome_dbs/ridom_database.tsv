@@ -1,8 +1,10 @@
 Species	Taxid	IdNumber	ReferenceGenome
-Staphylococcus_aureus	1280	141106	33148
-Mycobacterium_tuberculosis	1773	741110	538048
-Listeria_monocytogenes	1639	690488	264498
-Klebsiella_pneumoniae	573	2187931	31388
-Enterococcus_faecium	1352	991893	526908
 Acinetobacter_baumannii	470	3956907	39528
+Enterococcus_faecium	1352	991893	526908
+Klebsiella_pneumoniae	573	2187931	31388
 Legionella_pneumophila	446	1025099	30068
+Listeria_monocytogenes	1639	690488	264498
+Mycobacterium_tuberculosis	1773	741110	538048
+Staphylococcus_aureus	1280	141106	33148
+
+
