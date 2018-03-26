@@ -25,7 +25,7 @@ rule genotype_with_freebayes_on_all_samples:
         bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}_deduplicated_filtered.bam.bai", sample=read_naming.keys()),
         ref="references/{ref}/genome_fasta.fasta",
         ref_fai="references/{ref}/genome_fasta.fasta.fai",
-        quality = "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
+        quality = "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
     output:
         vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf"
     log:

@@ -1,4 +1,3 @@
-
 rule extract_cgMLST:
     conda:
         pipeline_path + "envs/bcftools.yaml"
