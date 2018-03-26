@@ -1,4 +1,3 @@
-
 .. _core_genome:
 
 =========================
@@ -32,9 +31,9 @@ Example
 
 .. code-block:: bash
 
-   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules --use-conda --conda-prefix $conda_folder --config species="Staphylococcus_aureus" -f all
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules --use-conda --conda-prefix $conda_folder core_genomes/cgMLST/Staphylococcus_aureus.bed
 
-will create a BED file in ``core_genomes/cgMLST/Staphylococcus_aureus.bed`` which defines the core genomic regions in the genome of the assembly ID 33148 (*Staphylococcus aureus* COL). 
+will create a BED file in ``core_genomes/cgMLST/Staphylococcus_aureus.bed`` which defines the core genomic regions in the genome of the assembly ID ``33148`` (*Staphylococcus aureus* COL). 
 
 ----------
 Enterobase
@@ -47,7 +46,7 @@ cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted
 .. csv-table:: Available cgMLST schemes from enterobase
    :header: "Species", "Taxonomy ID", "Enterobase ID", "Reference genome assembly ID", "Scheme"
 
-   "*Escherichia_coli*","562","ESCwgMLST","cgMLSTv1"
+   "*Escherichia_coli*","562","ESCwgMLST","79781","cgMLSTv1"
    "*Salmonella_enterica*","28901","SALwgMLST","359488","cgMLSTv1"
 
 
@@ -58,9 +57,9 @@ Example
 
 .. code-block:: bash
 
-   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules --use-conda --conda-prefix $conda_folder --config species="Salmonella enterica" -f all
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules --use-conda --conda-prefix $conda_folder core_genomes/cgMLST/Salmonella_enterica.bed
 
-will create a BED file in ``core_genomes/cgMLST/Salmonella_enterica.bed`` defining the core genomic regions in the genome of the assembly ID 359488 (*Salmonella enterica* subsp. enterica serovar Typhimurium str. D23580).
+will create a BED file in ``core_genomes/cgMLST/Salmonella_enterica.bed`` defining the core genomic regions in the genome of the assembly ID ``359488`` (*Salmonella enterica* subsp. enterica serovar Typhimurium str. D23580).
    
 
 ------   
@@ -74,6 +73,6 @@ Example
 
 .. code-block:: bash
 		
-   snakemake --config species="Morganella morganii" taxid="582" --snakefile $pipeline_folder/workflows/core_genomes/make_parsnp.rules --use-conda --conda-prefix $conda_folder -f all
+   snakemake --snakefile $pipeline_folder/workflows/core_genomes/make_parsnp.rules --use-conda --conda-prefix $conda_folder core_genome/parsnp/Morganella_morganii/parsnp.xmfa
 
-will calculate the core genome with parSNP with every complete genome of *Morganella morganii* available in `RefSeq <https://www.ncbi.nlm.nih.gov/refseq/>`_. The ``taxid`` value must be the `taxonomy ID <https://www.ncbi.nlm.nih.gov/taxonomy/>`_ for the species defined. The resulting file will be located in ``core_genomes/parsnp/Morganella_morganii/parsnp.xmfa``.
+will calculate the core genome with parSNP with every complete genome of *Morganella morganii* available in `RefSeq <https://www.ncbi.nlm.nih.gov/refseq/>`_.
