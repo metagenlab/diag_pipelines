@@ -8,13 +8,12 @@ include:
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
 
-species = config["species"].replace(" ", "_")
-    
+   
 ridom = pandas.read_csv(pipeline_path + "data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
  
 rule get_scheme_from_ridom:
     params:
-        id_ridom=str(ridom.loc[config["species"], "IdNumber"]),
+        id_ridom= lambda wildcards: str(ridom.loc[wildcards.spec, "IdNumber"]),
     output:
         tsv="core_genomes/cgMLST/{spec}/schemas.tsv"
     shell:

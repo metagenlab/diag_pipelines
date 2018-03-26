@@ -8,18 +8,17 @@ include:
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
     
-species = config["species"].replace(" ", "_")
 enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 rule get_schema_from_enterobase:
     params:
-        enterobase_scheme=enterobase.loc[config["species"], "Scheme"],
-        enterobase_species=enterobase.loc[config["species"], "SpeciesId"],
+        enterobase_scheme = lambda wildcards: enterobase.loc[wildcards.spec, "Scheme"],
+        enterobase_species_id = lambda wildcards: enterobase.loc[wildcards.spec, "SpeciesId"],
     output:
         gene_list = "core_genomes/cgMLST/{spec}/genes.txt",
     shell:
         """
-        wget -qO- http://enterobase.warwick.ac.uk/download_data?allele=profiles\&scheme={params.enterobase_scheme}\&species={params.enterobase_species} | gzip -d | head -n 1 | tr '[:space:]' '\\n' | tail -n +2 > {output[gene_list]} || :
+        wget -qO- http://enterobase.warwick.ac.uk/download_data?allele=profiles\&scheme={params.enterobase_scheme}\&species={params.enterobase_species_id} | gzip -d | head -n 1 | tr '[:space:]' '\\n' | tail -n +2 > {output[gene_list]} || :
         """
 
 rule fetch_gene_entries_from_locus_tag:
