@@ -10,7 +10,12 @@ def extract_translation(filename, locus, out, missing):
                         if locus & set(f.qualifiers["old_locus_tag"]):
                             outfile.write(version+"\t"+str(f.location.start)+"\t"+str(f.location.end)+"\n")
                             locus.remove(list(locus & set(f.qualifiers["old_locus_tag"]))[0])
+                    elif locus & set(f.qualifiers["locus_tag"]):
+                        outfile.write(version+"\t"+str(f.location.start)+"\t"+str(f.location.end)+"\n")
+                        locus.remove(list(locus & set(f.qualifiers["locus_tag"]))[0])
+                        
     open(missing, "w").write("\n".join(list(locus)))
+
 
 gbk = snakemake.input["gbk"]
 locus_tags = [x.strip() for x in list(open(snakemake.input["locus_list"]))]
