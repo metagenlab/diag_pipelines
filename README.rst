@@ -9,7 +9,7 @@ Docker
 
 .. code-block:: bash
 		
-   docker pull metagenlab/diag_pipelines:ring_trial_v0.1.3
+   docker pull metagenlab/diag_pipelines:latest
 
 
 General use
@@ -18,7 +18,7 @@ Once you have pulled the docker image on your computer:
 
 .. code-block:: bash
 		
-  docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind metagenlab/diag_pipelines:ring_trial_v0.1.3 sh -c 'snakemake --snakefile $pipeline_folder/workflows/ring_trial/pipeline.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml'
+  docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind metagenlab/diag_pipelines:latest sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
 Update the config file for your needs.
 
@@ -29,25 +29,25 @@ The pipeline works by asking the generation of the files of interest for a parti
 
 .. code-block:: bash
 		
-  docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:ring_trial_v0.1.3 sh -c 'snakemake --snakefile $pipeline_folder/workflows/ring_trial/pipeline.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml config.yaml quality/multiqc/self_genome/multiqc_report.html'
+  docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:latest sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml quality/multiqc/self_genome/multiqc_report.html'
 
 This will assemble and annotate every samples, and generate a multiqc report for all samples. 
 
 .. code-block:: bash
 		
-   docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:ring_trial_v0.1.3 sh -c 'snakemake --snakefile $pipeline_folder/workflows/ring_trial/pipeline.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml virulence_summary.xlsx'
+   docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:latest sh -c 'snakemake --snakefile $pipeline_folder/workflows/virulence.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml virulence_summary.xlsx'
 
 This will generate a summary excel file for the virulence factors of the samples, based on the virulence factors annotated in the file defined on the config file.
 
 .. code-block:: bash
 		
-   docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:ring_trial_v0.1.3 sh -c 'snakemake --snakefile $pipeline_folder/workflows/ring_trial/pipeline.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml typing/freebayes_joint_genotyping/core_ridom/33148/bwa/distances_snp.xlsx'
+   docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:latest sh -c 'snakemake --snakefile $pipeline_folder/workflows/typing.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp.xlsx'
 
-This will generate a snp-distance matrix of all samples, only on the core genome calculated with parsnp and with all complete genomes of the species defined in the `taxid` variable of the config file, mapped on the assembly (from the `NCBI Assembly database <https:/www.ncbi.nlm.nih.gov/assembly/>`_) whose `id` is 33148 (*Staphylococcus aureus* COL substrain, reference genome for the ridom cgMLST scheme) with bwa. 
+This will generate a snp-distance matrix of all samples, only on the core genome defined by ridom of the species defined in the `species` variable of the config file, mapped on the reference genome defined by ridom (which is *Staphylococcus aureus* COL substrain, `id` 33148 from the `NCBI Assembly database <https:/www.ncbi.nlm.nih.gov/assembly/>`_) with bwa. 
 
 .. code-block:: bash
 		
-   docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:ring_trial_v0.1.3 sh -c 'snakemake --snakefile $pipeline_folder/workflows/ring_trial/pipeline.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml typing/mlst/summary.xlsx'
+   docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind metagenlab/diag_pipelines:ring_trial_v0.1.3 sh -c 'snakemake --snakefile $pipeline_folder/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml typing/mlst/summary.xlsx'
 
 This will generate an Excel summary file of the MLST of all samples, based on the software `mlst <https:/github.com/tseemann/mlst>`_
 
