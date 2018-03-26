@@ -1,2 +1,3 @@
 Species	SpeciesId	ReferenceGenome	Scheme	Taxid
 Salmonella_enterica	SALwgMLST	359488	cgMLSTv1	28901
+Escherichia_coli	ESCwgMLST	79781	cgMLSTv1	562
