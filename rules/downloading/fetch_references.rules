@@ -1,9 +1,8 @@
 rule get_refseq_urls_complete_genomes:
     params:
-        taxid= config["taxid"],
         excluded_id = excl_id,
     conda:
-        "../../envs/entrez-direct.yaml"
+        pipeline_path + "envs/entrez-direct.yaml"
     output:
         "references/{spec}/url_complete_genomes.txt"
     shell:
@@ -14,12 +13,13 @@ rule get_refseq_urls_complete_genomes:
         else
             var=$(echo {params.excluded_id} | sed "s/ / -unless Taxid -equals /g" | sed "s/^/-unless Taxid -equals /")
         fi
-        esearch -db assembly -query "{wildcards.spec}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals {params.taxid} -if FtpPath_RefSeq ${{var}} -element Id FtpPath_RefSeq > {output[0]}
+        taxid=$(esearch -db taxonomy -query "{wildcards.spec}" | efetch -db taxonomy -format native -mode xml | xtract -pattern Taxon -element TaxId)
+        esearch -db assembly -query "{wildcards.spec}" | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if SpeciesTaxid -equals ${{taxid}} -if FtpPath_RefSeq ${{var}} -element Id FtpPath_RefSeq > {output[0]}
         """         
         
 rule download_all_complete_genomes_fasta:
     conda:
-        "../../envs/entrez-direct.yaml"
+        pipeline_path + "envs/entrez-direct.yaml"
     input:
         "references/{spec}/url_complete_genomes.txt"
     output:

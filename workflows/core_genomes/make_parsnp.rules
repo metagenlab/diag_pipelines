@@ -3,37 +3,19 @@ pipeline_path = workflow.basedir + "/../../"
 include:
     pipeline_path + "workflows/logging.rules"
 
-rule all:
-    input:
-        "core_genomes/"+config["species"].replace(" ", "_")+"/parsnp/parsnp.xmfa"
-
 include:
     pipeline_path + "rules/downloading/fetch_references.rules"
 
 rule calculate_core_genome_parsnp:
-    conda:
-        pipeline_path + "envs/inotify.yaml"
     input:
         "references/{spec}/all_complete_genomes_log.txt"
     output:
         "core_genomes/parsnp/{spec}/parsnp.xmfa"
     log:
-        logging_folder+"/core_genome/parsnp/log.txt"
+        logging_folder + "core_genome/parsnp/log.txt"
     shell:
         """
-        echo "begining" > {output[0]}
-        cmd="parsnp -r ! -c -d $(dirname {input[0]})/all_complete_genomes/ -o $(dirname {output[0]})" 
-        echo ${{cmd}}
-        ${{cmd}} &
-        pid=$!
-        echo ${{pid}}
-        while inotifywait -e close_write {output[0]}
-        do
-           echo "detected"
-           sleep 5
-           pstree -p ${{pid}} | grep -o "([0-9]\+)" | grep -o "[0-9]\+"
-           pstree -p ${{pid}} | grep -o "([0-9]\+)" | grep -o "[0-9]\+" | xargs -I % kill % || :
-        done
+        parsnp -r ! -c -d $(dirname {input[0]})/all_complete_genomes/ -o $(dirname {output[0]})
         """
 
         
