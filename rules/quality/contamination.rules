@@ -38,14 +38,26 @@ rule get_taxonomy_from_mash_results:
         """
 
 
-rule format_taxonomy_from_mash_results:
+rule format_distances_from_mash_results:
     input:
-        taxonomy = "samples/{sample}/contamination/mash/distances.tsv"
+        distances = "samples/{sample}/contamination/mash/distances.tsv"
     output:
-        formated_taxonomy = "samples/{sample}/contamination/mash/distances_taxonomy.tsv",
-        formated_taxonomy_no_viruses = "samples/{sample}/contamination/mash/distances_taxonomy_no_virus.tsv"        
+        formated_distances = "samples/{sample}/contamination/mash/distances_taxonomy.tsv",
+        formated_distances_no_viruses = "samples/{sample}/contamination/mash/distances_taxonomy_no_virus.tsv"        
     shell:
         """
         cat {input[taxonomy]}  | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | cut -f1,2,4,7 | sort -gr  > {output[formated_taxonomy]}
         cat {input[taxonomy]} | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | grep -v "ViralProj" | grep -v "phage" | grep -v "virus" | cut -f1,2,4,7 | sort -gr  > {output[formated_taxonomy_no_viruses]}
         """
+
+
+rule format_tsv_to_xlsx:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        tsv = "samples/{sample}/contamination/mash/{results}.tsv",
+    output:
+        xlsx = "samples/{sample}/contamination/mash/{results}.xlsx",
+    script:
+        "scripts/format_tsv_to_xlsx.py"
+        
