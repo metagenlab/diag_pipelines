@@ -19,5 +19,5 @@ Filtering over the frequency of observation at each position is processed separa
 
 Type filtering
 ==============
-Entries in the VCF are filtered according to their type. We preferentially keep only entries defined as single nucleotide polymorphisms, but ``indel`` or ``complex`` can also be extracted.
+Entries in the VCF are filtered according to their type. We preferentially keep only entries defined as single nucleotide polymorphisms, but ``indel`` or ``bnd`` can also be extracted from the genotyping of freebayes, or ``indel`` or ``mixed`` from the genotyping of GATK.
 

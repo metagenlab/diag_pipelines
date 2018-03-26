@@ -25,7 +25,7 @@ Update the config file for your needs.
 Generating files of interest
 ============================
 
-The pipeline works by asking the generation of the files of interest for a particular analysis. Consult the full documentation to know what files can be generated. Main examples are provided below: 
+The pipeline works by requesting the generation of the files of interest for a particular analysis. Consult the full documentation to know what files can be generated. Main examples are provided below: 
 
 .. code-block:: bash
 		
