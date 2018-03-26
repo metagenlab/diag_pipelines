@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3
+FROM continuumio/miniconda3:4.3.27
 
 RUN conda config --add channels defaults
 RUN conda config --add channels conda-forge
@@ -50,7 +50,7 @@ RUN echo '' > core_genomes/parsnp/Staphylococcus_aureus/parsnp.xmfa
 
 RUN wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > ${main}/data/references/mash_sketch.msh
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml  quality/multiqc/assembly/multiqc_report.html samples/S10/resistance/mykrobe.tsv samples/S10/resistance/rgi.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_34528/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome/S10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg 
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml  quality/multiqc/assembly/multiqc_report.html samples/S10/resistance/mykrobe.tsv samples/S10/resistance/rgi.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_34528/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome/S10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg
 
 RUN patch /opt/conda/envs/356da27d/lib/python3.6/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
