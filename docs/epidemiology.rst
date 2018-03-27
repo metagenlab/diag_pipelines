@@ -44,3 +44,6 @@ Deliverables
   
 * ``phylogeny/{snp_caller}/cgMLST/bwa/phylogeny_no_st.svg``: A phylogeny based on the alignments of the core SNPs, using RAxML. Available species and values for reference genomes are listed in the files in ``data/core_genome_dbs/``. If the species under consideration has a multiple locus sequence type available, ``phylogeny/{snp_caller}/cgMLST/bwa/phylogeny_with_st.svg`` can be generated with the ST of each sample.
   
+* If you don't want or can't use core genome schemes, ``typing/{snp_caller}/full_genome/33148/bwa/distance_snp_mst_no_st.svg`` will show the minimum spanning tree over the full genome of the assembly ID ``33148`` (*S. aureus COL* genome from NCBI).
+
+* If you want to genotyping with mapping over one of your own sequenced sample, ``typing/{snp_caller}/full_genome/S10_assembled_genome/bwa/distance_snp_mst_no_st.svg`` will show the minimum spanning tree when mapping onto the sample called ``S10``
