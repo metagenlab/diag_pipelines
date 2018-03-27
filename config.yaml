@@ -1,26 +1,19 @@
 #File listing currated genes for virulence factors, with uniprot accession number:
 virulence_factors: /home/pipeline_user/snakemake_pipeline/data/staph/db/virulence_factors.tsv
+virulence_percentage_identity_cutoff: 80
+virulence_coverage_cutoff: 70
 
 #Ontology files from the card database. Should be changed to automatically fetch the files from the db
-
-spec_for_mykrobe: tb
-resistance_prediction_softwares: 
- - mykrobe
- - rgi
 
 minimum_coverage_for_calling: 10
 minimum_alternate_fraction_for_calling: 0.75
 
-species: Staphylococcus aureus
-taxid: 1280
+species: Staphylococcus_aureus
 
 snp_threshold: 0
 cov_cutoff: 5
 
 phylogeny_image_size: 800
-
-virulence_percentage_identity_cutoff: 80
-virulence_coverage_cutoff: 70
 
 # Those file are specific to each analysis:
 
