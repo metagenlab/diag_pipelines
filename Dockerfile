@@ -32,6 +32,10 @@ RUN mkdir -p ${main}/data/links
 
 WORKDIR ${main}/data/
 
+RUN mkdir -p core_genomes/cgMLST/Acinetobacter_baumannii/
+
+RUN wget -qO- http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv > core_genomes/cgMLST/Acinetobacter_baumannii/schemas.tsv
+
 RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Staphylococcus_aureus.bed core_genomes/cgMLST/Mycobacterium_tuberculosis.bed core_genomes/cgMLST/Listeria_monocytogenes.bed core_genomes/cgMLST/Klebsiella_pneumoniae.bed core_genomes/cgMLST/Enterococcus_faecium.bed core_genomes/cgMLST/Acinetobacter_baumannii.bed core_genomes/cgMLST/Legionella_pneumophila.bed 
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Salmonella_enterica.bed core_genomes/cgMLST/Escherichia_coli.bed
