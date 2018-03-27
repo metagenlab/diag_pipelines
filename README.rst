@@ -39,7 +39,7 @@ The pipeline works by requesting the generation of the files of interest for a p
    docker run -t --rm \
    --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
    metagenlab/diag_pipelines:latest \
-   sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules quality/multiqc/self_genome/multiqc_report.html \
+   sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules quality/multiqc/assembly/multiqc_report.html \
    --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
 This will assemble and annotate every samples, and generate a multiqc report for all samples. 
