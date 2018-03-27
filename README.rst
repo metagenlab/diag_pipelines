@@ -21,7 +21,8 @@ Once you have pulled the docker image on your computer:
    docker run -t --rm \
    --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
    metagenlab/diag_pipelines:latest \
-   sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml'
+   sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules \
+   --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
 Update the config file for your needs.
 
@@ -35,7 +36,8 @@ The pipeline works by requesting the generation of the files of interest for a p
    docker run -t --rm \
    --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind \
    metagenlab/diag_pipelines:latest \
-   sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules quality/multiqc/self_genome/multiqc_report.html  --use-conda --conda-prefix $conda_folder --configfile config.yaml'
+   sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules quality/multiqc/self_genome/multiqc_report.html \
+   --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
 This will assemble and annotate every samples, and generate a multiqc report for all samples. 
 
@@ -44,7 +46,8 @@ This will assemble and annotate every samples, and generate a multiqc report for
    docker run -t --rm \
    --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind \
    metagenlab/diag_pipelines:latest \
-   sh -c 'snakemake --snakefile $pipeline_folder/workflows/virulence.rules virulence_summary.xlsx --use-conda --conda-prefix $conda_folder --configfile config.yaml'
+   sh -c 'snakemake --snakefile $pipeline_folder/workflows/virulence.rules virulence_summary.xlsx \
+   --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
 This will generate a summary excel file for the virulence factors of the samples, based on the virulence factors annotated in the file defined on the config file.
 
@@ -53,7 +56,8 @@ This will generate a summary excel file for the virulence factors of the samples
    docker run -t --rm \
    --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind \
    metagenlab/diag_pipelines:latest \
-   sh -c 'snakemake --snakefile $pipeline_folder/workflows/typing.rules typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp.xlsx  --use-conda --conda-prefix $conda_folder --configfile config.yaml'
+   sh -c 'snakemake --snakefile $pipeline_folder/workflows/typing.rules typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp.xlsx \
+   --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
 This will generate a snp-distance matrix of all samples, only on the core genome defined by ridom of the species defined in the `species` variable of the config file, mapped on the reference genome used by ridom (which is *Staphylococcus aureus* COL substrain, `id` 33148 from the `NCBI Assembly database <https:/www.ncbi.nlm.nih.gov/assembly/>`_) with bwa. 
 
