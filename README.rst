@@ -18,7 +18,10 @@ Once you have pulled the docker image on your computer:
 
 .. code-block:: bash
 		
-  docker run -t --rm --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind metagenlab/diag_pipelines:latest sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml'
+   docker run -t --rm \
+   --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
+   metagenlab/diag_pipelines:latest \
+   sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
 Update the config file for your needs.
 
