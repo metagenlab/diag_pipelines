@@ -3,8 +3,6 @@ virulence_factors: /home/pipeline_user/snakemake_pipeline/data/staph/db/virulenc
 virulence_percentage_identity_cutoff: 80
 virulence_coverage_cutoff: 70
 
-#Ontology files from the card database. Should be changed to automatically fetch the files from the db
-
 minimum_coverage_for_calling: 10
 minimum_alternate_fraction_for_calling: 0.75
 
@@ -13,6 +11,7 @@ species: Staphylococcus_aureus
 snp_threshold: 0
 cov_cutoff: 5
 
+minimum_spanning_tree_size: 10
 phylogeny_image_size: 800
 
 # Those file are specific to each analysis:

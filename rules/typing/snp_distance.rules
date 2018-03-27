@@ -14,7 +14,8 @@ rule distance_columns_to_matrix:
         
 rule compute_minimum_spanning_tree_with_st:
     params:
-        threshold = config["snp_threshold"]
+        threshold = config["snp_threshold"],
+        mst_size = config["minimum_spanning_tree_size"],
     conda:
         pipeline_path + "envs/igraph.yaml"
     input:
@@ -30,7 +31,8 @@ rule compute_minimum_spanning_tree_with_st:
         
 rule compute_minimum_spanning_tree_no_st:
     params:
-        threshold=config["snp_threshold"]
+        threshold=config["snp_threshold"],
+        mst_size = config["minimum_spanning_tree_size"],
     conda:
         pipeline_path + "envs/igraph.yaml"
     input:
