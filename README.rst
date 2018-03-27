@@ -5,7 +5,9 @@ Workflows for epidemiology, anti-microbial resistance genotyping and virulence f
 
 Dependencies
 ============
-Docker  
+Docker
+
+Install the CE version following these `instructions <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_
 
 .. code-block:: bash
 		
