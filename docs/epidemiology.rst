@@ -4,7 +4,7 @@ Epidemiology
 ============
 
 Depends on the :ref:`assembly_quality` workflow (for determining the Sequence Types).
-The genotyping results depend on the quality assessment performed on the mapping to the reference genomes, thus each time genotyping is performed, a Multiqc report is available in ``quality/multiqc/mapping_to_{ref}/multiqc_report.html`` and the contamination results in ``samples/{sample}/contamination/mash/{results}.xlsx`` for each sample.
+The genotyping results depend on the quality assessment performed on the mapping to the reference genomes, thus each time genotyping is performed, a Multiqc report is available in ``quality/multiqc/mapping_to_{ref}/multiqc_report.html`` and the contamination results in ``samples/{sample}/contamination/mash/distances_formated.xlsx`` for each sample.
 
 ----------
 Parameters
@@ -44,5 +44,3 @@ Deliverables
   
 * ``phylogeny/{snp_caller}/cgMLST/bwa/phylogeny_no_st.svg``: A phylogeny based on the alignments of the core SNPs, using RAxML. Available species and values for reference genomes are listed in the files in ``data/core_genome_dbs/``. If the species under consideration has a multiple locus sequence type available, ``phylogeny/{snp_caller}/cgMLST/bwa/phylogeny_with_st.svg`` can be generated with the ST of each sample.
   
-* ``quality/multiqc/mapping_to_{reference_genome}/multiqc_report.html``: multiqc report of **qualimap**, **fastqc** and **trimmomatic** of every samples when mapping against the reference. Check for quality control.
-

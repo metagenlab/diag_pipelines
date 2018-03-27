@@ -10,8 +10,9 @@ Depends on the :ref:`epidemiology` workflow (for genotyping samples)
 Parameters
 ----------
 
-* ``resistance_prediction_softwares``: list of software for genetic resistance assessment. Possible values: ``mykrobe`` and ``rgi``.
-  
+* ``species``: Species name to determine which software are available to run for your sample
+
+
 -------------------
 Available softwares
 -------------------

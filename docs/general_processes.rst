@@ -14,7 +14,11 @@ As a general rules, any ``variable`` referenced in this documentation must be ei
 * Defined in the yaml config file that is passed to snakemake by ``--configfile``
 * Defined directly in the snakemake command by ``--config variable=$value``
 
+General variables
+-----------------
 
+* Pass ``--cores number_of_cores`` to the snakemake command to define the number of cores you want to use for your analysis
+  
 -----------------
 Logging functions
 -----------------
