@@ -4,6 +4,7 @@ Epidemiology
 ============
 
 Depends on the :ref:`assembly_quality` workflow (for determining the Sequence Types).
+The genotyping results depend on the quality assessment performed on the mapping to the reference genomes, thus each time genotyping is performed, a Multiqc report is available in ``quality/multiqc/mapping_to_{ref}/multiqc_report.html`` and the contamination results in ``samples/{sample}/contamination/mash/{results}.xlsx`` for each sample.
 
 ----------
 Parameters
