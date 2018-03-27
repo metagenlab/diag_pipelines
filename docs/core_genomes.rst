@@ -39,6 +39,7 @@ Example
 will create a BED file in ``core_genomes/cgMLST/Staphylococcus_aureus.bed`` which defines the core genomic regions in the genome of the assembly ID ``33148`` (*Staphylococcus aureus* COL). 
 
 .. _enterobase:
+
 ----------
 Enterobase
 ----------
