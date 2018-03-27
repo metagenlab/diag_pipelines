@@ -62,7 +62,8 @@ This will generate a snp-distance matrix of all samples, only on the core genome
    docker run -t --rm \
    --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind \
    metagenlab/diag_pipelines:latest \
-   sh -c 'snakemake --snakefile $pipeline_folder/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile config.yaml typing/mlst/summary.xlsx'
+   sh -c 'snakemake --snakefile $pipeline_folder/workflows/resistance.rules typing/mlst/summary.xlsx \
+   --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
 This will generate an Excel summary file of the MLST of all samples, based on the software `mlst <https:/github.com/tseemann/mlst>`_
 
