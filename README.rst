@@ -7,10 +7,10 @@ Dependencies
 ============
 Docker
 
-Install the CE version following these `instructions <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_
+Install the CE version following these `instructions <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_ for ubuntu. Also make sure you have created the docker group and that you can run docker without sudo following these `instruction <https://docs.docker.com/install/linux/linux-postinstall/>`_
 
 .. code-block:: bash
-		
+   docker run hello-world
    docker pull metagenlab/diag_pipelines:latest
 
 
