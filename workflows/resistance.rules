@@ -12,6 +12,12 @@ if "mykrobe_panel" not in config.keys():
     mykrobe_panel = "bradley-2015"
 else:
     mykrobe_panel = config["mykrobe_panel"]
+
+
+if "mykrobe_confidence" not in config.keys():
+    mykrobe_panel = "10"
+else:
+    mykrobe_panel = config["mykrobe_confidence"]
     
 mykrobe_species = {}
 mykrobe_species["Mycobacterium_tuberculosis"]="tb"
