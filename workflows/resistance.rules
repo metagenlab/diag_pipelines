@@ -1,8 +1,6 @@
 include:
     "typing.rules"
 
-resistance_prediction_sofwares = config["resistance_prediction_softwares"]
-
 if "shift_for_mapping" not in config.keys():
     shift = 300
 else:
@@ -52,6 +50,7 @@ if species=="Mycobacterium_tuberculosis":
         pipeline_path + "rules/annotation/resistance/mykrobe.rules"
     rule all:
         input:
+            expand("samples/{sample}/resistance/rgi.xlsx", sample=read_naming.keys()),
             expand("samples/{sample}/resistance/mykrobe.xlsx", sample=read_naming.keys()),
             expand("samples/{sample}/resistance/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx", sample=read_naming.keys()),
 
