@@ -10,10 +10,10 @@ The genotyping results depend on the quality assessment performed on the mapping
 Parameters
 ----------
 
-* ``minimum_coverage_for_calling``: minimum of coverage for considering a genomic position when counting differences between samples. Any position (whether the genotype is identical to the reference, ie `GT=0` in the vcf, or different, ie `GT=1`) having a lower coverage will be masked
-* ``minimum_alternate_fraction_for_calling``: minimum ratio of observations favouring a SNP over observations not favouring a SNP. Any position (`GT=0` or `GT=1`) not meeting this criteria will also be masked  
-.. * ``ref_ids_for``
+* ``minimum_coverage_for_calling``: minimum of coverage for considering a genomic position when counting differences between samples. Any position (whether the genotype is identical to the reference, ie `GT=0` in the vcf, or different, ie `GT=1`) having a lower coverage will be masked.
+* ``minimum_alternate_fraction_for_calling``: minimum ratio of observations favouring an alternative allele over observations favouring the reference allele. Any position (`GT=0` or `GT=1`) not meeting this criteria will also be masked.
 
+  
 --------------------
 Available Genotypers
 --------------------
