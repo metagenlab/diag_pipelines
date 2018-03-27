@@ -1,4 +1,4 @@
-.. general_processes
+.. general_processes:
    
 ============
 Generalities
@@ -24,7 +24,12 @@ Logging processes are defined in the file :file:`workflows/logging.rules`.
 Parameters
 ----------
 
-The variable ``logging_folder`` can be defined in the ``config.yaml`` or passed to snakemake with ``--config``. If it is not defined, the default value will be the folder ``logs/``. Each time an effective snakemake run is started, a folder named with the current UTC datetime is created. A variable number of files will be copied there, so that replication of the run is possible:
+The variable ``logging_folder`` can be defined in the ``config.yaml`` or passed to snakemake with ``--config``. If it is not defined, the default value will be the folder ``logs/``.
+
+Saved files
+-----------
+
+Each time an effective snakemake run is started, a folder named with the current UTC datetime is created. A variable number of files will be copied there, so that replication of the run is possible:
 
 * The snakefile passed to snakemake
 * The config file

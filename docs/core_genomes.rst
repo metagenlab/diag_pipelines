@@ -4,9 +4,10 @@
 Core genome determination
 =========================
 
-Core genomes can be calculated by three different means.
+Core genomes can be calculated by three different means. Core genomes definition from :ref:`ridom` and :ref:`enterobase` are already included in the Docker image, in the folder ``/home/pipeline_user/core_genomes/cgMLST``, and the references they use in ``/home/pipeline_user/references/``.
 
 
+.. _ridom:
 -----
 Ridom
 -----
@@ -31,10 +32,13 @@ Example
 
 .. code-block:: bash
 
-   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules --use-conda --conda-prefix $conda_folder core_genomes/cgMLST/Staphylococcus_aureus.bed
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_ridom.rules \
+   core_genomes/cgMLST/Staphylococcus_aureus.bed \
+   --use-conda --conda-prefix $conda_folder
 
 will create a BED file in ``core_genomes/cgMLST/Staphylococcus_aureus.bed`` which defines the core genomic regions in the genome of the assembly ID ``33148`` (*Staphylococcus aureus* COL). 
 
+.. _enterobase:
 ----------
 Enterobase
 ----------
@@ -57,7 +61,9 @@ Example
 
 .. code-block:: bash
 
-   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules --use-conda --conda-prefix $conda_folder core_genomes/cgMLST/Salmonella_enterica.bed
+   snakemake --snakefile $pipeline_folder/workflows/core_genome/make_enterobase.rules \
+   core_genomes/cgMLST/Salmonella_enterica.bed \
+   --use-conda --conda-prefix $conda_folder
 
 will create a BED file in ``core_genomes/cgMLST/Salmonella_enterica.bed`` defining the core genomic regions in the genome of the assembly ID ``359488`` (*Salmonella enterica* subsp. enterica serovar Typhimurium str. D23580).
    
@@ -73,6 +79,8 @@ Example
 
 .. code-block:: bash
 		
-   snakemake --snakefile $pipeline_folder/workflows/core_genomes/make_parsnp.rules --use-conda --conda-prefix $conda_folder core_genome/parsnp/Morganella_morganii/parsnp.xmfa
+   snakemake --snakefile $pipeline_folder/workflows/core_genomes/make_parsnp.rules \
+   core_genome/parsnp/Morganella_morganii/parsnp.xmfa \
+   --use-conda --conda-prefix $conda_folder 
 
 will calculate the core genome with parSNP with every complete genome of *Morganella morganii* available in `RefSeq <https://www.ncbi.nlm.nih.gov/refseq/>`_.

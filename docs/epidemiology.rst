@@ -26,7 +26,7 @@ Genotyping can be performed with two different softwares:
 
 
 ---------      
-Filtering   
+Filtering
 ---------
 
 .. toctree::
@@ -40,6 +40,7 @@ Deliverables
 ------------
 
 * ``typing/{snp_caller}/cgMLST/bwa/distance_snp_mst_no_st.svg``: Minimum spanning tree of the distance in snps between every sample over the core genome as defined by ridom or enterobase. Available species and values for reference genomes are listed in the files in ``data/core_genome_dbs/``. If the species under consideration has a multiple locus sequence type available, ``typing/{snp_caller}/cgMLST/bwa/distance_snp_mst_with_st.svg`` can be generated with the ST of each sample.
+  
 * ``phylogeny/{snp_caller}/cgMLST/bwa/phylogeny_no_st.svg``: A phylogeny based on the alignments of the core SNPs, using RAxML. Available species and values for reference genomes are listed in the files in ``data/core_genome_dbs/``. If the species under consideration has a multiple locus sequence type available, ``phylogeny/{snp_caller}/cgMLST/bwa/phylogeny_with_st.svg`` can be generated with the ST of each sample.
   
 * ``quality/multiqc/mapping_to_{reference_genome}/multiqc_report.html``: multiqc report of **qualimap**, **fastqc** and **trimmomatic** of every samples when mapping against the reference. Check for quality control.
