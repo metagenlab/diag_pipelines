@@ -10,6 +10,7 @@ Docker
 Install the CE version following these `instructions <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_ for ubuntu. Also make sure you have created the docker group and that you can run docker without sudo following these `instruction <https://docs.docker.com/install/linux/linux-postinstall/>`_
 
 .. code-block:: bash
+		
    docker run hello-world
    docker pull metagenlab/diag_pipelines:latest
 
@@ -26,7 +27,7 @@ Once you have pulled the docker image on your computer:
    sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules \
    --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
-Update the config file for your needs.
+Update the config file for your needs. If you have read files you want to analyse, they should be stored in the ``links`` folder from your current working directory. 
 
 Generating files of interest
 ============================
@@ -36,7 +37,7 @@ The pipeline works by requesting the generation of the files of interest for a p
 .. code-block:: bash
 		
    docker run -t --rm \
-   --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind \
+   --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
    metagenlab/diag_pipelines:latest \
    sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules quality/multiqc/self_genome/multiqc_report.html \
    --use-conda --conda-prefix $conda_folder --configfile config.yaml'
@@ -46,7 +47,7 @@ This will assemble and annotate every samples, and generate a multiqc report for
 .. code-block:: bash
 		
    docker run -t --rm \
-   --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind \
+   --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
    metagenlab/diag_pipelines:latest \
    sh -c 'snakemake --snakefile $pipeline_folder/workflows/virulence.rules virulence_summary.xlsx \
    --use-conda --conda-prefix $conda_folder --configfile config.yaml'
@@ -56,7 +57,7 @@ This will generate a summary excel file for the virulence factors of the samples
 .. code-block:: bash
 		
    docker run -t --rm \
-   --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind \
+   --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
    metagenlab/diag_pipelines:latest \
    sh -c 'snakemake --snakefile $pipeline_folder/workflows/typing.rules typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp.xlsx \
    --use-conda --conda-prefix $conda_folder --configfile config.yaml'
@@ -66,10 +67,10 @@ This will generate a snp-distance matrix of all samples, only on the core genome
 .. code-block:: bash
 		
    docker run -t --rm \
-   --mount source="$(pwd)",target=/home/pipeline_user/data,type=bind \
+   --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
    metagenlab/diag_pipelines:latest \
    sh -c 'snakemake --snakefile $pipeline_folder/workflows/resistance.rules typing/mlst/summary.xlsx \
    --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
-This will generate an Excel summary file of the MLST of all samples, based on the software `mlst <https:/github.com/tseemann/mlst>`_
+This will generate an Excel summary file of the MLST of all samples, based on the software `mlst <https:/github.com/tseemann/mlst>`_.
 
