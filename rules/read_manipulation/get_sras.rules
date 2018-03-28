@@ -5,7 +5,7 @@ rule download_sra_single:
         temp(link_directory + "{sample,[A-Za-z0-9]+}.fastq.gz"),
     shell:
         """
-        fastq-dump --gzip --outdir $(dirname {output[0]}) {wildcards.sample} &> /dev/null
+        fastq-dump --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading {wildcards.sample}
         """
 
 
@@ -17,7 +17,7 @@ rule download_sra_paired:
         temp(link_directory + "{sample,[A-Za-z0-9]+}_2.fastq.gz"),
     shell:
         """
-        fastq-dump --split-files --gzip --outdir $(dirname {output[0]}) {wildcards.sample} &> /dev/null
+        fastq-dump --split-files --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading {wildcards.sample} 
         """
 
 
