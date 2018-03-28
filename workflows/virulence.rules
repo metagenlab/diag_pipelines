@@ -2,7 +2,7 @@ include:
     "assembly_quality.rules"
 
 include:
-    pipeline_path + "downloading/fetch_virulence_factors.rules"
+    pipeline_path + "rules/downloading/fetch_virulence_factors.rules"
 
 include:
-    pipeline_path + "annotation/virulence.rules"
+    pipeline_path + "rules/annotation/virulence.rules"
