@@ -6,3 +6,5 @@ include:
 
 include:
     pipeline_path + "rules/annotation/virulence.rules"
+
+
