@@ -1,21 +1,20 @@
 rule download_sra_single:
     conda:
-        "../../envs/sra-tools.yaml"
+        pipeline_path + "envs/sra-tools.yaml"
     output:
-        temp(link_directory+"./{sample}.single.fastq.gz"),
+        temp(link_directory + "{sample,[A-Za-z0-9]+}.fastq.gz"),
     shell:
         """
         fastq-dump --gzip --outdir $(dirname {output[0]}) {wildcards.sample} &> /dev/null
-        mv $(dirname {output[0]})/{wildcards.sample}.fastq.gz {output[0]}
         """
 
 
 rule download_sra_paired:
     conda:
-        "../../envs/sra-tools.yaml"
+        pipeline_path + "envs/sra-tools.yaml"
     output:
-        temp(link_directory+"./{sample}_1.fastq.gz"),
-        temp(link_directory+"./{sample}_2.fastq.gz"),
+        temp(link_directory + "{sample,[A-Za-z0-9]+}_1.fastq.gz"),
+        temp(link_directory + "{sample,[A-Za-z0-9]+}_2.fastq.gz"),
     shell:
         """
         fastq-dump --split-files --gzip --outdir $(dirname {output[0]}) {wildcards.sample} &> /dev/null

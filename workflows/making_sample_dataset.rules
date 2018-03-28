@@ -1,27 +1,9 @@
 include:
     "logging.rules"
     
-
 import sys
 import pandas
 import re
-
-def get_folders_structure_with_sample_naming(link_dir, func):
-    folders = {}
-    samp_names = func(link_dir)
-    for key in samp_names.keys():
-        folders[key] = "."
-    original_name = { x : x for x in samp_names.keys()}
-    for i in os.listdir(link_dir):
-        if os.path.isdir(link_dir + "/" + i):
-            l = func(link_dir+"/"+i)
-            k = { i + "_" + x : y for x, y in l.items()}
-            u = { i + "_" + x : x for x in l.keys()}
-            for key in k.keys():
-                folders[key]=i
-            samp_names = { **samp_names, **k}
-            original_name = { **original_name, **u}
-    return(samp_names, folders, original_name)
 
 def get_read_naming_patterns(directory):
     result = []
@@ -52,16 +34,16 @@ all_samples=pandas.DataFrame()
 
 if "link_directory" in config.keys():
     link_directory = config["link_directory"]
+    if not link_directory.endswith("/"):
+        link_directory = link_directory + "/"
 else:
     link_directory = "links/"
     
 sras_ext = {}
-sras_folder = {}
 reads_sra = {}
 
 reads_local = {}
-folders = {}
-original_name = {}
+original_names = {}
 
 if "local_samples" not in config.keys() and "sra_samples" not in config.keys():
     raise ValueError("No samples defined in the config file")
@@ -72,34 +54,31 @@ if "local_samples" in config.keys():
     all_local_sample_names =  "".join(list(local_data.index))
     if "(" in all_local_sample_names or ")" in all_local_sample_names or "_-_" in all_local_sample_names:
         raise ValueError("Forbidden character in sample name in sample name file")
-    reads_local, folders, original_name = get_folders_structure_with_sample_naming(link_directory, get_read_naming_patterns) #used if samples came from many different folders inside the links/ folder, should probably not be used
+    reads_local = get_read_naming_patterns(link_directory)
+    original_names = { x : x for x in reads_local.keys() }
     read_correct = {}
     original_correct = {}
-    folders_correct = {}
     if "OldSampleName" not in list(local_data):
         for i in list(local_data.index):
             regex = re.compile(r'%s([^a-zA-Z0-9]|$)' % i) # this regex ensures that the matching of the sample names end at the end of the str, to prevent S1 matching S10 for instance
-            match = [bool(re.match(regex, x)) for x in sorted(list(folders.keys()))]
+            match = [bool(re.match(regex, x)) for x in sorted(list(original_names.keys()))]
             if sum(match) != 1: #there must be one and only one entry matching one sample name
                 raise ValueError("Problem matching SampleName to read file names")
-            sample = str(sorted(list(folders.keys()))[match.index(True)])
-            folders_correct[i] = folders[sample]
-            original_correct[i] = original_name[sample]
+            sample = str(sorted(list(original_names.keys()))[match.index(True)])
+            original_correct[i] = original_names[sample]
             read_correct[i] = reads_local[sample]
     else:
         for i in list(local_data["OldSampleName"]):
             regex = re.compile(r'%s([^a-zA-Z0-9]|$)' % i)
-            match = [bool(re.match(regex, x)) for x in sorted(list(folders.keys()))]
+            match = [bool(re.match(regex, x)) for x in sorted(list(original_names.keys()))]
             if sum(match) != 1:
                 raise ValueError("Problem matching OldSampleName to read file names")
-            old_sample_name=str(sorted(list(folders.keys()))[match.index(True)])
+            old_sample_name=str(sorted(list(original_names.keys()))[match.index(True)])
             sample=str(local_data.index[local_data['OldSampleName'] == i][0])
-            folders_correct[sample] = folders[old_sample_name]
-            original_correct[sample] = original_name[old_sample_name]
+            original_correct[sample] = original_names[old_sample_name]
             read_correct[sample] = reads_local[old_sample_name]
-    original_name = original_correct
+    original_names = original_correct
     reads_local = read_correct
-    folders = folders_correct
     all_samples=local_data
 
 if "sra_samples" in config.keys():
@@ -121,17 +100,15 @@ if "sra_samples" in config.keys():
         if sample_name in reads_sra.keys():
             sample_name = sample_name+"_"+str(list(reads_sra.keys()).count(sample_name))
         reads_sra[sample_name]=str(i)
-        sras_folder[sample_name]="."
         if sra_data.loc[i, "LibraryLayout"].lower()=="paired":
             sras_ext[sample_name]=["1.fastq.gz", "2.fastq.gz"]
         elif sra_data.loc[i, "LibraryLayout"].lower()=="single":
-            sras_ext[sample_name] = ["single.fastq.gz"]
+            sras_ext[sample_name] = ["fastq.gz"]
         else:
             raise ValueError("Problem in the sra file, LibraryLayout badly defined")
         all_samples.loc[sample_name, "ScientificName"]=sra_data.loc[i, "ScientificName"]
 
 read_naming = { **reads_local, **sras_ext}
-original_name = { **original_name, **reads_sra}
-folders = { **folders, **sras_folder}
+original_names = { **original_names, **reads_sra}
 
 
