@@ -45,3 +45,29 @@ rule download_gff_for_reference_from_refseq:
         nucl_id=$(echo ${{ftp}} | sed  "s/\(\/GCF_.*\)/\\1\\1_genomic.gff.gz/")
         wget -qO- ${{nucl_id}} | gzip -d > {output[gff]}
         """
+        
+rule download_reference_genome_for_cgMLST:
+    params:
+        genome = str(all_core_genome_dbs.loc[species, "ReferenceGenome"])
+    conda:
+        pipeline_path + "envs/entrez-direct.yaml"
+    output:
+        genome = "references/cgMLST/genome_{format}.{format}"
+    shell:
+        """
+        ftp=$(efetch -db assembly -id {params.genome} -format docsum | xtract -pattern DocumentSummary -unless LatestAccession -if AssemblyStatus -equals "Complete Genome" -if FtpPath_RefSeq -element FtpPath_RefSeq)
+        nucl_id=$(echo ${{ftp}} | sed  "s/\(\/GCF_.*\)/\\1\\1_assembly_report.txt/" | xargs wget -qO- | sed '/^#.*/ d'  | awk ' $4 == "Chromosome" {{print $7}}')
+        efetch -db nucleotide -id ${{nucl_id}} -format {wildcards.format} > {output[genome]} 
+        """
+    
+
+rule copy_reference_genome_for_parsnp:
+    input:
+        genome_ref = "references/{ref}/genome_{format}.{format}"
+    output:
+        genome_parsnp = "references/core_parsnp_{ref}/genome_{format}.{format}"
+    shell:
+        """
+        cp {input[genome_ref]} {output[genome_parsnp]}
+        """
+    

@@ -1,39 +1,36 @@
 rule convert_phylogeny_to_image_with_st:
     params:
-        size=config["phylogeny_image_size"]
+        size = config["phylogeny_image_size"]
     conda:
-        "../../envs/newick-utils.yaml"
+        pipeline_path + "envs/newick-utils.yaml"
     input:
         tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw",
         bootstraps = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
         st_samples="typing/mlst/summary.tsv",
     output:
-        "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/renaming_with_st.txt",
-        "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_with_st.svg",
+        new_names = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/renaming_with_st.txt",
+        tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_with_st.svg",
     shell:
         """
-        cut -f1,3 {input[st_samples]} | sed "s/\\t/_ST_/" > {output[0]}.tmp
-        cut -f1 {input[st_samples]} | paste - {output[0]}.tmp > {output[0]}
-        rm {output[0]}.tmp
-        nw_support {input[tree]} {input[bootstraps]} | nw_rename - {output[0]} | nw_display -S -s -b 'opacity:0' -w -{params.size} -I m -W 20 -v 15 - > {output[1]}
+        cut -f1,3 {input[st_samples]} | sed "s/\\t/_ST_/" > {output[new_names]}.tmp
+        cut -f1 {input[st_samples]} | paste - {output[new_names]}.tmp > {output[new_names]}
+        rm {output[new_names]}.tmp
+        nw_support {input[tree]} {input[bootstraps]} | nw_rename - {output[new_names]} | nw_display -S -s -b 'opacity:0' -w -{params.size} -I m -W 20 -v 15 - > {output[tree]}
         """
 
 
 
 rule convert_phylogeny_to_image_no_st:
     params:
-        size=config["phylogeny_image_size"]
+        size = config["phylogeny_image_size"]
     conda:
-        "../../envs/newick-utils.yaml"
+        pipeline_path + "envs/newick-utils.yaml"
     input:
         tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw",
         bootstraps = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
     output:
-        "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/renaming_no_st.txt",
-        "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_no_st.svg",
+        tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_no_st.svg",
     shell:
         """
-        id=$(grep ">" {input[genome_ref]} | cut -f1 -d' ' | sed "s/>//")
-        echo {wildcards.ref}'\t'${{id}} >> {output[0]}
-        nw_support {input[tree]} {input[bootstraps]} | nw_rename - {output[0]} | nw_display -S -s -b 'opacity:0' -w -{params.size} -I m -W 20 -v 15 - > {output[1]}
+        nw_support {input[tree]} {input[bootstraps]} | nw_display -S -s -b 'opacity:0' -w -{params.size} -I m -W 20 -v 15 - > {output[tree]}
         """

@@ -1,9 +1,9 @@
 rule merge_multiallelic_by_sample:
     conda:
-        "../../envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
-        vcf="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/all_samples_snp.vcf",
-        vcf_tbi="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/all_samples_snp.vcf.tbi",
+        vcf="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/all_samples_snp.vcf.gz",
+        vcf_tbi="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/all_samples_snp.vcf.gz.tbi",
     output:
         merged_multi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf",
     shell:
@@ -14,7 +14,7 @@ rule merge_multiallelic_by_sample:
 
 rule extract_snps:
     conda:
-        "../../envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
         merged_multi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz",
         merged_multi_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz.tbi",
@@ -28,16 +28,16 @@ rule extract_snps:
         """
         
 
-rule create_consensus_sequence_parsnp:
+rule create_consensus_sequence:
     conda:
-        "../../envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
-        alt="samples/{sample}/snps/{snp_caller}/core_parsnp_{ref}/{mapping_method}/snps.vcf.gz",
-        alt_tbi="samples/{sample}/snps/{snp_caller}/core_parsnp_{ref}/{mapping_method}/snps.vcf.gz.tbi",
-        unknowns="samples/{sample}/snps/{snp_caller}/core_parsnp_{ref}/{mapping_method}/unknowns.tab",
-        ref="references/{ref}/genome_fasta.fasta",
+        alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz",
+        alt_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz.tbi",
+        unknowns="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/unknowns.tab",
+        ref="references/{core_genome_or_full_genome}/genome_fasta.fasta",
     output:
-        alignment="samples/{sample}/alignment/{snp_caller}/core_parsnp_{ref}/{mapping_method}/consensus.fa",
+        alignment="samples/{sample}/alignment/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/consensus.fa",
     shell:
         """
         bcftools consensus --mask {input[unknowns]} --fasta-ref {input[ref]} --output {output[alignment]} --sample {wildcards.sample} {input[alt]}
@@ -47,13 +47,13 @@ rule create_consensus_sequence_parsnp:
 
 rule concatenate_consensus_fasta_files:
     input:
-        fasta=expand("samples/{sample}/alignment/{{snp_caller}}/core_parsnp_{{ref}}/{{mapping_method}}/consensus.fa", sample=read_naming.keys()),
-        ref="references/{ref}/genome_fasta.fasta",
+        fasta = expand("samples/{sample}/alignment/{{snp_caller}}/{{core_genome_or_full_genome}}/{{mapping_method}}/consensus.fa", sample=read_naming.keys()),
+        ref = "references/{core_genome_or_full_genome}/genome_fasta.fasta",
     output:
-        alignment="typing/{snp_caller}/core_parsnp_{ref}/{mapping_method}/alignment.fa"
+        alignment="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alignment.fa"
     shell:
         """
-        sed "s/^>.*/>{wildcards.ref}/" {input[ref]} | cat {input[fasta]} - > {output[alignment]}
+        sed "s/^>.*/>{wildcards.core_genome_or_full_genome}/" {input[ref]} | cat {input[fasta]} - > {output[alignment]}
         """
     
 
