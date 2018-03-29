@@ -7,3 +7,19 @@ rule convert_tsv_to_xlsx:
         xlsx = "samples/{sample}/resistance/{software,[a-z]+}.xlsx",
     script:
         "scripts/convert_tsv_to_xlsx.py"
+        
+
+rule merge_rgi_or_mykrobe_xlsx:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        xlsx = expand("samples/{sample}/resistance/{{software}}.xlsx", sample=read_naming.keys())
+    output:
+        "resistance/{software,[A-Z,a-z]+}_summary.xlsx"
+    shell:
+        """
+        scripts/merge_non_empty_results.py
+        """
+
+
+        
