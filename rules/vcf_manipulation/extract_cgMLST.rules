@@ -1,11 +1,11 @@
-rule extract_cgMLST:
+rule extract_cgMLST_regions_from_vcf:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
         vcf_mutation_type = "typing/{snp_caller}/full_genome_" + str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) + "/{mapping_method}/all_samples_{type}.vcf.gz",
         vcf_mutation_type_tbi = "typing/{snp_caller}/full_genome_" + str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) + "/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
         bed = "core_genomes/cgMLST/" + species + ".bed",
-    output:                typing/reebayes_joint_genotyping/cgMLST/bwa/all_samples_snp.vcf.tbi
+    output:             
         core_genome_vcf = "typing/{snp_caller}/cgMLST/{mapping_method}/all_samples_{type}.vcf",
     shell:
         """
