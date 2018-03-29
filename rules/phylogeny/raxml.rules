@@ -14,8 +14,7 @@ rule compute_phylogeny_with_raxml:
             rm -rf $(dirname {output[best_tree]})
             mkdir -p $(dirname {output[best_tree]})
         fi
-        id=$(echo {wildcards.core_genome_or_full_genome} | tr "/" "_")
-        raxmlHPC -V -m GTRCAT -n ${{id}} -s {input[alignment]} -w $(dirname $(readlink -f {output[best_tree]})) -p 123 > {log} 
+        raxmlHPC -V -m GTRCAT -n {wildcards.core_genome_or_full_genome} -s {input[alignment]} -w $(dirname $(readlink -f {output[best_tree]})) -p 123 > {log} 
         cp $(dirname {output[best_tree]})/RAxML_bestTree.{wildcards.core_genome_or_full_genome} $(dirname {output[best_tree]})/RAxML_bestTree.nw 
         """
 
@@ -35,8 +34,7 @@ rule compute_phylogeny_bootstraps_with_raxml:
             rm -rf $(dirname {output[bootstrap]})
             mkdir -p $(dirname {output[bootstrap]})
         fi
-        id=$(echo {wildcards.core_genome_or_full_genome} | tr "/" "_")
-        raxmlHPC -m GTRCAT -V -n ${{id}} -s {input[alignment]} -b 123 -w $(dirname $(readlink -f {output[bootstrap]})) -N 100 -p 123 > {log} 
+        raxmlHPC -m GTRCAT -V -n {wildcards.core_genome_or_full_genome} -s {input[alignment]} -b 123 -w $(dirname $(readlink -f {output[bootstrap]})) -N 100 -p 123 > {log} 
         cp $(dirname {output[bootstrap]})/RAxML_bootstrap.{wildcards.core_genome_or_full_genome} $(dirname {output[bootstrap]})/RAxML_bootstrap.nw 
         """
 

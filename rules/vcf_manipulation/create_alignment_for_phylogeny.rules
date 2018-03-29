@@ -24,7 +24,7 @@ rule extract_snps:
     shell:
         """
         bcftools view --include 'GT="alt"' --samples {wildcards.sample} {input[merged_multi]} > {output[alt]} 
-        bcftools view --include 'GT="."' --samples {wildcards.sample} {input[merged_multi]} | bcftools query -f "%CHROM %POS\n" > {output[unknowns]}
+        bcftools view --include 'GT="."' --samples {wildcards.sample} {input[merged_multi]} | bcftools query -f "%CHROM\t%POS\n" > {output[unknowns]}
         """
         
 
@@ -41,7 +41,7 @@ rule create_consensus_sequence:
     shell:
         """
         bcftools consensus --mask {input[unknowns]} --fasta-ref {input[ref]} --output {output[alignment]} --sample {wildcards.sample} {input[alt]}
-        sed -i "s/^>.*/>{wildcards.sample}/" {output[alignment]} 
+        sed -i "s/^>.*/>{wildcards.sample}/" {output[alignment]}
         """
 
 
@@ -55,5 +55,3 @@ rule concatenate_consensus_fasta_files:
         """
         sed "s/^>.*/>{wildcards.core_genome_or_full_genome}/" {input[ref]} | cat {input[fasta]} - > {output[alignment]}
         """
-    
-
