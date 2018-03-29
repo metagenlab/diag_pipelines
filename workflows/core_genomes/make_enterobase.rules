@@ -8,12 +8,12 @@ include:
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
     
-enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
+all_core_genome_dbs = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 rule get_schema_from_enterobase:
     params:
-        enterobase_scheme = lambda wildcards: enterobase.loc[wildcards.spec, "Scheme"],
-        enterobase_species_id = lambda wildcards: enterobase.loc[wildcards.spec, "SpeciesId"],
+        enterobase_scheme = lambda wildcards: all_core_genome_dbs.loc[wildcards.spec, "Scheme"],
+        enterobase_species_id = lambda wildcards: all_core_genome_dbs.loc[wildcards.spec, "SpeciesId"],
     output:
         gene_list = "core_genomes/cgMLST/{spec}/genes.txt",
     shell:
@@ -25,7 +25,7 @@ rule fetch_gene_entries_from_locus_tag:
     conda:
         pipeline_path + "envs/biopython.yaml"
     input:
-        gbk = lambda wildcards : "references/" + str(enterobase.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_gbwithparts.gbwithparts",
+        gbk = lambda wildcards : "references/" + str(all_core_genome_dbs.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_gbwithparts.gbwithparts",
         locus_list = "core_genomes/cgMLST/{spec}/genes.txt",
     output:
         bed = "core_genomes/cgMLST/{spec}.bed",
