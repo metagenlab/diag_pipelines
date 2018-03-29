@@ -4,7 +4,7 @@ rule determine_mlst:
     input:
         fasta = "samples/{sample}/annotation/{sample}.fsa",
     output:
-        mlst = "samples/{sameple}/typing/mlst.txt"
+        mlst = "samples/{sample}/typing/mlst.txt"
     shell:
         """
         mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
