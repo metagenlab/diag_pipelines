@@ -7,3 +7,16 @@ rule convert_tsv_to_xlsx:
         xlsx = "samples/{sample}/resistance/{software,[a-z]+}.xlsx",
     script:
         "scripts/convert_tsv_to_xlsx.py"
+
+        
+rule merge_non_empty_results:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        xlsx = expand("samples/{sample}/resistance/{{ref}}.xlsx", sample=read_naming.keys()),
+    output:
+        summary = "resistance/{ref}_summary.xlsx"
+    script:
+        "scripts/merge_non_empty_results.py"
+ 
+   
