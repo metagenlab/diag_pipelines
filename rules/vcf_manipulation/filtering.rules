@@ -2,13 +2,13 @@ rule decompose_multiallelics_and_normalize:
     conda:
         pipeline_path + "envs/vt.yaml"
     input:
-        raw="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf.gz",
-        raw_tbi="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf.gz",
+        raw="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf.gz",
+        raw_tbi="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf.gz",
         ref="references/{ref}/genome_fasta.fasta",
     output:
-        decomposed="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/decomposed_normalized.vcf",
+        decomposed="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/decomposed_normalized.vcf",
     log:
-        logging_folder+"typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/decomposed_normalized.txt",
+        logging_folder+"typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/decomposed_normalized.txt",
     shell:
         """
         vt decompose -s {input[raw]} | vt normalize -r {input[ref]} -o {output[decomposed]} - &> {log}
@@ -20,9 +20,9 @@ rule filter_on_coverage:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        decomposed="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/decomposed_normalized.vcf",
+        decomposed="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/decomposed_normalized.vcf",
     output:
-        vcf_cov="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/cov_decomposed_normalized.vcf",
+        vcf_cov="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/cov_decomposed_normalized.vcf",
     shell:
         """
         bcftools filter -s "lowcov" -S "." -e '(FORMAT/DP)<{params.min_cov}' {input[decomposed]} > {output[vcf_cov]}
@@ -46,12 +46,12 @@ rule extract_allele_by_type_from_gatk_gvcfs:
     conda:
         pipeline_path + "envs/gatk.yaml"
     input:
-        joint_genotype_vcf="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
-        joint_genotype_vcf_tbi="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz.tbi",
+        joint_genotype_vcf="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
+        joint_genotype_vcf_tbi="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz.tbi",
     output:
-        vcf_mutation_type="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf",
+        vcf_mutation_type="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/all_samples_{type}.vcf",
     log:
-        logging_folder + "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/all_samples_{type}.txt"
+        logging_folder + "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/all_samples_{type}.txt"
     shell:
         """
         type=$(echo {wildcards.type}  | tr '[:lower:]' '[:upper:]')
@@ -62,12 +62,12 @@ rule extract_allele_by_type_from_freebayes_joint_genotyping:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        joint_genotype_vcf="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
-        joint_genotype_vcf_tbi="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz.tbi",
+        joint_genotype_vcf="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
+        joint_genotype_vcf_tbi="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz.tbi",
     output:
-        vcf_mutation_type="typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf",
+        vcf_mutation_type="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/all_samples_{type}.vcf",
     log:
-        logging_folder + "typing/freebayes_joint_genotyping/full_genome/{ref}/{mapping_method}/all_samples_{type}.txt"
+        logging_folder + "typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/all_samples_{type}.txt"
     shell:
         """
         bcftools view -i 'type="{wildcards.type}"' {input[joint_genotype_vcf]} > {output[vcf_mutation_type]}
@@ -77,8 +77,8 @@ rule extract_core_genome_parsnp:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        vcf_mutation_type = "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
-        vcf_mutation_type_tbi = "typing/{snp_caller}/full_genome/{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
+        vcf_mutation_type = "typing/{snp_caller}/full_genome_{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
+        vcf_mutation_type_tbi = "typing/{snp_caller}/full_genome_{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",
         bed = "core_genomes/parsnp/" + species + "/{ref}.bed",
     output:
         core_genome_vcf = "typing/{snp_caller}/core_parsnp_{ref}/{mapping_method}/all_samples_{type}.vcf",

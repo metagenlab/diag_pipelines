@@ -2,7 +2,7 @@ rule extract_sample_entry_from_vcf:
     conda:
         pipeline_path + "envs/bcftools.yaml",
     input:
-        vcf_cov="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/cov_decomposed_normalized.vcf",
+        vcf_cov="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/cov_decomposed_normalized.vcf",
     output:
         vcf_sample=temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/raw.vcf"),
     shell:
@@ -17,7 +17,7 @@ rule merge_all_samples_entries_into_vcf:
         vfcs=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/freq.vcf.gz", sample=list(read_naming.keys())),
         vfcs_tbi=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/freq.vcf.gz.tbi", sample=list(read_naming.keys())),
     output:
-        joint_genotype_vcf="typing/{snp_caller}/full_genome/{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf",
+        joint_genotype_vcf="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf",
     shell:
         """
         bcftools merge {input[vfcs]} > {output[joint_genotype_vcf]}

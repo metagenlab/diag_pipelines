@@ -1,22 +1,32 @@
-
-rule download_reference_genome_for_cgMLST:
+rule link_reference_genome_for_cgMLST:
     input:
         genome_ref = "references/" + str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) + "/genome_fasta.fasta"
     output:
         genome_cgmlst = "references/cgMLST/genome_{format}.{format}"
     shell:
         """
-        ln -s {input[genome_ref]} {output[genome_cgmlst]}
+        ln -sr {input[genome_ref]} {output[genome_cgmlst]}
         """
     
 
-rule copy_reference_genome_for_parsnp:
+rule link_reference_genome_for_parsnp:
     input:
         genome_ref = "references/{ref}/genome_{format}.{format}"
     output:
         genome_parsnp = "references/core_parsnp_{ref}/genome_{format}.{format}"
     shell:
         """
-        ln -s {input[genome_ref]} {output[genome_parsnp]}
+        ln -sr {input[genome_ref]} {output[genome_parsnp]}
+        """
+    
+
+rule link_full_genome:
+    input:
+        genome_ref = "references/{ref}/genome_{format}.{format}"
+    output:
+        genome_full = "references/full_genome_{ref}/genome_{format}.{format}"
+    shell:
+        """
+        ln -sr {input[genome_ref]} {output[genome_full]}
         """
     

@@ -39,9 +39,9 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
         gvcfs_tbi = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
     output:
-        header = "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
+        header = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/genomics_db/vcfheader.vcf"
     log:
-        logging_folder + "gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
+        logging_folder + "gatk_gvcfs/full_genome_{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
         if [ -d $(dirname {output[0]}) ]; then
@@ -61,9 +61,9 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
         gvcfs_tbi = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
     output:
-        combined = "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/combined.vcf"
+        combined = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/combined.vcf"
     log:
-        logging_folder + "gatk_gvcfs/full_genome/{ref}/{mapping_method}/merge_gvcf.txt",
+        logging_folder + "gatk_gvcfs/full_genome_{ref}/{mapping_method}/merge_gvcf.txt",
     shell:
         """
         var=$(echo {input[gvcfs]} | sed "s/ / --variant /g")
@@ -75,12 +75,12 @@ rule genotype_with_GenotypeGVCFs_GATK:
         pipeline_path + "envs/gatk.yaml"
     input:
         ref = "references/{ref}/genome_fasta.fasta",
-        combined = "typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/combined.vcf",
+        combined = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/combined.vcf",
         quality = "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
     output:
-        raw="typing/gatk_gvcfs/full_genome/{ref}/{mapping_method}/raw/all_samples.vcf",
+        raw="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf",
     log:
-        logging_folder + "gatk_gvcfs/full_genome/{ref}/{mapping_method}/genotype_gvcf.txt",
+        logging_folder + "gatk_gvcfs/full_genome_{ref}/{mapping_method}/genotype_gvcf.txt",
     shell:
         """
         gatk-launch GenotypeGVCFs --use-new-qual-calculator --sample-ploidy 1 --reference {input[ref]} --annotations-to-exclude InbreedingCoeff --variant {input[combined]} --output {output[raw]} &> {log}

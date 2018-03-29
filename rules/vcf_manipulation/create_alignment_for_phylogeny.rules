@@ -19,12 +19,12 @@ rule extract_snps:
         merged_multi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz",
         merged_multi_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz.tbi",
     output:
-        alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf",
+        alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alternative_snp.vcf",
         unknowns="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/unknowns.tab",
     shell:
         """
-        bcftools -i 'GT="alt"' --samples {wildcards.sample} {input[merged_multi]} > {output[alt]} 
-        bcftools -i 'GT="."' --samples {wildcards.sample} {input[merged_multi]} | bcftools query -f "%CHROM %POS\n" > {output[unknowns]}
+        bcftools view --include 'GT="alt"' --samples {wildcards.sample} {input[merged_multi]} > {output[alt]} 
+        bcftools view --include 'GT="."' --samples {wildcards.sample} {input[merged_multi]} | bcftools query -f "%CHROM %POS\n" > {output[unknowns]}
         """
         
 
@@ -32,8 +32,8 @@ rule create_consensus_sequence:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz",
-        alt_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz.tbi",
+        alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alternative_snp.vcf.gz",
+        alt_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alternative_snp.vcf.gz.tbi",
         unknowns="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/unknowns.tab",
         ref="references/{core_genome_or_full_genome}/genome_fasta.fasta",
     output:
