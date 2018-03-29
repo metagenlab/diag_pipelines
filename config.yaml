@@ -6,7 +6,7 @@ virulence_coverage_cutoff: 70
 minimum_coverage_for_calling: 10
 minimum_alternate_fraction_for_calling: 0.75
 
-species: Staphylococcus_aureus
+species: Mycobacterium_tuberculosis
 
 snp_threshold: 0
 cov_cutoff: 5
