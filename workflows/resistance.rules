@@ -26,15 +26,30 @@ include:
 include:
     pipeline_path + "rules/annotation/resistance/rgi.rules"
     
+if species!="Staphylococcus_aureus" and species!="Mycobacterium_tuberculosis":
+    rule all:
+        input:
+            expand("samples/{sample}/resistance/rgi.xlsx", sample=read_naming.keys())
+    
 if species=="Staphylococcus_aureus":
     include:
         pipeline_path + "rules/annotation/resistance/mykrobe.rules"
+    rule all:
+        input:
+            expand("samples/{sample}/resistance/rgi.xlsx", sample=read_naming.keys()),
+            expand("samples/{sample}/resistance/mykrobe.xlsx", sample=read_naming.keys()),
+        
 
 if species=="Mycobacterium_tuberculosis":
     include:
         pipeline_path + "rules/annotation/resistance/m_tuberculosis.rules"
     include:
         pipeline_path + "rules/annotation/resistance/mykrobe.rules"
+    rule all:
+        input:
+            expand("samples/{sample}/resistance/rgi.xlsx", sample=read_naming.keys()),
+            expand("samples/{sample}/resistance/mykrobe.xlsx", sample=read_naming.keys()),
+            expand("samples/{sample}/resistance/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx", sample=read_naming.keys()),
 
 
 

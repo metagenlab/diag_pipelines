@@ -173,9 +173,19 @@ rule merge_mutated_nucleotides_and_codons:
         formated_nucleotides = "samples/{sample}/resistance/{ref}/mutated_nucleotides.xlsx",
         locus_tag = pipeline_path + "data/mycobacterium/db/locus_tags.tsv",
     output:
-        resistance = "samples/{sample}/resistance/{ref}.xlsx",
+        resistance = "samples/{sample}/resistance/{ref}/summary.xlsx",
     script:
         "scripts/merge_mutated_nucleotides_and_codons.py"
 
         
+rule merge_non_empty_results:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        xlsx = expand("samples/{sample}/resistance/{{ref}}/summary.xlsx", sample=read_naming.keys()),
+    output:
+        summary = "resistance/{ref}_summary.xlsx"
+    script:
+        "scripts/merge_non_empty_results.py"
+ 
    
