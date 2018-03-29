@@ -2,13 +2,13 @@ import pandas
 
 pipeline_path = workflow.basedir + "/../../"
 
+all_core_genome_dbs = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
+
 include:
     pipeline_path + "workflows/logging.rules"
     
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
-    
-all_core_genome_dbs = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 rule get_schema_from_enterobase:
     params:
