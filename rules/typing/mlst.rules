@@ -1,10 +1,10 @@
 rule determine_mlst:
     conda:
-        "../../envs/mlst.yaml"
+        pipeline_path + "envs/mlst.yaml"
     input:
         fasta = "samples/{sample}/annotation/{sample}.fsa",
     output:
-        mlst = "samples/typing/mlst.txt"
+        mlst = "samples/{sameple}/typing/mlst.txt"
     shell:
         """
         mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
@@ -13,7 +13,7 @@ rule determine_mlst:
         
 rule merge_mlst_from_all_samples:
     conda:
-        "../../envs/mlst.yaml"
+        pipeline_path + "envs/mlst.yaml"
     input:
         mlsts = expand("samples/{sample}/typing/mlst.txt", sample=read_naming.keys())
     output:
@@ -25,7 +25,7 @@ rule merge_mlst_from_all_samples:
 
 rule determine_mlst_reference_genome:
     conda:
-        "../../envs/mlst.yaml"
+        pipeline_path + "envs/mlst.yaml"
     input:
         genome="references/{ref}/genome_fasta.fasta"
     output:
@@ -37,7 +37,7 @@ rule determine_mlst_reference_genome:
 
 rule generate_xlsx_file_from_mlst_results:
     conda:
-        "../../envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
         "typing/mlst/{file}.tsv"
     output:
