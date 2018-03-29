@@ -11,7 +11,6 @@ if "mykrobe_panel" not in config.keys():
 else:
     mykrobe_panel = config["mykrobe_panel"]
 
-
 if "mykrobe_confidence" not in config.keys():
     mykrobe_confidence = "10"
 else:
@@ -21,8 +20,6 @@ mykrobe_species = {}
 mykrobe_species["Mycobacterium_tuberculosis"]="tb"
 mykrobe_species["Staphylococcus_aureus"]="staph"
     
-genes = ''
-
 include:
     pipeline_path + "rules/annotation/resistance/format_xlsx.rules"
 
