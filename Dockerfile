@@ -69,5 +69,3 @@ WORKDIR ${main}/data/analysis/
 RUN chown -R pipeline_user ${main}/
 
 USER pipeline_user
-
-
