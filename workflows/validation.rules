@@ -2,9 +2,9 @@ import pandas
 
 pipeline_path = workflow.basedir + "../"
 
-species = config["species"].split(" ")[0]+" "+config["species"].split(" ")[1].split("_")[0]
+species = config["species"].replace(" ", "_")
 
-if config["species"]=="Salmonella enterica":
+if config["species"]=="Salmonella_enterica" or config["species"]=="Escherichia_coli":
     core="enterobase"
     enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
     species_taxid=int(enterobase.loc[species, "taxid"])
@@ -25,7 +25,7 @@ include:
 
 rule all:
     input:
-        "typing/freebayes_joint_genotyping/core_"+core+"/"+ref_id+"/bwa/distances_snp_mst.pdf",
+        "typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst.svg",
         "typing/gatk_gvcfs/core_"+core+"/"+ref_id+"/bwa/distances_snp_mst.pdf",
         "typing/freebayes_joint_genotyping/core_"+core+"/"+ref_id+"/bwa/distances_snp.txt"
         
