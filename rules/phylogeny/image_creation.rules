@@ -4,27 +4,17 @@ rule convert_phylogeny_to_image_with_st:
     conda:
         "../../envs/newick-utils.yaml"
     input:
-        tree = "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw",
-        bootstraps = "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
+        tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw",
+        bootstraps = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
         st_samples="typing/mlst/summary.tsv",
-        st_ref="references/{ref}/mlst.tsv",
-        genome_ref="references/{ref}/genome_fasta.fasta",                
     output:
-        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/renaming_with_st.txt",
-        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/phylogeny_with_st.svg",
+        "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/renaming_with_st.txt",
+        "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_with_st.svg",
     shell:
         """
         cut -f1,3 {input[st_samples]} | sed "s/\\t/_ST_/" > {output[0]}.tmp
         cut -f1 {input[st_samples]} | paste - {output[0]}.tmp > {output[0]}
         rm {output[0]}.tmp
-        st_ref=$(cat {input[st_ref]})
-        id=$(grep ">" {input[genome_ref]} | cut -f1 -d' ' | sed "s/>//")
-        echo {wildcards.ref}'\t'${{id}}"_ST_"${{st_ref}} >> {output[0]}
-        st=$(cut -f3 {input[st_samples]} | uniq)
-        if [[ "$(echo ${{st}} | wc -l)" -eq 1 && "${{st}}" == "-" ]]
-        then
-            echo {wildcards.ref}'\t'${{id}} > {output[0]}
-        fi
         nw_support {input[tree]} {input[bootstraps]} | nw_rename - {output[0]} | nw_display -S -s -b 'opacity:0' -w -{params.size} -I m -W 20 -v 15 - > {output[1]}
         """
 
@@ -36,13 +26,11 @@ rule convert_phylogeny_to_image_no_st:
     conda:
         "../../envs/newick-utils.yaml"
     input:
-        tree = "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw",
-        bootstraps = "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
-        genome_ref = "references/{ref}/genome_fasta.fasta",                
+        tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw",
+        bootstraps = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
     output:
-        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/renaming_no_st.txt",
-                
-        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/phylogeny_no_st.svg",
+        "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/renaming_no_st.txt",
+        "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_no_st.svg",
     shell:
         """
         id=$(grep ">" {input[genome_ref]} | cut -f1 -d' ' | sed "s/>//")

@@ -2,11 +2,11 @@ rule compute_phylogeny_with_raxml:
     conda:
         pipeline_path + "envs/raxml.yaml"
     input:
-        alignment="typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
+        alignment="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alignment.fa"
     output:
-        best_tree="phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/normal_run/RAxML_bestTree.nw"
+        best_tree="phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw"
     log:
-        logging_folder+"phylogeny/RAxML_log.{ref}"
+        logging_folder+"phylogeny/RAxML_log.{core_genome_or_full_genome}"
     shell:
         """
         if [ -d $(dirname {output[best_tree]}) ];
@@ -22,11 +22,11 @@ rule compute_phylogeny_bootstraps_with_raxml:
     conda:
         pipeline_path + "envs/raxml.yaml"
     input:
-        "typing/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/alignment.fa"
+        "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alignment.fa"
     output:
-        "phylogeny/{snp_caller}/core_{core_method}/{ref}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw"
+        "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw"
     log:
-        logging_folder+"phylogeny/RAxML_log.{ref}_boot"
+        logging_folder+"phylogeny/RAxML_log.{core_genome_or_full_genome}_boot"
     shell:
         """
         if [ -d $(dirname {output[0]}) ];
