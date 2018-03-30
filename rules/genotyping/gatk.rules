@@ -10,7 +10,7 @@ rule create_dictionary_for_reference:
     shell:
         """
         samtools faidx {input[ref]}
-        gatk-launch CreateSequenceDictionary --reference {input[ref]} &> {log}
+        gatk-launch CreateSequenceDictionary --REFERENCE {input[ref]} &> {log}
         """
         
 rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
