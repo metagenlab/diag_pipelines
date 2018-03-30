@@ -23,8 +23,8 @@ rule get_pairwise_snps_positions_by_type:
         variant_vcf=temp("{any_analysis}/vcfs/{sample1}_-_{sample2}_in_{type}.vcf")
     shell:
         """
-        bcftools --samples {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '%CHROM %POS [%GT ]\\n' | awk '$3!=$4 && $3!="." && $4!="."' | cut -f 1,2 -d' ' | sed "s/ /\\t/g" > {output[snp_pos]}
-        bcftools view -R {output[snp_pos]} -s {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} > {output[variant_vcf]}
+        bcftools view --samples {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '%CHROM %POS [%GT ]\\n' | awk '$3!=$4 && $3!="." && $4!="."' | cut -f 1,2 -d' ' | sed "s/ /\\t/g" > {output[snp_pos]}
+        bcftools view -R {output[snp_pos]} --samples {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} > {output[variant_vcf]}
         """
 
 rule calculate_distance_with_ref_by_type:
