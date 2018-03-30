@@ -8,7 +8,9 @@ RUN conda config --add channels bioconda
 
 RUN useradd -r -u 1080 pipeline_user
 
-RUN conda install snakemake=4.8.0=py36_0 fontconfig unzip
+RUN apt-get install fontconfig
+
+RUN conda install snakemake=4.8.0=py36_0 unzip
 
 ENV main=/home/pipeline_user/
 
