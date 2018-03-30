@@ -8,7 +8,7 @@ RUN conda config --add channels bioconda
 
 RUN useradd -r -u 1080 pipeline_user
 
-RUN apt-get install fontconfig
+RUN apt-get install -y fontconfig
 
 RUN conda install snakemake=4.8.0=py36_0 unzip
 
