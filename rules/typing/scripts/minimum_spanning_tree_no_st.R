@@ -72,7 +72,7 @@ vertices_colors = rep(NA, nb_vertex)
 
 
 
-svglite(snakemake@output[["mst"]], height=snakemake@params["mst_size"], width=snakemake@params["mst_size"])
+svglite(snakemake@output[["mst"]], height=as.numeric(snakemake@params["mst_size"]), width=as.numeric(snakemake@params["mst_size"]))
 
 plot(mst_graph, vertex.size=vertices_sizes, edge.label.dist=35, vertex.label.dist=0, node.label.cex=0.5, vertex.color=vertices_colors, vertex.label=vertex_attr(mst_graph, "label"), vertex.label.color=rep("black", nb_vertex), vertex.label.family="sans", edge.label.family="sans")
 
