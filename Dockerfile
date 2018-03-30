@@ -72,6 +72,8 @@ WORKDIR ${main}/data/analysis/
 
 RUN chown -R pipeline_user ${main}/
 
+RUN chmod 777 /opt/conda/envs/803617ab/lib/python2.7/site-packages/package/rgi/_db/proteindb.fsa
+
 USER pipeline_user
 
 RUN mkdir PRJEB12011
