@@ -1,6 +1,6 @@
 rule compress_vcf:
     conda:
-        pipeline_path + "envs/freebayes.yaml"
+        pipeline_path + "envs/htslib.yaml"
     input:
         "{any_vcf}.vcf",
     output:
@@ -12,7 +12,7 @@ rule compress_vcf:
 
 rule index_vcf:
     conda:
-        pipeline_path + "envs/freebayes.yaml"
+        pipeline_path + "envs/htslib.yaml"
     input:
         "{any_vcf}.vcf.gz",
     output:
@@ -24,7 +24,7 @@ rule index_vcf:
         
 rule sort_vcf:
     conda:
-        "../../envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
         "{any_vcf}.vcf.gz",
     output:
