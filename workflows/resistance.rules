@@ -19,7 +19,12 @@ else:
 mykrobe_species = {}
 mykrobe_species["Mycobacterium_tuberculosis"]="tb"
 mykrobe_species["Staphylococcus_aureus"]="staph"
-    
+
+
+ontology_file_aro = pipeline_path + "data/card/obo_files/aro.obo"
+ontology_file_mo = pipeline_path + "data/card/obo_files/mo.obo"
+ontology_file_ro = pipeline_path + "data/card/obo_files/ro.obo"
+
 include:
     pipeline_path + "rules/annotation/resistance/format_xlsx.rules"
 
