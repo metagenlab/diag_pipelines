@@ -70,9 +70,15 @@ RUN mkdir ${main}/data/analysis/
 
 WORKDIR ${main}/data/analysis/
 
-RUN chown -R pipeline_user ${main}/
+RUN wget https://card.mcmaster.ca/download/0/broadstreet-v1.1.9.tar.bz2 --no-check-certificate
 
-RUN chmod 777 /opt/conda/envs/803617ab/lib/python2.7/site-packages/package/rgi/_db/proteindb.fsa
+RUN tar xf broadstreet-v1.1.9.tar.bz2
+
+RUN /bin/bash -c 'source activate /opt/conda/envs/803617ab/ && rgi_load -i card.json'
+
+RUN chmod -R 777 /opt/conda/envs/803617ab/lib/python2.7/site-packages/package/rgi/_db/
+
+RUN chown -R pipeline_user ${main}/
 
 USER pipeline_user
 
@@ -84,9 +90,11 @@ RUN ln -s ${main}/data/core_genomes/ core_genomes
 
 RUN ln -s ${main}/data/references/ references
 
-RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "PRJEB12011[BIOPROJECT] AND \"Mycobacterium tuberculosis complex\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" > PRJEB12011_Mycobacterium-tuberculosis.tsv'
+RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "PRJEB12011[BIOPROJECT] AND \"Mycobacterium tuberculosis complex\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 2 > PRJEB12011_Mycobacterium-tuberculosis.tsv'
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_no_st.svg phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx resistance/m_tuberculosis_resistance_genes_4_db_mutations_summary.xlsx typing/freebayes_joint_genotyping/cgMLST/bwa/vcfs/1633-10_-_3634-13_in_snp.vcf typing/gatk_gvcfs/full_genome_3634-13_assembled_genome/bwa/distances_in_snp_mst_no_st.svg --config minimum_spanning_tree_size=10 sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/rgi_summary.xlsx --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis"
+
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_no_st.svg phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg resistance/mykrobe_summary.xlsx resistance/m_tuberculosis_resistance_genes_4_db_mutations_summary.xlsx typing/freebayes_joint_genotyping/cgMLST/bwa/vcfs/1633-10_-_3634-13_in_snp.vcf typing/gatk_gvcfs/full_genome_3634-13_assembled_genome/bwa/distances_in_snp_mst_no_st.svg --config minimum_spanning_tree_size=10 sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis"
 
 
 
