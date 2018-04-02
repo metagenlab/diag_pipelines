@@ -16,10 +16,8 @@ rule merge_rgi_or_mykrobe_xlsx:
         xlsx = expand("samples/{sample}/resistance/{{software}}.xlsx", sample=read_naming.keys())
     output:
         "resistance/{software,[A-Z,a-z]+}_summary.xlsx"
-    shell:
-        """
-        scripts/merge_non_empty_results.py
-        """
+    script:
+        "scripts/merge_non_empty_results.py"
 
 
         
