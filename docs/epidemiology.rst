@@ -12,7 +12,10 @@ Parameters
 
 * ``minimum_coverage_for_calling``: minimum of coverage for considering a genomic position when counting differences between samples. Any position (whether the genotype is identical to the reference, ie `GT=0` in the vcf, or different, ie `GT=1`) having a lower coverage will be masked.
 * ``minimum_alternate_fraction_for_calling``: minimum ratio of observations favouring an alternative allele over observations favouring the reference allele. Any position (`GT=0` or `GT=1`) not meeting this criteria will also be masked.
-
+* ``snp_threshold``: pairs of samples having less than this number of SNP differences will be linked in the final minimum spanning tree
+* ``minimum_spanning_tree_size``: size of the minimum spanning tree image, default is ``10``
+* ``phylogeny_image_size``: size of the phylogeny image, default is 800
+* ``species``
   
 --------------------
 Available Genotypers
