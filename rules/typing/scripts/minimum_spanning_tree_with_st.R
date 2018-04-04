@@ -86,7 +86,7 @@ for (i in 1:length(uniq_sts)){
 
 
 
-svglite(snakemake@output[["mst"]], height=snakemake@params["mst_size"], width=snakemake@params["mst_size"])
+svglite(snakemake@output[["mst"]], height=as.numeric(snakemake@params["mst_size"]), width=as.numeric(snakemake@params["mst_size"]))
 par(mar=c(0,8,0,0))
 
 

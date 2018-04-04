@@ -52,7 +52,6 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
         gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[header]}) --variant ${{var}} ${{acc}} &> {log}
         """
 
-
 rule merge_gvcf_files_with_CombineGVCFs_GATK:
     conda:
         pipeline_path + "envs/gatk.yaml"
@@ -78,7 +77,7 @@ rule genotype_with_GenotypeGVCFs_GATK:
         combined = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/combined.vcf",
         quality = "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
     output:
-        raw="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf",
+        raw = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf",
     log:
         logging_folder + "gatk_gvcfs/full_genome_{ref}/{mapping_method}/genotype_gvcf.txt",
     shell:
