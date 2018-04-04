@@ -10,6 +10,8 @@ Parameters
 ----------
 
 * ``virulence_factors``: file with list of uniprot accession of virulence factors. An example is available in the folder ``data/staph/db/``
+* ``virulence_percentage_identity_cutoff``
+* ``virulence_coverage_cutoff``
 
 ------------
 Deliverables
