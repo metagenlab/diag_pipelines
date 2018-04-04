@@ -15,7 +15,7 @@ graph <- graph.adjacency(matrix, mode="undirected", weighted=TRUE, diag=FALSE)
 graph <- set_vertex_attr(graph, "name", value=gsub("X", "", vertex_attr(graph, "name")))
 
 
-sts <- all_sts[vertex_attr(graph, "name"), 2]
+sts <- sample_sts[vertex_attr(graph, "name"), 2]
 sts[sts == "-"] <- NA
 graph <- set_vertex_attr(graph, "ST", value=sts)
 
