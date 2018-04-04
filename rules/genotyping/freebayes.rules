@@ -35,3 +35,23 @@ rule genotype_with_freebayes_on_all_samples:
         """
         freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads} --ploidy 1 --min-base-quality 20 --genotype-qualities --fasta-reference {input[ref]} --haplotype-length -1 {input[bams]}  > {output[vcf]} 2> {log}
         """
+
+
+rule genotype_with_freebayes_one_sample_second_pass:
+    conda:
+        pipeline_path + "envs/freebayes.yaml"
+    input:
+        bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
+        bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai", 
+        ref = "references/{ref}/genome_fasta.fasta",
+        ref_fai = "references/{ref}/genome_fasta.fasta.fai",
+        quality = "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
+        variants = "typing/freebayes_two_pass/full_genome_{ref}/{mapping_method}/positions.vcf",
+    output:
+        vcf = temp("samples/{sample}/typing/freebayes/second_pass/full_genome_{ref}/{mapping_method}/genotyping.vcf")
+    log:
+        logging_folder + "samples/{sample}/typing/freebayes/second_pass/full_genome_{ref}/{mapping_method}/genotyping.txt"
+    shell:
+        """
+        freebayes --ploidy 1 --min-base-quality 20 --genotype-qualities --fasta-reference {input[ref]} --haplotype-length -1 --variant-input {input[variants]} --vcf {output[vcf]} {input[bam]} 2> {log}
+        """

@@ -22,3 +22,29 @@ rule merge_all_samples_entries_into_vcf:
         """
         bcftools merge {input[vfcs]} > {output[joint_genotype_vcf]}
         """
+
+rule merge_all_vcf_freebayes_first_pass:
+    conda:
+        pipeline_path + "envs/bcftools.yaml"
+    input:
+        vfcs = expand("samples/{sample}/typing/freebayes/first_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz", sample=list(read_naming.keys())),
+        vfcs_tbi = expand("samples/{sample}/typing/freebayes/first_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz.tbi", sample=list(read_naming.keys())),
+    output:
+        merged_vcf = "typing/freebayes_two_pass/full_genome_{ref}/{mapping_method}/positions.vcf",
+    shell:
+        """
+        bcftools merge {input[vfcs]} > {output[joint_genotype_vcf]}
+        """
+
+rule merge_freebayes_second_pass:
+    conda:
+        pipeline_path + "envs/bcftools.yaml"
+    input:
+        vfcs = expand("samples/{sample}/typing/freebayes/second_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz", sample=list(read_naming.keys())),
+        vfcs_tbi = expand("samples/{sample}/typing/freebayes/second_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz.tbi", sample=list(read_naming.keys())),
+    output:
+        merged_vcf = "typing/freebayes_two_pass/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf",
+    shell:
+        """
+        bcftools merge {input[vfcs]} > {output[joint_genotype_vcf]}
+        """
