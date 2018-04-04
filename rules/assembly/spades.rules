@@ -1,9 +1,9 @@
 rule correct_error_paired_reads_with_spades:
     conda:
-        "../../envs/spades.yaml"
+        pipeline_path + "envs/spades.yaml"
     input:
-        ancient("samples/{sample}/reads/trimmed/R1_paired.fastq"),
-        ancient("samples/{sample}/reads/trimmed/R2_paired.fastq")
+        R1_trimmed = "samples/{sample}/reads/trimmed/R1_paired.fastq",
+        R2_trimmed = "samples/{sample}/reads/trimmed/R2_paired.fastq",
     output:
         temp("samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz"),
         temp("samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
@@ -12,31 +12,31 @@ rule correct_error_paired_reads_with_spades:
         logging_folder+"samples/{sample}/logs/spades_read_correction.txt"
     shell:
          """
-         spades.py -1 {input[0]} -2 {input[1]} --only-error-correction -o $( dirname $(dirname {output[0]})) > {log} 
+         spades.py -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} --only-error-correction -o $( dirname $(dirname {output[0]})) > {log} 
          """
 
 rule correct_error_single_reads_with_spades:
     conda:
-        "../../envs/spades.yaml"
+        pipeline_path + "envs/spades.yaml"
     input:
-        "samples/{sample}/reads/trimmed/single.fastq",
+        single_trimmed = "samples/{sample}/reads/trimmed/single.fastq",
     output:
         temp("samples/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz")
     log:
         logging_folder+"samples/{sample}/logs/spades_read_correction.txt"
     shell:
          """
-         spades.py -s {input[0]} --only-error-correction -o $( dirname $(dirname {output[0]})) > {log} 
+         spades.py -s {input[single_trimmed]} --only-error-correction -o $( dirname $(dirname {output[0]})) > {log} 
          """
 
          
 rule assemble_genome_paired_reads_with_spades:
     conda:
-        "../../envs/spades.yaml"
+        pipeline_path + "envs/spades.yaml"
     input:
         "samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
         "samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
-        "samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz"
+        "samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz",
     output:
         "samples/{sample}/assembly/spades/contigs.fasta"
     log:
@@ -51,7 +51,7 @@ rule assemble_genome_paired_reads_with_spades:
 
 rule assemble_genome_single_reads_with_spades:
     conda:
-        "../../envs/spades.yaml"
+        pipeline_path + "envs/spades.yaml"
     input:
         "samples/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz",
     output:
