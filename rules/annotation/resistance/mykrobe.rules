@@ -14,7 +14,12 @@ rule search_resistance_paired_reads_with_mykrobe:
         logging_folder + "samples/{sample}/resistance/mykrobe.txt"
     shell:
         """
-        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
+        if [ "{params.species}" = "staph"]
+        then
+            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+        else
+            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
+        fi
         """
         
 rule search_resistance_single_reads_with_mykrobe:
@@ -32,7 +37,12 @@ rule search_resistance_single_reads_with_mykrobe:
         logging_folder + "samples/{sample}/resistance/mykrobe.txt"
     shell:
         """
-        mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
+        if [ "{params.species}" = "staph"]
+        then
+            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+        else
+            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
+        fi
         """
 
 rule generate_mykrobe_tsv_file_from_json_file:
