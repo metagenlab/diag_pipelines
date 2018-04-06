@@ -45,14 +45,20 @@ Calculating differences
 
 .. figure:: differences.svg
 
-   Calculating differences between samples and reference
+   Calculating differences between pairs of samples and samples and reference
 	    
 After the filtering has been performed, differences in snps are calculated between samples and against the reference. Every comparison is pairwise. At each position, if any of the two genotype is unknown because of the filtering (``GT="."``), this position will not be counted as a difference. Once every distances have been computed, they are agregated in a single file, transformed to a matrix and finally to a minimum spanning tree image with the ``igraph`` R package.
 
 ---------
 Phylogeny
 ---------
-After the filtering has been performed, the SNPs of each samples are replaced in a 
+
+
+.. figure:: phylogeny.svg
+
+   Steps to create phylogeny from the filtered genotype positions
+
+After the filtering has been performed, the SNPs of each samples are replaced in the reference fasta file. However, the unknown positions are replace with ``N``s. Every sequence is then concatenated and a simple phylogeny is calculated with RAxML, without partitions, with the GTRCAT model. If a MLST scheme is available for the species, the label of each sample can show its ST. 
 
 ------------
 Deliverables
