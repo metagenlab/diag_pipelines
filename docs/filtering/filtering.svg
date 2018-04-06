@@ -12,9 +12,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="995pt"
-   height="1441pt"
-   viewBox="0 0 994.80336 1441"
+   width="740pt"
+   height="955pt"
+   viewBox="0 0 739.85376 955"
    version="1.1"
    id="svg1200"
    sodipodi:docname="filtering.svg"
@@ -42,15 +42,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1056"
+     inkscape:window-width="1080"
+     inkscape:window-height="1896"
      id="namedview1202"
      showgrid="false"
-     inkscape:zoom="0.21473699"
-     inkscape:cx="1553.5323"
-     inkscape:cy="1167.3893"
-     inkscape:window-x="0"
-     inkscape:window-y="353"
+     inkscape:zoom="0.399696"
+     inkscape:cx="610.76609"
+     inkscape:cy="-65.322189"
+     inkscape:window-x="1920"
+     inkscape:window-y="24"
      inkscape:window-maximized="1"
      inkscape:current-layer="graph0"
      fit-margin-top="0"
@@ -60,7 +60,7 @@
   <g
      id="graph0"
      class="graph"
-     transform="translate(-1527.75,1440)">
+     transform="translate(-1594.0983,1440)">
     <title
        id="title2">snakemake_dag</title>
     <!-- 0 -->
@@ -91,81 +91,8 @@
     <!-- 51 -->
     <!-- 4&#45;&gt;51 -->
     <!-- 5 -->
-    <g
-       id="node6"
-       class="node">
-      <title
-         id="title203">5</title>
-      <path
-         d="m 1835.5,-306 c 0,0 -295,0 -295,0 -6,0 -12,6 -12,12 0,0 0,39 0,39 0,6 6,12 12,12 0,0 295,0 295,0 6,0 12,-6 12,-12 0,0 0,-39 0,-39 0,-6 -6,-12 -12,-12"
-         id="path205"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#d87556;stroke-width:2" />
-      <text
-         x="1688"
-         y="-294"
-         font-size="10.00"
-         id="text207"
-         style="font-size:10px;font-family:sans;text-anchor:middle">calculate_pairwise_distances_by_type</text>
-      <text
-         x="1688"
-         y="-283"
-         font-size="10.00"
-         id="text209"
-         style="font-size:10px;font-family:sans;text-anchor:middle">any_analysis: typing/freebayes_joint_genotyping/cgMLST/bwa</text>
-      <text
-         x="1688"
-         y="-272"
-         font-size="10.00"
-         id="text211"
-         style="font-size:10px;font-family:sans;text-anchor:middle">sample1: S1</text>
-      <text
-         x="1688"
-         y="-261"
-         font-size="10.00"
-         id="text213"
-         style="font-size:10px;font-family:sans;text-anchor:middle">sample2: S2</text>
-      <text
-         x="1688"
-         y="-250"
-         font-size="10.00"
-         id="text215"
-         style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
-    </g>
     <!-- 34 -->
-    <g
-       id="node35"
-       class="node">
-      <title
-         id="title218">34</title>
-      <path
-         d="m 2149,-207 c 0,0 -248,0 -248,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 248,0 248,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path220"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#88d856;stroke-width:2" />
-      <text
-         x="2025"
-         y="-186.5"
-         font-size="10.00"
-         id="text222"
-         style="font-size:10px;font-family:sans;text-anchor:middle">agregate_distances_from_joint_genotyping_by_type</text>
-    </g>
     <!-- 5&#45;&gt;34 -->
-    <g
-       id="edge57"
-       class="edge">
-      <title
-         id="title225">5-&gt;34</title>
-      <path
-         d="m 1811.57,-242.882 c 45.12,11.18 94.88,23.509 134.99,33.448"
-         id="path227"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="1956.28,-207.026 1945.73,-206.034 1947.42,-212.829 "
-         id="polygon229"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 6 -->
     <!-- 11 -->
     <!-- 6&#45;&gt;11 -->
@@ -269,7 +196,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="1822,-1218.1 1818.5,-1228.1 1825.5,-1228.1 "
+         points="1825.5,-1228.1 1822,-1218.1 1818.5,-1228.1 "
          id="polygon406"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -327,7 +254,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2141.52,-1146.1 2133.04,-1152.46 2138.85,-1156.36 "
+         points="2138.85,-1156.36 2141.52,-1146.1 2133.04,-1152.46 "
          id="polygon429"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -400,7 +327,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="1976.37,-1002.12 1965.87,-1003.6 1969.09,-1009.82 "
+         points="1969.09,-1009.82 1976.37,-1002.12 1965.87,-1003.6 "
          id="polygon479"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -436,7 +363,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="1845.21,-1290.1 1851.19,-1298.85 1855.34,-1293.22 "
+         points="1855.34,-1293.22 1845.21,-1290.1 1851.19,-1298.85 "
          id="polygon507"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -476,7 +403,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="1988.79,-1290.1 1978.66,-1293.22 1982.81,-1298.85 "
+         points="1982.81,-1298.85 1988.79,-1290.1 1978.66,-1293.22 "
          id="polygon523"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -536,7 +463,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2047.67,-842.104 2040.51,-849.917 2046.95,-852.675 "
+         points="2046.95,-852.675 2047.67,-842.104 2040.51,-849.917 "
          id="polygon560"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -588,7 +515,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2019.43,-770.09 2014.16,-779.278 2021.04,-780.562 "
+         points="2021.04,-780.562 2019.43,-770.09 2014.16,-779.278 "
          id="polygon580"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -618,148 +545,16 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2083.03,-1218.1 2072.92,-1221.27 2077.1,-1226.88 "
+         points="2077.1,-1226.88 2083.03,-1218.1 2072.92,-1221.27 "
          id="polygon687"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
     <!-- 27 -->
-    <g
-       id="node28"
-       class="node">
-      <title
-         id="title690">27</title>
-      <path
-         d="m 2015,-378 c 0,0 -40,0 -40,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 40,0 40,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path692"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#56d8d0;stroke-width:2" />
-      <text
-         x="1995"
-         y="-357.5"
-         font-size="10.00"
-         id="text694"
-         style="font-size:10px;font-family:sans;text-anchor:middle">index_vcf</text>
-    </g>
     <!-- 27&#45;&gt;5 -->
-    <g
-       id="edge7"
-       class="edge">
-      <title
-         id="title697">27-&gt;5</title>
-      <path
-         d="m 1962.73,-350.222 c -36.24,9.855 -97.22,26.44 -152.53,41.485"
-         id="path699"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="1800.3,-306.045 1809.04,-312.047 1810.87,-305.293 "
-         id="polygon701"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 46 -->
-    <g
-       id="node47"
-       class="node">
-      <title
-         id="title704">46</title>
-      <path
-         d="m 2172.5,-300.5 c 0,0 -295,0 -295,0 -6,0 -12,6 -12,12 0,0 0,28 0,28 0,6 6,12 12,12 0,0 295,0 295,0 6,0 12,-6 12,-12 0,0 0,-28 0,-28 0,-6 -6,-12 -12,-12"
-         id="path706"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#d87556;stroke-width:2" />
-      <text
-         x="2025"
-         y="-288.5"
-         font-size="10.00"
-         id="text708"
-         style="font-size:10px;font-family:sans;text-anchor:middle">calculate_distance_with_ref_by_type</text>
-      <text
-         x="2025"
-         y="-277.5"
-         font-size="10.00"
-         id="text710"
-         style="font-size:10px;font-family:sans;text-anchor:middle">any_analysis: typing/freebayes_joint_genotyping/cgMLST/bwa</text>
-      <text
-         x="2025"
-         y="-266.5"
-         font-size="10.00"
-         id="text712"
-         style="font-size:10px;font-family:sans;text-anchor:middle">sample: S2</text>
-      <text
-         x="2025"
-         y="-255.5"
-         font-size="10.00"
-         id="text714"
-         style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
-    </g>
     <!-- 27&#45;&gt;46 -->
-    <g
-       id="edge76"
-       class="edge">
-      <title
-         id="title717">27-&gt;46</title>
-      <path
-         d="m 2001.22,-341.699 c 3.25,9.07 7.37,20.517 11.25,31.331"
-         id="path719"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2015.95,-300.701 2009.27,-308.929 2015.86,-311.296 "
-         id="polygon721"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 54 -->
-    <g
-       id="node55"
-       class="node">
-      <title
-         id="title724">54</title>
-      <path
-         d="m 2509.5,-300.5 c 0,0 -295,0 -295,0 -6,0 -12,6 -12,12 0,0 0,28 0,28 0,6 6,12 12,12 0,0 295,0 295,0 6,0 12,-6 12,-12 0,0 0,-28 0,-28 0,-6 -6,-12 -12,-12"
-         id="path726"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#d87556;stroke-width:2" />
-      <text
-         x="2362"
-         y="-288.5"
-         font-size="10.00"
-         id="text728"
-         style="font-size:10px;font-family:sans;text-anchor:middle">calculate_distance_with_ref_by_type</text>
-      <text
-         x="2362"
-         y="-277.5"
-         font-size="10.00"
-         id="text730"
-         style="font-size:10px;font-family:sans;text-anchor:middle">any_analysis: typing/freebayes_joint_genotyping/cgMLST/bwa</text>
-      <text
-         x="2362"
-         y="-266.5"
-         font-size="10.00"
-         id="text732"
-         style="font-size:10px;font-family:sans;text-anchor:middle">sample: S1</text>
-      <text
-         x="2362"
-         y="-255.5"
-         font-size="10.00"
-         id="text734"
-         style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
-    </g>
     <!-- 27&#45;&gt;54 -->
-    <g
-       id="edge85"
-       class="edge">
-      <title
-         id="title737">27-&gt;54</title>
-      <path
-         d="m 2027.25,-351.663 c 47.62,10.835 139.26,31.685 214.63,48.834"
-         id="path739"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2251.93,-300.542 2241.41,-299.348 2242.96,-306.174 "
-         id="polygon741"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 52 -->
     <g
        id="node53"
@@ -796,7 +591,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="1786.48,-1146.1 1789.15,-1156.36 1794.96,-1152.46 "
+         points="1794.96,-1152.46 1786.48,-1146.1 1789.15,-1156.36 "
          id="polygon757"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -817,68 +612,12 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2034.71,-770.257 2035.04,-780.847 2041.57,-778.334 "
+         points="2041.57,-778.334 2034.71,-770.257 2035.04,-780.847 "
          id="polygon799"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
     <!-- 55 -->
-    <g
-       id="node56"
-       class="node">
-      <title
-         id="title802">55</title>
-      <path
-         d="m 2117,-135 c 0,0 -184,0 -184,0 -6,0 -12,6 -12,12 0,0 0,39 0,39 0,6 6,12 12,12 0,0 184,0 184,0 6,0 12,-6 12,-12 0,0 0,-39 0,-39 0,-6 -6,-12 -12,-12"
-         id="path804"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#56d8b9;stroke-width:2" />
-      <text
-         x="2025"
-         y="-123"
-         font-size="10.00"
-         id="text806"
-         style="font-size:10px;font-family:sans;text-anchor:middle">distance_columns_to_matrix</text>
-      <text
-         x="2025"
-         y="-112"
-         font-size="10.00"
-         id="text808"
-         style="font-size:10px;font-family:sans;text-anchor:middle">core_genome_or_full_genome: cgMLST</text>
-      <text
-         x="2025"
-         y="-101"
-         font-size="10.00"
-         id="text810"
-         style="font-size:10px;font-family:sans;text-anchor:middle">distance_type: distances_in_snp</text>
-      <text
-         x="2025"
-         y="-90"
-         font-size="10.00"
-         id="text812"
-         style="font-size:10px;font-family:sans;text-anchor:middle">mapping_method: bwa</text>
-      <text
-         x="2025"
-         y="-79"
-         font-size="10.00"
-         id="text814"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
-    </g>
     <!-- 34&#45;&gt;55 -->
-    <g
-       id="edge87"
-       class="edge">
-      <title
-         id="title817">34-&gt;55</title>
-      <path
-         d="m 2025,-170.699 c 0,7.428 0,16.449 0,25.411"
-         id="path819"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2025,-135.283 2021.5,-145.283 2028.5,-145.283 "
-         id="polygon821"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 35 -->
     <g
        id="node36"
@@ -916,45 +655,7 @@
          style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
     </g>
     <!-- 50 -->
-    <g
-       id="node51"
-       class="node">
-      <title
-         id="title837">50</title>
-      <path
-         d="m 2201.5,-450 c 0,0 -353,0 -353,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 353,0 353,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path839"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#56d8c9;stroke-width:2" />
-      <text
-         x="2025"
-         y="-435"
-         font-size="10.00"
-         id="text841"
-         style="font-size:10px;font-family:sans;text-anchor:middle">compress_vcf</text>
-      <text
-         x="2025"
-         y="-424"
-         font-size="10.00"
-         id="text843"
-         style="font-size:10px;font-family:sans;text-anchor:middle">any_vcf: typing/freebayes_joint_genotyping/cgMLST/bwa/all_samples_snp</text>
-    </g>
     <!-- 35&#45;&gt;50 -->
-    <g
-       id="edge81"
-       class="edge">
-      <title
-         id="title846">35-&gt;50</title>
-      <path
-         d="m 2025,-485.891 c 0,8.051 0,17.011 0,25.233"
-         id="path848"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2025,-450.411 2021.5,-460.411 2028.5,-460.411 "
-         id="polygon850"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 36 -->
     <!-- 36&#45;&gt;14 -->
     <!-- 37&#45;&gt;18 -->
@@ -963,23 +664,6 @@
     <!-- 44 -->
     <!-- 38&#45;&gt;44 -->
     <!-- 39 -->
-    <g
-       id="node40"
-       class="node">
-      <title
-         id="title904">39</title>
-      <path
-         d="m 2122,-36 c 0,0 -194,0 -194,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 194,0 194,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path906"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#5663d8;stroke-width:2" />
-      <text
-         x="2025"
-         y="-15.5"
-         font-size="10.00"
-         id="text908"
-         style="font-size:10px;font-family:sans;text-anchor:middle">compute_minimum_spanning_tree_no_st</text>
-    </g>
     <!-- 40 -->
     <g
        id="node41"
@@ -1016,7 +700,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2019.43,-538.09 2014.16,-547.278 2021.04,-548.562 "
+         points="2021.04,-548.562 2019.43,-538.09 2014.16,-547.278 "
          id="polygon924"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -1050,7 +734,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2047.67,-610.104 2040.51,-617.917 2046.95,-620.675 "
+         points="2046.95,-620.675 2047.67,-610.104 2040.51,-617.917 "
          id="polygon938"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -1062,21 +746,6 @@
     <!-- 49 -->
     <!-- 45&#45;&gt;49 -->
     <!-- 46&#45;&gt;34 -->
-    <g
-       id="edge58"
-       class="edge">
-      <title
-         id="title992">46-&gt;34</title>
-      <path
-         d="m 2025,-248.447 c 0,9.807 0,21.086 0,31.104"
-         id="path994"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2025,-207.097 2021.5,-217.097 2028.5,-217.097 "
-         id="polygon996"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 47&#45;&gt;17 -->
     <g
        id="edge28"
@@ -1089,7 +758,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="1917,-1362.32 1913.5,-1372.32 1920.5,-1372.32 "
+         points="1920.5,-1372.32 1917,-1362.32 1913.5,-1372.32 "
          id="polygon1003"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -1103,69 +772,9 @@
     <!-- 48&#45;&gt;47 -->
     <!-- 49&#45;&gt;6 -->
     <!-- 50&#45;&gt;5 -->
-    <g
-       id="edge8"
-       class="edge">
-      <title
-         id="title1073">50-&gt;5</title>
-      <path
-         d="m 1987.97,-413.914 c -53.75,24.804 -154.59,71.334 -224.43,103.557"
-         id="path1075"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="1754.33,-306.106 1761.94,-313.474 1764.88,-307.118 "
-         id="polygon1077"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 50&#45;&gt;27 -->
-    <g
-       id="edge46"
-       class="edge">
-      <title
-         id="title1080">50-&gt;27</title>
-      <path
-         d="m 2017.58,-413.697 c -3.37,7.884 -7.45,17.393 -11.2,26.151"
-         id="path1082"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2002.33,-378.104 2003.05,-388.675 2009.49,-385.917 "
-         id="polygon1084"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 50&#45;&gt;46 -->
-    <g
-       id="edge77"
-       class="edge">
-      <title
-         id="title1087">50-&gt;46</title>
-      <path
-         d="m 2029.46,-413.953 c 2.48,10.323 5.29,23.8 6.54,35.953 2.29,22.335 -0.3,47.395 -3.55,67.145"
-         id="path1089"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2030.67,-300.767 2028.96,-311.224 2035.86,-310.003 "
-         id="polygon1091"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 50&#45;&gt;54 -->
-    <g
-       id="edge86"
-       class="edge">
-      <title
-         id="title1094">50-&gt;54</title>
-      <path
-         d="m 2062.03,-413.914 c 56.94,26.276 166.73,76.935 236.52,109.137"
-         id="path1096"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2307.7,-300.555 2297.15,-301.567 2300.09,-307.923 "
-         id="polygon1098"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 51&#45;&gt;41 -->
     <!-- 51&#45;&gt;45 -->
     <!-- 52&#45;&gt;15 -->
@@ -1180,7 +789,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="1849.69,-1074.19 1839.5,-1077.11 1843.54,-1082.82 "
+         points="1843.54,-1082.82 1849.69,-1074.19 1839.5,-1077.11 "
          id="polygon1119"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -1196,43 +805,13 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2001.7,-1002.13 1992.17,-1006.76 1997.13,-1011.69 "
+         points="1997.13,-1011.69 2001.7,-1002.13 1992.17,-1006.76 "
          id="polygon1126"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
     <!-- 53&#45;&gt;11 -->
     <!-- 54&#45;&gt;34 -->
-    <g
-       id="edge59"
-       class="edge">
-      <title
-         id="title1136">54-&gt;34</title>
-      <path
-         d="m 2260.89,-248.447 c -50.41,12.49 -110.45,27.367 -157.35,38.986"
-         id="path1138"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2093.74,-207.033 2102.61,-212.836 2104.29,-206.041 "
-         id="polygon1140"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 55&#45;&gt;39 -->
-    <g
-       id="edge65"
-       class="edge">
-      <title
-         id="title1143">55-&gt;39</title>
-      <path
-         d="m 2025,-71.8818 c 0,8.4144 0,17.4796 0,25.687"
-         id="path1145"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="2025,-36.0265 2021.5,-46.0265 2028.5,-46.0264 "
-         id="polygon1147"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 56 -->
     <g
        id="node57"
@@ -1263,7 +842,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2038.92,-1002.26 2040.69,-1012.7 2046.82,-1009.32 "
+         points="2046.82,-1009.32 2038.92,-1002.26 2040.69,-1012.7 "
          id="polygon1161"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -1279,7 +858,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2025,-914.411 2021.5,-924.411 2028.5,-924.411 "
+         points="2028.5,-924.411 2025,-914.411 2021.5,-924.411 "
          id="polygon1168"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -1295,7 +874,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2025,-682.411 2021.5,-692.411 2028.5,-692.411 "
+         points="2028.5,-692.411 2025,-682.411 2021.5,-692.411 "
          id="polygon1175"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -1311,7 +890,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2088.77,-1074.1 2094.26,-1083.16 2098.71,-1077.76 "
+         points="2098.71,-1077.76 2088.77,-1074.1 2094.26,-1083.16 "
          id="polygon1182"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -1327,7 +906,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2067.61,-1002 2073.73,-1010.65 2077.79,-1004.95 "
+         points="2077.79,-1004.95 2067.61,-1002 2073.73,-1010.65 "
          id="polygon1189"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
@@ -1343,7 +922,7 @@
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="2034.71,-538.257 2035.04,-548.847 2041.57,-546.334 "
+         points="2041.57,-546.334 2034.71,-538.257 2035.04,-548.847 "
          id="polygon1196"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
