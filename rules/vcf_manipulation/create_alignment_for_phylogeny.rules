@@ -12,7 +12,7 @@ rule merge_multiallelic_by_sample:
         """
 
 
-rule extract_snps:
+rule extract_alternative_positions_and_unknown_positions:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
@@ -28,7 +28,7 @@ rule extract_snps:
         """
         
 
-rule create_consensus_sequence:
+rule create_consensus_sequence_by_sample:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
@@ -45,7 +45,7 @@ rule create_consensus_sequence:
         """
 
 
-rule concatenate_consensus_fasta_files:
+rule concatenate_consensus_fasta_files_all_samples:
     input:
         fasta = expand("samples/{sample}/alignment/{{snp_caller}}/{{core_genome_or_full_genome}}/{{mapping_method}}/consensus.fa", sample=read_naming.keys()),
         ref = "references/{core_genome_or_full_genome}/genome_fasta.fasta",

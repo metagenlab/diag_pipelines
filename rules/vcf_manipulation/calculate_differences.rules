@@ -31,8 +31,8 @@ rule calculate_distance_with_ref_by_type:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        joint_genotype_vcf="{any_analysis}/all_samples_{type}.vcf",
-        joint_genotype_vcf_tbi="{any_analysis}/all_samples_{type}.vcf",
+        joint_genotype_vcf="{any_analysis}/all_samples_{type}.vcf.gz",
+        joint_genotype_vcf_tbi="{any_analysis}/all_samples_{type}.vcf.gz.tbi",
     output:
         dist_ref=temp("{any_analysis}/distances/to_ref/{sample}_distance_in_{type}.txt"),
     shell:
