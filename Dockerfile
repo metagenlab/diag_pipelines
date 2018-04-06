@@ -96,7 +96,7 @@ RUN ln -s ${main}/data/references/ references
 
 RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "PRJEB7847[BIOPROJECT] AND \"Staphylococcus aureus\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 2 > PRJEB7847_Staphylococcus-aureus.tsv'
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/mykrobe_summary.xlsx resistance/rgi_summary.xlsx virulence_summary.xlsx --config sra_samples=PRJEB7847_Staphylococcus-aureus.tsv species="Staphylococcus_aureus"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/mykrobe_summary.xlsx resistance/rgi_summary.xlsx virulence_summary.xlsx --config sra_samples=PRJEB7847_Staphylococcus-aureus.tsv species="Staphylococcus_aureus" virulence_factors=${pipeline_folder}/data/staph/db/virulence_factors.tsv virulence_percentage_identity_cutoff=80 virulence_coverage_cutoff=70
 
 RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "PRJEB7847[BIOPROJECT] AND \"Staphylococcus aureus\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 5 > PRJEB7847_Staphylococcus-aureus.tsv'
 
@@ -136,7 +136,7 @@ RUN ln -s ${main}/data/core_genomes/ core_genomes
 
 RUN ln -s ${main}/data/references/ references
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/mykrobe_summary.xlsx quality/multiqc/assembly/multiqc_report.html contamination/distances.xlsx --config sra_samples=${pipeline_folder}/example_sra_samples.tsv species="Mycobacterium_tuberculosis" minimum_quality_base=15
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/mykrobe_summary.xlsx quality/multiqc/assembly/multiqc_report.html contamination/distances_formatted.xlsx --config sra_samples=${pipeline_folder}/example_sra_samples.tsv species="Mycobacterium_tuberculosis" minimum_quality_base=15
 
 WORKDIR ${main}/data/analysis/
 
