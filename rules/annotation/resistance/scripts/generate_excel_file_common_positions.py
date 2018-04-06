@@ -94,8 +94,11 @@ for j in db_combinations.keys():
     rrs = all_mutations.loc[(all_mutations.index=="rrs")]
     rrs = rrs.assign(Start = lambda x: (x.Position - 1))
     rrs = rrs.assign(End = lambda x: (x.Position))
+    promoters = all_mutations.loc[(all_mutations["Position"]<0)]
     only_cds[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_cds"], header=False, index=False, sep="\t")
     rrs[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_not_cds"], header=False, index=False, sep="\t")
+    promoters[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_not_cds"], header=False, index=False, sep="\t")
+
     writer.save()
 
 
