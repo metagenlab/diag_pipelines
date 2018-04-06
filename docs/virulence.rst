@@ -37,4 +37,4 @@ Parameters
 Deliverables
 ------------
 
-*  ``virulence_summary.xlsx``: summary of virulence proteins found in every samples.
+*  ``virulence_summary.xlsx``: summary of virulence proteins found in every samples (one per sheet).
