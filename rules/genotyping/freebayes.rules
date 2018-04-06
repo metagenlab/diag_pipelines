@@ -18,9 +18,10 @@ rule genotype_with_freebayes_for_resistance:
 
     
 rule genotype_with_freebayes_on_all_samples:
-    threads: 4
-    conda:
+    conda:        
         pipeline_path + "envs/freebayes.yaml"
+    threads:
+        16
     input:
         bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}_deduplicated_filtered.bam", sample=read_naming.keys()),
         bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}_deduplicated_filtered.bam.bai", sample=read_naming.keys()),
