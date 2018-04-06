@@ -1,0 +1,17 @@
+rule genotype_with_freebayes_one_sample:
+    conda:
+        pipeline_path + "envs/freebayes.yaml"
+    input:
+        bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
+        bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai", 
+        ref = "references/{ref}/genome_fasta.fasta",
+        ref_fai = "references/{ref}/genome_fasta.fasta.fai",
+        quality = "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
+    output:
+        vcf = "samples/{sample}/typing/freebayes/first_pass/full_genome_{ref}/{mapping_method}/genotyping.vcf"
+    log:
+        logging_folder + "samples/{sample}/typing/freebayes/first_pass/full_genome_{ref}/{mapping_method}/genotyping.vcf"
+    shell:
+        """
+        freebayes --ploidy 1 --min-base-quality 20 --genotype-qualities --fasta-reference {input[ref]} --haplotype-length -1 {input[bam]}  --vcf {output[vcf]} 2> {log}
+        """
