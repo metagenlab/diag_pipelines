@@ -5,6 +5,15 @@ Virulence
 
 Depends on the :ref:`assembly_quality` workflow.
 
+.. figure:: virulence.svg
+
+   Steps to identify virulence factors
+
+After the annotation of the genome, virulence factors are search by two different ways:
+
+* Factors longer than 50 amino acids are search by ``blastp`` over the proteome annotated by prokka
+* Factors shorter than 50 amino acids are search by ``tblastn`` directly over the contigs of the assembly
+
 ----------
 Parameters
 ----------
@@ -12,7 +21,7 @@ Parameters
 * ``virulence_factors``: file with list of uniprot accession of virulence factors. An example is available in the folder ``data/staph/db/``
   
 .. csv-table:: Virulence data example 
-   :header: "gene", "uniprot_accession", "description"
+   :header: "gene","uniprot_accession","description"
 
    "hla","P09616","Alpha-hemolysin"
    "hld","P0C1V1","Delta-hemolysin"
@@ -22,6 +31,7 @@ Parameters
 
 * ``virulence_percentage_identity_cutoff``: amino acid identity cut off for considering a match
 * ``virulence_coverage_cutoff``: coverage cut off for considering a match
+
 
 ------------
 Deliverables
