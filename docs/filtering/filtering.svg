@@ -12,15 +12,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="740pt"
-   height="723pt"
-   viewBox="0 0 740 723"
+   width="995pt"
+   height="1441pt"
+   viewBox="0 0 994.80336 1441"
    version="1.1"
-   id="svg668"
+   id="svg1200"
    sodipodi:docname="filtering.svg"
-   inkscape:version="0.92.2 (unknown)">
+   inkscape:version="0.92.3 (unknown)">
   <metadata
-     id="metadata674">
+     id="metadata1206">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -32,7 +32,7 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs672" />
+     id="defs1204" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -44,13 +44,13 @@
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
      inkscape:window-height="1056"
-     id="namedview670"
+     id="namedview1202"
      showgrid="false"
-     inkscape:zoom="0.45364619"
-     inkscape:cx="756.02985"
-     inkscape:cy="528.6872"
+     inkscape:zoom="0.21473699"
+     inkscape:cx="1553.5323"
+     inkscape:cy="1167.3893"
      inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-y="353"
      inkscape:window-maximized="1"
      inkscape:current-layer="graph0"
      fit-margin-top="0"
@@ -60,666 +60,1292 @@
   <g
      id="graph0"
      class="graph"
-     transform="translate(-72,722)">
+     transform="translate(-1527.75,1440)">
     <title
        id="title2">snakemake_dag</title>
     <!-- 0 -->
-    <!-- 21 -->
-    <!-- 0&#45;&gt;21 -->
-    <!-- 1 -->
-    <g
-       id="node2"
-       class="node">
-      <title
-         id="title27">1</title>
-      <path
-         d="m 633.5,-52 c 0,0 -273,0 -273,0 -6,0 -12,6 -12,12 0,0 0,28 0,28 0,6 6,12 12,12 0,0 273,0 273,0 6,0 12,-6 12,-12 0,0 0,-28 0,-28 0,-6 -6,-12 -12,-12"
-         id="path29"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#d85e56;stroke-width:2" />
-      <text
-         x="497"
-         y="-40"
-         font-size="10.00"
-         id="text31"
-         style="font-size:10px;font-family:sans;text-anchor:middle">extract_allele_by_type_from_freebayes_joint_genotyping</text>
-      <text
-         x="497"
-         y="-29"
-         font-size="10.00"
-         id="text33"
-         style="font-size:10px;font-family:sans;text-anchor:middle">mapping_method: bwa</text>
-      <text
-         x="497"
-         y="-18"
-         font-size="10.00"
-         id="text35"
-         style="font-size:10px;font-family:sans;text-anchor:middle">ref: 34528</text>
-      <text
-         x="497"
-         y="-7"
-         font-size="10.00"
-         id="text37"
-         style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
-    </g>
-    <!-- 2 -->
-    <!-- 3 -->
-    <!-- 2&#45;&gt;3 -->
-    <!-- 27 -->
-    <!-- 2&#45;&gt;27 -->
-    <!-- 8 -->
-    <!-- 3&#45;&gt;8 -->
-    <!-- 4 -->
-    <g
-       id="node5"
-       class="node">
-      <title
-         id="title95">4</title>
-      <path
-         d="m 421,-428 c 0,0 -336,0 -336,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 336,0 336,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path97"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#ced856;stroke-width:2" />
-      <text
-         x="253"
-         y="-413"
-         font-size="10.00"
-         id="text99"
-         style="font-size:10px;font-family:sans;text-anchor:middle">compress_vcf</text>
-      <text
-         x="253"
-         y="-402"
-         font-size="10.00"
-         id="text101"
-         style="font-size:10px;font-family:sans;text-anchor:middle">any_vcf: samples/S2/snps/freebayes_joint_genotyping/34528/bwa/freq</text>
-    </g>
-    <!-- 25 -->
-    <g
-       id="node26"
-       class="node">
-      <title
-         id="title104">25</title>
-      <path
-         d="m 465,-356 c 0,0 -40,0 -40,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 40,0 40,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path106"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#61d856;stroke-width:2" />
-      <text
-         x="445"
-         y="-335.5"
-         font-size="10.00"
-         id="text108"
-         style="font-size:10px;font-family:sans;text-anchor:middle">index_vcf</text>
-    </g>
-    <!-- 4&#45;&gt;25 -->
-    <g
-       id="edge36"
-       class="edge">
-      <title
-         id="title111">4-&gt;25</title>
-      <path
-         d="m 299.968,-391.876 c 31.656,11.541 73.035,26.627 103.489,37.73"
-         id="path113"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="404.738,-357.404 412.934,-350.691 402.341,-350.828 "
-         id="polygon115"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
     <!-- 29 -->
-    <g
-       id="node30"
-       class="node">
-      <title
-         id="title118">29</title>
-      <path
-         d="m 589,-284 c 0,0 -184,0 -184,0 -6,0 -12,6 -12,12 0,0 0,28 0,28 0,6 6,12 12,12 0,0 184,0 184,0 6,0 12,-6 12,-12 0,0 0,-28 0,-28 0,-6 -6,-12 -12,-12"
-         id="path120"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#d86e56;stroke-width:2" />
-      <text
-         x="497"
-         y="-272"
-         font-size="10.00"
-         id="text122"
-         style="font-size:10px;font-family:sans;text-anchor:middle">merge_all_samples_entries_into_vcf</text>
-      <text
-         x="497"
-         y="-261"
-         font-size="10.00"
-         id="text124"
-         style="font-size:10px;font-family:sans;text-anchor:middle">mapping_method: bwa</text>
-      <text
-         x="497"
-         y="-250"
-         font-size="10.00"
-         id="text126"
-         style="font-size:10px;font-family:sans;text-anchor:middle">ref: 34528</text>
-      <text
-         x="497"
-         y="-239"
-         font-size="10.00"
-         id="text128"
-         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
-    </g>
-    <!-- 4&#45;&gt;29 -->
-    <g
-       id="edge42"
-       class="edge">
-      <title
-         id="title131">4-&gt;29</title>
-      <path
-         d="m 280.99,-391.793 c 40.504,24.9 116.086,71.364 166.232,102.192"
-         id="path133"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="449.28,-292.444 455.966,-284.226 445.614,-286.481 "
-         id="polygon135"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
+    <!-- 0&#45;&gt;29 -->
+    <!-- 1 -->
+    <!-- 18 -->
+    <!-- 1&#45;&gt;18 -->
+    <!-- 25 -->
+    <!-- 1&#45;&gt;25 -->
+    <!-- 30 -->
+    <!-- 1&#45;&gt;30 -->
+    <!-- 2 -->
+    <!-- 10 -->
+    <!-- 2&#45;&gt;10 -->
+    <!-- 20 -->
+    <!-- 2&#45;&gt;20 -->
+    <!-- 3 -->
+    <!-- 32 -->
+    <!-- 3&#45;&gt;32 -->
+    <!-- 37 -->
+    <!-- 3&#45;&gt;37 -->
+    <!-- 4 -->
+    <!-- 41 -->
+    <!-- 4&#45;&gt;41 -->
+    <!-- 45 -->
+    <!-- 4&#45;&gt;45 -->
+    <!-- 51 -->
+    <!-- 4&#45;&gt;51 -->
     <!-- 5 -->
     <g
        id="node6"
        class="node">
       <title
-         id="title138">5</title>
+         id="title203">5</title>
       <path
-         d="m 569,-356 c 0,0 -40,0 -40,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 40,0 40,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path140"
+         d="m 1835.5,-306 c 0,0 -295,0 -295,0 -6,0 -12,6 -12,12 0,0 0,39 0,39 0,6 6,12 12,12 0,0 295,0 295,0 6,0 12,-6 12,-12 0,0 0,-39 0,-39 0,-6 -6,-12 -12,-12"
+         id="path205"
          inkscape:connector-curvature="0"
-         style="fill:none;stroke:#61d856;stroke-width:2" />
+         style="fill:none;stroke:#d87556;stroke-width:2" />
       <text
-         x="549"
-         y="-335.5"
+         x="1688"
+         y="-294"
          font-size="10.00"
-         id="text142"
-         style="font-size:10px;font-family:sans;text-anchor:middle">index_vcf</text>
+         id="text207"
+         style="font-size:10px;font-family:sans;text-anchor:middle">calculate_pairwise_distances_by_type</text>
+      <text
+         x="1688"
+         y="-283"
+         font-size="10.00"
+         id="text209"
+         style="font-size:10px;font-family:sans;text-anchor:middle">any_analysis: typing/freebayes_joint_genotyping/cgMLST/bwa</text>
+      <text
+         x="1688"
+         y="-272"
+         font-size="10.00"
+         id="text211"
+         style="font-size:10px;font-family:sans;text-anchor:middle">sample1: S1</text>
+      <text
+         x="1688"
+         y="-261"
+         font-size="10.00"
+         id="text213"
+         style="font-size:10px;font-family:sans;text-anchor:middle">sample2: S2</text>
+      <text
+         x="1688"
+         y="-250"
+         font-size="10.00"
+         id="text215"
+         style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
     </g>
-    <!-- 5&#45;&gt;29 -->
+    <!-- 34 -->
     <g
-       id="edge40"
+       id="node35"
+       class="node">
+      <title
+         id="title218">34</title>
+      <path
+         d="m 2149,-207 c 0,0 -248,0 -248,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 248,0 248,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path220"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#88d856;stroke-width:2" />
+      <text
+         x="2025"
+         y="-186.5"
+         font-size="10.00"
+         id="text222"
+         style="font-size:10px;font-family:sans;text-anchor:middle">agregate_distances_from_joint_genotyping_by_type</text>
+    </g>
+    <!-- 5&#45;&gt;34 -->
+    <g
+       id="edge57"
        class="edge">
       <title
-         id="title145">5-&gt;29</title>
+         id="title225">5-&gt;34</title>
       <path
-         d="m 537.46,-319.689 c -5.315,7.972 -11.812,17.717 -18.031,27.045"
-         id="path147"
+         d="m 1811.57,-242.882 c 45.12,11.18 94.88,23.509 134.99,33.448"
+         id="path227"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="522.297,-290.636 513.838,-284.257 516.473,-294.519 "
-         id="polygon149"
+         points="1956.28,-207.026 1945.73,-206.034 1947.42,-212.829 "
+         id="polygon229"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
     <!-- 6 -->
-    <!-- 22 -->
-    <!-- 6&#45;&gt;22 -->
+    <!-- 11 -->
+    <!-- 6&#45;&gt;11 -->
+    <!-- 42 -->
+    <!-- 6&#45;&gt;42 -->
     <!-- 7 -->
+    <!-- 47 -->
     <g
-       id="node8"
+       id="node48"
        class="node">
       <title
-         id="title175">7</title>
+         id="title280">47</title>
       <path
-         d="m 436.5,-644 c 0,0 -83,0 -83,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 83,0 83,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path177"
+         d="m 2012.5,-1439 c 0,0 -191,0 -191,0 -6,0 -12,6 -12,12 0,0 0,17 0,17 0,6 6,12 12,12 0,0 191,0 191,0 6,0 12,-6 12,-12 0,0 0,-17 0,-17 0,-6 -6,-12 -12,-12"
+         id="path282"
          inkscape:connector-curvature="0"
-         style="fill:none;stroke:#d86656;stroke-width:2" />
+         style="fill:none;stroke:#568ad8;stroke-width:2" />
       <text
-         x="395"
-         y="-623.5"
+         x="1917"
+         y="-1427"
          font-size="10.00"
-         id="text179"
-         style="font-size:10px;font-family:sans;text-anchor:middle">filter_on_coverage</text>
-    </g>
-    <!-- 16 -->
-    <g
-       id="node17"
-       class="node">
-      <title
-         id="title182">16</title>
-      <path
-         d="m 564,-572 c 0,0 -148,0 -148,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 148,0 148,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path184"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#9fd856;stroke-width:2" />
-      <text
-         x="490"
-         y="-557"
-         font-size="10.00"
-         id="text186"
-         style="font-size:10px;font-family:sans;text-anchor:middle">extract_sample_entry_from_vcf</text>
-      <text
-         x="490"
-         y="-546"
-         font-size="10.00"
-         id="text188"
-         style="font-size:10px;font-family:sans;text-anchor:middle">sample: S1</text>
-    </g>
-    <!-- 7&#45;&gt;16 -->
-    <g
-       id="edge26"
-       class="edge">
-      <title
-         id="title191">7-&gt;16</title>
-      <path
-         d="m 418.483,-607.697 c 12.08,8.901 26.971,19.874 40.033,29.498"
-         id="path193"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="460.813,-580.854 466.787,-572.104 456.66,-575.219 "
-         id="polygon195"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
-    <!-- 24 -->
-    <g
-       id="node25"
-       class="node">
-      <title
-         id="title198">24</title>
-      <path
-         d="m 374,-572 c 0,0 -148,0 -148,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 148,0 148,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path200"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#9fd856;stroke-width:2" />
-      <text
-         x="300"
-         y="-557"
-         font-size="10.00"
-         id="text202"
-         style="font-size:10px;font-family:sans;text-anchor:middle">extract_sample_entry_from_vcf</text>
-      <text
-         x="300"
-         y="-546"
-         font-size="10.00"
-         id="text204"
-         style="font-size:10px;font-family:sans;text-anchor:middle">sample: S2</text>
-    </g>
-    <!-- 7&#45;&gt;24 -->
-    <g
-       id="edge35"
-       class="edge">
-      <title
-         id="title207">7-&gt;24</title>
-      <path
-         d="m 371.517,-607.697 c -12.08,8.901 -26.971,19.874 -40.033,29.498"
-         id="path209"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="333.34,-575.219 323.213,-572.104 329.187,-580.854 "
-         id="polygon211"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
-    <!-- 31 -->
-    <g
-       id="node32"
-       class="node">
-      <title
-         id="title214">31</title>
-      <path
-         d="m 490.5,-721 c 0,0 -191,0 -191,0 -6,0 -12,6 -12,12 0,0 0,17 0,17 0,6 6,12 12,12 0,0 191,0 191,0 6,0 12,-6 12,-12 0,0 0,-17 0,-17 0,-6 -6,-12 -12,-12"
-         id="path216"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#70d856;stroke-width:2" />
-      <text
-         x="395"
-         y="-709"
-         font-size="10.00"
-         id="text218"
+         id="text284"
          style="font-size:10px;font-family:sans;text-anchor:middle">decompose_multiallelics_and_normalize</text>
       <text
-         x="395"
-         y="-698"
+         x="1917"
+         y="-1416"
          font-size="10.00"
-         id="text220"
+         id="text286"
          style="font-size:10px;font-family:sans;text-anchor:middle">mapping_method: bwa</text>
       <text
-         x="395"
-         y="-687"
+         x="1917"
+         y="-1405"
          font-size="10.00"
-         id="text222"
+         id="text288"
          style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
     </g>
-    <!-- 8&#45;&gt;31 -->
+    <!-- 7&#45;&gt;47 -->
+    <!-- 8 -->
+    <!-- 8&#45;&gt;11 -->
+    <!-- 53 -->
+    <!-- 8&#45;&gt;53 -->
     <!-- 9 -->
-    <!-- 9&#45;&gt;2 -->
-    <!-- 10 -->
+    <!-- 9&#45;&gt;4 -->
+    <!-- 9&#45;&gt;11 -->
+    <!-- 9&#45;&gt;25 -->
+    <!-- 9&#45;&gt;32 -->
+    <!-- 9&#45;&gt;45 -->
+    <!-- 10&#45;&gt;0 -->
+    <!-- 11&#45;&gt;7 -->
     <!-- 12 -->
-    <!-- 10&#45;&gt;12 -->
-    <!-- 15 -->
-    <!-- 10&#45;&gt;15 -->
-    <!-- 11 -->
-    <!-- 11&#45;&gt;3 -->
-    <!-- 12&#45;&gt;3 -->
-    <!-- 12&#45;&gt;11 -->
-    <!-- 13 -->
-    <!-- 13&#45;&gt;0 -->
-    <!-- 14 -->
     <g
-       id="node15"
+       id="node13"
        class="node">
       <title
-         id="title331">14</title>
+         id="title386">12</title>
       <path
-         d="m 487,-124 c 0,0 -40,0 -40,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 40,0 40,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path333"
+         d="m 1896,-1290 c 0,0 -148,0 -148,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 148,0 148,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path388"
          inkscape:connector-curvature="0"
-         style="fill:none;stroke:#61d856;stroke-width:2" />
+         style="fill:none;stroke:#afd856;stroke-width:2" />
       <text
-         x="467"
-         y="-103.5"
+         x="1822"
+         y="-1275"
          font-size="10.00"
-         id="text335"
-         style="font-size:10px;font-family:sans;text-anchor:middle">index_vcf</text>
+         id="text390"
+         style="font-size:10px;font-family:sans;text-anchor:middle">extract_sample_entry_from_vcf</text>
+      <text
+         x="1822"
+         y="-1264"
+         font-size="10.00"
+         id="text392"
+         style="font-size:10px;font-family:sans;text-anchor:middle">sample: S2</text>
     </g>
-    <!-- 14&#45;&gt;1 -->
+    <!-- 28 -->
     <g
-       id="edge2"
+       id="node29"
+       class="node">
+      <title
+         id="title395">28</title>
+      <path
+         d="m 1896.5,-1218 c 0,0 -149,0 -149,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 149,0 149,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path397"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d892;stroke-width:2" />
+      <text
+         x="1822"
+         y="-1197.5"
+         font-size="10.00"
+         id="text399"
+         style="font-size:10px;font-family:sans;text-anchor:middle">filter_on_frequency_per_sample</text>
+    </g>
+    <!-- 12&#45;&gt;28 -->
+    <g
+       id="edge47"
        class="edge">
       <title
-         id="title338">14-&gt;1</title>
+         id="title402">12-&gt;28</title>
       <path
-         d="m 473.658,-87.6893 c 2.941,7.6467 6.509,16.9246 9.962,25.9013"
-         id="path340"
+         d="m 1822,-1253.7 c 0,7.72 0,16.99 0,25.59"
+         id="path404"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="486.963,-62.8469 487.286,-52.257 480.429,-60.334 "
-         id="polygon342"
+         points="1822,-1218.1 1818.5,-1228.1 1825.5,-1228.1 "
+         id="polygon406"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 15&#45;&gt;12 -->
+    <!-- 13 -->
+    <g
+       id="node14"
+       class="node">
+      <title
+         id="title409">13</title>
+      <path
+         d="m 2180.5,-1218 c 0,0 -149,0 -149,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 149,0 149,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path411"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d892;stroke-width:2" />
+      <text
+         x="2106"
+         y="-1197.5"
+         font-size="10.00"
+         id="text413"
+         style="font-size:10px;font-family:sans;text-anchor:middle">filter_on_frequency_per_sample</text>
+    </g>
+    <!-- 59 -->
+    <g
+       id="node60"
+       class="node">
+      <title
+         id="title416">59</title>
+      <path
+         d="m 2321,-1146 c 0,0 -336,0 -336,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 336,0 336,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path418"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8c9;stroke-width:2" />
+      <text
+         x="2153"
+         y="-1131"
+         font-size="10.00"
+         id="text420"
+         style="font-size:10px;font-family:sans;text-anchor:middle">compress_vcf</text>
+      <text
+         x="2153"
+         y="-1120"
+         font-size="10.00"
+         id="text422"
+         style="font-size:10px;font-family:sans;text-anchor:middle">any_vcf: samples/S1/snps/freebayes_joint_genotyping/33148/bwa/freq</text>
+    </g>
+    <!-- 13&#45;&gt;59 -->
+    <g
+       id="edge95"
+       class="edge">
+      <title
+         id="title425">13-&gt;59</title>
+      <path
+         d="m 2117.62,-1181.7 c 5.52,8.23 12.23,18.22 18.31,27.28"
+         id="path427"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2141.52,-1146.1 2133.04,-1152.46 2138.85,-1156.36 "
+         id="polygon429"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 14 -->
+    <!-- 31 -->
+    <!-- 14&#45;&gt;31 -->
+    <!-- 15 -->
+    <g
+       id="node16"
+       class="node">
+      <title
+         id="title455">15</title>
+      <path
+         d="m 1894,-1074 c 0,0 -40,0 -40,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 40,0 40,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path457"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8d0;stroke-width:2" />
+      <text
+         x="1874"
+         y="-1053.5"
+         font-size="10.00"
+         id="text459"
+         style="font-size:10px;font-family:sans;text-anchor:middle">index_vcf</text>
+    </g>
+    <!-- 57 -->
+    <g
+       id="node58"
+       class="node">
+      <title
+         id="title462">57</title>
+      <path
+         d="m 2117,-1002 c 0,0 -184,0 -184,0 -6,0 -12,6 -12,12 0,0 0,28 0,28 0,6 6,12 12,12 0,0 184,0 184,0 6,0 12,-6 12,-12 0,0 0,-28 0,-28 0,-6 -6,-12 -12,-12"
+         id="path464"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8a9;stroke-width:2" />
+      <text
+         x="2025"
+         y="-990"
+         font-size="10.00"
+         id="text466"
+         style="font-size:10px;font-family:sans;text-anchor:middle">merge_all_samples_entries_into_vcf</text>
+      <text
+         x="2025"
+         y="-979"
+         font-size="10.00"
+         id="text468"
+         style="font-size:10px;font-family:sans;text-anchor:middle">mapping_method: bwa</text>
+      <text
+         x="2025"
+         y="-968"
+         font-size="10.00"
+         id="text470"
+         style="font-size:10px;font-family:sans;text-anchor:middle">ref: 33148</text>
+      <text
+         x="2025"
+         y="-957"
+         font-size="10.00"
+         id="text472"
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+    </g>
+    <!-- 15&#45;&gt;57 -->
+    <g
+       id="edge92"
+       class="edge">
+      <title
+         id="title475">15-&gt;57</title>
+      <path
+         d="m 1906.02,-1038.46 c 17.8,9.2 40.49,20.91 61.27,31.65"
+         id="path477"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="1976.37,-1002.12 1965.87,-1003.6 1969.09,-1009.82 "
+         id="polygon479"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 16 -->
+    <!-- 16&#45;&gt;18 -->
+    <!-- 17 -->
+    <g
+       id="node18"
+       class="node">
+      <title
+         id="title496">17</title>
+      <path
+         d="m 1958.5,-1362 c 0,0 -83,0 -83,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 83,0 83,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path498"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56c1d8;stroke-width:2" />
+      <text
+         x="1917"
+         y="-1341.5"
+         font-size="10.00"
+         id="text500"
+         style="font-size:10px;font-family:sans;text-anchor:middle">filter_on_coverage</text>
+    </g>
+    <!-- 17&#45;&gt;12 -->
+    <g
+       id="edge23"
+       class="edge">
+      <title
+         id="title503">17-&gt;12</title>
+      <path
+         d="m 1893.52,-1325.7 c -12.08,8.9 -26.97,19.88 -40.04,29.5"
+         id="path505"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="1845.21,-1290.1 1851.19,-1298.85 1855.34,-1293.22 "
+         id="polygon507"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
     <!-- 26 -->
     <g
        id="node27"
        class="node">
       <title
-         id="title352">26</title>
+         id="title510">26</title>
       <path
-         d="m 658.5,-500 c 0,0 -149,0 -149,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 149,0 149,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path354"
+         d="m 2086,-1290 c 0,0 -148,0 -148,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 148,0 148,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path512"
          inkscape:connector-curvature="0"
-         style="fill:none;stroke:#567bd8;stroke-width:2" />
+         style="fill:none;stroke:#afd856;stroke-width:2" />
       <text
-         x="584"
-         y="-479.5"
+         x="2012"
+         y="-1275"
          font-size="10.00"
-         id="text356"
-         style="font-size:10px;font-family:sans;text-anchor:middle">filter_on_frequency_per_sample</text>
+         id="text514"
+         style="font-size:10px;font-family:sans;text-anchor:middle">extract_sample_entry_from_vcf</text>
+      <text
+         x="2012"
+         y="-1264"
+         font-size="10.00"
+         id="text516"
+         style="font-size:10px;font-family:sans;text-anchor:middle">sample: S1</text>
     </g>
-    <!-- 16&#45;&gt;26 -->
+    <!-- 17&#45;&gt;26 -->
     <g
-       id="edge37"
+       id="edge45"
        class="edge">
       <title
-         id="title359">16-&gt;26</title>
+         id="title519">17-&gt;26</title>
       <path
-         d="m 513.236,-535.697 c 11.952,8.901 26.687,19.874 39.611,29.498"
-         id="path361"
+         d="m 1940.48,-1325.7 c 12.08,8.9 26.97,19.88 40.04,29.5"
+         id="path521"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="555.101,-508.884 561.031,-500.104 550.92,-503.27 "
-         id="polygon363"
+         points="1988.79,-1290.1 1978.66,-1293.22 1982.81,-1298.85 "
+         id="polygon523"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 17 -->
-    <!-- 17&#45;&gt;3 -->
-    <!-- 17&#45;&gt;10 -->
-    <!-- 17&#45;&gt;21 -->
-    <!-- 30 -->
-    <!-- 17&#45;&gt;30 -->
-    <!-- 17&#45;&gt;31 -->
-    <!-- 32 -->
-    <!-- 17&#45;&gt;32 -->
-    <!-- 33 -->
-    <!-- 17&#45;&gt;33 -->
-    <!-- 18 -->
-    <g
-       id="node19"
-       class="node">
-      <title
-         id="title449">18</title>
-      <path
-         d="m 374.5,-500 c 0,0 -149,0 -149,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 149,0 149,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path451"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#567bd8;stroke-width:2" />
-      <text
-         x="300"
-         y="-479.5"
-         font-size="10.00"
-         id="text453"
-         style="font-size:10px;font-family:sans;text-anchor:middle">filter_on_frequency_per_sample</text>
-    </g>
-    <!-- 18&#45;&gt;4 -->
-    <g
-       id="edge12"
-       class="edge">
-      <title
-         id="title456">18-&gt;4</title>
-      <path
-         d="m 288.382,-463.697 c -5.521,8.223 -12.229,18.214 -18.314,27.276"
-         id="path458"
-         inkscape:connector-curvature="0"
-         style="fill:none;stroke:#808080;stroke-width:2" />
-      <polygon
-         points="272.965,-434.456 264.484,-428.104 267.153,-438.358 "
-         id="polygon460"
-         style="fill:#808080;stroke:#808080;stroke-width:2" />
-    </g>
+    <!-- 21 -->
+    <!-- 18&#45;&gt;21 -->
     <!-- 19 -->
     <g
        id="node20"
        class="node">
       <title
-         id="title463">19</title>
+         id="title540">19</title>
       <path
-         d="m 767,-196 c 0,0 -540,0 -540,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 540,0 540,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path465"
+         d="m 2296,-914 c 0,0 -542,0 -542,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 542,0 542,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path542"
          inkscape:connector-curvature="0"
-         style="fill:none;stroke:#ced856;stroke-width:2" />
+         style="fill:none;stroke:#56d8c9;stroke-width:2" />
       <text
-         x="497"
-         y="-181"
+         x="2025"
+         y="-899"
          font-size="10.00"
-         id="text467"
+         id="text544"
          style="font-size:10px;font-family:sans;text-anchor:middle">compress_vcf</text>
       <text
-         x="497"
-         y="-170"
+         x="2025"
+         y="-888"
          font-size="10.00"
-         id="text469"
-         style="font-size:10px;font-family:sans;text-anchor:middle">any_vcf: typing/freebayes_joint_genotyping/full_genome/34528/bwa/filtering/freq_cov_decomposed_normalized</text>
+         id="text546"
+         style="font-size:10px;font-family:sans;text-anchor:middle">any_vcf: typing/freebayes_joint_genotyping/full_genome_33148/bwa/filtering/freq_cov_decomposed_normalized</text>
     </g>
-    <!-- 19&#45;&gt;1 -->
+    <!-- 33 -->
     <g
-       id="edge3"
+       id="node34"
+       class="node">
+      <title
+         id="title549">33</title>
+      <path
+         d="m 2075,-842 c 0,0 -40,0 -40,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 40,0 40,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path551"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8d0;stroke-width:2" />
+      <text
+         x="2055"
+         y="-821.5"
+         font-size="10.00"
+         id="text553"
+         style="font-size:10px;font-family:sans;text-anchor:middle">index_vcf</text>
+    </g>
+    <!-- 19&#45;&gt;33 -->
+    <g
+       id="edge56"
        class="edge">
       <title
-         id="title472">19-&gt;1</title>
+         id="title556">19-&gt;33</title>
       <path
-         d="m 501.464,-159.953 c 2.471,10.323 5.288,23.8 6.536,35.953 1.634,15.916 1.425,20.064 0,36 -0.757,8.4582 -2.092,17.4983 -3.577,25.9576"
-         id="path474"
+         d="m 2032.42,-877.697 c 3.37,7.884 7.45,17.393 11.2,26.151"
+         id="path558"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="507.84,-61.278 502.565,-52.0899 500.959,-62.5623 "
-         id="polygon476"
+         points="2047.67,-842.104 2040.51,-849.917 2046.95,-852.675 "
+         id="polygon560"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 19&#45;&gt;14 -->
+    <!-- 58 -->
+    <g
+       id="node59"
+       class="node">
+      <title
+         id="title563">58</title>
+      <path
+         d="m 2161.5,-770 c 0,0 -273,0 -273,0 -6,0 -12,6 -12,12 0,0 0,28 0,28 0,6 6,12 12,12 0,0 273,0 273,0 6,0 12,-6 12,-12 0,0 0,-28 0,-28 0,-6 -6,-12 -12,-12"
+         id="path565"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#d88556;stroke-width:2" />
+      <text
+         x="2025"
+         y="-758"
+         font-size="10.00"
+         id="text567"
+         style="font-size:10px;font-family:sans;text-anchor:middle">extract_allele_by_type_from_freebayes_joint_genotyping</text>
+      <text
+         x="2025"
+         y="-747"
+         font-size="10.00"
+         id="text569"
+         style="font-size:10px;font-family:sans;text-anchor:middle">mapping_method: bwa</text>
+      <text
+         x="2025"
+         y="-736"
+         font-size="10.00"
+         id="text571"
+         style="font-size:10px;font-family:sans;text-anchor:middle">ref: 33148</text>
+      <text
+         x="2025"
+         y="-725"
+         font-size="10.00"
+         id="text573"
+         style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
+    </g>
+    <!-- 19&#45;&gt;58 -->
+    <g
+       id="edge93"
+       class="edge">
+      <title
+         id="title576">19-&gt;58</title>
+      <path
+         d="m 2020.54,-877.953 c -2.48,10.323 -5.29,23.8 -6.54,35.953 -1.63,15.916 -1.43,20.064 0,36 0.76,8.458 2.09,17.498 3.58,25.958"
+         id="path578"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2019.43,-770.09 2014.16,-779.278 2021.04,-780.562 "
+         id="polygon580"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 20&#45;&gt;4 -->
+    <!-- 23 -->
+    <!-- 20&#45;&gt;23 -->
+    <!-- 43 -->
+    <!-- 20&#45;&gt;43 -->
+    <!-- 21&#45;&gt;11 -->
+    <!-- 22 -->
+    <!-- 22&#45;&gt;23 -->
+    <!-- 23&#45;&gt;21 -->
+    <!-- 24 -->
+    <!-- 24&#45;&gt;8 -->
+    <!-- 25&#45;&gt;3 -->
+    <!-- 25&#45;&gt;32 -->
+    <!-- 25&#45;&gt;37 -->
+    <!-- 26&#45;&gt;13 -->
     <g
        id="edge24"
        class="edge">
       <title
-         id="title479">19-&gt;14</title>
+         id="title683">26-&gt;13</title>
       <path
-         d="m 489.584,-159.697 c -3.378,7.884 -7.454,17.393 -11.207,26.151"
-         id="path481"
+         d="m 2035.24,-1253.7 c 11.95,8.9 26.68,19.88 39.61,29.5"
+         id="path685"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="481.487,-131.917 474.33,-124.104 475.053,-134.675 "
-         id="polygon483"
+         points="2083.03,-1218.1 2072.92,-1221.27 2077.1,-1226.88 "
+         id="polygon687"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 20 -->
+    <!-- 27 -->
     <g
-       id="node21"
+       id="node28"
        class="node">
       <title
-         id="title486">20</title>
+         id="title690">27</title>
       <path
-         d="m 799,-428 c 0,0 -336,0 -336,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 336,0 336,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path488"
+         d="m 2015,-378 c 0,0 -40,0 -40,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 40,0 40,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path692"
          inkscape:connector-curvature="0"
-         style="fill:none;stroke:#ced856;stroke-width:2" />
+         style="fill:none;stroke:#56d8d0;stroke-width:2" />
       <text
-         x="631"
-         y="-413"
+         x="1995"
+         y="-357.5"
          font-size="10.00"
-         id="text490"
+         id="text694"
+         style="font-size:10px;font-family:sans;text-anchor:middle">index_vcf</text>
+    </g>
+    <!-- 27&#45;&gt;5 -->
+    <g
+       id="edge7"
+       class="edge">
+      <title
+         id="title697">27-&gt;5</title>
+      <path
+         d="m 1962.73,-350.222 c -36.24,9.855 -97.22,26.44 -152.53,41.485"
+         id="path699"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="1800.3,-306.045 1809.04,-312.047 1810.87,-305.293 "
+         id="polygon701"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 46 -->
+    <g
+       id="node47"
+       class="node">
+      <title
+         id="title704">46</title>
+      <path
+         d="m 2172.5,-300.5 c 0,0 -295,0 -295,0 -6,0 -12,6 -12,12 0,0 0,28 0,28 0,6 6,12 12,12 0,0 295,0 295,0 6,0 12,-6 12,-12 0,0 0,-28 0,-28 0,-6 -6,-12 -12,-12"
+         id="path706"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#d87556;stroke-width:2" />
+      <text
+         x="2025"
+         y="-288.5"
+         font-size="10.00"
+         id="text708"
+         style="font-size:10px;font-family:sans;text-anchor:middle">calculate_distance_with_ref_by_type</text>
+      <text
+         x="2025"
+         y="-277.5"
+         font-size="10.00"
+         id="text710"
+         style="font-size:10px;font-family:sans;text-anchor:middle">any_analysis: typing/freebayes_joint_genotyping/cgMLST/bwa</text>
+      <text
+         x="2025"
+         y="-266.5"
+         font-size="10.00"
+         id="text712"
+         style="font-size:10px;font-family:sans;text-anchor:middle">sample: S2</text>
+      <text
+         x="2025"
+         y="-255.5"
+         font-size="10.00"
+         id="text714"
+         style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
+    </g>
+    <!-- 27&#45;&gt;46 -->
+    <g
+       id="edge76"
+       class="edge">
+      <title
+         id="title717">27-&gt;46</title>
+      <path
+         d="m 2001.22,-341.699 c 3.25,9.07 7.37,20.517 11.25,31.331"
+         id="path719"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2015.95,-300.701 2009.27,-308.929 2015.86,-311.296 "
+         id="polygon721"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 54 -->
+    <g
+       id="node55"
+       class="node">
+      <title
+         id="title724">54</title>
+      <path
+         d="m 2509.5,-300.5 c 0,0 -295,0 -295,0 -6,0 -12,6 -12,12 0,0 0,28 0,28 0,6 6,12 12,12 0,0 295,0 295,0 6,0 12,-6 12,-12 0,0 0,-28 0,-28 0,-6 -6,-12 -12,-12"
+         id="path726"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#d87556;stroke-width:2" />
+      <text
+         x="2362"
+         y="-288.5"
+         font-size="10.00"
+         id="text728"
+         style="font-size:10px;font-family:sans;text-anchor:middle">calculate_distance_with_ref_by_type</text>
+      <text
+         x="2362"
+         y="-277.5"
+         font-size="10.00"
+         id="text730"
+         style="font-size:10px;font-family:sans;text-anchor:middle">any_analysis: typing/freebayes_joint_genotyping/cgMLST/bwa</text>
+      <text
+         x="2362"
+         y="-266.5"
+         font-size="10.00"
+         id="text732"
+         style="font-size:10px;font-family:sans;text-anchor:middle">sample: S1</text>
+      <text
+         x="2362"
+         y="-255.5"
+         font-size="10.00"
+         id="text734"
+         style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
+    </g>
+    <!-- 27&#45;&gt;54 -->
+    <g
+       id="edge85"
+       class="edge">
+      <title
+         id="title737">27-&gt;54</title>
+      <path
+         d="m 2027.25,-351.663 c 47.62,10.835 139.26,31.685 214.63,48.834"
+         id="path739"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2251.93,-300.542 2241.41,-299.348 2242.96,-306.174 "
+         id="polygon741"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 52 -->
+    <g
+       id="node53"
+       class="node">
+      <title
+         id="title744">52</title>
+      <path
+         d="m 1943,-1146 c 0,0 -336,0 -336,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 336,0 336,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path746"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8c9;stroke-width:2" />
+      <text
+         x="1775"
+         y="-1131"
+         font-size="10.00"
+         id="text748"
          style="font-size:10px;font-family:sans;text-anchor:middle">compress_vcf</text>
       <text
-         x="631"
-         y="-402"
+         x="1775"
+         y="-1120"
          font-size="10.00"
-         id="text492"
-         style="font-size:10px;font-family:sans;text-anchor:middle">any_vcf: samples/S1/snps/freebayes_joint_genotyping/34528/bwa/freq</text>
+         id="text750"
+         style="font-size:10px;font-family:sans;text-anchor:middle">any_vcf: samples/S2/snps/freebayes_joint_genotyping/33148/bwa/freq</text>
     </g>
-    <!-- 20&#45;&gt;5 -->
+    <!-- 28&#45;&gt;52 -->
     <g
-       id="edge13"
+       id="edge83"
        class="edge">
       <title
-         id="title495">20-&gt;5</title>
+         id="title753">28-&gt;52</title>
       <path
-         d="m 610.73,-391.697 c -10.228,8.732 -22.791,19.457 -33.908,28.947"
-         id="path497"
+         d="m 1810.38,-1181.7 c -5.52,8.23 -12.23,18.22 -18.31,27.28"
+         id="path755"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="578.915,-359.935 569.037,-356.104 574.37,-365.259 "
-         id="polygon499"
+         points="1786.48,-1146.1 1789.15,-1156.36 1794.96,-1152.46 "
+         id="polygon757"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 20&#45;&gt;29 -->
+    <!-- 29&#45;&gt;31 -->
+    <!-- 30&#45;&gt;16 -->
+    <!-- 31&#45;&gt;21 -->
+    <!-- 32&#45;&gt;8 -->
+    <!-- 32&#45;&gt;24 -->
+    <!-- 33&#45;&gt;58 -->
     <g
-       id="edge41"
+       id="edge94"
        class="edge">
       <title
-         id="title502">20-&gt;29</title>
+         id="title795">33-&gt;58</title>
       <path
-         d="m 626.194,-391.668 c -5.997,19.201 -17.765,50.27 -36.194,71.668 -9.829,11.412 -22.301,21.533 -34.895,30.09"
-         id="path504"
+         d="m 2048.34,-805.689 c -2.94,7.646 -6.51,16.924 -9.96,25.901"
+         id="path797"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="556.688,-286.764 546.398,-284.239 552.868,-292.63 "
-         id="polygon506"
+         points="2034.71,-770.257 2035.04,-780.847 2041.57,-778.334 "
+         id="polygon799"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 21&#45;&gt;10 -->
-    <!-- 23 -->
-    <!-- 21&#45;&gt;23 -->
-    <!-- 22&#45;&gt;32 -->
-    <!-- 23&#45;&gt;10 -->
-    <!-- 24&#45;&gt;18 -->
+    <!-- 55 -->
     <g
-       id="edge27"
+       id="node56"
+       class="node">
+      <title
+         id="title802">55</title>
+      <path
+         d="m 2117,-135 c 0,0 -184,0 -184,0 -6,0 -12,6 -12,12 0,0 0,39 0,39 0,6 6,12 12,12 0,0 184,0 184,0 6,0 12,-6 12,-12 0,0 0,-39 0,-39 0,-6 -6,-12 -12,-12"
+         id="path804"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8b9;stroke-width:2" />
+      <text
+         x="2025"
+         y="-123"
+         font-size="10.00"
+         id="text806"
+         style="font-size:10px;font-family:sans;text-anchor:middle">distance_columns_to_matrix</text>
+      <text
+         x="2025"
+         y="-112"
+         font-size="10.00"
+         id="text808"
+         style="font-size:10px;font-family:sans;text-anchor:middle">core_genome_or_full_genome: cgMLST</text>
+      <text
+         x="2025"
+         y="-101"
+         font-size="10.00"
+         id="text810"
+         style="font-size:10px;font-family:sans;text-anchor:middle">distance_type: distances_in_snp</text>
+      <text
+         x="2025"
+         y="-90"
+         font-size="10.00"
+         id="text812"
+         style="font-size:10px;font-family:sans;text-anchor:middle">mapping_method: bwa</text>
+      <text
+         x="2025"
+         y="-79"
+         font-size="10.00"
+         id="text814"
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+    </g>
+    <!-- 34&#45;&gt;55 -->
+    <g
+       id="edge87"
        class="edge">
       <title
-         id="title546">24-&gt;18</title>
+         id="title817">34-&gt;55</title>
       <path
-         d="m 300,-535.697 c 0,7.714 0,16.985 0,25.585"
-         id="path548"
+         d="m 2025,-170.699 c 0,7.428 0,16.449 0,25.411"
+         id="path819"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="303.5,-510.104 300,-500.104 296.5,-510.104 "
-         id="polygon550"
+         points="2025,-135.283 2021.5,-145.283 2028.5,-145.283 "
+         id="polygon821"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 25&#45;&gt;29 -->
+    <!-- 35 -->
     <g
-       id="edge43"
+       id="node36"
+       class="node">
+      <title
+         id="title824">35</title>
+      <path
+         d="m 2117,-538 c 0,0 -184,0 -184,0 -6,0 -12,6 -12,12 0,0 0,28 0,28 0,6 6,12 12,12 0,0 184,0 184,0 6,0 12,-6 12,-12 0,0 0,-28 0,-28 0,-6 -6,-12 -12,-12"
+         id="path826"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#d87d56;stroke-width:2" />
+      <text
+         x="2025"
+         y="-526"
+         font-size="10.00"
+         id="text828"
+         style="font-size:10px;font-family:sans;text-anchor:middle">extract_cgMLST_regions_from_vcf</text>
+      <text
+         x="2025"
+         y="-515"
+         font-size="10.00"
+         id="text830"
+         style="font-size:10px;font-family:sans;text-anchor:middle">mapping_method: bwa</text>
+      <text
+         x="2025"
+         y="-504"
+         font-size="10.00"
+         id="text832"
+         style="font-size:10px;font-family:sans;text-anchor:middle">snp_caller: freebayes_joint_genotyping</text>
+      <text
+         x="2025"
+         y="-493"
+         font-size="10.00"
+         id="text834"
+         style="font-size:10px;font-family:sans;text-anchor:middle">type: snp</text>
+    </g>
+    <!-- 50 -->
+    <g
+       id="node51"
+       class="node">
+      <title
+         id="title837">50</title>
+      <path
+         d="m 2201.5,-450 c 0,0 -353,0 -353,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 353,0 353,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path839"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8c9;stroke-width:2" />
+      <text
+         x="2025"
+         y="-435"
+         font-size="10.00"
+         id="text841"
+         style="font-size:10px;font-family:sans;text-anchor:middle">compress_vcf</text>
+      <text
+         x="2025"
+         y="-424"
+         font-size="10.00"
+         id="text843"
+         style="font-size:10px;font-family:sans;text-anchor:middle">any_vcf: typing/freebayes_joint_genotyping/cgMLST/bwa/all_samples_snp</text>
+    </g>
+    <!-- 35&#45;&gt;50 -->
+    <g
+       id="edge81"
        class="edge">
       <title
-         id="title553">25-&gt;29</title>
+         id="title846">35-&gt;50</title>
       <path
-         d="m 456.54,-319.689 c 5.315,7.972 11.812,17.717 18.031,27.045"
-         id="path555"
+         d="m 2025,-485.891 c 0,8.051 0,17.011 0,25.233"
+         id="path848"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="477.527,-294.519 480.162,-284.257 471.703,-290.636 "
-         id="polygon557"
+         points="2025,-450.411 2021.5,-460.411 2028.5,-460.411 "
+         id="polygon850"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 26&#45;&gt;20 -->
+    <!-- 36 -->
+    <!-- 36&#45;&gt;14 -->
+    <!-- 37&#45;&gt;18 -->
+    <!-- 38 -->
+    <!-- 38&#45;&gt;1 -->
+    <!-- 44 -->
+    <!-- 38&#45;&gt;44 -->
+    <!-- 39 -->
     <g
-       id="edge29"
+       id="node40"
+       class="node">
+      <title
+         id="title904">39</title>
+      <path
+         d="m 2122,-36 c 0,0 -194,0 -194,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 194,0 194,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path906"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#5663d8;stroke-width:2" />
+      <text
+         x="2025"
+         y="-15.5"
+         font-size="10.00"
+         id="text908"
+         style="font-size:10px;font-family:sans;text-anchor:middle">compute_minimum_spanning_tree_no_st</text>
+    </g>
+    <!-- 40 -->
+    <g
+       id="node41"
+       class="node">
+      <title
+         id="title911">40</title>
+      <path
+         d="m 2231.5,-682 c 0,0 -413,0 -413,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 413,0 413,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path913"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8c9;stroke-width:2" />
+      <text
+         x="2025"
+         y="-667"
+         font-size="10.00"
+         id="text915"
+         style="font-size:10px;font-family:sans;text-anchor:middle">compress_vcf</text>
+      <text
+         x="2025"
+         y="-656"
+         font-size="10.00"
+         id="text917"
+         style="font-size:10px;font-family:sans;text-anchor:middle">any_vcf: typing/freebayes_joint_genotyping/full_genome_33148/bwa/all_samples_snp</text>
+    </g>
+    <!-- 40&#45;&gt;35 -->
+    <g
+       id="edge60"
        class="edge">
       <title
-         id="title560">26-&gt;20</title>
+         id="title920">40-&gt;35</title>
       <path
-         d="m 595.618,-463.697 c 5.521,8.223 12.229,18.214 18.314,27.276"
-         id="path562"
+         d="m 2020.54,-645.953 c -2.48,10.323 -5.29,23.8 -6.54,35.953 -1.63,15.916 -1.43,20.064 0,36 0.76,8.458 2.09,17.498 3.58,25.958"
+         id="path922"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="616.847,-438.358 619.516,-428.104 611.035,-434.456 "
-         id="polygon564"
+         points="2019.43,-538.09 2014.16,-547.278 2021.04,-548.562 "
+         id="polygon924"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 27&#45;&gt;3 -->
-    <!-- 28 -->
-    <!-- 28&#45;&gt;30 -->
-    <!-- 29&#45;&gt;19 -->
+    <!-- 60 -->
+    <g
+       id="node61"
+       class="node">
+      <title
+         id="title927">60</title>
+      <path
+         d="m 2075,-610 c 0,0 -40,0 -40,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 40,0 40,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path929"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8d0;stroke-width:2" />
+      <text
+         x="2055"
+         y="-589.5"
+         font-size="10.00"
+         id="text931"
+         style="font-size:10px;font-family:sans;text-anchor:middle">index_vcf</text>
+    </g>
+    <!-- 40&#45;&gt;60 -->
+    <g
+       id="edge96"
+       class="edge">
+      <title
+         id="title934">40-&gt;60</title>
+      <path
+         d="m 2032.42,-645.697 c 3.37,7.884 7.45,17.393 11.2,26.151"
+         id="path936"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2047.67,-610.104 2040.51,-617.917 2046.95,-620.675 "
+         id="polygon938"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 41&#45;&gt;23 -->
+    <!-- 42&#45;&gt;11 -->
+    <!-- 43&#45;&gt;22 -->
+    <!-- 44&#45;&gt;36 -->
+    <!-- 45&#45;&gt;6 -->
+    <!-- 49 -->
+    <!-- 45&#45;&gt;49 -->
+    <!-- 46&#45;&gt;34 -->
+    <g
+       id="edge58"
+       class="edge">
+      <title
+         id="title992">46-&gt;34</title>
+      <path
+         d="m 2025,-248.447 c 0,9.807 0,21.086 0,31.104"
+         id="path994"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2025,-207.097 2021.5,-217.097 2028.5,-217.097 "
+         id="polygon996"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 47&#45;&gt;17 -->
     <g
        id="edge28"
        class="edge">
       <title
-         id="title590">29-&gt;19</title>
+         id="title999">47-&gt;17</title>
       <path
-         d="m 497,-231.891 c 0,8.051 0,17.011 0,25.233"
-         id="path592"
+         d="m 1917,-1397.69 c 0,7.78 0,16.85 0,25.24"
+         id="path1001"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="500.5,-206.411 497,-196.411 493.5,-206.411 "
-         id="polygon594"
+         points="1917,-1362.32 1913.5,-1372.32 1920.5,-1372.32 "
+         id="polygon1003"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 30&#45;&gt;2 -->
-    <!-- 30&#45;&gt;9 -->
-    <!-- 31&#45;&gt;7 -->
+    <!-- 48 -->
+    <!-- 48&#45;&gt;4 -->
+    <!-- 48&#45;&gt;9 -->
+    <!-- 48&#45;&gt;11 -->
+    <!-- 48&#45;&gt;25 -->
+    <!-- 48&#45;&gt;32 -->
+    <!-- 48&#45;&gt;45 -->
+    <!-- 48&#45;&gt;47 -->
+    <!-- 49&#45;&gt;6 -->
+    <!-- 50&#45;&gt;5 -->
     <g
-       id="edge14"
+       id="edge8"
        class="edge">
       <title
-         id="title611">31-&gt;7</title>
+         id="title1073">50-&gt;5</title>
       <path
-         d="m 395,-679.689 c 0,7.782 0,16.847 0,25.242"
-         id="path613"
+         d="m 1987.97,-413.914 c -53.75,24.804 -154.59,71.334 -224.43,103.557"
+         id="path1075"
          inkscape:connector-curvature="0"
          style="fill:none;stroke:#808080;stroke-width:2" />
       <polygon
-         points="398.5,-654.319 395,-644.319 391.5,-654.32 "
-         id="polygon615"
+         points="1754.33,-306.106 1761.94,-313.474 1764.88,-307.118 "
+         id="polygon1077"
          style="fill:#808080;stroke:#808080;stroke-width:2" />
     </g>
-    <!-- 32&#45;&gt;28 -->
-    <!-- 32&#45;&gt;30 -->
-    <!-- 33&#45;&gt;3 -->
-    <!-- 33&#45;&gt;10 -->
-    <!-- 33&#45;&gt;21 -->
-    <!-- 33&#45;&gt;30 -->
-    <!-- 33&#45;&gt;32 -->
+    <!-- 50&#45;&gt;27 -->
+    <g
+       id="edge46"
+       class="edge">
+      <title
+         id="title1080">50-&gt;27</title>
+      <path
+         d="m 2017.58,-413.697 c -3.37,7.884 -7.45,17.393 -11.2,26.151"
+         id="path1082"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2002.33,-378.104 2003.05,-388.675 2009.49,-385.917 "
+         id="polygon1084"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 50&#45;&gt;46 -->
+    <g
+       id="edge77"
+       class="edge">
+      <title
+         id="title1087">50-&gt;46</title>
+      <path
+         d="m 2029.46,-413.953 c 2.48,10.323 5.29,23.8 6.54,35.953 2.29,22.335 -0.3,47.395 -3.55,67.145"
+         id="path1089"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2030.67,-300.767 2028.96,-311.224 2035.86,-310.003 "
+         id="polygon1091"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 50&#45;&gt;54 -->
+    <g
+       id="edge86"
+       class="edge">
+      <title
+         id="title1094">50-&gt;54</title>
+      <path
+         d="m 2062.03,-413.914 c 56.94,26.276 166.73,76.935 236.52,109.137"
+         id="path1096"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2307.7,-300.555 2297.15,-301.567 2300.09,-307.923 "
+         id="polygon1098"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 51&#45;&gt;41 -->
+    <!-- 51&#45;&gt;45 -->
+    <!-- 52&#45;&gt;15 -->
+    <g
+       id="edge26"
+       class="edge">
+      <title
+         id="title1115">52-&gt;15</title>
+      <path
+         d="m 1799.22,-1109.88 c 12.7,8.99 28.44,20.12 42.2,29.85"
+         id="path1117"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="1849.69,-1074.19 1839.5,-1077.11 1843.54,-1082.82 "
+         id="polygon1119"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 52&#45;&gt;57 -->
+    <g
+       id="edge90"
+       class="edge">
+      <title
+         id="title1122">52-&gt;57</title>
+      <path
+         d="m 1834.05,-1109.93 c 25.84,8.78 55.91,20.84 80.95,35.93 29.52,17.79 58.58,43.89 79.41,64.54"
+         id="path1124"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2001.7,-1002.13 1992.17,-1006.76 1997.13,-1011.69 "
+         id="polygon1126"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 53&#45;&gt;11 -->
+    <!-- 54&#45;&gt;34 -->
+    <g
+       id="edge59"
+       class="edge">
+      <title
+         id="title1136">54-&gt;34</title>
+      <path
+         d="m 2260.89,-248.447 c -50.41,12.49 -110.45,27.367 -157.35,38.986"
+         id="path1138"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2093.74,-207.033 2102.61,-212.836 2104.29,-206.041 "
+         id="polygon1140"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 55&#45;&gt;39 -->
+    <g
+       id="edge65"
+       class="edge">
+      <title
+         id="title1143">55-&gt;39</title>
+      <path
+         d="m 2025,-71.8818 c 0,8.4144 0,17.4796 0,25.687"
+         id="path1145"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2025,-36.0265 2021.5,-46.0265 2028.5,-46.0264 "
+         id="polygon1147"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 56 -->
+    <g
+       id="node57"
+       class="node">
+      <title
+         id="title1150">56</title>
+      <path
+         d="m 2088,-1074 c 0,0 -40,0 -40,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 40,0 40,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
+         id="path1152"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#56d8d0;stroke-width:2" />
+      <text
+         x="2068"
+         y="-1053.5"
+         font-size="10.00"
+         id="text1154"
+         style="font-size:10px;font-family:sans;text-anchor:middle">index_vcf</text>
+    </g>
+    <!-- 56&#45;&gt;57 -->
+    <g
+       id="edge89"
+       class="edge">
+      <title
+         id="title1157">56-&gt;57</title>
+      <path
+         d="m 2058.46,-1037.69 c -4.31,7.81 -9.55,17.32 -14.6,26.47"
+         id="path1159"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2038.92,-1002.26 2040.69,-1012.7 2046.82,-1009.32 "
+         id="polygon1161"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 57&#45;&gt;19 -->
+    <g
+       id="edge32"
+       class="edge">
+      <title
+         id="title1164">57-&gt;19</title>
+      <path
+         d="m 2025,-949.891 c 0,8.051 0,17.011 0,25.233"
+         id="path1166"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2025,-914.411 2021.5,-924.411 2028.5,-924.411 "
+         id="polygon1168"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 58&#45;&gt;40 -->
+    <g
+       id="edge66"
+       class="edge">
+      <title
+         id="title1171">58-&gt;40</title>
+      <path
+         d="m 2025,-717.891 c 0,8.051 0,17.011 0,25.233"
+         id="path1173"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2025,-682.411 2021.5,-692.411 2028.5,-692.411 "
+         id="polygon1175"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 59&#45;&gt;56 -->
+    <g
+       id="edge88"
+       class="edge">
+      <title
+         id="title1178">59-&gt;56</title>
+      <path
+         d="m 2131.99,-1109.7 c -10.71,8.82 -23.88,19.67 -35.49,29.23"
+         id="path1180"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2088.77,-1074.1 2094.26,-1083.16 2098.71,-1077.76 "
+         id="polygon1182"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 59&#45;&gt;57 -->
+    <g
+       id="edge91"
+       class="edge">
+      <title
+         id="title1185">59-&gt;57</title>
+      <path
+         d="m 2147.35,-1109.84 c -6.87,19.04 -19.9,49.97 -38.35,71.84 -9.44,11.19 -21.35,21.42 -33.22,30.18"
+         id="path1187"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2067.61,-1002 2073.73,-1010.65 2077.79,-1004.95 "
+         id="polygon1189"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
+    <!-- 60&#45;&gt;35 -->
+    <g
+       id="edge61"
+       class="edge">
+      <title
+         id="title1192">60-&gt;35</title>
+      <path
+         d="m 2048.34,-573.689 c -2.94,7.646 -6.51,16.924 -9.96,25.901"
+         id="path1194"
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#808080;stroke-width:2" />
+      <polygon
+         points="2034.71,-538.257 2035.04,-548.847 2041.57,-546.334 "
+         id="polygon1196"
+         style="fill:#808080;stroke:#808080;stroke-width:2" />
+    </g>
   </g>
 </svg>

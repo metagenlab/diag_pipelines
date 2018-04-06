@@ -25,4 +25,4 @@ Entries in the VCF are filtered according to their type. We preferentially keep 
 Core genome filtering
 =====================
 
-Core genome filtering is performed at the end. Using any bed file defined using the mapping reference, only the positions in the filtered VCF with all samples overlapping the bed regions are kept. See :ref:`core_genome` for the bed file definitions.
+Core genome filtering is performed at the end. Using any bed file defined using the mapping reference, only the positions in the filtered final VCF overlapping the bed regions are kept. See :ref:`core_genome` for the bed file definitions.

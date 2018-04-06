@@ -42,7 +42,12 @@ Filtering
 -----------------------
 Calculating differences
 -----------------------
-Once the filtering has been performed, differences in snps are calculated between samples and against the reference. 
+After the filtering has been performed, differences in snps are calculated between samples and against the reference. Every comparison is pairwise. At each position, if any of the two genotype is unknown because of the filtering (``GT="."``), this position will not be counted as a difference. Once every distances have been computed, they are agregated in a single file, transformed to a matrix and finally to a minimum spanning tree image with the ``igraph`` R package.
+
+---------
+Phylogeny
+---------
+
 
 
 ------------
