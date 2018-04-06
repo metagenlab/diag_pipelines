@@ -1,46 +1,44 @@
 rule correct_error_paired_reads_with_spades:
-    conda:
-        pipeline_path + "envs/spades.yaml"
     threads:
         16
+    conda:
+        pipeline_path + "envs/spades.yaml"
     input:
         R1_trimmed = "samples/{sample}/reads/trimmed/R1_paired.fastq",
         R2_trimmed = "samples/{sample}/reads/trimmed/R2_paired.fastq",
     output:
-        temp("samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz"),
-        temp("samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
-        temp("samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz")
+        R1_corrected = temp("samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz"),
+        R2_corrected = temp("samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
+        single_corrected = temp("samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz"),
     log:
         logging_folder + "samples/{sample}/logs/spades_read_correction.txt"
     shell:
          """
-         spades.py -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} --only-error-correction -o $( dirname $(dirname {output[0]})) --threads {threads} > {log} 
+         spades.py --only-error-correction -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $(dirname $(dirname {output[0]})) --threads {threads} > {log} 
          """
 
 rule correct_error_single_reads_with_spades:
-    conda:
-        pipeline_path + "envs/spades.yaml"
     threads:
         16
+    conda:
+        pipeline_path + "envs/spades.yaml"
     input:
         single_trimmed = "samples/{sample}/reads/trimmed/single.fastq",
     output:
-        temp("samples/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz")
+        single_corrected = temp("samples/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz")
     log:
         logging_folder + "samples/{sample}/logs/spades_read_correction.txt"
     shell:
          """
-         spades.py -s {input[single_trimmed]} --only-error-correction -o $( dirname $(dirname {output[0]})) --threads {threads} > {log} 
+         spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log} 
          """
 
         
 rule assemble_genome_paired_reads_with_spades:
-    conda:
-        pipeline_path + "envs/spades.yaml"
     threads:
         16
-    shadow:
-        "full"
+    conda:
+        pipeline_path + "envs/spades.yaml"
     input:
         R1_corrected = "samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
         R2_corrected = "samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
@@ -52,15 +50,16 @@ rule assemble_genome_paired_reads_with_spades:
     shell:
         """
         spades.py --only-assembler -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
+        mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
+        rm -rf $( dirname {output[contigs]})/*
+        mv $(dirname $(dirname {output[contigs]}))/contigs.fasta $(dirname {output[contigs]})/
         """
 
 rule assemble_genome_single_reads_with_spades:
-    conda:
-        pipeline_path + "envs/spades.yaml"
     threads:
         16
-    shadow:
-        "shallow"
+    conda:
+        pipeline_path + "envs/spades.yaml"
     input:
         single_corrected = "samples/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz",
     output:
@@ -70,5 +69,8 @@ rule assemble_genome_single_reads_with_spades:
     shell:
         """
         spades.py --only-assembler -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
+        mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
+        rm -rf $( dirname {output[contigs]})/*
+        mv $(dirname $(dirname {output[contigs]}))/contigs.fasta $(dirname {output[contigs]})/
         """
         
