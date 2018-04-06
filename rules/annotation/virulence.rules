@@ -78,7 +78,7 @@ rule add_description_to_blast_results:
         "scripts/merge_result_and_description.py"
         
     
-rule merge_description_files_and_blast_results:
+rule merge_samples_summary:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml",
     input:
@@ -87,6 +87,6 @@ rule merge_description_files_and_blast_results:
     output:
         "virulence_summary.xlsx"
     script:
-        "scripts/merge_summary_xlsx.py"
+        pipeline_path + "rules/annoration/resistance/merge_non_empty_results.py"
 
     

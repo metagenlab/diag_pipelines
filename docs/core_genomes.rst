@@ -44,7 +44,7 @@ will create a BED file in ``core_genomes/cgMLST/Staphylococcus_aureus.bed`` whic
 Enterobase
 ----------
 
-cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted for *Salmonella enterica*:
+cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is available for:
 
 
 
@@ -55,7 +55,7 @@ cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is extracted
    "*Salmonella_enterica*","28901","SALwgMLST","359488","cgMLSTv1"
 
 
-A bed file for the reference genome `359488 <https://www.ncbi.nlm.nih.gov/assembly/GCF_000027025.1/>`_, based on the locus tag present in this genome is constructed. For instance, over the 3002 loci of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488. For *E. coli*, only 15 loci are missing for the reference assembly, out of 2498.
+A bed file for each reference genome, based on the locus tags present in this genome, is constructed. For instance, over the 3002 loci of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488. For *E. coli*, only 15 loci are missing for the reference assembly, out of 2498.
 
 Example
 -------
