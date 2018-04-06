@@ -87,6 +87,6 @@ rule merge_samples_summary:
     output:
         "virulence_summary.xlsx"
     script:
-        pipeline_path + "rules/annoration/resistance/merge_non_empty_results.py"
+        pipeline_path + "rules/annotation/resistance/scripts/merge_non_empty_results.py"
 
     
