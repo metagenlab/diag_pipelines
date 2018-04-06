@@ -14,7 +14,7 @@ rule search_resistance_paired_reads_with_mykrobe:
         logging_folder + "samples/{sample}/resistance/mykrobe.txt"
     shell:
         """
-        if [ "{params.species}" = "staph"]
+        if [ "{params.species}" = "staph" ]
         then
             mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
         else
@@ -37,7 +37,7 @@ rule search_resistance_single_reads_with_mykrobe:
         logging_folder + "samples/{sample}/resistance/mykrobe.txt"
     shell:
         """
-        if [ "{params.species}" = "staph"]
+        if [ "{params.species}" = "staph" ]
         then
             mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
         else
