@@ -70,6 +70,6 @@ The wildcard ``{snp_caller}`` in the following result files can have two values:
   
 * ``phylogeny/{snp_caller}/cgMLST/bwa/phylogeny_no_st.svg``: a phylogeny based on the alignments of the core SNPs, using RAxML. Available species and values for reference genomes are listed in the files in ``data/core_genome_dbs/``. If the species under consideration has a multiple locus sequence type available, ``phylogeny/{snp_caller}/cgMLST/bwa/phylogeny_with_st.svg`` can be generated with the ST of each sample.
   
-* If you do not want or cannot use core genome schemes, ``typing/{snp_caller}/full_genome/33148/bwa/distances_snp_mst_no_st.svg`` will show the minimum spanning tree over the full genome of the assembly ID ``33148`` (*S. aureus COL* genome from NCBI).
+* If you do not want or cannot use core genome schemes, ``typing/{snp_caller}/full_genome_33148/bwa/distances_snp_mst_no_st.svg`` will show the minimum spanning tree over the full genome of the assembly ID ``33148`` (*S. aureus COL* genome from NCBI).
 
-* If you want to genotype with mapping over one of your own sequenced sample, ``typing/{snp_caller}/full_genome/S10_assembled_genome/bwa/distances_snp_mst_no_st.svg`` will show the minimum spanning tree when mapping onto the sample called ``S10``.
+* If you want to genotype with mapping over one of your own sequenced sample, ``typing/{snp_caller}/full_genome_S10_assembled_genome/bwa/distances_snp_mst_no_st.svg`` will show the minimum spanning tree when mapping onto the sample called ``S10``.
