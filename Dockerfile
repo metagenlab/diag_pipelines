@@ -136,7 +136,7 @@ RUN ln -s ${main}/data/core_genomes/ core_genomes
 
 RUN ln -s ${main}/data/references/ references
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/mykrobe_summary.xlsx quality/multiqc/assembly/multiqc_report.html contamination/distances_formatted.xlsx --config sra_samples=${pipeline_folder}/example_sra_samples.tsv species="Mycobacterium_tuberculosis" minimum_quality_base=15
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/mykrobe_summary.xlsx quality/multiqc/assembly/multiqc_report.html contamination/distances_formated.xlsx --config sra_samples=${pipeline_folder}/example_sra_samples.tsv species="Mycobacterium_tuberculosis" minimum_quality_base=0
 
 WORKDIR ${main}/data/analysis/
 
