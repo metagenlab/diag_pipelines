@@ -1,4 +1,4 @@
-rule blast_virulence_protein_to_proteome:
+rule blast_virulence_protein_to_proteome_or_contigs:
     params:
         perc_id_cutoff=config["virulence_percentage_identity_cutoff"],
         cov_cutoff=config["virulence_coverage_cutoff"],

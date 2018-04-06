@@ -106,3 +106,4 @@ Current available workflows are implemented in the folder ``workflows``. Each wo
 .. toctree::
 
    all_rules.rst
+

@@ -1,4 +1,4 @@
-rule fetch_from_uniprot_accession:
+rule fetch_virulence_factors_from_uniprot_accessions:
     input:
         config["virulence_factors"]
     output:

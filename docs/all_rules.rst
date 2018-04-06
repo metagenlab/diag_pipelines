@@ -1,3 +1,15 @@
+.. _all_rules:
+
+-----
+Rules
+-----
+
+.. csv-table:: All rules in productions
+   :header: "Location","Rule name"
+        
+
+
+
 "annotation/prokka.rules"," annotate_with_prokka"
 "annotation/prokka.rules"," annotate_with_prokka_unfiltered_assembly"
 "annotation/prokka.rules"," create_blast_database_from_protein_sequences"
