@@ -21,3 +21,8 @@ Type filtering
 ==============
 Entries in the VCF are filtered according to their type. We preferentially keep only entries defined as single nucleotide polymorphisms, but ``indel`` or ``bnd`` can also be extracted from the genotyping of freebayes, or ``indel`` or ``mixed`` from the genotyping of GATK.
 
+
+Core genome filtering
+=====================
+
+Core genome filtering is performed at the end. Using any bed file defined using the mapping reference, only the positions in the filtered VCF with all samples overlapping the bed regions are kept. See :ref:`core_genome` for the bed file definitions.

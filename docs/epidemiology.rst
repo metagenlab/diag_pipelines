@@ -39,6 +39,12 @@ Filtering
    filtering/*
 
 
+-----------------------
+Calculating differences
+-----------------------
+Once the filtering has been performed, differences in snps are calculated between samples and against the reference. 
+
+
 ------------
 Deliverables
 ------------
