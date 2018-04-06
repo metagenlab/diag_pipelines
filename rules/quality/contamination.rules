@@ -43,7 +43,7 @@ rule format_distances_from_mash_results:
         distances = "samples/{sample}/contamination/mash/distances.tsv"
     output:
         formated_distances = "samples/{sample}/contamination/mash/distances_formated.tsv",
-        formated_distances_no_viruses = "samples/{sample}/contamination/mash/distances_formatedtaxonomy_no_virus.tsv"        
+        formated_distances_no_viruses = "samples/{sample}/contamination/mash/distances_formated_no_virus.tsv"        
     shell:
         """
         cat {input[distances]}  | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | cut -f1,2,4,7 | sort -gr  > {output[formated_distances]}
@@ -62,7 +62,7 @@ rule format_tsv_to_xlsx_mash_results:
         "scripts/format_tsv_to_xlsx.py"
 
         
-rule merge_all_xslx_mash_results:
+rule merge_all_xlsx_mash_results:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
