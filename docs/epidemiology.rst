@@ -58,7 +58,7 @@ Phylogeny
 
    Steps to create phylogeny from the filtered genotype positions
 
-After the filtering has been performed, the SNPs of each samples are replaced in the reference fasta file. However, the unknown positions are replace with ``N``s. Every sequence is then concatenated and a simple phylogeny is calculated with RAxML, without partitions, with the GTRCAT model. If a MLST scheme is available for the species, the label of each sample can show its ST. 
+After the filtering has been performed, the SNPs of each samples are replaced in the reference fasta file. However, the unknown positions are replace with ``N``. Every sequence is then concatenated and a simple phylogeny is calculated with RAxML, without partitions, with the GTRCAT model.
 
 ------------
 Deliverables
