@@ -21,7 +21,10 @@ for j in excels:
     for sheet in j.sheet_names:
         df = j.parse(sheet)
         if df.shape[0]:
-            df.to_excel(writer, sheet, index=False)
-            
-writer.save()
+            df.to_excel(writer, sheet_name=sheet, index=True)
+try:            
+    writer.save()
+except IndexError:
+    pandas.DataFrame(["Empty"]).to_excel(writer)
+    writer.save()
 
