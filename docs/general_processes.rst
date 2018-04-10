@@ -91,9 +91,10 @@ The tabulated file whose path is defined by ``sra_samples`` can be the RunInfo f
 
 .. csv-table:: SRA data example
    :header: "Run","SampleName", "LibraryLayout", "ScientificName"
-	 
-   "ERR1140788","Mycobacterium_tuberculosis_N0145-Lineage_2","paired","Mycobacterium tuberculosis"
-   "SRR006916","Mycobacterium_tuberculosis_K21-Lineage_1","single","Mycobacterium tuberculosis"
+
+   "ERR2130394","SE1","single","Mycobacterium tuberculosis"
+   "SRR6936587","XTB-14-012","single","Mycobacterium tuberculosis"
+
 
 .. _workflows:
 

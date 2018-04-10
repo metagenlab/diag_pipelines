@@ -15,7 +15,7 @@ Install the CE version following these `instructions <https://docs.docker.com/in
    docker pull metagenlab/diag_pipelines:latest
    docker run -t --rm metagenlab/diag_pipelines:latest sh -c "ping www.google.com"
 
-Our Docker image is fit for a user called ``pipeline_user`` whos UID is ``1080``. It is advised to create this user on your computer before using the Docker image to run your analysis. 
+Our Docker image is fit for a user called ``pipeline_user`` whose UID is ``1080``. It is advised to create this user on your computer before using the Docker image to run your analysis. 
 
 
 .. code-block:: bash
@@ -24,6 +24,8 @@ Our Docker image is fit for a user called ``pipeline_user`` whos UID is ``1080``
    sudo mkdir /home/pipeline_user/
    sudo chown pipeline_user -R /home/pipeline_user/
    sudo passwd pipeline_user
+
+Alternatively, you can run the Docker as root (``--user root``) but the created folders will belong to the root user of your computer.
 
 General use
 ===========
