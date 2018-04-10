@@ -12,6 +12,6 @@ The Resistance Gene Identifier (RGI) from the `Comprehensive Antibiotic Resistan
 Ontology
 ========
 
-The CARD ontology is parsed after the analysis are run to summarize the antibiotics for which a gene confering resistance has been identified (testing for the relationship equals to ``confers_resistance_to_drug`` or ``confers_resistance_to``. Find the result of the parsing for each sample in:
+The CARD ontology is parsed after the analysis are run to summarize the antibiotics for which a gene confering resistance has been identified (testing for the relationship equals to ``confers_resistance_to_drug`` or ``confers_resistance_to``). Find the result of the parsing for each sample in:
 
 * ``samples/{sample}/resistance/rgi_ontology.xlsx``
