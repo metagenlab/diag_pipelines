@@ -87,4 +87,4 @@ Example
 will calculate the core genome with parSNP with every complete genome of *Morganella morganii* available in `RefSeq <https://www.ncbi.nlm.nih.gov/refseq/>`_.
 
 
-If you wish to create a new parSNP core genome definition, do not link any ``references`` or ``core_genomes`` from your working directory.
+If you wish to create a new parSNP core genome definition with the Docker image (that include the ``parsnp`` binary), do not link any ``references`` or ``core_genomes`` from your working directory.
