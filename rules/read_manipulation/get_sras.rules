@@ -3,9 +3,11 @@ rule download_sra_single:
         pipeline_path + "envs/sra-tools.yaml"
     output:
         temp(link_directory + "{sample,[A-Za-z0-9]+}.fastq.gz"),
+    log:
+        logging_folder + "samples/{sample}/sras/dump.txt"
     shell:
         """
-        fastq-dump --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading {wildcards.sample} &> /dev/null
+        fastq-dump --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
         """
 
 
@@ -15,9 +17,11 @@ rule download_sra_paired:
     output:
         temp(link_directory + "{sample,[A-Za-z0-9]+}_1.fastq.gz"),
         temp(link_directory + "{sample,[A-Za-z0-9]+}_2.fastq.gz"),
+    log:
+        logging_folder + "samples/{sample}/sras/dump.txt"
     shell:
         """
-        fastq-dump --split-files --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading {wildcards.sample} &> /dev/null
+        fastq-dump --split-files --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
         """
 
 
