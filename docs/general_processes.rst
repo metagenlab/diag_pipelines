@@ -20,6 +20,8 @@ General variables
 * Pass ``--cores number_of_cores`` to the snakemake command to define the number of cores you want to use for your analysis
 
 An example of each variable value is provided in ``config.yaml`` of the github repository.
+
+  
 -----------------
 Logging functions
 -----------------
