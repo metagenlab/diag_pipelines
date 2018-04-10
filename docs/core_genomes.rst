@@ -55,7 +55,7 @@ cgMLST scheme from `enterobase <http://enterobase.warwick.ac.uk/>`_ is available
    "*Salmonella_enterica*","28901","SALwgMLST","359488","cgMLSTv1"
 
 
-A bed file for each reference genome, based on the locus tags present in this genome, is constructed. For instance, over the 3002 loci of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference 359488. For *E. coli*, only 15 loci are missing for the reference assembly, out of 2498.
+A bed file for each reference genome, based on the locus tags present in this genome, is constructed. For instance, over the 3002 loci of the *Salmonella* cgMLSTv1, 69 come from a different genome than the reference ``359488``. For *E. coli*, only 15 loci are missing for the reference assembly (``79781``), out of 2498.
 
 Example
 -------
@@ -85,3 +85,6 @@ Example
    --use-conda --conda-prefix $conda_folder 
 
 will calculate the core genome with parSNP with every complete genome of *Morganella morganii* available in `RefSeq <https://www.ncbi.nlm.nih.gov/refseq/>`_.
+
+
+If you wish to create a new parSNP core genome definition, do not link any ``references`` or ``core_genomes`` from your working directory.

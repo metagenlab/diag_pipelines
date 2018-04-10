@@ -5,7 +5,10 @@ Workflows for epidemiology, anti-microbial resistance genotyping and virulence f
 
 Dependencies
 ============
+
+------
 Docker
+------
 
 Install the CE version following these `instructions <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`_ for ubuntu. Also make sure you have created the docker group and that you can run docker without sudo following these `instruction <https://docs.docker.com/install/linux/linux-postinstall/>`_. If you can't have access to the internet when inside a Docker container, apply those `changes <https://docs.docker.com/install/linux/linux-postinstall/#disable-dnsmasq>`_.
 
@@ -36,7 +39,7 @@ Once you have pulled the docker image on your computer:
    docker run -t --rm \
    --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
    metagenlab/diag_pipelines:latest \
-   sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules \
+   sh -c 'snakemake --snakefile $pipeline_folder/workflows/full_pipeline.rules \
    --use-conda --conda-prefix $conda_folder --configfile config.yaml'
 
 Update the config file for your needs. If you have read files you want to analyse, they should be stored in the ``links`` folder from your current working directory. 
@@ -77,7 +80,7 @@ This will generate a summary excel file for the virulence factors of the samples
    --use-conda --conda-prefix $conda_folder --configfile config.yaml\
    typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp.xlsx'
 
-This will generate a snp-distance matrix of all samples, only on the core genome defined by ridom of the species defined in the `species` variable of the config file, mapped on the reference genome used by ridom (which is *Staphylococcus aureus* COL substrain, `id` 33148 from the `NCBI Assembly database <https:/www.ncbi.nlm.nih.gov/assembly/>`_) with bwa. 
+This will generate a snp-distance matrix of all samples, only on the core genome defined by ridom of the species defined in the `species` variable of the config file, mapped with bwa on the reference genome used by ridom (which is *Staphylococcus aureus* COL substrain, `id` 33148 from the `NCBI Assembly database <https:/www.ncbi.nlm.nih.gov/assembly/>`_). 
 
 .. code-block:: bash
 		
