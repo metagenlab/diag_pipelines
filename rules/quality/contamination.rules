@@ -71,3 +71,16 @@ rule merge_all_xlsx_mash_results:
         xlsx_out = "contamination/{results}.xlsx",
     script:
         pipeline_path + "rules/annotation/resistance/scripts/merge_non_empty_results.py"
+
+
+rule sketch_human_genome_with_mash:
+    conda:
+        pipeline_path + "envs/mash.yaml"
+    input:
+        human_ref = "references/1493941/genome_fasta.fasta"
+    output:
+        human_sketch = "references/human_sketch.msh"
+    shell:
+        """
+        mash sketch -o {output[human_sketch]} {input[human_ref]}
+        """
