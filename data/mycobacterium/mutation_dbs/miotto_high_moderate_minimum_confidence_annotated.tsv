@@ -1,287 +1,287 @@
-Gene	OriginalAnnotation	PositionAlternative	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	MutationType	PositionMTB
-eis	c-14t	-14	c	t	SNP	-14
-eis	g-10a	-10	g	a	SNP	-10
-gyrA	A90V	90	A	V	SNP	90
-gyrA	D94A	94	D	A	SNP	94
-gyrA	D94G	94	D	G	SNP	94
-gyrA	D94N	94	D	N	SNP	94
-gyrA	D94Y	94	D	Y	SNP	94
-gyrA	S91P	91	S	P	SNP	91
-gyrA	A90V	90	A	V	SNP	90
-gyrA	D94A	94	D	A	SNP	94
-gyrA	D94G	94	D	G	SNP	94
-gyrA	D94H	94	D	H	SNP	94
-gyrA	D94N	94	D	N	SNP	94
-gyrA	D94Y	94	D	Y	SNP	94
-gyrA	G88A	88	G	A	SNP	88
-gyrA	G88C	88	G	C	SNP	88
-gyrA	S91P	91	S	P	SNP	91
-gyrB	A504V	504	A	V	SNP	504
-inhA	c-15t	-15	C	T	SNP	-15
-inhA	c-15t	-15	C	T	SNP	-15
-katG	S315N	315	S	N	SNP	315
-katG	S315T	315	S	T	SNP	315
-pncA	a-11g	-11	A	g	SNP	-11
-pncA	A3E	3	A	E	SNP	3
-pncA	A46V	46	A	V	SNP	46
-pncA	C14R	14	C	R	SNP	14
-pncA	C14Stop	14	C	Stop	STOP	14
-pncA	C72R	72	C	R	SNP	72
-pncA	C72Stop	72	C	Stop	STOP	72
-pncA	D12A	12	D	A	SNP	12
-pncA	D12N	12	D	N	SNP	12
-pncA	D49G	49	D	G	SNP	49
-pncA	D63G	63	D	G	SNP	63
-pncA	D8G	8	D	G	SNP	8
-pncA	E111Stop	111	E	Stop	STOP	111
-pncA	E127Stop	127	E	Stop	STOP	127
-pncA	E37Stop	37	E	Stop	STOP	37
-pncA	E91Stop	91	E	Stop	STOP	91
-pncA	F94L	94	F	L	SNP	94
-pncA	F94S	94	F	S	SNP	94
-pncA	G108R	108	G	R	SNP	108
-pncA	G108Stop	108	G	Stop	STOP	108
-pncA	G122Stop	122	G	Stop	STOP	122
-pncA	G97D	97	G	D	SNP	97
-pncA	G97S	97	G	S	SNP	97
-pncA	H51Q	51	H	Q	SNP	51
-pncA	H57D	57	H	D	SNP	57
-pncA	H57R	57	H	R	SNP	57
-pncA	H57Y	57	H	Y	SNP	57
-pncA	H71D	71	H	D	SNP	71
-pncA	H71Y	71	H	Y	SNP	71
-pncA	H82R	82	H	R	SNP	82
-pncA	I6T	6	I	T	SNP	6
-pncA	indel - >200nt del	200	indel - >	nt del	INDEL_UNKNOWN	200
-pncA	indel - 117ins	117	indel - 	ins	INDEL_UNKNOWN	117
-pncA	indel - 15ins	15	indel - 	ins	INDEL_UNKNOWN	15
-pncA	indel - 16ins	16	indel - 	ins	INDEL_UNKNOWN	16
-pncA	indel - 17ins	17	indel - 	ins	INDEL_UNKNOWN	17
-pncA	indel - 2.5kb deletion	25	indel - 	kb deletion	INDEL_UNKNOWN	25
-pncA	indel - 24 bp del after 88	2488	indel - 		INDEL_UNKNOWN	2488
-pncA	indel - 29del	29	indel - 	del	INDEL_UNKNOWN	29
-pncA	indel - 29ins	29	indel - 	ins	INDEL_UNKNOWN	29
-pncA	indel - 34ins	34	indel - 	ins	INDEL_UNKNOWN	34
-pncA	indel - 36del	36	indel - 	del	INDEL_UNKNOWN	36
-pncA	indel - 36ins	36	indel - 	ins	INDEL_UNKNOWN	36
-pncA	Indel - 5.3 kb del at 106	106	Indel - 		INDEL	106
-pncA	indel - 50del	50	indel - 	del	INDEL_UNKNOWN	50
-pncA	indel - 8 bp del at 382	382	indel - 		INDEL	382
-pncA	indel - 8 bp del at start	0	indel - 	 bp del at start	INDEL	0
-pncA	indel - 80bp del (-11/69)	-11	indel - 	)	INDEL	-11
-pncA	Indel - A102ins	102	Indel - A	ins	INDEL	102
-pncA	indel - A140S+frameshift	140	indel - A	S+frameshift	INDEL	140
-pncA	indel - A152del	152	indel - A	del	INDEL	152
-pncA	indel - A152ins	152	indel - A	ins	INDEL	152
-pncA	indel - A165ins	165	indel - A	ins	INDEL	165
-pncA	Indel - A171del	171	Indel - A	del	INDEL	171
-pncA	indel - A178del+S179del (inframe)	178	indel - A	del (inframe)	INDEL	178
-pncA	Indel - A20del	20	Indel - A	del	INDEL	20
-pncA	indel - A25del	25	indel - A	del	INDEL	25
-pncA	indel - A26ins	26	indel - A	ins	INDEL	26
-pncA	indel - A46del	46	indel - A	del	INDEL	46
-pncA	indel - A90ins	90	indel - A	ins	INDEL	90
-pncA	indel - C14del	14	indel - C	del	INDEL	14
-pncA	indel - C14-E15del	1415	indel - C	del	INDEL	1415
-pncA	Indel - C72ins	72	Indel - C	ins	INDEL	72
-pncA	indel - D110del	110	indel - D	del	INDEL	110
-pncA	indel - D110ins	110	indel - D	ins	INDEL	110
-pncA	indel - D126del	126	indel - D	del	INDEL	126
-pncA	indel - D126ins	126	indel - D	ins	INDEL	126
-pncA	indel - D12ins	12	indel - D	ins	INDEL	12
-pncA	indel - D136ins	136	indel - D	ins	INDEL	136
-pncA	indel - D145ins	145	indel - D	ins	INDEL	145
-pncA	indel - D158ins	158	indel - D	ins	INDEL	158
-pncA	indel - D166ins	166	indel - D	ins	INDEL	166
-pncA	indel - D33del	33	indel - D	del	INDEL	33
-pncA	indel - D49del	49	indel - D	del	INDEL	49
-pncA	indel - D53del	53	indel - D	del	INDEL	53
-pncA	indel - D56ins	56	indel - D	ins	INDEL	56
-pncA	indel - D63ins	63	indel - D	ins	INDEL	63
-pncA	indel - D86del	86	indel - D	del	INDEL	86
-pncA	indel - D86ins	86	indel - D	ins	INDEL	86
-pncA	indel - deletion		indel - deletion	indel - deletion	INDEL_UNKNOWN	0
-pncA	indel - E111del	111	indel - E	del	INDEL	111
-pncA	indel - E173del	173	indel - E	del	INDEL	173
-pncA	indel - E174ins	174	indel - E	ins	INDEL	174
-pncA	indel - E91del	91	indel - E	del	INDEL	91
-pncA	indel - entire gene deletion		indel - entire gene deletion	indel - entire gene deletion	INDEL_UNKNOWN	0
-pncA	indel - F106del	106	indel - F	del	INDEL	106
-pncA	indel - F13ins	13	indel - F	ins	INDEL	13
-pncA	indel - F58del	58	indel - F	del	INDEL	58
-pncA	indel - F94del	94	indel - F	del	INDEL	94
-pncA	indel - F94ins	94	indel - F	ins	INDEL	94
-pncA	indel - Frameshift		indel - Frameshift	indel - Frameshift	INDEL_UNKNOWN	0
-pncA	indel - frameshift IS6110 (ins)		indel - frameshift IS	 (ins)	INDEL_UNKNOWN	0
-pncA	Indel - G101del	101	Indel - G	del	INDEL	101
-pncA	Indel - G101ins	101	Indel - G	ins	INDEL	101
-pncA	indel - G105ins	105	indel - G	ins	INDEL	105
-pncA	indel - G113ins	113	indel - G	ins	INDEL	113
-pncA	indel - G132del	132	indel - G	del	INDEL	132
-pncA	indel - G132ins	132	indel - G	ins	INDEL	132
-pncA	indel - G150ins	150	indel - G	ins	INDEL	150
-pncA	indel - G162ins	162	indel - G	ins	INDEL	162
-pncA	indel - G23ins	23	indel - G	ins	INDEL	23
-pncA	indel - G24del	24	indel - G	del	INDEL	24
-pncA	Indel - G55del	55	Indel - G	del	INDEL	55
-pncA	indel - g-71 del+R148ins+T167ins	71148167	indel - g-	ins	INDEL_UNKNOWN	71148167
-pncA	indel - g-71del	71	indel - g-	del	INDEL	71
-pncA	indel - G74ins	74	indel - G	ins	INDEL	74
-pncA	indel - G78ins	78	indel - G	ins	INDEL	78
-pncA	indel - G97del	97	indel - G	del	INDEL	97
-pncA	indel - G97ins	97	indel - G	ins	INDEL	97
-pncA	indel - H137ins	137	indel - H	ins	INDEL	137
-pncA	indel - H43del	43	indel - H	del	INDEL	43
-pncA	indel - H71del	71	indel - H	del	INDEL	71
-pncA	indel - I133del	133	indel - I	del	INDEL	133
-pncA	indel - I133ins	133	indel - I	ins	INDEL	133
-pncA	indel - I5ins	5	indel - I	ins	INDEL	5
-pncA	indel - K48del	48	indel - K	del	INDEL	48
-pncA	indel - K96del	96	indel - K	del	INDEL	96
-pncA	indel - K96ins	96	indel - K	ins	INDEL	96
-pncA	indel - L151del	151	indel - L	del	INDEL	151
-pncA	Indel - L159del	159	Indel - L	del	INDEL	159
-pncA	indel - L172del	172	indel - L	del	INDEL	172
-pncA	indel - L172ins	172	indel - L	ins	INDEL	172
-pncA	Indel - L35del	35	Indel - L	del	INDEL	35
-pncA	indel - L4del	4	indel - L	del	INDEL	4
-pncA	indel - M194del	194	indel - M	del	INDEL	194
-pncA	indel - N149del	149	indel - N	del	INDEL	149
-pncA	indel - N149ins	149	indel - N	ins	INDEL	149
-pncA	indel - P54ins	54	indel - P	ins	INDEL	54
-pncA	indel - P62del	62	indel - P	del	INDEL	62
-pncA	indel - P62ins	62	indel - P	ins	INDEL	62
-pncA	indel - P77ins	77	indel - P	ins	INDEL	77
-pncA	indel - pncA gene complex deletion		indel - pncA gene complex deletion	indel - pncA gene complex deletion	INDEL_UNKNOWN	0
-pncA	Indel - Q10del	10	Indel - Q	del	INDEL	10
-pncA	indel - Q122del	122	indel - Q	del	INDEL	122
-pncA	indel - Q122ins	122	indel - Q	ins	INDEL	122
-pncA	indel - Q141del	141	indel - Q	del	INDEL	141
-pncA	indel - Q141ins	141	indel - Q	ins	INDEL	141
-pncA	indel - R123ins	123	indel - R	ins	INDEL	123
-pncA	Indel - R140del	140	Indel - R	del	INDEL	140
-pncA	indel - R140ins	140	indel - R	ins	INDEL	140
-pncA	Indel - R148 g443del		Indel - R	del	INDEL_UNKNOWN	0
-pncA	indel - R148ins (inframe)	148	indel - R	ins (inframe)	INDEL	148
-pncA	indel - S104ins	104	indel - S	ins	INDEL	104
-pncA	indel - S18ins	18	indel - S	ins	INDEL	18
-pncA	indel - S65ins	65	indel - S	ins	INDEL	65
-pncA	indel - S65-S88del	6588	indel - S	del	INDEL	6588
-pncA	indel - S84ins	84	indel - S	ins	INDEL	84
-pncA	Indel - T114 1355 bp ins at 341		Indel - T		INDEL_UNKNOWN	0
-pncA	indel - T114del	114	indel - T	del	INDEL	114
-pncA	indel - T135ins	135	indel - T	ins	INDEL	135
-pncA	indel - T160ins	160	indel - T	ins	INDEL	160
-pncA	Indel - T167ins	167	Indel - T	ins	INDEL	167
-pncA	indel - T177ins	177	indel - T	ins	INDEL	177
-pncA	indel - T47ins	47	indel - T	ins	INDEL	47
-pncA	indel - T61ins	61	indel - T	ins	INDEL	61
-pncA	indel - T76del	76	indel - T	del	INDEL	76
-pncA	indel - T87del	87	indel - T	del	INDEL	87
-pncA	indel - T87ins	87	indel - T	ins	INDEL	87
-pncA	indel - V128ins	128	indel - V	ins	INDEL	128
-pncA	indel - V130ins	130	indel - V	ins	INDEL	130
-pncA	indel - V131del	131	indel - V	del	INDEL	131
-pncA	indel - V131ins (frameshift)	131	indel - V	ins (frameshift)	INDEL	131
-pncA	indel - V139del	139	indel - V	del	INDEL	139
-pncA	indel - V147ins	147	indel - V	ins	INDEL	147
-pncA	indel - V155ins	155	indel - V	ins	INDEL	155
-pncA	indel - V163del	163	indel - V	del	INDEL	163
-pncA	indel - V169ins	169	indel - V	ins	INDEL	169
-pncA	indel - V21del	21	indel - V	del	INDEL	21
-pncA	indel - V21ins	21	indel - V	ins	INDEL	21
-pncA	indel - V44del	44	indel - V	del	INDEL	44
-pncA	indel - V44ins	44	indel - V	ins	INDEL	44
-pncA	indel - Y103ins	103	indel - Y	ins	INDEL	103
-pncA	indel - Y34del	34	indel - Y	del	INDEL	34
-pncA	indel - Y41ins	41	indel - Y	ins	INDEL	41
-pncA	indel - Y64ins	64	indel - Y	ins	INDEL	64
-pncA	K48stop	48	K	stop	STOP	48
-pncA	K48T	48	K	T	SNP	48
-pncA	K96Stop	96	K	Stop	STOP	96
-pncA	L116R	116	L	R	SNP	116
-pncA	L120P	120	L	P	SNP	120
-pncA	L172P	172	L	P	SNP	172
-pncA	L85P	85	L	P	SNP	85
-pncA	L85R	85	L	R	SNP	85
-pncA	M175V	175	M	V	SNP	175
-pncA	Q10P	10	Q	P	SNP	10
-pncA	Q10Stop	10	Q	Stop	STOP	10
-pncA	Q122Stop	122	Q	Stop	STOP	122
-pncA	Q141P	141	Q	P	SNP	141
-pncA	Q141Stop	141	Q	Stop	STOP	141
-pncA	S104R	104	S	R	SNP	104
-pncA	S67P	67	S	P	SNP	67
-pncA	S88Stop	88	S	Stop	STOP	88
-pncA	T135N	135	T	N	SNP	135
-pncA	T135P	135	T	P	SNP	135
-pncA	T142A	142	T	A	SNP	142
-pncA	T142K	142	T	K	SNP	142
-pncA	T142M	142	T	M	SNP	142
-pncA	T76P	76	T	P	SNP	76
-pncA	V125G	125	V	G	SNP	125
-pncA	V128G	128	V	G	SNP	128
-pncA	V139G	139	V	G	SNP	139
-pncA	V139L	139	V	L	SNP	139
-pncA	V155G	155	V	G	SNP	155
-pncA	W119Stop	119	W	Stop	STOP	119
-pncA	W68R	68	W	R	SNP	68
-pncA	W68Stop	68	W	Stop	STOP	68
-pncA	Y103H	103	Y	H	SNP	103
-pncA	Y103Stop	103	Y	Stop	STOP	103
-pncA	Y34D	34	Y	D	SNP	34
-pncA	Y34Stop	34	Y	Stop	STOP	34
-pncA	Y41Stop	41	Y	Stop	STOP	41
-pncA	Y64stop	64	Y	stop	STOP	64
-pncA	Y95Stop	95	Y	Stop	STOP	95
-pncA	Y99Stop	99	Y	Stop	STOP	99
-pncA	P54L	54	P	L	SNP	54
-pncA	W68G	68	W	G	SNP	68
-pncA	V7G	7	V	G	SNP	7
-pncA	D12G	12	D	G	SNP	12
-pncA	V139A	139	V	A	SNP	139
-rpoB	D516A	516	D	A	SNP	435
-rpoB	D516F	516	D	F	SNP	435
-rpoB	D516G	516	D	G	SNP	435
-rpoB	D516V	516	D	V	SNP	435
-rpoB	F514dupl	514	F	dupl	INDEL	433
-rpoB	H526C	526	H	C	SNP	445
-rpoB	H526D	526	H	D	SNP	445
-rpoB	H526G	526	H	G	SNP	445
-rpoB	H526L	526	H	L	SNP	445
-rpoB	H526R	526	H	R	SNP	445
-rpoB	H526Y	526	H	Y	SNP	445
-rpoB	Q513K	513	Q	K	SNP	432
-rpoB	Q513L	513	Q	L	SNP	432
-rpoB	Q513P	513	Q	P	SNP	432
-rpoB	S522Q	522	S	Q	SNP	441
-rpoB	S531F	531	S	F	SNP	450
-rpoB	S531L	531	S	L	SNP	450
-rpoB	S531W	531	S	W	SNP	450
-rpoB	D516Y	516	D	Y	SNP	435
-rpoB	L533P	533	L	P	SNP	452
-rpoB	S522L	522	S	L	SNP	441
-rpoB	H526N	526	H	N	SNP	445
-rpoB	I572F	572	I	F	SNP	491
-rpoB	L511P	511	L	P	SNP	430
-rpsL	K43R	43	K	R	SNP	43
-rpsL	K88Q	88	K	Q	SNP	88
-rpsL	K88R	88	K	R	SNP	88
-rrs	a1401g	1401	a	g	SNP	1401
-rrs	g1484t	1484	g	t	SNP	1484
-rrs	a1401g	1401	a	g	SNP	1401
-rrs	c1402t	1402	c	t	SNP	1402
-rrs	a1401g	1401	a	g	SNP	1401
-rrs	c1402t	1402	c	t	SNP	1402
-rrs	g1484t	1484	g	t	SNP	1484
-rrs	a514c	514	a	c	SNP	514
-rrs	c517t	517	c	t	SNP	517
-tlyA	D174ins	174	D	ins	INDEL	174
-tlyA	E75Stop	75	E	Stop	STOP	75
-tlyA	H68ins	68	H	ins	INDEL	68
-tlyA	L218ins	218	L	ins	INDEL	218
-tlyA	N236K	236	N	K	SNP	236
-tlyA	Q215Stop	215	Q	Stop	STOP	215
-tlyA	Q23del	23	Q	del	INDEL	23
-tlyA	R18Stop	18	R	Stop	STOP	18
-tlyA	S262ins	262	S	ins	INDEL	262
+OriginalGene	Gene	OriginalAnnotation	PositionAlternative	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	MutationType	PositionMTB
+eis	eis	c-14t	-14	c	t	SNP	-14
+eis	eis	g-10a	-10	g	a	SNP	-10
+gyrA	gyrA	A90V	90	A	V	SNP	90
+gyrA	gyrA	D94A	94	D	A	SNP	94
+gyrA	gyrA	D94G	94	D	G	SNP	94
+gyrA	gyrA	D94N	94	D	N	SNP	94
+gyrA	gyrA	D94Y	94	D	Y	SNP	94
+gyrA	gyrA	S91P	91	S	P	SNP	91
+gyrA	gyrA	A90V	90	A	V	SNP	90
+gyrA	gyrA	D94A	94	D	A	SNP	94
+gyrA	gyrA	D94G	94	D	G	SNP	94
+gyrA	gyrA	D94H	94	D	H	SNP	94
+gyrA	gyrA	D94N	94	D	N	SNP	94
+gyrA	gyrA	D94Y	94	D	Y	SNP	94
+gyrA	gyrA	G88A	88	G	A	SNP	88
+gyrA	gyrA	G88C	88	G	C	SNP	88
+gyrA	gyrA	S91P	91	S	P	SNP	91
+gyrB	gyrB	A504V	504	A	V	SNP	504
+inhA	fabG1	c-15t	-15	C	T	SNP	-15
+inhA	fabG1	c-15t	-15	C	T	SNP	-15
+katG	katG	S315N	315	S	N	SNP	315
+katG	katG	S315T	315	S	T	SNP	315
+pncA	pncA	a-11g	-11	A	g	SNP	-11
+pncA	pncA	A3E	3	A	E	SNP	3
+pncA	pncA	A46V	46	A	V	SNP	46
+pncA	pncA	C14R	14	C	R	SNP	14
+pncA	pncA	C14Stop	14	C	Stop	STOP	14
+pncA	pncA	C72R	72	C	R	SNP	72
+pncA	pncA	C72Stop	72	C	Stop	STOP	72
+pncA	pncA	D12A	12	D	A	SNP	12
+pncA	pncA	D12N	12	D	N	SNP	12
+pncA	pncA	D49G	49	D	G	SNP	49
+pncA	pncA	D63G	63	D	G	SNP	63
+pncA	pncA	D8G	8	D	G	SNP	8
+pncA	pncA	E111Stop	111	E	Stop	STOP	111
+pncA	pncA	E127Stop	127	E	Stop	STOP	127
+pncA	pncA	E37Stop	37	E	Stop	STOP	37
+pncA	pncA	E91Stop	91	E	Stop	STOP	91
+pncA	pncA	F94L	94	F	L	SNP	94
+pncA	pncA	F94S	94	F	S	SNP	94
+pncA	pncA	G108R	108	G	R	SNP	108
+pncA	pncA	G108Stop	108	G	Stop	STOP	108
+pncA	pncA	G122Stop	122	G	Stop	STOP	122
+pncA	pncA	G97D	97	G	D	SNP	97
+pncA	pncA	G97S	97	G	S	SNP	97
+pncA	pncA	H51Q	51	H	Q	SNP	51
+pncA	pncA	H57D	57	H	D	SNP	57
+pncA	pncA	H57R	57	H	R	SNP	57
+pncA	pncA	H57Y	57	H	Y	SNP	57
+pncA	pncA	H71D	71	H	D	SNP	71
+pncA	pncA	H71Y	71	H	Y	SNP	71
+pncA	pncA	H82R	82	H	R	SNP	82
+pncA	pncA	I6T	6	I	T	SNP	6
+pncA	pncA	indel - >200nt del	200	indel - >	nt del	INDEL_UNKNOWN	200
+pncA	pncA	indel - 117ins	117	indel - 	ins	INDEL_UNKNOWN	117
+pncA	pncA	indel - 15ins	15	indel - 	ins	INDEL_UNKNOWN	15
+pncA	pncA	indel - 16ins	16	indel - 	ins	INDEL_UNKNOWN	16
+pncA	pncA	indel - 17ins	17	indel - 	ins	INDEL_UNKNOWN	17
+pncA	pncA	indel - 2.5kb deletion	25	indel - 	kb deletion	INDEL_UNKNOWN	25
+pncA	pncA	indel - 24 bp del after 88	2488	indel - 		INDEL_UNKNOWN	2488
+pncA	pncA	indel - 29del	29	indel - 	del	INDEL_UNKNOWN	29
+pncA	pncA	indel - 29ins	29	indel - 	ins	INDEL_UNKNOWN	29
+pncA	pncA	indel - 34ins	34	indel - 	ins	INDEL_UNKNOWN	34
+pncA	pncA	indel - 36del	36	indel - 	del	INDEL_UNKNOWN	36
+pncA	pncA	indel - 36ins	36	indel - 	ins	INDEL_UNKNOWN	36
+pncA	pncA	Indel - 5.3 kb del at 106	106	Indel - 		INDEL	106
+pncA	pncA	indel - 50del	50	indel - 	del	INDEL_UNKNOWN	50
+pncA	pncA	indel - 8 bp del at 382	382	indel - 		INDEL	382
+pncA	pncA	indel - 8 bp del at start	0	indel - 	 bp del at start	INDEL	0
+pncA	pncA	indel - 80bp del (-11/69)	-11	indel - 	)	INDEL	-11
+pncA	pncA	Indel - A102ins	102	Indel - A	ins	INDEL	102
+pncA	pncA	indel - A140S+frameshift	140	indel - A	S+frameshift	INDEL	140
+pncA	pncA	indel - A152del	152	indel - A	del	INDEL	152
+pncA	pncA	indel - A152ins	152	indel - A	ins	INDEL	152
+pncA	pncA	indel - A165ins	165	indel - A	ins	INDEL	165
+pncA	pncA	Indel - A171del	171	Indel - A	del	INDEL	171
+pncA	pncA	indel - A178del+S179del (inframe)	178	indel - A	del (inframe)	INDEL	178
+pncA	pncA	Indel - A20del	20	Indel - A	del	INDEL	20
+pncA	pncA	indel - A25del	25	indel - A	del	INDEL	25
+pncA	pncA	indel - A26ins	26	indel - A	ins	INDEL	26
+pncA	pncA	indel - A46del	46	indel - A	del	INDEL	46
+pncA	pncA	indel - A90ins	90	indel - A	ins	INDEL	90
+pncA	pncA	indel - C14del	14	indel - C	del	INDEL	14
+pncA	pncA	indel - C14-E15del	1415	indel - C	del	INDEL	1415
+pncA	pncA	Indel - C72ins	72	Indel - C	ins	INDEL	72
+pncA	pncA	indel - D110del	110	indel - D	del	INDEL	110
+pncA	pncA	indel - D110ins	110	indel - D	ins	INDEL	110
+pncA	pncA	indel - D126del	126	indel - D	del	INDEL	126
+pncA	pncA	indel - D126ins	126	indel - D	ins	INDEL	126
+pncA	pncA	indel - D12ins	12	indel - D	ins	INDEL	12
+pncA	pncA	indel - D136ins	136	indel - D	ins	INDEL	136
+pncA	pncA	indel - D145ins	145	indel - D	ins	INDEL	145
+pncA	pncA	indel - D158ins	158	indel - D	ins	INDEL	158
+pncA	pncA	indel - D166ins	166	indel - D	ins	INDEL	166
+pncA	pncA	indel - D33del	33	indel - D	del	INDEL	33
+pncA	pncA	indel - D49del	49	indel - D	del	INDEL	49
+pncA	pncA	indel - D53del	53	indel - D	del	INDEL	53
+pncA	pncA	indel - D56ins	56	indel - D	ins	INDEL	56
+pncA	pncA	indel - D63ins	63	indel - D	ins	INDEL	63
+pncA	pncA	indel - D86del	86	indel - D	del	INDEL	86
+pncA	pncA	indel - D86ins	86	indel - D	ins	INDEL	86
+pncA	pncA	indel - deletion		indel - deletion	indel - deletion	INDEL_UNKNOWN	0
+pncA	pncA	indel - E111del	111	indel - E	del	INDEL	111
+pncA	pncA	indel - E173del	173	indel - E	del	INDEL	173
+pncA	pncA	indel - E174ins	174	indel - E	ins	INDEL	174
+pncA	pncA	indel - E91del	91	indel - E	del	INDEL	91
+pncA	pncA	indel - entire gene deletion		indel - entire gene deletion	indel - entire gene deletion	INDEL_UNKNOWN	0
+pncA	pncA	indel - F106del	106	indel - F	del	INDEL	106
+pncA	pncA	indel - F13ins	13	indel - F	ins	INDEL	13
+pncA	pncA	indel - F58del	58	indel - F	del	INDEL	58
+pncA	pncA	indel - F94del	94	indel - F	del	INDEL	94
+pncA	pncA	indel - F94ins	94	indel - F	ins	INDEL	94
+pncA	pncA	indel - Frameshift		indel - Frameshift	indel - Frameshift	INDEL_UNKNOWN	0
+pncA	pncA	indel - frameshift IS6110 (ins)		indel - frameshift IS	 (ins)	INDEL_UNKNOWN	0
+pncA	pncA	Indel - G101del	101	Indel - G	del	INDEL	101
+pncA	pncA	Indel - G101ins	101	Indel - G	ins	INDEL	101
+pncA	pncA	indel - G105ins	105	indel - G	ins	INDEL	105
+pncA	pncA	indel - G113ins	113	indel - G	ins	INDEL	113
+pncA	pncA	indel - G132del	132	indel - G	del	INDEL	132
+pncA	pncA	indel - G132ins	132	indel - G	ins	INDEL	132
+pncA	pncA	indel - G150ins	150	indel - G	ins	INDEL	150
+pncA	pncA	indel - G162ins	162	indel - G	ins	INDEL	162
+pncA	pncA	indel - G23ins	23	indel - G	ins	INDEL	23
+pncA	pncA	indel - G24del	24	indel - G	del	INDEL	24
+pncA	pncA	Indel - G55del	55	Indel - G	del	INDEL	55
+pncA	pncA	indel - g-71 del+R148ins+T167ins	71148167	indel - g-	ins	INDEL_UNKNOWN	71148167
+pncA	pncA	indel - g-71del	71	indel - g-	del	INDEL	71
+pncA	pncA	indel - G74ins	74	indel - G	ins	INDEL	74
+pncA	pncA	indel - G78ins	78	indel - G	ins	INDEL	78
+pncA	pncA	indel - G97del	97	indel - G	del	INDEL	97
+pncA	pncA	indel - G97ins	97	indel - G	ins	INDEL	97
+pncA	pncA	indel - H137ins	137	indel - H	ins	INDEL	137
+pncA	pncA	indel - H43del	43	indel - H	del	INDEL	43
+pncA	pncA	indel - H71del	71	indel - H	del	INDEL	71
+pncA	pncA	indel - I133del	133	indel - I	del	INDEL	133
+pncA	pncA	indel - I133ins	133	indel - I	ins	INDEL	133
+pncA	pncA	indel - I5ins	5	indel - I	ins	INDEL	5
+pncA	pncA	indel - K48del	48	indel - K	del	INDEL	48
+pncA	pncA	indel - K96del	96	indel - K	del	INDEL	96
+pncA	pncA	indel - K96ins	96	indel - K	ins	INDEL	96
+pncA	pncA	indel - L151del	151	indel - L	del	INDEL	151
+pncA	pncA	Indel - L159del	159	Indel - L	del	INDEL	159
+pncA	pncA	indel - L172del	172	indel - L	del	INDEL	172
+pncA	pncA	indel - L172ins	172	indel - L	ins	INDEL	172
+pncA	pncA	Indel - L35del	35	Indel - L	del	INDEL	35
+pncA	pncA	indel - L4del	4	indel - L	del	INDEL	4
+pncA	pncA	indel - M194del	194	indel - M	del	INDEL	194
+pncA	pncA	indel - N149del	149	indel - N	del	INDEL	149
+pncA	pncA	indel - N149ins	149	indel - N	ins	INDEL	149
+pncA	pncA	indel - P54ins	54	indel - P	ins	INDEL	54
+pncA	pncA	indel - P62del	62	indel - P	del	INDEL	62
+pncA	pncA	indel - P62ins	62	indel - P	ins	INDEL	62
+pncA	pncA	indel - P77ins	77	indel - P	ins	INDEL	77
+pncA	pncA	indel - pncA gene complex deletion		indel - pncA gene complex deletion	indel - pncA gene complex deletion	INDEL_UNKNOWN	0
+pncA	pncA	Indel - Q10del	10	Indel - Q	del	INDEL	10
+pncA	pncA	indel - Q122del	122	indel - Q	del	INDEL	122
+pncA	pncA	indel - Q122ins	122	indel - Q	ins	INDEL	122
+pncA	pncA	indel - Q141del	141	indel - Q	del	INDEL	141
+pncA	pncA	indel - Q141ins	141	indel - Q	ins	INDEL	141
+pncA	pncA	indel - R123ins	123	indel - R	ins	INDEL	123
+pncA	pncA	Indel - R140del	140	Indel - R	del	INDEL	140
+pncA	pncA	indel - R140ins	140	indel - R	ins	INDEL	140
+pncA	pncA	Indel - R148 g443del		Indel - R	del	INDEL_UNKNOWN	0
+pncA	pncA	indel - R148ins (inframe)	148	indel - R	ins (inframe)	INDEL	148
+pncA	pncA	indel - S104ins	104	indel - S	ins	INDEL	104
+pncA	pncA	indel - S18ins	18	indel - S	ins	INDEL	18
+pncA	pncA	indel - S65ins	65	indel - S	ins	INDEL	65
+pncA	pncA	indel - S65-S88del	6588	indel - S	del	INDEL	6588
+pncA	pncA	indel - S84ins	84	indel - S	ins	INDEL	84
+pncA	pncA	Indel - T114 1355 bp ins at 341		Indel - T		INDEL_UNKNOWN	0
+pncA	pncA	indel - T114del	114	indel - T	del	INDEL	114
+pncA	pncA	indel - T135ins	135	indel - T	ins	INDEL	135
+pncA	pncA	indel - T160ins	160	indel - T	ins	INDEL	160
+pncA	pncA	Indel - T167ins	167	Indel - T	ins	INDEL	167
+pncA	pncA	indel - T177ins	177	indel - T	ins	INDEL	177
+pncA	pncA	indel - T47ins	47	indel - T	ins	INDEL	47
+pncA	pncA	indel - T61ins	61	indel - T	ins	INDEL	61
+pncA	pncA	indel - T76del	76	indel - T	del	INDEL	76
+pncA	pncA	indel - T87del	87	indel - T	del	INDEL	87
+pncA	pncA	indel - T87ins	87	indel - T	ins	INDEL	87
+pncA	pncA	indel - V128ins	128	indel - V	ins	INDEL	128
+pncA	pncA	indel - V130ins	130	indel - V	ins	INDEL	130
+pncA	pncA	indel - V131del	131	indel - V	del	INDEL	131
+pncA	pncA	indel - V131ins (frameshift)	131	indel - V	ins (frameshift)	INDEL	131
+pncA	pncA	indel - V139del	139	indel - V	del	INDEL	139
+pncA	pncA	indel - V147ins	147	indel - V	ins	INDEL	147
+pncA	pncA	indel - V155ins	155	indel - V	ins	INDEL	155
+pncA	pncA	indel - V163del	163	indel - V	del	INDEL	163
+pncA	pncA	indel - V169ins	169	indel - V	ins	INDEL	169
+pncA	pncA	indel - V21del	21	indel - V	del	INDEL	21
+pncA	pncA	indel - V21ins	21	indel - V	ins	INDEL	21
+pncA	pncA	indel - V44del	44	indel - V	del	INDEL	44
+pncA	pncA	indel - V44ins	44	indel - V	ins	INDEL	44
+pncA	pncA	indel - Y103ins	103	indel - Y	ins	INDEL	103
+pncA	pncA	indel - Y34del	34	indel - Y	del	INDEL	34
+pncA	pncA	indel - Y41ins	41	indel - Y	ins	INDEL	41
+pncA	pncA	indel - Y64ins	64	indel - Y	ins	INDEL	64
+pncA	pncA	K48stop	48	K	stop	STOP	48
+pncA	pncA	K48T	48	K	T	SNP	48
+pncA	pncA	K96Stop	96	K	Stop	STOP	96
+pncA	pncA	L116R	116	L	R	SNP	116
+pncA	pncA	L120P	120	L	P	SNP	120
+pncA	pncA	L172P	172	L	P	SNP	172
+pncA	pncA	L85P	85	L	P	SNP	85
+pncA	pncA	L85R	85	L	R	SNP	85
+pncA	pncA	M175V	175	M	V	SNP	175
+pncA	pncA	Q10P	10	Q	P	SNP	10
+pncA	pncA	Q10Stop	10	Q	Stop	STOP	10
+pncA	pncA	Q122Stop	122	Q	Stop	STOP	122
+pncA	pncA	Q141P	141	Q	P	SNP	141
+pncA	pncA	Q141Stop	141	Q	Stop	STOP	141
+pncA	pncA	S104R	104	S	R	SNP	104
+pncA	pncA	S67P	67	S	P	SNP	67
+pncA	pncA	S88Stop	88	S	Stop	STOP	88
+pncA	pncA	T135N	135	T	N	SNP	135
+pncA	pncA	T135P	135	T	P	SNP	135
+pncA	pncA	T142A	142	T	A	SNP	142
+pncA	pncA	T142K	142	T	K	SNP	142
+pncA	pncA	T142M	142	T	M	SNP	142
+pncA	pncA	T76P	76	T	P	SNP	76
+pncA	pncA	V125G	125	V	G	SNP	125
+pncA	pncA	V128G	128	V	G	SNP	128
+pncA	pncA	V139G	139	V	G	SNP	139
+pncA	pncA	V139L	139	V	L	SNP	139
+pncA	pncA	V155G	155	V	G	SNP	155
+pncA	pncA	W119Stop	119	W	Stop	STOP	119
+pncA	pncA	W68R	68	W	R	SNP	68
+pncA	pncA	W68Stop	68	W	Stop	STOP	68
+pncA	pncA	Y103H	103	Y	H	SNP	103
+pncA	pncA	Y103Stop	103	Y	Stop	STOP	103
+pncA	pncA	Y34D	34	Y	D	SNP	34
+pncA	pncA	Y34Stop	34	Y	Stop	STOP	34
+pncA	pncA	Y41Stop	41	Y	Stop	STOP	41
+pncA	pncA	Y64stop	64	Y	stop	STOP	64
+pncA	pncA	Y95Stop	95	Y	Stop	STOP	95
+pncA	pncA	Y99Stop	99	Y	Stop	STOP	99
+pncA	pncA	P54L	54	P	L	SNP	54
+pncA	pncA	W68G	68	W	G	SNP	68
+pncA	pncA	V7G	7	V	G	SNP	7
+pncA	pncA	D12G	12	D	G	SNP	12
+pncA	pncA	V139A	139	V	A	SNP	139
+rpoB	rpoB	D516A	516	D	A	SNP	435
+rpoB	rpoB	D516F	516	D	F	SNP	435
+rpoB	rpoB	D516G	516	D	G	SNP	435
+rpoB	rpoB	D516V	516	D	V	SNP	435
+rpoB	rpoB	F514dupl	514	F	dupl	INDEL	433
+rpoB	rpoB	H526C	526	H	C	SNP	445
+rpoB	rpoB	H526D	526	H	D	SNP	445
+rpoB	rpoB	H526G	526	H	G	SNP	445
+rpoB	rpoB	H526L	526	H	L	SNP	445
+rpoB	rpoB	H526R	526	H	R	SNP	445
+rpoB	rpoB	H526Y	526	H	Y	SNP	445
+rpoB	rpoB	Q513K	513	Q	K	SNP	432
+rpoB	rpoB	Q513L	513	Q	L	SNP	432
+rpoB	rpoB	Q513P	513	Q	P	SNP	432
+rpoB	rpoB	S522Q	522	S	Q	SNP	441
+rpoB	rpoB	S531F	531	S	F	SNP	450
+rpoB	rpoB	S531L	531	S	L	SNP	450
+rpoB	rpoB	S531W	531	S	W	SNP	450
+rpoB	rpoB	D516Y	516	D	Y	SNP	435
+rpoB	rpoB	L533P	533	L	P	SNP	452
+rpoB	rpoB	S522L	522	S	L	SNP	441
+rpoB	rpoB	H526N	526	H	N	SNP	445
+rpoB	rpoB	I572F	572	I	F	SNP	491
+rpoB	rpoB	L511P	511	L	P	SNP	430
+rpsL	rpsL	K43R	43	K	R	SNP	43
+rpsL	rpsL	K88Q	88	K	Q	SNP	88
+rpsL	rpsL	K88R	88	K	R	SNP	88
+rrs	rrs	a1401g	1401	a	g	SNP	1401
+rrs	rrs	g1484t	1484	g	t	SNP	1484
+rrs	rrs	a1401g	1401	a	g	SNP	1401
+rrs	rrs	c1402t	1402	c	t	SNP	1402
+rrs	rrs	a1401g	1401	a	g	SNP	1401
+rrs	rrs	c1402t	1402	c	t	SNP	1402
+rrs	rrs	g1484t	1484	g	t	SNP	1484
+rrs	rrs	a514c	514	a	c	SNP	514
+rrs	rrs	c517t	517	c	t	SNP	517
+tlyA	tlyA	D174ins	174	D	ins	INDEL	174
+tlyA	tlyA	E75Stop	75	E	Stop	STOP	75
+tlyA	tlyA	H68ins	68	H	ins	INDEL	68
+tlyA	tlyA	L218ins	218	L	ins	INDEL	218
+tlyA	tlyA	N236K	236	N	K	SNP	236
+tlyA	tlyA	Q215Stop	215	Q	Stop	STOP	215
+tlyA	tlyA	Q23del	23	Q	del	INDEL	23
+tlyA	tlyA	R18Stop	18	R	Stop	STOP	18
+tlyA	tlyA	S262ins	262	S	ins	INDEL	262
