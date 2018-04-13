@@ -9,18 +9,14 @@ rule create_reference_lists_from_databases:
         resistance_genes = pipeline_path + "data/mycobacterium/db/resistance_genes.tsv",
         locus_tag = pipeline_path + "data/mycobacterium/db/locus_tags.tsv",
     output:
-        bed_four_cds = "references/m_tuberculosis_resistance_genes_4_db_mutations/codons.bed",
-        bed_three_cds = "references/m_tuberculosis_resistance_genes_3_db_mutations/codons.bed",
-        bed_two_cds = "references/m_tuberculosis_resistance_genes_2_db_mutations/codons.bed",
-        bed_one_cds = "references/m_tuberculosis_resistance_genes_1_db_mutations/codons.bed",
-        bed_four_not_cds = "references/m_tuberculosis_resistance_genes_4_db_mutations/nucleotides.bed",
-        bed_three_not_cds = "references/m_tuberculosis_resistance_genes_3_db_mutations/nucleotides.bed",
-        bed_two_not_cds = "references/m_tuberculosis_resistance_genes_2_db_mutations/nucleotides.bed",
-        bed_one_not_cds = "references/m_tuberculosis_resistance_genes_1_db_mutations/nucleotides.bed",
-        bed_four_promoters = "references/m_tuberculosis_resistance_genes_4_db_mutations/promoters.bed",
-        bed_three_promoters = "references/m_tuberculosis_resistance_genes_3_db_mutations/promoters.bed",
-        bed_two_promoters = "references/m_tuberculosis_resistance_genes_2_db_mutations/promoters.bed",
-        bed_one_promoters = "references/m_tuberculosis_resistance_genes_1_db_mutations/promoters.bed",
+        bed_four_codons = "references/m_tuberculosis_resistance_genes_4_db_mutations/codons.bed",
+        bed_three_codons = "references/m_tuberculosis_resistance_genes_3_db_mutations/codons.bed",
+        bed_two_codons = "references/m_tuberculosis_resistance_genes_2_db_mutations/codons.bed",
+        bed_one_codons = "references/m_tuberculosis_resistance_genes_1_db_mutations/codons.bed",
+        bed_four_nucleotides = "references/m_tuberculosis_resistance_genes_4_db_mutations/nucleotides.bed",
+        bed_three_nucleotides = "references/m_tuberculosis_resistance_genes_3_db_mutations/nucleotides.bed",
+        bed_two_nucleotides = "references/m_tuberculosis_resistance_genes_2_db_mutations/nucleotides.bed",
+        bed_one_nucleotides = "references/m_tuberculosis_resistance_genes_1_db_mutations/nucleotides.bed",
         summary_four = "references/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx",
         summary_three = "references/m_tuberculosis_resistance_genes_3_db_mutations/summary.xlsx",
         summary_two = "references/m_tuberculosis_resistance_genes_2_db_mutations/summary.xlsx",
@@ -28,6 +24,22 @@ rule create_reference_lists_from_databases:
     script:
         "scripts/generate_excel_file_common_positions.py"
 
+
+rule check_annotated_mutations_from_database:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        db = pipeline_path + "data/mycobacterium/mutation_dbs/{db}.tsv",
+        gbk = "references/NC_000962.3/genome_gbwithparts.gbwithparts",
+        gene_to_locus = pipeline_path + "data/mycobacterium/metadata/locus_tags.tsv",
+    output:
+        correct_annotation = "references/m_tuberculosis_resistance/{db}/correct.tsv",
+        incorrect_annotation = "references/m_tuberculosis_resistance/{db}/incorrect.tsv",
+    log:
+        logging_folder + "references/NC_000962.3/{db}_errors.txt"
+    script:
+        "scripts/check_locus_against_database.py"
+        
         
 rule merge_nucleotides_and_codons_bed_files:
     input:

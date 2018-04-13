@@ -88,16 +88,16 @@ for j in db_combinations.keys():
         bed_panda = pandas.concat([bed_panda, res_panda_snp[["Gene", "Position"]].drop_duplicates()])
     bed_panda = bed_panda.set_index("Gene")
     all_mutations = bed_panda.drop_duplicates().join(locus_tags)
-    only_cds = all_mutations.loc[(all_mutations.index!="rrs") & (all_mutations["Position"]>0)]
-    only_cds = only_cds.assign(Start= lambda x: (x.Position - 1)*3)
-    only_cds = only_cds.assign(End= lambda x: (x.Position*3))
-    rrs = all_mutations.loc[(all_mutations.index=="rrs")]
-    rrs = rrs.assign(Start = lambda x: (x.Position - 1))
-    rrs = rrs.assign(End = lambda x: (x.Position))
+    codons = all_mutations.loc[(all_mutations.index!="rrs") & (all_mutations["Position"]>0)]
+    codons = codons.assign(Start= lambda x: (x.Position - 1)*3)
+    codons = codons.assign(End= lambda x: (x.Position*3))
+    nucleotides = all_mutations.loc[(all_mutations.index=="rrs")]
+    nucleotides = nucleotides.assign(Start = lambda x: (x.Position - 1))
+    nucleotides = nucleotides.assign(End = lambda x: (x.Position))
     promoters = all_mutations.loc[(all_mutations["Position"]<0)]
-    only_cds[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_cds"], header=False, index=False, sep="\t")
-    rrs[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_not_cds"], header=False, index=False, sep="\t")
-    promoters[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_not_cds"], header=False, index=False, sep="\t")
+    codons[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_codons"], header=False, index=False, sep="\t")
+    nucleotides[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_nucleotides"], header=False, index=False, sep="\t")
+    promoters[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_promoters"], header=False, index=False, sep="\t")
 
     writer.save()
 
