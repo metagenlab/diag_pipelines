@@ -1,0 +1,58 @@
+Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+embA	-16	C	T	Ramaswamy et al, 2000	SNP
+embA	-12	C	T	Ramaswamy et al, 2000	SNP
+embA	4	D	N	Ramaswamy et al, 2000	SNP
+embA	5	G	S,V	Brossier et al, 2015, Ramaswamy, et al, 2000	SNP
+embA	201	A	T	Ramaswamy et al, 2000	SNP
+embA	321	G	S	Ramaswamy et al, 2000	SNP
+embA	350	G	D	Ramaswamy et al, 2000	SNP
+embA	462	A	V	Ramaswamy et al, 2000	SNP
+embA	833	D	A	Ramaswamy et al, 2000	SNP
+embA	913	P	S	Ramaswamy et al, 2000	SNP
+embB	239	L	P	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	240	D	H	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	297	S	A	Ramaswamy et al, 2000	SNP
+embB	299	D	E	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	306	M	V,I, L	Walker et al, 2015, Srivastava et al (L) and Brossier et al, 2015	SNP
+embB	311	D	H	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	319	Y	C	Sugawara et al, 2015. The molecular epidemiology of ethambutol-resistant Mycobacterium tuberculosis in Henan Province, China.	SNP
+embB	328	D	A,Y	Walker et al, 2015 and Ramaswamy et al 	SNP
+embB	330	F	I	Brossier et al, 2015	SNP
+embB	331	D	Y	Lee et al, 2002. Mutations in the embB locus among Korean clinical isolates of Mycobacterium tuberculosis resistant to ethambutol.	SNP
+embB	333	Y	C	Sugawara et al, 2015. The molecular epidemiology of ethambutol-resistant Mycobacterium tuberculosis in Henan Province, China.	SNP
+embB	334	Y	H	Brossier et al, 2015	SNP
+embB	368	E	A	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	378	E	A	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	380	S	R	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	397	P	Q	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	399	N	I	Brossier et al, 2015	SNP
+embB	406	G	C,S,A,D	Brossier et al, 2015	SNP
+embB	413	L	P	Bakula et al, 2013. Mutations in the embB gene and their association with ethambutol resistance in multidrug resistant Mycobacterium tuberculosis clinical isolates from Poland.	SNP
+embB	446	P	H	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	465	I	D	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	469	R	P	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	471	R	P	Srivastava et al. Nucleotide Polymorphism Associated with Ethambutol Resistance in Clinical Isolates of Mycobacterium tuberculosis	SNP
+embB	497	Q	K,R	Walker et al, 2015 and Brossier et al, 2015	SNP
+embB	504	E	Q	Bakula et al, 2013. Mutations in the embB gene and their association with ethambutol resistance in multidrug resistant Mycobacterium tuberculosis clinical isolates from Poland.	SNP
+embB	507	R	G	Bakula et al, 2013. Mutations in the embB gene and their association with ethambutol resistance in multidrug resistant Mycobacterium tuberculosis clinical isolates from Poland.	SNP
+embB	630	T	I	Sreevatsan et al, 1997.  Ethambutol resistance in Mycobacterium tuberculosis: critical role of embB mutations.	SNP
+embB	745	G	D	Ramaswamy et al, 2000	SNP
+embB	959	D	A	Ramaswamy et al, 2000	SNP
+embB	1000	M	R	Ramaswamy et al, 2000	SNP
+embB	1002	H	R	Zhao et al, Analysis of embCAB Mutations Associated with Ethambutol Resistance in Multidrug-Resistant Mycobacterium tuberculosis Isolates fromChina	SNP
+embB	1024	D	N	Zhao et al, Analysis of embCAB Mutations Associated with Ethambutol Resistance in Multidrug-Resistant Mycobacterium tuberculosis Isolates fromChina	SNP
+embC	251	L	R	Ramaswamy et al, 2000	SNP
+embC	254	A	G	Ramaswamy et al, 2000	SNP
+embC	270	T	I	Ramaswamy et al, 2000	SNP
+embC	394	N	D	Ramaswamy et al, 2000	SNP
+embC	398	P	S	Safi et al, 2013. Evolution of high-level ethambutol-resistant tuberculosis through interacting mutations in decaprenylphosphoryl-β-D-arabinose biosynthetic and utilization pathway genes.	SNP
+embC	491	Q	R	Safi et al, 2013. Evolution of high-level ethambutol-resistant tuberculosis through interacting mutations in decaprenylphosphoryl-β-D-arabinose biosynthetic and utilization pathway genes.	SNP
+embC	502	L	P	Safi et al, 2013. Evolution of high-level ethambutol-resistant tuberculosis through interacting mutations in decaprenylphosphoryl-β-D-arabinose biosynthetic and utilization pathway genes.	SNP
+embC	738	R	Q	Ramaswamy et al, 2000	SNP
+embC	981	V	L	Brossier et al, 2015	SNP
+embR	110	C	Y	Ramaswamy et al, 2000	SNP
+embR	379	Q	R	Ramaswamy et al, 2000	SNP
+iniA	308	G	R	Ramaswamy et al, 2000	SNP
+iniA	501	S	W	Ramaswamy et al, 2000	SNP
+iniB	47	A	T	Ramaswamy et al, 2000	SNP
+iniC	248	P	A	Ramaswamy et al, 2000	SNP

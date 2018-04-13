@@ -1,0 +1,85 @@
+Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+pncA	-12	T	C	Walker et al, 2015	SNP
+pncA	-11	A	G	Walker et al, 2015	SNP
+pncA	1	M	I	Lee et al,2001 (I), 	SNP
+pncA	3	A	E	Sekiguchi et al 2007	SNP
+pncA	4	L	S,W	Walker et al, 2015 (S), Lee at al, 2001 (W)	SNP
+pncA	5	I	T,S	Sengstake et al, 2017(T), Scoprpio et al, 1997 (S)	SNP
+pncA	6	I	L,I	Sengstake et al, 2017 (L), Miotto et al, 2017 (I)	SNP
+pncA	7	V	A,G	Sengstake et al, 2017, Marttila, 1999 (G)	SNP
+pncA	8	D	N,G	Campbell et al, 2011 (N) and Walker (both mutations)	SNP
+pncA	9	V	G,A	Lee et al,2001	SNP
+pncA	10	Q	R, P	Bwalya et al, 2018, Glenn et al 2000, Hirano et al 1998 (P)	SNP
+pncA	12	D	A,N	Scorpio et la, 1997	SNP
+pncA	14	C	R,Y,G 	Sengstake et al, 2017, Campbell et al 2011 (G), Hirano et al 1998 (R)	SNP
+pncA	17	G	D	Hirano et al, 1997	SNP
+pncA	19	L	P	Posey et al, 2010	SNP
+pncA	23	G	V	Lee et al,2001	SNP
+pncA	26	A	G	Lee et al,2001	SNP
+pncA	27	L	R, P	Posey et al, 2010 ®and Walker, 2015 (P)	SNP
+pncA	34	Y	S,D	Hirano et al 1997 (S), Miotto et al, 2017 (D)	SNP
+pncA	41	Y	H	Hou et al, 2000	SNP
+pncA	45	V	G	Lee et al, 2001	SNP
+pncA	46	A	E,V	Cheng  et al 2000 , Hirano et al, 1998 (v)	SNP
+pncA	47	T	S, A	Marttila, 1999(S) , Sreevatsan et al, 1997 (A)	SNP
+pncA	48	K	T	Miotto et al 2017	SNP
+pncA	51	H	P,R,Q,Y	Hirano et al 1997 (P,R) and Miotto et al, 2017(Q,R), Mestdagh et al, 1999 (Y)	SNP
+pncA	49	D	A,G,E, V	Sengstake et al, 2017 (A), Bwalya et al, 2018 (G), Campbell et al 2011, Marttila, 1999 (V)	SNP
+pncA	53	D	A	Cheng  et al 2000 	SNP
+pncA	54	P	S,L,T	Miotto et al 2017 (S), Sekiguchi et al, 2007 (L) and Sreevatsan et 1997 (T)	SNP
+pncA	57	H	D, P	Campbell et al, 2011 	SNP
+pncA	58	F	L	Lee et al, 2001	SNP
+pncA	59	S	F,P	Posey et al, 2010	SNP
+pncA	62	P	H,T,Q	Mestdagh, 1999 (H) and Posey et al, 2010 (T,Q)	SNP
+pncA	63	D	A, G	Posey et al, 2010 (A) and Miotto et al, 2017 (G)	SNP
+pncA	66	S	P	Marttila, 1999	SNP
+pncA	67	S	P	Miotto et al 2017	SNP
+pncA	68	W	R,S, C	Campbell et al, 2011 (R,S) and walker	SNP
+pncA	69	P	R	Scorpio et al, 1997	SNP
+pncA	71	H	D,Y,Q,P,E	Miotto et al 2017 (D,Y,Q), Sengstake et al, 2017 (P,Y), Cheng et al, 2000 (E)	SNP
+pncA	72	C	R, W	Miotto et al 2017, Bwalya, 2018 (R)and Sekiguchi et al, 2007 (w)	SNP
+pncA	76	T	P,I	Miotto et al, 2017 (P)and Lee at al, 2001 (I)	SNP
+pncA	78	G	C,D	Walker et al, 2015 (C)and Lee et al, 2001 (D)	SNP
+pncA	81	F	S	Posey et al, 2010	SNP
+pncA	82	H	R	Miotto et al, 2017 	SNP
+pncA	85	L	P,R	Miotto et al, 2017	SNP
+pncA	90	I	S	Hannan et al, 2001	SNP
+pncA	94	F	L,S,F	Miotto et al, 2017 (L,S), Sreevatsan, 1997 (F)	SNP
+pncA	96	K	Q,E,N	Lee et al, 2001 (Q,E), Walker et al, 2015 (T), Hou et al, 2000(N)	SNP
+pncA	97	G	A,D,S	Bwalya et al, 2018 (A), Morlock et al 2000 (D,S)	SNP
+pncA	102	A	T,V	Marttila, 1999	SNP
+pncA	103	Y	H,S	Miotto et al,2017 and Lee at al, 2001 (S)	SNP
+pncA	104	S	C,R	Hannan et al 2001(C) and  Walker (R)	SNP
+pncA	108	G	R	MIotto et al,2017 	SNP
+pncA	116	L	R	Miotto et al, 2017	SNP
+pncA	118	N	T	Hou et al, 2000	SNP
+pncA	119	W	C,R	Bwalya et al, 2018©and Sreevatsan et al, 1997 (R)	SNP
+pncA	120	L	R,P	Posey et al, 2010 (R)and Miotti et al (P)	SNP
+pncA	121	R	P	Lee et al, 2001	SNP
+pncA	125	V	D,G	Harri et al, 1999 (D) nad walker et al (G)	SNP
+pncA	128	V	G	Bwalya et al, 2018 AND miotti et al, 2015	SNP
+pncA	132	G	D,S	Walker et al, 2015 (D) and Sekiguchi et al, 2007 (S)	SNP
+pncA	133	I	T	Sekiguchi  et al,2007	SNP
+pncA	134	A	V, G	Cheng  et al, 1999 and Morlock et al, 2000 and posey, 2010 (G)	SNP
+pncA	135	T	P,N	Miotto et al, 2017	SNP
+pncA	136	D	N,Y,H	Lee et al, 2001 (N,Y), Sekiguchi et al, 2007 (Y) and Mestdagh et al, 1999 (H)	SNP
+pncA	137	H	P,R	Lee et al, 2001 and Scorpio et al, 1997 (P), Sreevatsan et al, 1997 (R)	SNP
+pncA	138	C	R,Y,S	walker et al, 2015 ®and Sekiguchi et al, 2007 ®and Scorpio et al,1997 (Y), Cheng et al,1999 (S)	SNP
+pncA	139	V	G,L, M, A	Morlock et al, 2000 (G,L), Cheng et 1999 (M), Campbell et al, 2011(A)	SNP
+pncA	140	R	G,P,S	Posey et al, 2010 (G,P), Cheng et al, 1999 (S)	SNP
+pncA	141	Q	P	Sengstake et al, 2017	SNP
+pncA	142	T	A,k,M	Miotto et al, 2017	SNP
+pncA	146	A	T, E	Lee et al, 2001 (T)and Posey et al, 2010 (E)	SNP
+pncA	154	R	G	Bwalya et al, 2018	SNP
+pncA	155	V	G	Miotto et al, 2017	SNP
+pncA	159	L	R	Lee et al, 2001 	SNP
+pncA	160	T	P	Martilla, 1999	SNP
+pncA	161	A	P	Martilla, 1999	SNP
+pncA	162	G	D	Walker at al, 2015	SNP
+pncA	168	T	N	Cheng et al, 1999	SNP
+pncA	171	A	P, V	Scorpio et al,1997 (p), Bwalya et al, 2018 (V)	SNP
+pncA	172	L	P	Morlock et al, 2000	SNP
+pncA	175	M	V	Miotto et al, 2017	SNP
+pncA	180	V	F	Miotto et al, 2017	SNP
+rpsA	260	V	I	Simons et al, 2013	SNP
+rpsA	440	A	T	Walker et al, 2015	SNP

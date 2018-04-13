@@ -1,0 +1,101 @@
+Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+katG	64	Y	S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	2	P	S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	17	S	N	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	19	G	D	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	63	D	E	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	90	W	R	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	91	W	R	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	95	Y	C	Ramaswamy, S, Musser JM. Molecular genetic basis of antimicrobial agent resistance in MTB, 1998	SNP
+katG	97	H	R	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	104	R	L	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	107	W	R, STOP	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	108	H	E,Q	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	109	A	V	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	110	A	V	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	123	G	E	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	125	G	C	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	126	M	I	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	127	Q	E,P	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	128	R	P	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	131	P	T	Ramaswamy, S, Musser JM. Molecular genetic basis of antimicrobial agent resistance in MTB, 1998	SNP
+katG	133	N	T	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	138	N	S,H,T	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	139	A	P	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	140	S	A,N	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	141	L	F	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	142	D	(RAMASWAMY)G, A	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	159	L	P	Walker et al, 2015	SNP
+katG	162	A	V,T	Ramaswamy, S, Musser JM. Molecular genetic basis of antimicrobial agent resistance in MTB, 1998, Vilcheze	SNP
+katG	180	T	C,K 	Walker and vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	191	W	R,STOP	Walker and vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	224	Q	E	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	229	Y	F	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	232	P	R, S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	234	G	E, R	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	243	A	S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	262	T	R	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	269	G	D	Ramaswamy, S, Musser JM. Molecular genetic basis of antimicrobial agent resistance in MTB, 1998	SNP
+katG	275	T	A,P	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	279	G	A,D	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	285	G	D, C, V	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	295	Q	K, P, STOP	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	297	Q	V	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	299	G	S, C,A	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	300	W	G,C,D, STOP	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	306	T	P	Ramaswamy, S, Musser JM. Molecular genetic basis of antimicrobial agent resistance in MTB, 1998	SNP
+katG	311	D	E	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	315	S	T, N, I, R,G	Ramaswamy, S, Musser JM. Molecular genetic basis of antimicrobial agent resistance in MTB, 1998	SNP
+katG	316	G	D,S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	321	W	G,R	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	328	W	G, L,C, F,S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	335	I	T	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	337	Y	F,C	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	350	A	S,T	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	352	Q	STOP	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	379	A	T,V	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	383	S	P	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	385	R	W	Torres et al. Novel katG mutations causing isoniazid resistance in clinical M. tuberculosis isolates. 2015.Nature 	SNP
+katG	387	D	G	Torres et al. Novel katG mutations causing isoniazid resistance in clinical M. tuberculosis isolates. 2015.Nature 	SNP
+katG	394	T	M	Torres et al. Novel katG mutations causing isoniazid resistance in clinical M. tuberculosis isolates. 2015.Nature 	SNP
+katG	418	R	Q	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	419	D	H,A,Y,E	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	420	M	T	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	439	Q	P	Torres et al. Novel katG mutations causing isoniazid resistance in clinical M. tuberculosis isolates. 2015.Nature 	SNP
+katG	457	S	I	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	463	R	L	Ramaswamy, S, Musser JM. Molecular genetic basis of antimicrobial agent resistance in MTB, 1998	SNP
+katG	483	F	L	Torres et al. Novel katG mutations causing isoniazid resistance in clinical M. tuberculosis isolates. 2015.Nature 	SNP
+katG	489	R	S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	505	W	S,R	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	541	A	D	Torres et al. Novel katG mutations causing isoniazid resistance in clinical M. tuberculosis isolates. 2015.Nature 	SNP
+katG	542	D	H	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	550	A	D	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	587	L	I,M,P	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	593	G	D	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	629	G	S	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	632	R	C	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	633	V	A	Walker et al, 2015	SNP
+katG	700	S	P	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	717	Q	P	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+katG	735	D	A,N	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+fabG1	-34	C	G, T	Torres et al. Novel katG mutations causing isoniazid resistance in clinical M. tuberculosis isolates. 2015.Nature 	SNP
+inhA	21	I	T,V	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+inhA	94	S	A	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+inhA	194	I	T	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+ahpC	-57	C	T	Walker et al, 2015	SNP
+ahpC	-72	C	T	vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+fabG1	-17	G	T	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+fabG1	-16	A	G	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+fabG1	-15	C	T	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+fabG1	-8	T	A, G,C	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+ndh	13	R	C	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+ndh	18	V	A	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+ndh	110	T	A	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+ndh	268	R	H	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+ndh	313	G	R	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+kasA	66	D	N	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+kasA	121	R	K	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+kasA	269	G	S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+kasA	312	G	S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+kasA	387	G	D	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
+kasA	413	F	L	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
