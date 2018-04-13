@@ -84,6 +84,8 @@ RUN chown -R pipeline_user ${main}/
 
 USER pipeline_user
 
+RUN  /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${main}/references/1493941/genome_fasta.fasta' 
+
 RUN mkdir -p ${main}/data/validation/PRJEB7847/
 
 WORKDIR ${main}/data/validation/PRJEB7847/
