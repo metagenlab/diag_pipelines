@@ -21,7 +21,6 @@ General variables
 
 An example of each variable value is provided in ``config.yaml`` of the github repository.
 
-  
 -----------------
 Logging functions
 -----------------
