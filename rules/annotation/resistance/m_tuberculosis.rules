@@ -85,6 +85,7 @@ rule fetch_locus_tag_sequences_from_accession:
     script:
         "scripts/fetch_locus_tag_sequences_from_accession.py"
 
+        
 rule remove_shift_from_fasta_sequences:
     conda:
         pipeline_path + "envs/fastx.yaml"
