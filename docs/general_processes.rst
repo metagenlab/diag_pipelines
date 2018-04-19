@@ -110,3 +110,10 @@ Current available workflows are implemented in the folder ``workflows``. Each wo
 
    all_rules.rst
 
+----------------
+All Deliverables
+----------------
+
+.. toctree::
+   assembly_deliverables.rst
+
