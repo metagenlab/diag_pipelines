@@ -1,4 +1,5 @@
-* The wildcard ``{snp_caller}`` in the following result files can have two values: ``freebayes_joint_genotyping`` or ``gatk_gvcfs``.
+
+The wildcard ``{snp_caller}`` in the following result files can have two values: ``freebayes_joint_genotyping`` or ``gatk_gvcfs``.
 
 * ``typing/{snp_caller}/cgMLST/bwa/distances_in_snp_mst_no_st.svg``: minimum spanning tree of the distance in snps between every sample over the core genome as defined by ridom or enterobase. Available species and values for reference genomes are listed in the files in ``data/core_genome_dbs/``. If the species under consideration has a multiple locus sequence type available, ``typing/{snp_caller}/cgMLST/bwa/distances_in_snp_mst_with_st.svg`` can be generated with the ST of each sample.
   
