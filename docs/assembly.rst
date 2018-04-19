@@ -23,21 +23,10 @@ Parameters
 * ``minimum_quality_base``: leading and trailing bases below this quality will be removed
 * ``minimum_read_length``: reads shorter than this threshold after trimming will be discarded (be careful when using reads from SRA!)
 
+
 ------------
 Deliverables
 ------------
 
-.. toctree::
-
-   assembly_deliverables.rst
-
-* ``quality/multiqc/assembly/multiqc_report.html``: quality control report based on the results of **fastqc**, **trimmomatic**, **qualimap**, **quast** and **prokka** for every sample
-* ``samples/{sample_name}/annotation/``: folder containing all annotation files from **prokka**
-* ``contamination/distances_formated.xlsx``: mash distances to all RefSeq genomes, ordered by significance, for each sample
-
-
-
-
-
-
+.. include:: assembly_deliverables.rst
 
