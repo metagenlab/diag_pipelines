@@ -35,7 +35,7 @@ include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
 
 include:
-    pipeline_path + "rules/downloading/linking_references_for_core_genome_schemes.rules"
+    pipeline_path + "rules/downloading/adapting_genome_files.rules"
     
 include:
     pipeline_path + "rules/mapping/find_closest_genomes.rules"
