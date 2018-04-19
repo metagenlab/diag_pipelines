@@ -24,6 +24,7 @@ cgMLST scheme from `ridom <http://www.cgmlst.org/ncs>`_ can be extracted directl
    "*Legionella_pneumophila*","446","1025099","30068"
    "*Mycobacterium_tuberculosis*","1773","741110","538048"
    "*Staphylococcus_aureus*","1280","141106","33148"
+   "*Clostridioides_difficile*","1496","3560802","6374038"
 
 A bed file is constructed from the locus target file, using coordinates from the start and length columns of the csv file file available on the `ridom website <http://www.cgmlst.org/ncs/schema/3956907/locus/?content-type=csv>`_. 
 
