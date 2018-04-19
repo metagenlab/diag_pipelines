@@ -93,3 +93,15 @@ This will generate a snp-distance matrix of all samples, only on the core genome
 
 This will generate an Excel summary file of the MLST of all samples, based on the software `mlst <https:/github.com/tseemann/mlst>`_.
 
+
+
+
+----------------
+All Deliverables
+----------------
+
+Here is a list of all deliverables currently available:
+
+.. toctree::
+   
+   docs/assembly_deliverables.rst
