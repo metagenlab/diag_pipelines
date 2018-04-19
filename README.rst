@@ -102,6 +102,7 @@ All Deliverables
 
 Here is a list of all deliverables currently available:
 
-.. toctree::
-
-   assembly_deliverables.rst
+.. include:: assembly_deliverables.rst
+.. include:: virulence_deliverables.rst
+.. include:: resistance_deliverables.rst
+.. include:: epidemiology_deliverables.rst
