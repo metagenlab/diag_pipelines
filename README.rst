@@ -103,5 +103,5 @@ All Deliverables
 Here is a list of all deliverables currently available:
 
 .. toctree::
-   
-   docs/assembly_deliverables.rst
+
+   assembly_deliverables.rst
