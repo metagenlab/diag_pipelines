@@ -1,0 +1,10 @@
+Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+rrsD	1	a	T		SNP
+rrsD	2	a	T		SNP
+rrsD	3	a	c		SNP
+rrsD	4	t	c		SNP
+rrsD	5	t	c		SNP
+rrsD	6	g	c		SNP
+rrsD	7	a	c		SNP
+rrsD	8	a	c		SNP
+rrsD	9	g	c		SNP

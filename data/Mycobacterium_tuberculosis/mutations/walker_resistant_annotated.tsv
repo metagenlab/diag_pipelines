@@ -10,9 +10,9 @@ embB	embB_M306I	306	306	M	I	SNP
 embB	embB_M306V	306	306	M	V	SNP
 embB	embB_Q497K	497	497	Q	K	SNP
 embB	embB_Q497R	497	497	Q	R	SNP
-fabG1	fabG1_C-15T	-115	-115	C	T	SNP
-fabG1	fabG1_G-17T	-117	-117	G	T	SNP
-fabG1	fabG1_T-8C	-18	-18	T	C	SNP
+fabG1	fabG1_C-15T	-15	-15	C	T	SNP
+fabG1	fabG1_G-17T	-17	-17	G	T	SNP
+fabG1	fabG1_T-8C	-8	-8	T	C	SNP
 gidB	gidB_141_delC	141	141	delC	delC	INDEL
 gidB	gidB_202_delG	202	202	delG	delG	INDEL
 gidB	gidB_202_insGC	202	202	insGC	insGC	INDEL

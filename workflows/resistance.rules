@@ -20,6 +20,10 @@ mykrobe_species = {}
 mykrobe_species["Mycobacterium_tuberculosis"]="tb"
 mykrobe_species["Staphylococcus_aureus"]="staph"
 
+reference_assembly_for_resistance = {}
+reference_assembly_for_resistance["Mycobacterium_tuberculosis"] = "538048"
+reference_assembly_for_resistance["Escherichia_coli"] = "79781"
+
 
 ontology_file_aro = pipeline_path + "data/card/obo_files/aro.obo"
 ontology_file_mo = pipeline_path + "data/card/obo_files/mo.obo"
@@ -30,31 +34,13 @@ include:
 
 include:
     pipeline_path + "rules/annotation/resistance/rgi.rules"
+
+if species in reference_assembly_for_resistance.keys():
+    include:
+        pipeline_path + "rules/annotation/resistance/custom_annotated_dbs.rules"
     
-if species!="Staphylococcus_aureus" and species!="Mycobacterium_tuberculosis":
-    rule all:
-        input:
-            expand("samples/{sample}/resistance/rgi.xlsx", sample=read_naming.keys())
-    
-if species=="Staphylococcus_aureus":
+if species == "Staphylococcus_aureus" or species == "Mycobacterium_tuberculosis":
     include:
         pipeline_path + "rules/annotation/resistance/mykrobe.rules"
-    rule all:
-        input:
-            expand("samples/{sample}/resistance/rgi.xlsx", sample=read_naming.keys()),
-            expand("samples/{sample}/resistance/mykrobe.xlsx", sample=read_naming.keys()),
-        
-
-if species=="Mycobacterium_tuberculosis":
-    include:
-        pipeline_path + "rules/annotation/resistance/m_tuberculosis.rules"
-    include:
-        pipeline_path + "rules/annotation/resistance/mykrobe.rules"
-    rule all:
-        input:
-            expand("samples/{sample}/resistance/rgi.xlsx", sample=read_naming.keys()),
-            expand("samples/{sample}/resistance/mykrobe.xlsx", sample=read_naming.keys()),
-            expand("samples/{sample}/resistance/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx", sample=read_naming.keys()),
-
 
 

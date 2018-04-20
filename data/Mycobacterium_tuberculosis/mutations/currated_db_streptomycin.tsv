@@ -1,0 +1,39 @@
+Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+rpsL	43	K	R,T	Miotto et al 2017 and Balif, 2012 (R)	SNP
+rpsL	88	K	Q,R	Miotto et al 2017 and Balif, 2012 	SNP
+rrs	513	C	T	Miotto e al,2017	SNP
+rrs	514	A	C	Miotto et al, 2017 and Balif,2012	SNP
+rrs	517	C	T	Miotto et al 2017 and walker et al, 2015	SNP
+rrs	906	A	G	Jagielski,2014	SNP
+rrs	1401	A	G	Miotto et al 2017 and walker et al, 2015	SNP
+gidB	16	L	R	Balif et al, 2012 and Jagielski,2014	SNP
+gidB	26	G	C	Sun et al, 2016	SNP
+gidB	30	G	R	Spies et al, 2011	SNP
+gidB	34	G	V,E	Schleusener et al, 2017 (V) and Smittipat et al,2016 (E)	SNP
+gidB	45	W	S,R	Spies et al, 2011	SNP
+gidB	48	H	Y,N,D	Spies et al, 2011 (Y) and Walker et al,2015 (N) and Sun et al,2016 (D)	SNP
+gidB	49	L	P	Spies et al, 2014	SNP
+gidB	52	N	T	Spies et al, 2011 	SNP
+gidB	65	V	G	Walker et al, 2015	SNP
+gidB	67	D	H	Spies et al,2011	SNP
+gidB	69	G	D	Walker et al,2015	SNP
+gidB	70	S	N	walker et al, 2015	SNP
+gidB	75	P	L,S	walker et al, 2015 (L), Spies et al, 2011(S)	SNP
+gidB	79	L	F	Spies et al, 2011	SNP
+gidB	80	A	P	Walker et al,2015	SNP
+gidB	83	R	L,R,C	Spies et al, 2014	SNP
+gidB	84	P	L	Spies et al, 2014	SNP
+gidB	88	V	A	Walker et al,2015	SNP
+gidB	91	L	P	Walker et al, 2015	SNP
+gidB	93	P	R,Q,L	Spies et al, 2011®and Sun et al,2016 (Q,L)	SNP
+gidB	117	G	E	Spies et al, 2011	SNP
+gidB	134	A	E	walker et al, 2015	SNP
+gidB	136	S	P	Sun et al, 2016	SNP
+gidB	137	R	W	Walker et al,2015	SNP
+gidB	138	A	T,V	walker et al, 2015	SNP
+gidB	148	W	R	Spies et al,2011	SNP
+gidB	149	S	R	Sun et al, 2016	SNP
+gidB	164	G	C	Spies et al, 2104	SNP
+gidB	183	A	T,E	Spies et al, 2014	SNP
+gidB	188	V	M	Spies et al, 2014	SNP
+gidB	200	A	E	Spies et al, 2011 and Walker et al, 2015	SNP

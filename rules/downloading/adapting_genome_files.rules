@@ -30,3 +30,19 @@ rule link_full_genome:
         ln -sr {input[genome_ref]} {output[genome_full]}
         """
     
+rule correct_gbk_extension_for_IGV_visualization:
+    input:
+        genome = "references/{ref}/genome_gbwithparts.gbwithparts",
+    output:
+        genome_for_igv = "references/{ref}/genome_gbwithparts.gbk",
+    shell:
+        """
+        matchs=$(grep "^VERSION " {input[genome]} -c)
+        if [ "${{matchs}}" != "1" ]
+        then
+            echo 'More than one VERSION in {input[genome]}'
+            exit 1
+        fi
+        version=$(grep "^VERSION " {input[genome]} | sed "s/VERSION *//")
+        sed "s/^\(ACCESSION\s*\).*/\\1${{version}}/" {input[genome]} > {output[genome_for_igv]}
+        """

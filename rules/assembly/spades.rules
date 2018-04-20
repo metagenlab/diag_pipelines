@@ -33,7 +33,6 @@ rule correct_error_single_reads_with_spades:
          spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log} 
          """
 
-        
 rule assemble_genome_paired_reads_with_spades:
     threads:
         16
@@ -55,6 +54,7 @@ rule assemble_genome_paired_reads_with_spades:
         mv $(dirname $(dirname {output[contigs]}))/contigs.fasta $(dirname {output[contigs]})/
         """
 
+
 rule assemble_genome_single_reads_with_spades:
     threads:
         16
@@ -72,5 +72,40 @@ rule assemble_genome_single_reads_with_spades:
         mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
         rm -rf $( dirname {output[contigs]})/*
         mv $(dirname $(dirname {output[contigs]}))/contigs.fasta $(dirname {output[contigs]})/
+        """
+        
+rule assemble_genome_paired_reads_with_spades:
+    conda:
+        pipeline_path + "envs/spades.yaml"
+    input:
+        R1_trimmed = "samples/{sample}/reads/trimmed/R1_paired.fastq",
+        R2_trimmed = "samples/{sample}/reads/trimmed/R2_paired.fastq",
+    output:
+        "samples/{sample}/assembly/spades_no_correction/contigs.fasta"
+    log:
+        logging_folder + "samples/{sample}/logs/spades_assembly.txt"
+    shell:
+        """
+        spades.py --only-assembler -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $( dirname {output[0]}) > {log}
+        mv $(dirname {output[0]})/contigs.fasta $(dirname $(dirname {output[0]}))
+        rm -rf $( dirname {output[0]})/*
+        mv $(dirname $(dirname {output[0]}))/contigs.fasta $(dirname {output[0]})/
+        """
+
+rule assemble_genome_single_reads_with_spades:
+    conda:
+        pipeline_path + "envs/spades.yaml"
+    input:
+        single_trimmed = "samples/{sample}/reads/trimmed/single.fastq",
+    output:
+        "samples/{sample}/assembly/spades_no_correction/contigs.fasta"
+    log:
+        logging_folder + "samples/{sample}/logs/spades_assembly.txt",
+    shell:
+        """
+        spades.py --only-assembler -s {input[single_trimmed]} -o $( dirname {output[0]}) > {log}
+        mv $(dirname {output[0]})/contigs.fasta $(dirname $(dirname {output[0]}))
+        rm -rf $( dirname {output[0]})/*
+        mv $(dirname $(dirname {output[0]}))/contigs.fasta $(dirname {output[0]})/
         """
         
