@@ -1,0 +1,57 @@
+Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+rpoB	95	V	F	Heep  et al, 2000	SNP
+rpoB	170	V	F	Walker et al, 2015	SNP
+rpoB	262	V	A	Walker et al, 2015	SNP
+rpoB	300	A	V	Taniguchi H  et al, 1996	SNP
+rpoB	369	S	L	Posey et al, 2010	SNP
+rpoB	395	V	A	Walker et al, 2015	SNP
+rpoB	409	Q	H	Cavusoglu et al, 2002	SNP
+rpoB	423	E	A	Schilke K et al,1999	SNP
+rpoB	424	F	L	Chan RC et al,2007	SNP
+rpoB	426	G	D,S	Ramaswamy et al,1998 (D) and Bahrmand et al,2009(S) 	SNP
+rpoB	427	T	A,H,P,S,N	Bahrmand et al,2009(A,H,P), Mani et al, 2001(S)and Takawira et al,2017 (A,N)	SNP
+rpoB	428	S	R,Q	O'Sullivan et al, 2005 ® and Zenteno-Cuevas et al,2009 (Q)	SNP
+rpoB	429	Q	H	Ramaswamy et al,1998	SNP
+rpoB	430	L	P, R,V,M	Ramaswamy et al,1998 (P,R), Posey et al, 2010(P), Takawira et al,2017 (V), Mnai et al, 2001	SNP
+rpoB	431	S	T,R,I,N, G	Ramaswamy et al,1998 (T,R), sajduda et al, 2004 (I) and Takawira et al,2017 (N), Walker et al, 2015(G)	SNP
+rpoB	432	Q	L, K, P,R,D,E	Ramaswamy et al,1998 (L, K, P), O'Sullivan et al, 2005 ® and Bahrmand et al,2009 (D,E)	SNP
+rpoB	433	F	L		SNP
+rpoB	434	M	I, V	Valim AR et al,2000 (I)and Ramaswamy et al,1998	SNP
+rpoB	435	D	V, Y, E, G, A,F,N,k,H,T	Ramaswamy et al,1998 (V, Y, E, G, A), Posey et al,2010 (V,Y,A), Miotto et al, 2017 (A,Y,F,G,N,V), Mani et al,2001 (k,Y), Bahrmand et al,2009(H) and Madania et al,2012(T)	SNP
+rpoB	436	Q	L	Sajduda et al, 2004 	SNP
+rpoB	437	N	H,T,I	Ramaswamy et al,1998, Takawira et al,2017 (H), Siddiqi N et al, 2002(T) and Hillemann D et al 2005(I)	SNP
+rpoB	438	N	K	Bahrmand et al,2009	SNP
+rpoB	439	P	T	Takawira et al,2017	SNP
+rpoB	440	L	M	Ramaswamy et al,1998,	SNP
+rpoB	441	S	L,Q,W	Miotti et al,2017 (L,Q), Walker et al, 2015 and Posey, 2010 (Q) and Cavusoglu et al, 2002	SNP
+rpoB	442	G	A	Bahrmand et al,2009	SNP
+rpoB	443	L	S	Zenteno-Cuevas et al, 2009	SNP
+rpoB	445	H	Y, D, R, L, P, E,N, Q, G, T, C,F,S	Ramaswamy et al,1998 (Y, D, R, L, P, E,N, Q, G, T, C),  Bahrmand et al,2009(F) and Prammananan et al,2008 (S)	SNP
+rpoB	446	K	N	Siddiqi N et al, 2002	SNP
+rpoB	447	R	H,P	Takawira et al,2017(H), Zenteno-Cuevas et al,2009	SNP
+rpoB	448	R	Q	Takawira et al,2017	SNP
+rpoB	450	S	L, W, C, Q, Y,G	Ramaswamy et al,1998 (L, W, C, Q, Y) and Walker et al,2015 and Miotto et al,2017 (F,L,W) and Madania et al,2012 (G)	SNP
+rpoB	452	L	P,R	Ramaswamy et al,1998 (P) and Htike Min PK et al,  2014 (R)	SNP
+rpoB	457	L	R	Htike Min PK et al, 2014	SNP
+rpoB	464	L	M	Aslan G et al, 2008	SNP
+rpoB	491	I	F	Madania et al,2012 and Miotto, 2017 and Walker,2015	SNP
+rpoB	493	S	L	Chan RC et al, 2007	SNP
+rpoA	181	T	I, V	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoA	182	R	L	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoA	183	V	A,G	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoA	186	R	C	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoA	187	T	P, A	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	432	V	A	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	433	G	S	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	434	P	R,A	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	435	Q	H	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	449	L	V	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	483	V	G, A	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	484	W	G, A	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	485	D	N, H	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	491	I	V,T	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	516	L	P	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	517	L	V	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	519	G	D	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	698	N	S, H, K	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
+rpoC	702	E	K	Inaki Comas et al. 2011. Whole-genome sequencing of rifampicin-resistant Mycobacterium tuberculosis strains identifies compensatory mutations in RNA polymerase genes. Nature	SNP
