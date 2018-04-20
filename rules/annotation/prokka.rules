@@ -4,12 +4,12 @@ rule annotate_with_prokka:
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
     output:
-        "samples/{sample}/annotation/{spades}/{sample}.gff",
-        "samples/{sample}/annotation/{spades}/{sample}.faa",
-        "samples/{sample}/annotation/{spades}/{sample}.fsa",
-        "samples/{sample}/annotation/{spades}/{sample}.txt",
-        "samples/{sample}/annotation/{spades}/{sample}.gbk",
-        "samples/{sample}/annotation/{spades}/{sample}.ffn",
+        "samples/{sample}/annotation/{sample}.gff",
+        "samples/{sample}/annotation/{sample}.faa",
+        "samples/{sample}/annotation/{sample}.fsa",
+        "samples/{sample}/annotation/{sample}.txt",
+        "samples/{sample}/annotation/{sample}.gbk",
+        "samples/{sample}/annotation/{sample}.ffn",
     log:
         "samples/{sample}/annotation/spades/{sample}.log",
     params:
