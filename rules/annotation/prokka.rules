@@ -4,13 +4,14 @@ rule annotate_with_prokka:
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
     output:
-        "samples/{sample}/annotation/{sample}.log",
-        "samples/{sample}/annotation/{sample}.gff",
-        "samples/{sample}/annotation/{sample}.faa",
-        "samples/{sample}/annotation/{sample}.fsa",
-        "samples/{sample}/annotation/{sample}.txt",
-        "samples/{sample}/annotation/{sample}.gbk",
-        "samples/{sample}/annotation/{sample}.ffn",
+        "samples/{sample}/annotation/{spades}/{sample}.gff",
+        "samples/{sample}/annotation/{spades}/{sample}.faa",
+        "samples/{sample}/annotation/{spades}/{sample}.fsa",
+        "samples/{sample}/annotation/{spades}/{sample}.txt",
+        "samples/{sample}/annotation/{spades}/{sample}.gbk",
+        "samples/{sample}/annotation/{spades}/{sample}.ffn",
+    log:
+        "samples/{sample}/annotation/spades/{sample}.log",
     params:
         genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split(" ")[0],
         spec = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split(" ")[1]
@@ -21,9 +22,9 @@ rule annotate_with_prokka_unfiltered_assembly:
     conda:
         pipeline_path + "envs/prokka.yaml"
     input:
-        contigs = "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
+        contigs = "samples/{sample}/assembly/spades_no_correction/contigs.fasta"
     output:
-        "samples/{sample}/assembly/spades/temporary_annotation/{sample}.fsa"
+        "samples/{sample}/annotation/spades_no_correction/{sample}.fsa"
     params:
         genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split(" ")[0],
         spec = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split(" ")[1],
