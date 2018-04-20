@@ -13,6 +13,10 @@ rule download_sra_single:
         then
             rm ${{cache_dir}}/sra/{wildcards.sample}.sra
         fi
+        if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra.cache ]
+        then
+            rm ${{cache_dir}}/sra/{wildcards.sample}.sra.cache
+        fi
         """
 
 
@@ -31,6 +35,10 @@ rule download_sra_paired:
         if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra ]
         then
             rm ${{cache_dir}}/sra/{wildcards.sample}.sra
+        fi
+        if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra.cache ]
+        then
+            rm ${{cache_dir}}/sra/{wildcards.sample}.sra.cache
         fi
         """
 
