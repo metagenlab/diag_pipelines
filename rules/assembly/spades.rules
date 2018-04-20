@@ -33,7 +33,7 @@ rule correct_error_single_reads_with_spades:
          spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log} 
          """
 
-rule assemble_genome_paired_reads_with_spades:
+rule assemble_genome_corrected_paired_reads_with_spades:
     threads:
         16
     conda:
@@ -55,7 +55,7 @@ rule assemble_genome_paired_reads_with_spades:
         """
 
 
-rule assemble_genome_single_reads_with_spades:
+rule assemble_genome_corrected_single_reads_with_spades:
     threads:
         16
     conda:
@@ -75,6 +75,8 @@ rule assemble_genome_single_reads_with_spades:
         """
         
 rule assemble_genome_paired_reads_with_spades:
+    threads:
+        16
     conda:
         pipeline_path + "envs/spades.yaml"
     input:
@@ -83,7 +85,7 @@ rule assemble_genome_paired_reads_with_spades:
     output:
         "samples/{sample}/assembly/spades_no_correction/contigs.fasta"
     log:
-        logging_folder + "samples/{sample}/logs/spades_assembly.txt"
+        logging_folder + "samples/{sample}/logs/spades_no_correction_assembly.txt"
     shell:
         """
         spades.py --only-assembler -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $( dirname {output[0]}) > {log}
@@ -93,6 +95,8 @@ rule assemble_genome_paired_reads_with_spades:
         """
 
 rule assemble_genome_single_reads_with_spades:
+    threads:
+        16
     conda:
         pipeline_path + "envs/spades.yaml"
     input:
@@ -100,7 +104,7 @@ rule assemble_genome_single_reads_with_spades:
     output:
         "samples/{sample}/assembly/spades_no_correction/contigs.fasta"
     log:
-        logging_folder + "samples/{sample}/logs/spades_assembly.txt",
+        logging_folder + "samples/{sample}/logs/spades_no_correction_assembly.txt",
     shell:
         """
         spades.py --only-assembler -s {input[single_trimmed]} -o $( dirname {output[0]}) > {log}
