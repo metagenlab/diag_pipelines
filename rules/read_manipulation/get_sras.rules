@@ -9,7 +9,10 @@ rule download_sra_single:
         """
         fastq-dump --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
         cache_dir=$(vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\"//g")
-        rm ${{cache_dir}}/sra/{wildcards.sample}.sra
+        if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra ]
+        then
+            rm ${{cache_dir}}/sra/{wildcards.sample}.sra
+        fi
         """
 
 
@@ -25,7 +28,10 @@ rule download_sra_paired:
         """
         fastq-dump --split-files --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
         cache_dir=$(vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g")
-        rm ${{cache_dir}}/sra/{wildcards.sample}.sra
+        if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra ]
+        then
+            rm ${{cache_dir}}/sra/{wildcards.sample}.sra
+        fi
         """
 
 
