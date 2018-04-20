@@ -8,6 +8,7 @@ rule download_sra_single:
     shell:
         """
         fastq-dump --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
+        cache-mgr -c &>> {log}
         """
 
 
@@ -22,6 +23,7 @@ rule download_sra_paired:
     shell:
         """
         fastq-dump --split-files --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
+        cache-mgr -c &>> {log}
         """
 
 
