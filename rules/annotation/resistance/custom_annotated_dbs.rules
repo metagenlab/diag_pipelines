@@ -28,12 +28,12 @@ rule check_annotated_mutations_from_database:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        db = pipeline_path + "data/mycobacterium/mutation_dbs/{db}.tsv",
-        gene_to_locus = pipeline_path + "data/mycobacterium/metadata/locus_tags.tsv",
-        gbk = "references/NC_000962.3/genome_gbwithparts.gbwithparts",
+        db = pipeline_path + "data/"+species+"/mutations/{db}.tsv",
+        gene_to_locus = pipeline_path + "data/"+species+"/metadata/locus_tags.tsv",
+        gbk = "references/"+reference_assembly_for_resistance[species]+"/genome_gbwithparts.gbk",
     output:
-        correct_annotation = "references/m_tuberculosis_resistance_{db}/correct.tsv",
-        incorrect_annotation = "references/m_tuberculosis_resistance_{db}/incorrect.tsv",
+        correct_annotation = "resistance/annotations/{db}/correct.tsv",
+        incorrect_annotation = "resistance/annotations/{db}/incorrect.tsv",
     script:
         "scripts/check_locus_against_database.py"
         
