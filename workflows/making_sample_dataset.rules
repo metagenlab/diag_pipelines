@@ -82,7 +82,7 @@ if "local_samples" in config.keys():
     all_samples=local_data
 
 if "sra_samples" in config.keys():
-    sra_data = pandas.read_csv(config["sra_samples"], sep="\t", index_col=0)
+    sra_data = pandas.read_csv(config["sra_samples"], sep="\t", index_col=0).drop_duplicates()
     if 'use_library_name' not in config.keys():
         all_sra_sample_names = "".join(list(sra_data["SampleName"]))
     else:
