@@ -1,30 +1,23 @@
 library(svglite)
 
-data <- read.csv(snakemake@input[["insert_sizes"]], sep="\t", header=FALSE, stringsAsFactor=FALSE)
-bed <- read.csv(snakemake@input[["bed"]], sep="\t", header=FALSE, stringsAsFactor=FALSE)
+data <- read.csv(snakemake@input[["insert_sizes"]], sep="\t", header=FALSE, stringsAsFactor=FALSE, col.names=c("Position", "InsertSize"))
+bed <- read.csv(snakemake@input[["bed"]], sep="\t", header=FALSE, stringsAsFactor=FALSE, col.names=c("Reference", "Start", "End", "Strand"))
 
-print(bed)
-strand <- bed$V4
-
-if(strand == -1) {title <- paste(snakemake@wildcards[["gene"]], "(negative strand)")
+if(bed[, "Strand"] == -1) {title <- paste(snakemake@wildcards[["gene"]], "(negative strand)")
 } else title <- paste(snakemake@wildcards[["gene"]], "(positive strand)")
 
 increment <- seq(min(data[,1]), max(data[,1]), by=100)
 
-sliding <- c()
+sliding_standard_deviation <- c()
 for (i in 1:(length(increment)-1)){
-    sliding <- c(sliding, sd(data[data$V1>increment[i] & data$V1<increment[i+1],]$V2))
+    sliding_standard_deviation <- c(sliding_standard_deviation, sd(data[data[,"Position"]>increment[i] & data[,"Position"]<increment[i+1], "InsertSize"]))
 }
 
-
-
 fileConn<-file(snakemake@output[["mean_insert_sizes"]])
-writeLines(paste(snakemake@wildcards[["sample"]], as.integer(mean(sliding))), fileConn)
+writeLines(paste(snakemake@wildcards[["sample"]], as.integer(mean(sliding_standard_deviation))), fileConn)
 close(fileConn)
 
 svg(snakemake@output[["insert_sizes_plot"]])
-plot(head(increment, -1), sliding, type="l", ylab="Standard deviation of reads insert sizes", xlab=paste("Position on", snakemake@wildcards[["ref"]], "assembly"), main = title)
-rect(bed$V2+snakemake@params[["up_down"]], 0, bed$V3[1]-snakemake@params[["up_down"]], max(data$V2), col=rgb(96/256,168/256,98/256, alpha=0.5), border=NA)
+plot(head(increment, -1), sliding_standard_deviation, type="l", ylab="Standard deviation of reads insert sizes", xlab=paste("Position on", snakemake@wildcards[["ref"]], "assembly"), main = title)
+rect(bed[,"Start"] + snakemake@params[["up_down"]], 0, bed[, "End"] - snakemake@params[["up_down"]], max(data[,"InsertSize"]), col=rgb(96/256, 168/256, 98/256, alpha=0.5), border=NA)
 graphics.off()
-
-
