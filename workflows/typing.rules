@@ -29,8 +29,12 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
 
 
 include:
-    pipeline_path + "rules/core_genome/bed_creation.rules"
+    pipeline_path + "rules/core_genome/bed_creation_parsnp.rules"
 
+if species in all_core_genome_dbs.index:
+    include:
+        pipeline_path + "rules/core_genome/cgMLST.rules"
+    
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
 
@@ -61,10 +65,6 @@ include:
 include:
     pipeline_path + "rules/vcf_manipulation/create_alignment_for_phylogeny.rules"
 
-if species in all_core_genome_dbs.index:
-    include:
-        pipeline_path + "rules/vcf_manipulation/extract_cgMLST.rules"
-    
 include:
     pipeline_path + "rules/typing/snp_distance.rules"
 

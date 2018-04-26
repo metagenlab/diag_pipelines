@@ -12,3 +12,13 @@ rule extract_cgMLST_regions_from_vcf:
         bcftools view --regions-file {input[bed]} --output-file {output[core_genome_vcf]} {input[vcf_mutation_type]}
         """
     
+rule link_reference_genome_for_cgMLST:
+    input:
+        genome_ref = "references/" + str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) + "/genome_fasta.fasta"
+    output:
+        genome_cgmlst = "references/cgMLST/genome_{format}.{format}"
+    shell:
+        """
+        ln -sr {input[genome_ref]} {output[genome_cgmlst]}
+        """
+    
