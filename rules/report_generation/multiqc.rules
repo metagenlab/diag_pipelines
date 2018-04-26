@@ -24,7 +24,6 @@ rule create_multiqc_report_for_mapping:
         pipeline_path + "envs/multiqc.yaml"
     input:
         mapping = expand("samples/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = list(read_naming.keys())),
-        mash_results = "contamination/distances_formated.xlsx",
     output:
         "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
     log:
