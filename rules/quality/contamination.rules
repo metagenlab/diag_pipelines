@@ -3,6 +3,7 @@ rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
         pipeline_path + "envs/mash.yaml"
     input:
         mash_sketch = "references/mash_sketch.msh",
+        mash_human = "references/mash_sketch_human.msh",
         R1 = "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         R2 = "samples/{sample}/reads/raw/{sample}_R2.fastq.gz",
     output:
@@ -10,6 +11,7 @@ rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
     shell:
         """
         cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_sketch]} - > {output[distances]} 2> /dev/null
+        cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_human]} - >> {output[distances]} 2> /dev/null
         """
 
 rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
@@ -17,12 +19,14 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
         pipeline_path + "envs/mash.yaml"
     input:
         mash_sketch = "references/mash_sketch.msh",
+        mash_human = "references/mash_sketch_human.msh",
         single = "samples/{sample}/reads/raw/{sample}_single.fastq.gz",
     output:
         distances = "samples/{sample}/contamination/mash/distances.tsv"
     shell:
         """
         cat {input[single]} | mash screen -w {input[mash_sketch]} - > {output[distances]} 2> /dev/null
+        cat {input[single]} | mash screen -w {input[mash_human]} - >> {output[distances]} 2> /dev/null
         """
 
 rule get_taxonomy_from_mash_results:
@@ -72,15 +76,3 @@ rule merge_all_xlsx_mash_results:
     script:
         pipeline_path + "rules/annotation/resistance/scripts/merge_non_empty_results.py"
 
-
-rule sketch_human_genome_with_mash:
-    conda:
-        pipeline_path + "envs/mash.yaml"
-    input:
-        human_ref = "references/1493941/genome_fasta.fasta"
-    output:
-        human_sketch = "references/human_sketch.msh"
-    shell:
-        """
-        mash sketch -o {output[human_sketch]} {input[human_ref]}
-        """
