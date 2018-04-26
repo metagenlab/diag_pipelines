@@ -44,7 +44,7 @@ rule convert_mutation_positions_to_bed_files_to_full_genome:
         upstream_downstream_size = shift
     input:
         db_correct = "references/m_tuberculosis_resistance_{db}/correct.tsv",
-        gene_to_locus = pipeline_path + "data/mycobacterium/metadata/locus_tags.tsv",
+        gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
         gbk = "references/" + reference_assembly_for_resistance[species] + "/genome_gbwithparts.gbk",
     output:
         bed_shifted = "references/m_tuberculosis_resistance_{db}/full_genome.bed",
@@ -58,7 +58,7 @@ rule convert_mutation_positions_to_bed_files:
         upstream_downstream_size = shift
     input:
         db_correct = "references/m_tuberculosis_resistance_{db}/correct.tsv",
-        gene_to_locus = pipeline_path + "data/mycobacterium/metadata/locus_tags.tsv",
+        gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
     output:
         bed_shifted = "references/m_tuberculosis_resistance_{db}/shifted.bed",
     script:
