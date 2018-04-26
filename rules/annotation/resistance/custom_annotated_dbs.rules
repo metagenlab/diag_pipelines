@@ -2,10 +2,10 @@ rule create_reference_lists_from_databases:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        miotto = pipeline_path + "data/" + species + "/mutation/miotto_high_moderate_minimum_confidence_annotated.tsv",
-        mykrobe = pipeline_path + "data/" + species + "/mutation/mykrobe_annotated.tsv",
-        card = pipeline_path + "data/" + species + "/mutation/rgi_annotated_full_2_0_0.tsv",
-        walker = pipeline_path +"data/" + species + "/mutation/walker_resistant_annotated.tsv",
+        miotto = pipeline_path + "data/" + species + "/mutations/miotto_high_moderate_minimum_confidence_annotated.tsv",
+        mykrobe = pipeline_path + "data/" + species + "/mutations/mykrobe_annotated.tsv",
+        card = pipeline_path + "data/" + species + "/mutations/rgi_annotated_full_2_0_0.tsv",
+        walker = pipeline_path + "data/" + species + "/mutations/walker_resistant_annotated.tsv",
         resistance_genes = pipeline_path + "data/" + species + "/mutations/resistance_genes.tsv",
         locus_tag = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
     output:
