@@ -44,9 +44,14 @@ rule search_resistance_single_reads_with_mykrobe:
         """
         if [ "{params.species}" = "staph" ]
         then
-            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
         else
-            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input[0]} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
+            if [ -z "{params.panel}" ]
+            then
+                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+            else
+                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
+            fi
         fi
         """
 
