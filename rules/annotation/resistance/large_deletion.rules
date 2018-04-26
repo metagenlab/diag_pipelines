@@ -1,0 +1,72 @@
+rule extract_coverage_from_bed:
+    conda:
+        pipeline_path + "envs/bedtools.yaml"
+    input:
+        mapping = "samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam",
+        bed = "resistance/annotations/{gene}.bed"
+    output:
+        coverage_txt = "samples/{sample}/mapping/bwa/{ref}/coverage/{gene}.txt",
+    shell:
+        """
+        bedtools coverage -a {input[bed]} -b {input[mapping]} -d > {output[coverage_txt]}
+        """
+        
+rule create_bed_from_gene:
+    params:
+        up_down = upstream_downstream
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        gbk = "references/" + reference_assembly_for_resistance[species] + "/genome_gbwithparts.gbk",
+        gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
+    output:
+        bed = "resistance/annotations/{gene}.bed",
+    script:
+        "scripts/create_bed_from_gene.py"
+
+        
+rule plot_coverage_over_gene_and_flanking:
+    params:
+        up_down = upstream_downstream
+    conda:
+        pipeline_path + "envs/igraph.yaml"
+    input:
+        coverage_txt = "samples/{sample}/mapping/bwa/{ref}/coverage/{gene}.txt",
+    output:
+        coverage_plot = "samples/{sample}/mapping/bwa/{ref}/coverage/{gene}.svg",
+    script:
+        "scripts/plot_coverage_over_gene_and_flanking.R"
+        
+
+rule extract_insert_size_over_gene_and_flanking:
+    params:
+        up_down = upstream_downstream
+    conda:
+        pipeline_path + "envs/samtools.yaml"
+    input:
+        mapping = "samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam",
+        bed = "resistance/annotations/{gene}.bed",
+    output:
+        insert_sizes = "samples/{sample}/mapping/bwa/{ref}/insert_sizes/{gene,\w+}.txt",
+    shell:
+        """
+        start_gene=$(cut -f 2 {input[bed]})
+        samtools view -L {input[bed]} {input[mapping]} | cut -f4,9 | sed "s/-//" > {output[insert_sizes]}
+        """
+        
+
+rule plot_insert_size_over_gene_and_flanking:
+    params:
+        up_down = upstream_downstream
+    conda:
+        pipeline_path + "envs/igraph.yaml"
+    input:
+        insert_sizes = "samples/{sample}/mapping/bwa/{ref}/insert_sizes/{gene}.txt",
+        bed = "resistance/annotations/{gene}.bed",
+    output:
+        insert_sizes_plot = "samples/{sample}/mapping/bwa/{ref}/insert_sizes/{gene}.svg",
+        mean_insert_sizes = "samples/{sample}/mapping/bwa/{ref}/insert_sizes/{gene}-mean.txt",
+    script:
+        "scripts/plot_insert_size_over_gene_and_flanking.R"
+        
+        
