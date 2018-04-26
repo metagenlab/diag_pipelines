@@ -7,7 +7,7 @@ else:
     shift = config["shift_for_mapping"]
 
 if "mykrobe_panel" not in config.keys():
-    mykrobe_panel = "bradley-2015"
+    mykrobe_panel = ""
 else:
     mykrobe_panel = config["mykrobe_panel"]
 
@@ -15,7 +15,9 @@ if "mykrobe_confidence" not in config.keys():
     mykrobe_confidence = "10"
 else:
     mykrobe_confidence = config["mykrobe_confidence"]
-    
+
+upstream_downstream = 5000
+
 mykrobe_species = {}
 mykrobe_species["Mycobacterium_tuberculosis"]="tb"
 mykrobe_species["Staphylococcus_aureus"]="staph"
@@ -38,9 +40,21 @@ include:
 if species in reference_assembly_for_resistance.keys():
     include:
         pipeline_path + "rules/annotation/resistance/custom_annotated_dbs.rules"
+    include:
+        pipeline_path + "rules/annotation/resistance/large_deletion.rules"
     
 if species == "Staphylococcus_aureus" or species == "Mycobacterium_tuberculosis":
     include:
         pipeline_path + "rules/annotation/resistance/mykrobe.rules"
 
+    rule all_resistance_summaries:
+        input:
+            rgi = "resistance/rgi_summary.xlsx",
+            mykrobe = "resistance/mykrobe_summary.xlsx",
+
+else:
+    rule all_resistance_summaries:
+        input:
+            rgi = "resistance/rgi_summary.xlsx",
+        
 

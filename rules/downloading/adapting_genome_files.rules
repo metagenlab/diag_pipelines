@@ -7,7 +7,6 @@ rule link_reference_genome_for_parsnp:
         """
         ln -sr {input[genome_ref]} {output[genome_parsnp]}
         """
-    
 
 rule link_full_genome:
     input:
