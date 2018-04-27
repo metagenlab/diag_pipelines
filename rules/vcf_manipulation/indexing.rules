@@ -2,9 +2,9 @@ rule compress_vcf:
     conda:
         pipeline_path + "envs/htslib.yaml"
     input:
-        "{any_vcf}.vcf",
+        "{any_vcf}.{vcf_or_bed}",
     output:
-        temp("{any_vcf}.vcf.gz"),
+        temp("{any_vcf}.{vcf_or_bed, (vcf|bed)}.gz"),
     shell:
         """
         bgzip -c {input[0]} > {output[0]}
@@ -14,12 +14,12 @@ rule index_vcf:
     conda:
         pipeline_path + "envs/htslib.yaml"
     input:
-        "{any_vcf}.vcf.gz",
+        "{any_vcf}.{vcf_or_bed}.gz",
     output:
-        temp("{any_vcf}.vcf.gz.tbi"),
+        temp("{any_vcf}.{vcf_or_bed, (vcf|bed)}.gz.tbi"),
     shell:
         """
-        tabix -f -p vcf {input[0]}
+        tabix -f -p {wildcards.vcf_or_bed} {input[0]}
         """
         
 rule sort_vcf:
