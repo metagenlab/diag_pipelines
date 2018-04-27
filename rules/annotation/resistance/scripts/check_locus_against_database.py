@@ -10,7 +10,7 @@ gbk_features = {}
 column_names = ["Gene", "Position", "WildTypeAminoAcidOrNucleotide", "MutatedAminoAcidOrNucleotide", "MutationType"]
 
 incorrect_annotations = pandas.DataFrame(columns=column_names)
-bed_file = pandas.DataFrame(columns=["Reference", "Start", "End", "Gene", "Strand", "PositionInGene", "ReferenceAminoAcidorNucleotide"])
+bed_file = pandas.DataFrame(columns=["Reference", "Start", "End", "Gene", "Strand", "PositionInGene", "ReferenceAminoAcidOrNucleotide", "ReferenceCodonOrNucleotide"])
 
 for record in SeqIO.parse(snakemake.input["gbk"], "genbank"):
     h37rv = record
@@ -30,6 +30,7 @@ for gene in annotations["Gene"].unique():
             #RNA gene checking: no codon
             if "rrs" in gene:
                 wildtype = row["WildTypeAminoAcidOrNucleotide"].lower()
+                codon_or_nucleotide = wildtype
                 if coordinates.strand == 1 and record.seq[coordinates.start + position_in_gene - 1].lower() == row["WildTypeAminoAcidOrNucleotide"].lower():
                     status = 1
                     coordinates_for_bed = (coordinates.start + position_in_gene -1, coordinates.start + position_in_gene, coordinates.strand)
@@ -39,7 +40,8 @@ for gene in annotations["Gene"].unique():
                     coordinates_for_bed = (coordinates.end - position_in_gene, coordinates.end - position_in_gene + 1, coordinates.strand)
             #Promoter regions checking: no codon, negative positions
             elif position_in_gene < 0:
-                wildtype = row["WildTypeAminoAcidOrNucleotide"].lower()                  
+                wildtype = row["WildTypeAminoAcidOrNucleotide"].lower()
+                codon_or_nucleotide = wildtype
                 if coordinates.strand == 1 and record.seq[coordinates.start + position_in_gene ].lower() == row["WildTypeAminoAcidOrNucleotide"].lower():
                     status = 1
                     coordinates_for_bed = (coordinates.start + position_in_gene, coordinates.start + position_in_gene + 1, coordinates.strand)
@@ -52,11 +54,13 @@ for gene in annotations["Gene"].unique():
                 if coordinates.strand == 1 and record.seq[(coordinates.start + (position_in_gene - 1)*3):(coordinates.start + position_in_gene*3)].translate(table=11).lower() == row["WildTypeAminoAcidOrNucleotide"].lower():
                     status = 1
                     coordinates_for_bed = (coordinates.start + (position_in_gene - 1)*3, coordinates.start + position_in_gene*3, coordinates.strand)
+                    codon_or_nucleotide = str(record.seq[(coordinates.start + (position_in_gene - 1)*3):(coordinates.start + position_in_gene*3)])
                 elif coordinates.strand == -1 and record.seq[(coordinates.end - position_in_gene * 3):(coordinates.end - (position_in_gene - 1)*3)].reverse_complement().translate(table=11).lower() == row["WildTypeAminoAcidOrNucleotide"].lower():
                     status = 1
                     coordinates_for_bed = (coordinates.end - position_in_gene*3, coordinates.end - (position_in_gene - 1)*3, coordinates.strand)
+                    codon_or_nucleotide = str(record.seq[(coordinates.end - position_in_gene * 3):(coordinates.end - (position_in_gene - 1)*3)].reverse_complement())
             if status:
-                bed_file = bed_file.append(pandas.DataFrame([[version, coordinates_for_bed[0], coordinates_for_bed[1], gene, int(coordinates_for_bed[2]), row["Position"], wildtype]], columns=["Reference", "Start", "End", "Gene", "Strand", "PositionInGene", "ReferenceAminoAcidorNucleotide"]))
+                bed_file = bed_file.append(pandas.DataFrame([[version, coordinates_for_bed[0], coordinates_for_bed[1], gene, int(coordinates_for_bed[2]), row["Position"], wildtype, codon_or_nucleotide]], columns=["Reference", "Start", "End", "Gene", "Strand", "PositionInGene", "ReferenceAminoAcidOrNucleotide", "ReferenceCodonOrNucleotide"]))
             else:
                 incorrect_annotations = incorrect_annotations.append(pandas.DataFrame([[gene, row["Position"], row["WildTypeAminoAcidOrNucleotide"], row["MutatedAminoAcidOrNucleotide"], row["MutationType"]]], columns=column_names))
                 
