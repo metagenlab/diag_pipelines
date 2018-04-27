@@ -169,7 +169,7 @@ RUN ln -s ${main}/data/references/ references
 
 #THESE ARE SRA I SELECT FROM TB PORTALS NIAID FROM SAMPLES THAT ARE XTR
 
-RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "SRR1158874 OR SRR1158923 OR SRR1158907 OR SRR1158898" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 5 > MTB-XTR.tsv
+RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "SRR1158874 OR SRR1158923 OR SRR1158907 OR SRR1158898" | efetch -db sra -format runinfo | sed "s/,/\t/g" > MTB-XTR.tsv'
 
 
 

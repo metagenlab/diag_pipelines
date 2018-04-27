@@ -15,7 +15,6 @@ rule annotate_positions_from_genotyping:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        bed_correct = "resistance/annotations/{db}/correct.bed",
         bed_gz_correct = "resistance/annotations/{db}/correct.bed.gz",
         bed_tbi_correct = "resistance/annotations/{db}/correct.bed.gz.tbi",
         genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz",
@@ -30,7 +29,7 @@ rule annotate_positions_from_genotyping:
         echo '##INFO=<ID=POSITION_IN_GENE,Number=1,Type=Integer,Description="Position with respect to Gene">' >> {output[header]}
         echo '##INFO=<ID=WILDTYPE_AA_NUCL,Number=1,Type=String,Description="Wildtype amino acid or nucleotide">' >> {output[header]}
         echo '##INFO=<ID=WILDTYPE_CODON_NUCL,Number=1,Type=String,Description="Wildtype codon or nucleotide">' >> {output[header]}
-        bcftools view --regions-file {input[bed_correct]} {input[genotype]} | bcftools annotate --annotation {input[bed_gz_correct]} --columns CHROM,FROM,TO,INFO/GENE,INFO/STRAND,INFO/POSITION_IN_GENE,INFO/WILDTYPE_AA_NUCL,INFO/WILDTYPE_CODON_NUCL --header-lines {output[header]} - > {output[annotation]}
+        bcftools view --regions-file {input[bed_gz_correct]} {input[genotype]} | bcftools annotate --annotation {input[bed_gz_correct]} --columns CHROM,FROM,TO,INFO/GENE,INFO/STRAND,INFO/POSITION_IN_GENE,INFO/WILDTYPE_AA_NUCL,INFO/WILDTYPE_CODON_NUCL --header-lines {output[header]} - > {output[annotation]}
         """
 
 rule extract_mutated_codons_or_nucleotides:
