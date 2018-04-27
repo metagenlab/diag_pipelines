@@ -1,29 +1,3 @@
-rule create_reference_lists_from_databases:
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
-    input:
-        miotto = pipeline_path + "data/" + species + "/mutations/miotto_high_moderate_minimum_confidence_annotated.tsv",
-        mykrobe = pipeline_path + "data/" + species + "/mutations/mykrobe_annotated.tsv",
-        card = pipeline_path + "data/" + species + "/mutations/rgi_annotated_full_2_0_0.tsv",
-        walker = pipeline_path + "data/" + species + "/mutations/walker_resistant_annotated.tsv",
-        resistance_genes = pipeline_path + "data/" + species + "/metadata/resistance_genes.tsv",
-        locus_tag = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
-    output:
-        bed_four_codons = "references/m_tuberculosis_resistance_genes_4_db_mutations/codons.bed",
-        bed_three_codons = "references/m_tuberculosis_resistance_genes_3_db_mutations/codons.bed",
-        bed_two_codons = "references/m_tuberculosis_resistance_genes_2_db_mutations/codons.bed",
-        bed_one_codons = "references/m_tuberculosis_resistance_genes_1_db_mutations/codons.bed",
-        bed_four_nucleotides = "references/m_tuberculosis_resistance_genes_4_db_mutations/nucleotides.bed",
-        bed_three_nucleotides = "references/m_tuberculosis_resistance_genes_3_db_mutations/nucleotides.bed",
-        bed_two_nucleotides = "references/m_tuberculosis_resistance_genes_2_db_mutations/nucleotides.bed",
-        bed_one_nucleotides = "references/m_tuberculosis_resistance_genes_1_db_mutations/nucleotides.bed",
-        summary_four = "references/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx",
-        summary_three = "references/m_tuberculosis_resistance_genes_3_db_mutations/summary.xlsx",
-        summary_two = "references/m_tuberculosis_resistance_genes_2_db_mutations/summary.xlsx",
-        summary_one = "references/m_tuberculosis_resistance_genes_1_db_mutations/summary.xlsx",
-    script:
-        "scripts/generate_excel_file_common_positions.py"
-
 rule check_annotated_mutations_from_database_and_create_bed_file:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
@@ -51,38 +25,21 @@ rule annotate_positions_from_genotyping:
         header = temp("samples/{sample}/resistance/{db}/header.txt"),
     shell:
         """
-        echo '##INFO=<ID=GENE,Number=1,Type=String,Description="Gene">' > {output[header]}
+        echo '##INFO=<ID=GENE,Number=1,Type=String,Description="Gene">' >> {output[header]}
         echo '##INFO=<ID=STRAND,Number=1,Type=Integer,Description="Strand">' >> {output[header]}
         echo '##INFO=<ID=POSITION_IN_GENE,Number=1,Type=Integer,Description="Position with respect to Gene">' >> {output[header]}
-        echo '##INFO=<ID=WILDTYPE,Number=1,Type=String,Description="Wildtype amino acid or nucleotide">' >> {output[header]}
-        bcftools view --regions-file {input[bed_correct]} {input[genotype]} | bcftools annotate --annotation {input[bed_gz_correct]} --columns CHROM,FROM,TO,INFO/GENE,INFO/STRAND,INFO/POSITION_IN_GENE,INFO/WILDTYPE --header-lines {output[header]} - > {output[annotation]}
+        echo '##INFO=<ID=WILDTYPE_AA_NUCL,Number=1,Type=String,Description="Wildtype amino acid or nucleotide">' >> {output[header]}
+        echo '##INFO=<ID=WILDTYPE_CODON_NUCL,Number=1,Type=String,Description="Wildtype codon or nucleotide">' >> {output[header]}
+        bcftools view --regions-file {input[bed_correct]} {input[genotype]} | bcftools annotate --annotation {input[bed_gz_correct]} --columns CHROM,FROM,TO,INFO/GENE,INFO/STRAND,INFO/POSITION_IN_GENE,INFO/WILDTYPE_AA_NUCL,INFO/WILDTYPE_CODON_NUCL --header-lines {output[header]} - > {output[annotation]}
         """
 
-rule extract_annotated_positions:
+rule extract_mutated_codons_or_nucleotides:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
         annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
     output:
-        mutations = "samples/{sample}/resistance/{db}/mutations.vcf",
-    shell:
-        """
-        bcftools view --header-only {input[annotation]} > {output[mutations]}.tmp
-        bcftools view --include 'GT="alt"' {input[annotation]} | bcftools query --format "[%INFO/GENE]\\t[%INFO/POSITION_IN_GENE]\\n" | sort | uniq | while read gene position
-        do
-            bcftools view --no-header --include "INFO/GENE='${{gene}}' && INFO/POSITION_IN_GENE=${{position}}" {input[annotation]} >> {output[mutations]}.tmp
-        done
-        bcftools sort {output[mutations]}.tmp > {output[mutations]}
-        rm {output[mutations]}.tmp
-        """
-        
-rule collect_mutated_positions:
-    conda:
-        pipeline_path + "envs/bcftools.yaml"
-    input:
-        annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
-    output:
-        genotype = temp("samples/{sample}/resistance/{db}/position_genotypes.txt"),
+        genotype = "samples/{sample}/resistance/{db}/position_genotypes.txt",
     shell:
         """
         bcftools view --include 'GT="alt"' {input[annotation]} | bcftools query --format "%CHROM\\t%POS\\t[%INFO/GENE]\\t[%INFO/POSITION_IN_GENE]\\t[%INFO/STRAND]\\n" | while read chrom pos gene position strand
@@ -91,8 +48,8 @@ rule collect_mutated_positions:
             echo ${{chrom}} ${{pos}} ${{gt}} ${{strand}} >> {output[genotype]}
         done
         """
-
-rule convert_position_to_mutation:
+        
+rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
@@ -103,18 +60,19 @@ rule convert_position_to_mutation:
         "scripts/convert_position_to_mutation.py"
         
 
-rule add_mutated_amino_acid_or_nucleotide_value_to_annotation:
+rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synonymous_mutations:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
         mutation_gz = "samples/{sample}/resistance/{db}/mutations.bed.gz",
         mutation_tbi = "samples/{sample}/resistance/{db}/mutations.bed.gz.tbi",
-        annotation = "samples/{sample}/resistance/{db}/mutations.vcf",
+        annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
     output:
         header = "samples/{sample}/resistance/{db}/header_mutations.txt",
-        mutation = "samples/{sample}/resistance/{db}/mutations_full_annotation.vcf",
+        mutation = "samples/{sample}/resistance/{db}/mutations.vcf",
     shell:
         """
-        echo '##INFO=<ID=MUTATION,Number=1,Type=String,Description="Mutation in the context of the gene (can be amino acid or nucleotide)">' > {output[header]}
-        bcftools annotate --annotation {input[mutation_gz]} --columns CHROM,FROM,TO,INFO/MUTATION --header-lines {output[header]} {input[annotation]} > {output[mutation]}
+        echo '##INFO=<ID=MUTATED_AA_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be amino acid or nucleotide)">' > {output[header]}
+        echo '##INFO=<ID=MUTATED_CODON_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be codon or nucleotide)">' >> {output[header]}
+        bcftools annotate --include 'GT="alt"' --annotation {input[mutation_gz]} --columns CHROM,FROM,TO,INFO/MUTATED_AA_NUCL,INFO/MUTATED_CODON_NUCL --header-lines {output[header]} {input[annotation]} | bcftools view --exclude 'INFO/WILDTYPE_AA_NUCL=INFO/MUTATED_AA_NUCL' > {output[mutation]}
         """
