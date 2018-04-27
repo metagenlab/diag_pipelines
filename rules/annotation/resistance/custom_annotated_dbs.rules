@@ -24,7 +24,7 @@ rule create_reference_lists_from_databases:
     script:
         "scripts/generate_excel_file_common_positions.py"
 
-rule check_annotated_mutations_from_database:
+rule check_annotated_mutations_from_database_and_create_bed_file:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
@@ -32,195 +32,89 @@ rule check_annotated_mutations_from_database:
         gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
         gbk = "references/" + reference_assembly_for_resistance[species] + "/genome_gbwithparts.gbk",
     output:
-        correct_annotation = "resistance/annotations/{db}/correct.tsv",
+        bed_correct = "resistance/annotations/{db}/correct.bed",
         incorrect_annotation = "resistance/annotations/{db}/incorrect.tsv",
     script:
         "scripts/check_locus_against_database.py"
-        
-rule convert_mutation_positions_to_bed_files_to_full_genome:
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
-    params:
-        upstream_downstream_size = shift
-    input:
-        db_correct = "references/m_tuberculosis_resistance_{db}/correct.tsv",
-        gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
-        gbk = "references/" + reference_assembly_for_resistance[species] + "/genome_gbwithparts.gbk",
-    output:
-        bed_shifted = "references/m_tuberculosis_resistance_{db}/full_genome.bed",
-    script:
-        "scripts/convert_mutation_positions_to_bed_files_full_genome.py"
-        
-rule convert_mutation_positions_to_bed_files:
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
-    params:
-        upstream_downstream_size = shift
-    input:
-        db_correct = "references/m_tuberculosis_resistance_{db}/correct.tsv",
-        gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
-    output:
-        bed_shifted = "references/m_tuberculosis_resistance_{db}/shifted.bed",
-    script:
-        "scripts/convert_mutation_positions_to_bed_files.py"
-        
-rule merge_nucleotides_and_codons_bed_files:
-    input:
-        cds = "references/{any}/codons.bed",
-        not_cds = "references/{any}/nucleotides.bed",
-    output:
-        both = temp("references/{any}/codons_and_nucleotides.bed")
-    shell:
-        """
-        cat {input[cds]} {input[not_cds]} > {output[both]}
-        """
 
-rule extract_all_locus_tags:
-    input:
-        annotated = "references/{any}/shifted.bed",
-    output:
-        locus = "references/{any}/locus.txt"
-    shell:
-        """
-        cut -f1 {input[annotated]} | sort | uniq > {output[locus]}
-        """
-        
-rule fetch_locus_tag_sequences_from_accession:
-    conda:
-        pipeline_path + "envs/biopython.yaml"
-    params:
-        upstream_downstream_size = shift
-    input:
-        locus_list = "references/m_tuberculosis_resistance_{db}/locus.txt",
-        gbk = "references/NC_000962.3/genome_gbwithparts.gbwithparts",
-    output:
-        genes = "references/m_tuberculosis_resistance_{db}/genome_fasta.fasta",
-    script:
-        "scripts/fetch_locus_tag_sequences_from_accession.py"
-
-        
-rule remove_shift_from_fasta_sequences:
-    conda:
-        pipeline_path + "envs/fastx.yaml"
-    params:
-        upstream_downstream_size = shift
-    input:
-        fasta = "{ref}.fasta",
-    output:
-        trimmed = "{ref}_trimmed.fasta",
-    shell:
-        """
-        fasta_formatter -i {input[fasta]} | fastx_trimmer -f $(( {params.upstream_downstream_size}+1 )) > {output[trimmed]}
-        """
-
-rule shift_positions_from_genotype_vcf:
-    conda:
-        pipeline_path + "envs/bcftools.yaml"
-    params:
-        upstream_downstream_size = shift
-    input:
-        vcf = "samples/{sample}/typing/freebayes/bwa/{ref}.vcf.gz",
-        vcf_tbi = "samples/{sample}/typing/freebayes/bwa/{ref}.vcf.gz.tbi",
-    output:
-        vcf_shifted = "samples/{sample}/typing/freebayes/bwa/{ref}_shifted.vcf",
-    shell:
-        """
-        bcftools view -h {input[vcf]} > {output[vcf_shifted]}
-        bcftools view -H {input[vcf]} | awk -v shift="{params[upstream_downstream_size]}" -F$'\t' '$2=$2-shift' | awk '$2>0' | sed "s/ /\\t/g" >> {output[vcf_shifted]}
-        """
-
-rule apply_genotype_to_fasta:
+rule annotate_positions_from_genotyping:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        vcf_shifted = "samples/{sample}/typing/freebayes/bwa/{ref}_shifted.vcf.gz",
-        vcf_tbi = "samples/{sample}/typing/freebayes/bwa/{ref}_shifted.vcf.gz.tbi",
-        ref = "references/{ref}/genome_fasta_trimmed.fasta",
+        bed_correct = "resistance/annotations/{db}/correct.bed",
+        bed_gz_correct = "resistance/annotations/{db}/correct.bed.gz",
+        bed_tbi_correct = "resistance/annotations/{db}/correct.bed.gz.tbi",
+        genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz",
+        genotype_tbi = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz.tbi",
     output:
-        fasta = "samples/{sample}/resistance/{ref}/annotated_genes_with_mutations.fasta",
+        annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
+        header = temp("samples/{sample}/resistance/{db}/header.txt"),
     shell:
         """
-        bcftools consensus --include 'type="snp"' --sample {wildcards.sample} --fasta-ref {input[ref]} --output {output[fasta]} {input[vcf_shifted]}
+        echo '##INFO=<ID=GENE,Number=1,Type=String,Description="Gene">' > {output[header]}
+        echo '##INFO=<ID=STRAND,Number=1,Type=Integer,Description="Strand">' >> {output[header]}
+        echo '##INFO=<ID=POSITION_IN_GENE,Number=1,Type=Integer,Description="Position with respect to Gene">' >> {output[header]}
+        echo '##INFO=<ID=WILDTYPE,Number=1,Type=String,Description="Wildtype amino acid or nucleotide">' >> {output[header]}
+        bcftools view --regions-file {input[bed_correct]} {input[genotype]} | bcftools annotate --annotation {input[bed_gz_correct]} --columns CHROM,FROM,TO,INFO/GENE,INFO/STRAND,INFO/POSITION_IN_GENE,INFO/WILDTYPE --header-lines {output[header]} - > {output[annotation]}
         """
 
-rule extract_mutated_positions:
+rule extract_annotated_positions:
     conda:
-        pipeline_path + "envs/bedtools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
-        trimmed = "samples/{sample}/resistance/{ref}/annotated_genes_with_mutations.fasta",
-        bed = "references/{ref}/{cds}.bed",
+        annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
     output:
-        mutated_pos = "samples/{sample}/resistance/{ref}/mutated_{cds,[a-z]+}.fasta",
+        mutations = "samples/{sample}/resistance/{db}/mutations.vcf",
     shell:
         """
-        rm -f {input[trimmed]}.fai 2> /dev/null
-        bedtools getfasta -fi {input[trimmed]} -bed {input[bed]} > {output[mutated_pos]} 2> /dev/null
+        bcftools view --header-only {input[annotation]} > {output[mutations]}.tmp
+        bcftools view --include 'GT="alt"' {input[annotation]} | bcftools query --format "[%INFO/GENE]\\t[%INFO/POSITION_IN_GENE]\\n" | sort | uniq | while read gene position
+        do
+            bcftools view --no-header --include "INFO/GENE='${{gene}}' && INFO/POSITION_IN_GENE=${{position}}" {input[annotation]} >> {output[mutations]}.tmp
+        done
+        bcftools sort {output[mutations]}.tmp > {output[mutations]}
+        rm {output[mutations]}.tmp
         """
         
-rule extract_reference_positions:
+rule collect_mutated_positions:
     conda:
-        pipeline_path + "envs/bedtools.yaml"
+        pipeline_path + "envs/bcftools.yaml"
     input:
-        trimmed = "references/{ref}/genome_fasta_trimmed.fasta",
-        bed = "references/{ref}/{cds}.bed",
+        annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
     output:
-        mutated_pos = "references/{ref}/annotated_{cds,[a-z]+}.fasta",
+        genotype = temp("samples/{sample}/resistance/{db}/position_genotypes.txt"),
     shell:
         """
-        rm -f {input[trimmed]}.fai 2> /dev/null
-        bedtools getfasta -fi {input[trimmed]} -bed {input[bed]} > {output[mutated_pos]} 2> /dev/null
+        bcftools view --include 'GT="alt"' {input[annotation]} | bcftools query --format "%CHROM\\t%POS\\t[%INFO/GENE]\\t[%INFO/POSITION_IN_GENE]\\t[%INFO/STRAND]\\n" | while read chrom pos gene position strand
+        do
+            gt=$(bcftools view --include "INFO/GENE='${{gene}}' && INFO/POSITION_IN_GENE=${{position}}" {input[annotation]} | bcftools query --format "[%TGT]")
+            echo ${{chrom}} ${{pos}} ${{gt}} ${{strand}} >> {output[genotype]}
+        done
         """
 
-rule format_resistance_results:
+rule convert_position_to_mutation:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        mutated = "samples/{sample}/resistance/{ref}/mutated_{cds}.fasta",
-        ref = "references/{ref}/annotated_{cds}.fasta",
-    output:          
-        resistance = "samples/{sample}/resistance/{ref}/mutated_{cds,[a-z]+}.tsv",
+        genotype = "samples/{sample}/resistance/{db}/position_genotypes.txt",
+    output:
+        mutation = "samples/{sample}/resistance/{db}/mutations.bed",
+    script:
+        "scripts/convert_position_to_mutation.py"
+        
+
+rule add_mutated_amino_acid_or_nucleotide_value_to_annotation:
+    conda:
+        pipeline_path + "envs/bcftools.yaml"
+    input:
+        mutation_gz = "samples/{sample}/resistance/{db}/mutations.bed.gz",
+        mutation_tbi = "samples/{sample}/resistance/{db}/mutations.bed.gz.tbi",
+        annotation = "samples/{sample}/resistance/{db}/mutations.vcf",
+    output:
+        header = "samples/{sample}/resistance/{db}/header_mutations.txt",
+        mutation = "samples/{sample}/resistance/{db}/mutations_full_annotation.vcf",
     shell:
         """
-        diff -y {input[ref]} {input[mutated]} | grep "|" -B 1 | grep -v "\-\-" | sed "s/|//" | sed "s/\s>.*$//" | paste - - | tr -d  " " |  tr -s '\\t' '\\t'   > {output[resistance]} || :
+        echo '##INFO=<ID=MUTATION,Number=1,Type=String,Description="Mutation in the context of the gene (can be amino acid or nucleotide)">' > {output[header]}
+        bcftools annotate --annotation {input[mutation_gz]} --columns CHROM,FROM,TO,INFO/MUTATION --header-lines {output[header]} {input[annotation]} > {output[mutation]}
         """
-
-rule add_translation_to_mutated_codons:
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
-    input:
-        resistance_codons = "samples/{sample}/resistance/{ref}/mutated_codons.tsv",
-    output:
-        formated_aa = "samples/{sample}/resistance/{ref}/mutated_aa.xlsx",
-    script:
-        "scripts/add_translation_to_mutated_codons.py"
-
-        
-rule format_mutated_nucleotides:
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
-    input:
-        resistance_nucleotides = "samples/{sample}/resistance/{ref}/mutated_nucleotides.tsv",
-    output:
-        formated_nucleotides = "samples/{sample}/resistance/{ref}/mutated_nucleotides.xlsx",
-    script:
-        "scripts/format_mutated_nucleotides.py"
-
-rule merge_mutated_nucleotides_and_codons:
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
-    input:
-        formated_aa = "samples/{sample}/resistance/{ref}/mutated_aa.xlsx",
-        formated_nucleotides = "samples/{sample}/resistance/{ref}/mutated_nucleotides.xlsx",
-        locus_tag = pipeline_path + "data/mycobacterium/db/locus_tags.tsv",
-    output:
-        resistance = "samples/{sample}/resistance/{ref}/summary.xlsx",
-    script:
-        "scripts/merge_mutated_nucleotides_and_codons.py"
-        
-rule merge_non_empty_results:
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
-    input:
-        xlsx = expand("samples/{sample}/resistance/{{ref}}/summary.xlsx", sample=read_naming.keys()),
-    output:
-        summary = "resistance/{ref}_summary.xlsx"
-    script:
-        "scripts/merge_non_empty_results.py"
