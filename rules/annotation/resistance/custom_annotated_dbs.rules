@@ -72,7 +72,7 @@ rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synony
         mutation = "samples/{sample}/resistance/{db}/mutations.vcf",
     shell:
         """
-        echo '##INFO=<ID=MUTATED_AA_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be amino acid or nucleotide)">' > {output[header]}
+        echo '##INFO=<ID=MUTATED_AA_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be amino acid or nucleotide)">' >> {output[header]}
         echo '##INFO=<ID=MUTATED_CODON_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be codon or nucleotide)">' >> {output[header]}
         bcftools annotate --include 'GT="alt"' --annotation {input[mutation_gz]} --columns CHROM,FROM,TO,INFO/MUTATED_AA_NUCL,INFO/MUTATED_CODON_NUCL --header-lines {output[header]} {input[annotation]} | bcftools view --exclude 'INFO/WILDTYPE_AA_NUCL=INFO/MUTATED_AA_NUCL' > {output[mutation]}
         """

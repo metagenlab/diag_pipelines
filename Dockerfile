@@ -54,9 +54,19 @@ RUN echo '' > core_genomes/parsnp/Mycobacterium_tuberculosis/parsnp.xmfa
 
 RUN wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > ${main}/data/references/mash_sketch.msh
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml  quality/multiqc/assembly/multiqc_report.html samples/M10/resistance/mykrobe.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_538048/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome_M10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg virulence_summary.xlsx typing/mlst/summary.xlsx samples/M10/resistance/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/full_genome_538048/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/core_parsnp_538048/bwa/phylogeny_no_st.svg -j 4
+RUN echo '' > ${main}/data/references/mash_sketch_human.msh
+
+RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml  quality/multiqc/assembly/multiqc_report.html samples/M10/resistance/mykrobe.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_538048/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome_M10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg virulence_summary.xlsx typing/mlst/summary.xlsx resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/full_genome_538048/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/core_parsnp_538048/bwa/phylogeny_no_st.svg contamination/distances_formated.xlsx resistance/annotations/currated_db_isoniazid/correct.tsv -j 4
 
 RUN patch /opt/conda/envs/356da27d/lib/python3.6/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
+
+RUN mkdir -p ${main}/data/references/1493941/
+
+RUN  /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${main}/data/references/1493941/genome_fasta.fasta'
+
+RUN  /bin/bash -c 'source activate /opt/conda/envs/c327f08f/ && mash sketch -o ${main}/data/references/mash_sketch_human.msh ${main}/data/references/1493941/genome_fasta.fasta'
+
+RUN rm -rf ${main}/references/1493941/
 
 RUN rm -rf links/
 
@@ -94,9 +104,27 @@ RUN ln -s ${main}/data/references/ references
 
 RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "PRJEB7847[BIOPROJECT] AND \"Staphylococcus aureus\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 5 > PRJEB7847_Staphylococcus-aureus.tsv'
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/mykrobe_summary.xlsx --config sra_samples=PRJEB7847_Staphylococcus-aureus.tsv species="Staphylococcus_aureus"
+#TESTING MYKROBE ON 4 STAPH AUREUS
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_with_st.svg typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_with_st.svg resistance/mykrobe_summary.xlsx resistance/rgi_summary.xlsx typing/freebayes_joint_genotyping/cgMLST/bwa/vcfs/14035468_patient_1_Run2_-_14035482_patient_5_in_snp.vcf typing/gatk_gvcfs/full_genome_14035468_patient_1_Run2_assembled_genome/bwa/distances_in_snp_mst_with_st.svg --config sra_samples=PRJEB7847_Staphylococcus-aureus.tsv species="Staphylococcus_aureus"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 2 resistance/mykrobe_summary.xlsx --config sra_samples=PRJEB7847_Staphylococcus-aureus.tsv species="Staphylococcus_aureus"
+
+#TESTING TYPING ON 4 STAPH AUREUS
+
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 2 typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_with_st.svg typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_with_st.svg resistance/mykrobe_summary.xlsx resistance/rgi_summary.xlsx typing/freebayes_joint_genotyping/cgMLST/bwa/vcfs/14035468_patient_1_Run2_-_14035482_patient_5_in_snp.vcf typing/gatk_gvcfs/full_genome_14035468_patient_1_Run2_assembled_genome/bwa/distances_in_snp_mst_with_st.svg --config sra_samples=PRJEB7847_Staphylococcus-aureus.tsv species="Staphylococcus_aureus"
+
+#TESTING TYPING OF SERATIA MARCESCENS ISOLATES. ANNOTATED AS SINGLE BUT ACTUALLY PAIRED READS, BUT SINGLE READS RULES ARE TESTED IF WE LEAVE IT LIKE THIS 
+
+RUN mkdir -p ${main}/data/validation/PRJNA396838
+
+WORKDIR ${main}/data/validation/PRJNA396838
+
+RUN ln -s ${main}/data/core_genomes/ core_genomes
+
+RUN ln -s ${main}/data/references/ references
+
+RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "PRJNA396838[BIOPROJECT] AND \"Serratia marcescens\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 5 > PRJNA396838_Serratia-marcescens.tsv'
+
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 2 resistance/rgi_summary.xlsx typing/freebayes_joint_genotyping/full_genome_89161/bwa/distances_in_snp_mst_no_st.svg --config sra_samples="PRJNA396838_Serratia-marcescens.tsv" species="Serratia_marcescens"
 
 RUN mkdir -p ${main}/data/validation/PRJEB12011
 
@@ -108,24 +136,43 @@ RUN ln -s ${main}/data/references/ references
 
 RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "PRJEB12011[BIOPROJECT] AND \"Mycobacterium tuberculosis complex\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 2 > PRJEB12011_Mycobacterium-tuberculosis.tsv'
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis"
+#TESTING MYKROBE (ALL PANELS), RGI, ON 2 M. TB
+
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 2 resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis" mykrobe_panel="bradley-2015"
 
 RUN rm -rf samples/
 
 RUN rm -rf resistance/
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/mykrobe_summary.xlsx --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis" mykrobe_panel="walker-2015"
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 2 resistance/mykrobe_summary.xlsx --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis" mykrobe_panel="walker-2015"
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --notemp --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 resistance/mykrobe_summary.xlsx --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis mykrobe_panel='walker-2015'"
+RUN rm -rf resistance/
+
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --notemp --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 2 resistance/mykrobe_summary.xlsx --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis"
 
 RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "PRJEB12011[BIOPROJECT] AND \"Mycobacterium tuberculosis complex\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 5 > PRJEB12011_Mycobacterium-tuberculosis.tsv'
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_no_st.svg phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg resistance/mykrobe_summary.xlsx resistance/m_tuberculosis_resistance_genes_4_db_mutations_summary.xlsx typing/freebayes_joint_genotyping/cgMLST/bwa/vcfs/19-M-2-RUM_-_1633-10_in_snp.vcf typing/gatk_gvcfs/full_genome_1633-10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis"
+#TYPING ON 4 M. TB
+
+RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 2 typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_no_st.svg phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg resistance/mykrobe_summary.xlsx typing/freebayes_joint_genotyping/cgMLST/bwa/vcfs/SAMEA3697004_-_SAMEA3697005_in_snp.vcf typing/gatk_gvcfs/full_genome_SAMEA3697006_assembled_genome/bwa/distances_in_snp_mst_no_st.svg --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis"
+
+#NOW TESTING RESISTANT MTB STRAINS WITH ALL 3 METHODS
+
+
+RUN mkdir -p ${main}/data/validation/MTB-XTR/
+
+WORKDIR ${main}/data/validation/MTB-XTR/
+
+RUN ln -s ${main}/data/core_genomes/ core_genomes
+
+RUN ln -s ${main}/data/references/ references
+
+#THESE ARE SRA I SELECT FROM TB PORTALS NIAID FROM SAMPLES THAT ARE XTR
+
+RUN /bin/bash -c 'source activate /opt/conda/envs/618592fe/ && esearch -db sra -query "SRR1158874 OR SRR1158923 OR SRR1158907 OR SRR1158898" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 5 > MTB-XTR.tsv
+
+
 
 WORKDIR ${main}/data/analysis/
-
-RUN rm -rf *
-
-RUN rm -rf ${main}/data/validation/
 
 
