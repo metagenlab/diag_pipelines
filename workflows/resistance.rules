@@ -36,7 +36,7 @@ if species in reference_assembly_for_resistance.keys():
     include:
         pipeline_path + "rules/annotation/resistance/custom_annotated_dbs.rules"
     include:
-        pipeline_path + "rules/annotation/resistance/large_deletion.rules"
+        pipeline_path + "rules/annotation/resistance/detect_large_insertions_or_deletions.rules"
     
 if species == "Staphylococcus_aureus" or species.startswith("Mycobacterium"):
     include:

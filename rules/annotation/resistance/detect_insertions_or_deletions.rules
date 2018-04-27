@@ -20,7 +20,7 @@ rule create_bed_from_gene:
         gbk = "references/" + reference_assembly_for_resistance[species] + "/genome_gbwithparts.gbk",
         gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
     output:
-        bed = "resistance/annotations/{gene}.bed",
+        bed = "resistance/genes/{gene}.bed",
     script:
         "scripts/create_bed_from_gene.py"
 
