@@ -1,5 +1,6 @@
-pipeline_path = workdir + "../"
+pipeline_path = workflow.basedir + "/../"
 
+species = "Mycobacterium_tuberculosis"
 
 rule create_reference_lists_from_databases:
     conda:
@@ -12,17 +13,13 @@ rule create_reference_lists_from_databases:
         resistance_genes = pipeline_path + "data/" + species + "/metadata/resistance_genes.tsv",
         locus_tag = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
     output:
-        bed_four_codons = "references/m_tuberculosis_resistance_genes_4_db_mutations/codons.bed",
-        bed_three_codons = "references/m_tuberculosis_resistance_genes_3_db_mutations/codons.bed",
-        bed_two_codons = "references/m_tuberculosis_resistance_genes_2_db_mutations/codons.bed",
-        bed_one_codons = "references/m_tuberculosis_resistance_genes_1_db_mutations/codons.bed",
-        bed_four_nucleotides = "references/m_tuberculosis_resistance_genes_4_db_mutations/nucleotides.bed",
-        bed_three_nucleotides = "references/m_tuberculosis_resistance_genes_3_db_mutations/nucleotides.bed",
-        bed_two_nucleotides = "references/m_tuberculosis_resistance_genes_2_db_mutations/nucleotides.bed",
-        bed_one_nucleotides = "references/m_tuberculosis_resistance_genes_1_db_mutations/nucleotides.bed",
-        summary_four = "references/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx",
-        summary_three = "references/m_tuberculosis_resistance_genes_3_db_mutations/summary.xlsx",
-        summary_two = "references/m_tuberculosis_resistance_genes_2_db_mutations/summary.xlsx",
-        summary_one = "references/m_tuberculosis_resistance_genes_1_db_mutations/summary.xlsx",
+        four_tsv = pipeline_path + "data/"+ species + "/mutations/level_four_agreement.tsv",
+        three_tsv = pipeline_path + "data/"+ species + "/mutations/level_three_agreement.tsv",
+        two_tsv = pipeline_path + "data/"+ species + "/mutations/level_two_agreement.tsv",
+        one_tsv = pipeline_path + "data/"+ species + "/mutations/level_one_agreement.tsv",
+        summary_four = pipeline_path + "data/"+ species + "/mutations/level_four_agreement.xlsx",
+        summary_three = pipeline_path + "data/"+ species + "/mutations/level_three_agreement.xlsx",
+        summary_two = pipeline_path + "data/"+ species + "/mutations/level_two_agreement.xlsx",
+        summary_one = pipeline_path + "data/"+ species + "/mutations/level_one_agreement.xlsx",
     script:
         "scripts/generate_excel_file_common_positions.py"

@@ -22,7 +22,7 @@ for i in source_db["SNP"].keys():
     all_databases[i] = pandas.read_csv(source_db["SNP"][i], sep="\t")
     all_databases[i]["MutatedAminoAcidOrNucleotide"]=all_databases[i]["MutatedAminoAcidOrNucleotide"].str.upper().str.strip()
     all_databases[i]["WildTypeAminoAcidOrNucleotide"]=all_databases[i]["WildTypeAminoAcidOrNucleotide"].str.upper().str.strip()
-    all_databases[i]["PositionMTB"]=pandas.to_numeric(all_databases[i]["PositionMTB"])
+    all_databases[i]["Position"]=pandas.to_numeric(all_databases[i]["Position"])
 
 common_positions={}
 for j in db_combinations.keys():
@@ -37,7 +37,7 @@ for mutation_type in ["SNP"]:
     for gene in genes:
         pos_each_db={}
         for key in all_sources:
-            pos_each_db[key] = set(sorted([int(x) for x in all_databases[key].loc[(all_databases[key]["MutationType"]==mutation_type) & (all_databases[key]["Gene"]==gene), "PositionMTB"]]))
+            pos_each_db[key] = set(sorted([int(x) for x in all_databases[key].loc[(all_databases[key]["MutationType"]==mutation_type) & (all_databases[key]["Gene"]==gene), "Position"]]))
         union_4 = sorted(set(pos_each_db[all_sources[0]] & pos_each_db[all_sources[1]] & pos_each_db[all_sources[2]] & pos_each_db[all_sources[3]]))
         common_3 = []
         for db in itertools.combinations(source_db[mutation_type].keys(), 3):
@@ -60,13 +60,13 @@ for mutation_type in ["SNP"]:
             for number in ["4", "3", "2", "1"]:
                 for pos in unions[number]:
                     for i in source_db[mutation_type].keys():
-                        if pos in list(all_databases[i].loc[(all_databases[i]["Gene"]==gene) & (all_databases[i]["MutationType"]==mutation_type), "PositionMTB"]):
+                        if pos in list(all_databases[i].loc[(all_databases[i]["Gene"]==gene) & (all_databases[i]["MutationType"]==mutation_type), "Position"]):
                             if mutation_type=="SNP":
-                                mutated=sorted(set(all_databases[i].loc[(all_databases[i]["MutationType"]==mutation_type) & (all_databases[i]["Gene"]==gene) & (all_databases[i]["PositionMTB"]==pos), "MutatedAminoAcidOrNucleotide"]))
-                                wildtype=sorted(set(all_databases[i].loc[(all_databases[i]["MutationType"]==mutation_type) & (all_databases[i]["Gene"]==gene) & (all_databases[i]["PositionMTB"]==pos), "WildTypeAminoAcidOrNucleotide"]))
+                                mutated=sorted(set(all_databases[i].loc[(all_databases[i]["MutationType"]==mutation_type) & (all_databases[i]["Gene"]==gene) & (all_databases[i]["Position"]==pos), "MutatedAminoAcidOrNucleotide"]))
+                                wildtype=sorted(set(all_databases[i].loc[(all_databases[i]["MutationType"]==mutation_type) & (all_databases[i]["Gene"]==gene) & (all_databases[i]["Position"]==pos), "WildTypeAminoAcidOrNucleotide"]))
                                 common_positions[number][anti][mutation_type].append([i, gene, int(pos), ",".join(wildtype), ",".join(mutated)])
                             elif mutation_type=="INDEL":
-                                annot=sorted(set(all_databases[i].loc[(all_databases[i]["MutationType"]==mutation_type) & (all_databases[i]["Gene"]==gene) & (all_databases[i]["PositionMTB"]==pos), "OriginalAnnotation"]))
+                                annot=sorted(set(all_databases[i].loc[(all_databases[i]["MutationType"]==mutation_type) & (all_databases[i]["Gene"]==gene) & (all_databases[i]["Position"]==pos), "OriginalAnnotation"]))
                                 common_positions[number][anti][mutation_type].append([i, gene, int(pos), annot])
 
                                 
@@ -82,23 +82,13 @@ def alternate_gray_background(row, numb):
 for j in db_combinations.keys():
     writer = pandas.ExcelWriter(snakemake.output["summary_"+db_combinations[j]])
     bed_panda = pandas.DataFrame()
+    all_res = pandas.DataFrame()
     for i in sorted(set(list(gene_antibio["Antibiotic"]))):
         res_panda_snp=pandas.DataFrame(common_positions[j][i]["SNP"], columns=["Source", "Gene", "Position", "WildTypeAminoAcidorNucleotide", "MutatedAminoAcidOrNucleotide"])
+        all_res = all_res.append(res_panda_snp)
         res_panda_snp.style.apply(alternate_gray_background, axis=None, numb=int(j)).to_excel(writer, i, index=False)
         bed_panda = pandas.concat([bed_panda, res_panda_snp[["Gene", "Position"]].drop_duplicates()])
-    bed_panda = bed_panda.set_index("Gene")
-    all_mutations = bed_panda.drop_duplicates().join(locus_tags)
-    codons = all_mutations.loc[(all_mutations.index!="rrs") & (all_mutations["Position"]>0)]
-    codons = codons.assign(Start= lambda x: (x.Position - 1)*3)
-    codons = codons.assign(End= lambda x: (x.Position*3))
-    nucleotides = all_mutations.loc[(all_mutations.index=="rrs")]
-    nucleotides = nucleotides.assign(Start = lambda x: (x.Position - 1))
-    nucleotides = nucleotides.assign(End = lambda x: (x.Position))
-    promoters = all_mutations.loc[(all_mutations["Position"]<0)]
-    codons[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_codons"], header=False, index=False, sep="\t")
-    nucleotides[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_nucleotides"], header=False, index=False, sep="\t")
-    promoters[["LocusTag", "Start", "End"]].to_csv(snakemake.output["bed_"+db_combinations[j]+"_promoters"], header=False, index=False, sep="\t")
-
+    all_res[["Gene", "Position", "WildTypeAminoAcidorNucleotide"]].drop_duplicates().to_csv(snakemake.output[db_combinations[j]+"_tsv"], header=True, index=False, sep="\t")
     writer.save()
 
 
