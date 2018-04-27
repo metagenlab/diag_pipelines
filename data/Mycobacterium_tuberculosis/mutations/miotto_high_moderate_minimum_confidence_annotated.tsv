@@ -1,4 +1,4 @@
-OriginalGene	Gene	OriginalAnnotation	PositionAlternative	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	MutationType	PositionMTB
+OriginalGene	Gene	OriginalAnnotation	PositionAlternative	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	MutationType	Position
 eis	eis	c-14t	-14	c	t	SNP	-14
 eis	eis	g-10a	-10	g	a	SNP	-10
 gyrA	gyrA	A90V	90	A	V	SNP	90

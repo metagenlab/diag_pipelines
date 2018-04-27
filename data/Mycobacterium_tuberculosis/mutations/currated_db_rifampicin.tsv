@@ -1,4 +1,4 @@
-Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+Gene	Position	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
 rpoB	95	V	F	Heep  et al, 2000	SNP
 rpoB	170	V	F	Walker et al, 2015	SNP
 rpoB	262	V	A	Walker et al, 2015	SNP

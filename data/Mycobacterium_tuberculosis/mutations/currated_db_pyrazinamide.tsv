@@ -1,4 +1,4 @@
-Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+Gene	Position	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
 pncA	-12	T	C	Walker et al, 2015	SNP
 pncA	-11	A	G	Walker et al, 2015	SNP
 pncA	1	M	I	Lee et al,2001 (I), 	SNP

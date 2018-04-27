@@ -1,4 +1,4 @@
-Gene	OriginalAnnotation	PositionAlternative	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	MutationType	PositionMTB
+Gene	OriginalAnnotation	PositionAlternative	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	MutationType	Position
 rrs	A1401G	1401	A	G	SNP	1401
 rrs	C1402U	1402	C	U	SNP	1402
 rrs	A1401G	1401	A	G	SNP	1401

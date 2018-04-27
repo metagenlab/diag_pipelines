@@ -1,4 +1,4 @@
-Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+Gene	Position	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
 rpsL	43	K	R,T	Miotto et al 2017 and Balif, 2012 (R)	SNP
 rpsL	88	K	Q,R	Miotto et al 2017 and Balif, 2012 	SNP
 rrs	513	C	T	Miotto e al,2017	SNP

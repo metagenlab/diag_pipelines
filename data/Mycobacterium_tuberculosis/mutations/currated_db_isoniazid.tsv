@@ -1,4 +1,4 @@
-Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+Gene	Position	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
 katG	64	Y	S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
 katG	2	P	S	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP
 katG	17	S	N	Vilchèze C, Jacobs WR Jr. Resistance to Isoniazid and Ethionamide in Mycobacterium tuberculosis: Genes, Mutations, and Causalities. 2014. Microbiol Spectr	SNP

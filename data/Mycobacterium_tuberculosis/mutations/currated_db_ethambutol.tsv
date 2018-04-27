@@ -1,4 +1,4 @@
-Gene	PositionMTB	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
+Gene	Position	WildTypeAminoAcidOrNucleotide	MutatedAminoAcidOrNucleotide	Reference	MutationType
 embA	-16	C	T	Ramaswamy et al, 2000	SNP
 embA	-12	C	T	Ramaswamy et al, 2000	SNP
 embA	4	D	N	Ramaswamy et al, 2000	SNP
