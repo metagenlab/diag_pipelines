@@ -1,0 +1,28 @@
+pipeline_path = workdir + "../"
+
+
+rule create_reference_lists_from_databases:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        miotto = pipeline_path + "data/" + species + "/mutations/miotto_high_moderate_minimum_confidence_annotated.tsv",
+        mykrobe = pipeline_path + "data/" + species + "/mutations/mykrobe_annotated.tsv",
+        card = pipeline_path + "data/" + species + "/mutations/rgi_annotated_full_2_0_0.tsv",
+        walker = pipeline_path + "data/" + species + "/mutations/walker_resistant_annotated.tsv",
+        resistance_genes = pipeline_path + "data/" + species + "/metadata/resistance_genes.tsv",
+        locus_tag = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
+    output:
+        bed_four_codons = "references/m_tuberculosis_resistance_genes_4_db_mutations/codons.bed",
+        bed_three_codons = "references/m_tuberculosis_resistance_genes_3_db_mutations/codons.bed",
+        bed_two_codons = "references/m_tuberculosis_resistance_genes_2_db_mutations/codons.bed",
+        bed_one_codons = "references/m_tuberculosis_resistance_genes_1_db_mutations/codons.bed",
+        bed_four_nucleotides = "references/m_tuberculosis_resistance_genes_4_db_mutations/nucleotides.bed",
+        bed_three_nucleotides = "references/m_tuberculosis_resistance_genes_3_db_mutations/nucleotides.bed",
+        bed_two_nucleotides = "references/m_tuberculosis_resistance_genes_2_db_mutations/nucleotides.bed",
+        bed_one_nucleotides = "references/m_tuberculosis_resistance_genes_1_db_mutations/nucleotides.bed",
+        summary_four = "references/m_tuberculosis_resistance_genes_4_db_mutations/summary.xlsx",
+        summary_three = "references/m_tuberculosis_resistance_genes_3_db_mutations/summary.xlsx",
+        summary_two = "references/m_tuberculosis_resistance_genes_2_db_mutations/summary.xlsx",
+        summary_one = "references/m_tuberculosis_resistance_genes_1_db_mutations/summary.xlsx",
+    script:
+        "scripts/generate_excel_file_common_positions.py"
