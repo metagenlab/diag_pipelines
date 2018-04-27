@@ -1,11 +1,6 @@
 include:
     "typing.rules"
 
-if "shift_for_mapping" not in config.keys():
-    shift = 300
-else:
-    shift = config["shift_for_mapping"]
-
 if "mykrobe_panel" not in config.keys():
     mykrobe_panel = ""
 else:
@@ -43,7 +38,7 @@ if species in reference_assembly_for_resistance.keys():
     include:
         pipeline_path + "rules/annotation/resistance/large_deletion.rules"
     
-if species == "Staphylococcus_aureus" or species == "Mycobacterium_tuberculosis":
+if species == "Staphylococcus_aureus" or species.startswith("Mycobacterium"):
     include:
         pipeline_path + "rules/annotation/resistance/mykrobe.rules"
 
