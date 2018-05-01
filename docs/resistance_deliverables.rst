@@ -1,3 +1,2 @@
-* ``samples/{sample_name}/resistance/rgi.xlsx``: results files for RGI, for each sample
-* ``samples/{sample_name}/resistance/mykrobe.xlsx``: results file for mykrobe, for each sample
-* ``resistance/{mykrobe_or_rgi}_summary.xlsx``: summary for every samples (one per sheet)  
+* ``resistance/rgi_summary.xlsx``: summary of RGI results for every samples (one per sheet)
+* ``resistance/mykrobe_summary.xlsx``: summary of Mykrobe results for every samples (one per sheet, only for `Mycobacterium` genus or `Staphylococcus aureus`)    
