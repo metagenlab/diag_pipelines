@@ -8,7 +8,7 @@ rule calculate_pairwise_distances_by_type:
         dist_pair=temp("{any_analysis}/distances/{sample1}_-_{sample2}_distance_in_{type}.txt"),
     shell:
         """
-        snps=$(bcftools view --samples {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | awk '$1!=$2' | wc -l) || :
+        snps=$(bcftools view --samples {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | awk '$1!=$2' | grep -c -v "\.") 
         echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[dist_pair]}   
         """
 
@@ -37,11 +37,10 @@ rule calculate_distance_with_ref_by_type:
         dist_ref=temp("{any_analysis}/distances/to_ref/{sample}_distance_in_{type}.txt"),
     shell:
         """
-        snps=$(bcftools view --samples {wildcards.sample} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | grep -v "0" | wc -l) || :
+        snps=$(bcftools view --samples {wildcards.sample} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | awk '$1!=$2' | grep -c -v "\.")
         echo ref {wildcards.sample} ${{snps}} > {output[dist_ref]}
         """
-
-    
+ 
 rule agregate_distances_from_joint_genotyping_by_type:
     input:
         pairs=expand("{{any_analysis}}/distances/{sample1}_-_{sample2}_distance_in_{{type}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
