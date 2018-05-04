@@ -60,7 +60,7 @@ rule annotate_positions_from_genotyping:
         echo '##INFO=<ID=POSITION_IN_GENE,Number=1,Type=Integer,Description="Position with respect to Gene">' >> {output[header]}
         echo '##INFO=<ID=WILDTYPE_AA_NUCL,Number=1,Type=String,Description="Wildtype amino acid or nucleotide">' >> {output[header]}
         echo '##INFO=<ID=WILDTYPE_CODON_NUCL,Number=1,Type=String,Description="Wildtype codon or nucleotide">' >> {output[header]}
-        bcftools view --regions-file {input[bed_gz_correct]} {input[genotype]} | bcftools annotate --annotation {input[bed_gz_correct]} --columns CHROM,FROM,TO,INFO/GENE,INFO/STRAND,INFO/POSITION_IN_GENE,INFO/WILDTYPE_AA_NUCL,INFO/WILDTYPE_CODON_NUCL --header-lines {output[header]} - > {output[annotation]}
+        bcftools annotate --regions-file {input[bed_gz_correct]} --annotation {input[bed_gz_correct]} --columns CHROM,FROM,TO,INFO/GENE,INFO/STRAND,INFO/POSITION_IN_GENE,INFO/WILDTYPE_AA_NUCL,INFO/WILDTYPE_CODON_NUCL --header-lines {output[header]} {input[genotype]} > {output[annotation]}
         """
 
 rule extract_mutated_codons_or_nucleotides:
@@ -72,7 +72,7 @@ rule extract_mutated_codons_or_nucleotides:
         genotype = "samples/{sample}/resistance/{db}/position_genotypes.txt",
     shell:
         """
-        bcftools view --include 'GT="alt"' {input[annotation]} | bcftools query --format "%CHROM\\t%POS\\t[%INFO/GENE]\\t[%INFO/POSITION_IN_GENE]\\t[%INFO/STRAND]\\n" | while read chrom pos gene position strand
+        bcftools view --include 'FORMAT/AD[0:1]/FORMAT/DP>0.10' {input[annotation]} | bcftools query --format "%CHROM\\t%POS\\t[%INFO/GENE]\\t[%INFO/POSITION_IN_GENE]\\t[%INFO/STRAND]\\n" | while read chrom pos gene position strand
         do
             gt=$(bcftools view --include "INFO/GENE='${{gene}}' && INFO/POSITION_IN_GENE=${{position}}" {input[annotation]} | bcftools view --exclude "GT='.'" | bcftools query --format "[%TGT]")
             echo ${{chrom}} ${{pos}} ${{gt}} ${{strand}} | sed "s/ /\\t/g" >> {output[genotype]}
@@ -104,5 +104,5 @@ rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synony
         """
         echo '##INFO=<ID=MUTATED_AA_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be amino acid or nucleotide)">' >> {output[header]}
         echo '##INFO=<ID=MUTATED_CODON_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be codon or nucleotide)">' >> {output[header]}
-        bcftools annotate --include 'GT="alt"' --annotation {input[mutation_gz]} --columns CHROM,FROM,TO,INFO/MUTATED_AA_NUCL,INFO/MUTATED_CODON_NUCL --header-lines {output[header]} {input[annotation]} | bcftools view --exclude 'INFO/WILDTYPE_AA_NUCL=INFO/MUTATED_AA_NUCL' > {output[mutation]}
+        bcftools annotate --include 'FORMAT/AD[0:1]/FORMAT/DP>0.10' --annotation {input[mutation_gz]} --columns CHROM,FROM,TO,INFO/MUTATED_AA_NUCL,INFO/MUTATED_CODON_NUCL --header-lines {output[header]} {input[annotation]} | bcftools view --exclude 'INFO/WILDTYPE_AA_NUCL=INFO/MUTATED_AA_NUCL' > {output[mutation]}
         """
