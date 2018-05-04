@@ -2,10 +2,14 @@ from Bio import SeqIO, Seq
 
 import pandas
 
-genotype = pandas.read_csv(snakemake.input["genotype"], sep=" ", names=["Chrom", "Position", "Genotype", "Strand"])
+#We read the genotype info, which is always per nucleotide and not per codon. If we have more than one mutation on the same codon, we annotate all mutated positions. Genotype however can be codon or nucleotide.
+
+genotype = pandas.read_csv(snakemake.input["genotype"], sep="\t", names=["Chrom", "Position", "Genotype", "Strand"])
 
 aa_or_nucl = []
 codon_or_nucl = []
+
+#If the length of the Genotype is 3, we search for the correct orientation of the codon and translate it to get the mutated AA. We also annotate with the correct value of the codon in the context of the gene, which will be different from the VCF ALT values for -1 strand genes.
 
 for index, row in genotype.iterrows():
     if len(row["Genotype"])==3:
@@ -23,7 +27,7 @@ for index, row in genotype.iterrows():
             aa_or_nucl.append(str(Seq.Seq(row["Genotype"]).reverse_complement()))
             codon_or_nucl.append(str(Seq.Seq(row["Genotype"]).reverse_complement()))
 
-#we switch to bed file coordinates, which are 0 based
+#We switch to bed file coordinates, which are 0-based, whereas previous vcf coordinates are 1-based.
 
 genotype["Start"] = genotype["Position"] - 1
 genotype["End"] = genotype["Position"]
