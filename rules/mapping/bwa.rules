@@ -1,6 +1,8 @@
 rule map_paired_reads_with_bwa:
     conda:
-        "../../envs/bwa-samtools.yaml"
+        pipeline_path + "envs/bwa-samtools.yaml"
+    params:
+        platform = "ILLUMINA"
     input:
         fastq1 = "samples/{sample}/reads/trimmed/R1_paired.fastq",
         fastq2 = "samples/{sample}/reads/trimmed/R2_paired.fastq",        
@@ -16,12 +18,14 @@ rule map_paired_reads_with_bwa:
         then
              rm {output[0]}.tmp*
         fi 
-        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[ref]} {input[fastq1]} {input[fastq2]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
+        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq1]} {input[fastq2]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
         
 rule map_single_reads_with_bwa:
     conda:
-        "../../envs/bwa-samtools.yaml"
+        pipeline_path + "envs/bwa-samtools.yaml"
+    params:
+        platform = "ILLUMINA"
     input:
         fastq = "samples/{sample}/reads/trimmed/single.fastq",
         ref = "references/{ref}/genome_fasta.fasta",
@@ -36,13 +40,13 @@ rule map_single_reads_with_bwa:
         then
              rm {output[0]}.tmp*
         fi 
-        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}' {input[ref]} {input[fastq]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
+        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
 
 
 rule filter_reads_on_quality:
     conda:
-        "../../envs/bwa-samtools.yaml"
+        pipeline_path + "envs/bwa-samtools.yaml"
     input:
         bam = "samples/{sample}/mapping/bwa/{ref}.bam",
         bam_bai = "samples/{sample}/mapping/bwa/{ref}.bam.bai",
@@ -61,15 +65,15 @@ rule filter_reads_on_quality:
         
 rule remove_duplicates_from_mapping:
     conda:
-        "../../envs/gatk.yaml"
+        pipeline_path + "envs/gatk.yaml"
     input:
         bam = "samples/{sample}/mapping/bwa/{ref}_filtered.bam",
         bam_bai = "samples/{sample}/mapping/bwa/{ref}_filtered.bam.bai",
     output:
         temp("samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam"),
     log:
-         logging_folder+"samples/{sample}/mapping/bwa/{ref}/metrics_deduplicated.txt",
-         logging_folder+"samples/{sample}/logs/mapping/bwa/{ref}/markduplicates.txt",
+         logging_folder + "samples/{sample}/mapping/bwa/{ref}/metrics_deduplicated.txt",
+         logging_folder + "samples/{sample}/logs/mapping/bwa/{ref}/markduplicates.txt",
     shell:
         """
         gatk-launch MarkDuplicates --REMOVE_DUPLICATES true -I {input[bam]} -O {output[0]} -M {log[0]} &> {log[1]}
