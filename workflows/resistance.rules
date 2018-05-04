@@ -21,7 +21,6 @@ reference_assembly_for_resistance = {}
 reference_assembly_for_resistance["Mycobacterium_tuberculosis"] = "538048"
 reference_assembly_for_resistance["Escherichia_coli"] = "79781"
 
-
 ontology_file_aro = pipeline_path + "data/card/obo_files/aro.obo"
 ontology_file_mo = pipeline_path + "data/card/obo_files/mo.obo"
 ontology_file_ro = pipeline_path + "data/card/obo_files/ro.obo"
@@ -41,7 +40,6 @@ if species in reference_assembly_for_resistance.keys():
 if species == "Staphylococcus_aureus" or species.startswith("Mycobacterium"):
     include:
         pipeline_path + "rules/annotation/resistance/mykrobe.rules"
-
     rule all_resistance_summaries:
         input:
             rgi = "resistance/rgi_summary.xlsx",
