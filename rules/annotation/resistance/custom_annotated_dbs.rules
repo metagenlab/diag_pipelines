@@ -10,15 +10,46 @@ rule check_annotated_mutations_from_database_and_create_bed_file:
         incorrect_annotation = "resistance/annotations/{db}/incorrect.tsv",
     script:
         "scripts/check_locus_against_database.py"
+        
 
+rule keep_only_annotated_region:
+    conda:
+        pipeline_path + "envs/bcftools.yaml"
+    input:
+        genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz",
+        genotype_tbi = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz.tbi",
+        bed_gz_correct = "resistance/annotations/{db}/correct.bed.gz",
+    output:
+        genotype = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf",
+    shell:
+        """
+        bcftools view --regions-file {input[bed_gz_correct]} {input[genotype]} > {output[genotype]}
+        """
+
+rule decompose_multiallelic_positions_from_genotyping:
+    conda:
+        pipeline_path + "envs/vt.yaml"
+    input:
+        genotype = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf.gz",
+        genotype_tbi = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf.gz.tbi",
+        reference = "references/" + reference_assembly_for_resistance[species] + "/genome_fasta.fasta",
+    output:
+        genotype_decomposed = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf",
+    log:
+        logging_folder + "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps_decomposed.g.vcf",
+    shell:
+        """
+        vt decompose -s {input[genotype]} | vt normalize -r {input[reference]} -o {output[genotype_decomposed]} - &> {log}
+        """
+        
 rule annotate_positions_from_genotyping:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
         bed_gz_correct = "resistance/annotations/{db}/correct.bed.gz",
         bed_tbi_correct = "resistance/annotations/{db}/correct.bed.gz.tbi",
-        genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz",
-        genotype_tbi = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz.tbi",
+        genotype = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf.gz",
+        genotype_tbi = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf.gz.tbi",
     output:
         annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
         header = temp("samples/{sample}/resistance/{db}/header.txt"),
@@ -43,8 +74,8 @@ rule extract_mutated_codons_or_nucleotides:
         """
         bcftools view --include 'GT="alt"' {input[annotation]} | bcftools query --format "%CHROM\\t%POS\\t[%INFO/GENE]\\t[%INFO/POSITION_IN_GENE]\\t[%INFO/STRAND]\\n" | while read chrom pos gene position strand
         do
-            gt=$(bcftools view --include "INFO/GENE='${{gene}}' && INFO/POSITION_IN_GENE=${{position}}" {input[annotation]} | bcftools query --format "[%TGT]")
-            echo ${{chrom}} ${{pos}} ${{gt}} ${{strand}} >> {output[genotype]}
+            gt=$(bcftools view --include "INFO/GENE='${{gene}}' && INFO/POSITION_IN_GENE=${{position}}" {input[annotation]} | bcftools view --exclude "GT='.'" | bcftools query --format "[%TGT]")
+            echo ${{chrom}} ${{pos}} ${{gt}} ${{strand}} | sed "s/ /\\t/g" >> {output[genotype]}
         done
         """
         
