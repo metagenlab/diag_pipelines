@@ -23,9 +23,9 @@ rule create_multiqc_report_for_mapping:
     conda:
         pipeline_path + "envs/multiqc.yaml"
     input:
-        mapping = expand("samples/{sample}/multiqc/mapping_to_{{ref}}/log.txt", sample = list(read_naming.keys())),
+        mapping = expand("samples/{sample}/multiqc/mapping_to_{{ref}}/{{mapping_method}}/log.txt", sample = list(read_naming.keys())),
     output:
-        "quality/multiqc/mapping_to_{ref}/multiqc_report.html"
+        "quality/multiqc/mapping_to_{ref}/{mapping_method}/multiqc_report.html"
     log:
         logging_folder + "logs/quality/multiqc/mapping_to_{ref}.txt"
     shell:

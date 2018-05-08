@@ -10,7 +10,7 @@ rule compress_vcf:
         bgzip -c {input[0]} > {output[0]}
         """
 
-rule index_vcf:
+rule index_vcf_bed:
     conda:
         pipeline_path + "envs/htslib.yaml"
     input:
