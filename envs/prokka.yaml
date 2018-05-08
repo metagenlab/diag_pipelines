@@ -3,3 +3,4 @@ channels:
  - conda-forge
 dependencies:
  - prokka = 1.13=0
+ - blast = 2.7.1=boost1.64_3
