@@ -1,24 +1,10 @@
-rule check_annotated_mutations_from_database_and_create_bed_file:
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
-    input:
-        db = pipeline_path + "data/" + species + "/mutations/{db}.tsv",
-        gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
-        gbk = "references/" + reference_assembly_for_resistance[species] + "/genome_gbwithparts.gbk",
-    output:
-        bed_correct = "resistance/annotations/{db}/correct.bed",
-        incorrect_annotation = "resistance/annotations/{db}/incorrect.tsv",
-    script:
-        "scripts/check_locus_against_database.py"
-        
-
 rule keep_only_annotated_region:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
         genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz",
         genotype_tbi = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz.tbi",
-        bed_gz_correct = "resistance/annotations/{db}/correct.bed.gz",
+        bed_gz_correct = pipeline_path + "data/" + species + "/mutations/{db}/correct.bed.gz",
     output:
         genotype = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf",
     shell:
@@ -46,8 +32,8 @@ rule annotate_positions_from_genotyping:
     conda:
         pipeline_path + "envs/bcftools.yaml"
     input:
-        bed_gz_correct = "resistance/annotations/{db}/correct.bed.gz",
-        bed_tbi_correct = "resistance/annotations/{db}/correct.bed.gz.tbi",
+        bed_gz_correct =  pipeline_path + "data/" + species + "/mutations/{db}/correct.bed.gz",
+        bed_tbi_correct =  pipeline_path + "data/" + species + "/mutations/{db}/correct.bed.gz.tbi", 
         genotype = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf.gz",
         genotype_tbi = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf.gz.tbi",
     output:
@@ -106,3 +92,6 @@ rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synony
         echo '##INFO=<ID=MUTATED_CODON_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be codon or nucleotide)">' >> {output[header]}
         bcftools annotate --include 'FORMAT/AD[0:1]/FORMAT/DP>0.10' --annotation {input[mutation_gz]} --columns CHROM,FROM,TO,INFO/MUTATED_AA_NUCL,INFO/MUTATED_CODON_NUCL --header-lines {output[header]} {input[annotation]} | bcftools view --exclude 'INFO/WILDTYPE_AA_NUCL=INFO/MUTATED_AA_NUCL' > {output[mutation]}
         """
+
+
+        

@@ -2,6 +2,10 @@ pipeline_path = workflow.basedir + "/../"
 
 species = "Mycobacterium_tuberculosis"
 
+reference_assembly_for_resistance = {}
+reference_assembly_for_resistance["Mycobacterium_tuberculosis"] = "538048"
+
+
 rule create_reference_lists_from_databases:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
@@ -23,3 +27,33 @@ rule create_reference_lists_from_databases:
         summary_one = pipeline_path + "data/"+ species + "/mutations/level_one_agreement.xlsx",
     script:
         "scripts/generate_excel_file_common_positions.py"
+
+rule check_annotated_mutations_from_database_and_create_bed_file:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+    input:
+        db = pipeline_path + "data/" + species + "/mutations/{db}.tsv",
+        gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
+        gbk = "references/" + reference_assembly_for_resistance[species] + "/genome_gbwithparts.gbk",
+    output:
+        bed_correct = pipeline_path + "data/" + species + "/mutations/{db}/correct.bed",
+        incorrect_annotation = pipeline_path + "data/" + species + "/mutations/{db}/incorrect.tsv",
+    script:
+        "scripts/check_locus_against_database.py"
+
+rule check_and_concatenate_all_currated_dbs:
+    input:
+        bed_iso = pipeline_path + "data/" + species + "/mutations/currated_db_isoniazid/correct.bed",
+        bed_eth = pipeline_path + "data/" + species + "/mutations/currated_db_ethambutol/correct.bed",
+        bed_strepto = pipeline_path + "data/" + species + "/mutations/currated_db_streptomycin/correct.bed",
+        bed_pyra = pipeline_path + "data/" + species + "/mutations/currated_db_pyrazinamide/correct.bed",
+        bed_rif = pipeline_path + "data/" + species + "/mutations/currated_db_rifampicin/correct.bed",
+    output:
+        bed_all = pipeline_path + "data/" + species + "/mutations/currated_db_all/correct.bed",
+    shell:
+        """
+        cat {input} | sort -g -k2 > {output[bed_all]}
+        """
+        
+        
+        
