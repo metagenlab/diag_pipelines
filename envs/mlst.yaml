@@ -3,3 +3,4 @@ channels:
  - conda-forge
 dependencies:
  - mlst = 2.10=pl5.22.0_1
+ - blast = 2.7.1=boost1.64_3
