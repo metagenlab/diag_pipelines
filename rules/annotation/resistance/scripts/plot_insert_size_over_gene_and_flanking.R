@@ -14,10 +14,10 @@ for (i in 1:(length(increment)-1)){
 }
 
 fileConn<-file(snakemake@output[["mean_insert_sizes"]])
-writeLines(paste(snakemake@wildcards[["sample"]], as.integer(mean(sliding_standard_deviation))), fileConn)
+writeLines(paste(snakemake@wildcards[["sample"]], as.integer(sd(data[,"InsertSize"]))), fileConn)
 close(fileConn)
 
-svg(snakemake@output[["insert_sizes_plot"]])
-plot(head(increment, -1), log(sliding_standard_deviation), type="l", ylab="Standard deviation of reads insert sizes (log scale)", xlab=paste("Position on", snakemake@wildcards[["ref"]], "assembly"), main = title)
-rect(bed[,"Start"] + snakemake@params[["up_down"]], 0, bed[, "End"] - snakemake@params[["up_down"]], max(data[,"InsertSize"]), col=rgb(96/256, 168/256, 98/256, alpha=0.5), border=NA)
+svglite(snakemake@output[["insert_sizes_plot"]])
+plot(data[,"Position"], log(data[,"InsertSize"]), type="l", ylab="Standard deviation of reads insert sizes (log scale)", xlab=paste("Position on", snakemake@wildcards[["ref"]], "assembly"), main = title)
+rect(bed[,"Start"] + snakemake@params[["up_down"]], 0, bed[, "End"] - snakemake@params[["up_down"]], log(max(data[,"InsertSize"])), col=rgb(96/256, 168/256, 98/256, alpha=0.5), border=NA)
 graphics.off()
