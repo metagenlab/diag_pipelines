@@ -1,22 +1,3 @@
-rule genotype_with_freebayes_for_resistance:
-    conda:
-        pipeline_path + "envs/freebayes.yaml"
-    input:
-        bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
-        bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
-        ref = "references/{ref}/genome_fasta.fasta",
-        ref_fai = "references/{ref}/genome_fasta.fasta.fai",
-        
-    output:
-        vcf="samples/{sample}/typing/freebayes/{mapping_method}/{ref}.vcf"
-    log:
-        logging_folder+"samples/{sample}/typing/freebayes/{ref}.txt"
-    shell:
-        """
-        freebayes --ploidy 1 --min-base-quality 20 --genotype-qualities --fasta-reference {input[ref]} --haplotype-length -1 --bam {input[bam]} --vcf {output[vcf]} &> {log}
-        """
-
-    
 rule genotype_with_freebayes_on_all_samples:
     conda:        
         pipeline_path + "envs/freebayes.yaml"
@@ -27,7 +8,7 @@ rule genotype_with_freebayes_on_all_samples:
         bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}_deduplicated_filtered.bam.bai", sample=read_naming.keys()),
         ref="references/{ref}/genome_fasta.fasta",
         ref_fai="references/{ref}/genome_fasta.fasta.fai",
-        quality = "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
+        quality = "quality/multiqc/mapping_to_{ref}/{mapping_method}/multiqc_report.html",
     output:
         vcf="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf"
     log:
