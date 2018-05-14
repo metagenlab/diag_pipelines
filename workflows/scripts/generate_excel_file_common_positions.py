@@ -88,6 +88,7 @@ for j in db_combinations.keys():
 
         all_res = all_res.append(res_panda_snp)
     all_res["MutationType"] = "SNP"
+    all_res[~all_res["WildTypeAminoAcidorNucleotide"].str.contains(",")]
     all_res[["Gene", "Position", "WildTypeAminoAcidorNucleotide", "MutationType"]].drop_duplicates().to_csv(snakemake.output[db_combinations[j]+"_tsv"], header=True, index=False, sep="\t")
     writer.save()
 
