@@ -81,14 +81,14 @@ def alternate_gray_background(row, numb):
 
 for j in db_combinations.keys():
     writer = pandas.ExcelWriter(snakemake.output["summary_"+db_combinations[j]])
-    bed_panda = pandas.DataFrame()
     all_res = pandas.DataFrame()
     for i in sorted(set(list(gene_antibio["Antibiotic"]))):
         res_panda_snp=pandas.DataFrame(common_positions[j][i]["SNP"], columns=["Source", "Gene", "Position", "WildTypeAminoAcidorNucleotide", "MutatedAminoAcidOrNucleotide"])
-        all_res = all_res.append(res_panda_snp)
         res_panda_snp.style.apply(alternate_gray_background, axis=None, numb=int(j)).to_excel(writer, i, index=False)
-        bed_panda = pandas.concat([bed_panda, res_panda_snp[["Gene", "Position"]].drop_duplicates()])
-    all_res[["Gene", "Position", "WildTypeAminoAcidorNucleotide"]].drop_duplicates().to_csv(snakemake.output[db_combinations[j]+"_tsv"], header=True, index=False, sep="\t")
+
+        all_res = all_res.append(res_panda_snp)
+    all_res["MutationType"] = "SNP"
+    all_res[["Gene", "Position", "WildTypeAminoAcidorNucleotide", "MutationType"]].drop_duplicates().to_csv(snakemake.output[db_combinations[j]+"_tsv"], header=True, index=False, sep="\t")
     writer.save()
 
 
