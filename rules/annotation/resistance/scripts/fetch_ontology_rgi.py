@@ -32,7 +32,7 @@ def extract_rgi(row, aro_ont, gene_list):
 #                    if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
 #                        for antibiotic in term.relations[child]:
 #                            anti = antibiotic.name.replace("antibiotic", "").strip()
-#                            res.append(["rgi", gene, "variant", ref+str(pos)+mut, anti])
+#                            res.append(["rgi", gene, "variant model", ref+str(pos)+mut, anti])
 #        else:
 #            raise Exception("Problem parsing the predicted ARO Model from RGI")
     elif "intrinsic" not in row["Best_Hit_ARO"]:
@@ -43,13 +43,13 @@ def extract_rgi(row, aro_ont, gene_list):
                 if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
                     for antibiotic in term.relations[child]:
                         anti = antibiotic.name.replace("antibiotic", "").strip()
-                        res.append(["rgi", gene, "gene presence", "", anti])
+                        res.append(["rgi", gene, "homology model", "", anti])
             for parent in term.rparents():
                 for child in parent.relations:
                     if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
                         for antibiotic in parent.relations[child]:
                             anti = antibiotic.name.replace("antibiotic", "").strip()
-                            res.append(["rgi", gene, "gene presence", "", anti])
+                            res.append(["rgi", gene, "homology model", "", anti])
     return(res)
 
 all_res = []
