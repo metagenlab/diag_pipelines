@@ -9,4 +9,8 @@ jobs:
       - image: continuumio/miniconda3:4.3.27
     steps:
       - checkout
-      - run: echo "Test"          
+      - run: conda config --add channels defaults && conda config --add channels conda-forge && conda config --add channels bioconda
+      - run: sudo apt-get install -y fontconfig unzip
+      - run: conda install snakemake=4.8.0=py36_0 unzip
+      - run: wget -qO- https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz > /usr/local/bin/parsnp.tar.gz && tar xf /usr/local/bin/parsnp.tar.gz && mv /usr/local/bin/Parsnp-Linux64-v1.2/parsnp /usr/local/bin/parsnp && rm -rf /usr/local/bin/Parsnp-Linux64-v1.2/
+
