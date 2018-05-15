@@ -1,1 +1,9 @@
+machine:
+  python:
+    version: 3.5.1
 
+
+general:
+  branches:
+    only:
+      - master # list of branches to build
