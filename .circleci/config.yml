@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout:
           path: $pipeline_folder
-      - run: cp -R $pipeline_folder/data/* $data_folder
+      - run: mkdir $data_folder && cp -R $pipeline_folder/data/* $data_folder
       - run: conda config --add channels defaults && conda config --add channels conda-forge && conda config --add channels bioconda
       - run: apt-get install -y fontconfig unzip
       - run: conda install snakemake=4.8.0=py36_0
