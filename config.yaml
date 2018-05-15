@@ -1,1 +1,24 @@
+#mandatory, one of them or both
+sra_samples: example_sra_samples.tsv
+local_samples: example_local_samples.tsv
+#assembly
+minimum_quality_base: 15
+minimum_read_length: 0
+adapter_file_name: NexteraPE-PE.fa
+adapter_removal_param1: 3
+adapter_removal_param2: 25
+adapter_removal_param3: 6
+cov_cutoff: 5
+#resistance and typing
+species: Mycobacterium_tuberculosis
+#typing
+minimum_coverage_for_calling: 10
+minimum_alternate_fraction_for_calling: 0.75
+snp_threshold: 0
+minimum_spanning_tree_size: 10
+phylogeny_image_size: 800
+#virulence
+virulence_factors: /home/pipeline_user/snakemake_pipeline/data/staph/db/virulence_factors.tsv
+virulence_percentage_identity_cutoff: 80
+virulence_coverage_cutoff: 70
 
