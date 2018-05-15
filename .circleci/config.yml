@@ -5,22 +5,15 @@ jobs:
     docker:
       - image: continuumio/miniconda3:4.3.27
         environment:
-          pipeline_folder: diag_pipelines/
-          data_folder: data/
+          pipeline_folder: ~/build/diag_pipelines/
           conda_folder: /opt/conda/
     steps:
       - checkout:
           path: $pipeline_folder
-      - run: mkdir $data_folder && cp -R $pipeline_folder/data/* $data_folder
       - run: conda config --add channels defaults && conda config --add channels conda-forge && conda config --add channels bioconda
       - run: apt-get install -y fontconfig unzip
       - run: conda install snakemake=4.8.0=py36_0
       - run: wget -qO- https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz > parsnp.tar.gz && tar xf parsnp.tar.gz && mv Parsnp-Linux64-v1.2/parsnp /usr/local/bin/parsnp && rm -rf Parsnp-Linux64-v1.2/ && rm parsnp.tar.gz 
       - run: mkdir -p $conda_folder
-      - run: cd $data_folder && snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Staphylococcus_aureus.bed core_genomes/cgMLST/Mycobacterium_tuberculosis.bed core_genomes/cgMLST/Listeria_monocytogenes.bed core_genomes/cgMLST/Klebsiella_pneumoniae.bed core_genomes/cgMLST/Enterococcus_faecium.bed core_genomes/cgMLST/Acinetobacter_baumannii.bed core_genomes/cgMLST/Legionella_pneumophila.bed core_genomes/cgMLST/Clostridioides_difficile.bed && snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Salmonella_enterica.bed core_genomes/cgMLST/Escherichia_coli.bed references/538048/genome_gbwithparts.gbwithparts -j 4
-      - run: ln -s data/references/ references && snakemake --snakefile ${pipeline_folder}/workflows/check_resistance_databases.rules --use-conda --conda-prefix ${conda_folder} ${pipeline_folder}/workflows/../data/Mycobacterium_tuberculosis/mutations/currated_db_all/correct.bed ${pipeline_folder}/workflows/../data/Mycobacterium_tuberculosis/mutations/level_four_agreement/correct.bed ${pipeline_folder}/workflows/../data/Mycobacterium_tuberculosis/mutations/rgi_annotated_full_2_0_0/correct.bed ${pipeline_folder}/workflows/../data/Mycobacterium_tuberculosis/mutations/mykrobe_annotated/correct.bed ${pipeline_folder}/workflows/../data/Mycobacterium_tuberculosis/mutations/miotto_high_moderate_minimum_confidence_annotated/correct.bed ${pipeline_folder}/workflows/../data/Mycobacterium_tuberculosis/mutations/walker_resistant_annotated/correct.bed -j 4
-      - run: cp ${pipeline_folder}/*.tsv . && cp ${pipeline_folder}/config.yaml .
-      - run: mkdir -p core_genomes/parsnp/Mycobacterium_tuberculosis/
-      - run: echo '' > links/Myco-10_S10_L001_R1.fastq.gz && echo '' > links/Myco-10_S10_L001_R2.fastq.gz && echo '' > core_genomes/parsnp/Mycobacterium_tuberculosis/parsnp.xmfa && echo '' > data/references/mash_sketch_human.msh
-      - run: wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > data/references/mash_sketch.msh
-      - run: snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml quality/multiqc/assembly/multiqc_report.html samples/M10/resistance/mykrobe.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_538048/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome_M10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg virulence_summary.xlsx typing/mlst/summary.xlsx resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/full_genome_538048/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/core_parsnp_538048/bwa/phylogeny_no_st.svg contamination/distances_formated.xlsx -j 4 --config species="Mycobacterium_tuberculosis" && conda clean --all
+      - run: snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Staphylococcus_aureus.bed core_genomes/cgMLST/Mycobacterium_tuberculosis.bed core_genomes/cgMLST/Listeria_monocytogenes.bed core_genomes/cgMLST/Klebsiella_pneumoniae.bed core_genomes/cgMLST/Enterococcus_faecium.bed core_genomes/cgMLST/Acinetobacter_baumannii.bed core_genomes/cgMLST/Legionella_pneumophila.bed core_genomes/cgMLST/Clostridioides_difficile.bed -j 4
+
