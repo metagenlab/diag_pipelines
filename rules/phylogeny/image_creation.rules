@@ -15,7 +15,7 @@ rule convert_phylogeny_to_image_with_st:
         cut -f1,3 {input[st_samples]} | sed "s/\\t/_ST_/" > {output[new_names]}.tmp
         cut -f1 {input[st_samples]} | paste - {output[new_names]}.tmp > {output[new_names]}
         rm {output[new_names]}.tmp
-        nw_support {input[tree]} {input[bootstraps]} | nw_rename - {output[new_names]} | nw_display -S -s -b 'opacity:0' -w {params.size} -I m -W 20 -v 15 - > {output[tree]}
+        nw_support {input[tree]} {input[bootstraps]} | nw_rename - {output[new_names]} | nw_display -S -s -b 'opacity:0' -w {params.size} -I m -v 15 - > {output[tree]}
         """
 
 
@@ -32,5 +32,5 @@ rule convert_phylogeny_to_image_no_st:
         tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_no_st.svg",
     shell:
         """
-        nw_support {input[tree]} {input[bootstraps]} | nw_display -S -s -b 'opacity:0' -w {params.size} -I m -W 20 -v 15 - > {output[tree]}
+        nw_support {input[tree]} {input[bootstraps]} | nw_display -S -s -b 'opacity:0' -w {params.size} -I m -v 15 - > {output[tree]}
         """
