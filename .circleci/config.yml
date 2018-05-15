@@ -9,7 +9,7 @@ jobs:
           conda_folder: /opt/conda/
     steps:
       - checkout:
-        path: $pipeline_folder
+          path: $pipeline_folder
       - run: conda config --add channels defaults && conda config --add channels conda-forge && conda config --add channels bioconda
       - run: apt-get install -y fontconfig unzip
       - run: conda install snakemake=4.8.0=py36_0
