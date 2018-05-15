@@ -1,13 +1,13 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/build/
+    working_directory: /root/build/
     docker:
       - image: continuumio/miniconda3:4.3.27
         environment:
-          pipeline_folder: ~/build/diag_pipelines/
+          pipeline_folder: /root/build/diag_pipelines/
           conda_folder: /opt/conda/
-          main: ~/build/
+          main: /root/build/
     steps:
       - checkout:
           path: $pipeline_folder
