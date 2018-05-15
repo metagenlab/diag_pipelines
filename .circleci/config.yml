@@ -17,7 +17,7 @@ jobs:
           name: Download ParSNP bin
           command: |
              wget -qO- https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz > parsnp.tar.gz
-	     tar xf parsnp.tar.gz
+             tar xf parsnp.tar.gz
              mv Parsnp-Linux64-v1.2/parsnp /usr/local/bin/parsnp
              rm -rf Parsnp-Linux64-v1.2/
              rm parsnp.tar.gz 
@@ -66,10 +66,10 @@ jobs:
           command: |
              source activate ${conda_folder}/envs/618592fe/ 
              efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${data_folder}/references/1493941/genome_fasta.fasta
-	     source deactivate
+             source deactivate
              source activate ${conda_folder}/envs/c327f08f/
              mash sketch -o ${data_folder}/references/mash_sketch_human.msh ${data_folder}/references/1493941/genome_fasta.fasta
-	     source deactivate
+             source deactivate
              rm -rf ${data_folder}/references/1493941/
 
   
