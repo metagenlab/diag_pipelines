@@ -9,7 +9,7 @@ jobs:
     docker:
       - image: continuumio/miniconda3:4.3.27
         environment:
-          pipeline_folder: ~/build/diag_pipelines/
+          pipeline_folder: ~/build/
           conda_folder: /opt/conda/
     steps:
       - checkout
