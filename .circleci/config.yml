@@ -54,7 +54,7 @@ jobs:
           command: |
              wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > $data_folder/references/mash_sketch.msh
       - run:
-          name: Download all environments
+          name: Download all conda environments
           command: |
              mkdir -p tmp/links
              cd tmp
@@ -65,11 +65,10 @@ jobs:
              echo '' > core_genomes/parsnp/Mycobacterium_tuberculosis/parsnp.xmfa
              echo '' > ../${data_folder}/references/mash_sketch_human.msh
              ln -s ../${data_folder}/references/ references
-             snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml quality/multiqc/assembly/multiqc_report.html samples/M10/resistance/mykrobe.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_538048/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome_M10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg virulence_summary.xlsx typing/mlst/summary.xlsx resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/full_genome_538048/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/core_parsnp_538048/bwa/phylogeny_no_st.svg contamination/distances_formated.xlsx -j 4 --config species="Mycobacterium_tuberculosis"
+             snakemake --snakefile ../${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml quality/multiqc/assembly/multiqc_report.html samples/M10/resistance/mykrobe.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_538048/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome_M10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg virulence_summary.xlsx typing/mlst/summary.xlsx resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/full_genome_538048/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/core_parsnp_538048/bwa/phylogeny_no_st.svg contamination/distances_formated.xlsx -j 4 --config species="Mycobacterium_tuberculosis"
              conda clean --all
              cd ..
              rm -rf tmp
-
       - run:
           name: Create human genome MASH sketch
           command: |
