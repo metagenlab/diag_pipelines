@@ -10,21 +10,21 @@ rule create_reference_lists_from_databases:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        miotto = "data/" + species + "/mutations/miotto_high_moderate_minimum_confidence_annotated.tsv",
-        mykrobe = "data/" + species + "/mutations/mykrobe_annotated.tsv",
-        card = "data/" + species + "/mutations/rgi_annotated_full_2_0_0.tsv",
-        walker = "data/" + species + "/mutations/walker_resistant_annotated.tsv",
-        resistance_genes = "data/" + species + "/metadata/resistance_genes.tsv",
-        locus_tag = "data/" + species + "/metadata/locus_tags.tsv",
+        miotto = "resistance_db/" + species + "/mutations/miotto_high_moderate_minimum_confidence_annotated.tsv",
+        mykrobe = "resistance_db/" + species + "/mutations/mykrobe_annotated.tsv",
+        card = "resistance_db/" + species + "/mutations/rgi_annotated_full_2_0_0.tsv",
+        walker = "resistance_db/" + species + "/mutations/walker_resistant_annotated.tsv",
+        resistance_genes = "resistance_db/" + species + "/metadata/resistance_genes.tsv",
+        locus_tag = "resistance_db/" + species + "/metadata/locus_tags.tsv",
     output:
-        four_tsv = "data/"+ species + "/mutations/level_four_agreement.tsv",
-        three_tsv = "data/"+ species + "/mutations/level_three_agreement.tsv",
-        two_tsv = "data/"+ species + "/mutations/level_two_agreement.tsv",
-        one_tsv = "data/"+ species + "/mutations/level_one_agreement.tsv",
-        summary_four = "data/"+ species + "/mutations/level_four_agreement.xlsx",
-        summary_three = "data/"+ species + "/mutations/level_three_agreement.xlsx",
-        summary_two = "data/"+ species + "/mutations/level_two_agreement.xlsx",
-        summary_one = "data/"+ species + "/mutations/level_one_agreement.xlsx",
+        four_tsv = "resistance_db/"+ species + "/mutations/level_four_agreement.tsv",
+        three_tsv = "resistance_db/"+ species + "/mutations/level_three_agreement.tsv",
+        two_tsv = "resistance_db/"+ species + "/mutations/level_two_agreement.tsv",
+        one_tsv = "resistance_db/"+ species + "/mutations/level_one_agreement.tsv",
+        summary_four = "resistance_db/"+ species + "/mutations/level_four_agreement.xlsx",
+        summary_three = "resistance_db/"+ species + "/mutations/level_three_agreement.xlsx",
+        summary_two = "resistance_db/"+ species + "/mutations/level_two_agreement.xlsx",
+        summary_one = "resistance_db/"+ species + "/mutations/level_one_agreement.xlsx",
     script:
         "scripts/generate_excel_file_common_positions.py"
 
@@ -32,24 +32,24 @@ rule check_annotated_mutations_from_database_and_create_bed_file:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
     input:
-        db = "data/" + species + "/mutations/{db}.tsv",
-        gene_to_locus = "data/" + species + "/metadata/locus_tags.tsv",
+        db = "resistance_db/" + species + "/mutations/{db}.tsv",
+        gene_to_locus = "resistance_db/" + species + "/metadata/locus_tags.tsv",
         gbk = "references/" + reference_assembly_for_resistance[species] + "/genome_gbwithparts.gbk",
     output:
-        bed_correct = "data/" + species + "/mutations/{db}/correct.bed",
-        incorrect_annotation = "data/" + species + "/mutations/{db}/incorrect.tsv",
+        bed_correct = "resistance_db/" + species + "/mutations/{db}/correct.bed",
+        incorrect_annotation = "resistance_db/" + species + "/mutations/{db}/incorrect.tsv",
     script:
         "scripts/check_locus_against_database.py"
 
 rule check_and_concatenate_all_currated_dbs:
     input:
-        bed_iso = "data/" + species + "/mutations/currated_db_isoniazid/correct.bed",
-        bed_eth = "data/" + species + "/mutations/currated_db_ethambutol/correct.bed",
-        bed_strepto = "data/" + species + "/mutations/currated_db_streptomycin/correct.bed",
-        bed_pyra = "data/" + species + "/mutations/currated_db_pyrazinamide/correct.bed",
-        bed_rif = "data/" + species + "/mutations/currated_db_rifampicin/correct.bed",
+        bed_iso = "resistance_db/" + species + "/mutations/currated_db_isoniazid/correct.bed",
+        bed_eth = "resistance_db/" + species + "/mutations/currated_db_ethambutol/correct.bed",
+        bed_strepto = "resistance_db/" + species + "/mutations/currated_db_streptomycin/correct.bed",
+        bed_pyra = "resistance_db/" + species + "/mutations/currated_db_pyrazinamide/correct.bed",
+        bed_rif = "resistance_db/" + species + "/mutations/currated_db_rifampicin/correct.bed",
     output:
-        bed_all = "data/" + species + "/mutations/currated_db_all/correct.bed",
+        bed_all = "resistance_db/" + species + "/mutations/currated_db_all/correct.bed",
     shell:
         """
         cat {input} | sort -g -k2 > {output[bed_all]}
