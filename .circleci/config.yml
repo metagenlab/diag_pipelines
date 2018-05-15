@@ -1,7 +1,3 @@
-# Python CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-python/ for more details
-#
 version: 2
 jobs:
   build:
@@ -9,14 +5,15 @@ jobs:
     docker:
       - image: continuumio/miniconda3:4.3.27
         environment:
-          pipeline_folder: ~/build/
+          pipeline_folder: ~/build/diag_pipelines/
           conda_folder: /opt/conda/
     steps:
       - checkout
-      - run: ls
+        path: $pipeline_folder
       - run: conda config --add channels defaults && conda config --add channels conda-forge && conda config --add channels bioconda
       - run: apt-get install -y fontconfig unzip
       - run: conda install snakemake=4.8.0=py36_0
       - run: wget -qO- https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz > parsnp.tar.gz && tar xf parsnp.tar.gz && mv Parsnp-Linux64-v1.2/parsnp /usr/local/bin/parsnp && rm -rf Parsnp-Linux64-v1.2/ && rm parsnp.tar.gz 
+      - run: mkdir -p $conda_folder
       - run: snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Staphylococcus_aureus.bed core_genomes/cgMLST/Mycobacterium_tuberculosis.bed core_genomes/cgMLST/Listeria_monocytogenes.bed core_genomes/cgMLST/Klebsiella_pneumoniae.bed core_genomes/cgMLST/Enterococcus_faecium.bed core_genomes/cgMLST/Acinetobacter_baumannii.bed core_genomes/cgMLST/Legionella_pneumophila.bed core_genomes/cgMLST/Clostridioides_difficile.bed -j 4
 
