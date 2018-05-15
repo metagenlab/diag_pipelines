@@ -10,7 +10,12 @@ jobs:
     steps:
       - checkout:
           path: $pipeline_folder
-      - run: conda config --add channels defaults && conda config --add channels conda-forge && conda config --add channels bioconda
+      - run:
+          name: Add chanels to conda
+          command: |
+             conda config --add channels defaults
+             conda config --add channels conda-forge
+             conda config --add channels bioconda
       - run: apt-get install -y fontconfig unzip
       - run: conda install snakemake=4.8.0=py36_0
       - run:
@@ -38,7 +43,7 @@ jobs:
           name: Create resistance DBs for MTB
           command: |
              cd $data_folder
-             snakemake --snakefile ../${pipeline_folder}/workflows/check_resistance_databases.rules --use-conda --conda-prefix ${conda_folder} resistance_db/Mycobacterium_tuberculosis/mutations/currated_db_all/correct.bed resistance_db/Mycobacterium_tuberculosis/mutations/level_four_agreement/correct.bed resistance_dbMycobacterium_tuberculosis/mutations/rgi_annotated_full_2_0_0/correct.bed resistance_db/Mycobacterium_tuberculosis/mutations/mykrobe_annotated/correct.bed resistance_db/Mycobacterium_tuberculosis/mutations/miotto_high_moderate_minimum_confidence_annotated/correct.bed resistance_db/data/Mycobacterium_tuberculosis/mutations/walker_resistant_annotated/correct.bed -j 2
+             snakemake --snakefile ../${pipeline_folder}/workflows/check_resistance_databases.rules --use-conda --conda-prefix ${conda_folder} resistance_db/Mycobacterium_tuberculosis/mutations/currated_db_all/correct.bed resistance_db/Mycobacterium_tuberculosis/mutations/level_four_agreement/correct.bed resistance_dbMycobacterium_tuberculosis/mutations/rgi_annotated_full_2_0_0/correct.bed resistance_db/Mycobacterium_tuberculosis/mutations/mykrobe_annotated/correct.bed resistance_db/Mycobacterium_tuberculosis/mutations/miotto_high_moderate_minimum_confidence_annotated/correct.bed resistance_db/Mycobacterium_tuberculosis/mutations/walker_resistant_annotated/correct.bed -j 2
       - run:
           name: Download MASH sketchs
           command: |
