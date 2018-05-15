@@ -25,7 +25,7 @@ jobs:
           name: Create reference for MTB
           command: |
              cd $data_folder
-             snakemake --snakefile ${pipeline_folder}/rules/downloading/adapting_genome_files.rules --use-conda --conda-prefix ${conda_folder} references/538048/genome_gbwithparts.gbk
+             snakemake --snakefile ../${pipeline_folder}/rules/downloading/adapting_genome_files.rules --use-conda --conda-prefix ${conda_folder} references/538048/genome_gbwithparts.gbk
       - run:
           name: Create resistance DBs for MTB
           command: |
@@ -49,5 +49,13 @@ jobs:
              conda clean --all
              cd ..
              rm -rf tmp
+      - run:
+          name: Create human genome MASH sketch
+          command: |
+             source activate ${conda_folder}/envs/618592fe/ && efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${data_folder}/references/1493941/genome_fasta.fasta
+             source activate ${conda_folder}/envs/c327f08f/ && mash sketch -o ${data_folder}/references/mash_sketch_human.msh ${data_folder}/references/1493941/genome_fasta.fasta
+             rm -rf ${data_folder}/references/1493941/
+
+  
 
 
