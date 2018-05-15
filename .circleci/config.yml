@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: metagenlab/diag_pipelines:latest
+      - image: continuumio/miniconda3:4.3.27
     steps:
       - checkout
       - run: echo "Test"          
