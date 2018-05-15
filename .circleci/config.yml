@@ -16,7 +16,12 @@ jobs:
       - run:
           name: Download ParSNP bin
           command: |
-             wget -qO- https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz > parsnp.tar.gz && tar xf parsnp.tar.gz && mv Parsnp-Linux64-v1.2/parsnp /usr/local/bin/parsnp && rm -rf Parsnp-Linux64-v1.2/ && rm parsnp.tar.gz 
+             wget -qO- https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz > parsnp.tar.gz
+	     tar xf parsnp.tar.gz
+             mv Parsnp-Linux64-v1.2/parsnp /usr/local/bin/parsnp
+             rm -rf Parsnp-Linux64-v1.2/
+             rm parsnp.tar.gz 
+
       - run: mkdir -p $conda_folder && mkdir -p $data_folder/resistance_db/ && cp -R $pipeline_folder/data/Mycobacterium_tuberculosis $data_folder/resistance_db/
       - run: 
           name: Create BED cgMLST files
@@ -55,6 +60,7 @@ jobs:
              conda clean --all
              cd ..
              rm -rf tmp
+
       - run:
           name: Create human genome MASH sketch
           command: |
