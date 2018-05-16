@@ -32,31 +32,57 @@ rule correct_error_single_reads_with_spades:
          """
          spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log} 
          """
-
-rule assemble_genome_corrected_paired_reads_with_spades:
-    threads:
-        16
-    conda:
-        pipeline_path + "envs/spades.yaml"
-    input:
-        R1_corrected = "samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
-        R2_corrected = "samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
-        single_corrected = "samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz",
-    output:
-        contigs = "samples/{sample}/assembly/spades/contigs.fasta",
-        graph = "samples/{sample}/assembly/spades/assembly_graph.gfa",
-    log:
-        logging_folder + "samples/{sample}/logs/spades_assembly.txt"
-    shell:
-        """
+if config['meta'] == True:
+         
+         
+    rule assemble_genome_corrected_paired_reads_with_spades:
+        threads:
+            16
+        conda:
+            pipeline_path + "envs/spades.yaml"
+        input:
+            R1_corrected = "samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
+            R2_corrected = "samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
+            single_corrected = "samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz",
+        output:
+            contigs = "samples/{sample}/assembly/spades/contigs.fasta",
+            graph = "samples/{sample}/assembly/spades/assembly_graph.gfa",
+        log:
+            logging_folder + "samples/{sample}/logs/spades_assembly.txt"
+        shell:
+            """
         spades.py --only-assembler -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
         mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
         mv $(dirname {output[contigs]})/assembly_graph.gfa $(dirname $(dirname {output[contigs]}))
         rm -rf $( dirname {output[contigs]})/*
         mv $(dirname $(dirname {output[contigs]}))/contigs.fasta $(dirname {output[contigs]})/
         mv $(dirname $(dirname {output[contigs]}))/assembly_graph.gfa $(dirname {output[contigs]})/
-        """
-
+            """
+else:
+        
+    rule assemble_metagenome_corrected_paired_reads_with_spades:
+        threads:
+            16
+        conda:
+            pipeline_path + "envs/spades.yaml"
+        input:
+            R1_corrected = "samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
+            R2_corrected = "samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
+            single_corrected = "samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz",
+        output:
+            contigs = "samples/{sample}/assembly/spades/contigs.fasta",
+            graph = "samples/{sample}/assembly/spades/assembly_graph.gfa",
+        log:
+            logging_folder + "samples/{sample}/logs/spades_assembly.txt"
+        shell:
+            """
+        spades.py --only-assembler --meta -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
+        mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
+        mv $(dirname {output[contigs]})/assembly_graph.gfa $(dirname $(dirname {output[contigs]}))
+        rm -rf $( dirname {output[contigs]})/*
+        mv $(dirname $(dirname {output[contigs]}))/contigs.fasta $(dirname {output[contigs]})/
+        mv $(dirname $(dirname {output[contigs]}))/assembly_graph.gfa $(dirname {output[contigs]})/
+            """
 
 rule assemble_genome_corrected_single_reads_with_spades:
     threads:
