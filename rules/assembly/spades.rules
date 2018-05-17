@@ -79,15 +79,16 @@ else:
             logging_folder + "samples/{sample}/logs/spades_assembly.txt"
         shell:
             """
-            spades.py --only-assembler --meta -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
+            #spades.py --only-assembler -k 127 --meta -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
             # move to previous dir    
             mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
             mv $(dirname {output[contigs]})/assembly_graph.fastg $(dirname $(dirname {output[contigs]}))
             mv $(dirname {output[contigs]})/scaffolds.fasta $(dirname $(dirname {output[contigs]}))    
             mv $(dirname {output[contigs]})/contigs.paths $(dirname $(dirname {output[contigs]}))
             mv $(dirname {output[contigs]})/scaffolds.paths $(dirname $(dirname {output[contigs]}))
-            # remove unnessesary files    
-            rm -rf $( dirname {output[contigs]})/*
+            # remove unnessesary files
+            echo "rm -rf $( dirname {output[contigs]})/*"
+            #rm -rf $( dirname {output[contigs]})/*
             # move back to spades directory    
             mv $(dirname $(dirname {output[contigs]}))/contigs.fasta $(dirname {output[contigs]})/
             mv $(dirname $(dirname {output[contigs]}))/assembly_graph.fastg $(dirname {output[contigs]})/

@@ -1,3 +1,9 @@
 
 include:
     "assembly_quality.rules"
+
+# it is best practice to have a rule all at the top of the workflow which has all typically desired target files as input files.  
+rule all:
+	input: 
+		"samples/KPGE/annotation/KPGE.faa",
+		"quality/multiqc/assembly/multiqc_report.html"

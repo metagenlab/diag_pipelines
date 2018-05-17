@@ -29,14 +29,12 @@ else:
             contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
         output:
             "samples/{sample}/annotation/{sample}.faa",
-            "samples/{sample}/annotation/{sample}.fsa",
         log:
-            "samples/{sample}/annotation/spades/{sample}.log",
+            "samples/{sample}/annotation/prodigal/{sample}.log",
         shell:
-            """cp '{input[contigs]}' '{output[1]}';
-               prodigal -a {output[1]} -i {input[contigs]} -m -o 'temp.gbk' -p 'single' -q -f 'gbk';
             """
-            #
+               prodigal -a {output[0]} -i {input[contigs]} -m -o 'temp.gbk' -p 'single' -q -f 'gbk'
+            """
             
 rule annotate_with_prokka_unfiltered_assembly:
     conda:
