@@ -34,3 +34,19 @@ rule create_multiqc_report_for_mapping:
 
 
         
+rule create_multiqc_report_for_metaassembly:
+    params:
+        configfile = multiqc_configfile
+    conda:
+        pipeline_path + "envs/multiqc.yaml"
+    input:
+        mapping=expand("samples/{sample}/multiqc/mapping_to_{sample}_assembled_genome/bwa/log.txt", sample = list(read_naming.keys())),
+    output:
+        "quality/multiqc/assembly/multiqc_report.html"
+    log:
+        logging_folder + "logs/quality/multiqc/assembly.txt"
+    shell:
+        """
+        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) $(dirname {input[assembly]} {input[mapping]} | tr "\n" " ") &> {log[0]}
+        """
+

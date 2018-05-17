@@ -49,3 +49,4 @@ rule copy_result_files_assembly:
         sed -i.bak "s/.fsa//g" $(dirname {output[0]})/quast/report.tsv
         echo "okay" > {output}
         """
+        

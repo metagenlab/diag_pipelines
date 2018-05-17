@@ -1,23 +1,43 @@
-rule annotate_with_prokka:
-    conda:
-        pipeline_path + "envs/prokka.yaml"
-    input:
-        contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
-    output:
-        "samples/{sample}/annotation/{sample}.gff",
-        "samples/{sample}/annotation/{sample}.faa",
-        "samples/{sample}/annotation/{sample}.fsa",
-        "samples/{sample}/annotation/{sample}.txt",
-        "samples/{sample}/annotation/{sample}.gbk",
-        "samples/{sample}/annotation/{sample}.ffn",
-    log:
-        "samples/{sample}/annotation/spades/{sample}.log",
-    params:
-        genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[0],
-        spec = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[1]
-    shell:
-        "prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
 
+if config['meta'] == False:
+
+    rule annotate_with_prokka:
+        conda:
+            pipeline_path + "envs/prokka.yaml"
+        input:
+            contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
+        output:
+            "samples/{sample}/annotation/{sample}.gff",
+            "samples/{sample}/annotation/{sample}.faa",
+            "samples/{sample}/annotation/{sample}.fsa",
+            "samples/{sample}/annotation/{sample}.txt",
+            "samples/{sample}/annotation/{sample}.gbk",
+            "samples/{sample}/annotation/{sample}.ffn",
+        log:
+            "samples/{sample}/annotation/spades/{sample}.log",
+        params:
+            genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[0],
+            spec = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[1]
+        shell:
+            "prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
+
+else:
+    rule orfing_with_prodigal:
+        conda:
+            pipeline_path + "envs/prodigal.yaml"
+        input:
+            contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
+        output:
+            "samples/{sample}/annotation/{sample}.faa",
+            "samples/{sample}/annotation/{sample}.fsa",
+        log:
+            "samples/{sample}/annotation/spades/{sample}.log",
+        shell:
+            """cp '{input[contigs]}' '{output[1]}';
+               prodigal -a {output[1]} -i {input[contigs]} -m -o 'temp.gbk' -p 'single' -q -f 'gbk';
+            """
+            #
+            
 rule annotate_with_prokka_unfiltered_assembly:
     conda:
         pipeline_path + "envs/prokka.yaml"

@@ -32,8 +32,8 @@ rule correct_error_single_reads_with_spades:
          """
          spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log} 
          """
-if config['meta'] == True:
          
+if config['meta'] != True:
          
     rule assemble_genome_corrected_paired_reads_with_spades:
         threads:
