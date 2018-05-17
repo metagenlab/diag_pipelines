@@ -71,17 +71,28 @@ else:
             single_corrected = "samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz",
         output:
             contigs = "samples/{sample}/assembly/spades/contigs.fasta",
-            graph = "samples/{sample}/assembly/spades/assembly_graph.gfa",
+            graph = "samples/{sample}/assembly/spades/assembly_graph.fastg",
+            scaffolds = "samples/{sample}/assembly/spades/scaffolds.fasta",
+            contigs_paths = "samples/{sample}/assembly/spades/contigs.paths",
+            scaffolds_paths = "samples/{sample}/assembly/spades/scaffolds.paths",
         log:
             logging_folder + "samples/{sample}/logs/spades_assembly.txt"
         shell:
             """
-        spades.py --only-assembler --meta -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
-        mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
-        mv $(dirname {output[contigs]})/assembly_graph.gfa $(dirname $(dirname {output[contigs]}))
-        rm -rf $( dirname {output[contigs]})/*
-        mv $(dirname $(dirname {output[contigs]}))/contigs.fasta $(dirname {output[contigs]})/
-        mv $(dirname $(dirname {output[contigs]}))/assembly_graph.gfa $(dirname {output[contigs]})/
+            spades.py --only-assembler --meta -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
+            # move to previous dir    
+            mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
+            mv $(dirname {output[contigs]})/assembly_graph.fastg $(dirname $(dirname {output[contigs]}))
+            mv $(dirname {output[contigs]})/scaffolds.fasta $(dirname $(dirname {output[contigs]}))    
+            mv $(dirname {output[contigs]})/contigs.paths $(dirname $(dirname {output[contigs]}))
+            mv $(dirname {output[contigs]})/scaffolds.paths $(dirname $(dirname {output[contigs]}))
+            # remove unnessesary files    
+            rm -rf $( dirname {output[contigs]})/*
+            # move back to spades directory    
+            mv $(dirname $(dirname {output[contigs]}))/contigs.fasta $(dirname {output[contigs]})/
+            mv $(dirname $(dirname {output[contigs]}))/assembly_graph.fastg $(dirname {output[contigs]})/
+            mv $(dirname $(dirname {output[contigs]}))/scaffolds.fasta $(dirname {output[contigs]})/
+            mv $(dirname $(dirname {output[contigs]}))/assembly_graph.fastg $(dirname {output[contigs]})/    
             """
 
 rule assemble_genome_corrected_single_reads_with_spades:
