@@ -10,8 +10,7 @@ rule prepare_maxbin_abundance_file:
         """
         cut -f 1,4 {input[0]} > {output[0]}
         """
-    
-
+        
 rule maxbin_binning:
     conda:
         pipeline_path + "envs/maxbin.yaml"
@@ -19,11 +18,11 @@ rule maxbin_binning:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta",
         abundance = "samples/{sample}/binning/maxbin/contig_abundance.txt"
     output:
-        "samples/{sample}/binning/maxbin/result.summary",
-        "samples/{sample}/binning/maxbin/result.marker.pdf",
+        "samples/{sample}/binning/maxbin/bin.summary",
+        "samples/{sample}/binning/maxbin/bin.marker.pdf",
     log:
         "samples/{sample}/binning/maxbin/{sample}.log",
     shell:
         """
-        run_MaxBin.pl -contig {input[contigs]} -abund {input[abundance]} -out $( dirname {output[0]})/result -plotmarker > {log}
+        run_MaxBin.pl -contig {input[contigs]} -abund {input[abundance]} -out $( dirname {output[0]})/bin -plotmarker > {log}
         """
