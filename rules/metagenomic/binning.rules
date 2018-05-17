@@ -26,3 +26,20 @@ rule maxbin_binning:
         """
         run_MaxBin.pl -contig {input[contigs]} -abund {input[abundance]} -out $( dirname {output[0]})/bin -plotmarker > {log}
         """
+
+rule prepare_plot_gc_cov_files:
+    conda:
+        pipeline_path + "envs/maxbin.yaml"
+    input:
+        contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta",
+        abundance = "samples/{sample}/binning/maxbin/contig_abundance.txt"
+    output:
+        "samples/{sample}/binning/maxbin/bin.summary",
+        "samples/{sample}/binning/maxbin/bin.marker.pdf",
+    log:
+        "samples/{sample}/binning/maxbin/{sample}.log",
+    shell:
+        """
+        run_MaxBin.pl -contig {input[contigs]} -abund {input[abundance]} -out $( dirname {output[0]})/bin -plotmarker > {log}
+        """
+        

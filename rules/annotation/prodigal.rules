@@ -1,0 +1,15 @@
+
+rule orfing_with_prodigal:
+    conda:
+        pipeline_path + "envs/prodigal.yaml"
+    input:
+        contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
+    output:
+        "samples/{sample}/annotation/{sample}.faa",
+    log:
+        "samples/{sample}/annotation/prodigal/{sample}.log",
+    shell:
+        """
+        prodigal -a {output[0]} -i {input[contigs]} -m -o 'temp.gbk' -p 'single' -q -f 'gbk'
+        """
+ 
