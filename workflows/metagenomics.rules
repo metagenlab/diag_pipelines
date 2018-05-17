@@ -1,7 +1,9 @@
 
 include:
     "assembly_quality.rules"
-
+include:
+    "../rules/metagenomic/binning.rules"
+    
 # it is best practice to have a rule all at the top of the workflow which has all typically desired target files as input files.  
 rule all:
 	input: 
