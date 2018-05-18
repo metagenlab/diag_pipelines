@@ -18,8 +18,7 @@ rule maxbin_binning:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta",
         abundance = "samples/{sample}/binning/maxbin/contig_abundance.txt"
     output:
-        "samples/{sample}/binning/maxbin/bin.summary",
-        "samples/{sample}/binning/maxbin/bin.marker.pdf",
+        dynamic("samples/{sample}/binning/maxbin/{bin_id}.fasta")
     log:
         "samples/{sample}/binning/maxbin/{sample}.log",
     shell:
@@ -27,19 +26,15 @@ rule maxbin_binning:
         run_MaxBin.pl -contig {input[contigs]} -abund {input[abundance]} -out $( dirname {output[0]})/bin -plotmarker > {log}
         """
 
-rule prepare_plot_gc_cov_files:
-    conda:
-        pipeline_path + "envs/maxbin.yaml"
+rule prepare_contig_bins_table:
     input:
-        contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta",
-        abundance = "samples/{sample}/binning/maxbin/contig_abundance.txt"
+        fasta_files = dynamic("samples/{sample}/binning/maxbin/{bin_id}.fasta"),
     output:
-        "samples/{sample}/binning/maxbin/bin.summary",
-        "samples/{sample}/binning/maxbin/bin.marker.pdf",
+        "samples/{sample}/binning/maxbin/maxbin_table.tab",
     log:
         "samples/{sample}/binning/maxbin/{sample}.log",
     shell:
         """
-        run_MaxBin.pl -contig {input[contigs]} -abund {input[abundance]} -out $( dirname {output[0]})/bin -plotmarker > {log}
+        echo {input[fasta_files]}
+        scripts/maxbin2classif.py -i {input[fasta_files]} > {output[0]}
         """
-        

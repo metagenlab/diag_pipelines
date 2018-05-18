@@ -1,11 +1,60 @@
 
-include:
-    "assembly_quality.rules"
-include:
-    "../rules/metagenomic/binning.rules"
-    
 # it is best practice to have a rule all at the top of the workflow which has all typically desired target files as input files.  
 rule all:
 	input: 
 		"samples/KPGE/annotation/KPGE.faa",
 		"quality/multiqc/assembly/multiqc_report.html"
+
+include:
+    "making_sample_dataset.rules"
+                
+multiqc_configfile = pipeline_path + "data/configuration_files/multiqc/config.yaml"
+                
+include:
+    pipeline_path + "rules/metagenomic/binning.rules"
+    
+include:
+    pipeline_path + "rules/read_manipulation/get_reads.rules"
+
+include:
+    pipeline_path + "rules/read_manipulation/get_sras.rules"
+    
+include:
+    pipeline_path + "rules/quality/trimmomatic.rules"
+
+include:
+    pipeline_path + "rules/quality/assembly_filtering.rules"
+
+include:
+    pipeline_path + "rules/quality/contamination.rules"
+
+include:
+    pipeline_path + "rules/mapping/bwa.rules"
+
+include:
+    pipeline_path + "rules/mapping/indexing_files.rules"
+
+include:
+    pipeline_path + "rules/assembly/spades.rules"
+
+include:
+    pipeline_path + "rules/annotation/prodigal.rules"
+
+include:
+    pipeline_path + "rules/report_generation/prepare_files_for_multiqc.rules"
+    
+include:
+    pipeline_path + "rules/report_generation/multiqc.rules"
+
+include:
+    pipeline_path + "rules/report_generation/fastqc.rules"
+
+include:
+    pipeline_path + "rules/report_generation/quast.rules"
+
+include:
+    pipeline_path + "rules/report_generation/qualimap.rules"
+
+
+    
+
