@@ -38,3 +38,13 @@ rule prepare_contig_bins_table:
         echo {input[fasta_files]}
         scripts/maxbin2classif.py -i {input[fasta_files]} > {output[0]}
         """
+
+rule plot_gc_cov_maxbin_bins:
+    input:
+
+    output:
+
+    shell:
+        '''
+        scripts/gc_coverage_plot.py -t maxbin_table.tab -m contigs_500bp_renamed.fasta -d contig_abundance.txt 
+        '''

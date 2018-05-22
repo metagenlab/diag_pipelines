@@ -12,7 +12,9 @@ multiqc_configfile = pipeline_path + "data/configuration_files/multiqc/config.ya
                 
 include:
     pipeline_path + "rules/metagenomic/binning.rules"
-    
+include:
+    pipeline_path + "rules/metagenomic/quality_check.rules"
+        
 include:
     pipeline_path + "rules/read_manipulation/get_reads.rules"
 
