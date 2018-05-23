@@ -53,7 +53,7 @@ if config['meta'] != True:
             logging_folder + "samples/{sample}/logs/spades_assembly.txt"
         shell:
             """
-        spades.py --only-assembler -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
+        spades.py -m 20 --only-assembler -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
         mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
         mv $(dirname {output[contigs]})/assembly_graph.gfa $(dirname $(dirname {output[contigs]}))
         rm -rf $( dirname {output[contigs]})/*
@@ -61,7 +61,7 @@ if config['meta'] != True:
         mv $(dirname $(dirname {output[contigs]}))/assembly_graph.gfa $(dirname {output[contigs]})/
             """
 else:
-        
+    
     rule assemble_metagenome_corrected_paired_reads_with_spades:
         threads:
             16

@@ -47,6 +47,6 @@ rule create_multiqc_report_for_metaassembly:
         logging_folder + "logs/quality/multiqc/assembly.txt"
     shell:
         """
-        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) $(dirname {input[assembly]} {input[mapping]} | tr "\n" " ") &> {log[0]}
+        multiqc -c {params.configfile} -f -o $(dirname {output[0]}) $(dirname {input[mapping]}) &> {log[0]}
         """
 

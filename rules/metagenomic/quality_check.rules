@@ -13,11 +13,86 @@ rule prepare_contig_bins_table:
         """
 
 rule plot_gc_cov_maxbin_bins:
+    conda:
+        pipeline_path + "envs/rpy2.yaml"    
     input:
+        "samples/{sample}/binning/maxbin/maxbin_table.tab",
+        "samples/{sample}/binning/maxbin/contig_abundance.txt",
+        "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
+    output:
+        "samples/{sample}/binning/maxbin/gc_cov_buble_test.svg"
+    shell:
+        '''
+        echo scripts/gc_coverage_plot.py -t {input[0]} -m {input[2]} -d {input[1]} -o "$(dirname {output[0]})/"
+        scripts/gc_coverage_plot.py -t {input[0]} -m {input[2]} -d {input[1]} -o "$(dirname {output[0]})/"
+        '''
 
+'''
+rule plot_gc_cov_kaiju_phylum:
+    input:
+        
     output:
 
     shell:
-        '''
+        
         scripts/gc_coverage_plot.py -t maxbin_table.tab -m contigs_500bp_renamed.fasta -d contig_abundance.txt 
+        
+
+# extract contig name from prodigal output
+rule kaiju_phylum_contig_consensus:
+    input:
+        
+    output:
+        
+    shell:
+        
+        scripts/get_contig2majority_kaiju_phylum.py -g RHT_04182018.gbf -l locus_taxonomy.tab > contig_taxonomy.tab
+        
+'''
+              
+rule execute_kaiju_proteins:
+    params:
+        database_dir = config["kaju_database"],
+    input:
+        "samples/{sample}/annotation/{sample}.faa"
+    output:
+         "samples/{sample}/binning/kaiju/kaiju_output.txt",
+    shell:
         '''
+         kaiju -t {params[database_dir]}nodes.dmp -f {params[database_dir]}kaiju_db.fmi -i {input[0]} -p -v -o {output[0]}
+        '''
+
+rule kaiju_add_phylum_names:
+    input:
+        "samples/{sample}/binning/kaiju/kaiju_output.txt",
+    output:
+        "samples/{sample}/binning/kaiju/locus_phylum_taxonomy.tab",
+    shell:
+        '''
+         addTaxonNames -i {input[0]} -t {config[kaju_database]}nodes.dmp -n {config[kaju_database]}names.dmp -r phylum -o {output[0]}
+        '''
+
+# if config['meta'] != True:         
+rule kaiju_report_phylum:
+    input:
+        "samples/{sample}/binning/kaiju/kaiju_output.txt",
+    output:
+        "samples/{sample}/binning/kaiju/report_phylum.txt",
+    shell:
+        '''
+        kaijuReport -i {input[0]} -o {output[0]} -t {config[kaju_database]}nodes.dmp -n {config[kaju_database]}names.dmp -r phylum
+        '''
+
+        
+rule chekm_maxbin:
+    input:
+        fasta_dir = "samples/{sample}/binning/maxbin/",
+        fasta_files = dynamic("samples/{sample}/binning/maxbin/{bin_id}.fasta"),
+    output:
+        "samples/{sample}/binning/maxbin/checkm_bacteria/storage/bin_stats.analyze.tsv",
+    log:
+        "samples/{sample}/binning/maxbin/{sample}.log",
+    shell:
+        """
+        checkm analyze -t 6 scripts/bacteria.ms {input[fasta_dir]} samples/{sample}/binning/maxbin/checkm_bacteria -x fasta
+        """

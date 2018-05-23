@@ -1,20 +1,25 @@
 
 # it is best practice to have a rule all at the top of the workflow which has all typically desired target files as input files.  
-rule all:
-	input: 
-		"samples/KPGE/annotation/KPGE.faa",
-		"quality/multiqc/assembly/multiqc_report.html"
 
+                
 include:
     "making_sample_dataset.rules"
-                
+
 multiqc_configfile = pipeline_path + "data/configuration_files/multiqc/config.yaml"
+
+rule all:
+    input: 
+        "report.html"   
+
+
+
+     
                 
 include:
     pipeline_path + "rules/metagenomic/binning.rules"
 include:
     pipeline_path + "rules/metagenomic/quality_check.rules"
-        
+
 include:
     pipeline_path + "rules/read_manipulation/get_reads.rules"
 
@@ -57,6 +62,31 @@ include:
 include:
     pipeline_path + "rules/report_generation/qualimap.rules"
 
+rule report:
+    input:
+        qualimap_report = "quality/multiqc/assembly/multiqc_report.html",
+        buble_plot_maxbin = expand("samples/{sample}/binning/maxbin/gc_cov_buble_test.svg", sample = list(read_naming.keys())),
+        kaiju_phylum = expand("samples/{sample}/binning/kaiju/report_phylum.txt", sample = list(read_naming.keys())),
+        chekm_maxbin = expand("samples/{sample}/binning/maxbin/checkm_bacteria/storage/bin_stats.analyze.tsv", sample = list(read_naming.keys())),
+        #"samples/{sample}/binning/kaiju/report_phylum.txt",
+        #"samples/{sample}/binning/maxbin/checkm_bacteria/storage/bin_stats.analyze.tsv",        
+    output:
+        "report.html"
+    run:
+        from snakemake.utils import report
+        #with open(input[0]) as vcf:
+        #    n_calls = sum(1 for l in vcf if not l.startswith("#"))
+        n_samples = list(read_naming.keys()
+               
+        
+        report("""
+        Metagenome assembly
+        ===================================
 
+        Number of samples: {n_samples}
+        
+        {input.kaiju_phylum}
+        
+        """, output[0])
     
 
