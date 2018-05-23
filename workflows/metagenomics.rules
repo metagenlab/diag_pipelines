@@ -9,11 +9,10 @@ multiqc_configfile = pipeline_path + "data/configuration_files/multiqc/config.ya
 
 rule all:
     input: 
-        "report.html"   
-
-
-
-     
+        qualimap_report = "quality/multiqc/assembly/multiqc_report.html",
+        buble_plot_maxbin = expand("samples/{sample}/binning/maxbin/gc_cov_buble_test.svg", sample = list(read_naming.keys())),
+        kaiju_phylum = expand("samples/{sample}/binning/kaiju/report_phylum.txt", sample = list(read_naming.keys())),
+        #chekm_maxbin = expand("samples/{sample}/binning/maxbin/checkm_bacteria/storage/bin_stats.analyze.tsv", sample = list(read_naming.keys()))
                 
 include:
     pipeline_path + "rules/metagenomic/binning.rules"
@@ -67,26 +66,27 @@ rule report:
         qualimap_report = "quality/multiqc/assembly/multiqc_report.html",
         buble_plot_maxbin = expand("samples/{sample}/binning/maxbin/gc_cov_buble_test.svg", sample = list(read_naming.keys())),
         kaiju_phylum = expand("samples/{sample}/binning/kaiju/report_phylum.txt", sample = list(read_naming.keys())),
-        chekm_maxbin = expand("samples/{sample}/binning/maxbin/checkm_bacteria/storage/bin_stats.analyze.tsv", sample = list(read_naming.keys())),
+        chekm_maxbin = expand("samples/{sample}/binning/maxbin/checkm_bacteria/storage/bin_stats.analyze.tsv", sample = list(read_naming.keys()))
         #"samples/{sample}/binning/kaiju/report_phylum.txt",
         #"samples/{sample}/binning/maxbin/checkm_bacteria/storage/bin_stats.analyze.tsv",        
     output:
         "report.html"
+        
     run:
         from snakemake.utils import report
         #with open(input[0]) as vcf:
         #    n_calls = sum(1 for l in vcf if not l.startswith("#"))
-        n_samples = list(read_naming.keys()
-               
-        
+        #n_samples = list(read_naming.keys()
+        print (input.kaiju_phylum)
+        print (input.buble_plot_maxbin)
         report("""
         Metagenome assembly
         ===================================
 
-        Number of samples: {n_samples}
+        Number of samples:
+        T1_
         
-        {input.kaiju_phylum}
-        
-        """, output[0])
+        """, output[0],
+               T1=input[0])
     
 
