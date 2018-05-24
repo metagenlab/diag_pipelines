@@ -19,8 +19,6 @@ rule maxbin_binning:
         abundance = "samples/{sample}/binning/maxbin/contig_abundance.txt"
     output:
         dynamic("samples/{sample}/binning/maxbin/{bin_id}.fasta")
-    log:
-        "samples/{sample}/binning/maxbin/{sample}.log",
     shell:
         """
         run_MaxBin.pl -contig {input[contigs]} -abund {input[abundance]} -out $( dirname {output[0]})/bin -plotmarker > {log}

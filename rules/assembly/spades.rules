@@ -16,7 +16,7 @@ rule correct_error_paired_reads_with_spades:
         logging_folder + "samples/{sample}/logs/spades_read_correction.txt"
     shell:
          """
-         spades.py --only-error-correction -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $(dirname $(dirname {output[0]})) --threads {threads} -m 16 > {log} 
+         spades.py --only-error-correction -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $(dirname $(dirname {output[0]})) --threads {threads} -m 30 > {log} 
          """
 
 rule correct_error_single_reads_with_spades:
@@ -53,7 +53,7 @@ if config['meta'] != True:
             logging_folder + "samples/{sample}/logs/spades_assembly.txt"
         shell:
             """
-        spades.py -m 16 --only-assembler -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
+        spades.py -m 30 --only-assembler -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
         mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
         mv $(dirname {output[contigs]})/assembly_graph.gfa $(dirname $(dirname {output[contigs]}))
         rm -rf $( dirname {output[contigs]})/*
@@ -81,7 +81,7 @@ else:
             logging_folder + "samples/{sample}/logs/spades_assembly.txt"
         shell:
             """
-            #spades.py --only-assembler -k 127 --meta -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
+            spades.py --only-assembler -k 21,33,55,77,99,127 --meta -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $( dirname {output[contigs]}) --threads {threads} > {log}
             # move to previous dir    
             mv $(dirname {output[contigs]})/contigs.fasta $(dirname $(dirname {output[contigs]}))
             mv $(dirname {output[contigs]})/assembly_graph.fastg $(dirname $(dirname {output[contigs]}))
