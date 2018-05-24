@@ -47,3 +47,8 @@ include:
 include:
     pipeline_path + "rules/report_generation/qualimap.rules"
     
+
+
+rule all_assembly_quality:
+    input:
+        "quality/multiqc/assembly/multiqc_report.html"
