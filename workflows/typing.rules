@@ -30,11 +30,11 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
 
 include:
     pipeline_path + "rules/core_genome/bed_creation_parsnp.rules"
-
+    
 if species in all_core_genome_dbs.index:
     include:
         pipeline_path + "rules/core_genome/cgMLST.rules"
-    
+        
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
 
@@ -76,4 +76,9 @@ include:
 
 include:
     pipeline_path + "rules/phylogeny/image_creation.rules"
+
+if species in all_core_genome_dbs.index:
+    rule all_typing:
+        input:
+            "typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg"
 
