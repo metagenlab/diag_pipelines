@@ -96,3 +96,5 @@ rule chekm_maxbin:
         """
         checkm analyze -t 6 scripts/bacteria.ms {input[fasta_dir]} samples/{sample}/binning/maxbin/checkm_bacteria -x fasta
         """
+
+        
