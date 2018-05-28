@@ -1,5 +1,7 @@
 
 rule prepare_contig_bins_table:
+    conda:
+        pipeline_path + "envs/biopython.yaml"    
     input:
         fasta_files = dynamic("samples/{sample}/binning/maxbin/{bin_id}.fasta"),
     output:
