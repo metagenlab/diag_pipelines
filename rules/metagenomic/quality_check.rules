@@ -15,10 +15,9 @@ rule prepare_contig_bins_table:
         """
 
 rule plot_gc_cov_maxbin_bins:
-    
     conda:
         pipeline_path + "envs/rpy2.yaml",
-        pipeline_path + "envs/emboss.yaml",
+        pipeline_path + "envs/emboss.yaml"
     input:
         "samples/{sample}/binning/maxbin/maxbin_table.tab",
         "samples/{sample}/binning/maxbin/contig_abundance.txt",
