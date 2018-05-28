@@ -21,6 +21,6 @@ rule maxbin_binning:
         dynamic("samples/{sample}/binning/maxbin/{bin_id}.fasta")
     shell:
         """
-        run_MaxBin.pl -contig {input[contigs]} -abund {input[abundance]} -out $( dirname {input[1]}) -plotmarker > {log}
+        run_MaxBin.pl -contig {input[contigs]} -abund {input[abundance]} -out $( dirname {output[0]}) -plotmarker
         """
 
