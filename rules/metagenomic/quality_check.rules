@@ -51,6 +51,8 @@ rule kaiju_phylum_contig_consensus:
 '''
               
 rule execute_kaiju_proteins:
+    conda:
+        pipeline_path + "envs/kaiju.yaml"    
     params:
         database_dir = config["kaju_database"],
     input:
@@ -63,6 +65,8 @@ rule execute_kaiju_proteins:
         '''
 
 rule kaiju_add_phylum_names:
+    conda:
+        pipeline_path + "envs/kaiju.yaml"  
     input:
         "samples/{sample}/binning/kaiju/kaiju_output.txt",
     output:
@@ -74,6 +78,8 @@ rule kaiju_add_phylum_names:
 
 # if config['meta'] != True:         
 rule kaiju_report_phylum:
+    conda:
+        pipeline_path + "envs/kaiju.yaml"      
     input:
         "samples/{sample}/binning/kaiju/kaiju_output.txt",
     output:

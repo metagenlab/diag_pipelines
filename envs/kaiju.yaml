@@ -1,0 +1,4 @@
+channels:
+ - bioconda
+dependencies:
+ - kaiju = 1.6.2=pl5.22.0_0
