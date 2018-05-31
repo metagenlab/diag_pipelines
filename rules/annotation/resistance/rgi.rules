@@ -7,7 +7,7 @@ rule search_resistance_with_rgi:
         "samples/{sample}/resistance/rgi.json"
     shell:
         """
-        rgi main -t contig -i {input[0]} -o $(dirname {output[0]})/rgi
+        rgi -t contig -i {input[0]} -o $(dirname {output[0]})/rgi
         """
 
 rule extract_resistance_from_ontology:
@@ -30,12 +30,12 @@ rule generate_rgi_tsv_file_from_json_file:
     conda:
         pipeline_path + "envs/rgi.yaml"
     input:
-        json = "samples/{sample}/resistance/rgi.json"
+        "samples/{sample}/resistance/rgi.json"
     output:
-        tsv = "samples/{sample}/resistance/rgi.tsv"
+        "samples/{sample}/resistance/rgi.tsv"
     shell:
         """
-        rgi tab -i {input[0]} 
+        rgi_jsontab -v ON -i {input[0]} -o {output[0]}
         mv {output[0]}.txt {output[0]}
         """
 
