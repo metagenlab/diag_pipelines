@@ -97,7 +97,7 @@ rule assemble_genome_paired_reads_with_spades:
         log = "samples/{sample}/assembly/spades_no_correction/spades.log",
     shell:
         """
-        spades.py --only-assembler -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $( dirname {output[contigs]}) > /dev/null
+        spades.py --only-assembler -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $(dirname {output[contigs]}) > /dev/null
         """
 
 rule assemble_genome_single_reads_with_spades:
