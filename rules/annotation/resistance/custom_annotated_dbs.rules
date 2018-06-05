@@ -1,10 +1,10 @@
 rule keep_only_annotated_region:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz",
         genotype_tbi = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz.tbi",
-        bed_gz_correct = pipeline_path + "data/" + species + "/mutations/{db}/correct.bed.gz",
+        bed_gz_correct = data_path + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
     output:
         genotype = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf",
     shell:
@@ -14,11 +14,11 @@ rule keep_only_annotated_region:
 
 rule decompose_multiallelic_positions_from_genotyping:
     conda:
-        pipeline_path + "envs/vt.yaml"
+        pipeline_path + "envs/vt.yml"
     input:
         genotype = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf.gz",
         genotype_tbi = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf.gz.tbi",
-        reference = "references/" + reference_assembly_for_resistance[species] + "/genome_fasta.fasta",
+        reference = data_path + "references/" + reference_assembly_for_resistance[species] + "/genome_fasta.fasta",
     output:
         genotype_decomposed = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf",
     log:
@@ -30,10 +30,10 @@ rule decompose_multiallelic_positions_from_genotyping:
         
 rule annotate_positions_from_genotyping:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
-        bed_gz_correct =  pipeline_path + "data/" + species + "/mutations/{db}/correct.bed.gz",
-        bed_tbi_correct =  pipeline_path + "data/" + species + "/mutations/{db}/correct.bed.gz.tbi", 
+        bed_gz_correct =  data_path + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
+        bed_tbi_correct =  data_path  + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz.tbi", 
         genotype = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf.gz",
         genotype_tbi = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf.gz.tbi",
     output:
@@ -51,7 +51,7 @@ rule annotate_positions_from_genotyping:
 
 rule extract_mutated_codons_or_nucleotides:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
     output:
@@ -67,7 +67,7 @@ rule extract_mutated_codons_or_nucleotides:
         
 rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         genotype = "samples/{sample}/resistance/{db}/position_genotypes.txt",
     output:
@@ -78,7 +78,7 @@ rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
 
 rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synonymous_mutations:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         mutation_gz = "samples/{sample}/resistance/{db}/mutations.bed.gz",
         mutation_tbi = "samples/{sample}/resistance/{db}/mutations.bed.gz.tbi",
