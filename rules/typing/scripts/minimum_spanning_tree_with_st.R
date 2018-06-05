@@ -6,14 +6,15 @@ set.seed(1)
 sample_sts <- read.csv(snakemake@input[["mlst_samples"]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
 
 matrix <- as.matrix(read.csv(snakemake@input[["dist"]], sep="\t", header=TRUE, row.names=1))
+colnames(matrix) <- rownames(matrix)
+
 #We set the zero distance (clones) to a small value, otherwise no links exist between clones
 matrix[matrix==0] <- 0.01
 
 nb_vertex <- dim(matrix)[1]
 
 graph <- graph.adjacency(matrix, mode="undirected", weighted=TRUE, diag=FALSE)
-graph <- set_vertex_attr(graph, "name", value=gsub("X", "", vertex_attr(graph, "name")))
-
+graph <- set_vertex_attr(graph, "name", value=gsub("^X", "", vertex_attr(graph, "name")))
 
 sts <- sample_sts[vertex_attr(graph, "name"), 2]
 sts[sts == "-"] <- NA
