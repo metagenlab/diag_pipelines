@@ -1,6 +1,6 @@
 rule assess_mapping_with_qualimap:
     conda:
-        pipeline_path + "envs/qualimap.yaml"
+        pipeline_path + "envs/qualimap.yml"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}.bam.bai"
