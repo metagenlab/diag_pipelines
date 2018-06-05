@@ -13,6 +13,8 @@ else:
 
 upstream_downstream = 5000
 
+data_path = "/home/pipeline_user/data/" 
+
 mykrobe_species = {}
 mykrobe_species["Mycobacterium_tuberculosis"]="tb"
 mykrobe_species["Staphylococcus_aureus"]="staph"
