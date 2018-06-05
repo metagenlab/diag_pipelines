@@ -1,6 +1,6 @@
 rule extract_cgMLST_regions_from_vcf:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         vcf_mutation_type = "typing/{snp_caller}/full_genome_" + str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) + "/{mapping_method}/all_samples_{type}.vcf.gz",
         vcf_mutation_type_tbi = "typing/{snp_caller}/full_genome_" + str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) + "/{mapping_method}/all_samples_{type}.vcf.gz.tbi",

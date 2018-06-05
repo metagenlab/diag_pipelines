@@ -1,6 +1,6 @@
 rule search_resistance_paired_reads_with_mykrobe:
     conda:
-        pipeline_path + "envs/mykrobe.yaml"
+        pipeline_path + "envs/mykrobe.yml"
     params:
         panel = mykrobe_panel,
         species = mykrobe_species[species],
@@ -29,7 +29,7 @@ rule search_resistance_paired_reads_with_mykrobe:
         
 rule search_resistance_single_reads_with_mykrobe:
     conda:
-        pipeline_path + "envs/mykrobe.yaml"
+        pipeline_path + "envs/mykrobe.yml"
     params:
         panel = mykrobe_panel,
         species = mykrobe_species[species],

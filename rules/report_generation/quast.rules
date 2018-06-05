@@ -1,7 +1,7 @@
        
 rule calculate_assembly_statistics_with_quast:
     conda:
-        pipeline_path + "envs/quast.yaml"
+        pipeline_path + "envs/quast.yml"
     input:
         "samples/{sample}/annotation/{sample}.fsa"
     output:

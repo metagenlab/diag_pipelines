@@ -1,6 +1,6 @@
 rule convert_tsv_to_xlsx:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         tsv = "samples/{sample}/resistance/{software}.tsv",
     output:
@@ -11,7 +11,7 @@ rule convert_tsv_to_xlsx:
 
 rule merge_rgi_or_mykrobe_xlsx:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         xlsx = expand("samples/{sample}/resistance/{{software}}.xlsx", sample=read_naming.keys())
     output:

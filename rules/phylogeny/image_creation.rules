@@ -2,7 +2,7 @@ rule convert_phylogeny_to_image_with_st:
     params:
         size = config["phylogeny_image_size"]
     conda:
-        pipeline_path + "envs/newick-utils.yaml"
+        pipeline_path + "envs/newick-utils.yml"
     input:
         tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw",
         bootstraps = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
@@ -24,7 +24,7 @@ rule convert_phylogeny_to_image_no_st:
     params:
         size = config["phylogeny_image_size"]
     conda:
-        pipeline_path + "envs/newick-utils.yaml"
+        pipeline_path + "envs/newick-utils.yml"
     input:
         tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw",
         bootstraps = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",

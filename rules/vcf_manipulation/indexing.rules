@@ -1,6 +1,6 @@
 rule compress_vcf:
     conda:
-        pipeline_path + "envs/htslib.yaml"
+        pipeline_path + "envs/htslib.yml"
     input:
         "{any_vcf}.{vcf_or_bed}",
     output:
@@ -12,7 +12,7 @@ rule compress_vcf:
 
 rule index_vcf_bed:
     conda:
-        pipeline_path + "envs/htslib.yaml"
+        pipeline_path + "envs/htslib.yml"
     input:
         "{any_vcf}.{vcf_or_bed}.gz",
     output:
@@ -24,7 +24,7 @@ rule index_vcf_bed:
         
 rule sort_vcf:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         "{any_vcf}.vcf.gz",
     output:

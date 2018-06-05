@@ -1,6 +1,6 @@
 rule annotate_with_prokka:
     conda:
-        pipeline_path + "envs/prokka.yaml"
+        pipeline_path + "envs/prokka.yml"
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
     output:
@@ -20,7 +20,7 @@ rule annotate_with_prokka:
 
 rule annotate_with_prokka_unfiltered_assembly:
     conda:
-        pipeline_path + "envs/prokka.yaml"
+        pipeline_path + "envs/prokka.yml"
     input:
         contigs = "samples/{sample}/assembly/spades_no_correction/contigs.fasta"
     output:
@@ -34,7 +34,7 @@ rule annotate_with_prokka_unfiltered_assembly:
 
 rule create_blast_database_from_protein_sequences:
     conda:
-        pipeline_path + "envs/blast.yaml"
+        pipeline_path + "envs/blast.yml"
     input:
         "samples/{sample}/annotation/{sample}.faa",
     output:
@@ -46,7 +46,7 @@ rule create_blast_database_from_protein_sequences:
 
 rule create_blast_database_from_contig_sequences:
     conda:
-        pipeline_path + "envs/blast.yaml"
+        pipeline_path + "envs/blast.yml"
     input:
         "samples/{sample}/annotation/{sample}.fsa",
     output:

@@ -1,6 +1,6 @@
 rule sketch_kmers_complete_genomes_with_mash:
     conda:
-        "../quality/env/mash.yaml"
+        "../quality/env/mash.yml"
     input:
         "references/all_complete_genomes_log.txt"
     output:
@@ -12,7 +12,7 @@ rule sketch_kmers_complete_genomes_with_mash:
     
 rule calculate_distance_to_complete_genomes_with_mash:
     conda:
-        "../quality/env/mash.yaml"
+        "../quality/env/mash.yml"
     input:
         "references/all_complete_genomes.msh",
         "samples/{sample}/annotation/{sample}.fsa"

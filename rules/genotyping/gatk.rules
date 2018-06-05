@@ -1,6 +1,6 @@
 rule create_dictionary_for_reference:
     conda:
-        pipeline_path + "envs/gatk.yaml"
+        pipeline_path + "envs/gatk.yml"
     input:
         ref = "references/{ref}/genome_fasta.fasta"
     output:
@@ -15,7 +15,7 @@ rule create_dictionary_for_reference:
         
 rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     conda:
-        pipeline_path + "envs/gatk.yaml"
+        pipeline_path + "envs/gatk.yml"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
@@ -33,7 +33,7 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
 
 rule merge_gvcf_files_with_GenomicsDBImport_GATK:
     conda:
-        pipeline_path + "envs/gatk.yaml"
+        pipeline_path + "envs/gatk.yml"
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
@@ -54,7 +54,7 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
 
 rule merge_gvcf_files_with_CombineGVCFs_GATK:
     conda:
-        pipeline_path + "envs/gatk.yaml"
+        pipeline_path + "envs/gatk.yml"
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
@@ -71,7 +71,7 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
 
 rule genotype_with_GenotypeGVCFs_GATK:
     conda:
-        pipeline_path + "envs/gatk.yaml"
+        pipeline_path + "envs/gatk.yml"
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         combined = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/combined.vcf",

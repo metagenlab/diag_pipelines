@@ -1,6 +1,6 @@
 rule map_paired_reads_with_bwa:
     conda:
-        pipeline_path + "envs/bwa-samtools.yaml"
+        pipeline_path + "envs/bwa-samtools.yml"
     params:
         platform = "ILLUMINA"
     input:
@@ -23,7 +23,7 @@ rule map_paired_reads_with_bwa:
         
 rule map_single_reads_with_bwa:
     conda:
-        pipeline_path + "envs/bwa-samtools.yaml"
+        pipeline_path + "envs/bwa-samtools.yml"
     params:
         platform = "ILLUMINA"
     input:
@@ -46,7 +46,7 @@ rule map_single_reads_with_bwa:
 
 rule map_paired_reads_with_bwa_for_direct_sequencing:
     conda:
-        pipeline_path + "envs/bwa-samtools.yaml"
+        pipeline_path + "envs/bwa-samtools.yml"
     params:
         platform = "ILLUMINA"
     input:
@@ -70,7 +70,7 @@ rule map_paired_reads_with_bwa_for_direct_sequencing:
                 
 rule map_single_reads_with_bwa_for_direct_sequencing:
     conda:
-        pipeline_path + "envs/bwa-samtools.yaml"
+        pipeline_path + "envs/bwa-samtools.yml"
     params:
         platform = "ILLUMINA"
     input:
@@ -92,7 +92,7 @@ rule map_single_reads_with_bwa_for_direct_sequencing:
 
 rule filter_reads_on_quality:
     conda:
-        pipeline_path + "envs/bwa-samtools.yaml"
+        pipeline_path + "envs/bwa-samtools.yml"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}.bam.bai",
@@ -111,7 +111,7 @@ rule filter_reads_on_quality:
         
 rule remove_duplicates_from_mapping:
     conda:
-        pipeline_path + "envs/gatk.yaml"
+        pipeline_path + "envs/gatk.yml"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam.bai",

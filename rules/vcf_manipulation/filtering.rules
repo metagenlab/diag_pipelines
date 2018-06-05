@@ -1,6 +1,6 @@
 rule decompose_multiallelics_and_normalize:
     conda:
-        pipeline_path + "envs/vt.yaml"
+        pipeline_path + "envs/vt.yml"
     input:
         raw="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf.gz",
         raw_tbi="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf.gz",
@@ -18,7 +18,7 @@ rule filter_on_coverage:
     params:
         min_cov=minimum_coverage,
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         decomposed="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/decomposed_normalized.vcf",
     output:
@@ -32,7 +32,7 @@ rule filter_on_frequency_per_sample:
     params:
         min_alt=minimum_alternate_frac,
     conda:
-        pipeline_path + "envs/bcftools.yaml",
+        pipeline_path + "envs/bcftools.yml",
     input:
         sample="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/raw.vcf",
     output:
@@ -44,7 +44,7 @@ rule filter_on_frequency_per_sample:
         
 rule extract_allele_by_type_from_gatk_gvcfs:
     conda:
-        pipeline_path + "envs/gatk.yaml"
+        pipeline_path + "envs/gatk.yml"
     input:
         joint_genotype_vcf="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
         joint_genotype_vcf_tbi="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz.tbi",
@@ -60,7 +60,7 @@ rule extract_allele_by_type_from_gatk_gvcfs:
 
 rule extract_allele_by_type_from_freebayes_joint_genotyping:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         joint_genotype_vcf="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
         joint_genotype_vcf_tbi="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz.tbi",
@@ -75,7 +75,7 @@ rule extract_allele_by_type_from_freebayes_joint_genotyping:
 
 rule extract_core_genome_parsnp:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         vcf_mutation_type = "typing/{snp_caller}/full_genome_{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
         vcf_mutation_type_tbi = "typing/{snp_caller}/full_genome_{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",

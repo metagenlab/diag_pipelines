@@ -1,6 +1,6 @@
 rule search_resistance_with_rgi:
     conda:
-        pipeline_path + "envs/rgi.yaml"
+        pipeline_path + "envs/rgi.yml"
     input:
         "samples/{sample}/annotation/{sample}.fsa"
     output:
@@ -16,7 +16,7 @@ rule extract_resistance_from_ontology:
         ontology_mo = ontology_file_mo,
         ontology_ro = ontology_file_ro,
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         rgi = "samples/{sample}/resistance/rgi.tsv"
     output:
@@ -28,7 +28,7 @@ rule extract_resistance_from_ontology:
     
 rule generate_rgi_tsv_file_from_json_file:
     conda:
-        pipeline_path + "envs/rgi.yaml"
+        pipeline_path + "envs/rgi.yml"
     input:
         "samples/{sample}/resistance/rgi.json"
     output:

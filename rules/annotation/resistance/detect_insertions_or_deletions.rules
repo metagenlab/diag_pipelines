@@ -1,6 +1,6 @@
 rule extract_coverage_from_bed:
     conda:
-        pipeline_path + "envs/bedtools.yaml"
+        pipeline_path + "envs/bedtools.yml"
     input:
         mapping = "samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam",
         bed = "resistance/annotations/{gene}.bed"
@@ -15,7 +15,7 @@ rule create_bed_from_gene:
     params:
         up_down = upstream_downstream
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         gbk = "references/" + reference_assembly_for_resistance[species] + "/genome_gbwithparts.gbk",
         gene_to_locus = pipeline_path + "data/" + species + "/metadata/locus_tags.tsv",
@@ -29,7 +29,7 @@ rule plot_coverage_over_gene_and_flanking:
     params:
         up_down = upstream_downstream
     conda:
-        pipeline_path + "envs/igraph.yaml"
+        pipeline_path + "envs/igraph.yml"
     input:
         coverage_txt = "samples/{sample}/mapping/bwa/{ref}/coverage/{gene}.txt",
     output:
@@ -42,7 +42,7 @@ rule extract_insert_size_over_gene_and_flanking:
     params:
         up_down = upstream_downstream
     conda:
-        pipeline_path + "envs/samtools.yaml"
+        pipeline_path + "envs/samtools.yml"
     input:
         mapping = "samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam",
         bed = "resistance/annotations/{gene}.bed",
@@ -59,7 +59,7 @@ rule plot_insert_size_over_gene_and_flanking:
     params:
         up_down = upstream_downstream
     conda:
-        pipeline_path + "envs/igraph.yaml"
+        pipeline_path + "envs/igraph.yml"
     input:
         insert_sizes = "samples/{sample}/mapping/bwa/{ref}/insert_sizes/{gene}.txt",
         bed = "resistance/annotations/{gene}.bed",

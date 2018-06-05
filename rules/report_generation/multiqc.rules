@@ -2,7 +2,7 @@ rule create_multiqc_report_for_assembly:
     params:
         configfile = multiqc_configfile
     conda:
-        pipeline_path + "envs/multiqc.yaml"
+        pipeline_path + "envs/multiqc.yml"
     input:
         assembly=expand("samples/{sample}/multiqc/assembly/log.txt", sample = list(read_naming.keys())),
         mapping=expand("samples/{sample}/multiqc/mapping_to_{sample}_assembled_genome/bwa/log.txt", sample = list(read_naming.keys())),
@@ -20,7 +20,7 @@ rule create_multiqc_report_for_mapping:
     params:
         configfile = multiqc_configfile
     conda:
-        pipeline_path + "envs/multiqc.yaml"
+        pipeline_path + "envs/multiqc.yml"
     input:
         mapping = expand("samples/{sample}/multiqc/mapping_to_{{ref}}/{{mapping_method}}/log.txt", sample = list(read_naming.keys())),
     output:

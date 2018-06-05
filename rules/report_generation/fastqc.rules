@@ -1,6 +1,6 @@
 rule assess_quality_single_reads_with_fastqc:
     conda:
-        pipeline_path + "envs/fastqc.yaml"
+        pipeline_path + "envs/fastqc.yml"
     input:
         "samples/{sample}/reads/trimmed/single.fastq",
     output:
@@ -14,7 +14,7 @@ rule assess_quality_single_reads_with_fastqc:
         
 rule assess_quality_paired_reads_with_fastqc:
     conda:
-        pipeline_path + "envs/fastqc.yaml"
+        pipeline_path + "envs/fastqc.yml"
     input:
         "samples/{sample}/reads/trimmed/R1_paired.fastq",
         "samples/{sample}/reads/trimmed/R2_paired.fastq"

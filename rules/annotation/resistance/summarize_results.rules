@@ -5,7 +5,7 @@ rule summary_csv_excel_file:
         ontology_ro = ontology_file_ro,
         currated_genes = genes
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         expand("samples/{{sample}}/resistance/{software}.tsv", software = config["resistance_prediction_softwares"])
     output:
@@ -17,7 +17,7 @@ rule summary_csv_excel_file:
 
 rule write_congruent_results_fasta:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         "samples/{sample}/resistance/summary.tsv",
         "samples/{sample}/resistance/rgi.tsv",
@@ -30,7 +30,7 @@ rule write_congruent_results_fasta:
 
 rule merge_summary_xlsx_files:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         xlsx=expand("samples/{sample}/resistance/summary.xlsx", sample = read_naming.keys()),
 #        fastas=expand("samples/{sample}/resistance/sequences.faa", sample = read_naming.keys()),

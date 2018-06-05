@@ -2,7 +2,7 @@ rule distance_columns_to_matrix:
     params:
         samples = list(read_naming.keys())
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.txt",
     output:
@@ -17,7 +17,7 @@ rule compute_minimum_spanning_tree_with_st:
         threshold = config["snp_threshold"],
         mst_size = config["minimum_spanning_tree_size"],
     conda:
-        pipeline_path + "envs/igraph.yaml"
+        pipeline_path + "envs/igraph.yml"
     input:
         dist = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
         mlst_samples = "typing/mlst/summary.tsv",
@@ -34,7 +34,7 @@ rule compute_minimum_spanning_tree_no_st:
         threshold=config["snp_threshold"],
         mst_size = config["minimum_spanning_tree_size"],
     conda:
-        pipeline_path + "envs/igraph.yaml"
+        pipeline_path + "envs/igraph.yml"
     input:
         dist="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
     output:

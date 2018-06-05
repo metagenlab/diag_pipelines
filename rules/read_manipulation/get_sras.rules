@@ -1,6 +1,6 @@
 rule download_sra_single:
     conda:
-        pipeline_path + "envs/sra-tools.yaml"
+        pipeline_path + "envs/sra-tools.yml"
     output:
         temp(link_directory + "{sample,[A-Za-z0-9]+}.fastq.gz"),
     log:
@@ -22,7 +22,7 @@ rule download_sra_single:
 
 rule download_sra_paired:
     conda:
-        pipeline_path + "envs/sra-tools.yaml"
+        pipeline_path + "envs/sra-tools.yml"
     output:
         temp(link_directory + "{sample,[A-Za-z0-9]+}_1.fastq.gz"),
         temp(link_directory + "{sample,[A-Za-z0-9]+}_2.fastq.gz"),

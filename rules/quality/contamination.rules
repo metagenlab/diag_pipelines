@@ -1,6 +1,6 @@
 rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
     conda:
-        pipeline_path + "envs/mash.yaml"
+        pipeline_path + "envs/mash.yml"
     input:
         mash_sketch = "references/mash_sketch.msh",
         mash_human = "references/mash_sketch_human.msh",
@@ -16,7 +16,7 @@ rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
 
 rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
     conda:
-        pipeline_path + "envs/mash.yaml"
+        pipeline_path + "envs/mash.yml"
     input:
         mash_sketch = "references/mash_sketch.msh",
         mash_human = "references/mash_sketch_human.msh",
@@ -31,7 +31,7 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
 
 rule get_taxonomy_from_mash_results:
     conda:
-        pipeline_path + "envs/entrez-direct.yaml"
+        pipeline_path + "envs/entrez-direct.yml"
     input:
         distances = "samples/{sample}/contamination/mash/distances.tsv"
     output:
@@ -57,7 +57,7 @@ rule format_distances_from_mash_results:
 
 rule format_tsv_to_xlsx_mash_results:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         tsv = "samples/{sample}/contamination/mash/{results}.tsv",
     output:
@@ -68,7 +68,7 @@ rule format_tsv_to_xlsx_mash_results:
         
 rule merge_all_xlsx_mash_results:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         xlsx = expand("samples/{sample}/contamination/mash/{{results}}.xlsx", sample=read_naming.keys())
     output:

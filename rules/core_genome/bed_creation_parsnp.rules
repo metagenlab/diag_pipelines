@@ -1,6 +1,6 @@
 rule extract_core_genome_parsnp_from_ref:
     conda:
-        pipeline_path + "envs/bedtools.yaml"
+        pipeline_path + "envs/bedtools.yml"
     input:
         "core_genomes/parsnp/" + species + "/parsnp.xmfa",
         "references/{ref}/genome_fasta.fasta"

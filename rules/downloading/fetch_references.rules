@@ -2,7 +2,7 @@ rule get_refseq_urls_complete_genomes:
     params:
         excluded_id = excl_id,
     conda:
-        pipeline_path + "envs/entrez-direct.yaml"
+        pipeline_path + "envs/entrez-direct.yml"
     output:
         "references/{spec}/url_complete_genomes.txt"
     shell:
@@ -19,7 +19,7 @@ rule get_refseq_urls_complete_genomes:
         
 rule download_all_complete_genomes_fasta:
     conda:
-        pipeline_path + "envs/entrez-direct.yaml"
+        pipeline_path + "envs/entrez-direct.yml"
     input:
         "references/{spec}/url_complete_genomes.txt"
     output:

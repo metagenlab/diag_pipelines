@@ -1,6 +1,6 @@
 rule index_reference_fasta:
     conda:
-        "../../envs/bwa-samtools.yaml"
+        "../../envs/bwa-samtools.yml"
     input:
         "{any_genome}.fasta"
     output:
@@ -14,7 +14,7 @@ rule index_reference_fasta:
 
 rule index_bam_file:
     conda:
-        "../../envs/bwa-samtools.yaml"
+        "../../envs/bwa-samtools.yml"
     input:
         "{any_bam}.bam"
     output:

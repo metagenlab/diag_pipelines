@@ -1,6 +1,6 @@
 rule extract_sample_entry_from_vcf:
     conda:
-        pipeline_path + "envs/bcftools.yaml",
+        pipeline_path + "envs/bcftools.yml",
     input:
         vcf_cov="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/cov_decomposed_normalized.vcf",
     output:
@@ -12,7 +12,7 @@ rule extract_sample_entry_from_vcf:
 
 rule merge_all_samples_entries_into_vcf:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         vfcs=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/freq.vcf.gz", sample=list(read_naming.keys())),
         vfcs_tbi=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/freq.vcf.gz.tbi", sample=list(read_naming.keys())),
@@ -25,7 +25,7 @@ rule merge_all_samples_entries_into_vcf:
 
 rule merge_all_vcf_freebayes_first_pass:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         vfcs = expand("samples/{sample}/typing/freebayes/first_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz", sample=list(read_naming.keys())),
         vfcs_tbi = expand("samples/{sample}/typing/freebayes/first_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz.tbi", sample=list(read_naming.keys())),
@@ -38,7 +38,7 @@ rule merge_all_vcf_freebayes_first_pass:
 
 rule merge_freebayes_second_pass:
     conda:
-        pipeline_path + "envs/bcftools.yaml"
+        pipeline_path + "envs/bcftools.yml"
     input:
         vfcs = expand("samples/{sample}/typing/freebayes/second_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz", sample=list(read_naming.keys())),
         vfcs_tbi = expand("samples/{sample}/typing/freebayes/second_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz.tbi", sample=list(read_naming.keys())),

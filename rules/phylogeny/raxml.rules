@@ -1,6 +1,6 @@
 rule compute_phylogeny_with_raxml:
     conda:
-        pipeline_path + "envs/raxml.yaml"
+        pipeline_path + "envs/raxml.yml"
     input:
         alignment="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alignment.fa"
     output:
@@ -20,7 +20,7 @@ rule compute_phylogeny_with_raxml:
 
 rule compute_phylogeny_bootstraps_with_raxml:
     conda:
-        pipeline_path + "envs/raxml.yaml"
+        pipeline_path + "envs/raxml.yml"
     input:
         alignment = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alignment.fa"
     output:

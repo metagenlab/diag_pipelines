@@ -1,6 +1,6 @@
 rule genotype_with_freebayes_on_all_samples:
     conda:        
-        pipeline_path + "envs/freebayes.yaml"
+        pipeline_path + "envs/freebayes.yml"
     threads:
         16
     input:
@@ -21,7 +21,7 @@ rule genotype_with_freebayes_on_all_samples:
 
 rule genotype_with_freebayes_one_sample_second_pass:
     conda:
-        pipeline_path + "envs/freebayes.yaml"
+        pipeline_path + "envs/freebayes.yml"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
         bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai", 

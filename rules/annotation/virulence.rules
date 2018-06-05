@@ -3,7 +3,7 @@ rule blast_virulence_protein_to_proteome_or_contigs:
         perc_id_cutoff=config["virulence_percentage_identity_cutoff"],
         cov_cutoff=config["virulence_coverage_cutoff"],
     conda:
-        pipeline_path + "envs/blast.yaml"
+        pipeline_path + "envs/blast.yml"
     input:
         "virulence/protein_fastas/log.txt",
         "samples/{sample}/annotation/{sample}.fsa",
@@ -46,7 +46,7 @@ rule remove_redundancy_from_blast_results:
         
 rule extract_protein_sequences_from_blast_results:
     conda:
-        pipeline_path + "envs/samtools.yaml"
+        pipeline_path + "envs/samtools.yml"
     input:
         "samples/{sample}/virulence/results_blast_not_redundant.tsv",
         "samples/{sample}/annotation/{sample}.faa",
@@ -67,7 +67,7 @@ rule extract_protein_sequences_from_blast_results:
         
 rule add_description_to_blast_results:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml"
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
         "samples/{sample}/virulence/results_blast_not_redundant.tsv",
         config["virulence_factors"]
@@ -80,7 +80,7 @@ rule add_description_to_blast_results:
     
 rule merge_samples_summary:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yaml",
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml",
     input:
         xlsx=expand("samples/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys()),
         fasta=expand("samples/{sample}/virulence/proteins.fasta", sample = read_naming.keys()),
