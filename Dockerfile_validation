@@ -1,4 +1,4 @@
-FROM metagenlab/diag_pipelines:latest
+FROM metagenlab/testing_image:latest
 
 # TESTING RESISTANT MTB ISOLATES WITH ALL 3 METHODS
 
