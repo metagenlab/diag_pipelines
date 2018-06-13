@@ -16,8 +16,8 @@ upstream_downstream = 5000
 data_path = "/home/pipeline_user/data/" 
 
 mykrobe_species = {}
-mykrobe_species["Mycobacterium_tuberculosis"]="tb"
-mykrobe_species["Staphylococcus_aureus"]="staph"
+mykrobe_species["Mycobacterium"]="tb"
+mykrobe_species["Staphylococcus"]="staph"
 
 reference_assembly_for_resistance = {}
 reference_assembly_for_resistance["Mycobacterium_tuberculosis"] = "538048"
@@ -39,7 +39,7 @@ if species in reference_assembly_for_resistance.keys():
     include:
         pipeline_path + "rules/annotation/resistance/detect_insertions_or_deletions.rules"
     
-if species == "Staphylococcus_aureus" or species.startswith("Mycobacterium"):
+if species.startswith("Staphylococcus") or species.startswith("Mycobacterium"):
     include:
         pipeline_path + "rules/annotation/resistance/mykrobe.rules"
     rule all_resistance_summaries:
