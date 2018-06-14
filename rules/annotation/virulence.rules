@@ -48,21 +48,21 @@ rule extract_protein_sequences_from_blast_results:
     conda:
         pipeline_path + "envs/samtools.yml"
     input:
-        "samples/{sample}/virulence/results_blast_not_redundant.tsv",
-        "samples/{sample}/annotation/{sample}.faa",
+        blast_res = "samples/{sample}/virulence/results_blast_not_redundant.tsv",
+        annotation_prot = "samples/{sample}/annotation/{sample}.faa",
     output:
-        "samples/{sample}/virulence/proteins.fasta",
+        virulence_fasta = "samples/{sample}/virulence/proteins.fasta",
     shell:
         """
-        grep "blastp" {input[0]} | cut -f1,2 > {output[0]}.tmp
-        grep "blastp" {input[0]} | cut -f 2 | xargs -n 1 samtools faidx {input[1]} > {output[0]}
+        awk '$15=="blastp"' {input[blast_res]} | cut -f1,2 > {output[virulence_fasta]}.tmp
+        awk '$15=="blastp"' {input[blast_res]} | cut -f2 | xargs -n 1 samtools faidx {input[annotation_prot]} > {output[virulence_fasta]}
         while read hit prokka
         do 
-           sed -i "s/${{prokka}}/{wildcards.sample}_${{prokka}}_(${{hit}}_homolog)/" {output[0]}
-        done < {output[0]}.tmp
-        grep "tblastn" {input[0]} | cut -f 13 | sed "s/-//g" > {output[0]}.tmp
-        grep "tblastn" {input[0]} | cut -f1 | sed "s/^/>{wildcards.sample}_/" | sed "s/$/_homolog/" | paste -d"\\n" - {output[0]}.tmp >> {output[0]}
-        rm {output[0]}.tmp
+           sed -i "s/${{prokka}}/{wildcards.sample}_${{prokka}}_(${{hit}}_homolog)/" {output[virulence_fasta]}
+        done < {output[virulence_fasta]}.tmp
+        awk '$15=="tblastn"' {input[blast_res]} | cut -f 13 | sed "s/-//g" > {output[virulence_fasta]}.tmp
+        awk '$15=="tblastn"' {input[blast_res]} | cut -f1 | sed "s/^/>{wildcards.sample}_/" | sed "s/$/_homolog/" | paste -d"\\n" - {output[virulence_fasta]}.tmp >> {output[virulence_fasta]}
+        rm {output[virulence_fasta]}.tmp
         """
         
 rule add_description_to_blast_results:
