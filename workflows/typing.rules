@@ -27,7 +27,8 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
     all_combined_1.append(i)
     all_combined_2.append(j)
 
-
+print(all_core_genome_dbs.index)
+    
 include:
     pipeline_path + "rules/core_genome/bed_creation_parsnp.rules"
     
