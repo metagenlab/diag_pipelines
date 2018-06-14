@@ -1,4 +1,6 @@
 rule trim_paired_reads_with_trimmomatic:
+    params:
+        conda_path = workflow.conda_prefix
     conda:
         pipeline_path + "envs/trimmomatic.yml"
     input:
@@ -21,13 +23,15 @@ rule trim_paired_reads_with_trimmomatic:
         logging_folder+"samples/{sample}/logs/trimmomatic.log"
     shell:
         """
-        trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} &> {log}
+        trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:{params.conda_path}/${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} &> {log}
         cp {log} {output[4]}
         """        
 
 
 
 rule trim_single_reads_with_trimmomatic:
+    params:
+        conda_path = workflow.conda_prefix
     conda:
         pipeline_path + "envs/trimmomatic.yml"
     input:
@@ -46,6 +50,6 @@ rule trim_single_reads_with_trimmomatic:
         logging_folder+"samples/{sample}/logs/trimmomatic.log"
     shell:
         """
-        trimmomatic SE {input[0]} {output[0]} ILLUMINACLIP:${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} &> {log}
+        trimmomatic SE {input[0]} {output[0]} ILLUMINACLIP:{params.conda_path}/${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} &> {log}
         cp {log} {output[1]}
         """
