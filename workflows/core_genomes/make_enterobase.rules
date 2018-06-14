@@ -17,7 +17,7 @@ rule get_schema_from_enterobase:
         gene_list = "core_genomes/cgMLST/{spec}/genes.txt",
     shell:
         """
-        cut -f 2 {input[data]} | tail -n +2 > {output[gene_list]}
+        cut -f 2 {input[data]} | cut -f 1 -d' ' | tail -n +2 > {output[gene_list]}
         """
 
 rule fetch_gene_entries_from_locus_tag:
