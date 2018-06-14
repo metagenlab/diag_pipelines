@@ -1,12 +1,11 @@
 rule trim_paired_reads_with_trimmomatic:
-    params:
-        conda_path = workflow.conda_prefix
     conda:
         pipeline_path + "envs/trimmomatic.yml"
     input:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"
     params:
+        conda_path = workflow.conda_prefix
         minlength = config["minimum_read_length"],
         minqual = config["minimum_quality_base"],
         adapter_file_name = config["adapter_file_name"],
@@ -30,13 +29,12 @@ rule trim_paired_reads_with_trimmomatic:
 
 
 rule trim_single_reads_with_trimmomatic:
-    params:
-        conda_path = workflow.conda_prefix
     conda:
         pipeline_path + "envs/trimmomatic.yml"
     input:
         "samples/{sample}/reads/raw/{sample}_single.fastq.gz"
     params:
+        conda_path = workflow.conda_prefix
         minlength = config["minimum_read_length"],
         minqual = config["minimum_quality_base"],
         adapter_file_name = config["adapter_file_name"],
