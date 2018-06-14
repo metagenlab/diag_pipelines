@@ -23,7 +23,7 @@ rule get_schema_from_enterobase:
 
 rule fetch_gene_entries_from_locus_tag:
     conda:
-        pipeline_path + "envs/biopython.yaml"
+        pipeline_path + "envs/biopython.yml"
     input:
         gbk = lambda wildcards : "references/" + str(enterobase.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_gbwithparts.gbwithparts",
         locus_list = "core_genomes/cgMLST/{spec}/genes.txt",
