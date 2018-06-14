@@ -11,14 +11,13 @@ include:
 enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 rule get_schema_from_enterobase:
-    params:
-        enterobase_scheme = lambda wildcards: enterobase.loc[wildcards.spec, "Scheme"],
-        enterobase_species_id = lambda wildcards: enterobase.loc[wildcards.spec, "SpeciesId"],
+    input:
+        data = pipeline_path + "data/{spec}/cgMLST.tsv"
     output:
         gene_list = "core_genomes/cgMLST/{spec}/genes.txt",
     shell:
         """
-        wget -qO- http://enterobase.warwick.ac.uk/download_data?allele=profiles\&scheme={params.enterobase_scheme}\&species={params.enterobase_species_id} | gzip -d | head -n 1 | tr '[:space:]' '\\n' | tail -n +2 > {output[gene_list]} || :
+        cut -f 2 {input[data]} | tail -n +2 > {output[gene_list]}
         """
 
 rule fetch_gene_entries_from_locus_tag:

@@ -1,0 +1,2514 @@
+Scheme name	Locus tag	Description
+cgMLST V1	b3356 (yhfA)	OsmC family protein
+cgMLST V1	b3357 (crp)	"cAMP-activated global transcription factor, mediator of catabolite repression"
+cgMLST V1	b3354 (yheU)	UPF0270 family protein
+cgMLST V1	b3355 (prkB)	putative phosphoribulokinase
+cgMLST V1	b3352 (yheS)	putative transporter subunit of ABC superfamily: ATP-binding component
+cgMLST V1	b3353 (yheT)	UPF0017 family putative hydrolase
+cgMLST V1	b3351 (kefG)	"potassium-efflux system ancillary protein for KefB, glutathione-regulated"
+cgMLST V1	b3358 (yhfK)	"putative transporter, FUSC superfamily inner membrane protein, tandem domains"
+cgMLST V1	b1599 (mdtI)	multidrug efflux system transporter
+cgMLST V1	b4242 (mgtA)	magnesium transporter
+cgMLST V1	b1080 (flgI)	putative flagellar basal body protein
+cgMLST V1	b1081 (flgJ)	flagellar rod assembly protein and murein hydrolase; flagellum-specific muramidase
+cgMLST V1	b1082 (flgK)	flagellar hook-filament junction protein 1
+cgMLST V1	b1083 (flgL)	flagellar hook-filament junction protein
+cgMLST V1	b1084 (rne)	fused ribonucleaseE: endoribonuclease/RNA-binding protein/RNA degradosome binding protein
+cgMLST V1	b1085 (yceQ)	uncharacterized protein
+cgMLST V1	b1086 (rluC)	"23S rRNA pseudouridine(955,2504,2580) synthase "
+cgMLST V1	b1087 (yceF)	Maf-like protein
+cgMLST V1	b1088 (yceD)	DUF177 family protein
+cgMLST V1	b1089 (rpmF)	50S ribosomal subunit protein L32
+cgMLST V1	b0029 (ispH)	"4-hydroxy-3-methylbut-2-enyl diphosphate reductase, 4Fe-4S protein "
+cgMLST V1	b0028 (fkpB)	FKBP-type peptidyl-prolyl cis-trans isomerase (rotamase)
+cgMLST V1	b0020 (nhaR)	transcriptional activator of nhaA
+cgMLST V1	b0023 (rpsT)	30S ribosomal subunit protein S20
+cgMLST V1	b0025 (ribF)	bifunctional riboflavin kinase/FAD synthetase
+cgMLST V1	b0024 (yaaY)	uncharacterized protein
+cgMLST V1	b0027 (lspA)	prolipoprotein signal peptidase (signal peptidase II)
+cgMLST V1	b0026 (ileS)	isoleucyl-tRNA synthetase
+cgMLST V1	b3590 (selB)	selenocysteinyl-tRNA-specific translation factor
+cgMLST V1	b3591 (selA)	selenocysteine synthase
+cgMLST V1	b3592 (yibF)	glutathione S-transferase homolog
+cgMLST V1	b3598 (yibI)	DUF3302 family inner membrane protein
+cgMLST V1	b3599 (mtlA)	fused mannitol-specific PTS enzymes: IIA components/IIB components/IIC components
+cgMLST V1	b0928 (aspC)	"aspartate aminotransferase, PLP-dependent "
+cgMLST V1	b0929 (ompF)	outer membrane porin 1a (Ia;b;F)
+cgMLST V1	b0924 (mukB)	"chromosome condensin MukBEF, ATPase and DNA-binding subunit"
+cgMLST V1	b0925 (ldtD)	"murein L,D-transpeptidase"
+cgMLST V1	b0926 (ycbK)	M15A protease-related family periplasmic protein
+cgMLST V1	b0927 (ycbL)	putative metal-binding enzyme
+cgMLST V1	b0920 (ycbC)	DUF218 superfamily protein
+cgMLST V1	b0921 (smtA)	putative S-adenosyl-L-methionine-dependent methyltransferase
+cgMLST V1	b0922 (mukF)	"chromosome condensin MukBEF, kleisin-like subunit, binds calcium"
+cgMLST V1	b0923 (mukE)	"chromosome condensin MukBEF, MukE localization factor"
+cgMLST V1	b2959 (yggL)	DUF469 family protein
+cgMLST V1	b2958 (yggN)	DUF2884 family putative periplasmic protein
+cgMLST V1	b2953 (yggU)	UPF0235 family protein
+cgMLST V1	b2952 (yggT)	putative inner membrane protein; compensates for loss in K+ uptake
+cgMLST V1	b2951 (yggS)	"UPF0001 family protein, PLP-binding"
+cgMLST V1	b2950 (yggR)	putative PilT family AAA+ ATPase
+cgMLST V1	b2955 (yggW)	HemN family putative oxidoreductase
+cgMLST V1	b2954 (rdgB)	dITP/XTP pyrophosphatase
+cgMLST V1	b1541 (ydfZ)	"selenoprotein, function unknown"
+cgMLST V1	b1540 (rspR)	transcriptional repressor for rspAB
+cgMLST V1	b0494 (tesA)	multifunctional acyl-CoA thioesterase 1; protease I; lysophospholipase L1
+cgMLST V1	b0495 (ybbA)	putative ABC superfamily transporter ATP-binding subunit
+cgMLST V1	b0496 (ybbP)	putative ABC transporter permease
+cgMLST V1	b0490 (fetA)	"iron exporter, ATP-binding subunit, ABC transporter FetAB subunit; peroxide resistance protein"
+cgMLST V1	b0491 (fetB)	"iron exporter permease subunit, ABC transporter FetAB; peroxide resistance protein"
+cgMLST V1	b0492 (ybbN)	"DnaK co-chaperone, thioredoxin-like protein"
+cgMLST V1	b0493 (ybbO)	putative oxidoreductase
+cgMLST V1	b3149 (diaA)	DnaA initiator-associating factor for replication initiation
+cgMLST V1	b3148 (yraN)	UPF0102 family protein
+cgMLST V1	b3147 (lpoA)	OM lipoprotein stimulator of MrcA transpeptidase
+cgMLST V1	b1664 (ydhQ)	autotransporter adhesin-related protein
+cgMLST V1	b2239 (glpQ)	periplasmic glycerophosphodiester phosphodiesterase
+cgMLST V1	b2236 (yfaE)	ferredoxin involved with ribonucleotide reductase diferric-tyrosyl radical (Y*) cofactor maintenance
+cgMLST V1	b2237 (inaA)	acid-inducible Kdo/WaaP family putative kinase
+cgMLST V1	b2232 (ubiG)	bifunctional 3-demethylubiquinone-9 3-methyltransferase/2-octaprenyl-6-hydroxy phenol methylase
+cgMLST V1	b1957 (yodC)	uncharacterized protein
+cgMLST V1	b1958 (yedI)	DUF808 family inner membrane protein
+cgMLST V1	b1959 (yedA)	"amino acid exporter for phenylalanine, threonine"
+cgMLST V1	b3034 (nudF)	ADP-ribose pyrophosphatase
+cgMLST V1	b2007 (yeeX)	UPF0265 family protein
+cgMLST V1	b1000 (cbpA)	DnaK co-chaperone; curved DNA-binding protein
+cgMLST V1	b1002 (agp)	glucose-1-phosphatase/inositol phosphatase
+cgMLST V1	b1003 (yccJ)	uncharacterized protein
+cgMLST V1	b4238 (nrdD)	anaerobic ribonucleoside-triphosphate reductase
+cgMLST V1	b4239 (treC)	trehalose-6-P hydrolase
+cgMLST V1	b0759 (galE)	UDP-galactose-4-epimerase
+cgMLST V1	b0758 (galT)	galactose-1-phosphate uridylyltransferase
+cgMLST V1	b4230 (ytfT)	inner membrane putative ABC superfamily sugar transporter permease
+cgMLST V1	b4232 (fbp)	"fructose-1,6-bisphosphatase I "
+cgMLST V1	b4233 (mpl)	UDP-N-acetylmuramate:L-alanyl-gamma-D-glutamyl-meso-diaminopimelate ligase
+cgMLST V1	b0757 (galK)	galactokinase
+cgMLST V1	b4235 (pmbA)	putative antibiotic peptide MccB17 maturation peptidase
+cgMLST V1	b0755 (gpmA)	phosphoglyceromutase 1
+cgMLST V1	b4237 (nrdG)	anaerobic ribonucleotide reductase activating protein
+cgMLST V1	b3519 (treF)	cytoplasmic trehalase
+cgMLST V1	b3510 (hdeA)	stress response protein acid-resistance protein
+cgMLST V1	b3511 (hdeD)	acid-resistance membrane protein
+cgMLST V1	b3512 (gadE)	gad regulon transcriptional activator
+cgMLST V1	b3515 (gadW)	transcriptional activator of gadA and gadBC; repressor of gadX
+cgMLST V1	b4173 (hflX)	"GTPase, stimulated by 50S subunit binding"
+cgMLST V1	b4172 (hfq)	"global sRNA chaperone; HF-I, host factor for RNA phage Q beta replication"
+cgMLST V1	b4171 (miaA)	delta(2)-isopentenylpyrophosphate tRNA-adenosine transferase
+cgMLST V1	b4170 (mutL)	methyl-directed mismatch repair protein
+cgMLST V1	b4177 (purA)	adenylosuccinate synthetase
+cgMLST V1	b4176 (yjeT)	DUF2065 family protein
+cgMLST V1	b4175 (hflC)	modulator for HflB protease specific for phage lambda cII repressor
+cgMLST V1	b4174 (hflK)	modulator for HflB protease specific for phage lambda cII repressor
+cgMLST V1	b4179 (rnr)	"exoribonuclease R, RNase R "
+cgMLST V1	b4178 (nsrR)	nitric oxide-sensitive repressor for NO regulon
+cgMLST V1	b1764 (selD)	selenophosphate synthase
+cgMLST V1	b1767 (ansA)	cytoplasmic L-asparaginase 1
+cgMLST V1	b3253 (acuI)	putative acryloyl-CoA reductase
+cgMLST V1	b3252 (csrD)	targeting factor for csrBC sRNA degradation
+cgMLST V1	b3251 (mreB)	"cell wall structural complex MreBCD, actin-like component MreB"
+cgMLST V1	b3250 (mreC)	cell wall structural complex MreBCD transmembrane component MreC
+cgMLST V1	b3257 (yhdT)	DUF997 family putative inner membrane protein
+cgMLST V1	b3256 (accC)	"acetyl-CoA carboxylase, biotin carboxylase subunit "
+cgMLST V1	b3259 (prmA)	methyltransferase for 50S ribosomal subunit protein L11
+cgMLST V1	b3258 (panF)	pantothenate:sodium symporter
+cgMLST V1	b1638 (pdxH)	pyridoxine 5'-phosphate oxidase
+cgMLST V1	b1631 (rsxG)	SoxR iron-sulfur cluster reduction factor component; putative membrane protein of electron transport complex
+cgMLST V1	b1637 (tyrS)	tyrosyl-tRNA synthetase
+cgMLST V1	b1634 (dtpA)	dipeptide and tripeptide permease A
+cgMLST V1	b4379 (yjjW)	putative pyruvate formate lyase activating enzyme
+cgMLST V1	b4374 (yjjG)	dUMP phosphatase
+cgMLST V1	b4377 (yjjU)	putative patatin-like family phospholipase
+cgMLST V1	b4376 (osmY)	periplasmic protein
+cgMLST V1	b4371 (rsmC)	"16S rRNA m(2)G1207 methyltransferase, SAM-dependent "
+cgMLST V1	b4373 (rimI)	ribosomal-protein-S18-alanine N-acetyltransferase
+cgMLST V1	b4372 (holD)	"DNA polymerase III, psi subunit "
+cgMLST V1	b4705 (mntS)	"Mn(2)-response protein, MntR-repressed"
+cgMLST V1	b3729 (glmS)	L-glutamine:D-fructose-6-phosphate aminotransferase
+cgMLST V1	b3728 (pstS)	"periplasmic phosphate binding protein, high-affinity"
+cgMLST V1	b3727 (pstC)	phosphate transporter subunit
+cgMLST V1	b3726 (pstA)	phosphate transporter subunit
+cgMLST V1	b3725 (pstB)	phosphate transporter subunit
+cgMLST V1	b2295 (yfbV)	UPF0208 family inner membrane protein
+cgMLST V1	b0849 (grxA)	"glutaredoxin 1, redox coenzyme for ribonucleotide reductase (RNR1a)"
+cgMLST V1	b0848 (ybjM)	inner membrane protein
+cgMLST V1	b0843 (ybjH)	uncharacterized protein
+cgMLST V1	b0842 (mdfA)	multidrug efflux system protein
+cgMLST V1	b0841 (ybjG)	undecaprenyl pyrophosphate phosphatase
+cgMLST V1	b0840 (deoR)	deoxyribose-5-phosphate-inducible deoxyribose operon transcriptional repressor; repressor of nupG and tsx
+cgMLST V1	b0847 (ybjL)	putative transporter
+cgMLST V1	b0846 (rcdA)	transcriptional regulator of csgD and ybiJI; autoregulator
+cgMLST V1	b0845 (ybjJ)	putative transporter
+cgMLST V1	b0844 (ybjI)	5-amino-6-(5-phospho-D-ribitylamino)uracil phosphatase; pyrimidine phosphatase; riboflavin synthesis
+cgMLST V1	b0593 (entC)	isochorismate synthase 1
+cgMLST V1	b0592 (fepB)	iron-enterobactin transporter subunit
+cgMLST V1	b0594 (entE)	"2,3-dihydroxybenzoate-AMP ligase component of enterobactin synthase multienzyme complex "
+cgMLST V1	b0597 (entH)	enterobactin synthesis proofreading thioesterase
+cgMLST V1	b0596 (entA)	"2,3-dihydro-2,3-dihydroxybenzoate dehydrogenase "
+cgMLST V1	b0599 (ybdH)	putative oxidoreductase
+cgMLST V1	b3028 (mdaB)	NADPH quinone reductase
+cgMLST V1	b3029 (ygiN)	quinol monooxygenase
+cgMLST V1	b3023 (ygiV)	transcriptional repressor for mcbR biofilm gene
+cgMLST V1	b3024 (ygiW)	hydrogen peroxide and cadmium resistance periplasmic protein; stress-induced OB-fold protein
+cgMLST V1	b3025 (qseB)	quorum sensing DNA-binding response regulator in two-component regulatory system with QseC
+cgMLST V1	b3026 (qseC)	quorum sensing sensory histidine kinase in two-component regulatory system with QseB
+cgMLST V1	b3688 (yidQ)	DUF1375 family outer membrane protein
+cgMLST V1	b3689 (yidR)	DUF3748 family protein
+cgMLST V1	b3685 (yidE)	putative transporter
+cgMLST V1	b3686 (ibpB)	heat shock chaperone
+cgMLST V1	b3687 (ibpA)	heat shock chaperone
+cgMLST V1	b2379 (alaC)	valine-pyruvate aminotransferase 3
+cgMLST V1	b2378 (lpxP)	palmitoleoyl-acyl carrier protein (ACP)-dependent acyltransferase
+cgMLST V1	b2377 (yfdY)	DUF2545 family putative inner membrane protein
+cgMLST V1	b3972 (murB)	"UDP-N-acetylenolpyruvoylglucosamine reductase, FAD-binding "
+cgMLST V1	b3973 (birA)	"bifunctional biotin-[acetylCoA carboxylase] holoenzyme synthetase/DNA-binding transcriptional repressor, bio-5'-AMP-binding "
+cgMLST V1	b3974 (coaA)	pantothenate kinase
+cgMLST V1	b2081 (yegQ)	putative peptidase
+cgMLST V1	b2080 (yegP)	UPF0339 family protein
+cgMLST V1	b2086 (yegS)	"phosphatidylglycerol kinase, metal-dependent"
+cgMLST V1	b1853 (yebK)	putative DNA-binding transcriptional regulator
+cgMLST V1	b1852 (zwf)	glucose-6-phosphate 1-dehydrogenase
+cgMLST V1	b1851 (edd)	6-phosphogluconate dehydratase
+cgMLST V1	b1850 (eda)	multifunctional 2-keto-3-deoxygluconate 6-phosphate aldolase and 2-keto-4-hydroxyglutarate aldolase and oxaloacetate decarboxylase
+cgMLST V1	b1857 (znuA)	zinc transporter subunit: periplasmic-binding component of ABC superfamily
+cgMLST V1	b1856 (mepM)	"murein DD-endopeptidase, space-maker hydrolase, septation protein"
+cgMLST V1	b1855 (lpxM)	myristoyl-acyl carrier protein (ACP)-dependent acyltransferase
+cgMLST V1	b1854 (pykA)	pyruvate kinase II
+cgMLST V1	b1859 (znuB)	zinc transporter subunit: membrane component of ABC superfamily
+cgMLST V1	b1858 (znuC)	zinc transporter subunit: ATP-binding component of ABC superfamily
+cgMLST V1	b4502 (yeiW)	UPF0153 cysteine cluster protein
+cgMLST V1	b0686 (ybfF)	acyl-CoA esterase
+cgMLST V1	b2128 (yehW)	inner membrane putative ABC superfamily transporter permease
+cgMLST V1	b2129 (yehX)	putative ABC superfamily transporter ATP-binding subunit
+cgMLST V1	b2126 (yehU)	inner membrane putative sensory kinase in two-component system with YehT
+cgMLST V1	b2124 (yehS)	DUF1456 family protein
+cgMLST V1	b2125 (yehT)	putative response regulator in two-component system withYehU
+cgMLST V1	b0142 (folK)	2-amino-4-hydroxy-6-hydroxymethyldihyropteridine pyrophosphokinase
+cgMLST V1	b0143 (pcnB)	poly(A) polymerase
+cgMLST V1	b0146 (sfsA)	sugar fermentation stimulation protein A
+cgMLST V1	b0147 (ligT)	2'-5' RNA ligase
+cgMLST V1	b0144 (gluQ)	glutamyl-Q tRNA(Asp) synthetase
+cgMLST V1	b0145 (dksA)	"transcriptional regulator of rRNA transcription, DnaK suppressor protein"
+cgMLST V1	b0148 (hrpB)	putative ATP-dependent helicase
+cgMLST V1	b0149 (mrcB)	fused glycosyl transferase and transpeptidase
+cgMLST V1	b3996 (nudC)	NADH pyrophosphatase
+cgMLST V1	b1376 (uspF)	"stress-induced protein, ATP-binding protein"
+cgMLST V1	b0425 (panE)	"2-dehydropantoate reductase, NADPH-specific "
+cgMLST V1	b0424 (yajL)	oxidative-stress-resistance chaperone
+cgMLST V1	b0426 (yajQ)	"phage Phi6 host factor, ATP/GTP binding protein"
+cgMLST V1	b0421 (ispA)	geranyltranstransferase
+cgMLST V1	b0420 (dxs)	"1-deoxyxylulose-5-phosphate synthase, thiamine triphosphate-binding, FAD-requiring "
+cgMLST V1	b0422 (xseB)	exonuclease VII small subunit
+cgMLST V1	b0429 (cyoD)	cytochrome o ubiquinol oxidase subunit IV
+cgMLST V1	b0428 (cyoE)	protoheme IX farnesyltransferase
+cgMLST V1	b3198 (kdsC)	3-deoxy-D-manno-octulosonate 8-phosphate phosphatase
+cgMLST V1	b3199 (lptC)	"lipopolysaccharide export, IM-tethered periplasmic protein of the LptBFGC export complex"
+cgMLST V1	b3194 (mlaE)	"ABC transporter maintaining OM lipid asymmetry, inner membrane permease protein"
+cgMLST V1	b3195 (mlaF)	"ABC transporter maintaining OM lipid asymmetry, ATP-binding protein"
+cgMLST V1	b3196 (yrbG)	putative calcium/sodium:proton antiporter
+cgMLST V1	b3197 (kdsD)	D-arabinose 5-phosphate isomerase
+cgMLST V1	b3190 (ibaG)	"acid stress protein; putative transcriptional regulator, BolA family"
+cgMLST V1	b3191 (mlaB)	"ABC transporter maintaining OM lipid asymmetry, cytoplasmic STAS component"
+cgMLST V1	b3192 (mlaC)	"ABC transporter maintaining OM lipid asymmetry, periplasmic binding protein"
+cgMLST V1	b3193 (mlaD)	"ABC transporter maintaining OM lipid asymmetry, anchored periplasmic binding protein"
+cgMLST V1	b3448 (yhhA)	DUF2756 family protein
+cgMLST V1	b3449 (ugpQ)	"glycerophosphodiester phosphodiesterase, cytosolic "
+cgMLST V1	b3440 (yhhX)	putative oxidoreductase
+cgMLST V1	b2711 (norW)	NADH:flavorubredoxin oxidoreductase
+cgMLST V1	b2710 (norV)	anaerobic nitric oxide reductase flavorubredoxin
+cgMLST V1	b2713 (hydN)	"formate dehydrogenase-H, [4Fe-4S] ferredoxin subunit"
+cgMLST V1	b0169 (rpsB)	30S ribosomal subunit protein S2
+cgMLST V1	b1174 (minE)	cell division topological specificity factor
+cgMLST V1	b1175 (minD)	membrane ATPase of the MinC-MinD-MinE system
+cgMLST V1	b1176 (minC)	cell division inhibitor
+cgMLST V1	b1179 (ycgL)	UPF0745 family protein
+cgMLST V1	b4522 (ymiA)	uncharacterized protein
+cgMLST V1	b4523 (yciX)	uncharacterized protein
+cgMLST V1	b4529 (ydbJ)	DUF333 family putative lipoprotein
+cgMLST V1	b3604 (lldR)	dual role activator/repressor for lldPRD operon
+cgMLST V1	b3605 (lldD)	"L-lactate dehydrogenase, FMN-linked "
+cgMLST V1	b3606 (trmL)	"tRNA Leu mC34,mU34 2'-O-methyltransferase, SAM-dependent"
+cgMLST V1	b3607 (cysE)	serine acetyltransferase
+cgMLST V1	b3600 (mtlD)	"mannitol-1-phosphate dehydrogenase, NAD-dependent "
+cgMLST V1	b3601 (mtlR)	mannitol operon repressor
+cgMLST V1	b3602 (yibL)	ribosome-associated DUF2810 family protein
+cgMLST V1	b3603 (lldP)	L-lactate permease
+cgMLST V1	b3608 (gpsA)	glycerol-3-phosphate dehydrogenase (NAD+)
+cgMLST V1	b3609 (secB)	protein export chaperone
+cgMLST V1	b2957 (ansB)	periplasmic L-asparaginase 2
+cgMLST V1	b2829 (ptsP)	fused PTS enzyme: PEP-protein phosphotransferase (enzyme I)/GAF domain containing protein
+cgMLST V1	b2828 (lgt)	phosphatidylglycerol-prolipoprotein diacylglyceryl transferase
+cgMLST V1	b2827 (thyA)	thymidylate synthetase
+cgMLST V1	b2826 (ppdA)	putative prepilin peptidase-dependent protein
+cgMLST V1	b2825 (ppdB)	putative prepilin peptidase-dependent protein
+cgMLST V1	b2824 (ygdB)	DUF2509 family protein
+cgMLST V1	b2823 (ppdC)	putative prepilin peptidase-dependent protein
+cgMLST V1	b2822 (recC)	"exonuclease V (RecBCD complex), gamma chain "
+cgMLST V1	b2821 (ptrA)	protease III
+cgMLST V1	b2820 (recB)	"exonuclease V (RecBCD complex), beta subunit "
+cgMLST V1	b1707 (ydiV)	"anti-FlhD4C2 factor, inactive EAL family phosphodiesterase"
+cgMLST V1	b1706 (ydiU)	UPF0061 family protein
+cgMLST V1	b1705 (ydiE)	hemin uptake protein HemP homolog
+cgMLST V1	b1704 (aroH)	"3-deoxy-D-arabino-heptulosonate-7-phosphate synthase, tryptophan repressible "
+cgMLST V1	b1703 (ppsR)	bifunctional regulatory protein: PEP synthase kinase and PEP synthase pyrophosphorylase
+cgMLST V1	b1702 (ppsA)	phosphoenolpyruvate synthase
+cgMLST V1	b1709 (btuD)	vitamin B12 transporter subunit : ATP-binding component of ABC superfamily
+cgMLST V1	b1708 (nlpC)	putative C40 clan peptidase lipoprotein
+cgMLST V1	b0077 (ilvI)	acetolactate synthase 3 large subunit
+cgMLST V1	b0074 (leuA)	2-isopropylmalate synthase
+cgMLST V1	b0075 (leuL)	leu operon leader peptide
+cgMLST V1	b0072 (leuC)	3-isopropylmalate dehydratase large subunit
+cgMLST V1	b0073 (leuB)	"3-isopropylmalate dehydrogenase, NAD(+)-dependent "
+cgMLST V1	b0071 (leuD)	3-isopropylmalate dehydratase small subunit
+cgMLST V1	b0078 (ilvH)	"acetolactate synthase 3, small subunit, valine-sensitive "
+cgMLST V1	b3836 (tatA)	TatABCE protein translocation system subunit
+cgMLST V1	b3832 (rmuC)	DNA recombination protein
+cgMLST V1	b3839 (tatC)	TatABCE protein translocation system subunit
+cgMLST V1	b3838 (tatB)	TatABCE protein translocation system subunit
+cgMLST V1	b0915 (lpxK)	lipid A 4'kinase
+cgMLST V1	b0917 (ycaR)	"peroxide and acid resistance protein, UPF0434 family"
+cgMLST V1	b0916 (ycaQ)	DUF1006 family protein with C-terminal wHTH domain
+cgMLST V1	b0910 (cmk)	cytidylate kinase
+cgMLST V1	b0912 (ihfB)	"integration host factor (IHF), DNA-binding protein, beta subunit"
+cgMLST V1	b0919 (ycbJ)	protein kinase-like domain protein
+cgMLST V1	b0918 (kdsB)	3-deoxy-manno-octulosonate cytidylyltransferase
+cgMLST V1	b3733 (atpG)	"F1 sector of membrane-bound ATP synthase, gamma subunit "
+cgMLST V1	b2988 (gss)	fused glutathionylspermidine amidase/glutathionylspermidine synthetase
+cgMLST V1	b2989 (yghU)	putative S-transferase
+cgMLST V1	b3115 (tdcD)	"propionate kinase/acetate kinase C, anaerobic "
+cgMLST V1	b3116 (tdcC)	L-threonine/L-serine transporter
+cgMLST V1	b3113 (tdcF)	putative reactive intermediate deaminase
+cgMLST V1	b3118 (tdcA)	tdc operon transcriptional activator
+cgMLST V1	b3119 (tdcR)	L-threonine dehydratase operon activator protein
+cgMLST V1	b2799 (fucO)	"L-1,2-propanediol oxidoreductase "
+cgMLST V1	b2798 (ygdG)	"Ssb-binding protein, misidentified as ExoIX "
+cgMLST V1	b2795 (ygdH)	UPF0717 family protein
+cgMLST V1	b2794 (queF)	7-cyano-7-deazaguanine reductase (NADPH-dependent)
+cgMLST V1	b2796 (sdaC)	putative serine transporter
+cgMLST V1	b2791 (truC)	"tRNA(Ile1,Asp) pseudouridine(65) synthase "
+cgMLST V1	b2790 (yqcA)	"short-chain flavodoxin, FMN-binding"
+cgMLST V1	b2793 (syd)	SecY-interacting protein
+cgMLST V1	b2792 (yqcC)	DUF446 family protein
+cgMLST V1	b2234 (nrdA)	"ribonucleoside-diphosphate reductase 1, alpha subunit "
+cgMLST V1	b2235 (nrdB)	"ribonucleoside-diphosphate reductase 1, beta subunit, ferritin-like protein "
+cgMLST V1	b2231 (gyrA)	"DNA gyrase (type II topoisomerase), subunit A "
+cgMLST V1	b0628 (lipA)	lipoate synthase
+cgMLST V1	b0624 (flc)	"fluoride efflux channel, dual topology membrane protein"
+cgMLST V1	b2559 (tadA)	tRNA-specific adenosine deaminase
+cgMLST V1	b2558 (mltF)	"membrane-bound lytic transglycosylase F, murein hydrolase"
+cgMLST V1	b2557 (purL)	phosphoribosylformyl-glycineamide synthetase
+cgMLST V1	b2556 (glrK)	sensor protein kinase regulating glmY sRNA in two-component system with response regulator GlrR
+cgMLST V1	b2555 (yfhG)	putative outer membrane protein modulating the QseEF response
+cgMLST V1	b2552 (hmp)	fused nitric oxide dioxygenase/dihydropteridine reductase 2
+cgMLST V1	b2551 (glyA)	serine hydroxymethyltransferase
+cgMLST V1	b2550 (yphH)	putative DNA-binding transcriptional regulator
+cgMLST V1	b0794 (ybhF)	putative transporter subunit of ABC superfamily: ATP-binding component
+cgMLST V1	b1237 (hns)	global DNA-binding transcriptional dual regulator H-NS
+cgMLST V1	b1236 (galU)	glucose-1-phosphate uridylyltransferase
+cgMLST V1	b1235 (rssB)	PcnB-degradosome interaction factor; response regulator
+cgMLST V1	b1234 (rssA)	putative patatin-like family phospholipase
+cgMLST V1	b1233 (ychJ)	UPF0225 family protein
+cgMLST V1	b1232 (purU)	formyltetrahydrofolate hydrolase
+cgMLST V1	b1238 (tdk)	thymidine kinase/deoxyuridine kinase
+cgMLST V1	b4046 (zur)	"transcriptional repressor, Zn(II)-binding"
+cgMLST V1	b4045 (yjbJ)	"stress-induced protein, UPF0337 family"
+cgMLST V1	b4044 (dinF)	oxidative stress resistance protein; putative MATE family efflux pump; UV and mitomycin C inducible protein
+cgMLST V1	b4043 (lexA)	transcriptional repressor of SOS regulon
+cgMLST V1	b4041 (plsB)	glycerol-3-phosphate O-acyltransferase
+cgMLST V1	b1952 (dsrB)	uncharacterized protein
+cgMLST V1	b1953 (yodD)	uncharacterized protein
+cgMLST V1	b3091 (uxaA)	altronate hydrolase
+cgMLST V1	b3093 (exuT)	hexuronate transporter
+cgMLST V1	b3092 (uxaC)	uronate isomerase
+cgMLST V1	b3095 (yqjA)	general envelope maintenance protein; DedA family inner membrane protein
+cgMLST V1	b3094 (exuR)	hexuronate regulon transcriptional repressor; autorepressor
+cgMLST V1	b3097 (yqjC)	DUF1090 family putative periplasmic protein
+cgMLST V1	b3096 (mzrA)	modulator of EnvZ/OmpR regulon
+cgMLST V1	b3321 (rpsJ)	30S ribosomal subunit protein S10
+cgMLST V1	b3320 (rplC)	50S ribosomal subunit protein L3
+cgMLST V1	b1056 (yceI)	secreted protein
+cgMLST V1	b1033 (ghrA)	glyoxylate/hydroxypyruvate reductase A
+cgMLST V1	b1035 (ycdY)	redox enzyme maturation protein (REMP) chaperone for YcdX
+cgMLST V1	b1034 (ycdX)	alkaline phosphatase
+cgMLST V1	b1036 (ycdZ)	DUF1097 family inner membrane protein
+cgMLST V1	b0780 (ybhK)	putative NAD(P)-binding transferase
+cgMLST V1	b0781 (moaA)	molybdopterin biosynthesis protein A
+cgMLST V1	b4203 (rplI)	50S ribosomal subunit protein L9
+cgMLST V1	b0783 (moaC)	"molybdopterin biosynthesis, protein C"
+cgMLST V1	b0784 (moaD)	"molybdopterin synthase, small subunit"
+cgMLST V1	b0785 (moaE)	"molybdopterin synthase, large subunit"
+cgMLST V1	b0786 (ybhL)	UPF0005 family inner membrane protein
+cgMLST V1	b4206 (ytfB)	OapA family protein
+cgMLST V1	b4209 (ytfE)	iron-sulfur cluster repair protein RIC
+cgMLST V1	b1789 (yeaL)	UPF0756 family putative inner membrane protein
+cgMLST V1	b1788 (yoaI)	uncharacterized protein
+cgMLST V1	b1787 (yeaK)	aminoacyl-tRNA editing domain protein
+cgMLST V1	b1782 (mipA)	scaffolding protein for murein synthesizing machinery
+cgMLST V1	b1781 (yeaE)	"aldo-keto reductase, methylglyoxal to acetol, NADPH-dependent"
+cgMLST V1	b1780 (yeaD)	D-hexose-6-phosphate epimerase-like protein
+cgMLST V1	b1728 (ydjM)	inner membrane protein regulated by LexA
+cgMLST V1	b3521 (yhjC)	LysR family putative transcriptional regulator
+cgMLST V1	b3520 (yhjB)	putative DNA-binding transcriptional response regulator
+cgMLST V1	b3523 (yhjE)	MFS superfamily sugar transport 1 family protein
+cgMLST V1	b3522 (yhjD)	inner membrane putative BrbK family alternate lipid exporter
+cgMLST V1	b3525 (yhjH)	"cyclic-di-GMP phosphodiesterase, FlhDC-regulated"
+cgMLST V1	b3527 (yhjJ)	putative periplasmic M16 family chaperone
+cgMLST V1	b3526 (kdgK)	2-dehydro-3-deoxygluconokinase
+cgMLST V1	b3529 (yhjK)	cyclic-di-GMP phosphodiesterase
+cgMLST V1	b3528 (dctA)	"C4-dicarboxylic acid, orotate and citrate transporter"
+cgMLST V1	b2690 (yqaB)	fructose-1-P and 6-phosphogluconate phosphatase
+cgMLST V1	b2696 (csrA)	pleiotropic regulatory protein for carbon source metabolism
+cgMLST V1	b2697 (alaS)	alanyl-tRNA synthetase
+cgMLST V1	b2698 (recX)	regulatory protein for RecA
+cgMLST V1	b2699 (recA)	DNA recombination and repair protein; ssDNA-dependent ATPase; synaptase; ssDNA and dsDNA binding protein forming filaments; ATP-dependent homologous DNA strand exchanger; recombinase A; LexA autocleavage cofactor
+cgMLST V1	b0999 (cbpM)	modulator of CbpA co-chaperone
+cgMLST V1	b0995 (torR)	response regulator in two-component regulatory system with TorS
+cgMLST V1	b0996 (torC)	"trimethylamine N-oxide (TMAO) reductase I, cytochrome c-type subunit"
+cgMLST V1	b2908 (pepP)	proline aminopeptidase P II
+cgMLST V1	b2909 (ygfB)	UPF0149 family protein
+cgMLST V1	b2900 (yqfB)	UPF0267 family protein
+cgMLST V1	b2901 (bglA)	6-phospho-beta-glucosidase A
+cgMLST V1	b2904 (gcvH)	glycine cleavage complex lipoylprotein
+cgMLST V1	b2905 (gcvT)	"aminomethyltransferase, tetrahydrofolate-dependent, subunit (T protein) of glycine cleavage complex "
+cgMLST V1	b2906 (ubiI)	"2-octaprenylphenol hydroxylase, FAD-dependent"
+cgMLST V1	b2907 (ubiH)	"2-octaprenyl-6-methoxyphenol hydroxylase, FAD/NAD(P)-binding "
+cgMLST V1	b1596 (ynfM)	putative arabinose efflux transporter
+cgMLST V1	b1597 (asr)	acid shock-inducible periplasmic protein
+cgMLST V1	b1592 (clcB)	H(+)/Cl(-) exchange transporter
+cgMLST V1	b1593 (ynfK)	putative dethiobiotin synthetase
+cgMLST V1	b1591 (dmsD)	twin-argninine leader-binding protein for DmsA and TorA
+cgMLST V1	b4410 (ecnA)	"entericidin A membrane lipoprotein, antidote entericidin B"
+cgMLST V1	b4411 (ecnB)	entericidin B membrane lipoprotein
+cgMLST V1	b0241 (phoE)	outer membrane phosphoporin protein E
+cgMLST V1	b0243 (proA)	gamma-glutamylphosphate reductase
+cgMLST V1	b0242 (proB)	gamma-glutamate kinase
+cgMLST V1	b2249 (yfaY)	inactive PncC family protein
+cgMLST V1	b2242 (glpB)	"sn-glycerol-3-phosphate dehydrogenase (anaerobic), membrane anchor subunit "
+cgMLST V1	b2241 (glpA)	"sn-glycerol-3-phosphate dehydrogenase (anaerobic), large subunit, FAD/NAD(P)-binding "
+cgMLST V1	b2240 (glpT)	sn-glycerol-3-phosphate transporter
+cgMLST V1	b1927 (amyA)	cytoplasmic alpha-amylase
+cgMLST V1	b1925 (fliS)	flagellar protein potentiates polymerization
+cgMLST V1	b1922 (fliA)	"RNA polymerase, sigma 28 (sigma F) factor"
+cgMLST V1	b1920 (fliY)	cystine transporter subunit
+cgMLST V1	b1929 (yedE)	UPF0394 family sulfur transport domain-containing inner membrane protein
+cgMLST V1	b1928 (yedD)	lipoprotein
+cgMLST V1	b4546 (ypeB)	DUF3820 family protein
+cgMLST V1	b4547 (ypfN)	"putative membrane protein, UPF0370 family"
+cgMLST V1	b0890 (ftsK)	DNA translocase at septal ring sorting daughter chromsomes
+cgMLST V1	b0891 (lolA)	lipoprotein chaperone
+cgMLST V1	b0892 (rarA)	DNA-dependent ATPase involved in processing recombination intermediates at replication forks
+cgMLST V1	b0893 (serS)	"seryl-tRNA synthetase, also charges selenocysteinyl-tRNA with serine "
+cgMLST V1	b0894 (dmsA)	"dimethyl sulfoxide reductase, anaerobic, subunit A "
+cgMLST V1	b0896 (dmsC)	"dimethyl sulfoxide reductase, anaerobic, subunit C "
+cgMLST V1	b0898 (ycaD)	putative MFS-type transporter
+cgMLST V1	b2153 (folE)	GTP cyclohydrolase I
+cgMLST V1	b1413 (hrpA)	putative ATP-dependent helicase
+cgMLST V1	b1412 (azoR)	"NADH-azoreductase, FMN-dependent "
+cgMLST V1	b1418 (cybB)	cytochrome b561
+cgMLST V1	b2156 (lysP)	lysine transporter
+cgMLST V1	b4595 (yciY)	uncharacterized protein
+cgMLST V1	b4596 (yciZ)	uncharacterized protein
+cgMLST V1	b4592 (cbdX)	putative cytochrome bd-II oxidase subunit
+cgMLST V1	b4598 (yncL)	stress-induced small inner membrane enterobacterial protein
+cgMLST V1	b4620 (yjbT)	putative periplasmic protein
+cgMLST V1	b3011 (yqhD)	"aldehyde reductase, NADPH-dependent"
+cgMLST V1	b3010 (yqhC)	transcriptional activator of yqhD
+cgMLST V1	b3012 (dkgA)	"2,5-diketo-D-gluconate reductase A "
+cgMLST V1	b3014 (yqhH)	"outer membrane lipoprotein, Lpp paralog"
+cgMLST V1	b3017 (ftsP)	septal ring component that protects the divisome from stress; multicopy suppressor of ftsI(Ts)
+cgMLST V1	b3019 (parC)	"DNA topoisomerase IV, subunit A "
+cgMLST V1	b3018 (plsC)	1-acyl-sn-glycerol-3-phosphate acyltransferase
+cgMLST V1	b0393 (rdgC)	nucleoid-associated ssDNA and dsDNA binding protein; competitive inhibitor of RecA function
+cgMLST V1	b0390 (aroM)	AroM family protein
+cgMLST V1	b3906 (rhaR)	transcriptional activator of rhaSR
+cgMLST V1	b3905 (rhaS)	transcriptional activator of rhaBAD and rhaT
+cgMLST V1	b3908 (sodA)	"superoxide dismutase, Mn "
+cgMLST V1	b1185 (dsbB)	oxidoreductase that catalyzes reoxidation of DsbA protein disulfide isomerase I
+cgMLST V1	b0856 (potH)	putrescine transporter subunit: membrane component of ABC superfamily
+cgMLST V1	b0708 (phr)	"deoxyribodipyrimidine photolyase, FAD-binding "
+cgMLST V1	b0709 (dtpD)	dipeptide and tripeptide permease D
+cgMLST V1	b0707 (ybgA)	DUF1722 family protein
+cgMLST V1	b2618 (ratB)	UPF0125 family protein
+cgMLST V1	b2619 (ratA)	toxic UPF0083 family protein inhibitor of 70S ribosome formation
+cgMLST V1	b2610 (ffh)	Signal Recognition Particle (SRP) component with 4.5S RNA (ffs)
+cgMLST V1	b2611 (ypjD)	cytochrome c assembly protein family inner membrane protein
+cgMLST V1	b2615 (nadK)	NAD kinase
+cgMLST V1	b2616 (recN)	recombination and repair protein
+cgMLST V1	b2617 (bamE)	lipoprotein component of BamABCDE OM biogenesis complex
+cgMLST V1	ECs4266 (glpR)	DNA-binding transcriptional repressor GlpR
+cgMLST V1	b4123 (dcuB)	"C4-dicarboxylate transporter, anaerobic; DcuS co-sensor"
+cgMLST V1	b4124 (dcuR)	response regulator in two-component regulatory system with DcuS
+cgMLST V1	b4125 (dcuS)	"sensory histidine kinase in two-component regulatory system with DcuR, regulator of anaerobic fumarate respiration"
+cgMLST V1	NCTC12129_01305 (argT)	lysine/arginine/ornithine transport system substrate-binding protein
+cgMLST V1	b3200 (lptA)	periplasmic LPS-binding protein
+cgMLST V1	b3201 (lptB)	lipopolysaccharide export ABC transporter ATP-binding protein of the LptBFGC export complex
+cgMLST V1	b3202 (rpoN)	"RNA polymerase, sigma 54 (sigma N) factor"
+cgMLST V1	b3203 (hpf)	ribosome hibernation promoting factor HPF; stabilizes 70S dimers (100S)
+cgMLST V1	b3204 (ptsN)	sugar-specific enzyme IIA component of PTS
+cgMLST V1	b3205 (yhbJ)	adaptor protein RapZ for GlmZ/GlmY sRNA decay; glucosamine-6-phosphate regulated; NTPase
+cgMLST V1	b3206 (npr)	phosphohistidinoprotein-hexose phosphotransferase component of N-regulated PTS system (Npr)
+cgMLST V1	b3207 (yrbL)	Mg(2+)-starvation-stimulated protein
+cgMLST V1	b3208 (mtgA)	biosynthetic peptidoglycan transglycosylase
+cgMLST V1	b3209 (elbB)	isoprenoid biosynthesis protein with amidotransferase-like domain
+cgMLST V1	b2152 (yeiB)	DUF418 family putative inner membrane protein
+cgMLST V1	b2151 (galS)	galactose- and fucose-inducible galactose regulon transcriptional isorepressor; mgl operon transcriptional repressor; autorepressor
+cgMLST V1	b2150 (mglB)	methyl-galactoside transporter subunit
+cgMLST V1	b2157 (yeiE)	putative DNA-binding transcriptional regulator
+cgMLST V1	b2159 (nfo)	endonuclease IV with intrinsic 3'-5' exonuclease activity
+cgMLST V1	b2158 (yeiH)	UPF0324 family inner membrane protein
+cgMLST V1	b4322 (uxuA)	mannonate hydrolase
+cgMLST V1	b4324 (uxuR)	fructuronate-inducible hexuronate regulon transcriptional repressor; autorepressor
+cgMLST V1	b1669 (ydhT)	"FNR, Nar, NarP-regulated protein; putative subunit of YdhYVWXUT oxidoreductase complex"
+cgMLST V1	b1660 (ydhC)	putative arabinose efflux transporter
+cgMLST V1	b1661 (cfa)	cyclopropane fatty acyl phospholipid synthase (unsaturated-phospholipid methyltransferase)
+cgMLST V1	b1662 (ribC)	"riboflavin synthase, alpha subunit "
+cgMLST V1	b1663 (mdtK)	multidrug efflux system transporter
+cgMLST V1	b1667 (ydhR)	putative monooxygenase
+cgMLST V1	b0133 (panC)	pantothenate synthetase
+cgMLST V1	b0131 (panD)	aspartate 1-decarboxylase
+cgMLST V1	b0130 (yadE)	putative polysaccharide deacetylase lipoprotein
+cgMLST V1	b0134 (panB)	3-methyl-2-oxobutanoate hydroxymethyltransferase
+cgMLST V1	b3614 (yibQ)	putative polysaccharide deacetylase
+cgMLST V1	b3779 (gpp)	guanosine pentaphosphatase/exopolyphosphatase
+cgMLST V1	b3770 (ilvE)	branched-chain amino-acid aminotransferase
+cgMLST V1	b3771 (ilvD)	dihydroxyacid dehydratase
+cgMLST V1	b3772 (ilvA)	"L-threonine dehydratase, biosynthetic; also known as threonine deaminase "
+cgMLST V1	b3774 (ilvC)	"ketol-acid reductoisomerase, NAD(P)-binding "
+cgMLST V1	b3775 (ppiC)	peptidyl-prolyl cis-trans isomerase C (rotamase C)
+cgMLST V1	b2428 (murQ)	N-acetylmuramic acid 6-phosphate (MurNAc-6-P) etherase
+cgMLST V1	b2423 (cysW)	sulfate/thiosulfate ABC transporter subunit
+cgMLST V1	b2422 (cysA)	sulfate/thiosulfate transporter subunit
+cgMLST V1	b2421 (cysM)	cysteine synthase B (O-acetylserine sulfhydrolase B)
+cgMLST V1	b2426 (ucpA)	"furfural resistance protein, putative short-chain oxidoreductase"
+cgMLST V1	b2425 (cysP)	thiosulfate-binding protein
+cgMLST V1	b2424 (cysU)	sulfate/thiosulfate ABC transporter permease
+cgMLST V1	b1307 (pspD)	peripheral inner membrane phage-shock protein
+cgMLST V1	b1306 (pspC)	psp operon transcription co-activator
+cgMLST V1	b1305 (pspB)	psp operon transcription co-activator
+cgMLST V1	b1304 (pspA)	regulatory protein for phage-shock-protein operon
+cgMLST V1	b1308 (pspE)	thiosulfate:cyanide sulfurtransferase (rhodanese)
+cgMLST V1	b3433 (asd)	"aspartate-semialdehyde dehydrogenase, NAD(P)-binding "
+cgMLST V1	b3432 (glgB)	"1,4-alpha-glucan branching enzyme "
+cgMLST V1	b3431 (glgX)	glycogen debranching enzyme
+cgMLST V1	b3430 (glgC)	glucose-1-phosphate adenylyltransferase
+cgMLST V1	b3437 (gntK)	gluconate kinase 2
+cgMLST V1	b3434 (yhgN)	UPF0056 family inner membrane protein
+cgMLST V1	b3439 (yhhW)	quercetinase activity in vitro
+cgMLST V1	b3438 (gntR)	d-gluconate inducible gluconate regulon transcriptional repressor
+cgMLST V1	b4024 (lysC)	lysine-sensitive aspartokinase 3
+cgMLST V1	b4026 (yjbE)	extracellular polysaccharide production threonine-rich protein
+cgMLST V1	b4021 (pepE)	(alpha)-aspartyl dipeptidase
+cgMLST V1	b2916 (argP)	transcriptional regulator for arginine transport and DNA replication genes; replication initiation inhibitor
+cgMLST V1	b0818 (ybiR)	putative transporter
+cgMLST V1	b0819 (ldtB)	"L,D-transpeptidase linking Lpp to murein"
+cgMLST V1	b0811 (glnH)	glutamine transporter subunit
+cgMLST V1	b0813 (rhtA)	threonine and homoserine efflux system
+cgMLST V1	b0814 (ompX)	outer membrane protein X
+cgMLST V1	b0815 (ybiP)	"putative EptAB family phosphoethanolamine transferase, inner membrane protein"
+cgMLST V1	b0817 (mntR)	Mn(2+)-responsive manganese regulon transcriptional regulator
+cgMLST V1	b1492 (gadC)	glutamate:gamma-aminobutyric acid antiporter
+cgMLST V1	b1491 (yddW)	"liprotein, glycosyl hydrolase homolog"
+cgMLST V1	b4515 (cydX)	cytochrome d (bd-I) ubiquinol oxidase subunit X
+cgMLST V1	b4513 (kdpF)	potassium ion accessory transporter subunit
+cgMLST V1	b0369 (hemB)	5-aminolevulinate dehydratase (porphobilinogen synthase)
+cgMLST V1	b0366 (tauB)	taurine transporter subunit
+cgMLST V1	b0367 (tauC)	taurine transporter subunit
+cgMLST V1	b3639 (dfp)	"fused 4'-phosphopantothenoylcysteine decarboxylase/phosphopantothenoylcysteine synthetase, FMN-binding "
+cgMLST V1	b3635 (mutM)	formamidopyrimidine/5-formyluracil/5-hydroxymethyluracil DNA glycosylase
+cgMLST V1	b3634 (coaD)	pantetheine-phosphate adenylyltransferase
+cgMLST V1	b3637 (rpmB)	50S ribosomal subunit protein L28
+cgMLST V1	b3636 (rpmG)	50S ribosomal subunit protein L33
+cgMLST V1	b3631 (waaG)	glucosyltransferase I
+cgMLST V1	b3630 (waaP)	kinase that phosphorylates core heptose of lipopolysaccharide
+cgMLST V1	b3633 (waaA)	3-deoxy-D-manno-octulosonic-acid transferase (KDO transferase)
+cgMLST V1	b2328 (mepA)	murein DD-endopeptidase
+cgMLST V1	b2329 (aroC)	chorismate synthase
+cgMLST V1	b2320 (pdxB)	erythronate-4-phosphate dehydrogenase
+cgMLST V1	b2321 (flk)	putative flagella assembly protein
+cgMLST V1	b2322 (yfcJ)	putative arabinose efflux transporter
+cgMLST V1	b2323 (fabB)	3-oxoacyl-[acyl-carrier-protein] synthase I
+cgMLST V1	b2324 (mnmC)	fused 5-methylaminomethyl-2-thiouridine-forming enzyme methyltransferase and FAD-dependent demodification enzyme
+cgMLST V1	b2325 (yfcL)	uncharacterized protein
+cgMLST V1	b2326 (epmC)	Elongation Factor P Lys34 hydroxylase
+cgMLST V1	b3983 (rplK)	50S ribosomal subunit protein L11
+cgMLST V1	b3982 (nusG)	transcription termination factor
+cgMLST V1	b3981 (secE)	preprotein translocase membrane subunit
+cgMLST V1	b3987 (rpoB)	"RNA polymerase, beta subunit "
+cgMLST V1	b3986 (rplL)	50S ribosomal subunit protein L7/L12
+cgMLST V1	b3985 (rplJ)	50S ribosomal subunit protein L10
+cgMLST V1	b3984 (rplA)	50S ribosomal subunit protein L1
+cgMLST V1	b2584 (pka)	protein lysine acetyltransferase
+cgMLST V1	b2585 (pssA)	phosphatidylserine synthase (CDP-diacylglycerol-serine O-phosphatidyltransferase)
+cgMLST V1	b2586 (yfiM)	putative lipoprotein
+cgMLST V1	b2580 (ung)	uracil-DNA-glycosylase
+cgMLST V1	b2581 (yfiF)	putative methyltransferase
+cgMLST V1	b2582 (trxC)	thioredoxin 2
+cgMLST V1	b2583 (yfiP)	DTW domain protein
+cgMLST V1	b1804 (rnd)	ribonuclease D
+cgMLST V1	b1805 (fadD)	acyl-CoA synthetase (long-chain-fatty-acid--CoA ligase)
+cgMLST V1	b1806 (yeaY)	"Slp family lipoprotein, RpoE-regulated"
+cgMLST V1	b1807 (tsaB)	tRNA(ANN) t(6)A37 threonylcarbamoyladenosine modification protein; binding partner and protease for TsaD
+cgMLST V1	b1808 (yoaA)	"putative ATP-dependent helicase, DinG family"
+cgMLST V1	b1809 (yoaB)	putative reactive intermediate deaminase
+cgMLST V1	b4406 (yaeP)	UPF0253 family protein
+cgMLST V1	b4402 (yjjY)	uncharacterized protein
+cgMLST V1	b4401 (arcA)	response regulator in two-component regulatory system with ArcB or CpxA
+cgMLST V1	b4400 (creD)	inner membrane protein
+cgMLST V1	b1759 (nudG)	"CTP pyrophosphohydrolase; also hydrolyzes 2-hydroxy-dATP, 8-hydroxy-dGTP, 5-hydroxy-CTP, dCTP and 5-methyl-dCTP "
+cgMLST V1	b1756 (ynjD)	putative ABC superfamily transporter ATP-binding subunit
+cgMLST V1	b1751 (ydjY)	putative ferrodoxin-like lipoprotein
+cgMLST V1	b1752 (ydjZ)	TVP38/TMEM64 family inner membrane protein
+cgMLST V1	b1753 (ynjA)	carboxymuconolactone decarboxylase family protein
+cgMLST V1	b4409 (blr)	beta-lactam resistance membrane protein; divisome-associated protein
+cgMLST V1	b4702 (mgtL)	regulatory leader peptide for mgtA
+cgMLST V1	b4703 (pmrR)	putative membrane-bound BasS regulator
+cgMLST V1	b3288 (fmt)	10-formyltetrahydrofolate:L-methionyl-tRNA(fMet) N-formyltransferase
+cgMLST V1	b3289 (rsmB)	"16S rRNA m(5)C967 methyltransferase, SAM-dependent "
+cgMLST V1	b3280 (yrdB)	DUF1488 family protein
+cgMLST V1	b3281 (aroE)	"dehydroshikimate reductase, NAD(P)-binding "
+cgMLST V1	b3282 (tsaC)	"tRNA(ANN) t(6)A37 threonylcarbamoyladenosine modification protein, threonine-dependent ADP-forming ATPase"
+cgMLST V1	b3283 (yrdD)	putative DNA topoisomerase
+cgMLST V1	b3284 (smg)	DUF494 family putative periplasmic protein
+cgMLST V1	b3868 (glnG)	fused DNA-binding response regulator in two-component regulatory system with GlnL: response regulator/sigma54 interaction protein
+cgMLST V1	b3869 (glnL)	sensory histidine kinase in two-component regulatory system with GlnG
+cgMLST V1	b3865 (yihA)	cell division GTP-binding protein
+cgMLST V1	b3866 (yihI)	activator of Der GTPase
+cgMLST V1	b3867 (hemN)	"coproporphyrinogen III oxidase, SAM and NAD(P)H dependent, oxygen-independent "
+cgMLST V1	b3860 (dsbA)	periplasmic protein disulfide isomerase I
+cgMLST V1	b3863 (polA)	fused DNA polymerase I 5'->3' polymerase/3'->5' exonuclease/5'->3' exonuclease
+cgMLST V1	b1382 (ynbE)	lipoprotein
+cgMLST V1	b1381 (ydbH)	"putative membrane-anchored protein, function unknown"
+cgMLST V1	b1380 (ldhA)	"fermentative D-lactate dehydrogenase, NAD-dependent "
+cgMLST V1	b0478 (ybaL)	inner membrane putative NAD(P)-binding transporter
+cgMLST V1	b0472 (recR)	gap repair protein
+cgMLST V1	b0473 (htpG)	"protein refolding molecular co-chaperone Hsp90, Hsp70-dependent; heat-shock protein; ATPase"
+cgMLST V1	b0470 (dnaX)	"DNA polymerase III/DNA elongation factor III, tau and gamma subunits "
+cgMLST V1	b0471 (ybaB)	"DNA-binding protein, putative nucleoid-associated protein"
+cgMLST V1	b0477 (gsk)	inosine/guanosine kinase
+cgMLST V1	b0474 (adk)	adenylate kinase
+cgMLST V1	b0475 (hemH)	ferrochelatase
+cgMLST V1	b3125 (garR)	tartronate semialdehyde reductase
+cgMLST V1	b3127 (garP)	putative (D)-galactarate transporter
+cgMLST V1	b3126 (garL)	alpha-dehydro-beta-deoxy-D-glucarate aldolase
+cgMLST V1	b2298 (yfcC)	"putative inner membrane transporter, C4-dicarboxylate anaerobic carrier family"
+cgMLST V1	b2299 (yfcD)	putative NUDIX hydrolase
+cgMLST V1	b2294 (yfbU)	UPF0304 family protein
+cgMLST V1	b2296 (ackA)	acetate kinase A and propionate kinase 2
+cgMLST V1	b2297 (pta)	phosphate acetyltransferase
+cgMLST V1	b2290 (alaA)	valine-pyruvate aminotransferase 2
+cgMLST V1	b2291 (yfbR)	5'-nucleotidase
+cgMLST V1	b2292 (yfbS)	putative transporter
+cgMLST V1	b2293 (yfbT)	sugar phosphatas
+cgMLST V1	b2748 (ftsB)	cell division protein
+cgMLST V1	b2749 (ygbE)	DUF3561 family inner membrane protein
+cgMLST V1	b2742 (nlpD)	"activator of AmiC murein hydrolase activity, lipoprotein"
+cgMLST V1	b2743 (pcm)	L-isoaspartate protein carboxylmethyltransferase type II
+cgMLST V1	b2741 (rpoS)	"RNA polymerase, sigma S (sigma 38) factor"
+cgMLST V1	b2746 (ispF)	"2C-methyl-D-erythritol 2,4-cyclodiphosphate synthase "
+cgMLST V1	b2747 (ispD)	4-diphosphocytidyl-2C-methyl-D-erythritol synthase
+cgMLST V1	b2744 (umpG)	broad specificity 5'(3')-nucleotidase and polyphosphatase
+cgMLST V1	b2745 (truD)	tRNA(Glu) pseudouridine(13) synthase
+cgMLST V1	b0753 (ybgS)	putative periplasmic protein
+cgMLST V1	b0751 (pnuC)	nicotinamide riboside transporter
+cgMLST V1	b4234 (yjgA)	ribosome-associated UPF0307 family protein
+cgMLST V1	b0756 (galM)	aldose 1-epimerase; type-1 mutarotase
+cgMLST V1	b0674 (asnB)	asparagine synthetase B
+cgMLST V1	b0675 (umpH)	UMP phosphatase
+cgMLST V1	b0676 (nagC)	N-acetylglucosamine-inducible nag divergent operon transcriptional repressor
+cgMLST V1	b0677 (nagA)	N-acetylglucosamine-6-phosphate deacetylase
+cgMLST V1	b0678 (nagB)	glucosamine-6-phosphate deaminase
+cgMLST V1	b0679 (nagE)	"fused N-acetyl glucosamine specific PTS enzyme: IIC, IIB, and IIA components "
+cgMLST V1	b2504 (yfgG)	uncharacterized protein
+cgMLST V1	b2505 (yfgH)	outer membrane integrity lipoprotein
+cgMLST V1	b2506 (yfgI)	"nalidixic acid resistance protein, putative periplasmic protein"
+cgMLST V1	b2507 (guaA)	GMP synthetase (glutamine aminotransferase)
+cgMLST V1	b2500 (purN)	phosphoribosylglycinamide formyltransferase 1
+cgMLST V1	b2501 (ppk)	"polyphosphate kinase, component of RNA degradosome "
+cgMLST V1	b2502 (ppx)	exopolyphosphatase
+cgMLST V1	b2508 (guaB)	IMP dehydrogenase
+cgMLST V1	b1269 (rluB)	23S rRNA pseudouridine(2605) synthase
+cgMLST V1	b1264 (trpE)	component I of anthranilate synthase
+cgMLST V1	b1265 (trpL)	trp operon leader peptide
+cgMLST V1	b1266 (yciV)	PHP domain protein
+cgMLST V1	b1267 (yciO)	putative RNA binding protein
+cgMLST V1	b1260 (trpA)	"tryptophan synthase, alpha subunit "
+cgMLST V1	b1261 (trpB)	"tryptophan synthase, beta subunit "
+cgMLST V1	b1262 (trpC)	fused indole-3-glycerolphosphate synthetase/N-(5-phosphoribosyl)anthranilate isomerase
+cgMLST V1	b1263 (trpD)	fused glutamine amidotransferase (component II) of anthranilate synthase/anthranilate phosphoribosyl transferase
+cgMLST V1	b4018 (iclR)	transcriptional repressor
+cgMLST V1	b4019 (metH)	"homocysteine-N5-methyltetrahydrofolate transmethylase, B12-dependent "
+cgMLST V1	b4015 (aceA)	isocitrate lyase
+cgMLST V1	b4012 (yjaB)	putative acetyltransferase
+cgMLST V1	b4013 (metA)	homoserine O-transsuccinylase
+cgMLST V1	b1069 (murJ)	putative peptidoglycan lipid II flippase
+cgMLST V1	b1066 (rimJ)	ribosomal-protein-S5-alanine N-acetyltransferase
+cgMLST V1	b1067 (yceH)	UPF0502 family protein
+cgMLST V1	b1065 (mdtH)	multidrug resistance efflux transporter conferring overexpression resistance to norfloxacin and enoxacin
+cgMLST V1	b1062 (pyrC)	dihydro-orotase
+cgMLST V1	b1063 (yceB)	"lipoprotein, DUF1439 family"
+cgMLST V1	b1060 (bssS)	biofilm regulator
+cgMLST V1	b1061 (dinI)	DNA damage-inducible protein I
+cgMLST V1	b4258 (valS)	valyl-tRNA synthetase
+cgMLST V1	b4259 (holC)	"DNA polymerase III, chi subunit "
+cgMLST V1	b4256 (yjgM)	putative acetyltransferase
+cgMLST V1	b4255 (rraB)	protein inhibitor of RNase E
+cgMLST V1	b0006 (yaaA)	"peroxide resistance protein, lowers intracellular iron"
+cgMLST V1	b0004 (thrC)	L-threonine synthase
+cgMLST V1	b0003 (thrB)	homoserine kinase
+cgMLST V1	b0002 (thrA)	Bifunctional aspartokinase/homoserine dehydrogenase 1
+cgMLST V1	b0001 (thrL)	thr operon leader peptide
+cgMLST V1	b0009 (mog)	molybdochelatase incorporating molybdenum into molybdopterin
+cgMLST V1	b0008 (talB)	transaldolase B
+cgMLST V1	b0948 (rlmL)	"fused 23S rRNA m(2)G2445 and m(7)G2069 methyltransferase, SAM-dependent"
+cgMLST V1	b0949 (uup)	putative transporter subunit of ABC superfamily: ATP-binding component
+cgMLST V1	b0946 (zapC)	FtsZ stabilizer
+cgMLST V1	b0947 (ycbX)	6-N-hydroxylaminopurine detoxification oxidoreductase
+cgMLST V1	b0945 (pyrD)	"dihydro-orotate oxidase, FMN-linked "
+cgMLST V1	b1603 (pntA)	"pyridine nucleotide transhydrogenase, alpha subunit "
+cgMLST V1	b2937 (speB)	agmatinase
+cgMLST V1	b2936 (loiP)	"Phe-Phe periplasmic metalloprotease, OM lipoprotein; low salt-inducible; heat shock protein that binds Era"
+cgMLST V1	b2939 (yqgB)	uncharacterized protein
+cgMLST V1	b2938 (speA)	"biosynthetic arginine decarboxylase, PLP-binding "
+cgMLST V1	b0214 (rnhA)	"ribonuclease HI, degrades RNA of DNA-RNA hybrids "
+cgMLST V1	b0215 (dnaQ)	DNA polymerase III epsilon subunit
+cgMLST V1	b0212 (gloB)	hydroxyacylglutathione hydrolase
+cgMLST V1	b0213 (yafS)	putative S-adenosyl-L-methionine-dependent methyltransferase
+cgMLST V1	b0211 (mltD)	putative membrane-bound lytic murein transglycosylase D
+cgMLST V1	b2214 (apbE)	putative thiamine-synthetic flavin transferase lipoprotein
+cgMLST V1	b2216 (rcsD)	phosphotransfer intermediate protein in two-component regulatory system with RcsBC
+cgMLST V1	b2217 (rcsB)	response regulator in two-component regulatory system with RcsC and YojN
+cgMLST V1	b2210 (mqo)	"malate dehydrogenase, FAD/NAD(P)-binding domain "
+cgMLST V1	b2211 (yojI)	"microcin J25 efflux pump, TolC-dependent; fused ABC transporter permease and ATP-binding components"
+cgMLST V1	b2212 (alkB)	oxidative demethylase of N1-methyladenine or N3-methylcytosine DNA lesions
+cgMLST V1	b2213 (ada)	fused DNA-binding transcriptional dual regulator/O6-methylguanine-DNA methyltransferase
+cgMLST V1	b2218 (rcsC)	hybrid sensory kinase in two-component regulatory system with RcsB and YojN
+cgMLST V1	b1976 (mtfA)	anti-repressor for DgsA(Mlc)
+cgMLST V1	b1970 (hiuH)	hydroxyisourate hydrolase
+cgMLST V1	b1971 (yedY)	"membrane-anchored, periplasmic TMAO, DMSO reductase"
+cgMLST V1	b1972 (yedZ)	inner membrane heme subunit for periplasmic YedYZ reductase
+cgMLST V1	b1973 (zinT)	"zinc and cadmium binding protein, periplasmic"
+cgMLST V1	b0760 (modF)	fused molybdate transporter subunits of ABC superfamily: ATP-binding components
+cgMLST V1	b3255 (accB)	"acetyl CoA carboxylase, BCCP subunit"
+cgMLST V1	b0931 (pncB)	nicotinate phosphoribosyltransferase
+cgMLST V1	b0810 (glnP)	glutamine transporter subunit
+cgMLST V1	b0812 (dps)	Fe-binding and storage protein; stress-inducible DNA-binding protetin
+cgMLST V1	b3040 (zupT)	zinc transporter
+cgMLST V1	b3041 (ribB)	"3,4-dihydroxy-2-butanone-4-phosphate synthase "
+cgMLST V1	b2399 (yfeD)	DUF1323 family putative DNA-binding protein
+cgMLST V1	b2398 (yfeC)	DUF1323 family putative DNA-binding protein
+cgMLST V1	b2390 (ypeC)	DUF2502 family putative periplasmic protein
+cgMLST V1	b2393 (nupC)	nucleoside (except guanosine) transporter
+cgMLST V1	b2392 (mntH)	manganese/divalent cation transporter
+cgMLST V1	b0368 (tauD)	"taurine dioxygenase, 2-oxoglutarate-dependent "
+cgMLST V1	b0733 (cydA)	"cytochrome d terminal oxidase, subunit I "
+cgMLST V1	b0735 (ybgE)	putative inner membrane protein in cydABX-ybgE operon
+cgMLST V1	b0734 (cydB)	"cytochrome d terminal oxidase, subunit II "
+cgMLST V1	b0737 (tolQ)	membrane spanning protein in TolA-TolQ-TolR complex
+cgMLST V1	b0736 (ybgC)	acyl-CoA thioester hydrolase
+cgMLST V1	b0739 (tolA)	membrane anchored protein in TolA-TolQ-TolR complex
+cgMLST V1	b0738 (tolR)	membrane spanning protein in TolA-TolQ-TolR complex
+cgMLST V1	b0089 (ftsW)	lipid II flippase; integral membrane protein involved in stabilizing FstZ ring during cell division
+cgMLST V1	b0088 (murD)	UDP-N-acetylmuramoyl-L-alanine:D-glutamate ligase
+cgMLST V1	b0087 (mraY)	phospho-N-acetylmuramoyl-pentapeptide transferase
+cgMLST V1	b0086 (murF)	UDP-N-acetylmuramoyl-tripeptide:D-alanyl-D-alanine ligase
+cgMLST V1	b0085 (murE)	UDP-N-acetylmuramoyl-L-alanyl-D-glutamate:meso-diaminopimelate ligase
+cgMLST V1	b0084 (ftsI)	transpeptidase involved in septal peptidoglycan synthesis (penicillin-binding protein 3)
+cgMLST V1	b0083 (ftsL)	membrane bound cell division protein at septum containing leucine zipper motif
+cgMLST V1	b0082 (rsmH)	"16S rRNA m(4)C1402 methyltransferase, SAM-dependent "
+cgMLST V1	b0081 (mraZ)	RsmH methytransferase inhibitor
+cgMLST V1	b0080 (cra)	transcriptional repressor-activator for carbon metabolism
+cgMLST V1	b2620 (smpB)	trans-translation protein
+cgMLST V1	b4111 (proP)	proline/glycine betaine transporter
+cgMLST V1	b4113 (basR)	response regulator in two-component regulatory system with BasS
+cgMLST V1	b4112 (basS)	sensory histidine kinase in two-component regulatory system with BasR
+cgMLST V1	b4115 (adiC)	arginine:agmatine antiporter
+cgMLST V1	b4114 (eptA)	lipid A phosphoethanolamine transferase
+cgMLST V1	b4117 (adiA)	arginine decarboxylase
+cgMLST V1	b4116 (adiY)	adi system transcriptional activator
+cgMLST V1	b0885 (aat)	leucyl/phenylalanyl-tRNA-protein transferase
+cgMLST V1	b3239 (yhcO)	putative barnase inhibitor
+cgMLST V1	b3238 (yhcN)	"cadmium and peroxide resistance protein, stress-induced"
+cgMLST V1	b3231 (rplM)	50S ribosomal subunit protein L13
+cgMLST V1	b3230 (rpsI)	30S ribosomal subunit protein S9
+cgMLST V1	b3233 (yhcB)	DUF1043 family inner membrane-anchored protein
+cgMLST V1	b3232 (yhcM)	putative AFG1-like family P-loop ATPase
+cgMLST V1	b3235 (degS)	"serine endoprotease, periplasmic "
+cgMLST V1	b3234 (degQ)	"serine endoprotease, periplasmic "
+cgMLST V1	b3237 (argR)	l-arginine-responsive arginine metabolism regulon transcriptional regulator
+cgMLST V1	b3236 (mdh)	"malate dehydrogenase, NAD(P)-binding "
+cgMLST V1	b2577 (yfiE)	putative DNA-binding transcriptional regulator
+cgMLST V1	b2327 (yfcA)	UPF0721 family inner membrane protein
+cgMLST V1	b3988 (rpoC)	"RNA polymerase, beta prime subunit "
+cgMLST V1	b4359 (opgB)	phosphoglycerol transferases I and II
+cgMLST V1	b4358 (yjjN)	L-galactonate oxidoreductase
+cgMLST V1	b4352 (yjiA)	"GTP-binding protein, putative GTPase"
+cgMLST V1	b4354 (yjiY)	putative transporter
+cgMLST V1	b1651 (gloA)	"glyoxalase I, Ni-dependent "
+cgMLST V1	b1650 (nemA)	"chromate reductase, quinone reductase, FMN-linked; N-Ethylmaleimide reductase; old yellow enzyme "
+cgMLST V1	b1655 (mepH)	"murein DD-endopeptidase, space-maker hydrolase"
+cgMLST V1	b1657 (ydhP)	putative transporter
+cgMLST V1	b1659 (ydhB)	LysR family putative transcriptional regulator
+cgMLST V1	b1658 (purR)	"transcriptional repressor, hypoxanthine-binding"
+cgMLST V1	b1685 (ydiH)	uncharacterized protein
+cgMLST V1	b2587 (kgtP)	alpha-ketoglutarate transporter
+cgMLST V1	b3741 (mnmG)	5-methylaminomethyl-2-thiouridine modification at tRNA U34
+cgMLST V1	b3743 (asnC)	transcriptional activator of asnA; autorepressor
+cgMLST V1	b3742 (mioC)	FMN-binding protein MioC
+cgMLST V1	b3745 (viaA)	stimulator of RavA ATPase activity; von Willebrand factor domain protein
+cgMLST V1	b3744 (asnA)	asparagine synthetase A
+cgMLST V1	b3747 (kup)	potassium transporter
+cgMLST V1	b3746 (ravA)	"hexameric AAA+ MoxR family ATPase, putative molecular chaperone"
+cgMLST V1	b3748 (rbsD)	putative cytoplasmic sugar-binding protein
+cgMLST V1	b3393 (hofO)	DNA catabolic protein
+cgMLST V1	b3391 (hofQ)	DNA catabolic putative fimbrial transporter
+cgMLST V1	b1192 (ldcA)	murein tetrapeptide carboxypeptidase; LD-carboxypeptidase A
+cgMLST V1	b1193 (emtA)	lytic murein endotransglycosylase E
+cgMLST V1	b1190 (dadX)	"alanine racemase, catabolic, PLP-binding "
+cgMLST V1	b1191 (cvrA)	putative cation/proton antiporter
+cgMLST V1	b0823 (ybiW)	putative pyruvate formate lyase
+cgMLST V1	b0822 (ybiV)	"sugar phosphatase; preference for fructose-1-P, ribose-5-P and glucose-6-P"
+cgMLST V1	b0824 (ybiY)	putative pyruvate formate lyase activating enzyme
+cgMLST V1	b0827 (moeA)	molybdopterin molybdenumtransferase; molybdopterin biosynthesis protein
+cgMLST V1	b0826 (moeB)	molybdopterin synthase sulfurylase
+cgMLST V1	b0829 (gsiA)	"glutathione transporter ATP-binding protein, ABC superfamily"
+cgMLST V1	b0828 (iaaA)	Isoaspartyl peptidase
+cgMLST V1	b1445 (ydcX)	DUF2566 family protein
+cgMLST V1	b1446 (ydcY)	uncharacterized protein
+cgMLST V1	b1633 (nth)	DNA glycosylase and apyrimidinic (AP) lyase (endonuclease III)
+cgMLST V1	b1632 (rsxE)	SoxR iron-sulfur cluster reduction factor component; electron transport inner membrane NADH-quinone reductase
+cgMLST V1	b1630 (rsxD)	SoxR iron-sulfur cluster reduction factor component; putative membrane protein of electron transport complex
+cgMLST V1	b1636 (pdxY)	pyridoxamine kinase
+cgMLST V1	b4678 (yoeI)	uncharacterized protein
+cgMLST V1	b2311 (ubiX)	3-octaprenyl-4-hydroxybenzoate carboxy-lyase
+cgMLST V1	b2313 (cvpA)	colicin V production membrane protein
+cgMLST V1	b2312 (purF)	amidophosphoribosyltransferase
+cgMLST V1	b2315 (folC)	bifunctional folylpolyglutamate synthase/dihydrofolate synthase
+cgMLST V1	b2314 (dedD)	membrane-anchored periplasmic protein involved in septation
+cgMLST V1	b2317 (dedA)	DedA family inner membrane protein
+cgMLST V1	b2316 (accD)	"acetyl-CoA carboxylase, beta (carboxyltransferase) subunit "
+cgMLST V1	b2319 (usg)	putative semialdehyde dehydrogenase
+cgMLST V1	b2318 (truA)	tRNA pseudouridine(38-40) synthase
+cgMLST V1	b3950 (frwB)	putative enzyme IIB component of PTS
+cgMLST V1	b3951 (pflD)	putative glycine radical domain-containing pyruvate formate-lyase
+cgMLST V1	b3952 (pflC)	putative [formate-C-acetyltransferase 2]-activating enzyme; pyruvate formate-lyase 1-activating enzyme
+cgMLST V1	b3953 (frwD)	putative enzyme IIB component of PTS
+cgMLST V1	b3954 (yijO)	AraC family putative transcriptional activator
+cgMLST V1	b3955 (eptC)	LPS heptose I phosphoethanolamine transferase
+cgMLST V1	b3956 (ppc)	phosphoenolpyruvate carboxylase
+cgMLST V1	b3957 (argE)	acetylornithine deacetylase
+cgMLST V1	b3958 (argC)	"N-acetyl-gamma-glutamylphosphate reductase, NAD(P)-binding "
+cgMLST V1	b3959 (argB)	acetylglutamate kinase
+cgMLST V1	b1839 (yebY)	DUF2511 family protein
+cgMLST V1	b1831 (proQ)	"RNA chaperone, putative ProP translation regulator"
+cgMLST V1	b1830 (prc)	carboxy-terminal protease for penicillin-binding protein 3
+cgMLST V1	b1833 (yebS)	inner membrane protein
+cgMLST V1	b1832 (msrC)	free methionine-(R)-sulfoxide reductase
+cgMLST V1	b1835 (rsmF)	"16S rRNA m(5)C1407 methyltransferase, SAM-dependent"
+cgMLST V1	b1834 (yebT)	MCE domain protein
+cgMLST V1	b1837 (yebW)	uncharacterized protein
+cgMLST V1	b2844 (yqeF)	short chain acyltransferase
+cgMLST V1	b2841 (araE)	arabinose transporter
+cgMLST V1	b2840 (ygeA)	Asp/Glu_racemase family protein
+cgMLST V1	b2843 (kduI)	hexuronate isomerase; hexuronate utilization in high osmolarity
+cgMLST V1	b2842 (kduD)	hexuronate dehydrogenase; hexuronate utilization in high osmolarity
+cgMLST V1	b1765 (ydjA)	putative oxidoreductase
+cgMLST V1	b1766 (sppA)	protease IV (signal peptide peptidase)
+cgMLST V1	b1761 (gdhA)	"glutamate dehydrogenase, NADP-specific "
+cgMLST V1	b1760 (ynjH)	DUF1496 family protein
+cgMLST V1	b1768 (pncA)	nicotinamidase/pyrazinamidase
+cgMLST V1	b4191 (ulaR)	transcriptional repressor for the L-ascorbate utilization (ula) divergent operon
+cgMLST V1	b4190 (yjfP)	acyl CoA esterase
+cgMLST V1	b4193 (ulaA)	L-ascorbate-specific enzyme IIC permease component of PTS
+cgMLST V1	b4192 (ulaG)	L-ascorbate 6-phosphate lactonase
+cgMLST V1	b4195 (ulaC)	L-ascorbate-specific enzyme IIA component of PTS
+cgMLST V1	b4194 (ulaB)	L-ascorbate-specific enzyme IIB component of PTS
+cgMLST V1	b4197 (ulaE)	L-xylulose 5-phosphate 3-epimerase
+cgMLST V1	b4196 (ulaD)	3-keto-L-gulonate 6-phosphate decarboxylase
+cgMLST V1	b4199 (yjfY)	"YhcN family protein, periplasmic"
+cgMLST V1	b4198 (ulaF)	L-ribulose 5-phosphate 4-epimerase
+cgMLST V1	b1683 (sufB)	component of SufBCD Fe-S cluster assembly scaffold
+cgMLST V1	b3857 (mobA)	molybdopterin-guanine dinucleotide synthase
+cgMLST V1	b3856 (mobB)	molybdopterin-guanine dinucleotide biosynthesis protein B
+cgMLST V1	b3850 (hemG)	"protoporphyrin oxidase, flavoprotein "
+cgMLST V1	b3859 (srkA)	stress response kinase A; MazF antagonist; Thr/Ser kinase involved in Cpx stress response
+cgMLST V1	b3858 (yihD)	DUF1040 protein YihD
+cgMLST V1	b2100 (yegV)	putative kinase
+cgMLST V1	b2101 (yegW)	putative DNA-binding transcriptional regulator
+cgMLST V1	b2103 (thiD)	bifunctional hydroxy-methylpyrimidine kinase/hydroxy-phosphomethylpyrimidine kinase
+cgMLST V1	b2104 (thiM)	hydoxyethylthiazole kinase
+cgMLST V1	b2105 (rcnR)	transcriptional repressor of rcnA
+cgMLST V1	b2107 (rcnB)	periplasmic modulator of Ni and Co efflux
+cgMLST V1	b1530 (marR)	transcriptional repressor of multiple antibiotic resistance
+cgMLST V1	b1531 (marA)	multiple antibiotic resistance transcriptional regulator
+cgMLST V1	b1532 (marB)	"mar operon regulator, periplasmic"
+cgMLST V1	b0168 (map)	methionine aminopeptidase
+cgMLST V1	b0161 (degP)	"serine endoprotease (protease Do), membrane-associated "
+cgMLST V1	b0162 (cdaR)	carbohydrate diacid regulon transcriptional regulator; autoregulator
+cgMLST V1	b0163 (yaeH)	UPF0325 family protein
+cgMLST V1	b0166 (dapD)	"2,3,4,5-tetrahydropyridine-2-carboxylate N-succinyltransferase "
+cgMLST V1	b0167 (glnD)	uridylyltransferase
+cgMLST V1	b1342 (ydaN)	putative Zn(II) transporter
+cgMLST V1	b2478 (dapA)	dihydrodipicolinate synthase
+cgMLST V1	b2479 (gcvR)	"transcriptional repressor, regulatory protein accessory to GcvA"
+cgMLST V1	b2470 (acrD)	aminoglycoside/multidrug efflux system
+cgMLST V1	b2471 (yffB)	putative ArsC family reductase
+cgMLST V1	b2472 (dapE)	N-succinyl-diaminopimelate deacylase
+cgMLST V1	b2473 (ypfH)	"palmitoyl-CoA esterase activity, uncertain physiological substrate"
+cgMLST V1	b2474 (tmcA)	elongator methionine tRNA (ac4C34) acetyltransferase
+cgMLST V1	b2475 (ypfJ)	putative neutral zinc metallopeptidase
+cgMLST V1	b2476 (purC)	phosphoribosylaminoimidazole-succinocarboxamide synthetase
+cgMLST V1	b2477 (bamC)	BamABCDE complex OM biogenesis lipoprotein
+cgMLST V1	b0403 (malZ)	maltodextrin glucosidase
+cgMLST V1	b0402 (proY)	proline-specific permease
+cgMLST V1	b0401 (brnQ)	"branched-chain amino acid transport system 2 carrier protein; LIV-II transport system for Ile, Leu, and Val"
+cgMLST V1	b0400 (phoR)	sensory histidine kinase in two-component regulatory system with PhoB
+cgMLST V1	b0407 (yajC)	SecYEG protein translocase auxillary subunit
+cgMLST V1	b0406 (tgt)	tRNA-guanine transglycosylase
+cgMLST V1	b0405 (queA)	S-adenosylmethionine:tRNA ribosyltransferase-isomerase
+cgMLST V1	b0404 (acpH)	acyl carrier protein (ACP) phosphodiesterase; ACP hydrolyase
+cgMLST V1	b0409 (secF)	SecYEG protein translocase auxillary subunit
+cgMLST V1	b0408 (secD)	SecYEG protein translocase auxillary subunit
+cgMLST V1	b0804 (ybiX)	Fe(II)-dependent oxygenase superfamily protein
+cgMLST V1	b3461 (rpoH)	"RNA polymerase, sigma 32 (sigma H) factor"
+cgMLST V1	b3462 (ftsX)	inner membrane putative ABC superfamily transporter permease
+cgMLST V1	b3463 (ftsE)	putative ABC superfamily transporter ATP-binding subunit
+cgMLST V1	b3464 (ftsY)	Signal Recognition Particle (SRP) receptor
+cgMLST V1	b3465 (rsmD)	"16S rRNA m(2)G966 methyltransferase, SAM-dependent"
+cgMLST V1	b3466 (yhhL)	DUF1145 family protein
+cgMLST V1	b3467 (yhhM)	DUF2500 family protein
+cgMLST V1	b3468 (yhhN)	TMEM86 family putative inner membrane protein
+cgMLST V1	b3469 (zntA)	"zinc, cobalt and lead efflux system "
+cgMLST V1	b2733 (mutS)	methyl-directed mismatch repair protein
+cgMLST V1	b2730 (hypE)	"carbamoyl dehydratase, hydrogenases 1,2,3 maturation protein"
+cgMLST V1	b1112 (bhsA)	"biofilm, cell surface and signaling protein"
+cgMLST V1	b1113 (ldtC)	"L,D-transpeptidase linking Lpp to murein"
+cgMLST V1	b1110 (ycfJ)	uncharacterized protein
+cgMLST V1	b1111 (ycfQ)	repressor for bhsA(ycfR)
+cgMLST V1	b1116 (lolC)	lipoprotein-releasing system transmembrane protein
+cgMLST V1	b1117 (lolD)	outer membrane-specific lipoprotein transporter subunit
+cgMLST V1	b1114 (mfd)	transcription-repair coupling factor
+cgMLST V1	b1115 (ycfT)	inner membrane protein
+cgMLST V1	b1118 (lolE)	lipoprotein-releasing system transmembrane protein
+cgMLST V1	b1119 (nagK)	N-acetyl-D-glucosamine kinase
+cgMLST V1	b4542 (yohO)	putative membrane protein
+cgMLST V1	b4544 (arnE)	undecaprenyl phosphate-alpha-L-ara4N exporter; flippase ArnEF subunit
+cgMLST V1	b0641 (lptE)	"LPS assembly OM complex LptDE, lipoprotein component"
+cgMLST V1	b0640 (holA)	"DNA polymerase III, delta subunit "
+cgMLST V1	b0643 (ybeL)	DUF1451 family protein
+cgMLST V1	b0642 (leuS)	leucyl-tRNA synthetase
+cgMLST V1	b0399 (phoB)	response regulator in two-component regulatory system with PhoR (or CreC)
+cgMLST V1	b0398 (sbcD)	"exonuclease, dsDNA, ATP-dependent"
+cgMLST V1	b0391 (yaiE)	UPF0345 family protein
+cgMLST V1	b0397 (sbcC)	"exonuclease, dsDNA, ATP-dependent"
+cgMLST V1	b0394 (mak)	manno(fructo)kinase
+cgMLST V1	EFER_RS09440 (-)	hypothetical protein
+cgMLST V1	b3663 (yicN)	DUF1198 family protein
+cgMLST V1	b3666 (uhpT)	hexose phosphate transporter
+cgMLST V1	b3667 (uhpC)	membrane protein regulates uhpT expression
+cgMLST V1	b3668 (uhpB)	sensory histidine kinase in two-component regulatory sytem with UhpA
+cgMLST V1	b3669 (uhpA)	response regulator in two-component regulatory system wtih UhpB
+cgMLST V1	b2535 (csiE)	stationary phase inducible protein
+cgMLST V1	b2534 (yfhR)	putative S9 family prolyl oligopeptidase
+cgMLST V1	b2536 (hcaT)	putative 3-phenylpropionic transporter
+cgMLST V1	b2531 (iscR)	isc operon transcriptional repressor; suf operon transcriptional activator; oxidative stress- and iron starvation-inducible; autorepressor
+cgMLST V1	b2530 (iscS)	"cysteine desulfurase (tRNA sulfurtransferase), PLP-dependent "
+cgMLST V1	b2533 (suhB)	inositol monophosphatase
+cgMLST V1	b1255 (yciC)	UPF0259 family inner membrane protein
+cgMLST V1	b1254 (yciB)	IspA family inner membrane protein
+cgMLST V1	b1256 (ompW)	outer membrane protein W
+cgMLST V1	b1251 (yciI)	putative DGPF domain-containing enzyme
+cgMLST V1	b1250 (kch)	voltage-gated potassium channel
+cgMLST V1	b1253 (yciA)	acyl-CoA esterase
+cgMLST V1	b1252 (tonB)	membrane spanning protein in TonB-ExbB-ExbD transport complex
+cgMLST V1	b4025 (pgi)	glucosephosphate isomerase
+cgMLST V1	b4027 (yjbF)	extracellular polysaccharide production lipoprotein
+cgMLST V1	b4020 (yjbB)	putative Na+/Pi-cotransporter
+cgMLST V1	b4022 (rluF)	23S rRNA pseudouridine(2604) synthase
+cgMLST V1	b3473 (yhhS)	putative arabinose efflux transporter
+cgMLST V1	b3345 (tusD)	sulfurtransferase for 2-thiolation step of mnm(5)-s(2)U34-tRNA synthesis
+cgMLST V1	b3344 (tusC)	mnm(5)-s(2)U34-tRNA synthesis 2-thiolation protein
+cgMLST V1	b3347 (fkpA)	FKBP-type peptidyl-prolyl cis-trans isomerase (rotamase)
+cgMLST V1	b3346 (yheO)	putative PAS domain-containing DNA-binding transcriptional regulator
+cgMLST V1	b3340 (fusA)	"protein chain elongation factor EF-G, GTP-binding"
+cgMLST V1	b3343 (tusB)	mnm(5)-s(2)U34-tRNA synthesis 2-thiolation protein
+cgMLST V1	b3342 (rpsL)	30S ribosomal subunit protein S12
+cgMLST V1	b3349 (slyD)	FKBP-type peptidyl prolyl cis-trans isomerase (rotamase)
+cgMLST V1	b3348 (slyX)	phi X174 lysis protein
+cgMLST V1	b1097 (yceG)	"septation protein, ampicillin sensitivity"
+cgMLST V1	b1096 (pabC)	4-amino-4-deoxychorismate lyase component of para-aminobenzoate synthase multienzyme complex
+cgMLST V1	b1095 (fabF)	3-oxoacyl-[acyl-carrier-protein] synthase II
+cgMLST V1	b1094 (acpP)	acyl carrier protein (ACP)
+cgMLST V1	b1093 (fabG)	3-oxoacyl-[acyl-carrier-protein] reductase
+cgMLST V1	b1092 (fabD)	malonyl-CoA-[acyl-carrier-protein] transacylase
+cgMLST V1	b1091 (fabH)	3-oxoacyl-[acyl-carrier-protein] synthase III
+cgMLST V1	b1090 (plsX)	putative phosphate acyltransferase
+cgMLST V1	b1098 (tmk)	thymidylate kinase
+cgMLST V1	b0058 (rluA)	"dual specificity 23S rRNA pseudouridine(746), tRNA pseudouridine(32) synthase, SAM-dependent "
+cgMLST V1	b0059 (rapA)	"RNA polymerase remodeling/recycling factor ATPase; RNA polymerase-associated, ATP-dependent RNA translocase "
+cgMLST V1	b0054 (lptD)	"LPS assembly OM complex LptDE, beta-barrel component"
+cgMLST V1	b0055 (djlA)	"membrane-anchored DnaK co-chaperone, DNA-binding protein"
+cgMLST V1	b0050 (apaG)	protein associated with Co2+ and Mg2+ efflux
+cgMLST V1	b0051 (rsmA)	"16S rRNA m(6)A1518, m(6)A1519 dimethyltransferase, SAM-dependent "
+cgMLST V1	b0052 (pdxA)	"4-hydroxy-L-threonine phosphate dehydrogenase, NAD-dependent "
+cgMLST V1	b0053 (surA)	peptidyl-prolyl cis-trans isomerase (PPIase)
+cgMLST V1	b1757 (ynjE)	molybdopterin synthase sulfurtransferase
+cgMLST V1	b2188 (yejM)	essential inner membrane DUF3413 domain-containing protein; lipid A production and membrane permeability factor
+cgMLST V1	b2180 (yejF)	"microcin C transporter, ATP-binding subunit; ABC family"
+cgMLST V1	b2181 (yejG)	uncharacterized protein
+cgMLST V1	b2182 (bcr)	bicyclomycin/cysteine/sulfonamide efflux transporter
+cgMLST V1	b2183 (rsuA)	16S rRNA pseudouridine(516) synthase
+cgMLST V1	b2184 (yejH)	putative ATP-dependent DNA or RNA helicase
+cgMLST V1	b2185 (rplY)	50S ribosomal subunit protein L25
+cgMLST V1	b2186 (yejK)	spermidine nucleoid-associated protein
+cgMLST V1	b2187 (yejL)	UPF0352 family protein
+cgMLST V1	b0932 (pepN)	aminopeptidase N
+cgMLST V1	b0930 (asnS)	asparaginyl tRNA synthetase
+cgMLST V1	b0936 (ssuA)	"aliphatic sulfonate binding protein, SsuABC ABC transporter"
+cgMLST V1	b0935 (ssuD)	"alkanesulfonate monooxygenase, FMNH(2)-dependent "
+cgMLST V1	b3892 (fdoI)	"formate dehydrogenase-O, cytochrome b556 subunit"
+cgMLST V1	b2966 (yqgA)	DUF554 family putative inner membrane protein
+cgMLST V1	b2964 (nupG)	nucleoside transporter
+cgMLST V1	b2962 (yggX)	protein that protects iron-sulfur proteins against oxidative damage
+cgMLST V1	b2963 (mltC)	membrane-bound lytic murein transglycosylase C
+cgMLST V1	b2960 (trmI)	"tRNA m(7)G46 methyltransferase, SAM-dependent "
+cgMLST V1	b2961 (mutY)	adenine DNA glycosylase
+cgMLST V1	b1686 (menI)	"1,4-dihydroxy-2-naphthoyl-CoA hydrolase "
+cgMLST V1	b1687 (ydiJ)	putative FAD-linked oxidoreductase
+cgMLST V1	b1684 (sufA)	Fe-S cluster assembly protein
+cgMLST V1	b1682 (sufC)	"SufBCD Fe-S cluster assembly scaffold protein, ATP-binding protein"
+cgMLST V1	b1680 (sufS)	"cysteine desulfurase, stimulated by SufE; selenocysteine lyase, PLP-dependent "
+cgMLST V1	b1681 (sufD)	component of SufBCD Fe-S cluster assembly scaffold
+cgMLST V1	b1688 (ydiK)	UPF0118 family inner membrane protein
+cgMLST V1	b1538 (dcp)	dipeptidyl carboxypeptidase II
+cgMLST V1	b1539 (ydfG)	NADP-dependent 3-hydroxy acid dehydrogenase; malonic semialdehyde reductase
+cgMLST V1	b0489 (qmcA)	PHB domain membrane-anchored putative protease
+cgMLST V1	b0482 (ybaP)	TraB family protein
+cgMLST V1	b0481 (ybaK)	Cys-tRNA(Pro)/Cys-tRNA(Cys) deacylase
+cgMLST V1	b0487 (cueR)	copper-responsive regulon transcriptional regulator
+cgMLST V1	b0486 (ybaT)	putative amino acid transporter
+cgMLST V1	b0485 (glsA)	glutaminase 1
+cgMLST V1	b0484 (copA)	copper transporter
+cgMLST V1	b4476 (gntU)	"gluconate transporter, low affinity GNT 1 system"
+cgMLST V1	b4472 (yhdP)	DUF3971-AsmA2 domains protein
+cgMLST V1	b4473 (smf)	DNA recombination-mediator A family protein
+cgMLST V1	b4470 (yhaM)	putative L-serine dehydratase alpha chain
+cgMLST V1	b3172 (argG)	argininosuccinate synthetase
+cgMLST V1	b3170 (rimP)	ribosome maturation factor for 30S subunits
+cgMLST V1	b3176 (glmM)	phosphoglucosamine mutase
+cgMLST V1	b3177 (folP)	"7,8-dihydropteroate synthase "
+cgMLST V1	b3175 (secG)	preprotein translocase membrane subunit
+cgMLST V1	b3178 (ftsH)	"protease, ATP-dependent zinc-metallo "
+cgMLST V1	b3179 (rlmE)	"23S rRNA U2552 2'-O-ribose methyltransferase, SAM-dependent "
+cgMLST V1	b3794 (wecG)	UDP-N-acetyl-D-mannosaminuronic acid transferase
+cgMLST V1	b3795 (yifK)	putative APC family amino acid transporter
+cgMLST V1	b3792 (wzxE)	O-antigen translocase
+cgMLST V1	b3793 (wzyE)	putative ECA polysaccharide chain elongation protein
+cgMLST V1	b3790 (wecD)	TDP-fucosamine acetyltransferase
+cgMLST V1	b3791 (wecE)	TDP-4-oxo-6-deoxy-D-glucose transaminase
+cgMLST V1	b2225 (yfaP)	"DUF2135 family protein, putative host defense protein"
+cgMLST V1	b1100 (ycfH)	putative DNase
+cgMLST V1	b2078 (baeS)	sensory histidine kinase in two-component regulatory system with BaeR
+cgMLST V1	b2079 (baeR)	response regulator in two-component regulatory system with BaeS
+cgMLST V1	b2075 (mdtB)	"multidrug efflux system, subunit B"
+cgMLST V1	b2077 (mdtD)	putative arabinose efflux transporter
+cgMLST V1	b0651 (rihA)	ribonucleoside hydrolase 1
+cgMLST V1	b2243 (glpC)	"anaerobic sn-glycerol-3-phosphate dehydrogenase, C subunit, 4Fe-4S iron-sulfur cluster"
+cgMLST V1	b1013 (rutR)	rut operon transcriptional repressor for
+cgMLST V1	b4226 (ppa)	inorganic pyrophosphatase
+cgMLST V1	b0762 (acrZ)	"AcrAB-TolC efflux pump accessory protein, membrane-associated"
+cgMLST V1	b4222 (ytfP)	GGCT-like protein
+cgMLST V1	b4221 (tamB)	"translocation and assembly module for autotransporter export, inner membrane subunit"
+cgMLST V1	b0761 (modE)	transcriptional repressor for the molybdenum transport operon modABC
+cgMLST V1	b3509 (hdeB)	acid-resistance protein
+cgMLST V1	b3507 (dctR)	LuxR family putative transcriptional regulator
+cgMLST V1	b3506 (slp)	outer membrane lipoprotein
+cgMLST V1	b3503 (arsC)	arsenate reductase
+cgMLST V1	b3500 (gor)	glutathione oxidoreductase
+cgMLST V1	b2678 (proW)	glycine betaine transporter subunit
+cgMLST V1	b2679 (proX)	glycine betaine transporter subunit
+cgMLST V1	b2676 (nrdF)	"ribonucleoside-diphosphate reductase 2, beta subunit, ferritin-like protein "
+cgMLST V1	b2677 (proV)	glycine betaine transporter subunit
+cgMLST V1	b2675 (nrdE)	"ribonucleoside-diphosphate reductase 2, alpha subunit "
+cgMLST V1	b2673 (nrdH)	hydrogen donor for NrdEF electron transport system; glutaredoxin-like protein
+cgMLST V1	b2670 (alaE)	"alanine exporter, alanine-inducible, stress-responsive"
+cgMLST V1	b2671 (ygaC)	uncharacterized protein
+cgMLST V1	b4146 (epmB)	"EF-P-Lys34 lysylation protein; weak lysine 2,3-aminomutase"
+cgMLST V1	b4147 (efp)	polyproline-specific translation elongation factor EF-P
+cgMLST V1	b4144 (yjeI)	DUF4156 family lipoprotein
+cgMLST V1	b4142 (groS)	"Cpn10 chaperonin GroES, small subunit of GroESL"
+cgMLST V1	b4143 (groL)	"Cpn60 chaperonin GroEL, large subunit of GroESL"
+cgMLST V1	b4140 (fxsA)	suppressor of F exclusion of phage T7
+cgMLST V1	b4141 (yjeH)	putative transporter
+cgMLST V1	b4148 (sugE)	multidrug efflux system protein
+cgMLST V1	b4149 (blc)	"outer membrane lipoprotein (lipocalin), cell division and growth function"
+cgMLST V1	b3262 (yhdJ)	"DNA adenine methyltransferase, SAM-dependent"
+cgMLST V1	b3260 (dusB)	tRNA-dihydrouridine synthase B
+cgMLST V1	b3261 (fis)	global DNA-binding transcriptional dual regulator
+cgMLST V1	b1608 (rstA)	"response regulator of RstAB two-component system, low Mg-responsive via PhoQP"
+cgMLST V1	b1609 (rstB)	"sensory histidine kinase of RstAB two-component system, low Mg-responsive via PhoQP"
+cgMLST V1	b1607 (ydgC)	GlpM family inner membrane protein
+cgMLST V1	b1605 (ydgI)	putative arginine/ornithine antiporter transporter
+cgMLST V1	b4381 (deoC)	"2-deoxyribose-5-phosphate aldolase, NAD(P)-linked "
+cgMLST V1	b4382 (deoA)	thymidine phosphorylase
+cgMLST V1	b4383 (deoB)	phosphopentomutase
+cgMLST V1	b4384 (deoD)	purine-nucleoside phosphorylase
+cgMLST V1	b4386 (lplA)	lipoate-protein ligase A
+cgMLST V1	b4387 (ytjB)	SMP_2 family putative membrane-anchored periplasmic protein
+cgMLST V1	b4388 (serB)	3-phosphoserine phosphatase
+cgMLST V1	b4389 (radA)	DNA repair protein
+cgMLST V1	b3712 (yieE)	phosphopantetheinyl transferase superfamily protein
+cgMLST V1	b3713 (chrR)	"chromate reductase, Class I, flavoprotein"
+cgMLST V1	b3710 (mdtL)	multidrug efflux system protein
+cgMLST V1	b2923 (argO)	arginine transporter
+cgMLST V1	b0878 (macA)	"macrolide transporter subunit, membrane fusion protein (MFP) component"
+cgMLST V1	b0879 (macB)	fused macrolide transporter subunits of ABC superfamily: ATP-binding component/membrane component
+cgMLST V1	b0876 (ybjD)	putative OLD family ATP-dependent endonuclease; DUF2813 family protein
+cgMLST V1	b0877 (ybjX)	DUF535 family protein
+cgMLST V1	b0874 (ybjE)	putative transporter
+cgMLST V1	b0872 (hcr)	"HCP oxidoreductase, NADH-dependent "
+cgMLST V1	b0873 (hcp)	hybrid-cluster [4Fe-2S-2O] protein in anaerobic terminal reductases
+cgMLST V1	b0870 (ltaE)	"L-allo-threonine aldolase, PLP-dependent "
+cgMLST V1	b0871 (poxB)	"pyruvate dehydrogenase (pyruvate oxidase), thiamine triphosphate-binding, FAD-binding "
+cgMLST V1	b1479 (maeA)	"malate dehydrogenase, (decarboxylating, NAD-requiring) (malic enzyme) "
+cgMLST V1	b1476 (fdnI)	"formate dehydrogenase-N, cytochrome B556 (gamma) subunit, nitrate-inducible"
+cgMLST V1	b4485 (ytfR)	putative ABC superfamily sugar transporter ATP-binding subunit
+cgMLST V1	b0102 (zapD)	FtsZ stabilizer
+cgMLST V1	b4480 (hdfR)	flhDC operon transcriptional repressor
+cgMLST V1	b3039 (ygiD)	"4,5-DOPA-extradiol-dioxygenase"
+cgMLST V1	b3038 (ygiC)	ATP-Grasp family ATPase
+cgMLST V1	b3037 (ygiB)	DUF1190 family protein
+cgMLST V1	b3035 (tolC)	transport channel
+cgMLST V1	b3033 (yqiB)	DUF1249 protein YqiB
+cgMLST V1	b3032 (cpdA)	"3',5' cAMP phosphodiesterase "
+cgMLST V1	b3031 (yqiA)	acyl CoA esterase
+cgMLST V1	b3697 (yidA)	sugar phosphate phosphatase; substrates include erythrose 4-P and mannose 1-P phosphatase
+cgMLST V1	b3699 (gyrB)	"DNA gyrase, subunit B "
+cgMLST V1	b3698 (yidB)	DUF937 family protein
+cgMLST V1	b2346 (mlaA)	"ABC transporter maintaining OM lipid asymmetry, OM lipoprotein component"
+cgMLST V1	b2347 (yfdC)	putative inner membrane protein
+cgMLST V1	b2344 (fadL)	long-chain fatty acid outer membrane transporter
+cgMLST V1	b2342 (fadI)	"beta-ketoacyl-CoA thiolase, anaerobic, subunit "
+cgMLST V1	b2343 (yfcZ)	UPF0381 family protein
+cgMLST V1	b2340 (sixA)	phosphohistidine phosphatase
+cgMLST V1	b2341 (fadJ)	fused enoyl-CoA hydratase and epimerase and isomerase/3-hydroxyacyl-CoA dehydrogenase
+cgMLST V1	b3961 (oxyR)	oxidative and nitrosative stress transcriptional regulator
+cgMLST V1	b3960 (argH)	argininosuccinate lyase
+cgMLST V1	b3963 (fabR)	transcriptional repressor of fabA and fabB
+cgMLST V1	b3965 (trmA)	"tRNA m(5)U54 methyltransferase, SAM-dependent; tmRNA m(5)U341 methyltransferase "
+cgMLST V1	b3964 (yijD)	DUF1422 family inner membrane protein
+cgMLST V1	b3967 (murI)	glutamate racemase
+cgMLST V1	b1866 (aspS)	aspartyl-tRNA synthetase
+cgMLST V1	b1864 (yebC)	UPF0082 family protein
+cgMLST V1	b1865 (nudB)	dihydroneopterin triphosphate pyrophosphatase
+cgMLST V1	b1863 (ruvC)	"component of RuvABC resolvasome, endonuclease "
+cgMLST V1	b1860 (ruvB)	"ATP-dependent DNA helicase, component of RuvABC resolvasome "
+cgMLST V1	b1861 (ruvA)	"component of RuvABC resolvasome, regulatory subunit "
+cgMLST V1	b1869 (yecN)	MAPEG family inner membrane protein
+cgMLST V1	NCTC12129_00311 (glgP)	starch phosphorylase
+cgMLST V1	b2898 (ygfZ)	"iron-sulfur cluster repair protein, plumbagin resistance"
+cgMLST V1	b2899 (yqfA)	hemolysin III family HylIII inner membrane protein
+cgMLST V1	b2892 (recJ)	"ssDNA exonuclease, 5' --> 3'-specific "
+cgMLST V1	b2893 (dsbC)	protein disulfide isomerase II
+cgMLST V1	b2896 (cptA)	toxin of CptAB toxin-antitoxin pair
+cgMLST V1	b2897 (sdhE)	flavinator of succinate dehydrogenase; antitoxin of CptAB toxin-antitoxin pair
+cgMLST V1	b2894 (xerD)	site-specific tyrosine recombinase
+cgMLST V1	b2895 (fldB)	flavodoxin 2
+cgMLST V1	b0195 (tsaA)	"tRNA-Thr(GGU) m(6)t(6)A37 methyltransferase, SAM-dependent"
+cgMLST V1	b2131 (osmF)	putative ABC superfamily transporter periplasmic-binding protein
+cgMLST V1	b2130 (yehY)	inner membrane putative ABC superfamily transporter permease
+cgMLST V1	b2133 (dld)	"D-lactate dehydrogenase, FAD-binding, NADH independent "
+cgMLST V1	b2132 (bglX)	"beta-D-glucoside glucohydrolase, periplasmic "
+cgMLST V1	b2135 (yohC)	Yip1 family inner membrane protein
+cgMLST V1	b2136 (yohD)	DedA family inner membrane protein
+cgMLST V1	b2512 (bamB)	BamABCDE complex OM biogenesis lipoprotein
+cgMLST V1	b0151 (fhuC)	iron-hydroxamate transporter subunit
+cgMLST V1	b0153 (fhuB)	fused iron-hydroxamate transporter subunits of ABC superfamily: membrane components
+cgMLST V1	b0152 (fhuD)	iron-hydroxamate transporter subunit
+cgMLST V1	b0155 (clcA)	H(+)/Cl(-) exchange transporter
+cgMLST V1	b0157 (yadS)	UPF0126 family inner membrane protein
+cgMLST V1	b0156 (erpA)	iron-sulfur cluster insertion protein
+cgMLST V1	b0159 (mtn)	5'-methylthioadenosine/S-adenosylhomocysteine nucleosidase
+cgMLST V1	b0158 (btuF)	vitamin B12 transporter subunit: periplasmic-binding component of ABC superfamily
+cgMLST V1	b3183 (obgE)	GTPase involved in cell partioning and DNA repair
+cgMLST V1	b3182 (dacB)	D-alanyl-D-alanine carboxypeptidase
+cgMLST V1	b3181 (greA)	transcript cleavage factor
+cgMLST V1	b3180 (yhbY)	RNA binding protein associated with pre-50S ribosomal subunits
+cgMLST V1	b3187 (ispB)	octaprenyl diphosphate synthase
+cgMLST V1	b3186 (rplU)	50S ribosomal subunit protein L21
+cgMLST V1	b3185 (rpmA)	50S ribosomal subunit protein L27
+cgMLST V1	b3184 (yhbE)	EamA family inner membrane putative transporter
+cgMLST V1	b3189 (murA)	UDP-N-acetylglucosamine 1-carboxyvinyltransferase
+cgMLST V1	b3188 (sfsB)	malPQ operon transcriptional activator
+cgMLST V1	b3459 (panM)	"PanD autocleavage accelerator, panothenate synthesis"
+cgMLST V1	b3451 (ugpE)	glycerol-3-phosphate transporter subunit
+cgMLST V1	b3450 (ugpC)	glycerol-3-phosphate transporter subunit
+cgMLST V1	b3452 (ugpA)	glycerol-3-phosphate transporter subunit
+cgMLST V1	b3455 (livG)	leucine/isoleucine/valine transporter subunit
+cgMLST V1	b3454 (livF)	leucine/isoleucine/valine transporter subunit
+cgMLST V1	b3457 (livH)	leucine/isoleucine/valine transporter subunit
+cgMLST V1	b3456 (livM)	leucine/isoleucine/valine transporter subunit
+cgMLST V1	b4227 (ytfQ)	galactofuranose binding proteint: periplasmic-binding component of ABC superfamily
+cgMLST V1	b0767 (pgl)	6-phosphogluconolactonase
+cgMLST V1	b0764 (modB)	molybdate transporter subunit
+cgMLST V1	b0765 (modC)	molybdate transporter subunit
+cgMLST V1	b0763 (modA)	molybdate transporter subunit
+cgMLST V1	b3124 (garK)	glycerate kinase I
+cgMLST V1	b4220 (tamA)	"translocation and assembly module for autotransporter export, outer membrane subunit"
+cgMLST V1	b0698 (kdpA)	"potassium translocating ATPase, subunit A "
+cgMLST V1	b0699 (ybfA)	DUF2517 family protein
+cgMLST V1	b4537 (yecJ)	uncharacterized protein
+cgMLST V1	b4536 (yobH)	uncharacterized protein
+cgMLST V1	b4535 (yniD)	uncharacterized protein
+cgMLST V1	b1960 (vsr)	DNA mismatch endonuclease of very short patch repair
+cgMLST V1	b3619 (hldD)	"ADP-L-glycero-D-mannoheptose-6-epimerase, NAD(P)-binding "
+cgMLST V1	b3613 (envC)	"activator of AmiB,C murein hydrolases, septal ring factor"
+cgMLST V1	b3612 (gpmM)	"phosphoglycero mutase III, cofactor-independent "
+cgMLST V1	b3611 (yibN)	putative rhodanese-related sulfurtransferase
+cgMLST V1	b3610 (grxC)	glutaredoxin 3
+cgMLST V1	b3617 (kbl)	glycine C-acetyltransferase
+cgMLST V1	b1712 (ihfA)	"integration host factor (IHF), DNA-binding protein, alpha subunit"
+cgMLST V1	b2812 (tcdA)	tRNA threonylcarbamoyladenosine dehydratase; sulfur acceptor for CsdA
+cgMLST V1	b2813 (mltA)	membrane-bound lytic murein transglycosylase A
+cgMLST V1	b2811 (csdE)	CsdA-binding activator; Fe-S protein
+cgMLST V1	b2817 (amiC)	N-acetylmuramoyl-L-alanine amidase
+cgMLST V1	b2818 (argA)	fused acetylglutamate kinase homolog (inactive)/amino acid N-acetyltransferase
+cgMLST V1	b2819 (recD)	"exonuclease V (RecBCD complex), alpha chain "
+cgMLST V1	b1738 (chbB)	"N,N'-diacetylchitobiose-specific enzyme IIB component of PTS "
+cgMLST V1	b1739 (osmE)	osmotically-inducible lipoprotein
+cgMLST V1	b1731 (cedA)	cell division modulator
+cgMLST V1	b1736 (chbA)	"N,N'-diacetylchitobiose-specific enzyme IIA component of PTS "
+cgMLST V1	b0042 (fixB)	"putative electron transfer flavoprotein, NAD/FAD-binding domain and ETFP adenine nucleotide-binding domain-like protein"
+cgMLST V1	b0047 (kefC)	potassium:proton antiporter
+cgMLST V1	b0065 (yabI)	DedA family inner membrane protein
+cgMLST V1	b0067 (thiP)	"thiamine, thiamine pyrophosphate ABC transporter permease; ThiBPQ thiamine, thiamine pyrophosphate importer"
+cgMLST V1	b0066 (thiQ)	"thiamine, thiamine pyrophosphate ABC transporter ATPase; ThiBPQ thiamine, thiamine pyrophosphate importer"
+cgMLST V1	b0060 (polB)	DNA polymerase II
+cgMLST V1	b0063 (araB)	L-ribulokinase
+cgMLST V1	b0062 (araA)	L-arabinose isomerase
+cgMLST V1	b0068 (thiB)	"thiamine-, thiamine pyrophosphate-, thiamine monophosphate-binding ABC transporter periplasmic protein; ThiBPQ thiamine, thiamine pyrophosphate importer"
+cgMLST V1	b2672 (ygaM)	"DUF883 family protein, putative membrane-anchored ribosome-binding protein"
+cgMLST V1	b3809 (dapF)	diaminopimelate epimerase
+cgMLST V1	b3802 (hemY)	putative protoheme IX synthesis protein
+cgMLST V1	b3800 (aslB)	putative AslA-specific sulfatase-maturating enzyme
+cgMLST V1	b3806 (cyaA)	adenylate cyclase
+cgMLST V1	b3804 (hemD)	uroporphyrinogen III synthase
+cgMLST V1	b3805 (hemC)	hydroxymethylbilane synthase
+cgMLST V1	b2997 (hybO)	"hydrogenase 2, small subunit "
+cgMLST V1	b2996 (hybA)	hydrogenase 2 4Fe-4S ferredoxin-type component
+cgMLST V1	b2995 (hybB)	putative hydrogenase 2 cytochrome b type component
+cgMLST V1	b2994 (hybC)	"hydrogenase 2, large subunit "
+cgMLST V1	b2993 (hybD)	maturation protease for hydrogenase 2
+cgMLST V1	b2992 (hybE)	hydrogenase 2-specific chaperone
+cgMLST V1	b2991 (hybF)	protein involved with the maturation of hydrogenases 1 and 2
+cgMLST V1	b2990 (hybG)	hydrogenase 2 accessory protein
+cgMLST V1	b2998 (yghW)	DUF2623 family protein
+cgMLST V1	b0451 (amtB)	ammonium transporter
+cgMLST V1	b0452 (tesB)	acyl-CoA thioesterase 2
+cgMLST V1	b0453 (ybaY)	outer membrane lipoprotein
+cgMLST V1	b0454 (ybaZ)	"excision repair protein, alkyltransferase-like protein ATL"
+cgMLST V1	b0456 (ybaA)	DUF1428 family protein
+cgMLST V1	b0457 (ylaB)	putative membrane-anchored cyclic-di-GMP phosphodiesterase
+cgMLST V1	b0458 (ylaC)	DUF1449 family inner membrane protein
+cgMLST V1	b0459 (maa)	maltose O-acetyltransferase
+cgMLST V1	b3102 (yqjG)	putative S-transferase
+cgMLST V1	b3101 (yqjF)	putative quinol oxidase subunit
+cgMLST V1	b3100 (yqjK)	uncharacterized protein
+cgMLST V1	b3107 (yhaL)	uncharacterized protein
+cgMLST V1	b3106 (yhaK)	redox-sensitive bicupin
+cgMLST V1	b3105 (yhaJ)	LysR family putative transcriptional regulator
+cgMLST V1	b2762 (cysH)	"phosphoadenosine phosphosulfate reductase; PAPS reductase, thioredoxin dependent "
+cgMLST V1	b2763 (cysI)	"sulfite reductase, beta subunit, NAD(P)-binding, heme-binding "
+cgMLST V1	b2764 (cysJ)	"sulfite reductase, alpha subunit, flavoprotein "
+cgMLST V1	b2765 (queD)	6-pyruvoyl tetrahydrobiopterin synthase (PTPS)
+cgMLST V1	b0612 (citT)	citrate:succinate antiporter
+cgMLST V1	b0613 (citG)	2-(5''-triphosphoribosyl)-3'-dephosphocoenzyme-A synthase
+cgMLST V1	b0610 (rnk)	regulator of nucleoside diphosphate kinase
+cgMLST V1	b0611 (rna)	ribonuclease I
+cgMLST V1	b0616 (citE)	"citrate lyase, citryl-ACP lyase (beta) subunit "
+cgMLST V1	b0617 (citD)	"citrate lyase, acyl carrier (gamma) subunit "
+cgMLST V1	b0614 (citX)	apo-citrate lyase phosphoribosyl-dephospho-CoA transferase
+cgMLST V1	b0615 (citF)	"citrate lyase, citrate-ACP transferase (alpha) subunit "
+cgMLST V1	b2562 (yfhL)	putative 4Fe-4S cluster-containing protein
+cgMLST V1	b2563 (acpS)	holo-[acyl-carrier-protein] synthase 1
+cgMLST V1	b2560 (pgpC)	"phosphatidylglycerophosphatase C, membrane bound"
+cgMLST V1	b2561 (yfhH)	putative DNA-binding transcriptional regulator
+cgMLST V1	b2566 (era)	"membrane-associated, 16S rRNA-binding GTPase"
+cgMLST V1	b2567 (rnc)	RNase III
+cgMLST V1	b2564 (pdxJ)	pyridoxine 5'-phosphate synthase
+cgMLST V1	b2565 (recO)	gap repair protein
+cgMLST V1	b2568 (lepB)	leader peptidase (signal peptidase I)
+cgMLST V1	b2569 (lepA)	"back-translocating elongation factor EF4, GTPase"
+cgMLST V1	b1208 (ispE)	4-diphosphocytidyl-2-C-methylerythritol kinase
+cgMLST V1	b1209 (lolB)	lipoprotein localization factor
+cgMLST V1	b1203 (ychF)	"catalase inhibitor protein; ATPase, K+-dependent, ribosome-associated"
+cgMLST V1	b1206 (dauA)	C4-dicarboxylic acid transporter
+cgMLST V1	b1207 (prs)	phosphoribosylpyrophosphate synthase
+cgMLST V1	b1204 (pth)	peptidyl-tRNA hydrolase
+cgMLST V1	b1205 (ychH)	DUF2583 family putative inner membrane protein
+cgMLST V1	b4078 (yjcO)	Sel1 family TPR-like repeat protein
+cgMLST V1	b4072 (nrfC)	"formate-dependent nitrite reductase, 4Fe4S subunit"
+cgMLST V1	b4073 (nrfD)	"formate-dependent nitrite reductase, membrane subunit"
+cgMLST V1	b4070 (nrfA)	"nitrite reductase, formate-dependent, cytochrome"
+cgMLST V1	b4071 (nrfB)	"nitrite reductase, formate-dependent, penta-heme cytochrome c "
+cgMLST V1	b4076 (nrfG)	"heme lyase (NrfEFG) for insertion of heme into c552, subunit NrfG"
+cgMLST V1	b4077 (gltP)	glutamate/aspartate:proton symporter
+cgMLST V1	b4074 (nrfE)	"heme lyase (NrfEFG) for insertion of heme into c552, subunit NrfE"
+cgMLST V1	b4075 (nrfF)	"heme lyase (NrfEFG) for insertion of heme into c552, subunit NrfF"
+cgMLST V1	b0807 (rlmF)	"23S rRNA m(6)A1618 methyltransferase, SAM-dependent"
+cgMLST V1	b3318 (rplW)	50S ribosomal subunit protein L23
+cgMLST V1	b3319 (rplD)	50S ribosomal subunit protein L4
+cgMLST V1	b3312 (rpmC)	50S ribosomal subunit protein L29
+cgMLST V1	b3313 (rplP)	50S ribosomal subunit protein L16
+cgMLST V1	b3310 (rplN)	50S ribosomal subunit protein L14
+cgMLST V1	b3311 (rpsQ)	30S ribosomal subunit protein S17
+cgMLST V1	b3316 (rpsS)	30S ribosomal subunit protein S19
+cgMLST V1	b3317 (rplB)	50S ribosomal subunit protein L2
+cgMLST V1	b3314 (rpsC)	30S ribosomal subunit protein S3
+cgMLST V1	b3315 (rplV)	50S ribosomal subunit protein L22
+cgMLST V1	b0800 (ybiB)	putative family 3 glycosyltransferase
+cgMLST V1	b1045 (ymdB)	O-acetyl-ADP-ribose deacetylase; RNase III inhibitor during cold shock; putative cardiolipin synthase C regulatory subunit
+cgMLST V1	b1046 (clsC)	stationary phase cardiolipin synthase 3
+cgMLST V1	b1047 (opgC)	osmoregulated periplasmic glucan succinylation membrane protein
+cgMLST V1	b1048 (opgG)	osmoregulated periplasmic glucan (OPG) biosynthesis periplasmic protein
+cgMLST V1	b1049 (opgH)	"membrane glycosyltransferase; nutrient-dependent cell size regulator, FtsZ assembly antagonist"
+cgMLST V1	b0796 (ybiH)	DUF1956 domain-containing tetR family putative transcriptional regulator
+cgMLST V1	b0795 (ybhG)	"putative membrane fusion protein (MFP) component of efflux pump, membrane anchor"
+cgMLST V1	b0793 (ybhS)	inner membrane putative ABC superfamily transporter permease
+cgMLST V1	b0792 (ybhR)	inner membrane putative ABC superfamily transporter permease
+cgMLST V1	b0791 (ybhQ)	inner membrane protein
+cgMLST V1	b0790 (ybhP)	endo/exonuclease/phosphatase family protein
+cgMLST V1	b0799 (dinG)	ATP-dependent DNA helicase
+cgMLST V1	b3554 (yiaF)	barrier effect co-colonization resistance factor; DUF3053 family lipoprotein
+cgMLST V1	b3555 (yiaG)	HTH_CROC1 family putative transcriptional regulator
+cgMLST V1	b3550 (yiaC)	putative acyl-CoA transferase
+cgMLST V1	b3551 (bisC)	biotin sulfoxide reductase
+cgMLST V1	b3552 (yiaD)	multicopy suppressor of bamB; outer membrane lipoprotein
+cgMLST V1	b3553 (ghrB)	glyoxylate/hydroxypyruvate reductase B
+cgMLST V1	b3559 (glyS)	"glycine tRNA synthetase, beta subunit "
+cgMLST V1	b2687 (luxS)	S-ribosylhomocysteine lyase
+cgMLST V1	b2686 (emrB)	multidrug efflux system protein
+cgMLST V1	b2685 (emrA)	multidrug efflux system
+cgMLST V1	b2684 (mprA)	transcriptional repressor of microcin B17 synthesis and multidrug efflux
+cgMLST V1	b2683 (ygaH)	"putative L-valine exporter, norvaline resistance protein"
+cgMLST V1	b2682 (ygaZ)	"putative L-valine exporter, norvaline resistance protein"
+cgMLST V1	b1290 (sapF)	antimicrobial peptide transport ABC system ATP-binding protein
+cgMLST V1	b2689 (yqaA)	COG1238 family inner membrane protein
+cgMLST V1	b2688 (gshA)	glutamate-cysteine ligase
+cgMLST V1	b3886 (yihY)	"BrkB family putative transporter, inner membrane protein"
+cgMLST V1	b3887 (dtd)	D-tyr-tRNA(Tyr) deacylase
+cgMLST V1	b3885 (yihX)	"alpha-D-Glucose-1-P phosphatase, anomer-specific"
+cgMLST V1	b3888 (yiiD)	putative acetyltransferase
+cgMLST V1	b0961 (yccF)	DUF307 family inner membrane protein
+cgMLST V1	b0962 (helD)	DNA helicase IV
+cgMLST V1	b0963 (mgsA)	methylglyoxal synthase
+cgMLST V1	b0964 (yccT)	UPF0319 family protein
+cgMLST V1	b0965 (yccU)	putative CoA-binding protein
+cgMLST V1	b0966 (hspQ)	heat shock protein involved in degradation of mutant DnaA; hemimethylated oriC DNA-binding protein
+cgMLST V1	b0967 (rlmI)	"23S rRNA m(5)C1962 methyltransferase, SAM-dependent"
+cgMLST V1	b0968 (yccX)	weak acylphosphatase
+cgMLST V1	b0969 (tusE)	mnm(5)-s(2)U34-tRNA 2-thiolation sulfurtransferase
+cgMLST V1	NCTC12129_03503 (-)	lysM domain protein
+cgMLST V1	b2914 (rpiA)	"ribose 5-phosphate isomerase, constitutive "
+cgMLST V1	b2913 (serA)	D-3-phosphoglycerate dehydrogenase
+cgMLST V1	b2912 (fau)	5-formyltetrahydrofolate cyclo-ligase family protein
+cgMLST V1	b2910 (zapA)	FtsZ stabilizer
+cgMLST V1	b4407 (thiS)	immediate sulfur donor in thiazole formation
+cgMLST V1	b0187 (yaeR)	putative lyase
+cgMLST V1	b0184 (dnaE)	DNA polymerase III alpha subunit
+cgMLST V1	b0185 (accA)	"acetyl-CoA carboxylase, carboxytransferase, alpha subunit "
+cgMLST V1	b4403 (yjtD)	putative methyltransferase
+cgMLST V1	b0183 (rnhB)	"ribonuclease HII, degrades RNA of DNA-RNA hybrids "
+cgMLST V1	b0180 (fabZ)	(3R)-hydroxymyristol acyl carrier protein dehydratase
+cgMLST V1	b0181 (lpxA)	UDP-N-acetylglucosamine acetyltransferase
+cgMLST V1	b0189 (rof)	modulator of Rho-dependent transcription termination
+cgMLST V1	b4606 (ypfM)	stress-induced small enterobacterial protein
+cgMLST V1	b0238 (gpt)	xanthine phosphoribosyltransferase; xanthine-guanine phosphoribosyltransferase
+cgMLST V1	b0239 (frsA)	fermentation-respiration switch protein; PTS Enzyme IIA(Glc)-binding protein; pNP-butyrate esterase activity
+cgMLST V1	b0234 (yafP)	putative acyl-CoA transferase
+cgMLST V1	b4601 (ydgU)	stationary phase-induced protein
+cgMLST V1	b0237 (pepD)	aminoacyl-histidine dipeptidase (peptidase D)
+cgMLST V1	b0231 (dinB)	DNA polymerase IV
+cgMLST V1	b2272 (yfbM)	DUF1877 family protein
+cgMLST V1	b2276 (nuoN)	"NADH:ubiquinone oxidoreductase, membrane subunit N"
+cgMLST V1	b2277 (nuoM)	"NADH:ubiquinone oxidoreductase, membrane subunit M"
+cgMLST V1	b2278 (nuoL)	"NADH:ubiquinone oxidoreductase, membrane subunit L"
+cgMLST V1	b2279 (nuoK)	"NADH:ubiquinone oxidoreductase, membrane subunit K"
+cgMLST V1	ECs0267 (crl)	DNA-binding transcriptional regulator Crl
+cgMLST V1	b2496 (hda)	ATPase regulatory factor involved in DnaA inactivation
+cgMLST V1	b2497 (uraA)	uracil permease
+cgMLST V1	b2494 (bepA)	periplasmic metalloprotease and chaperone for OM protein maintenance and assembly
+cgMLST V1	b2495 (yfgD)	putative oxidoreductase
+cgMLST V1	b2493 (yfgO)	putative UPF0118 family inner membrane permease
+cgMLST V1	b2498 (upp)	uracil phosphoribosyltransferase
+cgMLST V1	b2499 (purM)	phosphoribosylaminoimidazole synthetase
+cgMLST V1	b1918 (yecS)	ABC family putative inner membrane permease
+cgMLST V1	b1919 (dcyD)	"D-cysteine desulfhydrase, PLP-dependent "
+cgMLST V1	b1912 (pgsA)	phosphatidylglycerophosphate synthetase
+cgMLST V1	b1913 (uvrC)	"excinuclease UvrABC, endonuclease subunit"
+cgMLST V1	b1917 (yecC)	putative ABC superfamily transporter ATP-binding subunit
+cgMLST V1	b1914 (uvrY)	response regulator in two-component regulatory system with BarA
+cgMLST V1	b1915 (yecF)	DUF2594 family protein
+cgMLST V1	b3073 (patA)	"putrescine:2-oxoglutaric acid aminotransferase, PLP-dependent "
+cgMLST V1	b3072 (aer)	fused signal transducer for aerotaxis sensory component/methyl accepting chemotaxis component
+cgMLST V1	b3070 (yqjH)	putative siderophore interacting protein
+cgMLST V1	C_RS24040 (-)	spermidine/putrescine ABC transporter substrate-binding protein
+cgMLST V1	b1282 (yciH)	"initiation factor function partial mimic, SUI1 family"
+cgMLST V1	b1283 (osmB)	lipoprotein
+cgMLST V1	b1280 (yciM)	envelope integrity maintenance protein; EnvC-interacting protein
+cgMLST V1	b1281 (pyrF)	orotidine-5'-phosphate decarboxylase
+cgMLST V1	b1286 (rnb)	ribonuclease II
+cgMLST V1	b1287 (yciW)	putative oxidoreductase
+cgMLST V1	b1284 (yciT)	global regulator of transcription; DeoR family
+cgMLST V1	b1288 (fabI)	"enoyl-[acyl-carrier-protein] reductase, NADH-dependent "
+cgMLST V1	b0887 (cydD)	"fused glutathione, cysteine exporter subunits of ABC superfamily: membrane component/ATP-binding component"
+cgMLST V1	b0886 (cydC)	"fused glutathione, cysteine exporter subunits of ABC superfamily: membrane component/ATP-binding component"
+cgMLST V1	b0884 (infA)	translation initiation factor IF-1
+cgMLST V1	b0881 (clpS)	regulatory protein for ClpA substrate specificity
+cgMLST V1	b0880 (cspD)	"inhibitor of DNA replication, cold shock protein homolog"
+cgMLST V1	b0889 (lrp)	leucine-responsive global transcriptional regulator
+cgMLST V1	b0888 (trxB)	"thioredoxin reductase, FAD/NAD(P)-binding "
+cgMLST V1	b1426 (ydcH)	DUF465 family protein
+cgMLST V1	b1424 (opgD)	osmoregulated periplasmic glucan (OPG) biosynthesis periplasmic protein
+cgMLST V1	b1422 (ydcI)	putative DNA-binding transcriptional regulator
+cgMLST V1	b1423 (ydcJ)	putative metalloenzyme
+cgMLST V1	b1428 (ydcK)	uncharacterized protein
+cgMLST V1	b1429 (tehA)	potassium-tellurite ethidium and proflavin transporter
+cgMLST V1	b1606 (folM)	"dihydromonapterin reductase, NADPH-dependent; dihydrofolate reductase isozyme "
+cgMLST V1	b1604 (ydgH)	DUF1471 family periplasmic protein
+cgMLST V1	b1602 (pntB)	"pyridine nucleotide transhydrogenase, beta subunit "
+cgMLST V1	b1600 (mdtJ)	multidrug efflux system transporter
+cgMLST V1	b4613 (dinQ)	"UV-inducible membrane toxin, DinQ-AgrB type I toxin-antitoxin system"
+cgMLST V1	b3064 (tsaD)	tRNA(ANN) t(6)A37 threonylcarbamoyladenosine modification protein; glycation binding protein
+cgMLST V1	b3065 (rpsU)	30S ribosomal subunit protein S21
+cgMLST V1	b3066 (dnaG)	DNA primase
+cgMLST V1	b3067 (rpoD)	"RNA polymerase, sigma 70 (sigma D) factor"
+cgMLST V1	b3061 (ttdA)	"L-tartrate dehydratase, alpha subunit "
+cgMLST V1	b3062 (ttdB)	"L-tartrate dehydratase, beta subunit "
+cgMLST V1	b3063 (ttdT)	L-tartrate/succinate antiporte
+cgMLST V1	b3068 (mug)	G/U mismatch-specific DNA glycosylase; xanthine DNA glycosylase
+cgMLST V1	b3392 (hofP)	DNA catabolic protein
+cgMLST V1	b3390 (aroK)	shikimate kinase I
+cgMLST V1	b3396 (mrcA)	fused penicillin-binding protein 1a: murein transglycosylase/murein transpeptidase
+cgMLST V1	b3397 (nudE)	"adenosine nucleotide hydrolase; substrates include Ap3A, Ap2A, ADP-ribose, NADH "
+cgMLST V1	b3394 (hofN)	DNA catabolic putative fimbrial assembly protein
+cgMLST V1	b3395 (hofM)	DNA catabolic putative pilus assembly protein
+cgMLST V1	b3398 (yrfF)	inner membrane protein
+cgMLST V1	b3399 (yrfG)	GMP/IMP nucleotidase
+cgMLST V1	b3936 (rpmE)	50S ribosomal subunit protein L31
+cgMLST V1	b3937 (yiiX)	"putative lipid binding hydrolase, DUF830 family protein"
+cgMLST V1	b3934 (cytR)	Anti-activator for CytR-CRP nucleoside utilization regulon
+cgMLST V1	b3935 (priA)	Primosome factor n' (replication factor Y)
+cgMLST V1	b3932 (hslV)	peptidase component of the HslUV protease
+cgMLST V1	b3933 (ftsN)	essential cell division protein
+cgMLST V1	b3930 (menA)	"1,4-dihydroxy-2-naphthoate octaprenyltransferase "
+cgMLST V1	b3931 (hslU)	molecular chaperone and ATPase component of HslUV protease
+cgMLST V1	b3938 (metJ)	"transcriptional repressor, S-adenosylmethionine-binding"
+cgMLST V1	b3939 (metB)	"cystathionine gamma-synthase, PLP-dependent "
+cgMLST V1	b0715 (abrB)	regulator of aidB expression; inner membrane protein
+cgMLST V1	b0714 (nei)	endonuclease VIII/5-formyluracil/5-hydroxymethyluracil DNA glycosylase
+cgMLST V1	b0713 (ybgL)	UPF0271 family protein
+cgMLST V1	b0712 (ybgK)	"putative allophanate hydrolase, subunit 2"
+cgMLST V1	b0711 (ybgJ)	"putative allophanate hydrolase, subunit 1"
+cgMLST V1	b0710 (ybgI)	NIF3 family metal-binding protein
+cgMLST V1	b2609 (rpsP)	30S ribosomal subunit protein S16
+cgMLST V1	b2608 (rimM)	16S rRNA processing protein
+cgMLST V1	b2607 (trmD)	"tRNA m(1)G37 methyltransferase, SAM-dependent "
+cgMLST V1	b2606 (rplS)	50S ribosomal subunit protein L19
+cgMLST V1	b2605 (yfiB)	OM lipoprotein putative positive effector of YfiN activity
+cgMLST V1	b2603 (yfiR)	putative periplasmic inhibitor of YfiN activity
+cgMLST V1	b2602 (yfiL)	lipoprotein
+cgMLST V1	b2601 (aroF)	"3-deoxy-D-arabino-heptulosonate-7-phosphate synthase, tyrosine-repressible "
+cgMLST V1	b2600 (tyrA)	fused chorismate mutase T/prephenate dehydrogenase
+cgMLST V1	b4137 (cutA)	"divalent-cation tolerance protein, copper sensitivity"
+cgMLST V1	b4136 (dsbD)	fused thiol:disulfide interchange protein: activator of DsbC/conserved protein
+cgMLST V1	b4135 (yjdC)	putative transcriptional regulator
+cgMLST V1	b4139 (aspA)	aspartate ammonia-lyase
+cgMLST V1	b4138 (dcuA)	C4-dicarboxylate antiporter
+cgMLST V1	b3213 (gltD)	"glutamate synthase, 4Fe-4S protein, small subunit "
+cgMLST V1	b3212 (gltB)	"glutamate synthase, large subunit "
+cgMLST V1	b3211 (yhcC)	"putative Fe-S oxidoreductase, Radical SAM superfamily protein"
+cgMLST V1	b3210 (arcB)	"aerobic respiration control sensor histidine protein kinase, cognate to two-component response regulators ArcA and RssB"
+cgMLST V1	b2167 (fruA)	fused fructose-specific PTS enzymes: IIBcomponent/IIC components
+cgMLST V1	b2165 (psuG)	pseudouridine 5'-phosphate glycosidase
+cgMLST V1	b2160 (yeiI)	putative kinase
+cgMLST V1	b2168 (fruK)	fructose-1-phosphate kinase
+cgMLST V1	b2169 (fruB)	fused fructose-specific PTS enzymes: IIA component/HPr component
+cgMLST V1	b0182 (lpxB)	tetraacyldisaccharide-1-P synthase
+cgMLST V1	b1378 (pfo)	pyruvate-flavodoxin oxidoreductase
+cgMLST V1	b1679 (sufE)	sulfur acceptor protein
+cgMLST V1	b1678 (ldtE)	"murein L,D-transpeptidase"
+cgMLST V1	b1677 (lpp)	murein lipoprotein
+cgMLST V1	b1676 (pykF)	pyruvate kinase I
+cgMLST V1	b1675 (ydhZ)	uncharacterized protein
+cgMLST V1	b0108 (ppdD)	putative prepilin peptidase-dependent pilin
+cgMLST V1	b0109 (nadC)	quinolinate phosphoribosyltransferase
+cgMLST V1	b0106 (hofC)	"assembly protein in type IV pilin biogenesis, transmembrane protein"
+cgMLST V1	b0104 (guaC)	GMP reductase
+cgMLST V1	b4484 (cpxP)	inhibitor of the cpx response; periplasmic adaptor protein
+cgMLST V1	b4483 (tatD)	quality control of Tat-exported FeS proteins; Mg-dependent cytoplasmic DNase
+cgMLST V1	b0103 (coaE)	dephospho-CoA kinase
+cgMLST V1	b4481 (wecF)	TDP-Fuc4NAc:lipidIIFuc4NAc transferase
+cgMLST V1	b0101 (yacG)	DNA gyrase inhibitor
+cgMLST V1	b3769 (ilvM)	acetolactate synthase 2 small subunit
+cgMLST V1	b3766 (ilvL)	ilvG operon leader peptide
+cgMLST V1	b3764 (yifE)	UPF0438 family protein
+cgMLST V1	b2418 (pdxK)	pyridoxal-pyridoxamine kinase/hydroxymethylpyrimidine kinase
+cgMLST V1	b2417 (crr)	glucose-specific enzyme IIA component of PTS
+cgMLST V1	b2414 (cysK)	"cysteine synthase A, O-acetylserine sulfhydrolase A subunit "
+cgMLST V1	b2415 (ptsH)	phosphohistidinoprotein-hexose phosphotransferase component of PTS system (Hpr)
+cgMLST V1	b2412 (zipA)	FtsZ stabilizer
+cgMLST V1	b2413 (cysZ)	EI24 family inner membrane protein; putative sulfate transporter
+cgMLST V1	b2410 (yfeH)	putative inorganic ion transporter
+cgMLST V1	b2411 (ligA)	"DNA ligase, NAD(+)-dependent "
+cgMLST V1	b1992 (cobS)	cobalamin synthase
+cgMLST V1	b0423 (thiI)	tRNA s(4)U8 sulfurtransferase
+cgMLST V1	b1334 (fnr)	oxygen-sensing anaerobic growth regulon transcriptional regulator; autorepressor
+cgMLST V1	b1335 (ogt)	O-6-alkylguanine-DNA:cysteine-protein methyltransferase
+cgMLST V1	b1332 (ynaJ)	DUF2534 family putative inner membrane protein
+cgMLST V1	b1333 (uspE)	stress-induced protein
+cgMLST V1	b3160 (yhbW)	putative luciferase-like monooxygenase
+cgMLST V1	NCTC12129_03460 (csdA)	cysteine sulfinate desulfinase
+cgMLST V1	b3406 (greB)	transcript cleavage factor
+cgMLST V1	b3407 (yhgF)	putative transcriptional accessory protein
+cgMLST V1	b3404 (envZ)	sensory histidine kinase in two-component regulatory system with OmpR
+cgMLST V1	b3405 (ompR)	response regulator in two-component regulatory system with EnvZ
+cgMLST V1	b3402 (yhgE)	DUF4153 family putative inner membrane protein
+cgMLST V1	b3403 (pck)	phosphoenolpyruvate carboxykinase
+cgMLST V1	b3400 (hslR)	ribosome-associated heat shock protein Hsp15
+cgMLST V1	b3401 (hslO)	heat shock protein Hsp33
+cgMLST V1	b3408 (feoA)	"ferrous iron transporter, protein A"
+cgMLST V1	b3409 (feoB)	"fused ferrous iron transporter, protein B: GTP-binding protein/membrane protein"
+cgMLST V1	b0809 (glnQ)	glutamine transporter subunit
+cgMLST V1	b0808 (ybiO)	"mechanosensitive channel protein, intermediate conductance"
+cgMLST V1	b0806 (mcbA)	colanic acid mucoidy stimulation protein
+cgMLST V1	b0803 (ybiI)	DksA-type zinc finger protein
+cgMLST V1	b0802 (ybiJ)	DUF1471 family putative periplasmic protein
+cgMLST V1	b0801 (ybiC)	putative dehydrogenase
+cgMLST V1	b0094 (ftsA)	ATP-binding cell division protein involved in recruitment of FtsK to Z ring
+cgMLST V1	b0379 (yaiY)	DUF2755 family inner membrane protein
+cgMLST V1	b0378 (yaiW)	putative lipoprotein
+cgMLST V1	b0375 (yaiV)	putative transcriptional regulator
+cgMLST V1	b0377 (sbmA)	microcin B17 transporter
+cgMLST V1	b0376 (ampH)	D-alanyl-D-alanine-carboxypeptidase/endopeptidase; penicillin-binding protein; weak beta-lactamase
+cgMLST V1	b2331 (smrB)	putative DNA endonuclease
+cgMLST V1	b2330 (prmB)	N5-glutamine methyltransferase
+cgMLST V1	b2593 (yfiH)	UPF0124 family protein
+cgMLST V1	b2592 (clpB)	protein disaggregation chaperone
+cgMLST V1	b2597 (raiA)	cold shock protein associated with 30S ribosomal subunit
+cgMLST V1	b2595 (bamD)	BamABCDE complex OM biogenesis lipoprotein
+cgMLST V1	b2594 (rluD)	"23S rRNA pseudouridine(1911,1915,1917) synthase "
+cgMLST V1	b2599 (pheA)	"chorismate mutase and prephenate dehydratase, P-protein "
+cgMLST V1	b2598 (pheL)	pheA gene leader peptide
+cgMLST V1	b1817 (manX)	fused mannose-specific PTS enzymes: IIA component/IIB component
+cgMLST V1	b1816 (yoaE)	putative membrane protein/conserved protein
+cgMLST V1	b1815 (yoaD)	"putative membrane-anchored cyclic-di-GMP phosphodiesterase, regulator of cellulose production"
+cgMLST V1	b1813 (nudL)	"putative CoA pyrophosphohydrolase, weak 3-phosphohydroxypyruvate phosphatase"
+cgMLST V1	b1812 (pabB)	"aminodeoxychorismate synthase, subunit I "
+cgMLST V1	b1811 (yoaH)	UPF0181 family protein
+cgMLST V1	b1810 (yoaC)	DUF1889 family protein
+cgMLST V1	b1819 (manZ)	mannose-specific enzyme IID component of PTS
+cgMLST V1	b1818 (manY)	mannose-specific enzyme IIC component of PTS
+cgMLST V1	b0005 (yaaX)	DUF2502 family putative periplasmic protein
+cgMLST V1	b1742 (ves)	cold- and stress-inducible protein
+cgMLST V1	b1740 (nadE)	"NAD synthetase, NH3/glutamine-dependent "
+cgMLST V1	b1747 (astA)	arginine succinyltransferase
+cgMLST V1	b1746 (astD)	succinylglutamic semialdehyde dehydrogenase
+cgMLST V1	b1745 (astB)	succinylarginine dihydrolase
+cgMLST V1	b1744 (astE)	succinylglutamate desuccinylase
+cgMLST V1	b1749 (xthA)	exonuclease III
+cgMLST V1	b1748 (astC)	"succinylornithine transaminase, PLP-dependent "
+cgMLST V1	b3299 (rpmJ)	50S ribosomal subunit protein L36
+cgMLST V1	b3298 (rpsM)	30S ribosomal subunit protein S13
+cgMLST V1	b3297 (rpsK)	30S ribosomal subunit protein S11
+cgMLST V1	b3296 (rpsD)	30S ribosomal subunit protein S4
+cgMLST V1	b3295 (rpoA)	"RNA polymerase, alpha subunit "
+cgMLST V1	b3294 (rplQ)	50S ribosomal subunit protein L17
+cgMLST V1	b3290 (trkA)	NAD-binding component of TrK potassium transporter
+cgMLST V1	b3871 (typA)	GTP-binding protein
+cgMLST V1	b3870 (glnA)	glutamine synthetase
+cgMLST V1	b0914 (msbA)	fused lipid transporter subunits of ABC superfamily: membrane component/ATP-binding component
+cgMLST V1	b0469 (apt)	adenine phosphoribosyltransferase
+cgMLST V1	b0468 (ybaN)	DUF454 family inner membrane protein
+cgMLST V1	b0462 (acrB)	multidrug efflux system protein
+cgMLST V1	b0465 (mscK)	"mechanosensitive channel protein, intermediate conductance, K+ regulated"
+cgMLST V1	b0464 (acrR)	transcriptional repressor
+cgMLST V1	b0467 (priC)	primosomal replication protein N''
+cgMLST V1	b2283 (nuoG)	"NADH:ubiquinone oxidoreductase, chain G "
+cgMLST V1	b2282 (nuoH)	"NADH:ubiquinone oxidoreductase, membrane subunit H"
+cgMLST V1	b2281 (nuoI)	"NADH:ubiquinone oxidoreductase, chain I "
+cgMLST V1	b2280 (nuoJ)	"NADH:ubiquinone oxidoreductase, membrane subunit J"
+cgMLST V1	b2287 (nuoB)	"NADH:ubiquinone oxidoreductase, chain B "
+cgMLST V1	b2286 (nuoC)	"NADH:ubiquinone oxidoreductase, fused CD subunit "
+cgMLST V1	b2285 (nuoE)	"NADH:ubiquinone oxidoreductase, chain E "
+cgMLST V1	b2284 (nuoF)	"NADH:ubiquinone oxidoreductase, chain F "
+cgMLST V1	b2289 (lrhA)	"transcriptional repressor of flagellar, motility and chemotaxis genes"
+cgMLST V1	b2288 (nuoA)	"NADH:ubiquinone oxidoreductase, membrane subunit A"
+cgMLST V1	b3486 (rbbA)	ribosome-associated ATPase: ATP-binding protein/ATP-binding membrane protein
+cgMLST V1	b3487 (yhiI)	putative membrane fusion protein (MFP) of efflux pump
+cgMLST V1	b3485 (yhhJ)	inner membrane putative ABC transporter permease
+cgMLST V1	b3480 (nikE)	nickel transporter subunit
+cgMLST V1	b3481 (nikR)	"transcriptional repressor, Ni-binding"
+cgMLST V1	b2751 (cysN)	"sulfate adenylyltransferase, subunit 1 "
+cgMLST V1	b2750 (cysC)	adenosine 5'-phosphosulfate kinase
+cgMLST V1	b2753 (iap)	aminopeptidase in alkaline phosphatase isozyme conversion
+cgMLST V1	b2752 (cysD)	"sulfate adenylyltransferase, subunit 2 "
+cgMLST V1	b1130 (phoP)	response regulator in two-component regulatory system with PhoQ
+cgMLST V1	b1131 (purB)	adenylosuccinate lyase
+cgMLST V1	b1132 (hflD)	putative lysogenization regulator
+cgMLST V1	b1133 (mnmA)	"tRNA(Gln,Lys,Glu) U34 2-thiouridylase, first step in mnm(5)-s(2)U34-tRNA synthesis "
+cgMLST V1	b1134 (nudJ)	bifunctional thiamine pyrimidine pyrophosphate hydrolase/thiamine pyrophosphate hydrolase
+cgMLST V1	b1135 (rluE)	23S rRNA pseudouridine(2457) synthase
+cgMLST V1	b1136 (icd)	"e14 prophage; isocitrate dehydrogenase, specific for NADP+ "
+cgMLST V1	b4568 (ytjA)	uncharacterized protein
+cgMLST V1	b0662 (ubiF)	"2-octaprenyl-3-methyl-6-methoxy-1,4-benzoquinol oxygenase "
+cgMLST V1	b0661 (miaB)	tRNA-i(6)A37 methylthiotransferase
+cgMLST V1	b0660 (ybeZ)	PhoH-like heat shock protein
+cgMLST V1	b4567 (yjjZ)	uncharacterized protein
+cgMLST V1	b3229 (sspA)	"stringent starvation protein A, phage P1 late gene activator, RNAP-associated acid-resistance protein, inactive glutathione S-transferase homolog"
+cgMLST V1	b3226 (nanR)	"transcriptional repressor of the nan operon, induced by sialic acid"
+cgMLST V1	b3648 (gmk)	guanylate kinase
+cgMLST V1	b3649 (rpoZ)	"RNA polymerase, omega subunit "
+cgMLST V1	b3640 (dut)	deoxyuridinetriphosphatase
+cgMLST V1	b3641 (slmA)	"nucleoid occlusion factor, anti-FtsZ division inhibitor"
+cgMLST V1	b3642 (pyrE)	orotate phosphoribosyltransferase
+cgMLST V1	b3644 (yicC)	UPF0701 family protein
+cgMLST V1	b3646 (yicG)	UPF0126 family inner membrane protein
+cgMLST V1	b3647 (ligB)	"DNA ligase, NAD(+)-dependent"
+cgMLST V1	b2518 (ndk)	multifunctional nucleoside diphosphate kinase and apyrimidinic endonuclease and 3'-phosphodiesterase
+cgMLST V1	b2511 (der)	GTPase; multicopy suppressor of ftsJ
+cgMLST V1	b2517 (rlmN)	"dual specificity 23S rRNA m(2)A2503, tRNA m(2)A37 methyltransferase, SAM-dependent"
+cgMLST V1	b2516 (rodZ)	MreB assembly cytoskeletal protein
+cgMLST V1	b2514 (hisS)	histidyl tRNA synthetase
+cgMLST V1	b1897 (otsB)	"trehalose-6-phosphate phosphatase, biosynthetic "
+cgMLST V1	b1273 (yciN)	DUF2498 protein YciN
+cgMLST V1	b1272 (sohB)	"inner membrane protein, S49 peptidase family protein"
+cgMLST V1	b1271 (yciK)	putative EmrKY-TolC system oxoacyl-(acyl carrier protein) reductase
+cgMLST V1	b1270 (btuR)	"cob(I)yrinic acid a,c-diamide adenosyltransferase "
+cgMLST V1	b1277 (ribA)	GTP cyclohydrolase II
+cgMLST V1	b1276 (acnA)	aconitate hydratase 1
+cgMLST V1	b1275 (cysB)	N-acetylserine-responsive cysteine regulon transcriptional activator; autorepressor
+cgMLST V1	b1274 (topA)	"DNA topoisomerase I, omega subunit "
+cgMLST V1	b1279 (yciS)	"DUF1049 family inner membrane protein, function unknown"
+cgMLST V1	b1278 (pgpB)	phosphatidylglycerophosphatase B
+cgMLST V1	b4003 (zraS)	sensory histidine kinase in two-component regulatory system with ZraR
+cgMLST V1	b4002 (zraP)	Zn-dependent periplasmic chaperone
+cgMLST V1	b4001 (yjaH)	DUF1481 family putative lipoprotein
+cgMLST V1	b4000 (hupA)	"HU, DNA-binding transcriptional regulator, alpha subunit"
+cgMLST V1	b4006 (purH)	fused IMP cyclohydrolase/phosphoribosylaminoimidazolecarboxamide formyltransferase
+cgMLST V1	b4005 (purD)	phosphoribosylglycinamide synthetase phosphoribosylamine-glycine ligase
+cgMLST V1	b4004 (zraR)	fused DNA-binding response regulator in two-component regulatory system with ZraS: response regulator/sigma54 interaction protein
+cgMLST V1	b3363 (ppiA)	peptidyl-prolyl cis-trans isomerase A (rotamase A)
+cgMLST V1	b3362 (yhfG)	putative Fic-binding protein
+cgMLST V1	b3361 (fic)	stationary-phase adenosine monophosphate-protein transferase domain protein
+cgMLST V1	b3360 (pabA)	"aminodeoxychorismate synthase, subunit II "
+cgMLST V1	b3367 (nirC)	nitrite transporter
+cgMLST V1	b3366 (nirD)	"nitrite reductase, NAD(P)H-binding, small subunit "
+cgMLST V1	b3365 (nirB)	"nitrite reductase, large subunit, NAD(P)H-binding "
+cgMLST V1	b3364 (tsgA)	putative transporter
+cgMLST V1	b3369 (yhfL)	small lipoprotein
+cgMLST V1	b3368 (cysG)	"fused siroheme synthase 1,3-dimethyluroporphyriongen III dehydrogenase and siroheme ferrochelatase/uroporphyrinogen methyltransferase "
+cgMLST V1	b1344 (ttcA)	tRNA 2-thiocytidine biosynthesis protein
+cgMLST V1	b1079 (flgH)	flagellar protein of basal-body outer-membrane L ring
+cgMLST V1	b1078 (flgG)	flagellar component of cell-distal portion of basal-body rod
+cgMLST V1	b1075 (flgD)	flagellar hook assembly protein
+cgMLST V1	b1074 (flgC)	flagellar component of cell-proximal portion of basal-body rod
+cgMLST V1	b1073 (flgB)	flagellar component of cell-proximal portion of basal-body rod
+cgMLST V1	b4244 (pyrI)	"aspartate carbamoyltransferase, regulatory subunit"
+cgMLST V1	b4246 (pyrL)	pyrBI operon leader peptide
+cgMLST V1	b4241 (treR)	trehalose 6-phosphate-inducible trehalose regulon transcriptional repressor
+cgMLST V1	b4240 (treB)	fused trehalose(maltose)-specific PTS enzyme: IIB component/IIC component
+cgMLST V1	b0039 (caiA)	"crotonobetaine reductase subunit II, FAD-binding "
+cgMLST V1	b0032 (carA)	"carbamoyl phosphate synthetase small subunit, glutamine amidotransferase "
+cgMLST V1	b0033 (carB)	carbamoyl-phosphate synthase large subunit
+cgMLST V1	b0030 (rihC)	ribonucleoside hydrolase 3
+cgMLST V1	b0031 (dapB)	dihydrodipicolinate reductase
+cgMLST V1	b0036 (caiD)	carnitinyl-CoA dehydratase
+cgMLST V1	b0037 (caiC)	putative crotonobetaine/carnitine-CoA ligase
+cgMLST V1	b0034 (caiF)	cai operon transcriptional activator
+cgMLST V1	b0035 (caiE)	stimulator of CaiD and CaiB enzyme activities
+cgMLST V1	b3565 (xylA)	D-xylose isomerase
+cgMLST V1	b3561 (wecH)	O-acetyltransferase for enterobacterial common antigen
+cgMLST V1	b3563 (yiaB)	YiaAB family inner membrane protein
+cgMLST V1	b1477 (yddM)	putative DNA-binding transcriptional regulator
+cgMLST V1	b0951 (pqiB)	"paraquat-inducible, SoxRS-regulated MCE domain protein"
+cgMLST V1	b0950 (pqiA)	"paraquat-inducible, SoxRS-regulated inner membrane protein"
+cgMLST V1	b0953 (rmf)	ribosome modulation factor
+cgMLST V1	b0952 (pqiC)	DUF330 family putative lipoprotein
+cgMLST V1	b0955 (ycbZ)	putative peptidase
+cgMLST V1	b0954 (fabA)	beta-hydroxydecanoyl thioester dehydrase
+cgMLST V1	b0957 (ompA)	outer membrane protein A (3a;II*;G;d)
+cgMLST V1	b0956 (matP)	Ter macrodomain organizer matS-binding protein
+cgMLST V1	b1598 (ydgD)	putative peptidase
+cgMLST V1	b1594 (mlc)	glucosamine anaerobic growth regulon transcriptional repressor; autorepressor
+cgMLST V1	b1595 (ynfL)	LysR family putative transcriptional regulator
+cgMLST V1	b4050 (pspG)	phage shock protein G
+cgMLST V1	b4052 (dnaB)	replicative DNA helicase
+cgMLST V1	b4053 (alr)	"alanine racemase, biosynthetic, PLP-binding "
+cgMLST V1	b4054 (tyrB)	"tyrosine aminotransferase, tyrosine-repressible, PLP-dependent "
+cgMLST V1	b4057 (yjbR)	DUF419 family protein
+cgMLST V1	b2945 (endA)	DNA-specific endonuclease I
+cgMLST V1	b2946 (rsmE)	"16S rRNA m(3)U1498 methyltransferase, SAM-dependent"
+cgMLST V1	b2947 (gshB)	glutathione synthetase
+cgMLST V1	b2940 (yqgC)	uncharacterized protein
+cgMLST V1	b2942 (metK)	S-adenosylmethionine synthetase
+cgMLST V1	b2943 (galP)	D-galactose transporter
+cgMLST V1	b2948 (yqgE)	uncharacterized protein
+cgMLST V1	b2949 (yqgF)	putative Holliday junction resolvase
+cgMLST V1	b4455 (hokA)	"toxic polypeptide, small"
+cgMLST V1	b0209 (yafD)	endo/exonuclease/phosphatase family protein
+cgMLST V1	b3158 (yhbU)	U32 peptidase family protein
+cgMLST V1	b3159 (yhbV)	U32 peptidase family protein
+cgMLST V1	b3150 (yraP)	outer membrane lipoprotein
+cgMLST V1	b3151 (yraQ)	putative inner membrane permease
+cgMLST V1	b3155 (yhbQ)	GIY-YIG nuclease superfamily protein
+cgMLST V1	b3156 (yhbS)	putative acyl-CoA transferase
+cgMLST V1	b2209 (eco)	"ecotin, a serine protease inhibitor"
+cgMLST V1	b2208 (napF)	"ferredoxin-type protein, role in electron transfer to periplasmic nitrate reductase NapA"
+cgMLST V1	b2203 (napB)	"nitrate reductase, small, cytochrome C550 subunit, periplasmic"
+cgMLST V1	b2202 (napC)	"quinol dehydrogenase, electron source for NapAB"
+cgMLST V1	b2201 (ccmA)	heme exporter subunit
+cgMLST V1	b2200 (ccmB)	heme exporter subunit
+cgMLST V1	b2207 (napD)	assembly protein for periplasmic nitrate reductase
+cgMLST V1	b2206 (napA)	"nitrate reductase, periplasmic, large subunit "
+cgMLST V1	b2205 (napG)	ferredoxin-type protein essential for electron transfer from ubiquinol to periplasmic nitrate reductase (NapAB)
+cgMLST V1	b2204 (napH)	ferredoxin-type protein essential for electron transfer from ubiquinol to periplasmic nitrate reductase (NapAB)
+cgMLST V1	b1961 (dcm)	DNA cytosine methyltransferase
+cgMLST V1	b1969 (yedW)	response regulator family protein
+cgMLST V1	b3962 (sthA)	"pyridine nucleotide transhydrogenase, soluble "
+cgMLST V1	b2935 (tktA)	"transketolase 1, thiamine triphosphate-binding "
+cgMLST V1	b1640 (anmK)	anhydro-N-acetylmuramic acid kinase
+cgMLST V1	b4082 (mdtN)	membrane fusion protein of efflux pump
+cgMLST V1	b4081 (mdtO)	"membrane translocase (MDR) of MdtNOP efflux pump, PET family"
+cgMLST V1	b0114 (aceE)	"pyruvate dehydrogenase, decarboxylase component E1, thiamine triphosphate-binding "
+cgMLST V1	b3059 (plsY)	putative glycerol-3-phosphate acyltransferase
+cgMLST V1	b3058 (folB)	bifunctional dihydroneopterin aldolase/dihydroneopterin triphosphate 2'-epimerase
+cgMLST V1	b3055 (ygiM)	SH3 domain protein
+cgMLST V1	b3054 (ygiF)	inorganic triphosphatase
+cgMLST V1	b3057 (bacA)	undecaprenyl pyrophosphate phosphatase
+cgMLST V1	b3056 (cca)	fused tRNA nucleotidyl transferase/2'3'-cyclic phosphodiesterase/2'nucleotidase and phosphatase
+cgMLST V1	b3053 (glnE)	fused deadenylyltransferase/adenylyltransferase for glutamine synthetase
+cgMLST V1	b3052 (hldE)	fused heptose 7-phosphate kinase/heptose 1-phosphate adenyltransferase
+cgMLST V1	b2016 (yeeZ)	putative epimerase
+cgMLST V1	b2014 (plaP)	"putrescine importer, low affinity"
+cgMLST V1	b1099 (holB)	"DNA polymerase III, delta prime subunit "
+cgMLST V1	b0740 (tolB)	periplasmic protein
+cgMLST V1	b0741 (pal)	peptidoglycan-associated outer membrane lipoprotein
+cgMLST V1	b0742 (ybgF)	periplasmic TolA-binding protein
+cgMLST V1	b4168 (tsaE)	tRNA(ANN) t(6)A37 threonylcarbamoyladenosine modification protein; ADP binding protein
+cgMLST V1	b4169 (amiB)	N-acetylmuramoyl-l-alanine amidase II
+cgMLST V1	b4166 (queG)	"epoxyqueuosine reductase, cobalamine-stimulated; queosine biosynthesis"
+cgMLST V1	b4167 (nnr)	bifunctional NAD(P)H-hydrate repair enzyme; C-terminal domain ADP-dependent (S)-NAD(P)H-hydrate dehydratase and N-terminal domain NAD(P)H-hydrate epimerase
+cgMLST V1	b4160 (psd)	phosphatidylserine decarboxylase
+cgMLST V1	b4161 (rsgA)	ribosome small subunit-dependent GTPase A
+cgMLST V1	b4162 (orn)	oligoribonuclease
+cgMLST V1	b3248 (yhdE)	Maf-like protein
+cgMLST V1	b3249 (mreD)	cell wall structural complex MreBCD transmembrane component MreD
+cgMLST V1	b3244 (tldD)	putative peptidase
+cgMLST V1	b3247 (rng)	ribonuclease G
+cgMLST V1	b3240 (aaeB)	p-hydroxybenzoic acid efflux system component
+cgMLST V1	b3241 (aaeA)	p-hydroxybenzoic acid efflux system component
+cgMLST V1	b3242 (aaeX)	DUF1656 family putative inner membrane efflux pump associated protein
+cgMLST V1	b3243 (aaeR)	transcriptional regulator for aaeXAB operon
+cgMLST V1	b3752 (rbsK)	ribokinase
+cgMLST V1	b3753 (rbsR)	transcriptional repressor of ribose metabolism
+cgMLST V1	b0461 (tomB)	Hha toxicity attenuator; conjugation-related protein
+cgMLST V1	b0460 (hha)	"modulator of gene expression, with H-NS"
+cgMLST V1	b0463 (acrA)	multidrug efflux system
+cgMLST V1	b1983 (yeeN)	UPF0082 family protein
+cgMLST V1	b4366 (bglJ)	bgl operon transcriptional activator
+cgMLST V1	b4367 (fhuF)	ferric iron reductase involved in ferric hydroximate transport
+cgMLST V1	b4364 (yjjP)	DUF1212 family inner membrane protein
+cgMLST V1	b4362 (dnaT)	DNA biosynthesis protein (primosomal protein I)
+cgMLST V1	b4363 (yjjB)	DUF3815 family inner membrane protein
+cgMLST V1	b4360 (yjjA)	putative DUF2501 family periplasmic protein
+cgMLST V1	b4361 (dnaC)	DNA biosynthesis protein
+cgMLST V1	b1624 (ydgJ)	putative oxidoreductase
+cgMLST V1	b1625 (cnu)	nucleoid-associated oriC-binding protein; H-NS and StpA stabilizing factor
+cgMLST V1	b1626 (ydgK)	DUF2569 family inner membrane protein
+cgMLST V1	b1627 (rsxA)	SoxR iron-sulfur cluster reduction factor component; inner membrane protein of electron transport complex
+cgMLST V1	b1620 (malI)	transcriptional repressor of Mal regulon
+cgMLST V1	b1621 (malX)	"fused maltose and glucose-specific PTS enzymes: IIB component, IIC component "
+cgMLST V1	b1622 (malY)	"bifunctional beta-cystathionase, PLP-dependent/regulator of maltose regulon "
+cgMLST V1	b1623 (add)	adenosine deaminase
+cgMLST V1	b1628 (rsxB)	SoxR iron-sulfur cluster reduction factor component; putative iron-sulfur protein
+cgMLST V1	b3734 (atpA)	"F1 sector of membrane-bound ATP synthase, alpha subunit "
+cgMLST V1	b3735 (atpH)	"F1 sector of membrane-bound ATP synthase, delta subunit "
+cgMLST V1	b3736 (atpF)	"F0 sector of membrane-bound ATP synthase, subunit b "
+cgMLST V1	b3737 (atpE)	"F0 sector of membrane-bound ATP synthase, subunit c "
+cgMLST V1	b3730 (glmU)	fused N-acetyl glucosamine-1-phosphate uridyltransferase/glucosamine-1-phosphate acetyl transferase
+cgMLST V1	b3731 (atpC)	"F1 sector of membrane-bound ATP synthase, epsilon subunit "
+cgMLST V1	b3732 (atpD)	"F1 sector of membrane-bound ATP synthase, beta subunit "
+cgMLST V1	b3738 (atpB)	"F0 sector of membrane-bound ATP synthase, subunit a "
+cgMLST V1	b3739 (atpI)	"ATP synthase, membrane-bound accessory factor "
+cgMLST V1	b3263 (yhdU)	putative membrane protein
+cgMLST V1	b0076 (leuO)	global transcription factor
+cgMLST V1	C_RS24035 (fdoG)	formate dehydrogenase major subunit
+cgMLST V1	NCTC12130_00627 (-)	membrane protein
+cgMLST V1	b0779 (uvrB)	"excinulease of nucleotide excision repair, DNA damage recognition component"
+cgMLST V1	b0778 (bioD)	dethiobiotin synthetase
+cgMLST V1	b4218 (ytfL)	UPF0053 family inner membrane protein
+cgMLST V1	b0776 (bioF)	8-amino-7-oxononanoate synthase
+cgMLST V1	b1189 (dadA)	D-amino acid dehydrogenase
+cgMLST V1	b1188 (ycgB)	SpoVR family stationary phase protein
+cgMLST V1	b1181 (ycgN)	UPF0153 family cysteine cluster protein
+cgMLST V1	b1180 (ycgM)	putative isomerase/hydrolase
+cgMLST V1	b1187 (fadR)	fatty acid metabolism regulon transcriptional regulator
+cgMLST V1	b1186 (nhaB)	sodium:proton antiporter
+cgMLST V1	b0854 (potF)	putrescine transporter subunit: periplasmic-binding component of ABC superfamily
+cgMLST V1	b0855 (potG)	putrescine transporter subunit: ATP-binding component of ABC superfamily
+cgMLST V1	b0857 (potI)	putrescine transporter subunit: membrane component of ABC superfamily
+cgMLST V1	b0850 (ybjC)	DUF1418 family protein
+cgMLST V1	b0852 (rimK)	ribosomal protein S6 modification protein
+cgMLST V1	b0853 (ybjN)	negative regulator of motility; multicopy suppressor of coaA(Ts)
+cgMLST V1	b0858 (ybjO)	DUF2593 family inner membrane protein
+cgMLST V1	b0859 (rlmC)	"23S rRNA m(5)U747 methyltransferase, SAM-dependent "
+cgMLST V1	b0580 (ybdJ)	DUF1158 family putative inner membrane protein
+cgMLST V1	b4663 (azuC)	acid-inducible small membrane-associated protein
+cgMLST V1	b4669 (ilvX)	uncharacterized protein
+cgMLST V1	b3945 (gldA)	"glycerol dehydrogenase, NAD+ dependent; 1,2-propanediol:NAD+ oxidoreductase "
+cgMLST V1	b3944 (yijF)	DUF1287 family protein
+cgMLST V1	b3943 (yijE)	EamA-like transporter family protein
+cgMLST V1	b3942 (katG)	"catalase-peroxidase HPI, heme b-containing "
+cgMLST V1	b3941 (metF)	"5,10-methylenetetrahydrofolate reductase "
+cgMLST V1	b3940 (metL)	Bifunctional aspartokinase/homoserine dehydrogenase 2
+cgMLST V1	b3949 (frwC)	putative enzyme IIC component of PTS
+cgMLST V1	b2097 (fbaB)	fructose-bisphosphate aldolase class I
+cgMLST V1	b2099 (yegU)	ADP-ribosylglycohydrolase family protein
+cgMLST V1	b1848 (yebG)	DNA damage-inducible protein regulated by LexA
+cgMLST V1	b1849 (purT)	phosphoribosylglycinamide formyltransferase 2
+cgMLST V1	b1844 (exoX)	exodeoxyribonuclease 10; DNA exonuclease X
+cgMLST V1	b1845 (ptrB)	protease II
+cgMLST V1	b1846 (yebE)	DUF533 family inner membrane protein
+cgMLST V1	b1847 (yebF)	extracellular Colicin M immunity family protein
+cgMLST V1	b1840 (yebZ)	inner membrane protein
+cgMLST V1	b1841 (yobA)	CopC family protein
+cgMLST V1	b1842 (holE)	"DNA polymerase III, theta subunit "
+cgMLST V1	b1843 (yobB)	C-N hydrolase family protein
+cgMLST V1	b2113 (mrp)	antiporter inner membrane protein
+cgMLST V1	b0179 (lpxD)	UDP-3-O-(3-hydroxymyristoyl)-glucosamine N-acyltransferase
+cgMLST V1	b0178 (skp)	periplasmic chaperone
+cgMLST V1	b0177 (bamA)	BamABCDE complex OM biogenesis outer membrane pore-forming assembly factor
+cgMLST V1	b0176 (rseP)	"inner membrane zinc RIP metalloprotease; RpoE activator, by degrading RseA; cleaved signal peptide endoprotease "
+cgMLST V1	b0175 (cdsA)	CDP-diglyceride synthase
+cgMLST V1	b0174 (ispU)	undecaprenyl pyrophosphate synthase
+cgMLST V1	b0173 (dxr)	1-deoxy-D-xylulose 5-phosphate reductoisomerase
+cgMLST V1	b0172 (frr)	ribosome recycling factor
+cgMLST V1	b0171 (pyrH)	uridylate kinase
+cgMLST V1	b0170 (tsf)	translation elongation factor EF-Ts
+cgMLST V1	b3835 (ubiB)	"regulator of octaprenylphenol hydroxylation, ubiquinone synthesis; regulator of 2'-N-acetyltransferase; putative ABC1 family protein kinase"
+cgMLST V1	b3834 (ubiJ)	"aerobic ubiquinone synthesis protein, SCP2 family protein"
+cgMLST V1	b2468 (aegA)	"putative oxidoreductase, FeS binding subunit/NAD/FAD-binding subunit"
+cgMLST V1	b2467 (nudK)	GDP-mannose pyrophosphatase
+cgMLST V1	b2466 (ypfG)	DUF1176 family protein
+cgMLST V1	b2464 (talA)	transaldolase A
+cgMLST V1	b2463 (maeB)	malic enzyme: putative oxidoreductase/putative phosphotransacetylase
+cgMLST V1	b2462 (eutS)	putative ethanol utilization carboxysome structural protein
+cgMLST V1	b2461 (eutP)	putative P-loop NTPase ethanolamine utilization protein
+cgMLST V1	b1343 (dbpA)	"ATP-dependent RNA helicase, specific for 23S rRNA"
+cgMLST V1	b1340 (smrA)	DNA endonuclease
+cgMLST V1	b0436 (tig)	peptidyl-prolyl cis/trans isomerase (trigger factor)
+cgMLST V1	b0437 (clpP)	proteolytic subunit of ClpA-ClpP and ClpX-ClpP ATP-dependent serine proteases
+cgMLST V1	b0434 (yajG)	putative lipoprotein
+cgMLST V1	b0435 (bolA)	"stationary-phase morphogene, transcriptional repressor for mreB; also regulator for dacA, dacC, and ampC"
+cgMLST V1	b0433 (ampG)	muropeptide transporter
+cgMLST V1	b0430 (cyoC)	cytochrome o ubiquinol oxidase subunit III
+cgMLST V1	b0431 (cyoB)	cytochrome o ubiquinol oxidase subunit I
+cgMLST V1	b0438 (clpX)	ATPase and specificity subunit of ClpX-ClpP ATP-dependent serine protease
+cgMLST V1	b0439 (lon)	DNA-binding ATP-dependent protease La
+cgMLST V1	b3477 (nikB)	nickel transporter subunit
+cgMLST V1	b3476 (nikA)	"nickel-binding, heme-binding periplasmic protein"
+cgMLST V1	b3475 (acpT)	4'-phosphopantetheinyl transferase
+cgMLST V1	b3474 (yhhT)	UPF0118 family putative transporter
+cgMLST V1	b3472 (dcrB)	putative lipoprotein
+cgMLST V1	b3471 (yhhQ)	DUF165 family inner membrane protein
+cgMLST V1	b3470 (tusA)	mnm(5)-s(2)U34-tRNA 2-thiolation sulfurtransferase
+cgMLST V1	b3479 (nikD)	nickel transporter subunit
+cgMLST V1	b3478 (nikC)	nickel transporter subunit
+cgMLST V1	b2700 (pncC)	nicotinamide-nucleotide amidohydrolase; NMN amidohydrolase
+cgMLST V1	b2701 (mltB)	membrane-bound lytic murein transglycosylase B
+cgMLST V1	b2708 (srlQ)	D-arabinose 5-phosphate isomerase
+cgMLST V1	b2709 (norR)	anaerobic nitric oxide reductase DNA-binding transcriptional activator
+cgMLST V1	b1103 (hinT)	"purine nucleoside phosphoramidase, dadA activator protein"
+cgMLST V1	b1105 (lpoB)	OM lipoprotein stimulator of MrcB transpeptidase
+cgMLST V1	b1104 (ycfL)	uncharacterized protein
+cgMLST V1	b1107 (nagZ)	beta N-acetyl-glucosaminidase
+cgMLST V1	b1106 (thiK)	thiamine kinase
+cgMLST V1	b1109 (ndh)	respiratory NADH dehydrogenase 2/cupric reductase
+cgMLST V1	b1108 (ycfP)	putative UPF0227 family esterase
+cgMLST V1	b4551 (yheV)	DUF2387 family putative metal-binding protein
+cgMLST V1	b4553 (ysaB)	uncharacterized protein
+cgMLST V1	b4555 (yicS)	putative periplasmic protein
+cgMLST V1	b4557 (yidD)	"membrane protein insertion efficiency factor, inner membrane protein, UPF0161 family"
+cgMLST V1	b4558 (yifL)	putative lipoprotein
+cgMLST V1	b2134 (pbpG)	D-alanyl-D-alanine endopeptidase
+cgMLST V1	b3671 (ilvB)	acetolactate synthase 2 large subunit
+cgMLST V1	b3670 (ilvN)	acetolactate synthase 1 small subunit
+cgMLST V1	b3673 (emrD)	multidrug efflux system protein
+cgMLST V1	b3672 (ivbL)	ilvB operon leader peptide
+cgMLST V1	b3675 (yidG)	inner membrane protein
+cgMLST V1	b3674 (yidF)	putative Cys-type oxidative YidJ-maturating enzyme
+cgMLST V1	b3676 (yidH)	DUF202 family inner membrane protein
+cgMLST V1	b0911 (rpsA)	30S ribosomal subunit protein S1
+cgMLST V1	b2838 (lysA)	"diaminopimelate decarboxylase, PLP-binding "
+cgMLST V1	b2839 (lysR)	transcriptional activator of lysA; autorepressor
+cgMLST V1	b2830 (rppH)	RNA pyrophosphohydrolase
+cgMLST V1	b2831 (mutH)	methyl-directed mismatch repair protein
+cgMLST V1	b2832 (ygdQ)	UPF0053 family inner membrane protein
+cgMLST V1	b2833 (ygdR)	DUF903 family verified lipoprotein
+cgMLST V1	b2834 (tas)	putative NADP(H)-dependent aldo-keto reductase
+cgMLST V1	b2835 (lplT)	lysophospholipid transporter
+cgMLST V1	b2836 (aas)	fused 2-acylglycerophospho-ethanolamine acyl transferase/acyl-acyl carrier protein synthetase
+cgMLST V1	b2837 (galR)	galactose-inducible d-galactose regulon transcriptional repressor; autorepressor
+cgMLST V1	b1710 (btuE)	glutathione peroxidase
+cgMLST V1	b1711 (btuC)	vitamin B12 transporter subunit: membrane component of ABC superfamily
+cgMLST V1	b1713 (pheT)	"phenylalanine tRNA synthetase, beta subunit "
+cgMLST V1	b1714 (pheS)	"phenylalanine tRNA synthetase, alpha subunit "
+cgMLST V1	b1715 (pheM)	phenylalanyl-tRNA synthetase operon leader peptide
+cgMLST V1	b1716 (rplT)	50S ribosomal subunit protein L20
+cgMLST V1	b1717 (rpmI)	50S ribosomal subunit protein L35
+cgMLST V1	b1718 (infC)	translation initiation factor IF-3
+cgMLST V1	b1719 (thrS)	threonyl-tRNA synthetase
+cgMLST V1	b0043 (fixC)	putative oxidoreductase
+cgMLST V1	b0041 (fixA)	anaerobic carnitine reduction putative electron transfer flavoprotein subunit
+cgMLST V1	b0040 (caiT)	putative transporter
+cgMLST V1	b0046 (kefF)	"potassium-efflux system ancillary protein for KefC, glutathione-regulated; quinone oxidoreductase, FMN-dependent"
+cgMLST V1	b0044 (fixX)	putative 4Fe-4S ferredoxin-type protein
+cgMLST V1	b0048 (folA)	dihydrofolate reductase
+cgMLST V1	b4685 (yrbN)	uncharacterized protein
+cgMLST V1	b4684 (yqfG)	uncharacterized protein
+cgMLST V1	b4687 (shoB)	toxic membrane protein
+cgMLST V1	b4686 (yshB)	uncharacterized protein
+cgMLST V1	b4680 (ypdK)	inner membrane protein
+cgMLST V1	b3820 (yigI)	4HBT thioesterase family protein
+cgMLST V1	b3821 (pldA)	outer membrane phospholipase A
+cgMLST V1	b3822 (recQ)	ATP-dependent DNA helicase
+cgMLST V1	b3823 (rhtC)	threonine efflux pump
+cgMLST V1	b3824 (rhtB)	"homoserine, homoserine lactone and S-methyl-methionine efflux pump"
+cgMLST V1	b3825 (pldB)	lysophospholipase L2
+cgMLST V1	b3826 (yigL)	pyridoxal phosphate phosphatase
+cgMLST V1	b3827 (yigM)	putative inner membrane EamA-like transporter
+cgMLST V1	b3828 (metR)	methionine biosynthesis regulon transcriptional regulator
+cgMLST V1	b3829 (metE)	5-methyltetrahydropteroyltriglutamate-homocysteine S-methyltransferase
+cgMLST V1	b2199 (ccmC)	heme exporter subunit
+cgMLST V1	b2198 (ccmD)	cytochrome c biogenesis protein
+cgMLST V1	b2197 (ccmE)	periplasmic heme chaperone
+cgMLST V1	b2196 (ccmF)	"heme lyase, CcmF subunit"
+cgMLST V1	b2195 (dsbE)	periplasmic thioredoxin of cytochrome c-type biogenesis
+cgMLST V1	b2194 (ccmH)	"heme lyase, CcmH subunit"
+cgMLST V1	b2193 (narP)	response regulator in two-component regulatory system with NarQ or NarX
+cgMLST V1	b2513 (yfgM)	putative anti-RcsB factor
+cgMLST V1	b2515 (ispG)	1-hydroxy-2-methyl-2-(E)-butenyl 4-diphosphate synthase
+cgMLST V1	b0906 (ycaP)	UPF0702 family putative inner membrane protein
+cgMLST V1	b0907 (serC)	3-phosphoserine/phosphohydroxythreonine aminotransferase
+cgMLST V1	b0904 (focA)	formate channel
+cgMLST V1	b0905 (ycaO)	ribosomal protein S12 methylthiotransferase accessory factor
+cgMLST V1	b0902 (pflA)	[formate-C-acetyltransferase 1]-activating enzyme; pyruvate formate-lyase 1-activating enzyme
+cgMLST V1	b0903 (pflB)	"formate C-acetyltransferase 1, anaerobic; pyruvate formate-lyase 1 "
+cgMLST V1	b0908 (aroA)	5-enolpyruvylshikimate-3-phosphate synthetase
+cgMLST V1	b0909 (ycaL)	putative peptidase-related chaperone
+cgMLST V1	b2304 (yfcH)	putative NAD-dependent nucleotide-sugar epimerase
+cgMLST V1	b2308 (hisQ)	histidine/lysine/arginine/ornithine transporter permease subunit
+cgMLST V1	b1693 (aroD)	3-dehydroquinate dehydratase
+cgMLST V1	b1692 (ydiB)	"quinate/shikimate 5-dehydrogenase, NAD(P)-binding "
+cgMLST V1	b1521 (uxaB)	"altronate oxidoreductase, NAD-dependent "
+cgMLST V1	b1524 (glsB)	glutaminase 2
+cgMLST V1	b1529 (marC)	UPF0056 family inner membrane protein
+cgMLST V1	b1528 (ydeA)	"arabinose efflux transporter, arabinose-inducible"
+cgMLST V1	b4461 (yfjD)	UPF0053 family inner membrane protein
+cgMLST V1	b4469 (ygiQ)	Radical SAM superfamily protein
+cgMLST V1	b3161 (mtr)	tryptophan transporter of high affinity
+cgMLST V1	b3163 (nlpI)	lipoprotein involved in osmotic sensitivity and filamentation
+cgMLST V1	b3162 (deaD)	ATP-dependent RNA helicase
+cgMLST V1	b3165 (rpsO)	30S ribosomal subunit protein S15
+cgMLST V1	b3164 (pnp)	polynucleotide phosphorylase/polyadenylase
+cgMLST V1	b3167 (rbfA)	30s ribosome binding factor
+cgMLST V1	b3166 (truB)	tRNA pseudouridine synthase B: tRNA pseudouridine(55) synthase and putative tmRNA pseudouridine(342) synthase
+cgMLST V1	b3169 (nusA)	transcription termination/antitermination L factor
+cgMLST V1	b3168 (infB)	translation initiation factor IF-2
+cgMLST V1	b3785 (wzzE)	Entobacterial Common Antigen
+cgMLST V1	b3784 (wecA)	UDP-GlcNAc:undecaprenylphosphate GlcNAc-1-phosphate transferase
+cgMLST V1	b3787 (wecC)	UDP-N-acetyl-D-mannosaminuronic acid dehydrogenase
+cgMLST V1	b3786 (wecB)	UDP-N-acetyl glucosamine-2-epimerase
+cgMLST V1	b3781 (trxA)	thioredoxin 1
+cgMLST V1	b3780 (rhlB)	ATP-dependent RNA helicase
+cgMLST V1	b3783 (rho)	transcription termination factor
+cgMLST V1	b3789 (rffH)	glucose-1-phosphate thymidylyltransferase
+cgMLST V1	b3788 (rffG)	"dTDP-glucose 4,6-dehydratase "
+cgMLST V1	b2786 (barA)	"hybrid sensory histidine kinase, in two-component regulatory system with UvrY"
+cgMLST V1	b2784 (relA)	(p)ppGpp synthetase I/GTP pyrophosphokinase
+cgMLST V1	b2785 (rlmD)	"23S rRNA m(5)U1939 methyltransferase, SAM-dependent "
+cgMLST V1	b2780 (pyrG)	CTP synthetase
+cgMLST V1	b2781 (mazG)	nucleoside triphosphate pyrophosphohydrolase
+cgMLST V1	b3049 (glgS)	motility and biofilm regulator
+cgMLST V1	b0638 (cobC)	putative alpha-ribazole-5'-P phosphatase
+cgMLST V1	b0639 (nadD)	"nicotinic acid mononucleotide adenylyltransferase, NAD(P)-dependent "
+cgMLST V1	b0630 (lipB)	octanoyltransferase; octanoyl-[ACP]:protein N-octanoyltransferase
+cgMLST V1	b0631 (ybeD)	UPF0250 family protein
+cgMLST V1	b0632 (dacA)	D-alanyl-D-alanine carboxypeptidase (penicillin-binding protein 5)
+cgMLST V1	b0633 (rlpA)	"septal ring protein, suppressor of prc, minor lipoprotein"
+cgMLST V1	b0634 (mrdB)	cell wall shape-determining protein
+cgMLST V1	b0635 (mrdA)	transpeptidase involved in peptidoglycan synthesis (penicillin-binding protein 2)
+cgMLST V1	b0636 (rlmH)	"23S rRNA m(3)Psi1915 pseudouridine methyltransferase, SAM-dependent"
+cgMLST V1	b0637 (rsfS)	ribosomal silencing factor
+cgMLST V1	b2543 (yphA)	DoxX family inner membrane protein
+cgMLST V1	b2544 (yphB)	"mutarotase superfamily protein, YphB family"
+cgMLST V1	b2545 (yphC)	putative Zn-dependent NAD(P)-binding oxidoreductase
+cgMLST V1	b2547 (yphE)	"putative sugar transporter subunit of ABC superfamily, ATP-binding component"
+cgMLST V1	b1220 (ychO)	putative invasin
+cgMLST V1	b1221 (narL)	response regulator in two-component regulatory system with NarX (or NarQ)
+cgMLST V1	b1222 (narX)	sensory histidine kinase in two-component regulatory system with NarL
+cgMLST V1	b1223 (narK)	nitrate/nitrite transporter
+cgMLST V1	b1225 (narH)	"nitrate reductase 1, beta (Fe-S) subunit "
+cgMLST V1	b1226 (narJ)	molybdenum-cofactor-assembly chaperone subunit (delta subunit) of nitrate reductase 1
+cgMLST V1	b4051 (qorA)	"quinone oxidoreductase, NADPH-dependent "
+cgMLST V1	b0571 (cusR)	response regulator in two-component regulatory system with CusS
+cgMLST V1	b0577 (ybdG)	"mechanosensitive channel protein, miniconductance"
+cgMLST V1	b4055 (aphA)	"acid phosphatase/phosphotransferase, class B, non-specific "
+cgMLST V1	b4056 (yjbQ)	thiamine phosphate synthase
+cgMLST V1	b4058 (uvrA)	ATPase and DNA damage recognition protein of nucleotide excision repair excinuclease UvrABC
+cgMLST V1	b4059 (ssb)	single-stranded DNA-binding protein
+cgMLST V1	b0578 (nfsB)	"dihydropteridine reductase, NAD(P)H-dependent, oxygen-insensitive "
+cgMLST V1	b3088 (alx)	putative membrane-bound redox modulator
+cgMLST V1	b3089 (sstT)	sodium:serine/threonine symporter
+cgMLST V1	b3081 (fadH)	"2,4-dienoyl-CoA reductase, NADH and FMN-linked "
+cgMLST V1	b3087 (ygjR)	putative NAD(P)-dependent dehydrogenase
+cgMLST V1	b3084 (rlmG)	"23S rRNA m(2)G1835 methyltransferase, SAM-dependent"
+cgMLST V1	b3085 (ygjP)	putative metal dependent hydrolase
+cgMLST V1	b1613 (manA)	mannose-6-phosphate isomerase
+cgMLST V1	b2066 (udk)	uridine/cytidine kinase
+cgMLST V1	b2065 (dcd)	2'-deoxycytidine 5'-triphosphate deaminase
+cgMLST V1	b1123 (potD)	polyamine transporter subunit
+cgMLST V1	b1649 (nemR)	"transcriptional repressor for the nemRA-gloA operon, quinone-, glyoxal-, and HOCl-activated"
+cgMLST V1	b4212 (ytfH)	DUF24 family HxlR-type putative transcriptional regulator
+cgMLST V1	b4210 (ytfF)	DMT transporter family inner membrane protein
+cgMLST V1	b4211 (qorB)	NAD(P)H:quinone oxidoreductase
+cgMLST V1	b4217 (ytfK)	DUF1107 family protein
+cgMLST V1	b4214 (cysQ)	"3'(2'),5'-bisphosphate nucleotidase"
+cgMLST V1	b0775 (bioB)	biotin synthase
+cgMLST V1	b0774 (bioA)	"7,8-diaminopelargonic acid synthase, PLP-dependent "
+cgMLST V1	b0777 (bioC)	"malonyl-ACP O-methyltransferase, SAM-dependent"
+cgMLST V1	b4219 (msrA)	methionine sulfoxide reductase A
+cgMLST V1	b0773 (ybhB)	"kinase inhibitor homolog, UPF0098 family"
+cgMLST V1	b0772 (ybhC)	"acyl-CoA thioesterase, lipoprotein"
+cgMLST V1	b1792 (yeaO)	DUF488 family protein
+cgMLST V1	b1793 (yoaF)	DUF333 family outer membrane lipoprotein
+cgMLST V1	b3531 (bcsZ)	"endo-1,4-D-glucanase "
+cgMLST V1	b3539 (yhjV)	putative transporter
+cgMLST V1	b2669 (stpA)	"DNA binding protein, nucleoid-associated"
+cgMLST V1	b2668 (ygaP)	DUF2892 family inner membrane rhodanese
+cgMLST V1	b2665 (ygaU)	uncharacterized protein
+cgMLST V1	b2664 (csiR)	transcriptional repressor of csiD
+cgMLST V1	b2667 (ygaV)	tributyltin-inducible repressor of ygaVP
+cgMLST V1	b2666 (yqaE)	cyaR sRNA-regulated protein
+cgMLST V1	b4155 (epmA)	Elongation Factor P Lys34 lysyltransferase
+cgMLST V1	b4154 (frdA)	fumarate reductase (anaerobic) catalytic and NAD/flavoprotein subunit
+cgMLST V1	b4151 (frdD)	"fumarate reductase (anaerobic), membrane anchor subunit"
+cgMLST V1	b4150 (ampC)	"penicillin-binding protein; beta-lactamase, intrinsically weak "
+cgMLST V1	b4153 (frdB)	"fumarate reductase (anaerobic), Fe-S subunit "
+cgMLST V1	b4152 (frdC)	"fumarate reductase (anaerobic), membrane anchor subunit"
+cgMLST V1	b4159 (mscM)	"mechanosensitive channel protein, miniconductance"
+cgMLST V1	b3279 (yrdA)	bacterial transferase hexapeptide domain protein
+cgMLST V1	b1614 (ydgA)	DUF945 family protein
+cgMLST V1	b1611 (fumC)	"fumarate hydratase (fumarase C),aerobic Class II "
+cgMLST V1	b1610 (tus)	"inhibitor of replication at Ter, DNA-binding protein"
+cgMLST V1	b4397 (creA)	putative periplasmic protein
+cgMLST V1	b4396 (rob)	"right oriC-binding transcriptional activator, AraC family"
+cgMLST V1	b4395 (ytjC)	phosphatase
+cgMLST V1	b4393 (trpR)	"transcriptional repressor, tryptophan-binding"
+cgMLST V1	b4392 (slt)	"lytic murein transglycosylase, soluble "
+cgMLST V1	b4391 (yjjK)	putative transporter subunit of ABC superfamily: ATP-binding component
+cgMLST V1	b4390 (nadR)	"trifunctional protein: nicotinamide mononucleotide adenylyltransferase, ribosylnicotinamide kinase, transcriptional repressor"
+cgMLST V1	b4399 (creC)	"sensory histidine kinase in two-component regulatory system with CreB or PhoB, regulator of the CreBC regulon"
+cgMLST V1	b4398 (creB)	response regulator in two-component regulatory system with CreC
+cgMLST V1	b3705 (yidC)	membrane protein insertase
+cgMLST V1	b3704 (rnpA)	protein C5 component of RNase P
+cgMLST V1	b3706 (mnmE)	tRNA U34 5-methylaminomethyl-2-thiouridine modification GTPase
+cgMLST V1	b3701 (dnaN)	"DNA polymerase III, beta subunit "
+cgMLST V1	b3700 (recF)	gap repair protein
+cgMLST V1	b3703 (rpmH)	50S ribosomal subunit protein L34
+cgMLST V1	b3702 (dnaA)	"chromosomal replication initiator protein DnaA, DNA-binding transcriptional dual regulator"
+cgMLST V1	b2258 (arnF)	undecaprenyl phosphate-alpha-L-ara4N exporter; flippase ArnEF subunit
+cgMLST V1	b2259 (pmrD)	inactive two-component system connector protein
+cgMLST V1	b2250 (yfaZ)	"outer membrane protein, putative porin"
+cgMLST V1	b2251 (nudI)	nucleoside triphosphatase
+cgMLST V1	b2252 (ais)	putative LPS core heptose(II)-phosphate phosphatase
+cgMLST V1	b2253 (arnB)	"uridine 5'-(beta-1-threo-pentapyranosyl-4-ulose diphosphate) aminotransferase, PLP-dependent"
+cgMLST V1	b2254 (arnC)	undecaprenyl phosphate-L-Ara4FN transferase
+cgMLST V1	b2255 (arnA)	fused UDP-L-Ara4N formyltransferase/UDP-GlcA C-4'-decarboxylase
+cgMLST V1	b2256 (arnD)	undecaprenyl phosphate-alpha-L-ara4FN deformylase
+cgMLST V1	b2257 (arnT)	4-amino-4-deoxy-L-arabinose transferase
+cgMLST V1	b1930 (yedF)	putative TusA family sulfurtransferase
+cgMLST V1	b1937 (fliE)	flagellar basal-body component
+cgMLST V1	b3117 (tdcB)	"L-threonine dehydratase, catabolic "
+cgMLST V1	b1077 (flgF)	flagellar component of cell-proximal portion of basal-body rod
+cgMLST V1	b1076 (flgE)	flagellar hook protein
+cgMLST V1	b1071 (flgM)	anti-sigma factor for FliA (sigma 28)
+cgMLST V1	b1070 (flgN)	export chaperone for FlgK and FlgL
+cgMLST V1	b0869 (ybjT)	putative NAD-dependent oxidoreductase
+cgMLST V1	b0868 (ybjS)	putative NAD(P)H-dependent oxidoreductase with NAD(P)-binding Rossmann-fold domain
+cgMLST V1	b0865 (ybjP)	lipoprotein
+cgMLST V1	b0867 (amiD)	"1,6-anhydro-N-acetylmuramyl-L-alanine amidase, Zn-dependent; OM lipoprotein"
+cgMLST V1	b0866 (ybjQ)	UPF0145 family protein
+cgMLST V1	b0861 (artM)	arginine transporter subunit
+cgMLST V1	b0863 (artI)	arginine transporter subunit
+cgMLST V1	b0862 (artQ)	arginine transporter subunit
+cgMLST V1	b4637 (uof)	ryhB-regulated fur leader peptide
+cgMLST V1	b3002 (yqhA)	UPF0114 family putative inner membrane protein
+cgMLST V1	b3001 (gpr)	L-glyceraldehyde 3-phosphate reductase
+cgMLST V1	b3006 (exbB)	membrane spanning protein in TonB-ExbB-ExbD complex
+cgMLST V1	b3005 (exbD)	membrane spanning protein in TonB-ExbB-ExbD complex
+cgMLST V1	b3008 (metC)	"cystathionine beta-lyase, PLP-dependent "
+cgMLST V1	EFER_RS06010 (cydB)	cytochrome d ubiquinol oxidase subunit II
+cgMLST V1	b3918 (cdh)	CDP-diacylglycerol phosphotidylhydrolase
+cgMLST V1	b3919 (tpiA)	triosephosphate isomerase
+cgMLST V1	b3915 (fieF)	ferrous iron and zinc transporter
+cgMLST V1	b3916 (pfkA)	6-phosphofructokinase I
+cgMLST V1	b3917 (sbp)	sulfate transporter subunit
+cgMLST V1	b3910 (yiiM)	6-N-hydroxylaminopurine resistance protein
+cgMLST V1	b3911 (cpxA)	sensory histidine kinase in two-component regulatory system with CpxR
+cgMLST V1	b3912 (cpxR)	response regulator in two-component regulatory system with CpxA
+cgMLST V1	b1875 (yecM)	putative metal-binding enzyme
+cgMLST V1	b1874 (cutC)	copper homeostasis protein
+cgMLST V1	b1876 (argS)	arginyl-tRNA synthetase
+cgMLST V1	b1871 (cmoB)	"tRNA (cmo5U34)-carboxymethyltransferase, carboxy-SAM-dependent"
+cgMLST V1	b1870 (cmoA)	carboxy-SAM synthase
+cgMLST V1	b4245 (pyrB)	"aspartate carbamoyltransferase, catalytic subunit "
+cgMLST V1	b4602 (ynhF)	stress response membrane
+cgMLST V1	b2889 (idi)	isopentenyl diphosphate isomerase
+cgMLST V1	b1778 (msrB)	methionine sulfoxide reductase B
+cgMLST V1	b2148 (mglC)	methyl-galactoside transporter subunit
+cgMLST V1	b2149 (mglA)	fused methyl-galactoside transporter subunits of ABC superfamily: ATP-binding components
+cgMLST V1	b2144 (sanA)	"vancomycin high temperature exclusion protein, DUF218 superfamily protein"
+cgMLST V1	b2145 (yeiS)	DUF2542 family protein
+cgMLST V1	b2146 (preT)	"dihydropyrimidine dehydrogenase, NADH-dependent, subunit N"
+cgMLST V1	b2141 (yohJ)	UPF0299 family inner membrane protein
+cgMLST V1	b2143 (cdd)	cytidine/deoxycytidine deaminase
+cgMLST V1	b4187 (aidB)	"DNA alkylation damage repair protein; flavin-containing DNA binding protein, weak isovaleryl CoA dehydrogenase"
+cgMLST V1	b3560 (glyQ)	"glycine tRNA synthetase, alpha subunit "
+cgMLST V1	b0125 (hpt)	hypoxanthine phosphoribosyltransferase
+cgMLST V1	b0126 (can)	carbonic anhydrase
+cgMLST V1	b0127 (yadG)	putative ABC superfamily transporter ATP-binding subunit
+cgMLST V1	b0120 (speD)	S-adenosylmethionine decarboxylase
+cgMLST V1	b0121 (speE)	spermidine synthase (putrescine aminopropyltransferase)
+cgMLST V1	b0122 (yacC)	PulS_OutS family protein
+cgMLST V1	b0123 (cueO)	multicopper oxidase (laccase)
+cgMLST V1	b0128 (yadH)	inner membrane putative ABC superfamily transporter permease
+cgMLST V1	b0129 (yadI)	putative PTS Enzyme IIA
+cgMLST V1	b2434 (ypeA)	putative acyl-CoA transferase
+cgMLST V1	b2435 (amiA)	N-acetylmuramoyl-l-alanine amidase I
+cgMLST V1	b2436 (hemF)	coproporphyrinogen III oxidase
+cgMLST V1	b2431 (yfeX)	"porphyrinogen oxidase, cytoplasmic"
+cgMLST V1	b2432 (yfeY)	RpoE-regulated lipoprotein
+cgMLST V1	b2433 (yfeZ)	inner membrane protein
+cgMLST V1	b2438 (eutK)	putative ethanol utilization carboxysome structural protein
+cgMLST V1	b2439 (eutL)	putative ethanol utilization carboxysome structural protein
+cgMLST V1	b3428 (glgP)	glycogen phosphorylase
+cgMLST V1	b3429 (glgA)	glycogen synthase
+cgMLST V1	b3424 (glpG)	rhomboid intramembrane serine protease
+cgMLST V1	b3425 (glpE)	thiosulfate:cyanide sulfurtransferase (rhodanese)
+cgMLST V1	b3426 (glpD)	"sn-glycerol-3-phosphate dehydrogenase, aerobic, FAD/NAD(P)-binding "
+cgMLST V1	AEJV01_03887 (-)	hypothetical protein
+cgMLST V1	b0627 (tatE)	TatABCE protein translocation system subunit
+cgMLST V1	b0688 (pgm)	phosphoglucomutase
+cgMLST V1	b0680 (glnS)	glutamyl-tRNA synthetase
+cgMLST V1	b0683 (fur)	ferric iron uptake regulon transcriptional repressor; autorepressor
+cgMLST V1	b0682 (chiQ)	chitosugar-induced verified lipoprotein
+cgMLST V1	b0685 (ybfE)	"LexA-regulated protein, CopB family"
+cgMLST V1	b0684 (fldA)	flavodoxin 1
+cgMLST V1	b0687 (seqA)	negative modulator of initiation of replication
+cgMLST V1	b0958 (sulA)	SOS cell division inhibitor
+cgMLST V1	b1482 (osmC)	"lipoyl-dependent Cys-based peroxidase, hydroperoxide resistance; salt-shock inducible membrane protein; peroxiredoxin"
+cgMLST V1	b3620 (waaF)	ADP-heptose:LPS heptosyltransferase II
+cgMLST V1	b3994 (thiC)	phosphomethylpyrimidine synthase
+cgMLST V1	b3995 (rsd)	"stationary phase protein, binds sigma 70 RNA polymerase subunit"
+cgMLST V1	b3997 (hemE)	uroporphyrinogen decarboxylase
+cgMLST V1	b3990 (thiH)	"tyrosine lyase, involved in thiamine-thiazole moiety synthesis"
+cgMLST V1	b3991 (thiG)	thiamine biosynthesis ThiGH complex subunit
+cgMLST V1	b3992 (thiF)	"adenylyltransferase, modifies ThiS C-terminus "
+cgMLST V1	b3993 (thiE)	thiamine phosphate synthase (thiamine phosphate pyrophosphorylase)
+cgMLST V1	b3998 (nfi)	endonuclease V; deoxyinosine 3' endonuclease
+cgMLST V1	b3999 (yjaG)	DUF416 domain protein
+cgMLST V1	b0696 (kdpC)	"potassium translocating ATPase, subunit C "
+cgMLST V1	b0697 (kdpB)	"potassium translocating ATPase, subunit B "
+cgMLST V1	b0695 (kdpD)	fused sensory histidine kinase in two-component regulatory system with KdpE: signal sensing protein
+cgMLST V1	ECs4702 (-)	acetolactate synthase 2 catalytic subunit
+cgMLST V1	b2800 (fucA)	L-fuculose-1-phosphate aldolase
+cgMLST V1	b2803 (fucK)	L-fuculokinase
+cgMLST V1	b2802 (fucI)	L-fucose isomerase
+cgMLST V1	b2805 (fucR)	l-fucose operon activator
+cgMLST V1	b2804 (fucU)	L-fucose mutarotase
+cgMLST V1	b2807 (ygdD)	UPF0382 family inner membrane protein
+cgMLST V1	b2806 (rlmM)	"23S rRNA C2498 2'-O-ribose methyltransferase, SAM-dependent"
+cgMLST V1	b2809 (ygdI)	DUF903 family verified lipoprotein
+cgMLST V1	b2808 (gcvA)	glycine cleavage system transcriptional activator; autorepressor
+cgMLST V1	b1729 (ydjN)	putative transporter
+cgMLST V1	b1723 (pfkB)	6-phosphofructokinase II
+cgMLST V1	b1722 (ydiY)	acid-inducible putative outer membrane protein
+cgMLST V1	b1725 (yniA)	fructosamine kinase family protein
+cgMLST V1	b1724 (ydiZ)	uncharacterized protein
+cgMLST V1	b1727 (yniC)	2-deoxyglucose-6-P phosphatase
+cgMLST V1	b1726 (yniB)	putative inner membrane protein
+cgMLST V1	b0864 (artP)	arginine transporter subunit
+cgMLST V1	b3811 (xerC)	site-specific tyrosine recombinase
+cgMLST V1	b3810 (yigA)	DUF484 family protein
+cgMLST V1	b3813 (uvrD)	DNA-dependent ATPase I and helicase II
+cgMLST V1	b3812 (yigB)	5-amino-6-(5-phospho-D-ribitylamino)uracil phosphatase; pyrimidine phosphatase; riboflavin synthesis
+cgMLST V1	b3616 (tdh)	"L-threonine 3-dehydrogenase, NAD(P)-binding "
+cgMLST V1	b4042 (dgkA)	diacylglycerol kinase
+cgMLST V1	b4040 (ubiA)	p-hydroxybenzoate octaprenyltransferase
+cgMLST V1	b0447 (ybaO)	putative DNA-binding transcriptional regulator
+cgMLST V1	b0446 (cof)	thiamine pyrimidine pyrophosphate hydrolase; HMP-PP phosphatase
+cgMLST V1	b0445 (ybaE)	putative ABC superfamily transporter periplasmic-binding protein
+cgMLST V1	b0444 (queC)	7-cyano-7-deazaguanine (preQ0) synthase; queuosine biosynthesis
+cgMLST V1	b0443 (fadM)	long-chain acyl-CoA thioesterase III
+cgMLST V1	b0441 (ppiD)	"periplasmic folding chaperone, has an inactive PPIase domain "
+cgMLST V1	b0449 (mdlB)	"putative multidrug transporter subunit of ABC superfamily, ATP-binding component"
+cgMLST V1	b0448 (mdlA)	"putative multidrug transporter subunit of ABC superfamily, ATP-binding component"
+cgMLST V1	b2777 (queE)	7-carboxy-7-deazaguanine synthase; queosine biosynthesis
+cgMLST V1	b2779 (eno)	enolase
+cgMLST V1	b3099 (yqjE)	DUF1469 family inner membrane protein
+cgMLST V1	b3098 (yqjD)	membrane-anchored ribosome-binding protein
+cgMLST V1	b3090 (ygjV)	Imp-YgjV family inner membrane protein
+cgMLST V1	b0600 (ybdL)	"methionine aminotransferase, PLP-dependent "
+cgMLST V1	b0605 (ahpC)	"alkyl hydroperoxide reductase, C22 subunit "
+cgMLST V1	b0607 (uspG)	universal stress protein UP12
+cgMLST V1	b0606 (ahpF)	"alkyl hydroperoxide reductase, F52a subunit, FAD/NAD(P)-binding "
+cgMLST V1	b2571 (rseB)	"anti-sigma E factor, binds RseA"
+cgMLST V1	b2570 (rseC)	SoxR iron-sulfur cluster reduction factor component; with RsxABCDEG
+cgMLST V1	b2573 (rpoE)	RNA polymerase sigma E factor
+cgMLST V1	b2572 (rseA)	anti-sigma factor
+cgMLST V1	b2575 (trmN)	tRNA1(Val) (adenine(37)-N6)-methyltransferase
+cgMLST V1	b2576 (srmB)	ATP-dependent RNA helicase
+cgMLST V1	b2578 (eamB)	cysteine and O-acetylserine exporter
+cgMLST V1	b2944 (yggI)	Zn-dependent metalloprotease-related protein
+cgMLST V1	b1219 (ychN)	putative sulfur relay protein
+cgMLST V1	b1218 (chaC)	cation transport regulator
+cgMLST V1	b1211 (prfA)	peptide chain release factor RF-1
+cgMLST V1	b1210 (hemA)	glutamyl tRNA reductase
+cgMLST V1	b1213 (ychQ)	SIRB family inner membrane protein
+cgMLST V1	b1212 (prmC)	"N5-glutamine methyltransferase, modifies release factors RF-1 and RF-2 "
+cgMLST V1	b1215 (kdsA)	3-deoxy-D-manno-octulosonate 8-phosphate synthase
+cgMLST V1	b1214 (ychA)	transglutaminase-like TPR-repeat protein
+cgMLST V1	b1217 (chaB)	cation transport regulator
+cgMLST V1	b1216 (chaA)	calcium/sodium:proton antiporter
+cgMLST V1	b1652 (rnt)	ribonuclease T (RNase T)
+cgMLST V1	b1654 (grxD)	glutaredoxin-4
+cgMLST V1	b1656 (sodB)	"superoxide dismutase, Fe "
+cgMLST V1	b4069 (acs)	acetyl-CoA synthetase
+cgMLST V1	b4068 (yjcH)	DUF485 family inner membrane protein
+cgMLST V1	b4060 (yjcB)	putative inner membrane protein
+cgMLST V1	b4062 (soxS)	superoxide response regulon transcriptional activator; autoregulator
+cgMLST V1	b4065 (yjcE)	putative cation/proton antiporter
+cgMLST V1	b4067 (actP)	acetate transporter
+cgMLST V1	b3309 (rplX)	50S ribosomal subunit protein L24
+cgMLST V1	b3308 (rplE)	50S ribosomal subunit protein L5
+cgMLST V1	b3301 (rplO)	50S ribosomal subunit protein L15
+cgMLST V1	b3300 (secY)	preprotein translocase membrane subunit
+cgMLST V1	b3303 (rpsE)	30S ribosomal subunit protein S5
+cgMLST V1	b3302 (rpmD)	50S ribosomal subunit protein L30
+cgMLST V1	b3305 (rplF)	50S ribosomal subunit protein L6
+cgMLST V1	b3304 (rplR)	50S ribosomal subunit protein L18
+cgMLST V1	b3307 (rpsN)	30S ribosomal subunit protein S14
+cgMLST V1	b3306 (rpsH)	30S ribosomal subunit protein S8
+cgMLST V1	b1059 (solA)	"N-methyltryptophan oxidase, FAD-binding "
+cgMLST V1	b1057 (yceJ)	putative cytochrome b561
+cgMLST V1	b1055 (yceA)	putative rhodanese-related sulfurtransferase
+cgMLST V1	b1054 (lpxL)	lauryl-acyl carrier protein (ACP)-dependent acyltransferase
+cgMLST V1	b4262 (lptG)	lipopolysaccharide export ABC permease of the LptBFGC export complex
+cgMLST V1	b4261 (lptF)	lipopolysaccharide export ABC permease of the LptBFGC export complex
+cgMLST V1	b4260 (pepA)	"multifunctional aminopeptidase A: a cyteinylglycinase, transcription regulator and site-specific recombination factor "
+cgMLST V1	b0010 (satP)	succinate-acetate transporter
+cgMLST V1	b0011 (yaaW)	UPF0174 family protein
+cgMLST V1	b0013 (yaaI)	UPF0412 family protein
+cgMLST V1	b0014 (dnaK)	"chaperone Hsp70, with co-chaperone DnaJ"
+cgMLST V1	b0015 (dnaJ)	"chaperone Hsp40, DnaK co-chaperone"
+cgMLST V1	b0018 (mokC)	"regulatory protein for HokC, overlaps CDS of hokC"
+cgMLST V1	b0019 (nhaA)	sodium-proton antiporter
+cgMLST V1	b3549 (tag)	"3-methyl-adenine DNA glycosylase I, constitutive "
+cgMLST V1	b3548 (yhjY)	autotransporter beta-domain protein
+cgMLST V1	b3543 (dppB)	dipeptide/heme transporter
+cgMLST V1	b3542 (dppC)	dipeptide/heme transporter
+cgMLST V1	b3541 (dppD)	dipeptide/heme transporter
+cgMLST V1	b3546 (eptB)	"KDO phosphoethanolamine transferase, Ca(2+)-inducible"
+cgMLST V1	b3544 (dppA)	dipeptide transporter
+cgMLST V1	b3891 (fdhE)	formate dehydrogenase formation protein
+cgMLST V1	b3893 (fdoH)	"formate dehydrogenase-O, Fe-S subunit"
+cgMLST V1	b0977 (hyaF)	protein involved in nickel incorporation into hydrogenase-1 proteins
+cgMLST V1	b0976 (hyaE)	putative HyaA chaperone
+cgMLST V1	b0975 (hyaD)	hydrogenase 1 maturation protease
+cgMLST V1	b0974 (hyaC)	"hydrogenase 1, b-type cytochrome subunit"
+cgMLST V1	b0973 (hyaB)	"hydrogenase 1, large subunit "
+cgMLST V1	b0972 (hyaA)	"hydrogenase 1, small subunit "
+cgMLST V1	b0970 (yccA)	"HflBKC-binding inner membrane protein, UPF0005 family"
+cgMLST V1	b3740 (rsmG)	"16S rRNA m(7)G527 methyltransferase, SAM-dependent; glucose-inhibited cell-division protein"
+cgMLST V1	b2922 (yggE)	oxidative stress defense protein
+cgMLST V1	b2926 (pgk)	phosphoglycerate kinase
+cgMLST V1	b2927 (epd)	D-erythrose 4-phosphate dehydrogenase
+cgMLST V1	b2925 (fbaA)	"fructose-bisphosphate aldolase, class II "
+cgMLST V1	b0413 (nrdR)	Nrd regulon repressor
+cgMLST V1	b3152 (yraR)	putative nucleoside-diphosphate-sugar epimerase
+cgMLST V1	b3157 (yhbT)	SCP-2 sterol transfer family protein
+cgMLST V1	b0194 (proS)	prolyl-tRNA synthetase
+cgMLST V1	b0197 (metQ)	DL-methionine transporter subunit
+cgMLST V1	b0196 (rcsF)	putative outer membrane protein
+cgMLST V1	b0191 (arfB)	"alternative stalled-ribosome rescue factor B; peptidyl-tRNA hydrolase, ribosome-attached"
+cgMLST V1	b0190 (yaeQ)	PDDEXK superfamily protein
+cgMLST V1	b0192 (nlpE)	lipoprotein involved with copper homeostasis and adhesion
+cgMLST V1	b0199 (metN)	DL-methionine transporter subunit
+cgMLST V1	b0198 (metI)	DL-methionine transporter subunit
+cgMLST V1	b0223 (yafJ)	putative amidotransfease
+cgMLST V1	b0222 (gmhA)	D-sedoheptulose 7-phosphate isomerase
+cgMLST V1	b0221 (fadE)	acyl coenzyme A dehydrogenase
+cgMLST V1	b0220 (ivy)	"inhibitor of c-type lysozyme, periplasmic"
+cgMLST V1	b0224 (yafK)	"L,D-transpeptidase-related protein"
+cgMLST V1	b1072 (flgA)	assembly protein for flagellar basal-body periplasmic P ring
+cgMLST V1	b2261 (menC)	O-succinylbenzoyl-CoA synthase
+cgMLST V1	b2260 (menE)	O-succinylbenzoate-CoA ligase
+cgMLST V1	b2263 (menH)	"2-succinyl-6-hydroxy-2,4-cyclohexadiene-1-carboxylate synthase"
+cgMLST V1	b2262 (menB)	dihydroxynaphthoic acid synthetase
+cgMLST V1	b2265 (menF)	isochorismate synthase 2
+cgMLST V1	b2264 (menD)	2-succinyl-5-enolpyruvyl-6-hydroxy-3-cyclohexene-1-carboxylate synthase; SEPHCHC synthase
+cgMLST V1	b2267 (elaA)	putative acyl-CoA transferase
+cgMLST V1	b2266 (elaB)	"DUF883 family protein, putative membrane-anchored ribosome-binding protein"
+cgMLST V1	b2268 (rbn)	"RNase BN, tRNA processing enzyme"
+cgMLST V1	b2480 (bcp)	"peroxiredoxin; thiol peroxidase, thioredoxin-dependent "
+cgMLST V1	b1908 (yecA)	UPF0149 family protein
+cgMLST V1	b1901 (araF)	L-arabinose transporter subunit
+cgMLST V1	b1900 (araG)	fused L-arabinose transporter subunits of ABC superfamily: ATP-binding components
+cgMLST V1	b1902 (ftnB)	"ferritin B, putative ferrous iron reservoir"
+cgMLST V1	b1905 (ftnA)	ferritin iron storage protein (cytoplasmic)
+cgMLST V1	b1904 (yecR)	"lipoprotein, function unknown"
+cgMLST V1	b1907 (tyrP)	tyrosine transporter
+cgMLST V1	b1906 (yecH)	DUF2492 family protein
+cgMLST V1	b0154 (hemL)	glutamate-1-semialdehyde aminotransferase (aminomutase)
+cgMLST V1	b1037 (csgG)	curli production assembly/transport outer membrane lipoprotein
+cgMLST V1	b4201 (priB)	primosomal protein N
+cgMLST V1	b4200 (rpsF)	30S ribosomal subunit protein S6
+cgMLST V1	b0782 (moaB)	inactive molybdopterin adenylyltransferase
+cgMLST V1	b4202 (rpsR)	30S ribosomal subunit protein S18
+cgMLST V1	b4207 (fklB)	FKBP-type peptidyl-prolyl cis-trans isomerase (rotamase)
+cgMLST V1	b0789 (clsB)	cardiolipin synthase 2
+cgMLST V1	b1291 (sapD)	antimicrobial peptide transport ABC system ATP-binding protein
+cgMLST V1	b1293 (sapB)	antimicrobial peptide transport ABC transporter permease
+cgMLST V1	b1292 (sapC)	antimicrobial peptide transport ABC transporter permease
+cgMLST V1	b1295 (ymjA)	DUF2543 family protein
+cgMLST V1	b1294 (sapA)	antimicrobial peptide transport ABC transporter periplasmic binding protein
+cgMLST V1	b1430 (tehB)	"tellurite, selenium methyltransferase, SAM-dependent; tellurite, selenium resistance protein"
+cgMLST V1	b1473 (yddG)	aromatic amino acid exporter
+cgMLST V1	b0521 (ybcF)	putative carbonate kinase
+cgMLST V1	b0522 (purK)	N5-carboxyaminoimidazole ribonucleotide synthase
+cgMLST V1	b0523 (purE)	N5-carboxyaminoimidazole ribonucleotide mutase
+cgMLST V1	b0524 (lpxH)	"UDP-2,3-diacylglucosamine pyrophosphohydrolase "
+cgMLST V1	b0526 (cysS)	cysteinyl-tRNA synthetase
+cgMLST V1	b0528 (ybcJ)	ribosome-associated protein; putative RNA-binding protein
+cgMLST V1	b0529 (folD)	"bifunctional 5,10-methylene-tetrahydrofolate dehydrogenase/5,10-methylene-tetrahydrofolate cyclohydrolase "
+cgMLST V1	b3071 (yqjI)	PadR family putative transcriptional regulator
+cgMLST V1	b3077 (ebgC)	"evolved beta-D-galactosidase, beta subunit; cupin superfamily"
+cgMLST V1	b3076 (ebgA)	"evolved beta-D-galactosidase, alpha subunit "
+cgMLST V1	b3075 (ebgR)	transcriptional repressor
+cgMLST V1	b3074 (ygjH)	putative tRNA binding protein; putative tRNA corner chaperone
+cgMLST V1	b2388 (glk)	glucokinase
+cgMLST V1	b2389 (yfeO)	putative ion channel protein
+cgMLST V1	b2382 (ypdC)	putative DNA-binding protein
+cgMLST V1	b2381 (ypdB)	response regulator activating yhjX; pyruvate-responsive YpdAB two-component system
+cgMLST V1	b2386 (fryC)	putative enzyme IIC component of PTS
+cgMLST V1	b2387 (fryB)	putative enzyme IIB component of PTS
+cgMLST V1	b2384 (ypdE)	aminopeptidase
+cgMLST V1	b2729 (hypD)	hydrogenase maturation protein
+cgMLST V1	b3385 (gph)	phosphoglycolate phosphatase
+cgMLST V1	b3384 (trpS)	tryptophanyl-tRNA synthetase
+cgMLST V1	b3387 (dam)	DNA adenine methyltransferase
+cgMLST V1	b3386 (rpe)	D-ribulose-5-phosphate 3-epimerase
+cgMLST V1	b3389 (aroB)	3-dehydroquinate synthase
+cgMLST V1	b3388 (damX)	cell division protein that binds to the septal ring
+cgMLST V1	b3925 (glpX)	"fructose 1,6-bisphosphatase II "
+cgMLST V1	b3924 (fpr)	ferredoxin-NADP reductase
+cgMLST V1	b3927 (glpF)	glycerol facilitator
+cgMLST V1	b3921 (yiiR)	DUF805 family putative inner membrane protein
+cgMLST V1	b3920 (yiiQ)	DUF1454 family putative periplasmic protein
+cgMLST V1	b3923 (uspD)	stress-induced protein
+cgMLST V1	b3922 (yiiS)	UPF0381 family protein
+cgMLST V1	b3929 (rraA)	ribonuclease E (RNase E) inhibitor protein
+cgMLST V1	b3928 (zapB)	"FtsZ stabilizer; septal ring assembly factor, stimulates cell division"
+cgMLST V1	b0722 (sdhD)	"succinate dehydrogenase, membrane subunit, binds cytochrome b556"
+cgMLST V1	b0720 (gltA)	citrate synthase
+cgMLST V1	b0721 (sdhC)	"succinate dehydrogenase, membrane subunit, binds cytochrome b556"
+cgMLST V1	b0726 (sucA)	"2-oxoglutarate decarboxylase, thiamine triphosphate-binding "
+cgMLST V1	b0727 (sucB)	dihydrolipoyltranssuccinase
+cgMLST V1	b0724 (sdhB)	"succinate dehydrogenase, FeS subunit "
+cgMLST V1	b0728 (sucC)	"succinyl-CoA synthetase, beta subunit "
+cgMLST V1	b0729 (sucD)	"succinyl-CoA synthetase, NAD(P)-binding, alpha subunit "
+cgMLST V1	b1733 (chbG)	chito-oligosaccharide deacetylase
+cgMLST V1	b0694 (kdpE)	response regulator in two-component regulatory system with KdpD
+cgMLST V1	b0098 (secA)	"preprotein translocase subunit, ATPase"
+cgMLST V1	b0090 (murG)	N-acetylglucosaminyl transferase
+cgMLST V1	b0091 (murC)	UDP-N-acetylmuramate:L-alanine ligase
+cgMLST V1	b0092 (ddlB)	D-alanine:D-alanine ligase
+cgMLST V1	b0093 (ftsQ)	"divisome assembly protein, membrane anchored protein involved in growth of wall at septum"
+cgMLST V1	b0095 (ftsZ)	GTP-binding tubulin-like cell division protein
+cgMLST V1	b0096 (lpxC)	UDP-3-O-acyl N-acetylglucosamine deacetylase
+cgMLST V1	b0097 (secM)	regulator of secA translation
+cgMLST V1	b4108 (yjdM)	zinc-ribbon family protein
+cgMLST V1	b4107 (yjdN)	metalloprotein superfamily protein
+cgMLST V1	b3524 (yhjG)	putative inner membrane-anchored periplasmic AsmA family protein
+cgMLST V1	b3228 (sspB)	ClpXP protease specificity enhancing factor
+cgMLST V1	b3222 (nanK)	N-acetylmannosamine kinase
+cgMLST V1	b3223 (nanE)	putative N-acetylmannosamine-6-P epimerase
+cgMLST V1	b3221 (yhcH)	"DUF386 family protein, cupin superfamily"
+cgMLST V1	b3224 (nanT)	sialic acid transporter
+cgMLST V1	b3225 (nanA)	N-acetylneuraminate lyase
+cgMLST V1	b2175 (mepS)	"murein DD-endopeptidase, space-maker hydrolase, mutational suppressor of prc thermosensitivity, outer membrane lipoprotein"
+cgMLST V1	b2174 (lpxT)	lipid A 1-diphosphate synthase; undecaprenyl pyrophosphate:lipid A 1-phosphate phosphotransferase
+cgMLST V1	b2177 (yejA)	"microcin C transporter YejABEF, periplasmic binding protein; ABC family"
+cgMLST V1	b2176 (rtn)	"resistance protein for phages lambda and N4, putative membrane-anchored cyclic-di-GMP phosphodiesterase"
+cgMLST V1	b2171 (yeiP)	elongation factor P-like protein
+cgMLST V1	b2173 (yeiR)	Zn-stimulated GTPase involved in zinc homeostasis; mutants are cadmium and EDTA sensitive; Zn(2+) binding protein
+cgMLST V1	b2172 (yeiQ)	putative NAD-dependent D-mannonate oxidoreductase
+cgMLST V1	b2179 (yejE)	"microcin C transporter YejABEF, permease subunit; ABC family"
+cgMLST V1	b2178 (yejB)	"microcin C transporter YejABEF, permease subunit; ABC family"
+cgMLST V1	b1642 (slyA)	global transcriptional regulator
+cgMLST V1	b1643 (ydhI)	DUF1656 family putative inner membrane efflux pump associated protein
+cgMLST V1	b1641 (slyB)	outer membrane lipoprotein
+cgMLST V1	b1646 (sodC)	"superoxide dismutase, Cu, Zn, periplasmic "
+cgMLST V1	b1647 (ydhF)	putative oxidoreductase
+cgMLST V1	b1644 (ydhJ)	putative membrane fusion protein (MFP) of YdhJK efflux pump
+cgMLST V1	b1648 (ydhL)	DUF1289 family protein
+cgMLST V1	b0119 (yacL)	UPF0231 family protein
+cgMLST V1	b0118 (acnB)	bifunctional aconitate hydratase 2/2-methylisocitrate dehydratase
+cgMLST V1	b0115 (aceF)	"pyruvate dehydrogenase, dihydrolipoyltransacetylase component E2 "
+cgMLST V1	b0116 (lpd)	"lipoamide dehydrogenase, E3 component is part of three enzyme complexes "
+cgMLST V1	b0111 (ampE)	ampicillin resistance inner membrane protein; putative signaling protein in beta-lactamase regulation
+cgMLST V1	b0110 (ampD)	"1,6-anhydro-N-acetylmuramyl-L-alanine amidase, Zn-dependent; murein amidase "
+cgMLST V1	b0113 (pdhR)	pyruvate dehydrogenase complex repressor; autorepressor
+cgMLST V1	b0112 (aroP)	aromatic amino acid transporter
+cgMLST V1	b3750 (rbsC)	D-ribose transporter subunit
+cgMLST V1	b3754 (hsrA)	putative multidrug or homocysteine efflux system
+cgMLST V1	b3755 (yieP)	putative transcriptional regulator
+cgMLST V1	b2400 (gltX)	glutamyl-tRNA synthetase
+cgMLST V1	b1987 (cbl)	ssuEADCB/tauABCD operon transcriptional activator
+cgMLST V1	b1325 (ycjG)	L-Ala-D/L-Glu epimerase
+cgMLST V1	b1324 (tpx)	lipid hydroperoxide peroxidase
+cgMLST V1	b1326 (mpaA)	murein peptide amidase A
+cgMLST V1	b1321 (ycjX)	"DUF463 family protein, putative P-loop NTPase"
+cgMLST V1	b1323 (tyrR)	aromatic amino acid biosynthesis and transport regulon transcriptional regulator; autorepressor; ATPase; phosphatase
+cgMLST V1	b1322 (ycjF)	UPF0283 family inner membrane protein
+cgMLST V1	b1329 (mppA)	murein tripeptide (L-ala-gamma-D-glutamyl-meso-DAP) transporter subunit
+cgMLST V1	b3807 (cyaY)	iron-dependent inhibitor of iron-sulfur cluster formation; frataxin; iron-binding and oxidizing protein
+cgMLST V1	b3415 (gntT)	"gluconate transporter, high-affinity GNT I system"
+cgMLST V1	b3414 (nfuA)	Fe/S biogenesis protein; putative scaffold/chaperone for damaged Fe/S proteins
+cgMLST V1	b3410 (feoC)	putative DNA-binding transcriptional regulator
+cgMLST V1	b3413 (gntX)	DNA catabolic protein
+cgMLST V1	b3412 (bioH)	pimeloyl-ACP methyl ester carboxylesterase
+cgMLST V1	b3418 (malT)	mal regulon transcriptional activator
+cgMLST V1	b1126 (potA)	polyamine transporter subunit
+cgMLST V1	b0658 (ybeX)	putative ion transport
+cgMLST V1	b0654 (gltJ)	"glutamate, aspartate ABC transporter permease subunit"
+cgMLST V1	b0653 (gltK)	"glutamate, aspartate ABC transporter permease subunit"
+cgMLST V1	b0832 (gsiD)	"glutathione transporter, permease component, ABC superfamily"
+cgMLST V1	b0830 (gsiB)	"glutathione periplasmic binding protein, ABC superfamily transporter"
+cgMLST V1	b0831 (gsiC)	"glutathione transporter, permease component, ABC superfamily"
+cgMLST V1	b0836 (bssR)	repressor of biofilm formation by indole transport regulation
+cgMLST V1	b0835 (rimO)	ribosomal protein S12 methylthiotransferase; radical SAM superfamily
+cgMLST V1	b2147 (preA)	"dihydropyrimidine dehydrogenase, NADH-dependent, subunit C"
+cgMLST V1	b2142 (yohK)	LrgB family inner membrane protein
+cgMLST V1	b2302 (yfcG)	GSH-dependent disulfide bond oxidoreductase
+cgMLST V1	b2303 (folX)	"D-erythro-7,8-dihydroneopterin triphosphate 2'-epimerase and dihydroneopterin aldolase "
+cgMLST V1	b2300 (yfcE)	phosphodiesterase activity on bis-pNPP
+cgMLST V1	b2301 (yfcF)	glutathione S-transferase
+cgMLST V1	b2306 (hisP)	histidine/lysine/arginine/ornithine transporter subunit
+cgMLST V1	b2307 (hisM)	histidine/lysine/arginine/ornithine transporter subunit
+cgMLST V1	b2309 (hisJ)	histidine/lysine/arginine/ornithine transporter subunit
+cgMLST V1	ECs4518 (rph)	ribonuclease PH
+cgMLST V1	b1829 (htpX)	putative endopeptidase
+cgMLST V1	b1822 (rlmA)	"23S rRNA m(1)G745 methyltransferase, SAM-dependent "
+cgMLST V1	b1821 (mntP)	"putative Mn(2+) efflux pump, mntR-regulated"
+cgMLST V1	b1826 (mgrB)	"regulatory peptide for PhoPQ, feedback inhibition"
+cgMLST V1	b1827 (kdgR)	KDG regulon transcriptional repressor
+cgMLST V1	b1824 (yobF)	DUF2527 family heat-induced protein
+cgMLST V1	b1825 (yebO)	putative inner membrane protein
+cgMLST V1	b1195 (ymgE)	UPF0410 family putative inner membrane protein
+cgMLST V1	b1448 (mnaT)	methionine N-acyltransferase; L-amino acid N-acyltransferase
+cgMLST V1	b3833 (ubiE)	"bifunctional 2-octaprenyl-6-methoxy-1,4-benzoquinone methylase/S-adenosylmethionine:2-DMK methyltransferase "
+cgMLST V1	b1777 (yeaC)	DUF1315 family protein
+cgMLST V1	b1779 (gapA)	glyceraldehyde-3-phosphate dehydrogenase A
+cgMLST V1	b4180 (rlmB)	"23S rRNA mG2251 2'-O-ribose methyltransferase, SAM-dependent "
+cgMLST V1	b4186 (yjfC)	ATP-Grasp family ATPase
+cgMLST V1	b4188 (yjfN)	DUF1471 family periplasmic protein
+cgMLST V1	b4189 (bsmA)	bioflm peroxide resistance protein
+cgMLST V1	EAKF1_RS07940 (tsr)	"methyl-accepting chemotaxis protein I, serine sensor receptor"
+cgMLST V1	b4670 (yjeV)	uncharacterized protein
+cgMLST V1	b4675 (yoaJ)	inner membrane-associated protein
+cgMLST V1	b4676 (yoaK)	inner membrane-associated protein
+cgMLST V1	b3846 (fadB)	fused 3-hydroxybutyryl-CoA epimerase/delta(3)-cis-delta(2)-trans-enoyl-CoA isomerase/enoyl-CoA hydratase/3-hydroxyacyl-CoA dehydrogenase
+cgMLST V1	b3847 (pepQ)	proline dipeptidase
+cgMLST V1	b3844 (fre)	NAD(P)H-flavin reductase
+cgMLST V1	b3845 (fadA)	3-ketoacyl-CoA thiolase (thiolase I)
+cgMLST V1	b3842 (rfaH)	transcription antitermination protein
+cgMLST V1	b3843 (ubiD)	3-octaprenyl-4-hydroxybenzoate decarboxylase
+cgMLST V1	b3848 (yigZ)	UPF0029 family protein
+cgMLST V1	b3849 (trkH)	potassium transporter
+cgMLST V1	b0503 (mnmH)	"tRNA 2-selenouridine synthase, selenophosphate-dependent"
+cgMLST V1	b4080 (mdtP)	outer membrane factor of efflux pump
+cgMLST V1	b1249 (clsA)	cardiolipin synthase 1
+cgMLST V1	b0419 (yajO)	2-carboxybenzaldehyde reductase
+cgMLST V1	b0414 (ribD)	fused diaminohydroxyphosphoribosylaminopyrimidine deaminase and 5-amino-6-(5-phosphoribosylamino) uracil reductase
+cgMLST V1	b0415 (ribE)	riboflavin synthase beta chain
+cgMLST V1	b0416 (nusB)	transcription antitermination protein
+cgMLST V1	b0417 (thiL)	thiamine monophosphate kinase
+cgMLST V1	b0410 (yajD)	HNH nuclease family protein
+cgMLST V1	b0411 (tsx)	"nucleoside channel, receptor of phage T6 and colicin K"
+cgMLST V1	b3499 (rlmJ)	"23S rRNA m(6)A2030 methyltransferase, SAM-dependent"
+cgMLST V1	b3498 (prlC)	oligopeptidase A
+cgMLST V1	b3495 (uspA)	universal stress global response regulator
+cgMLST V1	b3494 (uspB)	universal stress (ethanol tolerance) protein B
+cgMLST V1	b3497 (rsmJ)	"16S rRNA m(2)G1516 methyltransferase, SAM-dependent"
+cgMLST V1	b3496 (dtpB)	dipeptide and tripeptide permease B
+cgMLST V1	b2728 (hypC)	hydrogenase maturation protein
+cgMLST V1	b2724 (hycB)	"hydrogenase 3, Fe-S subunit "
+cgMLST V1	b2725 (hycA)	regulator of the transcriptional regulator FhlA
+cgMLST V1	b2726 (hypA)	protein involved in nickel insertion into hydrogenases 3
+cgMLST V1	b2727 (hypB)	GTP hydrolase involved in nickel liganding into hydrogenases
+cgMLST V1	b2722 (hycD)	"hydrogenase 3, membrane subunit"
+cgMLST V1	b2723 (hycC)	"hydrogenase 3, membrane subunit"
+cgMLST V1	b2903 (gcvP)	"glycine decarboxylase, PLP-dependent, subunit (protein P) of glycine cleavage complex "
+cgMLST V1	b1129 (phoQ)	sensory histidine kinase in two-component regulatory system with PhoP
+cgMLST V1	b1128 (roxA)	50S ribosomal protein L16 arginine hydroxylase; 2-oxoglutarate oxygenase
+cgMLST V1	b1124 (potC)	polyamine transporter subunit
+cgMLST V1	b0659 (ybeY)	ssRNA-specific endoribonuclease; co-endoribonuclease working with RNase R in 16S rRNA 3' end maturation and quality control; rRNA transcription antitermination factor
+cgMLST V1	b0655 (gltI)	"glutamate, aspartate binding protein, periplasmic; part of GltJKLI ABC transporter"
+cgMLST V1	b0384 (psiF)	PsiF family protein
+cgMLST V1	b0386 (proC)	"pyrroline-5-carboxylate reductase, NAD(P)-binding "
+cgMLST V1	b0380 (yaiZ)	DUF2754 family putative inner membrane protein
+cgMLST V1	b0381 (ddlA)	D-alanine-D-alanine ligase A
+cgMLST V1	b0382 (iraP)	"anti-RssB factor, RpoS stabilzer during Pi starvation; anti-adapter protein"
+cgMLST V1	b0383 (phoA)	bacterial alkaline phosphatase
+cgMLST V1	b0388 (aroL)	shikimate kinase II
+cgMLST V1	b0389 (yaiA)	OxyR-regulated conserved protein
+cgMLST V1	b3655 (yicH)	putative inner membrane-anchored periplasmic AsmA family protein
+cgMLST V1	b3654 (xanP)	xanthine permease
+cgMLST V1	b3653 (gltS)	glutamate transporter
+cgMLST V1	b3652 (recG)	ATP-dependent DNA helicase
+cgMLST V1	b3651 (trmH)	"tRNA mG18-2'-O-methyltransferase, SAM-dependent"
+cgMLST V1	b3650 (spoT)	"bifunctional (p)ppGpp synthetase II/guanosine-3',5'-bis pyrophosphate 3'-pyrophosphohydrolase "
+cgMLST V1	b2528 (iscA)	FeS cluster assembly protein
+cgMLST V1	b2529 (iscU)	iron-sulfur cluster assembly scaffold protein
+cgMLST V1	b2527 (hscB)	"HscA co-chaperone, J domain-containing protein Hsc56; IscU-specific chaperone HscAB"
+cgMLST V1	b2524 (iscX)	Iron binding protein associated with IscS; putative molecular adaptor of IscS function
+cgMLST V1	b2525 (fdx)	[2Fe-2S] ferredoxin
+cgMLST V1	b2522 (sseB)	"rhodanase-like enzyme, sulfur transfer from thiosulfate"
+cgMLST V1	b2523 (pepB)	aminopeptidase B
+cgMLST V1	b1246 (oppD)	oligopeptide transporter subunit
+cgMLST V1	b1247 (oppF)	oligopeptide transporter subunit
+cgMLST V1	b1244 (oppB)	oligopeptide transporter subunit
+cgMLST V1	b1245 (oppC)	oligopeptide transporter subunit
+cgMLST V1	b1242 (ychE)	UPF0056 family inner membrane protein
+cgMLST V1	b1243 (oppA)	oligopeptide transporter subunit
+cgMLST V1	b1241 (adhE)	fused acetaldehyde-CoA dehydrogenase/iron-dependent alcohol dehydrogenase/pyruvate-formate lyase deactivase
+cgMLST V1	b1248 (yciU)	UPF0263 family protein
+cgMLST V1	b4036 (lamB)	maltose outer membrane porin (maltoporin)
+cgMLST V1	b4037 (malM)	maltose regulon periplasmic protein
+cgMLST V1	b4034 (malE)	maltose transporter subunit
+cgMLST V1	b4035 (malK)	"fused maltose transport subunit, ATP-binding component of ABC superfamily/regulatory protein"
+cgMLST V1	b4032 (malG)	maltose transporter subunit
+cgMLST V1	b4033 (malF)	maltose transporter subunit
+cgMLST V1	b4030 (psiE)	phosphate starvation inducible protein
+cgMLST V1	b4039 (ubiC)	chorismate--pyruvate lyase
