@@ -12,6 +12,8 @@ rule trim_paired_reads_with_trimmomatic:
         adapter_removal_param1 = config["adapter_removal_param1"],
         adapter_removal_param2 = config["adapter_removal_param2"],
         adapter_removal_param3 = config["adapter_removal_param3"],
+        sliding_window_size = config["sliding_window_size"],
+        sliding_window_quality_threshold = config["sliding_window_quality_threshold"],
     output:
         temp("samples/{sample}/reads/trimmed/R1_paired.fastq"),
         temp("samples/{sample}/reads/trimmed/R1_unpaired.fastq"),
@@ -22,7 +24,7 @@ rule trim_paired_reads_with_trimmomatic:
         logging_folder+"samples/{sample}/logs/trimmomatic.log"
     shell:
         """
-        trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:{params.conda_path}/${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} &> {log}
+        trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:{params.conda_path}/${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} SLIDINGWINDOW:{sliding_window_size}:{sliding_window_quality_threshold} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} &> {log}
         cp {log} {output[4]}
         """        
 
