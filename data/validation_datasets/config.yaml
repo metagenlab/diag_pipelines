@@ -8,6 +8,8 @@ minimum_spanning_tree_size: 10
 minimum_quality_base: 35
 minimum_read_length: 0
 adapter_file_name: NexteraPE-PE.fa
+sliding_window_size: 5
+sliding_window_quality_threshold: 20
 adapter_removal_param1: 3
 adapter_removal_param2: 25
 adapter_removal_param3: 6
