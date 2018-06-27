@@ -26,7 +26,7 @@ Available softwares
 *Mycobacterium tuberculosis* specific analyses
 --------------------------------------------
 
-If the value of ``species`` is ``Mycobacterium_tuberculosis``, specific variant markers of resistance can be searched by mapping to the genome of H37Rv, genotyping with GATK and annotating the resulting VCF. Different databases of markers can be searched from different sources of annotations
+If the value of ``species`` is ``Mycobacterium_tuberculosis``, specific variant markers of resistance can be searched by mapping to the genome of H37Rv, genotyping with GATK and annotating the resulting VCF. Different sources of annotation can be used to search markers:
 
 * `Walker et al. 2015 Lancet Infectious Diseases <https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(15)00062-6/abstract>`_
 * `the CARD database <https://card.mcmaster.ca/>`_
