@@ -40,8 +40,8 @@ rule merbe_bed_file:
         bed = "core_genomes/cgMLST/{spec}_unmerged.bed",
     output:
         bed_merged = "core_genomes/cgMLST/{spec}.bed",
-    script:
+    shell:
         """
-        bedtools merge {input[bed]} > {output[bed_merged]}
+        bedtools merge -i {input[bed]} > {output[bed_merged]}
         """
 
