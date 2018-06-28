@@ -11,7 +11,7 @@ rule annotate_with_prokka:
         "samples/{sample}/annotation/{sample}.gbk",
         "samples/{sample}/annotation/{sample}.ffn",
     log:
-        "samples/{sample}/annotation/spades/{sample}.log",
+        "samples/{sample}/annotation/spades/{sample}.txt",
     params:
         genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[0],
         spec = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[1]
@@ -36,24 +36,24 @@ rule create_blast_database_from_protein_sequences:
     conda:
         pipeline_path + "envs/blast.yml"
     input:
-        "samples/{sample}/annotation/{sample}.faa",
+        proteins = "samples/{sample}/annotation/{sample}.faa",
     output:
         "samples/{sample}/annotation/{sample}.faa.phr",
     shell:
         """
-        makeblastdb -dbtype prot -in {input[0]}
+        makeblastdb -dbtype prot -in {input[proteins]}
         """
 
 rule create_blast_database_from_contig_sequences:
     conda:
         pipeline_path + "envs/blast.yml"
     input:
-        "samples/{sample}/annotation/{sample}.fsa",
+        contigs = "samples/{sample}/annotation/{sample}.fsa",
     output:
         "samples/{sample}/annotation/{sample}.fsa.nhr",
     shell:
         """
-        makeblastdb -dbtype nucl -in {input[0]}
+        makeblastdb -dbtype nucl -in {input[contigs]}
         """
 
 rule remove_fasta_part_from_gff:
