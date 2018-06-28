@@ -11,7 +11,7 @@ rule correct_error_paired_reads_with_spades:
         R2_corrected = temp("samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz"),
         single_corrected = temp("samples/{sample}/reads/corrected/R_unpaired.00.0_0.cor.fastq.gz"),
     log:
-        logging_folder + "samples/{sample}/logs/spades_read_correction.txt"
+        logging_folder + "samples/{sample}/spades_read_correction.txt"
     shell:
          """
          spades.py --only-error-correction -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $(dirname $(dirname {output[0]})) --threads {threads} > {log} 
@@ -27,7 +27,7 @@ rule correct_error_single_reads_with_spades:
     output:
         single_corrected = temp("samples/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz")
     log:
-        logging_folder + "samples/{sample}/logs/spades_read_correction.txt"
+        logging_folder + "samples/{sample}/spades_read_correction.txt"
     shell:
          """
          spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log} 
