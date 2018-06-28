@@ -33,7 +33,7 @@ rule fetch_gene_entries_from_locus_tag:
         pipeline_path + "rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
 
 
-rule fetch_gene_entries_from_locus_tag:
+rule merbe_bed_file:
     conda:
         pipeline_path + "envs/bedtools.yml"
     input:
