@@ -42,6 +42,6 @@ rule merbe_bed_file:
         bed_merged = "core_genomes/cgMLST/{spec}.bed",
     shell:
         """
-        bedtools merge -i {input[bed]} > {output[bed_merged]}
+        bedtools merge -i {input[bed]} | sort -k2 -g > {output[bed_merged]}
         """
 
