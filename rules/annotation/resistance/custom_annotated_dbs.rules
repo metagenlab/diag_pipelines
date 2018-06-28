@@ -34,8 +34,8 @@ rule annotate_positions_from_genotyping:
     input:
         bed_gz_correct =  data_path + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
         bed_tbi_correct =  data_path  + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz.tbi", 
-        genotype = "samples/{sample}/resistance/{bwa_or_strigent}/{db}/snps_decomposed.g.vcf.gz",
-        genotype_tbi = "samples/{sample}/resistance/{bwa_or_strigent}/{db}/snps_decomposed.g.vcf.gz.tbi",
+        genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf.gz",
+        genotype_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf.gz.tbi",
     output:
         annotation = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/annotation.vcf",
         header = temp("samples/{sample}/resistance/{bwa_or_stringent}/{db}/header.txt"),
