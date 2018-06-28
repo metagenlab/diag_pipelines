@@ -2,11 +2,11 @@ rule keep_only_annotated_region:
     conda:
         pipeline_path + "envs/bcftools.yml"
     input:
-        genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz",
-        genotype_tbi = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps.g.vcf.gz.tbi",
+        genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/snps.g.vcf.gz",
+        genotype_tbi = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/snps.g.vcf.gz.tbi",
         bed_gz_correct = data_path + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
     output:
-        genotype = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf",
+        genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf",
     shell:
         """
         bcftools view --regions-file {input[bed_gz_correct]} {input[genotype]} > {output[genotype]}
@@ -16,13 +16,13 @@ rule decompose_multiallelic_positions_from_genotyping:
     conda:
         pipeline_path + "envs/vt.yml"
     input:
-        genotype = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf.gz",
-        genotype_tbi = "samples/{sample}/resistance/{db}/snps_region_filtered.g.vcf.gz.tbi",
+        genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf.gz",
+        genotype_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf.gz.tbi",
         reference = data_path + "references/" + reference_assembly_for_resistance[species] + "/genome_fasta.fasta",
     output:
-        genotype_decomposed = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf",
+        genotype_decomposed = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf",
     log:
-        logging_folder + "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/bwa/snps_decomposed.g.vcf",
+        logging_folder + "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/snps_decomposed.g.vcf",
     shell:
         """
         vt decompose -s {input[genotype]} | vt normalize -r {input[reference]} -o {output[genotype_decomposed]} - &> {log}
@@ -34,11 +34,11 @@ rule annotate_positions_from_genotyping:
     input:
         bed_gz_correct =  data_path + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
         bed_tbi_correct =  data_path  + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz.tbi", 
-        genotype = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf.gz",
-        genotype_tbi = "samples/{sample}/resistance/{db}/snps_decomposed.g.vcf.gz.tbi",
+        genotype = "samples/{sample}/resistance/{bwa_or_strigent}/{db}/snps_decomposed.g.vcf.gz",
+        genotype_tbi = "samples/{sample}/resistance/{bwa_or_strigent}/{db}/snps_decomposed.g.vcf.gz.tbi",
     output:
-        annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
-        header = temp("samples/{sample}/resistance/{db}/header.txt"),
+        annotation = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/annotation.vcf",
+        header = temp("samples/{sample}/resistance/{bwa_or_stringent}/{db}/header.txt"),
     shell:
         """
         echo '##INFO=<ID=GENE,Number=1,Type=String,Description="Gene">' >> {output[header]}
@@ -53,9 +53,9 @@ rule extract_mutated_codons_or_nucleotides:
     conda:
         pipeline_path + "envs/bcftools.yml"
     input:
-        annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
+        annotation = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/annotation.vcf",
     output:
-        genotype = "samples/{sample}/resistance/{db}/position_genotypes.txt",
+        genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/position_genotypes.txt",
     shell:
         """
         bcftools view --include 'FORMAT/AD[0:1]/FORMAT/DP>0.10' {input[annotation]} | bcftools query --format "%CHROM\\t%POS\\t[%INFO/GENE]\\t[%INFO/POSITION_IN_GENE]\\t[%INFO/STRAND]\\n" | while read chrom pos gene position strand
@@ -63,15 +63,16 @@ rule extract_mutated_codons_or_nucleotides:
             gt=$(bcftools view --include "INFO/GENE='${{gene}}' && INFO/POSITION_IN_GENE=${{position}}" {input[annotation]} | bcftools view --exclude "GT='.'" | bcftools query --format "[%TGT]")
             echo ${{chrom}} ${{pos}} ${{gt}} ${{strand}} | sed "s/ /\\t/g" >> {output[genotype]}
         done
+        touch {output[genotype]}
         """
         
 rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
-        genotype = "samples/{sample}/resistance/{db}/position_genotypes.txt",
+        genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/position_genotypes.txt",
     output:
-        mutation = "samples/{sample}/resistance/{db}/mutations.bed",
+        mutation = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.bed",
     script:
         "scripts/convert_position_to_mutation.py"
         
@@ -80,12 +81,12 @@ rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synony
     conda:
         pipeline_path + "envs/bcftools.yml"
     input:
-        mutation_gz = "samples/{sample}/resistance/{db}/mutations.bed.gz",
-        mutation_tbi = "samples/{sample}/resistance/{db}/mutations.bed.gz.tbi",
-        annotation = "samples/{sample}/resistance/{db}/annotation.vcf",
+        mutation_gz = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.bed.gz",
+        mutation_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.bed.gz.tbi",
+        annotation = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/annotation.vcf",
     output:
-        header = "samples/{sample}/resistance/{db}/header_mutations.txt",
-        mutation = "samples/{sample}/resistance/{db}/mutations.vcf",
+        header = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/header_mutations.txt",
+        mutation = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.vcf",
     shell:
         """
         echo '##INFO=<ID=MUTATED_AA_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be amino acid or nucleotide)">' >> {output[header]}
