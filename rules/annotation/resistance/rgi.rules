@@ -24,18 +24,47 @@ rule extract_resistance_from_ontology:
         xlsx = "samples/{sample}/resistance/rgi_ontology.xlsx",
     script:
         "scripts/fetch_ontology_rgi.py"
-    
-    
+
+rule extract_resistance_mechanism_from_ontology:
+    params:
+        ontology_aro = ontology_file_aro,
+        ontology_mo = ontology_file_mo,
+        ontology_ro = ontology_file_ro,
+        aro_categories = card_categories_file,
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+    input:
+        rgi = "samples/{sample}/resistance/rgi.tsv"
+    output:
+        tsv = "samples/{sample}/resistance/rgi_mechanism.tsv",
+        xlsx = "samples/{sample}/resistance/rgi_mechanism.xlsx",
+    script:
+        "scripts/rgi_get_resistance_mechanism.py"
+
 rule generate_rgi_tsv_file_from_json_file:
     conda:
         pipeline_path + "envs/rgi.yml"
     input:
         "samples/{sample}/resistance/rgi.json"
     output:
-        "samples/{sample}/resistance/rgi.tsv"
+        "samples/{sample}/resistance/rgi.tsv",
+
     shell:
         """
         rgi_jsontab -v ON -i {input[0]} -o {output[0]}
         mv {output[0]}.txt {output[0]}
         """
 
+rule plot_rgi:
+    conda:
+        pipeline_path + "envs/ggplot2-gridextra.yml"
+    input:
+        rgi_files=expand("samples/{sample}/resistance/rgi.tsv", sample=read_naming.keys()),
+        rgi_mechanism_files=expand("samples/{sample}/resistance/rgi_mechanism.tsv", sample=read_naming.keys()),
+    params:
+        species = lambda wildcards: all_samples.loc[read_naming.keys(), "ScientificName"],
+    output:
+        expand("resistance/{species}.pdf", species=list(set(all_samples.loc[read_naming.keys(), "ScientificName"]))),
+        rgi_plot="resistance/rgi_overview.pdf",
+    script:
+        "scripts/plot_gene_presence_heatmap.R"
