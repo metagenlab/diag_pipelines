@@ -34,14 +34,15 @@ for (i in 1:nrow(sample_table)){
 
     dataset<-rbind(dataset, temp_dataset)
     rm(temp_dataset)
-
   }
 }
 
+# sort factors
 u <- unique(dataset$Best_Hit_ARO)
 u_sort <- u[rev(order(u))]
 dataset$Best_Hit_ARO <- factor(dataset$Best_Hit_ARO, levels=u_sort)
 
+# overview plot
 pdf(snakemake@output[["rgi_plot"]], height=25,width=0.5*length(rgi_files))
 p <- ggplot(data = dataset, aes(x = sample, y = Best_Hit_ARO)) + geom_raster(aes(fill = CUT_OFF))
 p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
@@ -50,23 +51,20 @@ dev.off()
 
 ###
 # produce one plot per species
-###
-
 nr_species <- unique(sample_table$species)
-if (length(nr_species) > 1){
-    for (species in nr_species){
-        sub_dataset <- dataset[dataset$species==species,]
-        sub_dataset$Best_Hit_ARO <- as.character(sub_dataset$Best_Hit_ARO)
-        u <- unique(sub_dataset$Best_Hit_ARO)
-        u_sort <- u[rev(order(u))]
-        sub_dataset$Best_Hit_ARO <- factor(sub_dataset$Best_Hit_ARO, levels=u_sort)
-        w <- length(unique(sub_dataset$species))*6
-        h <- length(unique(sub_dataset$Best_Hit_ARO))/4
-        pdf(paste('resistance/', species, '.pdf', sep=''), width=w, height=h)
-        print(species)
+
+for (species in nr_species){
+    sub_dataset <- dataset[dataset$species==species,]
+    sub_dataset$Best_Hit_ARO <- as.character(sub_dataset$Best_Hit_ARO)
+    u <- unique(sub_dataset$Best_Hit_ARO)
+    u_sort <- u[rev(order(u))]
+    sub_dataset$Best_Hit_ARO <- factor(sub_dataset$Best_Hit_ARO, levels=u_sort)
+
+    w <- length(unique(sub_dataset$species))*6
+    h <- length(unique(sub_dataset$Best_Hit_ARO))/4
+    pdf(paste('resistance/', species, '.pdf', sep=''), width=w, height=h)
         p <- ggplot(data = sub_dataset, aes(x = sample, y = Best_Hit_ARO)) + geom_tile(aes(fill = CUT_OFF), height = 0.9, width=0.9)
         p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-        print(p + coord_fixed(ratio=1) + facet_grid(. ~ mechanism, switch = "y")) + theme(strip.text.x = element_text(size=8, angle=75))
-        dev.off()
-    }
+        print(p + coord_fixed(ratio=1)) #+ theme(strip.text.x = element_text(size=8, angle=75))
+    dev.off()
 }
