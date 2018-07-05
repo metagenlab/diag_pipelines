@@ -21,6 +21,9 @@ rule plot_virulence_ete_tree_s_aureus:
         vf_table=config["virulence_factors"],
         spa_typing='typing/spa/summary.tsv',
         mlst='typing/mlst/summary.tsv',
+        resistance_tables = expand("samples/{sample}/resistance/rgi.tsv", sample = read_naming.keys()),
+    params:
+        samples = list(read_naming.keys()),
     output:
         "virulence/virulence_staph.svg",
     script:
