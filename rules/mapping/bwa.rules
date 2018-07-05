@@ -122,6 +122,6 @@ rule remove_duplicates_from_mapping:
          logging_folder + "samples/{sample}/mapping/{mapping_method}/{ref}/markduplicates.txt",
     shell:
         """
-        gatk-launch MarkDuplicates --REMOVE_DUPLICATES true -I {input[bam]} -O {output[0]} -M {log[0]} &> {log[1]}
+        gatk-launch --java-options "-Xmx10G" MarkDuplicates --REMOVE_DUPLICATES true -I {input[bam]} -O {output[0]} -M {log[0]} &> {log[1]}
         """
 

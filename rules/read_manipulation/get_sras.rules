@@ -7,6 +7,7 @@ rule download_sra_single:
         logging_folder + "samples/{sample}/sras/dump.txt"
     shell:
         """
+        vdb-config --restore-defaults
         fastq-dump --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
         cache_dir=$(vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g")
         if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra ]
@@ -30,6 +31,7 @@ rule download_sra_paired:
         logging_folder + "samples/{sample}/sras/dump.txt"
     shell:
         """
+        vdb-config --restore-defaults
         fastq-dump --split-files --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
         cache_dir=$(vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g")
         if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra ]

@@ -27,8 +27,21 @@ rule fetch_gene_entries_from_locus_tag:
         gbk = lambda wildcards : "references/" + str(enterobase.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_gbwithparts.gbwithparts",
         locus_list = "core_genomes/cgMLST/{spec}/genes.txt",
     output:
-        bed = "core_genomes/cgMLST/{spec}.bed",
+        bed = "core_genomes/cgMLST/{spec}_unmerged.bed",
         problematic = "core_genomes/cgMLST/{spec}/enterobase_missing.txt",
     script:
         pipeline_path + "rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
+
+
+rule merbe_bed_file:
+    conda:
+        pipeline_path + "envs/bedtools.yml"
+    input:
+        bed = "core_genomes/cgMLST/{spec}_unmerged.bed",
+    output:
+        bed_merged = "core_genomes/cgMLST/{spec}.bed",
+    shell:
+        """
+        bedtools merge -i {input[bed]} | sort -k2 -g > {output[bed_merged]}
+        """
 
