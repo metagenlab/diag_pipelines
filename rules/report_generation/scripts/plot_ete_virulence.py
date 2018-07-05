@@ -5,7 +5,7 @@ import matplotlib.cm as cm
 import matplotlib as mpl
 from matplotlib.colors import rgb2hex
 
-norm = mpl.colors.Normalize(vmin=80, vmax=100)
+norm = mpl.colors.Normalize(vmin=float(snakemake.config['virulence_percentage_identity_cutoff']), vmax=100)
 cmap_red = cm.OrRd
 cmap_blue = cm.Blues
 cmap_green = cm.Greens
