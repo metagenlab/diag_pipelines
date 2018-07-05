@@ -7,4 +7,6 @@ include:
 include:
     pipeline_path + "rules/annotation/virulence.rules"
 
+include:
+    pipeline_path + "rules/report_generation/ete_figures.rules"
 

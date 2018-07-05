@@ -1,0 +1,27 @@
+
+rule plot_virulence_ete_tree:
+    conda:
+        pipeline_path + "envs/pandas-ete2.yml",
+    input:
+        nr_blast_results=expand("samples/{sample}/virulence/results_blast_not_redundant.tsv", sample = read_naming.keys()),
+        best_tree = "phylogeny/gatk_gvcfs/cgMLST/bwa/normal_run/RAxML_bestTree.nw",
+        vf_table=config["virulence_factors"]
+    output:
+        "virulence/virulence.svg",
+    script:
+        "scripts/plot_ete_virulence.py"
+
+
+rule plot_virulence_ete_tree_s_aureus:
+    conda:
+        pipeline_path + "envs/pandas-ete2.yml",
+    input:
+        nr_blast_results=expand("samples/{sample}/virulence/results_blast_not_redundant.tsv", sample = read_naming.keys()),
+        best_tree = "phylogeny/gatk_gvcfs/cgMLST/bwa/normal_run/RAxML_bestTree.nw",
+        vf_table=config["virulence_factors"],
+        spa_typing='typing/spa/summary.tsv',
+        mlst='typing/mlst/summary.tsv',
+    output:
+        "virulence/virulence_staph.svg",
+    script:
+        "scripts/plot_ete_virulence.py"
