@@ -69,7 +69,10 @@ include:
 
 include:
     pipeline_path + "rules/typing/mlst.rules"
- 
+
+include:
+    pipeline_path + "rules/typing/saureus_spa.rules"
+
 include:
     pipeline_path + "rules/phylogeny/raxml.rules"
 

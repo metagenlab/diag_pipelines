@@ -1,0 +1,26 @@
+
+{
+    "__default__" :
+    {
+        "queue"     : "normal",
+        "nCPUs"     : "1",
+        "memory_R"  : "rusage[mem=2000]",
+        "memory_M"  : "2000000",
+        "name"      : "JOBNAME.{rule}.{wildcards}",
+        "output"    : "logs/cluster/{rule}.{wildcards}.out",
+        "error"     : "logs/cluster/{rule}.{wildcards}.err"
+    },
+
+
+    "assemble_genome_corrected_paired_reads_with_spades" :
+    {
+        "memory_R"    : "rusage[mem=16000]",
+        "memory_M"    : "16000000",
+    },
+
+    "correct_error_paired_reads_with_spades" :
+    {
+        "memory_R"    : "rusage[mem=16000]",
+        "memory_M"    : "16000000",
+    }
+}
