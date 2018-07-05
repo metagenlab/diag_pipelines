@@ -22,5 +22,11 @@
     {
         "memory_R"    : "rusage[mem=16000]",
         "memory_M"    : "16000000",
+    },
+
+    "remove_duplicates_from_mapping" :
+    {
+        "memory_R"    : "rusage[mem=10000]",
+        "memory_M"    : "10000000",
     }
 }
