@@ -31,7 +31,7 @@
     {
         "memory_R"    : "rusage[mem=10000]",
         "memory_M"    : "10000000",
-        "n_cores"     :  4
+        "n_cores"     :  1
 
     },
 
