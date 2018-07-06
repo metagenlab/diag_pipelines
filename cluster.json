@@ -8,7 +8,7 @@
         "memory_M"  : "2000000",
         "name"      : "JOBNAME.{rule}.{wildcards}",
         "output"    : "logs/cluster/{rule}.{wildcards}.out",
-        "error"     : "logs/cluster/{rule}.{wildcards}.err"
+        "error"     : "logs/cluster/{rule}.{wildcards}.err",
         "hosts"     :  "span[hosts=1]",
         "n_cores"   :  1
     },
