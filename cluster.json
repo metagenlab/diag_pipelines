@@ -9,24 +9,35 @@
         "name"      : "JOBNAME.{rule}.{wildcards}",
         "output"    : "logs/cluster/{rule}.{wildcards}.out",
         "error"     : "logs/cluster/{rule}.{wildcards}.err"
+        "hosts"     :  "span[hosts=1]",
+        "n_cores"   :  1,
     },
-
 
     "assemble_genome_corrected_paired_reads_with_spades" :
     {
         "memory_R"    : "rusage[mem=16000]",
         "memory_M"    : "16000000",
+        "n_cores"     :  4,
     },
 
     "correct_error_paired_reads_with_spades" :
     {
         "memory_R"    : "rusage[mem=16000]",
         "memory_M"    : "16000000",
+        "n_cores"     :  4,
     },
 
     "remove_duplicates_from_mapping" :
     {
         "memory_R"    : "rusage[mem=10000]",
         "memory_M"    : "10000000",
-    }
+        "n_cores"     :  4,
+
+    },
+
+    "genotype_with_freebayes_on_all_samples" :
+    {
+        "n_cores"     :  4,
+    },
+
 }
