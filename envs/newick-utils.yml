@@ -3,3 +3,4 @@ channels:
  - conda-forge
 dependencies:
  - newick_utils = 1.6=1
+ - libiconv = 1.15=h470a237_1
