@@ -26,5 +26,6 @@ rule plot_virulence_ete_tree_s_aureus:
         samples = list(read_naming.keys()),
     output:
         "virulence/virulence_staph.svg",
+        "virulence/virulence_staph.tab",
     script:
         "scripts/plot_ete_virulence.py"

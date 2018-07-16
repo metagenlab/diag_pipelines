@@ -24,7 +24,7 @@ leaf2spa_typing= pandas.read_csv(snakemake.input["spa_typing"],
 
 leaf2mlst= pandas.read_csv(snakemake.input["mlst"],
                            delimiter='\t',
-                           names=["leaf","spacies","mlst","1","2","3","4","5","6","7"]).set_index("leaf").to_dict()["mlst"]
+                           names=["leaf","species","mlst","1","2","3","4","5","6","7"]).set_index("leaf").to_dict()["mlst"]
 
 vf_table = pandas.read_csv(snakemake.input["vf_table"], delimiter='\t')
 vf_list = vf_table["gene"] + '_' + vf_table["uniprot_accession"]
@@ -53,6 +53,42 @@ def get_spaced_colors(n):
     colors = [hex(I)[2:].zfill(6) for I in range(0, max_value, interval)]
 
     return ['#%02x%02x%02x' % (int(i[:2], 16), int(i[2:4], 16), int(i[4:], 16)) for i in colors]
+
+
+def write_table(tree,
+                leaf_id2protein_id2identity,
+                leaf_id2mlst,
+                leaf_id2spa,
+                leaf_id2meca,
+                out_name,
+                ordered_queries):
+    t1 = Tree(tree)
+    with open(out_name, 'w') as f:
+        for lf in t1.iter_leaves():
+            try:
+                mlst = leaf_id2mlst[lf.name]
+            except:
+                mlst = '-'
+            try:
+                spa = leaf_id2spa[lf.name]
+            except:
+                spa = '-'
+            try:
+                meca = leaf_id2meca[lf.name]
+            except:
+                meca = '-'
+            VFs=''
+            for VF in ordered_queries:
+               try:
+                   VFs+='\t%s' % (leaf_id2protein_id2identity[lf.name][VF])
+               except:
+                   VFs += '\t-'
+            f.write("%s\t%s\t%s\t%s\t%s\n" % (lf.name,
+                                            mlst,
+                                            spa,
+                                            meca,
+                                            VFs))
+
 
 
 
@@ -282,6 +318,16 @@ t1, tss = plot_ete_tree(best_tree,
               leaf_id2spa=leaf2spa_typing,
               leaf_id2mlst=leaf2mlst,
               leaf_id2meca=leaf_id2meca)
+
+output_tab = snakemake.output[1]
+write_table(best_tree,
+            leaf_id2protein_id2identity,
+            leaf_id2mlst=leaf2mlst,
+            leaf_id2spa=leaf2spa_typing,
+            leaf_id2meca=leaf_id2meca,
+            out_name=output_tab,
+            ordered_queries=vf_list)
+
 
 output_svg = snakemake.output[0]
 t1.render(output_svg, dpi=1000, h=400, tree_style=tss)
