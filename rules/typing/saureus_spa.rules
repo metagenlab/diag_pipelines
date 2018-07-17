@@ -1,6 +1,6 @@
 rule determine_spa:
     input:
-        fasta = "samples/{sample}/annotation/{sample}.fsa",
+        fasta = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta",
         spa_repeats = pipeline_path + "data/spa/sparepeats.fasta",
         spa_types = pipeline_path + "data/spa/spatypes.txt",
     output:
