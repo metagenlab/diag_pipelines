@@ -52,7 +52,7 @@ rule assemble_genome_corrected_paired_reads_with_spades:
         log = "samples/{sample}/assembly/spades/spades.log",
     shell:
         """
-        spades.py --only-assembler -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $(dirname {output[contigs]}) --threads {threads} > /dev/null
+        spades.py --only-assembler -k 21,33,55,77,99,127 -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $(dirname {output[contigs]}) --threads {threads} > /dev/null
         """
 
 
