@@ -1,4 +1,6 @@
 rule search_resistance_with_rgi:
+    threads:
+        4
     conda:
         pipeline_path + "envs/rgi.yml"
     input:
@@ -7,7 +9,7 @@ rule search_resistance_with_rgi:
         "samples/{sample}/resistance/rgi.json"
     shell:
         """
-        rgi -t contig -i {input[0]} -o $(dirname {output[0]})/rgi
+        rgi -t contig -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi
         """
 
 rule extract_resistance_from_ontology:
