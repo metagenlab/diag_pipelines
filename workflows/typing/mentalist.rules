@@ -1,0 +1,7 @@
+
+pipeline_path = '../../'
+
+include:
+    "../../rules/typing/mentalist.rules"
+include:
+    "../logging.rules"

@@ -1,0 +1,5 @@
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - mentalist = 0.2.3=h77ef58a_0
