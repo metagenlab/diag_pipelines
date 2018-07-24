@@ -1,0 +1,12 @@
+rule get_mentalist_mlst_scheme:
+    conda:
+        "../../envs/mentalist.yml"
+    params:
+        species_name=lambda wildcards, output: output["database"].split('/')[-2].replace("_", " "),
+    output:
+        database="references/mentalist/{species}/mlst.db",
+        profiles="references/mentalist/{species}/mlst.db.profile",
+    shell:
+        """
+        mentalist download_pubmlst -k 31 -o $(dirname {output.profiles})/mlst_fasta_files/ -s "{params.species_name}" --db {output.database}
+        """
