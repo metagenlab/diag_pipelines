@@ -11,6 +11,7 @@ adapter_removal_param1: 3
 adapter_removal_param2: 25
 adapter_removal_param3: 6
 cov_cutoff: 5
+spades_kmer_sizes: 21,33,55,77,99,111,127
 #resistance and typing
 species: Mycobacterium_tuberculosis
 #typing
