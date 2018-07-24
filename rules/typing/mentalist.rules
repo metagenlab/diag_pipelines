@@ -21,11 +21,9 @@ rule determine_mlst_from_trimmed_reads:
         "samples/{sample}/typing/mentalist.txt",
     params:
         species=lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].replace(" ", "_"),
-    log:
-        logging_folder+"samples/{sample}/logs/typing/mentalist/log.txt"
     shell:
         """
-        mentalist call -o {output[0]} --db references/mentalist/{params.species}/mlst.db -1 {input.fastq1} -2 {input.fastq2} >> {log[0]}
+        mentalist call -o {output[0]} --db references/mentalist/{params.species}/mlst.db -1 {input.fastq1} -2 {input.fastq2} 
         """
 
 rule merge_mentalist_from_all_samples:
