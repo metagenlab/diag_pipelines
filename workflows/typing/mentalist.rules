@@ -1,5 +1,0 @@
-
-pipeline_path = '../../'
-
-include:
-    "../../rules/typing/mentalist.rules"
