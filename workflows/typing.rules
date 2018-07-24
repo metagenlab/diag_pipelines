@@ -72,6 +72,9 @@ include:
     pipeline_path + "rules/typing/mlst.rules"
 
 include:
+    pipeline_path + "rules/typing/mentalist.rules"
+
+include:
     pipeline_path + "rules/typing/saureus_spa.rules"
 
 include:
