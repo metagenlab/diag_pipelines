@@ -1,5 +1,5 @@
 format-version: 1.2
-date: 10:10:2017 15:04
+date: 28:06:2018 09:13
 saved-by: CARD
 auto-generated-by: cv2obo
 default-namespace: model_ontology
@@ -51,7 +51,7 @@ is_a: MO:0000001 ! detection model or meta-model
 id: MO:0000007
 name: gene order
 namespace: model_ontology
-def: "The gene order model parameter describes the relative order (5'->3') of a set of genes or other genetic elements on a chromosome, a plasmid or within an operon. Antibiotic resistance is only conferred when the detected set of genes appears in the indicated order; otherwise, no resistance phenotype is produced. This parameter is part of the gene cluster meta-model, and may be attached to detection models with the following notation: [[cvterm_id 1],[cvterm_id 2],...,[cvterm_id n]], where the cvterm_id denotes a gene-associated AMR term and an attached model id. This parameter currently (August 2017) lacks an algorithm for detection." []
+def: "The gene order model parameter describes the relative order of a set of genes or other genetic elements on a chromosome, a plasmid or within an operon. Antibiotic resistance is only conferred when the detected set of genes appears in the indicated order; otherwise, no resistance phenotype is produced. This parameter is part of the gene cluster meta-model, and may be attached to detection models with the following notation: [[cvterm_id 1],[cvterm_id 2],...,[cvterm_id n]], where the cvterm_id denotes a gene-associated AMR term and an attached model id. This parameter currently (August 2017) lacks an algorithm for detection." []
 is_a: MO:0000038 ! detection parameter
 relationship: part_of MO:0000008 ! gene cluster meta-model
 
@@ -179,7 +179,7 @@ relationship: part_of MO:0000032 ! protein overexpression model
 id: MO:0000031
 name: gene type
 namespace: model_ontology
-def: "A parameter to describe the general type of genes detected by multiple detection models. The parameter is defined by cvterm_id and the gene type of one component gene separated by a comma. For example, <39353,regulatory> would indicate that the gene for VanRA codes for a regulatory protein." []
+def: "A parameter to describe the general type of genes detected by multiple detection models. The parameter is defined by cvterm_id and the gene type of one component gene separated by a comma. For example, 39353,regulatory would indicate that the gene for VanRA codes for a regulatory protein." []
 is_a: MO:0000038 ! detection parameter
 relationship: part_of MO:0000008 ! gene cluster meta-model
 

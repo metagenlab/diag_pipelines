@@ -34,7 +34,6 @@ def get_all_path(obo_list, all_obo):
 
 def search_participating_mechanism(obo_term, mechanism_list):
     for relation in obo_term.relations:
-        print ("relation level 1",relation, obo_term.relations[relation])
         if relation.obo_name=="participates_in":
             if obo_term.relations[relation][0].id in mechanism_list:
                 return obo_term.relations[relation][0]
@@ -45,15 +44,13 @@ def search_participating_mechanism(obo_term, mechanism_list):
                 except IndexError:
                     continue
         elif relation.obo_name in ["regulates"]:
-            # need a fix
-            print ('Regulator')
+            # classify as regulator
             relation.name = 'regulator'
             return (relation)
 
 term_nr_list = []
 for index, row in rgi_results.iterrows():
     gene = row["Best_Hit_ARO"]
-
     for terms in row["ARO"].split(","):
         term = aro[terms.strip()]
         for i in term.rparents():

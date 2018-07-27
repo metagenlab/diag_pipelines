@@ -1,5 +1,5 @@
 format-version: 1.2
-date: 10:10:2017 15:04
+date: 28:06:2018 09:13
 saved-by: CARD
 auto-generated-by: cv2obo
 default-namespace: relationship_ontology
@@ -9,7 +9,7 @@ ontology: relationship_ontology
 id: RO:is_a
 name: is_a
 namespace: relationship_ontology
-def: "(paraphrased) An axiomatic relationship ontology term in which the subject is placed into a higher order classification." []
+def: "An axiomatic relationship ontology term in which the subject is placed into a higher order classification (paraphrased from Relationship Ontology)." []
 is_a: RO:relationship ! relationship
 synonym: "is_subtype_of" EXACT []
 
@@ -24,7 +24,7 @@ is_a: RO:relationship ! relationship
 id: RO:part_of
 name: part_of
 namespace: relationship_ontology
-def: "(paraphrased) A relationship ontology term in which the subject is but part of the object." []
+def: "A relationship ontology term in which the subject is but part of the object (paraphrased from Relationship Ontology)." []
 is_a: RO:relationship ! relationship
 
 [Term]
@@ -85,14 +85,14 @@ is_a: RO:relationship ! relationship
 id: RO:has_part
 name: has_part
 namespace: relationship_ontology
-def: "(paraphrased)  A core relation that holds between a whole and its part. The subject has_part object." []
+def: "A core relation that holds between a whole and its part. The subject has_part object. (paraphrased from Relationship Ontology)" []
 is_a: RO:relationship ! relationship
 
 [Term]
 id: RO:derives_from
 name: derives_from
 namespace: relationship_ontology
-def: "(paraphrased) A relationship ontology term in which the subject has its origins from the object." []
+def: "A relationship ontology term in which the subject has its origins from the object (paraphrased from Relationship Ontology)." []
 is_a: RO:relationship ! relationship
 synonym: "derived_from" EXACT []
 
