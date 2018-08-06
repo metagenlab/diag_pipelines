@@ -2,7 +2,7 @@ rule get_mentalist_mlst_scheme:
     conda:
         "../../envs/mentalist.yml"
     params:
-        species_name=lambda wildcards, output: output["database"].split('/')[-2].replace("_", " "),
+        species_name=lambda wildcards: str(wildcards.species).replace("_", " "),
     output:
         database="references/mentalist/{species}/mlst.db",
         profiles="references/mentalist/{species}/mlst.db.profile",
