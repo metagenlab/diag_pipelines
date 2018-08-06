@@ -90,7 +90,7 @@ for index, row in rgi_results.iterrows():
                         anti_class = get_drug_class(antibiotic, obo2drug_class)
                         if anti_class is not None:
                             anti_class = anti_class.replace("antibiotic", "")
-                        ontology_results.append(["rgi", gene, "variant model", ref+str(pos)+mut, anti, anti_class, mechanism.name, fam])
+                        ontology_results.append([term.id, term.name, "rgi", gene, "variant model", ref+str(pos)+mut, anti, anti_class, mechanism.name, fam])
 
     elif row["Model_type"] == "protein homolog model":
         hit_list = []
@@ -121,7 +121,7 @@ for index, row in rgi_results.iterrows():
                                 break
                         if parent_of:
                             continue
-                        ontology_results.append(["rgi", gene, "homology model", "", anti, anti_class, mechanism.name, fam])
+                        ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism.name, fam])
 
             for parent in term.rparents():
                 for child in parent.relations:
@@ -142,11 +142,11 @@ for index, row in rgi_results.iterrows():
                                 continue
                             if anti_class is not None:
                                 anti_class = anti_class.replace("antibiotic", "")
-                            ontology_results.append(["rgi", gene, "homology model", "", anti, anti_class, mechanism.name, fam])
+                            ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism.name, fam])
                             hit_list.append(parent)
 
 
-df = pandas.DataFrame(ontology_results, columns= ["Software", "Gene", "Resistance Type", "Variant", "Antibiotic resistance prediction", "Class", "Mechanism", "AMR family"])
+df = pandas.DataFrame(ontology_results, columns= ["ARO","Name", "Software", "Gene", "Resistance Type", "Variant", "Antibiotic resistance prediction", "Class", "Mechanism", "AMR family"])
 
 writer = pandas.ExcelWriter(snakemake.output["xlsx"])
 df.drop_duplicates().to_excel(writer, snakemake.wildcards["sample"], index=False)
