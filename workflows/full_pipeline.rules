@@ -5,6 +5,6 @@ include:
     "virulence.rules"
 
 rule all:
-    output:
+    input:
         "quality/multiqc/assembly/multiqc_report.html",
         "resistance/rgi_summary.xlsx"
