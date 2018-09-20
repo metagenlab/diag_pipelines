@@ -3,3 +3,8 @@ include:
 
 include:
     "virulence.rules"
+
+rule all:
+    output:
+        "quality/multiqc/assembly/multiqc_report.html",
+        "resistance/rgi_summary.xlsx"
