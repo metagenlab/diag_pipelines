@@ -6,7 +6,7 @@ rule compute_phylogeny_with_raxml:
     output:
         best_tree="phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw"
     log:
-        logging_folder+"phylogeny/RAxML_log.{core_genome_or_full_genome}"
+        logging_folder+"phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/RAxML_log.{core_genome_or_full_genome}"
     shell:
         """
         if [ -d $(dirname {output[best_tree]}) ];
@@ -26,7 +26,7 @@ rule compute_phylogeny_bootstraps_with_raxml:
     output:
         bootstrap = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw"
     log:
-        logging_folder+"phylogeny/RAxML_log.{core_genome_or_full_genome}_boot"
+        logging_folder+"phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/RAxML_log.{core_genome_or_full_genome}_boot"
     shell:
         """
         if [ -d $(dirname {output[bootstrap]}) ];

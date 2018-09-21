@@ -26,7 +26,7 @@ rule create_multiqc_report_for_mapping:
     output:
         "quality/multiqc/mapping_to_{ref}/{mapping_method}/multiqc_report.html"
     log:
-        logging_folder + "logs/quality/multiqc/mapping_to_{ref}.txt"
+        logging_folder + "logs/quality/multiqc/{mapping_method}/mapping_to_{ref}.txt"
     shell:
         """
         multiqc -c {params.configfile} -f -o $(dirname {output[0]}) $(dirname {input[mapping]}) &> {log[0]}

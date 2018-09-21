@@ -25,7 +25,7 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
         gvcf = temp("samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf"),
         gvcf_index = temp("samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf.idx"),
     log:
-        logging_folder + "samples/{sample}/snps/gatk/haplotypecaller_gvcf.txt",
+        logging_folder + "samples/{sample}/snps/gatk/{mapping_method}/mapping_to_{ref}_haplotypecaller_gvcf.txt",
     shell:
         """
         gatk-launch HaplotypeCaller --sample-ploidy 1 --output {output[gvcf]} --input {input[bam]} --reference {input[ref]} -ERC BP_RESOLUTION &> {log[0]}

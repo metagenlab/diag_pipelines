@@ -12,7 +12,7 @@ rule genotype_with_freebayes_on_all_samples:
     output:
         vcf="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf"
     log:
-        logging_folder+"freebayes_joint_genotyping/all_samples.txt"
+        logging_folder+"freebayes_joint_genotyping/{mapping_method}/mapping_to_{ref}_all_samples.txt"
     shell:
         """
         freebayes-parallel <(fasta_generate_regions.py {input[ref_fai]} 100000) {threads} --ploidy 1 --min-base-quality 20 --genotype-qualities --fasta-reference {input[ref]} --haplotype-length -1 {input[bams]}  > {output[vcf]} 2> {log}
