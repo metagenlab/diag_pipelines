@@ -25,6 +25,9 @@ leaf2spa_typing= pandas.read_csv(snakemake.input["spa_typing"],
 leaf2mlst= pandas.read_csv(snakemake.input["mlst"],
                            delimiter='\t',
                            names=["leaf","species","mlst","1","2","3","4","5","6","7"]).set_index("leaf").to_dict()["mlst"]
+print(snakemake.input["mlst"])
+print('mlst')
+print(leaf2mlst)
 
 vf_table = pandas.read_csv(snakemake.input["vf_table"], delimiter='\t')
 vf_list = vf_table["gene"] + '_' + vf_table["uniprot_accession"]

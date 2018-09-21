@@ -2,12 +2,12 @@ rule determine_mlst:
     conda:
         pipeline_path + "envs/mlst.yml"
     input:
-        fasta = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta",
+        fasta = "samples/{sample}/annotation/{sample}.fna",
     output:
         mlst = "samples/{sample}/typing/mlst.txt"
     shell:
         """
-        mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
+        mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fna//"  > {output[0]}
         """
 
         
@@ -32,7 +32,7 @@ rule determine_mlst_reference_genome:
         "references/{ref}/mlst.tsv"
     shell:
         """
-        mlst --quiet {input[genome]}  | sed "s/.*\///" | sed "s/_genome\.fasta//" > {output[0]}
+        mlst --quiet {input[genome]}  | sed "s/.*\///" | sed "s/\.fna//" > {output[0]}
         """
 
 rule generate_xlsx_file_from_mlst_results:
