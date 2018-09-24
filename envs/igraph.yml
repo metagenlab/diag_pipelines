@@ -4,3 +4,4 @@ channels:
 dependencies:
  - r-igraph = 1.1.2=r3.4.1_0
  - r-svglite = 1.2.1=r3.4.1_0
+ - r-networkd3 = 0.4= r3.4.1_0

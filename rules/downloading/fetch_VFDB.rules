@@ -1,0 +1,55 @@
+
+
+rule download_VFDB_fasta:
+    output:
+        "references/virulence/VFDB_setA_pro.fas.gz",
+    shell:
+        """
+        curl http://www.mgc.ac.cn/VFs/Down/VFDB_setA_pro.fas.gz -o {output[0]}
+        """
+
+rule extract_VFDB_fasta:
+    input:
+        "references/virulence/VFDB_setA_pro.fas.gz",
+    output:
+        "references/virulence/VFDB_setA_pro.fas",
+    shell:
+        """
+        gunzip {input[0]}
+        """
+
+rule filter_VFDB_fasta_by_size:
+    conda:
+        "../../envs/biopython.yml"
+    input:
+        "references/virulence/VFDB_formated.faa",
+    output:
+        "references/virulence/VFDB_max_50aa.faa",
+        "references/virulence/VFDB_larger_50aa.faa",
+    params:
+        size_limit = 50,
+    script:
+        "scripts/fasta_filter_size.py"
+
+rule format_VFDB_fasta:
+    conda:
+        "../../envs/biopython.yml"
+    input:
+        "references/virulence/VFDB_setA_pro.fas",
+    output:
+        "references/virulence/VFDB_formated.faa",
+        "references/virulence/VFDB_annotations.tab",
+    script:
+        "scripts/VFDB_format_fasta.py"
+
+rule create_VFDB_blast_database:
+    conda:
+        pipeline_path + "envs/blast.yml"
+    input:
+        proteins = "references/virulence/VFDB_larger_50aa.faa",
+    output:
+        "references/virulence/VFDB_larger_50aa.faa.phr",
+    shell:
+        """
+        makeblastdb -dbtype prot -in {input[proteins]}
+        """

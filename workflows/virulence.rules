@@ -12,3 +12,6 @@ include:
 
 include:
     pipeline_path + "rules/downloading/fetch_VFDB.rules"
+
+include:
+    pipeline_path + "rules/report_generation/general_report.rules"
