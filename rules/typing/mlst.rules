@@ -2,7 +2,7 @@ rule determine_mlst:
     conda:
         pipeline_path + "envs/mlst.yml"
     input:
-        fasta = "samples/{sample}/annotation/{sample}.fna",
+        fasta = "samples/{sample}/annotation/{sample}.fsa",
     output:
         mlst = "samples/{sample}/typing/mlst.txt"
     shell:
