@@ -14,6 +14,8 @@ rule create_dictionary_for_reference:
         """
         
 rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
+    threads:
+        2
     conda:
         pipeline_path + "envs/gatk.yml"
     input:
@@ -70,6 +72,8 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
         """
 
 rule genotype_with_GenotypeGVCFs_GATK:
+    threads:
+        4
     conda:
         pipeline_path + "envs/gatk.yml"
     input:
