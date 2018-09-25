@@ -112,4 +112,3 @@ all_samples["ScientificName"] = all_samples["ScientificName"].str.replace(" ", "
 read_naming = {**reads_local, **sras_ext}
 original_names = {**original_names, **reads_sra}
 
-
