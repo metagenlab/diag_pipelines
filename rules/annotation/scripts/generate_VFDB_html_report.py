@@ -118,16 +118,18 @@ row_template = '''
 
 table_rows = ''
 for blast_hit in protein_id2blast_hit:
+    vf_accession = protein_id2blast_hit[blast_hit][0]
+    annotation = vf_accession2annotation[vf_accession]
     table_rows+=row_template % (blast_hit,
                                 protein_id2blast_hit[blast_hit][0],
                                 protein_id2blast_hit[blast_hit][0],
-                                vf_accession2annotation[protein_id2blast_hit[blast_hit][0]][0],
-                                vf_accession2annotation[protein_id2blast_hit[blast_hit][0]][0],
-                                vf_accession2annotation[protein_id2blast_hit[blast_hit][0]][0],
-                                vf_accession2annotation[protein_id2blast_hit[blast_hit][0]][3],
+                                annotation[0],
+                                annotation[0],
+                                annotation[0],
+                                annotation[3],
                                 protein_id2blast_hit[blast_hit][0],
-                                vf_accession2annotation[protein_id2blast_hit[blast_hit][0]][4],
-                                vf_accession2annotation[protein_id2blast_hit[blast_hit][0]][2],
+                                annotation[4],
+                                annotation[2],
                                 protein_id2blast_hit[blast_hit][1],
                                 protein_id2blast_hit[blast_hit][9],
                                 protein_id2blast_hit[blast_hit][10],)

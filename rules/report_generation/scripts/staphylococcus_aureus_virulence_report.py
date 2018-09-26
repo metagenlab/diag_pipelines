@@ -11,10 +11,13 @@ ete_figure = snakemake.input["ete_figure"]
 ete_figure_counts = snakemake.input["ete_figure_counts"]
 virulence_reports = snakemake.input["virulence_reports"]
 ordered_samples = snakemake.params["samples"]
+spanning_tree_core = snakemake.input["spanning_tree_core"]
+mlst_tree = snakemake.input["mlst_tree"]
 
 output_file = snakemake.output[0]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
 
+'''
 blast_hit2freq = {}
 for blast_file in blast_files:
     with open(blast_file, 'r') as f:
@@ -36,14 +39,11 @@ import pandas as pn
 df = pd.DataFrame.from_dict(VF_freq, orient='index')
 print(df)
 sorted = df.sort(['A'], ascending=[1, 0])
+'''
 
 sample2n_VFs = {}
 for n, sample in enumerate(ordered_samples):
     sample2n_VFs[sample] = len(blast_files[n])
-
-print(sample2n_VFs)
-
-sample2mlst={}
 
 
 report_template = '''
@@ -295,11 +295,8 @@ body {
                     <li class="pageheader"><a>Virulence/Typing <br> 
                     Report</a></li>
                     <li><a href="#quality">1. QC</a></li>
-                    <li><a href="#phylogeny">2. MLST</a></li>
-                    <li><a href="-">3. Antibiotic Resistances</a></li>
-                    <li><a href="-">4. Virulence</a></li>
-                    <li><a href="-">5. Phylogeny</a></li>
-                    <li><a href="-">6. Minimum spanning tree</a></li>
+                    <li><a href="#phylogeny">2. Typing</a></li>
+                    <li><a href="#virulence">3. Virulence</a></li>
               </ul>
             </div><!--/.nav-collapse -->
          </div>
@@ -310,20 +307,18 @@ body {
             <h1 id="quality">1. Quality control</h1>
             
             <p><a href="http://multiqc.info/">MultiQC</a> aggregate results from bioinformatics analyses across 
-            many samples into a single report</p>. The analyses covered here inclide genome assembly 
-            with <a href="http://cab.spbu.ru/software/spades/">spades<>, evaluation of the sequencing depth by mapping of 
-            the reads against the assembly and annotation with <a href="https://github.com/tseemann/prokka">prokka</a>. 
+            many samples into a single report. The analyses covered here include genome assembly 
+            with <a href="http://cab.spbu.ru/software/spades/">spades</a>, evaluation of the sequencing depth by mapping of 
+            the reads against the assembly and annotation with <a href="https://github.com/tseemann/prokka">prokka</a>.
+            </p>. 
                 <ul>
                     <li><a href="%s">MULTIQC</a></li>
                 </ul>
-            <h1 id="phylogeny">2. Typing</h1>
-            
-                Various methods can be used to discriminate bacterial clones of the same species, including serotyping, 
-                mass spectrometry, pulsed-field gel electrophoresis (PFGE) and multi locus sequence typing (MLST). <br> 
+            <h1 id="typing">2. Typing</h1>
 
-                <h3 id="phylogeny">2.1 MLST</h3>
+                <h3 id="mlst">2.1 MLST</h3>
                 
-                    The S. aureus MLST scheme uses internal fragments of the following seven house-keeping genes: <br>
+                    The <i>S. aureus</i> MLST scheme is based on the sequence of the following seven house-keeping genes: <br>
                     <ul>
                         <li>arcC (Carbamate kinase)</li>
                         <li>aroE (Shikimate dehydrogenase)</li>
@@ -334,46 +329,53 @@ body {
                         <li>yqi (Acetyle coenzyme A acetyltransferase)</li>
                     </ul>                
                 
-                    The MLST was determined using the <a href="https://github.com/tseemann/mlst"><mlst software/a> based 
+                    The MLST was determined using the <a href="https://github.com/tseemann/mlst">mlst software</a> based 
                      on <a href="https://pubmlst.org/">PubMLST</a> typing schemes<br> 
                                    
-                    <div>
-                        <img style="width:90%%" src="%s" align="top">
-                    </div>
-                    
+                   
                 <h3 id="phylogeny">2.2. Phylogeny + MLST</h1>
                 
-                The phylogeny was computed based on SNP identified in genes part of the core genome MLST of S. aureus 
-                as defined on the  
+                The phylogeny was computed based on SNP identified in genes part of the core genome MLST of <i>S. aureus</i> 
+                as defined on <a href="https://www.cgmlst.org/ncs">the ridom server</a>.  
                     
-                <h4 id="phylogeny">2.3 cgMLST SNPs</h1>
+                     <div>
+                    </figure>
+                        <img style="width:50%%" src="%s" align="top">
+                        <figcaption>Fig.2 Core SNP phylogeny and associated MLST for each isolate.</figcaption>
+                    <figure>
+                    </div>               
                 
-                Pairwise SNP distance between isolates. Identified SNPs are restricted to the core genome as defined on <a href="https://www.cgmlst.org/ncs">the ridom server</a>.              
                     
-                <h4 id="phylogeny">2.4 Minimum spanning tree</h1> 
-                    Minimum spanning trees (MSTs) are frequently used in molecular epidemiology research to estimate 
-                    relationships among individual strains or isolates.        
-                    Pairwise distances are used to compute the tree: the munimum spanning tree represents a 
-                    set of edges (connections) that link together nodes (individuals) by the shortest possible distance.
+                    
+                <h4 id="phylogeny">2.3 Minimum spanning tree</h1>
                 
-                </figure>
-                    <img style="width:90%%" src="%s" align="top">
-                    <figcaption>Fig.X - Minimum spanning tree. Colors indicates MLST. Identicl isolates (0 core SNP) are clustered together.</figcaption>
-                </figure>
-                
-            <h1 id="phylogeny">3. Antibiotic Resistances</h1>
+                Pairwise SNP distance between isolates. Identified SNPs are restricted to the core genome as defined 
+                on <a href="https://www.cgmlst.org/ncs">the ridom server</a>. Minimum spanning trees (MSTs) are 
+                frequently used in molecular epidemiology research to estimate 
+                relationships among individual strains or isolates.        
+                Pairwise distances are used to compute the tree: the munimum spanning tree represents a 
+                set of edges (connections) that link together nodes (individuals) by the shortest possible distance.
 
-            <h1 id="phylogeny">4. Virulence factors (VFDB)</h1>
-                <h3>4.1 Overview</h3>
-                    <img style="width:50%%" src="%s" align="top">
-                <h3>4.2 Frequency</h3>
-            
-                    <div style="height:400px;width:800px">
-                    <div id="chart" style="height:400px;width:800px"></div>
-                    <canvas id="myChart" style="height:400px;width:800px"></canvas>
+                    <div>
+                    </figure>
+                        <img style="width:60%%" src="%s" align="top">
+                        <figcaption>Fig.2 - Minimum spanning tree. Colors indicate MLST. Identicl isolates (0 core SNP) are clustered together.</figcaption>
+                    <figure>
                     </div>
+                    
+
+
+            <h1 id="virulence">4. Virulence factors (VFDB)</h1>
+                The identification of virlence factors was performed with BLAST. Only hits exhibiting more than 80%% amino acid idenity 
+                to a known virulence factor from the VFDB database are considered.
+            
+                <h3>4.1 Overview</h3>
+                </figure>
+                    <img style="width:50%%" src="%s" align="top">
+                    <figcaption>Fig.3 - Number of virulence factors identified in each genome.</figcaption>
+                </figure>
                 
-                <h3>4.3 Details</h3>
+                <h3>4.2 Details</h3>
                     %s
     </div>
 
@@ -489,13 +491,13 @@ virulence_row = '''
                         '''
 rows = ''
 for report in virulence_reports:
-    print(report.split('/'))
     rows += virulence_row % (report.split('/')[1], sample2n_VFs[report.split('/')[1]],report, report)
 
 with open(output_file, 'w') as f:
     f.write(report_template % (qualimap_report,
-                               ete_figure,
+                               mlst_tree,
+                               spanning_tree_core,
                                ete_figure_counts,
                                virulence_section % rows,
-                               ete_figure,))
+                               ))
 f.close()

@@ -8,6 +8,7 @@ rule report_virulence_saureus:
         virulence_reports = expand("samples/{sample}/virulence/VFDB_report.html", sample=read_naming.keys()),
         blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
         spanning_tree_core="typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg",
+        mlst_tree="typing/mlst_tree.svg",
         #spanning_tree_all="typing/gatk_gvcfs/full_genome_33148/bwa/distances_in_snp_mst_with_st.svg",
         #spanning_tree_st152 ="typing/gatk_gvcfs/full_genome_1411181071_assembled_genome/bwa/distances_in_snp_mst_with_st.svg"
     params:

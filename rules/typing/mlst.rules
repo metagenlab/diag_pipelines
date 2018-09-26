@@ -7,7 +7,7 @@ rule determine_mlst:
         mlst = "samples/{sample}/typing/mlst.txt"
     shell:
         """
-        mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fna//"  > {output[0]}
+        mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
         """
 
         
@@ -32,7 +32,7 @@ rule determine_mlst_reference_genome:
         "references/{ref}/mlst.tsv"
     shell:
         """
-        mlst --quiet {input[genome]}  | sed "s/.*\///" | sed "s/\.fna//" > {output[0]}
+        mlst --quiet {input[genome]}  | sed "s/.*\///" | sed "s/\.fsa//" > {output[0]}
         """
 
 rule generate_xlsx_file_from_mlst_results:

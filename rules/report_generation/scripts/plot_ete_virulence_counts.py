@@ -26,6 +26,7 @@ leaf2mlst= pandas.read_csv(snakemake.input["mlst"],
                            delimiter='\t',
                            names=["leaf","species","mlst","1","2","3","4","5","6","7"]).set_index("leaf").to_dict()["mlst"]
 
+
 def get_spaced_colors(n):
 
     max_value = 16581375 #255**3
@@ -184,12 +185,14 @@ def plot_tree_barplot(tree_file,
                     tss.aligned_header.add_face(n, col+col_add)
 
         if taxon2mlst:
-            if lf.name in leaf2mlst:
-                n = TextFace(' %s ' % taxon2mlst[lf.name])
+
+            try:
+                #if lf.name in leaf2mlst or int(lf.name) in leaf2mlst:
+                n = TextFace(' %s ' % taxon2mlst[int(lf.name)])
                 n.inner_background.color = 'white'
                 m = TextFace('  ')
-                m.inner_background.color = mlst2color[taxon2mlst[lf.name]]
-            else:
+                m.inner_background.color = mlst2color[taxon2mlst[int(lf.name)]]
+            except:
                 n = TextFace(' na ')
                 n.inner_background.color = "grey"
                 m = TextFace('    ')
