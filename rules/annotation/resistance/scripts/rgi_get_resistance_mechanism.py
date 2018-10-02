@@ -58,8 +58,11 @@ for index, row in rgi_results.iterrows():
             if mechanism:
                 break
         # remove redundancy
-        if [gene, mechanism.name] not in term_nr_list:
-            term_nr_list.append([gene, mechanism.name])
+        if mechanism is not None:
+            if [gene, mechanism.name] not in term_nr_list:
+                term_nr_list.append([gene, mechanism.name])
+        else:
+            term_nr_list.append([gene, "Unknown"])
 
 df = pandas.DataFrame(term_nr_list, columns= ["Gene", "Resistance Mechanism"])
 

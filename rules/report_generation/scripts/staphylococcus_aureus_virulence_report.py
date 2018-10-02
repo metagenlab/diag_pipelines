@@ -17,6 +17,8 @@ mlst_tree = snakemake.input["mlst_tree"]
 output_file = snakemake.output[0]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
 
+
+
 '''
 blast_hit2freq = {}
 for blast_file in blast_files:
@@ -52,7 +54,8 @@ report_template = '''
 
 
 <html>
-    <head>        
+    <head>
+    <meta charset="utf-8"/>        
 
     <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 
@@ -71,7 +74,7 @@ report_template = '''
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.7/c3.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
     
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
     <style>
 
@@ -277,10 +280,6 @@ body {
     </style>
 </head>
 
-<div class="topnav">
-  
-</div>
-
 
 <body style="position: absolute;">
 
@@ -377,20 +376,150 @@ body {
                 
                 <h3>4.2 Details</h3>
                     %s
+            <h1 id="resistance">5. Resistance</h1>   
+            
+                <div style="width:400px;">
+                <canvas id="chartJSContainer" width="400" height="400"></canvas>       
+                </div>
+            <h1 id="resistance">6. todo</h1>   
+   
+                    
     </div>
 
 
-
+    
 
 </body>
-
-
+%s
+</html>
         '''
 
 barchart_template = '''
 
-<script>
+<script type="text/javascript">
 
+var options = {
+         legend: {
+            display: false
+         },
+  type: 'bubble',
+  data: {
+    labels: ["One","two"],
+    datasets: [
+      {
+        label: 'John----',
+        data: [
+          {
+            x: 3,
+            y: 7,
+            r: 10
+          },
+            {
+              x: 22,
+              y: 22,
+              r: 22
+            }
+        ],
+        backgroundColor:"rgba(255, 99, 132, 0.2)",
+        hoverBackgroundColor: "rgba(255, 99, 132, 0.2)"
+      },
+      {
+        label: 'Paul',
+          data: [
+            {
+              x: 6,
+              y: 2,
+              r: 10
+            }
+          ],
+          backgroundColor:"#ff6384",
+          hoverBackgroundColor: "#ff6384"
+      },
+      {
+        label: 'George',
+          data: [
+            {
+              x: 2,
+              y: 6,
+              r: 10
+            }
+          ],
+          backgroundColor:"#ff6384",
+          hoverBackgroundColor: "#ff6384"
+      },
+      {
+        label: 'Ringo',
+          data: [
+            {
+              x: 5,
+              y: 3,
+              r: 10
+            }
+          ],
+          backgroundColor:"#ff6384",
+          hoverBackgroundColor: "#ff6384"
+      },
+      {
+        label: 'John',
+          data: [
+            {
+              x: 2,
+              y: 1,
+              r: 10
+            }
+          ],
+          backgroundColor:"#ff6384",
+          hoverBackgroundColor: "#ff6384"
+      },
+      {
+        label: 'George',
+          data: [
+            {
+              x: 1,
+              y: 3,
+              r: 10
+            }
+          ],
+          backgroundColor:"#ff6384",
+          hoverBackgroundColor: "#ff6384"
+      },
+      {
+        label: 'Ringo',
+          data: [
+            {
+              x: 1,
+              y: 1,
+              r: 10
+            }
+          ],
+          backgroundColor:"#ff6384",
+          hoverBackgroundColor: "#ff6384"
+      },
+      {
+        label: 'George',
+          data: [
+            {
+              x: 1,
+              y: 2,
+              r: 10
+            }
+          ],
+          backgroundColor:"#ff6384",
+          hoverBackgroundColor: "#ff6384"
+      }
+      ]
+  }
+}
+
+var ctx = document.getElementById('chartJSContainer').getContext('2d');
+new Chart(ctx, options);
+
+
+</script>
+
+'''
+
+barchart = '''
 
 var chart = c3.generate({
     size: {
@@ -461,10 +590,7 @@ var chart = c3.generate({
     }
 });
 
-</script>
-
 '''
-
 
 
 virulence_section = '''
@@ -499,5 +625,5 @@ with open(output_file, 'w') as f:
                                spanning_tree_core,
                                ete_figure_counts,
                                virulence_section % rows,
-                               ))
+                               barchart_template))
 f.close()
