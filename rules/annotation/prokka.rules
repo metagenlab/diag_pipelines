@@ -74,6 +74,6 @@ rule get_CDS_and_contigs_depth:
         "samples/{sample}/quality/mapping/{mapping_method}/{ref}/mapping.depth",
     output:
         "samples/{sample}/quality/mapping/{mapping_method}/{ref}/CDS_depth.tab",
-        #"samples/{sample}/quality/mapping/{mapping_method}/{ref}/contig_depth.tab"
+        "samples/{sample}/quality/mapping/{mapping_method}/{ref}/contig_depth.tab"
     script:
         "scripts/calculate_CDS_depth.py"

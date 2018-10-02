@@ -6,7 +6,7 @@ gbk_file = snakemake.input[1]
 depth_file = snakemake.input[2]
 
 out_CDS_depth = snakemake.output[0]
-#out_contig_depth = snakemake.output[1]
+out_contig_depth = snakemake.output[1]
 
 def get_contig_name2contig_coverage(samtool_depth_file):
     contig2depth = {}
@@ -24,6 +24,13 @@ def get_contig_id2median_depth(contig2depth_list):
         m = numpy.median(contig2depth_list[contig])
         contig2med[contig] = m
     return contig2med
+
+def get_contig_id2mean_depth(contig2depth_list):
+    contig2mean = {}
+    for contig in contig2depth_list:
+        m = numpy.mean(contig2depth_list[contig])
+        contig2mean[contig] = m
+    return contig2mean
 
 def contig_id2contig_length(contigs_file):
 
@@ -62,13 +69,14 @@ def parse_smatools_depth(samtools_depth):
 contig_id2contig_length = contig_id2contig_length(fna_file)
 contig_id2depth = get_contig_name2contig_coverage(depth_file)
 contig2median_depth = get_contig_id2median_depth(contig_id2depth)
+contig2mean_depth = get_contig_id2mean_depth(contig_id2depth)
 record2gene2coord = gbk2CDS_loc(gbk_file)
 
 samtools_dataframe = parse_smatools_depth(depth_file)
 median_depth = numpy.median(samtools_dataframe.iloc[:, 1])
 
 with open(out_CDS_depth, 'w') as f:
-    f.write("Contig\tgene\tstart\tend\tdepth\tratio_assembly\tcontig_depth\tcontig_ratio_depth\tcontig_length\n")
+    f.write("contig\tgene\tstart\tend\tdepth\tratio_assembly\tcontig_depth\tcontig_ratio_depth\tcontig_length\n")
     for record in record2gene2coord:
         # get record subset
         subset_table = samtools_dataframe.loc[record]
@@ -90,3 +98,7 @@ with open(out_CDS_depth, 'w') as f:
 
             #print ('all_assembly\t-\t1\t%s\t%s\t-\t-\t-' % (len(samtools_dataframe.iloc[:, 1]),
             #                                                numpy.median(samtools_dataframe.iloc[:, 1])))
+with open(out_contig_depth, 'w') as g:
+    g.write("contig\tmean_depth\tmedian_depth\n")
+    for contig in contig2median_depth:
+        g.write("%s\t%s\t%s\n" % (contig, contig2mean_depth[contig], contig2median_depth[contig]))
