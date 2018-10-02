@@ -110,10 +110,11 @@ with open(out_CDS_depth, 'w') as f:
 
 # write contig depth
 with open(out_contig_depth, 'w') as g:
-    g.write("contig\tmean_depth\tmedian_depth\tgc_content\n")
+    g.write("contig\tmean_depth\tmedian_depth\tgc_content\tcontig_size\n")
     # only write data for filtered contigs
     for contig in record2gene2coord:
-        g.write("%s\t%s\t%s\t%s\n" % (contig,
+        g.write("%s\t%s\t%s\t%s\t%s\n" % (contig,
                                   contig2mean_depth[contig],
                                   contig2median_depth[contig],
-                                  contig_id2contig_gc[contig]))
+                                  contig_id2contig_gc[contig],
+                                  contig_id2contig_length[contig]))

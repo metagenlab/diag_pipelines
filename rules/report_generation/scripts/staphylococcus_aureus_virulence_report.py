@@ -73,9 +73,10 @@ report_template = '''
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.7/c3.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
-    
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
+    <script type="text/javascript" src="https://github.com/chartjs/Chart.js/releases/download/v2.7.1/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.js"></script>
+    
     <style>
 
 /* make sidebar nav vertical */
@@ -398,6 +399,13 @@ barchart_template = '''
 
 <script type="text/javascript">
 
+var data = {
+
+
+
+};
+
+
 var options = {
          legend: {
             display: false
@@ -508,6 +516,32 @@ var options = {
           hoverBackgroundColor: "#ff6384"
       }
       ]
+  },
+  options: {
+    plugins: {
+        datalabels: {
+            anchor: function(context) {
+                var value = context.dataset.data[context.dataIndex];
+                return value.r < 50 ? 'end' : 'center';
+            },
+            align: function(context) {
+                var value = context.dataset.data[context.dataIndex];
+                return value.r < 50 ? 'end' : 'center';
+            },
+            color: function(context) {
+                var value = context.dataset.data[context.dataIndex];
+                return value.r < 50 ? context.dataset.backgroundColor : 'white';
+            },
+            font: {
+                weight: 'bold'
+            },
+            formatter: function(value) {
+                return Math.round(value.r);
+            },
+            offset: 2,
+            padding: 0
+        }
+    }
   }
 }
 

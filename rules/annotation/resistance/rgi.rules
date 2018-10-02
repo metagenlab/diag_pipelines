@@ -74,9 +74,11 @@ rule plot_rgi:
 
 rule generate_rgi_report:
     input:
-        rgi_tsv_output="samples/{sample}/virulence/VFDB_results_blast.tsv",
-        gene_depth_file="",
-        contig_gc_depth_file="",
+        rgi_tsv_output="samples/{sample}/resistance/rgi.tsv",
+        rgi_ontology="samples/{sample}/resistance/rgi_ontology.tsv",
+        gene_depth_file="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/CDS_depth.tab",
+        contig_gc_depth_file="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
+        samtools_depth = "samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/mapping.depth",
     params:
         sample="{sample}",
     output:
