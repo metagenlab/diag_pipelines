@@ -42,6 +42,17 @@ def contig_id2contig_length(contigs_file):
         id2length[record.name] = len(record)
     return id2length
 
+def contig_id2gc_content(contigs_file):
+
+    from Bio import SeqIO
+    from Bio.SeqUtils import GC
+
+    fasta_handle = open(contigs_file, 'r')
+    id2gc = {}
+    for record in SeqIO.parse(fasta_handle, "fasta"):
+        id2gc[record.name] = GC(record.seq)
+    return id2gc
+
 def gbk2CDS_loc(gbk_file):
 
     from Bio import SeqIO
@@ -66,6 +77,7 @@ def parse_smatools_depth(samtools_depth):
 
 ### MAIN ###
 contig_id2contig_length = contig_id2contig_length(fna_file)
+contig_id2contig_gc = contig_id2gc_content(fna_file)
 contig_id2depth = get_contig_name2contig_coverage(depth_file)
 contig2median_depth = get_contig_id2median_depth(contig_id2depth)
 contig2mean_depth = get_contig_id2mean_depth(contig_id2depth)
@@ -98,6 +110,10 @@ with open(out_CDS_depth, 'w') as f:
 
 # write contig depth
 with open(out_contig_depth, 'w') as g:
-    g.write("contig\tmean_depth\tmedian_depth\n")
-    for contig in contig2median_depth:
-        g.write("%s\t%s\t%s\n" % (contig, contig2mean_depth[contig], contig2median_depth[contig]))
+    g.write("contig\tmean_depth\tmedian_depth\tgc_content\n")
+    # only write data for filtered contigs
+    for contig in record2gene2coord:
+        g.write("%s\t%s\t%s\t%s\n" % (contig,
+                                  contig2mean_depth[contig],
+                                  contig2median_depth[contig],
+                                  contig_id2contig_gc[contig]))

@@ -71,3 +71,15 @@ rule plot_rgi:
         rgi_plot="resistance/rgi_overview.pdf",
     script:
         "scripts/plot_gene_presence_heatmap.R"
+
+rule generate_rgi_report:
+    input:
+        rgi_tsv_output="samples/{sample}/virulence/VFDB_results_blast.tsv",
+        gene_depth_file="",
+        contig_gc_depth_file="",
+    params:
+        sample="{sample}",
+    output:
+        "samples/{sample}/resistance/rgi_report.html",
+    script:
+        "scripts/generate_rgi_html_report.py"
