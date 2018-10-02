@@ -64,7 +64,6 @@ def parse_smatools_depth(samtools_depth):
     return table
 
 
-
 ### MAIN ###
 contig_id2contig_length = contig_id2contig_length(fna_file)
 contig_id2depth = get_contig_name2contig_coverage(depth_file)
@@ -75,6 +74,7 @@ record2gene2coord = gbk2CDS_loc(gbk_file)
 samtools_dataframe = parse_smatools_depth(depth_file)
 median_depth = numpy.median(samtools_dataframe.iloc[:, 1])
 
+# write gene depth
 with open(out_CDS_depth, 'w') as f:
     f.write("contig\tgene\tstart\tend\tdepth\tratio_assembly\tcontig_depth\tcontig_ratio_depth\tcontig_length\n")
     for record in record2gene2coord:
@@ -83,8 +83,8 @@ with open(out_CDS_depth, 'w') as f:
 
         for gene in record2gene2coord[record]:
             # attention range
-            # index commence a 0
-            # range n'inclu pas le dernier chiffre
+            # index starts from 0
+            # range does not include "last count"
             start_pos = int(record2gene2coord[record][gene][0]) - 1
             end_pos = int(record2gene2coord[record][gene][1])
             if start_pos > end_pos:
@@ -96,8 +96,7 @@ with open(out_CDS_depth, 'w') as f:
             record, gene, start_pos, end_pos, gene_median, round(gene_median / median_depth, 2), contig2median_depth[record],
             round(contig2median_depth[record] / median_depth, 2), contig_id2contig_length[record]))
 
-            #print ('all_assembly\t-\t1\t%s\t%s\t-\t-\t-' % (len(samtools_dataframe.iloc[:, 1]),
-            #                                                numpy.median(samtools_dataframe.iloc[:, 1])))
+# write contig depth
 with open(out_contig_depth, 'w') as g:
     g.write("contig\tmean_depth\tmedian_depth\n")
     for contig in contig2median_depth:
