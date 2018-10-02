@@ -43,6 +43,17 @@ rule map_single_reads_with_bwa:
         (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
 
+rule mapping_depth:
+    conda:
+        pipeline_path + "envs/bwa-samtools.yml"
+    input:
+        "samples/{sample}/mapping/bwa/{ref}.bam",
+    output:
+        "samples/{sample}/mapping/bwa/{ref}.depth",
+    shell:
+        """
+        samtools depth -a {input[0]} > {output[0]}
+        """
 
 rule map_paired_reads_with_bwa_for_direct_sequencing:
     conda:
