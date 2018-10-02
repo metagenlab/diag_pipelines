@@ -49,7 +49,7 @@ rule mapping_depth:
     input:
         "samples/{sample}/mapping/bwa/{ref}.bam",
     output:
-        "samples/{sample}/mapping/bwa/{ref}.depth",
+        "samples/{sample}/quality/mapping/{mapping_method}/{ref}/mapping.depth",
     shell:
         """
         samtools depth -a {input[0]} > {output[0]}

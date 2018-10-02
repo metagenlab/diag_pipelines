@@ -10,6 +10,7 @@ rule annotate_with_prokka:
         "samples/{sample}/annotation/{sample}.txt",
         "samples/{sample}/annotation/{sample}.gbk",
         "samples/{sample}/annotation/{sample}.ffn",
+        "samples/{sample}/annotation/{sample}.fna",
     log:
         "samples/{sample}/annotation/spades/{sample}.txt",
     params:
@@ -64,3 +65,15 @@ rule remove_fasta_part_from_gff:
     shell:
         "sed '/^##FASTA$/,$d' {input} > {output}"
     
+rule get_CDS_and_contigs_depth:
+    conda:
+        pipeline_path + "envs/biopython.yml"
+    input:
+        "samples/{sample}/annotation/{sample}.fna",
+        "samples/{sample}/annotation/{sample}.gbk",
+        "samples/{sample}/quality/mapping/{mapping_method}/{ref}/mapping.depth",
+    output:
+        "samples/{sample}/quality/mapping/{mapping_method}/{ref}/CDS_depth.tab",
+        #"samples/{sample}/quality/mapping/{mapping_method}/{ref}/contig_depth.tab"
+    script:
+        "scripts/calculate_CDS_depth.py"
