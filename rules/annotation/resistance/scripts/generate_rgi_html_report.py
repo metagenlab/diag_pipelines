@@ -1,5 +1,6 @@
 
 import pandas
+import re
 
 rgi_tsv_output = snakemake.input[0]
 rgi_ontology = snakemake.input[1]
@@ -18,9 +19,9 @@ with open(rgi_tsv_output, 'r') as f:
         data = row.split('\t')
         contig = '_'.join(data[0].split('_')[0:-1])
         if contig not in contig2resistances:
-            contig2resistances[contig] = [data[11]]
+            contig2resistances[contig] = [re.sub("'", "", data[8])]
         else:
-            contig2resistances[contig].append(data[11])
+            contig2resistances[contig].append(re.sub("'", "", data[8]))
         orf_id2data[data[0]] = data[1:len(data)]
 print("contig2resistances")
 print(contig2resistances)
@@ -186,8 +187,6 @@ buuble_chart_code = bubble_template % (dataset_template % ('No resistances',
 
 template = '''
 <!DOCTYPE html>
-
-
 <html>
     <head>        
 
@@ -206,15 +205,53 @@ template = '''
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.5/chartjs-plugin-zoom.js"></script>
 
     </head>
-<body>
-    <h1>Bubble plot</h1>
-    <div style="width:400px;">
-    <canvas id="chartJSContainer" width="400" height="400"></canvas>       
-    </div>
+<body style="max-width:95%%; padding-left:55px;">
+    <h1>Identification of resistance markers</h1>
+    
+    <h2>GC-coverage plot</h2>
+        <div style="width:400px;">
+        <canvas id="chartJSContainer" width="400" height="400"></canvas>       
+        </div>
+    
+    <h2>Detailed table<h2>
+        <div id='vftable' style="max-width:90%%; padding-left:55px;">
+            <table class="display dataTable" id="res_table">
+                <thead>
+                    <tr>
+                      <th scope="col">ARO</th></th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Gene</th>
+                      <th scope="col">Resistance Type</th>
+                      <th scope="col">Variant</th>
+                      <th scope="col">Organism</th>
+                      <th scope="col">Identity (%%)</th>
+                      <th scope="col">e-value</th>
+                      <th scope="col">bit-score</th>
+                </thead>
+                <tbody>
+    
+                </tbody>
+            </table>
+        </div>
+    <h2>Circos<h2>
+    
 
 </body>
 <script type="text/javascript">
 %s
+
+$(document).ready(function() {
+    $('#res_table').DataTable( {
+        dom: 'Bfrtip',
+        "pageLength": 20,
+        "searching": true,
+        "bLengthChange": false,
+        "paging":   true,
+        "info": false
+    } );
+} );
+
+
 </script>
 
 </html>

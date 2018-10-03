@@ -1,6 +1,8 @@
 
 
 rule download_VFDB_fasta:
+    conda:
+        "../../envs/curl.yml"
     output:
         "references/virulence/VFDB_setA_pro.fas.gz",
     shell:

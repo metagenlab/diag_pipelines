@@ -121,7 +121,11 @@ for index, row in rgi_results.iterrows():
                                 break
                         if parent_of:
                             continue
-                        ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism.name, fam])
+                        if mechanism is not None:
+                            mechanism_name = mechanism.name
+                        else:
+                            mechanism_name = 'Unknown'
+                        ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
 
             for parent in term.rparents():
                 for child in parent.relations:
@@ -142,7 +146,11 @@ for index, row in rgi_results.iterrows():
                                 continue
                             if anti_class is not None:
                                 anti_class = anti_class.replace("antibiotic", "")
-                            ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism.name, fam])
+                            if mechanism is not None:
+                                mechanism_name = mechanism.name
+                            else:
+                                mechanism_name = 'Unknown'
+                            ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
                             hit_list.append(parent)
 
 

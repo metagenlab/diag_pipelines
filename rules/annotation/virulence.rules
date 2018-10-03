@@ -117,3 +117,29 @@ rule generate_VFDB_report:
         "samples/{sample}/virulence/VFDB_report.html",
     script:
         "scripts/generate_VFDB_html_report.py"
+
+# needed
+# tab file with contig, start, end label (and color)
+rule prepare_label_file_for_circos:
+    input:
+        gbk_file="samples/{sample}/annotation/{sample}.gbk",
+        blast_results="samples/{sample}/virulence/VFDB_results_blast.tsv",
+    output:
+        "samples/{sample}/virulence/circos/VF_loc_table.tab",
+    script:
+        "scripts/prepare_circos_file.py"
+
+'''
+rule circos_plot_virulence:
+    input:
+        depth_file="samples/{sample}/quality/mapping/{mapping_method}/{ref}/mapping.depth",
+        vf_table="samples/{sample}/virulence/circos/VF_loc_table.tab",
+        gbk_file="samples/{sample}/annotation/{sample}.gbk",
+        fna_file="samples/{sample}/annotation/{sample}.fna",
+    params:
+        sample="{sample}",
+    output:
+        "samples/{sample}/virulence/VFDB_report.html",
+    script:
+        "scripts/generate_VFDB_html_report.py"
+'''
