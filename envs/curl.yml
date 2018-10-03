@@ -1,0 +1,5 @@
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - curl = 7.61.1=hbc83047_0

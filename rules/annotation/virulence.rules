@@ -121,9 +121,12 @@ rule generate_VFDB_report:
 # needed
 # tab file with contig, start, end label (and color)
 rule prepare_label_file_for_circos:
+    conda:
+        pipeline_path + "envs/biopython.yml"
     input:
         gbk_file="samples/{sample}/annotation/{sample}.gbk",
         blast_results="samples/{sample}/virulence/VFDB_results_blast.tsv",
+        VF_annotation="references/virulence/VFDB_annotations.tab",
     output:
         "samples/{sample}/virulence/circos/VF_loc_table.tab",
     script:
