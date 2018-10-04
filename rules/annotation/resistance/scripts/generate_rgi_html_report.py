@@ -12,29 +12,31 @@ sample = snakemake.params[0]
 report_file = snakemake.output[0]
 
 # parse rgi output file
-orf_id2data = {}
 contig2resistances = {}
 with open(rgi_tsv_output, 'r') as f:
     for row in f:
-        data = row.split('\t')
-        contig = '_'.join(data[0].split('_')[0:-1])
+        data = row.rstrip().split('\t')
+        contig = '_'.join(data[1].split('_')[0:-1])
         if contig not in contig2resistances:
             contig2resistances[contig] = [re.sub("'", "", data[8])]
         else:
             contig2resistances[contig].append(re.sub("'", "", data[8]))
-        orf_id2data[data[0]] = data[1:len(data)]
-print("contig2resistances")
-print(contig2resistances)
+rgi_table = pandas.read_csv(rgi_tsv_output,
+                                      delimiter='\t',
+                                      header=0)
+ontology_table = pandas.read_csv(rgi_ontology,
+                           delimiter='\t',
+                           header=0)
+
 
 # calculate rgi hit(s) sequencing depth based on position of the CDS in contigs
 def parse_smatools_depth(samtools_depth):
     import pandas
-
     with open(samtools_depth, 'r') as f:
         table = pandas.read_csv(f, sep='\t', header=None, index_col=0)
     return table
-
 samtools_dataframe = parse_smatools_depth(samtools_depth)
+hit2depth={}
 
 # get contig depth and GC
 contig2gc_content = pandas.read_csv(contig_gc_depth_file,
@@ -214,22 +216,25 @@ template = '''
         </div>
     
     <h2>Detailed table<h2>
-        <div id='vftable' style="max-width:90%%; padding-left:55px;">
+        <div id='vftable' style="max-width:100%%; padding-left:0px;">
             <table class="display dataTable" id="res_table">
                 <thead>
                     <tr>
-                      <th scope="col">ARO</th></th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Gene</th>
-                      <th scope="col">Resistance Type</th>
+                      <th scope="col">Contig</th></th>
+                      <th scope="col">ORF</th>
+                      <th scope="col">ARO</th>
+                      <th scope="col">Model Type</th>
                       <th scope="col">Variant</th>
-                      <th scope="col">Organism</th>
+                      <th scope="col">Cov (%%)</th>
                       <th scope="col">Identity (%%)</th>
-                      <th scope="col">e-value</th>
-                      <th scope="col">bit-score</th>
+                      <th scope="col">Score</th>
+                      <th scope="col">Score cutoff</th>
+                      <th scope="col">Family</th>
+                      <th scope="col">Mechanism</th>
+                      <th scope="col">Resistance</th>
                 </thead>
                 <tbody>
-    
+                    %s
                 </tbody>
             </table>
         </div>
@@ -243,7 +248,7 @@ template = '''
 $(document).ready(function() {
     $('#res_table').DataTable( {
         dom: 'Bfrtip',
-        "pageLength": 20,
+        "pageLength": 10,
         "searching": true,
         "bLengthChange": false,
         "paging":   true,
@@ -253,6 +258,11 @@ $(document).ready(function() {
 
 
 </script>
+
+<style>
+th { font-size: 12px; }
+td { font-size: 11px; }
+</style>
 
 </html>
 
@@ -268,8 +278,50 @@ row_template = '''
         <td>%s</td>
         <td>%s</td>
         <td>%s</td>
+        <td>%s</td>
+        <td>%s</td>
+        <td>%s</td>        
+        <td>%s</td>
     </tr>
 '''
 
+table_rows = ''
+for n, one_resistance in rgi_table.iterrows():
+    contig = '_'.join(one_resistance["Contig"].split('_')[0:-1])
+    orf_id = one_resistance["Contig"].split('_')[-1]
+    cutoff = one_resistance["Cut_Off"]
+    name = one_resistance["Best_Hit_ARO"]
+    identity = one_resistance["Best_Identities"]
+    aro = one_resistance["ARO"]
+    cov = one_resistance["Percentage Length of Reference Sequence"]
+    bitscore = one_resistance["Best_Hit_Bitscore"]
+    pass_bitscore = one_resistance["Pass_Bitscore"]
+    mechanism = one_resistance["Resistance Mechanism"]
+    snps = one_resistance["SNPs_in_Best_Hit_ARO"]
+    model = one_resistance["Model_type"]
+    family = one_resistance["AMR Gene Family"]
+    antibio_res_list = list(ontology_table[ontology_table['Name'] == name]["Antibiotic resistance prediction"])
+    antibio_res_class_list = list(ontology_table[ontology_table['Name'] == name]["Class"])
+
+    resistance_code = ''
+    for resistance, resistance_class in zip(antibio_res_list, antibio_res_class_list):
+        print(resistance, resistance_class)
+        resistance_code+='%s (%s) </br>' % (resistance, resistance_class)
+
+
+    table_rows += row_template % (contig,
+                          orf_id,
+                          "%s (%s)" % (name, aro),
+                          model,
+                          snps,
+                          cov,
+                          identity,
+                          bitscore,
+                          pass_bitscore,
+                          family,
+                          mechanism,
+                          resistance_code)
+
+
 with open(report_file, 'w') as f:
-    f.write(template % (buuble_chart_code))
+    f.write(template % (table_rows, buuble_chart_code))

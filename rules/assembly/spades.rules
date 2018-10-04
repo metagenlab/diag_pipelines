@@ -1,7 +1,6 @@
 rule correct_error_paired_reads_with_spades:
     threads:
         4
-
     conda:
         pipeline_path + "envs/spades.yml"
     input:

@@ -5,6 +5,7 @@
 #    n_calls = sum(1 for l in vcf if not l.startswith("#"))
 # n_samples = list(read_naming.keys()
 import pandas
+from Bio import SeqIO
 
 qualimap_report = snakemake.input["qualimap_report"]
 ete_figure = snakemake.input["ete_figure"]
@@ -13,6 +14,8 @@ virulence_reports = snakemake.input["virulence_reports"]
 ordered_samples = snakemake.params["samples"]
 spanning_tree_core = snakemake.input["spanning_tree_core"]
 mlst_tree = snakemake.input["mlst_tree"]
+resistance_reports = snakemake.input["resistance_reports"]
+low_cov_fastas = snakemake.input["low_cov_fastas"]
 
 output_file = snakemake.output[0]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
@@ -297,6 +300,7 @@ body {
                     <li><a href="#quality">1. QC</a></li>
                     <li><a href="#phylogeny">2. Typing</a></li>
                     <li><a href="#virulence">3. Virulence</a></li>
+                    <li><a href="#virulence">4. Resistance</a></li>
               </ul>
             </div><!--/.nav-collapse -->
          </div>
@@ -306,14 +310,24 @@ body {
     <div class="col-sm-10 col-md-10 affix-content">
             <h1 id="quality">1. Quality control</h1>
             
-            <p><a href="http://multiqc.info/">MultiQC</a> aggregate results from bioinformatics analyses across 
-            many samples into a single report. The analyses covered here include genome assembly 
-            with <a href="http://cab.spbu.ru/software/spades/">spades</a>, evaluation of the sequencing depth by mapping of 
-            the reads against the assembly and annotation with <a href="https://github.com/tseemann/prokka">prokka</a>.
-            </p>. 
+             <h3 id="quality">1.1 MultiQC</h3>
+                <p><a href="http://multiqc.info/">MultiQC</a> aggregate results from bioinformatics analyses across 
+                many samples into a single report. The analyses covered here include genome assembly 
+                with <a href="http://cab.spbu.ru/software/spades/">spades</a>, evaluation of the sequencing depth by mapping of 
+                the reads against the assembly and annotation with <a href="https://github.com/tseemann/prokka">prokka</a>.
+                </p>. 
+                        
                 <ul>
                     <li><a href="%s">MULTIQC</a></li>
                 </ul>
+              
+              <h3 id="quality">1.1 Low coverage contigs</h3>
+                %s
+              <h3 id="quality">1.1 Mash report</h3>                
+            
+              
+              
+            
             <h1 id="typing">2. Typing</h1>
 
                 <h3 id="mlst">2.1 MLST</h3>
@@ -365,25 +379,21 @@ body {
                     
 
 
-            <h1 id="virulence">4. Virulence factors (VFDB)</h1>
+            <h1 id="virulence">3. Virulence factors (VFDB)</h1>
                 The identification of virlence factors was performed with BLAST. Only hits exhibiting more than 80%% amino acid idenity 
                 to a known virulence factor from the VFDB database are considered.
             
-                <h3>4.1 Overview</h3>
+                <h3>3.1 Overview</h3>
                 </figure>
                     <img style="width:50%%" src="%s" align="top">
                     <figcaption>Fig.3 - Number of virulence factors identified in each genome.</figcaption>
                 </figure>
                 
-                <h3>4.2 Details</h3>
+                <h3>3.2 Details</h3>
                     %s
-            <h1 id="resistance">5. Resistance</h1>   
-            
-                <div style="width:400px;">
-                <canvas id="chartJSContainer" width="400" height="400"></canvas>       
-                </div>
-            <h1 id="resistance">6. todo</h1>   
-   
+            <h1 id="resistance">4. Resistance</h1>   
+                %s 
+ 
                     
     </div>
 
@@ -391,7 +401,7 @@ body {
     
 
 </body>
-%s
+
 </html>
         '''
 
@@ -626,7 +636,6 @@ var chart = c3.generate({
 
 '''
 
-
 virulence_section = '''
                             <table class="display dataTable" id="VF_table">
                                 <thead>
@@ -653,11 +662,69 @@ rows = ''
 for report in virulence_reports:
     rows += virulence_row % (report.split('/')[1], sample2n_VFs[report.split('/')[1]],report, report)
 
+
+
+resistance_section = '''
+                            <table class="display dataTable" id="res_table">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Strain id</th></th>
+                                      <th scope="col">Resistance Report</th>
+                                </thead>
+                                <tbody>
+                                    %s
+                                </tbody>
+                            </table>        
+                            '''
+
+resistance_row = '''
+                        <tr>
+                            <td>%s</td>
+                            <td><a href="%s">%s</a></td>
+
+                        </tr>        
+                        '''
+rows_res = ''
+for report in resistance_reports:
+    rows_res += resistance_row % (report.split('/')[1], report, report)
+
+low_cov_contigs_section = '''
+                            <table class="display dataTable" id="cov_table">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">Strain id</th></th>
+                                      <th scope="col">Number of low coverage contigs</th></th>
+                                      <th scope="col">Resistance Report</th>
+                                </thead>
+                                <tbody>
+                                    %s
+                                </tbody>
+                            </table>        
+                            '''
+
+low_cov_contigs_row = '''
+                        <tr>
+                            <td>%s</td>
+                            <td>%s</td>
+                            <td><a href="%s">%s</a></td>
+                        </tr>        
+                        '''
+rows_cov = ''
+for fasta in low_cov_fastas:
+    try:
+        with open(fasta, 'r') as f:
+            n_records = len(SeqIO.read(f, 'fasta'))
+    except ValueError:
+        n_records = 0
+    report = ''
+    rows_cov += low_cov_contigs_row % (fasta.split('/')[1], n_records, report, report)
+
 with open(output_file, 'w') as f:
     f.write(report_template % (qualimap_report,
+                               low_cov_contigs_section % rows_cov,
                                mlst_tree,
                                spanning_tree_core,
                                ete_figure_counts,
                                virulence_section % rows,
-                               barchart_template))
+                               resistance_section % rows_res))
 f.close()

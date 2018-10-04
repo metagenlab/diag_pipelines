@@ -36,7 +36,7 @@ leaf_id2meca = {}
 for sample_name, virulence_table in zip(ordered_samples, virulence_tables):
     try:
         # attention, could match multiple mecA?
-        CUT_OFF = virulence_table.loc[virulence_table['Best_Hit_ARO'] == 'mecA', 'CUT_OFF'].iloc[0]
+        CUT_OFF = virulence_table.loc[virulence_table['Best_Hit_ARO'] == 'mecA', 'Cut_Off'].iloc[0]
         leaf_id2meca[sample_name] = CUT_OFF
     except IndexError:
         leaf_id2meca[sample_name] = '-'

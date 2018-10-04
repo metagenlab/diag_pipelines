@@ -1,5 +1,5 @@
 format-version: 1.2
-date: 28:06:2018 09:13
+date: 22:08:2018 10:50
 saved-by: CARD
 auto-generated-by: cv2obo
 default-namespace: model_ontology
@@ -30,14 +30,14 @@ relationship: part_of MO:0000032 ! protein overexpression model
 id: MO:0000009
 name: protein homolog model
 namespace: model_ontology
-def: "The protein homolog model is an AMR detection model. Protein homolog models detect a protein sequence based on its similarity to a curated reference sequence. A protein homolog model has only one parameter: a curated BLASTP bitscore cutoff for determining the strength of a match. Protein homolog model matches to reference sequences are categorized on three criteria: \"perfect\", \"strict\" and \"loose\". A perfect match is 100% identical to the reference sequence along its entire length; a strict match is not identical but the bitscore of the matched sequence is greater than the curated BLASTP bitscore cutoff. Loose matches are other sequences with a match bitscore less than the curated BLASTP bitscore." []
+def: "The protein homolog model is an AMR detection model. Protein homolog models detect a protein sequence based on its similarity to a curated reference sequence. A protein homolog model has only one parameter: a curated BLASTP bitscore cutoff for determining the strength of a match. Protein homolog model matches to reference sequences are categorized on three criteria: perfect, strict and loose. A perfect match is 100% identical to the reference sequence along its entire length; a strict match is not identical but the bitscore of the matched sequence is greater than the curated BLASTP bitscore cutoff. Loose matches are other sequences with a match bitscore less than the curated BLASTP bitscore." []
 is_a: MO:0000001 ! detection model or meta-model
 
 [Term]
 id: MO:0000002
 name: protein variant model
 namespace: model_ontology
-def: "The protein variant model is an AMR detection model. Protein variant models are similar to protein homolog models - they detect the presence of a protein sequence based on its similarity to a curated reference sequence, but secondarily search submitted query sequences for curated sets of mutations shown clinically to confer resistance relative to wild-type. This model includes a protein reference sequence, a curated BLASTP cut-off, and mapped resistance variants. Mapped resistance variants may include any or all of: single resistance variants, insertions, deletions, co-dependent resistance variants, nonsense SNPs, and/or frameshift mutations. Protein variant model matches to reference sequences are categorized on two criteria: \"strict\" and \"loose\". A strict match has a BLASTP bitscore above the curated BLASTP cutoff value and contains at least one detected mutation from amongst the mapped resistance variants; a loose match has a BLASTP bitscore below the curated BLASTP cutoff value but still contains at least one detected mutation from amongst the mapped resistance variants. Regardless of BLASTP bitscore, if a sequence does not contain one of the mapped resistance variants, it is not considered a match and not detected by the protein variant model." []
+def: "The protein variant model is an AMR detection model. Protein variant models are similar to protein homolog models - they detect the presence of a protein sequence based on its similarity to a curated reference sequence, but secondarily search submitted query sequences for curated sets of mutations shown clinically to confer resistance relative to wild-type. This model includes a protein reference sequence, a curated BLASTP cut-off, and mapped resistance variants. Mapped resistance variants may include any or all of: single resistance variants, insertions, deletions, co-dependent resistance variants, nonsense SNPs, and/or frameshift mutations. Protein variant model matches to reference sequences are categorized on two criteria: strict and loose. A strict match has a BLASTP bitscore above the curated BLASTP cutoff value and contains at least one detected mutation from amongst the mapped resistance variants; a loose match has a BLASTP bitscore below the curated BLASTP cutoff value but still contains at least one detected mutation from amongst the mapped resistance variants. Regardless of BLASTP bitscore, if a sequence does not contain one of the mapped resistance variants, it is not considered a match and not detected by the protein variant model." []
 is_a: MO:0000001 ! detection model or meta-model
 
 [Term]
@@ -66,7 +66,7 @@ is_a: MO:0000001 ! detection model or meta-model
 id: MO:0000001
 name: detection model or meta-model
 namespace: model_ontology
-def: "The Comprehensive Antibiotic Resistance Database uses models for the detection of molecular determinants. For example, a \"protein homolog\" model can contain sequences of antimicrobial resistance genes that do not include mutation as a determinant of resistance, whereas a \"protein variant\" model will contain reference wild type sequences used for mapping SNPs conferring antimicrobial resistance.  The Comprehensive Antibiotic Resistance Database uses meta-models for the detection of combinations of individual molecular determinants. For example, efflux pump systems consist of multiple subunits and regulators that are detected together using the the \"efflux pump system\" meta-model. In CARD, these models are applied to the detection of antimicrobial resistance elements, but they are broadly applicable to other systems as well, with modifications." []
+def: "The Comprehensive Antibiotic Resistance Database uses models for the detection of molecular determinants. For example, a protein homolog model can contain sequences of antimicrobial resistance genes that do not include mutation as a determinant of resistance, whereas a protein variant model will contain reference wild-type sequences used for mapping SNPs conferring antimicrobial resistance.  The Comprehensive Antibiotic Resistance Database uses meta-models for the detection of combinations of individual molecular determinants. For example, efflux pump systems consist of multiple subunits and regulators that are detected together using the the efflux pump system meta-model. In CARD, these models are applied to the detection of antimicrobial resistance elements, but they are broadly applicable to other systems as well, with modifications." []
 is_a: MO:0000036 ! detection model or parameter
 
 [Term]
@@ -88,7 +88,7 @@ relationship: part_of MO:0000010 ! protein domain meta-model
 id: MO:0000012
 name: domain direction or strand
 namespace: model_ontology
-def: "A parameter to describe the order of the fusion protein domains from N terminus to C terminus. The parameter is defined by Cvterm IDs separated by commas (if known). " []
+def: "A parameter to describe the order of the fusion protein domains from N terminus to C terminus. The parameter is defined by Cvterm IDs separated by commas (if known)." []
 is_a: MO:0000038 ! detection parameter
 relationship: part_of MO:0000010 ! protein domain meta-model
 
@@ -223,7 +223,7 @@ def: "The Comprehensive Antibiotic Resistance Database uses meta-models, models,
 id: MO:0000038
 name: detection parameter
 namespace: model_ontology
-def: "Model parameters are used within detection models or meta-models. Collectively, parameters describe numerical or other measurable factors that define models, providing the framework for development of analytical tools. For example, many detection models rely on a curated expectation value or bitscore cut-off value to differentiate between functional homologs of known sequences and more divergent homologs with different function. " []
+def: "Model parameters are used within detection models or meta-models. Collectively, parameters describe numerical or other measurable factors that define models, providing the framework for development of analytical tools. For example, many detection models rely on a curated expectation value or bitscore cut-off value to differentiate between functional homologs of known sequences and more divergent homologs with different function." []
 is_a: MO:0000036 ! detection model or parameter
 
 [Term]
@@ -279,12 +279,12 @@ def: "A subtype of the insertion mutation detection model parameter. This parame
 is_a: MO:0000040 ! insertion mutation
 
 [Typedef]
-id: part_of
-name: part_of
-xref: RO:part_of
-
-[Typedef]
 id: is_a
 name: is_a
 xref: RO:is_a
+
+[Typedef]
+id: part_of
+name: part_of
+xref: RO:part_of
 

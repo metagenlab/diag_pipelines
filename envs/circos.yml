@@ -1,0 +1,8 @@
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - biopython = 1.72=py36_0
+ - circos = 0.69.6=2
+ - mummer = 3.23=pl526_6
+ - matplotlib = 3.0.0=py36h0b34cb6_1

@@ -17,6 +17,7 @@ AMR Gene Family	ARO:3004259	AAC(1)
 AMR Gene Family	ARO:3000341	AAC(2')
 AMR Gene Family	ARO:3000322	AAC(3)
 AMR Gene Family	ARO:3000345	AAC(6')
+AMR Gene Family	ARO:3004469	ABC-F ATP-binding cassette ribosomal protection protein
 AMR Gene Family	ARO:3000073	ACC beta-lactamase
 AMR Gene Family	ARO:3004358	ACI beta-lactamase
 AMR Gene Family	ARO:3003581	Acinetobacter mutant Lpx gene conferring resistance to colistin
@@ -71,6 +72,7 @@ AMR Gene Family	ARO:3004201	BlaB beta-lactamase
 AMR Gene Family	ARO:3004233	blaF family beta-lactamase
 AMR Gene Family	ARO:3004197	blaZ beta-lactamase
 AMR Gene Family	ARO:3004256	Bleomycin resistant protein
+AMR Gene Family	ARO:3004293	BUT beta-lactamase
 AMR Gene Family	ARO:3000091	CARB beta-lactamase
 AMR Gene Family	ARO:3004283	CarO porin
 AMR Gene Family	ARO:3004218	CAU beta-lactamase
@@ -84,6 +86,7 @@ AMR Gene Family	ARO:3003000	CfxA beta-lactamase
 AMR Gene Family	ARO:3004203	CGB beta-lactamase
 AMR Gene Family	ARO:3000122	chloramphenicol acetyltransferase (CAT)
 AMR Gene Family	ARO:3000249	chloramphenicol phosphotransferase
+AMR Gene Family	ARO:3004467	ciprofloxacin phosphotransferase
 AMR Gene Family	ARO:3004229	class A Bacillus anthracis Bla beta-lactamase
 AMR Gene Family	ARO:3004228	class A LRA beta-lactamase
 AMR Gene Family	ARO:3004231	class C LRA beta-lactamase
@@ -150,6 +153,7 @@ AMR Gene Family	ARO:3004209	HMB beta-lactamase
 AMR Gene Family	ARO:3000018	IMI beta-lactamase
 AMR Gene Family	ARO:3000020	IMP beta-lactamase
 AMR Gene Family	ARO:3000060	IND beta-lactamase
+AMR Gene Family	ARO:3004465	intrinsic colistin resistant phosphoethanolamine transferase
 AMR Gene Family	ARO:3003416	isoniazid resistant katG
 AMR Gene Family	ARO:3004202	JOHN beta-lactamase
 AMR Gene Family	ARO:3004046	kdpDE

@@ -9,7 +9,8 @@ rule search_resistance_with_rgi:
         "samples/{sample}/resistance/rgi.json"
     shell:
         """
-        rgi -t contig -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi
+        # new version
+        rgi main -t contig -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi
         """
 
 rule extract_resistance_from_ontology:
@@ -54,8 +55,8 @@ rule generate_rgi_tsv_file_from_json_file:
 
     shell:
         """
-        rgi_jsontab -v ON -i {input[0]} -o {output[0]}
-        mv {output[0]}.txt {output[0]}
+        rgi tab -i {input[0]}
+        mv $(dirname {output[0]})/rgi.txt {output[0]}
         """
 
 rule plot_rgi:
