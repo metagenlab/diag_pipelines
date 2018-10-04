@@ -7,16 +7,25 @@
         "memory_R"  : "rusage[mem=2000]",
         "memory_M"  : "2000000",
         "name"      : "JOBNAME.{rule}.{wildcards}",
-        "output"    : "logs/cluster/{rule}.{wildcards}.out",
-        "error"     : "logs/cluster/{rule}.{wildcards}.err",
+        "output"    : "logs/{rule}.{wildcards}.out",
+        "error"     : "logs/{rule}.{wildcards}.err",
         "hosts"     :  "span[hosts=1]",
         "n_cores"   :  1
     },
+
 
     "assemble_genome_corrected_paired_reads_with_spades" :
     {
         "memory_R"    : "rusage[mem=16000]",
         "memory_M"    : "16000000",
+        "n_cores"     :  4
+    },
+
+
+    "determine_mlst_from_trimmed_reads" :
+    {
+        "memory_R"    : "rusage[mem=4000]",
+        "memory_M"    : "4000000",
         "n_cores"     :  4
     },
 
@@ -37,7 +46,20 @@
 
     "genotype_with_freebayes_on_all_samples" :
     {
-        "n_cores"     :  4
-    }
+        "memory_R"     :  "rusage[mem=16000]",                                                                                                                                                                              
+        "memory_M"     :  "16000000",
+        "n_cores"      :  4,
+        "queue"        :  "long"
+    },
 
+    "genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION" :                                                                                                                                                                    
+    {                                                                                                                                                                                                                       
+        "memory_R"     :  "rusage[mem=8000]",
+	"memory_M"     :  "8000000"
+    },
+     "merge_gvcf_files_with_CombineGVCFs_GATK":
+    {                                                                                                                                                                                                                       
+        "memory_R"     :  "rusage[mem=16000]",
+	"memory_M"     :  "16000000"
+    }
 }
