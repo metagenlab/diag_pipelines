@@ -22,7 +22,7 @@ rule compute_minimum_spanning_tree_with_st:
         dist = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
         mlst_samples = "typing/mlst/summary.tsv",
     output:
-        mst = report("typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_with_st.svg", caption="report/typing.rst", category="Typing")
+        mst = "report/figures/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_with_st.svg"
     log:
         logging_folder + "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_with_st.txt"
     script:
@@ -38,7 +38,7 @@ rule compute_minimum_spanning_tree_no_st:
     input:
         dist="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
     output:
-        mst="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_no_st.svg"
+        mst="report/figures/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_no_st.svg"
     log:
         logging_folder + "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_no_st.txt"
     script:

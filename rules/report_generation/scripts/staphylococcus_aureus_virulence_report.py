@@ -9,12 +9,21 @@ from Bio import SeqIO
 import re
 
 multiqc_report = snakemake.input["multiqc_report"]
+
 ete_figure = snakemake.input["ete_figure"]
+ete_figure = '/'.join(ete_figure.split('/')[1:])
+
 ete_figure_counts = snakemake.input["ete_figure_counts"]
+ete_figure_counts = '/'.join(ete_figure_counts.split('/')[1:])
+
 virulence_reports = snakemake.input["virulence_reports"]
 ordered_samples = snakemake.params["samples"]
 spanning_tree_core = snakemake.input["spanning_tree_core"]
+spanning_tree_core = '/'.join(spanning_tree_core.split('/')[1:])
+
 mlst_tree = snakemake.input["mlst_tree"]
+mlst_tree = '/'.join(mlst_tree.split('/')[1:])
+
 resistance_reports = snakemake.input["resistance_reports"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 
@@ -251,7 +260,7 @@ The MLST was determined using the mlst_ software based on PubMLST_ typing scheme
 Phylogeny + MLST
 ****************
 
-.. figure:: ../{mlst_tree} 
+.. figure:: {mlst_tree} 
    :alt: MST tree
    :figwidth: 80%
 
@@ -260,7 +269,7 @@ Phylogeny + MLST
 Minimum Spanning tree
 *********************
 
-.. figure:: ../{spanning_tree_core} 
+.. figure:: {spanning_tree_core} 
    :alt: MST tree
    :figwidth: 80%
 
@@ -274,7 +283,7 @@ Overview
 The identification of virlence factors was performed with BLAST. Only hits exhibiting more 
 than 80% amino acid idenity to a known virulence factor from the VFDB database are considered. 
 
-.. figure:: ../{ete_figure_counts} 
+.. figure:: {ete_figure_counts} 
    :alt: MST tree
    :figwidth: 80%
 

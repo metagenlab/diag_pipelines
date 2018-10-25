@@ -7,7 +7,7 @@ rule plot_virulence_ete_tree:
         best_tree = "phylogeny/gatk_gvcfs/cgMLST/bwa/normal_run/RAxML_bestTree.nw",
         vf_table=config["virulence_factors"]
     output:
-        "virulence/virulence.svg",
+        "report/figures/virulence.svg",
     script:
         "scripts/plot_ete_virulence.py"
 
@@ -18,7 +18,7 @@ rule plot_MLST_ete_tree:
         best_tree = "phylogeny/gatk_gvcfs/cgMLST/bwa/normal_run/RAxML_bestTree.nw",
         mlst='typing/mlst/summary.tsv',
     output:
-        "typing/mlst_tree.svg",
+        "report/figures/mlst_tree.svg",
     script:
         "scripts/plot_ete_MLST.py"
 
@@ -35,7 +35,7 @@ rule plot_virulence_ete_tree_s_aureus:
     params:
         samples = list(read_naming.keys()),
     output:
-        "virulence/virulence_staph.svg",
+        "report/figures/virulence_staph.svg",
         "virulence/virulence_staph.tab",
     script:
         "scripts/plot_ete_virulence.py"
@@ -50,7 +50,7 @@ rule plot_VFDB_ete_tree_counts:
     params:
         samples = list(read_naming.keys()),
     output:
-        "virulence/virulence_counts.svg",
+        "report/figures/virulence_counts.svg",
     script:
         "scripts/plot_ete_virulence_counts.py"
 
@@ -64,6 +64,6 @@ rule plot_VFDB_ete_matrix:
     params:
         samples = list(read_naming.keys()),
     output:
-        "virulence/virulence_matrix.svg",
+        "report/figures/virulence_matrix.svg",
     script:
         "scripts/plot_ete_virulence_matrix.py"

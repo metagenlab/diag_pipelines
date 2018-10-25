@@ -5,12 +5,12 @@ rule report_virulence_saureus:
         pipeline_path + "envs/biopython.yml"
     input:
         multiqc_report = "report/multiqc_assembly/multiqc_report.html",
-        ete_figure = "virulence/virulence_staph.svg",
-        ete_figure_counts = "virulence/virulence_counts.svg",
+        ete_figure = "report/figures/virulence_staph.svg",
+        ete_figure_counts = "report/figures/virulence_counts.svg",
         virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
         blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
-        spanning_tree_core="typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg",
-        mlst_tree="typing/mlst_tree.svg",
+        spanning_tree_core="report/figures/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg",
+        mlst_tree="report/figures/mlst_tree.svg",
         #spanning_tree_all="typing/gatk_gvcfs/full_genome_33148/bwa/distances_in_snp_mst_with_st.svg",
         #spanning_tree_st152 ="typing/gatk_gvcfs/full_genome_1411181071_assembled_genome/bwa/distances_in_snp_mst_with_st.svg"
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
