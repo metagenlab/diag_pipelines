@@ -7,7 +7,7 @@ rule create_multiqc_report_for_assembly:
         assembly=expand("samples/{sample}/multiqc/assembly/log.txt", sample = list(read_naming.keys())),
         mapping=expand("samples/{sample}/multiqc/mapping_to_{sample}_assembled_genome/bwa/log.txt", sample = list(read_naming.keys())),
     output:
-        "quality/multiqc/assembly/multiqc_report.html"
+        "report/multiqc_assembly/multiqc_report.html"
     log:
         logging_folder + "logs/quality/multiqc/assembly.txt"
     shell:

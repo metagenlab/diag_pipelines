@@ -83,6 +83,6 @@ rule generate_rgi_report:
     params:
         sample="{sample}",
     output:
-        "samples/{sample}/resistance/rgi_report.html",
+        "report/resistance/{sample}_rgi_report.html",
     script:
         "scripts/generate_rgi_html_report.py"
