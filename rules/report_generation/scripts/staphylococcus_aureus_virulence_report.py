@@ -276,7 +276,7 @@ Minimum Spanning tree
    This is the caption of the figure (a simple paragraph).
 
 Virulence (VFDB)
-------------------------
+-----------------
 
 Overview
 *********
@@ -296,8 +296,8 @@ Details
 
     {table_virulence}
 
-Resistance
-----------
+Resistance (RGI/CARD)
+--------------------
 
 .. raw:: html
 

@@ -9,11 +9,27 @@ rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
         R1 = "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         R2 = "samples/{sample}/reads/raw/{sample}_R2.fastq.gz",
     output:
-        distances = "samples/{sample}/contamination/mash/distances.tsv"
+        distances = "samples/{sample}/contamination/mash/fastq/distances.tsv"
     shell:
         """
         cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_sketch]} - > {output[distances]} 2> /dev/null
         cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_human]} - >> {output[distances]} 2> /dev/null
+        """
+
+rule calculate_distance_assembly_from_refseq_genomes_with_mash:
+    threads:
+        4
+    conda:
+        pipeline_path + "envs/mash.yml"
+    input:
+        mash_sketch = "references/mash_sketch.msh",
+        mash_human = "references/mash_sketch_human.msh",
+        assembly = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta",
+    output:
+        distances = "samples/{sample}/contamination/mash/assembly/distances.tsv"
+    shell:
+        """
+        mash screen -w  {input[mash_sketch]} {input[assembly]} > {output[distances]} 2> /dev/null
         """
 
 rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
@@ -26,7 +42,7 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
         mash_human = "references/mash_sketch_human.msh",
         single = "samples/{sample}/reads/raw/{sample}_single.fastq.gz",
     output:
-        distances = "samples/{sample}/contamination/mash/distances.tsv"
+        distances = "samples/{sample}/contamination/mash/fastq/distances.tsv"
     shell:
         """
         cat {input[single]} | mash screen -w {input[mash_sketch]} - > {output[distances]} 2> /dev/null
@@ -48,10 +64,10 @@ rule get_taxonomy_from_mash_results:
 
 rule format_distances_from_mash_results:
     input:
-        distances = "samples/{sample}/contamination/mash/distances.tsv"
+        distances = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv"
     output:
-        formated_distances = "samples/{sample}/contamination/mash/distances_formated.tsv",
-        formated_distances_no_viruses = "samples/{sample}/contamination/mash/distances_formated_no_virus.tsv"        
+        formated_distances = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances_formated.tsv",
+        formated_distances_no_viruses = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances_formated_no_virus.tsv"
     shell:
         """
         cat {input[distances]}  | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | cut -f1,2,4,7 | sort -gr  > {output[formated_distances]}
@@ -63,9 +79,9 @@ rule format_tsv_to_xlsx_mash_results:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
-        tsv = "samples/{sample}/contamination/mash/{results}.tsv",
+        tsv = "samples/{sample}/contamination/mash/{fastq_or_assembly}/{results}.tsv",
     output:
-        xlsx = "samples/{sample}/contamination/mash/{results}.xlsx",
+        xlsx = "samples/{sample}/contamination/mash/{fastq_or_assembly}/{results}.xlsx",
     script:
         "scripts/format_tsv_to_xlsx.py"
 
@@ -74,9 +90,9 @@ rule merge_all_xlsx_mash_results:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
-        xlsx = expand("samples/{sample}/contamination/mash/{{results}}.xlsx", sample=read_naming.keys())
+        xlsx = expand("samples/{sample}/contamination/mash/{{fastq_or_assembly}}/{{results}}.xlsx", sample=read_naming.keys())
     output:
-        xlsx_out = "contamination/{results}.xlsx",
+        xlsx_out = "contamination/{fastq_or_assembly}/{results}.xlsx",
     script:
         pipeline_path + "rules/annotation/resistance/scripts/merge_non_empty_results.py"
 
