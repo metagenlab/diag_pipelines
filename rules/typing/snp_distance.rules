@@ -22,7 +22,7 @@ rule compute_minimum_spanning_tree_with_st:
         dist = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
         mlst_samples = "typing/mlst/summary.tsv",
     output:
-        mst = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_with_st.svg"
+        mst = report("typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_with_st.svg", caption="report/typing.rst", category="Typing")
     log:
         logging_folder + "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_with_st.txt"
     script:

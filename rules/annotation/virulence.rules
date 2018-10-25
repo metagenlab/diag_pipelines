@@ -114,7 +114,7 @@ rule generate_VFDB_report:
     params:
         sample="{sample}",
     output:
-        "samples/{sample}/virulence/VFDB_report.html",
+        "report/virulence/{sample}_VFDB_report.html"
     script:
         "scripts/generate_VFDB_html_report.py"
 
