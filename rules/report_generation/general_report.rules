@@ -20,5 +20,30 @@ rule report_virulence_saureus:
     output:
         "report/report_virulence_saureus.html",
     script:
-        "scripts/staphylococcus_aureus_virulence_report.py"
+        "scripts/report_staphylococcus_aureus_virulence.py"
 
+
+rule report_strain_characterization:
+
+    '''
+    - multiqc
+    - assembly
+    - lowcov contigs
+    - blast VFDB
+    - RGI
+    '''
+
+    conda:
+        pipeline_path + "envs/biopython.yml"
+    input:
+        multiqc_report = "report/multiqc_assembly/multiqc_report.html",
+        virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
+        blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
+        resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
+        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+    params:
+        samples = list(read_naming.keys()),
+    output:
+        "report/report_strain_characterization.html",
+    script:
+        "scripts/report_strain_characterization.py"
