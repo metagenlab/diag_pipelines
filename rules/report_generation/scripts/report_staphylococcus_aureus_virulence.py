@@ -7,8 +7,11 @@
 import pandas
 from Bio import SeqIO
 import re
+from plotly import offline
+
 
 multiqc_report = snakemake.input["multiqc_report"]
+snp_table = snakemake.input["snp_table"]
 
 ete_figure = snakemake.input["ete_figure"]
 ete_figure = '/'.join(ete_figure.split('/')[1:])
@@ -40,13 +43,26 @@ STYLE = """
     .dataTables_filter {
        float: left !important;
     }
+    #cy {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 999;
+    }
     </style>
     """
+
 SCRIPT = """
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.2.4/cytoscape-cola.min.js"></script>
+    
     <script>
     $(document).ready(function() {
         $('#VF_table').DataTable( {
@@ -78,7 +94,58 @@ SCRIPT = """
             "info": false
         } );
     } );
+
+
+    document.addEventListener('DOMContentLoaded', function(){
+    
+        var cy = window.cy = cytoscape({
+            container: document.getElementById('cy'),
+    
+            autounselectify: true,
+            
+            boxSelectionEnabled: false,
+    
+            layout: {
+                name: 'cose',
+                idealEdgeLength: function(edge){ return Math.sqrt(edge.data('strength')); }, // edgeLength
+                padding: 30,
+                maxSimulationTime: 6000,
+                randomize: false,
+                nodeSpacing: 100,
+                animate: true
+    
+            },
+    
+            style: [
+                {
+                    selector: 'node',
+                    css: {
+                        'background-color': '#f92411',
+                        'shape': 'roundrectangle',
+                        'width': function(node){ return 2*node.data('label').length; },
+                        'height': 7,
+                        'content': 'data(label)',
+                        'font-size': 3,
+                        'text-valign': 'center'
+                    }
+                },
+    
+                {
+                    selector: 'edge',
+                    css: {
+                        'line-color': '#f92411',
+                        'label': 'data(strength)',
+                        'font-size': 3
+                    }
+                }
+            ],
+    
+            elements:  %s
+            });
+    
+    });
     </script>
+
     """
 
 
@@ -178,6 +245,59 @@ def resistance_table(resistance_reports):
     return df_str.replace("\n", "\n" + 10 * " ")
 
 
+def plot_minimum_spanning_tree():
+    pass
+
+def make_div(figure_or_data, include_plotlyjs=False, show_link=False, div_id=None):
+    div = offline.plot(
+        figure_or_data,
+        include_plotlyjs=include_plotlyjs,
+        show_link=show_link,
+        output_type="div",
+    )
+    if ".then(function ()" in div:
+        div = f"""{div.partition(".then(function ()")[0]}</script>"""
+    if div_id:
+        import re
+
+        try:
+            existing_id = re.findall(r'id="(.*?)"|$', div)[0]
+            div = div.replace(existing_id, div_id)
+        except IndexError:
+            pass
+    return div
+
+
+def plot_heatmap_snps(mat):
+    import pandas
+    import scipy.cluster.hierarchy as hc
+    import plotly.figure_factory as ff
+    import plotly.graph_objs as go
+
+    m = pandas.read_csv(mat, delimiter='\t', header=0, index_col=0)
+    link = hc.linkage(m.values, method='centroid')
+    o1 = hc.leaves_list(link)
+
+    mat = m.iloc[o1, :]
+    mat = mat.iloc[:, o1[::-1]]
+
+    nodes = ['S_' + str(i) for i in mat.index]
+
+    data = ff.create_annotated_heatmap(
+        z=mat.values,  # squareform(m.values)
+        x=nodes,
+        y=nodes,
+        colorscale='Reds'
+    )
+
+    layout = go.Layout(
+        title='SNP heatmap'
+    )
+
+    fig = go.Figure(data=data, layout=layout)
+
+    return make_div(fig, div_id="heatmapPlot")
+
 def write_report(output_file,
                  STYLE,
                  SCRIPT,
@@ -187,7 +307,8 @@ def write_report(output_file,
                  spanning_tree_core,
                  low_cov_fasta,
                  ete_figure_counts,
-                 mlst_tree):
+                 mlst_tree,
+                 snp_table):
     import io
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
@@ -196,6 +317,7 @@ def write_report(output_file,
     table_lowcoverage_contigs = coverage_table(low_cov_fasta)
     table_virulence = virulence_table(virulence_reports,blast_files)
     table_resistance = resistance_table(resistance_reports)
+    snp_heatmap = plot_heatmap_snps(snp_table)
 
 
     report_str = f"""
@@ -266,7 +388,7 @@ Phylogeny + MLST
 
    This is the caption of the figure (a simple paragraph).
 
-Minimum Spanning tree
+MS tree (R)
 *********************
 
 .. figure:: {spanning_tree_core} 
@@ -274,6 +396,20 @@ Minimum Spanning tree
    :figwidth: 80%
 
    This is the caption of the figure (a simple paragraph).
+   
+MS tree (js) 
+***********************
+
+.. raw:: html
+
+    <div id="cy" style="width:800px;height:800px; position: relative; border: 2px solid #212523"></div>
+
+SNP table
+***********
+
+.. raw:: html
+
+    {snp_heatmap}
 
 Virulence (VFDB)
 -----------------
@@ -297,7 +433,7 @@ Details
     {table_virulence}
 
 Resistance (RGI/CARD)
---------------------
+----------------------
 
 .. raw:: html
 
@@ -312,13 +448,19 @@ Resistance (RGI/CARD)
             settings_overrides={"stylesheet_path": ""},
         )
 
+from MN_tree import get_MN_tree, convert2cytoscapeJSON
+
+net = convert2cytoscapeJSON(get_MN_tree(snp_table))
+
+
 write_report(output_file,
              STYLE,
-             SCRIPT,
+             SCRIPT % net,
              virulence_reports,
              blast_files,
              resistance_reports,
              spanning_tree_core,
              low_cov_fastas,
              ete_figure_counts,
-             mlst_tree)
+             mlst_tree,
+             snp_table)
