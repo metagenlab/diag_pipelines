@@ -30,8 +30,15 @@ mlst_tree = '/'.join(mlst_tree.split('/')[1:])
 resistance_reports = snakemake.input["resistance_reports"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 
+reference_genome = snakemake.input["reference_genome"]
+core_genome_bed = snakemake.input["core_genome_bed"]
+
 output_file = snakemake.output[0]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
+
+leaf2mlst= pandas.read_csv(snakemake.input["mlst"],
+                           delimiter='\t',
+                           names=["leaf","species","mlst","1","2","3","4","5","6","7"]).set_index("leaf").to_dict()["mlst"]
 
 
 STYLE = """
@@ -107,7 +114,7 @@ SCRIPT = """
     
             layout: {
                 name: 'cose',
-                idealEdgeLength: function(edge){ return Math.sqrt(edge.data('strength')); }, // edgeLength
+                idealEdgeLength: function(edge){ return 1/Math.log(edge.data('strength')); }, // edgeLength
                 padding: 30,
                 maxSimulationTime: 6000,
                 randomize: false,
@@ -120,12 +127,12 @@ SCRIPT = """
                 {
                     selector: 'node',
                     css: {
-                        'background-color': '#f92411',
+                        'background-color': 'data(color)',
                         'shape': 'roundrectangle',
-                        'width': function(node){ return 2*node.data('label').length; },
+                        'width': function(node){ return 3*node.data('label').length; },
                         'height': 7,
                         'content': 'data(label)',
-                        'font-size': 3,
+                        'font-size': 5,
                         'text-valign': 'center'
                     }
                 },
@@ -133,9 +140,10 @@ SCRIPT = """
                 {
                     selector: 'edge',
                     css: {
-                        'line-color': '#f92411',
+                        'line-color': 'data(color)',
                         'label': 'data(strength)',
-                        'font-size': 3
+                        'width': 'data(width)',
+                        'font-size': 4
                     }
                 }
             ],
@@ -147,6 +155,15 @@ SCRIPT = """
     </script>
 
     """
+
+def get_core_genome_size(core_genome_bed):
+    table = pandas.read_csv(core_genome_bed, delimiter="\t", names=['chromosome', 'start', 'end'])
+    return sum(table["end"]-table["start"]+1)
+
+def get_reference_genome_size(reference_genome_file):
+    from Bio import SeqIO
+    records_len = [len(i) for i in SeqIO.parse(open(reference_genome_file, 'r'), 'fasta')]
+    return sum(records_len)
 
 
 def coverage_table(low_cov_fastas):
@@ -308,7 +325,9 @@ def write_report(output_file,
                  low_cov_fasta,
                  ete_figure_counts,
                  mlst_tree,
-                 snp_table):
+                 snp_table,
+                 core_genome_size,
+                 reference_genome_size):
     import io
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
@@ -318,7 +337,7 @@ def write_report(output_file,
     table_virulence = virulence_table(virulence_reports,blast_files)
     table_resistance = resistance_table(resistance_reports)
     snp_heatmap = plot_heatmap_snps(snp_table)
-
+    fraction_core = round(float(core_genome_size)/float(reference_genome_size)*100, 2)
 
     report_str = f"""
 
@@ -391,6 +410,10 @@ Phylogeny + MLST
 MS tree (R)
 *********************
 
+- Size of the reference genome: {reference_genome_size}
+- Size of the core genome: {core_genome_size} ({fraction_core} % of the reference) 
+
+
 .. figure:: {spanning_tree_core} 
    :alt: MST tree
    :figwidth: 80%
@@ -402,7 +425,7 @@ MS tree (js)
 
 .. raw:: html
 
-    <div id="cy" style="width:800px;height:800px; position: relative; border: 2px solid #212523"></div>
+    <div id="cy" style="width:80%;height:700px; position: relative; border: 2px solid #212523"></div>
 
 SNP table
 ***********
@@ -450,8 +473,8 @@ Resistance (RGI/CARD)
 
 from MN_tree import get_MN_tree, convert2cytoscapeJSON
 
-net = convert2cytoscapeJSON(get_MN_tree(snp_table))
-
+print(leaf2mlst)
+net = convert2cytoscapeJSON(get_MN_tree(snp_table), leaf2mlst)
 
 write_report(output_file,
              STYLE,
@@ -463,4 +486,6 @@ write_report(output_file,
              low_cov_fastas,
              ete_figure_counts,
              mlst_tree,
-             snp_table)
+             snp_table,
+             get_core_genome_size(core_genome_bed),
+             get_reference_genome_size(reference_genome))

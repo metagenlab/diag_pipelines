@@ -1,5 +1,6 @@
 
-
+# only ok for cgMLST core genomes
+# need further checks for parsnp core genomes
 rule report_virulence_saureus:
     conda:
         pipeline_path + "envs/report.yml"
@@ -16,6 +17,9 @@ rule report_virulence_saureus:
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
         snp_table = "typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp.tsv",
+        reference_genome = "references/cgMLST/genome_fasta.fasta",
+        core_genome_bed = "core_genomes/cgMLST/" + species + ".bed",
+        mlst='typing/mlst/summary.tsv',
     params:
         samples = list(read_naming.keys()),
     output:

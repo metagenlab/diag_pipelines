@@ -33,6 +33,14 @@ def find_clusters(G, node_list):
                 groups.append([i[0], i[1]])
     return groups
 
+def get_spaced_colors(n):
+
+    max_value = 16581375 #255**3
+    interval = int(max_value / n)
+    colors = [hex(I)[2:].zfill(6) for I in range(0, max_value, interval)]
+
+    return ['#%02x%02x%02x' % (int(i[:2], 16), int(i[2:4], 16), int(i[4:], 16)) for i in colors]
+
 def merge_group_nodes(G, groups, node_list):
     for group in groups:
         median_dico = {}
@@ -57,7 +65,13 @@ def merge_group_nodes(G, groups, node_list):
 
 # this function is used to convert networkx to Cytoscape.js JSON format
 # returns string of JSON
-def convert2cytoscapeJSON(G):
+def convert2cytoscapeJSON(G, node2st=False):
+
+    if node2st:
+        mlst_list = list(set(node2st.values()))
+        mlst2color = dict(zip(mlst_list, get_spaced_colors(len(mlst_list))))
+        mlst2color['-'] = 'white'
+    print(mlst2color)
     # load all nodes into nodes array
     final = {}
     final["nodes"] = []
@@ -68,13 +82,28 @@ def convert2cytoscapeJSON(G):
         nx["data"]["id"] = node
         nx["data"]["label"] = node
         final["nodes"].append(nx.copy())
+        if node2st:
+            try:
+                st = node2st[int(node.split('\n')[0])]
+            except:
+                st = '-'
+            nx["data"]["color"] = mlst2color[st]
+            nx["data"]["MLST"] = ST
+        else:
+            nx["data"]["color"] = '#8A8A8A'
     #load all edges to edges array
     for edge in G.edges(data=True):
-        print(edge)
+        #print(edge)
         nx = {}
         nx["data"]={}
         nx["data"]["id"]=edge[0]+edge[1]
         nx["data"]["strength"] = edge[2]["weight"]
+        if edge[2]["weight"] < 50:
+            nx["data"]["color"] = '#f92411'
+            nx["data"]["width"] = 2
+        else:
+            nx["data"]["color"] = '#8A8A8A'
+            nx["data"]["width"] = 1
         nx["data"]["source"]=edge[0]
         nx["data"]["target"]=edge[1]
         final["edges"].append(nx)
