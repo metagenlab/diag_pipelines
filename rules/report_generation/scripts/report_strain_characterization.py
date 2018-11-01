@@ -5,24 +5,13 @@
 #    n_calls = sum(1 for l in vcf if not l.startswith("#"))
 # n_samples = list(read_naming.keys()
 import pandas
-from Bio import SeqIO
-import re
+from MN_tree import get_MN_tree, convert2cytoscapeJSON
+from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 
 multiqc_report = snakemake.input["multiqc_report"]
 
-ete_figure = snakemake.input["ete_figure"]
-ete_figure = '/'.join(ete_figure.split('/')[1:])
-
-ete_figure_counts = snakemake.input["ete_figure_counts"]
-ete_figure_counts = '/'.join(ete_figure_counts.split('/')[1:])
-
 virulence_reports = snakemake.input["virulence_reports"]
 ordered_samples = snakemake.params["samples"]
-spanning_tree_core = snakemake.input["spanning_tree_core"]
-spanning_tree_core = '/'.join(spanning_tree_core.split('/')[1:])
-
-mlst_tree = snakemake.input["mlst_tree"]
-mlst_tree = '/'.join(mlst_tree.split('/')[1:])
 
 resistance_reports = snakemake.input["resistance_reports"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
@@ -42,11 +31,16 @@ STYLE = """
     }
     </style>
     """
+
 SCRIPT = """
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.2.4/cytoscape-cola.min.js"></script>
+    
     <script>
     $(document).ready(function() {
         $('#VF_table').DataTable( {
@@ -79,103 +73,9 @@ SCRIPT = """
         } );
     } );
     </script>
+
     """
 
-
-def coverage_table(low_cov_fastas):
-
-    header = ["Strain id","Number of contigs"]
-
-    cov_table = []
-    for fasta in low_cov_fastas:
-        sample = re.search('samples/(.*)/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta', fasta).group(1)
-        try:
-            with open(fasta, 'r') as f:
-                n_records = len(SeqIO.read(f, 'fasta'))
-        except ValueError:
-            continue
-        cov_table.append([sample, n_records])
-
-    if len(cov_table) > 0:
-        df = pandas.DataFrame(cov_table, columns=header)
-
-        # cell content is truncated if colwidth not set to -1
-        pandas.set_option('display.max_colwidth', -1)
-
-        df_str = df.to_html(
-            index=False,
-            bold_rows=False,
-            classes=["dataTable"],
-            table_id="cov_table",
-            escape=False,
-            border=0)
-
-        return df_str.replace("\n", "\n" + 10 * " ")
-    else:
-        return 'No sample with low coverage contigs'
-
-def virulence_table(virulence_reports,
-                    blast_files):
-
-    header = ["Strain id","Number of VFs","Virulence Report"]
-
-    sample2n_VFs = {}
-    for n, sample in enumerate(ordered_samples):
-        sample2n_VFs[sample] = len(blast_files[n])
-
-    vf_data = []
-    report_template = '<a href="virulence/%s_VFDB_report.html">VFDB report</a>'
-    for report in virulence_reports:
-        sample = re.search('report/virulence/(.*)_VFDB_report.html', report).group(1)
-        vf_data.append([sample,
-                      sample2n_VFs[sample],
-                      report_template % sample])
-
-    df = pandas.DataFrame(vf_data, columns=header)
-
-    # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
-
-    df_str = df.to_html(
-        index=False,
-        bold_rows=False,
-        classes=["dataTable"],
-        table_id="VF_table",
-        escape=False,
-        border=0)
-
-    return df_str.replace("\n", "\n" + 10 * " ")
-
-
-def resistance_table(resistance_reports):
-
-    header = ["Strain id","Resistance Report"]
-
-    sample2n_VFs = {}
-    for n, sample in enumerate(ordered_samples):
-        sample2n_VFs[sample] = len(blast_files[n])
-
-    rgi_data = []
-    report_template = '<a href="resistance/%s_rgi_report.html">RGI report</a>'
-    for report in resistance_reports:
-        sample = re.search('report/resistance/(.*)_rgi_report.html', report).group(1)
-        rgi_data.append([sample,
-                      report_template % sample])
-
-    df = pandas.DataFrame(rgi_data, columns=header)
-
-    # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
-
-    df_str = df.to_html(
-        index=False,
-        bold_rows=False,
-        classes=["dataTable"],
-        table_id="RGI_table",
-        escape=False,
-        border=0)
-
-    return df_str.replace("\n", "\n" + 10 * " ")
 
 
 def write_report(output_file,
@@ -184,19 +84,16 @@ def write_report(output_file,
                  virulence_reports,
                  blast_files,
                  resistance_reports,
-                 spanning_tree_core,
                  low_cov_fasta,
-                 ete_figure_counts,
-                 mlst_tree):
+                 virulence_table):
     import io
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
 
     multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
     table_lowcoverage_contigs = coverage_table(low_cov_fasta)
-    table_virulence = virulence_table(virulence_reports,blast_files)
+    table_virulence = virulence_table(virulence_reports,blast_files, ordered_samples)
     table_resistance = resistance_table(resistance_reports)
-
 
     report_str = f"""
 
@@ -207,7 +104,7 @@ def write_report(output_file,
     {STYLE}
     
 =============================================================
-Diag Pipeline - Staphylococcus aureus virulence report
+Diag Pipeline - strain characterization report
 =============================================================
 
 .. contents::
@@ -235,59 +132,12 @@ Low coverage contigs
 .. raw:: html
 
     {table_lowcoverage_contigs}
-    
-Typing
-------
-
-MLST
-*****
-
-The *S. aureus* MLST scheme is based on the sequence of the following seven house-keeping genes:
-    
-1. arcC (Carbamate kinase)
-2. aroE (Shikimate dehydrogenase)
-3. glpF (Glycerol kinase)
-4. gmk (Guanylate kinase)
-5. pta (Phosphate acetyltransferase)
-6. tpi (Triosephosphate isomerase)
-7. yqi (Acetyle coenzyme A acetyltransferase)
-              
-The MLST was determined using the mlst_ software based on PubMLST_ typing schemes.
-    
-.. _PubMLST: https://pubmlst.org/
-.. _mlst: https://github.com/tseemann/mlst
-
-Phylogeny + MLST
-****************
-
-.. figure:: {mlst_tree} 
-   :alt: MST tree
-   :figwidth: 80%
-
-   This is the caption of the figure (a simple paragraph).
-
-Minimum Spanning tree
-*********************
-
-.. figure:: {spanning_tree_core} 
-   :alt: MST tree
-   :figwidth: 80%
-
-   This is the caption of the figure (a simple paragraph).
 
 Virulence (VFDB)
 -----------------
 
-Overview
-*********
 The identification of virlence factors was performed with BLAST. Only hits exhibiting more 
 than 80% amino acid idenity to a known virulence factor from the VFDB database are considered. 
-
-.. figure:: {ete_figure_counts} 
-   :alt: MST tree
-   :figwidth: 80%
-
-   This is the caption of the figure (a simple paragraph).
     
 Details
 ********
@@ -297,7 +147,7 @@ Details
     {table_virulence}
 
 Resistance (RGI/CARD)
---------------------
+----------------------
 
 .. raw:: html
 
@@ -318,7 +168,5 @@ write_report(output_file,
              virulence_reports,
              blast_files,
              resistance_reports,
-             spanning_tree_core,
              low_cov_fastas,
-             ete_figure_counts,
-             mlst_tree)
+             virulence_table)

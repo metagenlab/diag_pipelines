@@ -1,7 +1,14 @@
+#!/usr/bin/env python
+
+# add options in config file?
+# core genome vs complete genome
+# one strain as reference?
+# spanning_tree_all="typing/gatk_gvcfs/full_genome_33148/bwa/distances_in_snp_mst_with_st.svg",
+# spanning_tree_st152 ="typing/gatk_gvcfs/full_genome_1411181071_assembled_genome/bwa/distances_in_snp_mst_with_st.svg"
 
 # only ok for cgMLST core genomes
-# need further checks for parsnp core genomes
-rule report_virulence_saureus:
+# need further checks for parsnp core genomes. Add it as option?
+rule report_epidemiology_virulence_resistance_saureus:
     conda:
         pipeline_path + "envs/report.yml"
     input:
@@ -12,8 +19,6 @@ rule report_virulence_saureus:
         blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
         spanning_tree_core="report/figures/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg",
         mlst_tree="report/figures/mlst_tree.svg",
-        #spanning_tree_all="typing/gatk_gvcfs/full_genome_33148/bwa/distances_in_snp_mst_with_st.svg",
-        #spanning_tree_st152 ="typing/gatk_gvcfs/full_genome_1411181071_assembled_genome/bwa/distances_in_snp_mst_with_st.svg"
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
         snp_table = "typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp.tsv",
@@ -23,22 +28,60 @@ rule report_virulence_saureus:
     params:
         samples = list(read_naming.keys()),
     output:
-        "report/report_virulence_saureus.html",
+        "report/report_epidemiology_virulence_resistance_saureus.html",
     script:
-        "scripts/report_staphylococcus_aureus_virulence.py"
+        "scripts/report_epidemiology_virulence_resistance_saureus.py"
 
+# only ok for cgMLST core genomes
+# need further checks for parsnp core genomes
+rule report_epidemiology:
+    conda:
+        pipeline_path + "envs/report.yml"
+    input:
+        multiqc_report = "report/multiqc_assembly/multiqc_report.html",
+        spanning_tree_core="report/figures/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg",
+        mlst_tree="report/figures/mlst_tree.svg",
+        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+        snp_table = "typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp.tsv",
+        reference_genome = "references/cgMLST/genome_fasta.fasta",
+        core_genome_bed = "core_genomes/cgMLST/" + species + ".bed",
+        mlst='typing/mlst/summary.tsv',
+    params:
+        samples = list(read_naming.keys()),
+    output:
+        "report/report_epidemiology.html",
+    script:
+        "scripts/report_epidemiology.py"
 
-'''
-    - multiqc
-    - assembly
-    - lowcov contigs
-    - blast VFDB
-    - RGI
-'''
+# only ok for cgMLST core genomes
+# need further checks for parsnp core genomes
+rule report_epidemiology_virulence_resistance:
+    conda:
+        pipeline_path + "envs/report.yml"
+    input:
+        multiqc_report = "report/multiqc_assembly/multiqc_report.html",
+        ete_figure_counts = "report/figures/virulence_counts.svg",
+        virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
+        blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
+        spanning_tree_core="report/figures/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg",
+        mlst_tree="report/figures/mlst_tree.svg",
+        resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
+        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+        snp_table = "typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp.tsv",
+        reference_genome = "references/cgMLST/genome_fasta.fasta",
+        core_genome_bed = "core_genomes/cgMLST/" + species + ".bed",
+        mlst='typing/mlst/summary.tsv',
+    params:
+        samples = list(read_naming.keys()),
+    output:
+        "report/report_epidemiology_virulence_resistance.html",
+    script:
+        "scripts/report_epidemiology_virulence_resistance.py"
 
+# todo: donwload assemblies of a given taxon and build core genome phylogeny
 rule report_strain_characterization:
     conda:
-        pipeline_path + "envs/biopython.yml"
+        pipeline_path + "envs/report.yml"
     input:
         multiqc_report = "report/multiqc_assembly/multiqc_report.html",
         virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
@@ -51,3 +94,34 @@ rule report_strain_characterization:
         "report/report_strain_characterization.html",
     script:
         "scripts/report_strain_characterization.py"
+
+# todo: add heatmaps overview
+rule report_resistance:
+    conda:
+        pipeline_path + "envs/report.yml"
+    input:
+        multiqc_report = "report/multiqc_assembly/multiqc_report.html",
+        resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
+        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+    params:
+        samples = list(read_naming.keys()),
+    output:
+        "report/report_resistance.html",
+    script:
+        "scripts/report_resistance.py"
+
+# todo: build phylogeny from a set of core markers?
+rule report_virulence:
+    conda:
+        pipeline_path + "envs/report.yml"
+    input:
+        multiqc_report = "report/multiqc_assembly/multiqc_report.html",
+        virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
+        blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
+        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+    params:
+        samples = list(read_naming.keys()),
+    output:
+        "report/report_virulence.html",
+    script:
+        "scripts/report_virulence.py"

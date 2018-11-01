@@ -9,16 +9,32 @@ from MN_tree import get_MN_tree, convert2cytoscapeJSON
 from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 
 multiqc_report = snakemake.input["multiqc_report"]
+snp_table = snakemake.input["snp_table"]
+
+ete_figure_counts = snakemake.input["ete_figure_counts"]
+ete_figure_counts = '/'.join(ete_figure_counts.split('/')[1:])
 
 virulence_reports = snakemake.input["virulence_reports"]
-
 ordered_samples = snakemake.params["samples"]
+spanning_tree_core = snakemake.input["spanning_tree_core"]
+spanning_tree_core = '/'.join(spanning_tree_core.split('/')[1:])
 
+mlst_tree = snakemake.input["mlst_tree"]
+mlst_tree = '/'.join(mlst_tree.split('/')[1:])
+
+resistance_reports = snakemake.input["resistance_reports"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 
-output_file = snakemake.output[0]
+reference_genome = snakemake.input["reference_genome"]
+core_genome_bed = snakemake.input["core_genome_bed"]
 
+output_file = snakemake.output[0]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
+
+leaf2mlst= pandas.read_csv(snakemake.input["mlst"],
+                           delimiter='\t',
+                           names=["leaf","species","mlst","1","2","3","4","5","6","7"]).set_index("leaf").to_dict()["mlst"]
+
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -59,7 +75,17 @@ SCRIPT = """
             "paging":   true,
             "info": false
         } );
-    } ); 
+    } );
+    $(document).ready(function() {
+        $('#RGI_table').DataTable( {
+            dom: 'Bfrtip',
+            "pageLength": 20,
+            "searching": true,
+            "bLengthChange": false,
+            "paging":   true,
+            "info": false
+        } );
+    } );    
     $(document).ready(function() {
         $('#cov_table').DataTable( {
             dom: 'Bfrtip',
@@ -70,6 +96,57 @@ SCRIPT = """
             "info": false
         } );
     } );
+
+
+    document.addEventListener('DOMContentLoaded', function(){
+    
+        var cy = window.cy = cytoscape({
+            container: document.getElementById('cy'),
+    
+            autounselectify: true,
+            
+            boxSelectionEnabled: false,
+    
+            layout: {
+                name: 'cose',
+                idealEdgeLength: function(edge){ return 1/Math.log(edge.data('strength')); }, // edgeLength
+                padding: 30,
+                maxSimulationTime: 6000,
+                randomize: false,
+                nodeSpacing: 100,
+                animate: true
+    
+            },
+    
+            style: [
+                {
+                    selector: 'node',
+                    css: {
+                        'background-color': 'data(color)',
+                        'shape': 'roundrectangle',
+                        'width': function(node){ return 3*node.data('label').length; },
+                        'height': 7,
+                        'content': 'data(label)',
+                        'font-size': 5,
+                        'text-valign': 'center'
+                    }
+                },
+    
+                {
+                    selector: 'edge',
+                    css: {
+                        'line-color': 'data(color)',
+                        'label': 'data(strength)',
+                        'width': 'data(width)',
+                        'font-size': 4
+                    }
+                }
+            ],
+    
+            elements:  %s
+            });
+    
+    });
     </script>
 
     """
@@ -81,7 +158,14 @@ def write_report(output_file,
                  SCRIPT,
                  virulence_reports,
                  blast_files,
+                 resistance_reports,
+                 spanning_tree_core,
                  low_cov_fasta,
+                 ete_figure_counts,
+                 mlst_tree,
+                 snp_table,
+                 core_genome_size,
+                 reference_genome_size,
                  virulence_table):
     import io
     from docutils.core import publish_file, publish_parts
@@ -90,6 +174,9 @@ def write_report(output_file,
     multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
     table_lowcoverage_contigs = coverage_table(low_cov_fasta)
     table_virulence = virulence_table(virulence_reports,blast_files, ordered_samples)
+    table_resistance = resistance_table(resistance_reports)
+    snp_heatmap = plot_heatmap_snps(snp_table)
+    fraction_core = round(float(core_genome_size)/float(reference_genome_size)*100, 2)
 
     report_str = f"""
 
@@ -100,7 +187,7 @@ def write_report(output_file,
     {STYLE}
     
 =============================================================
-Diag Pipeline - Staphylococcus aureus virulence report
+Diag Pipeline - Complete report
 =============================================================
 
 .. contents::
@@ -128,13 +215,78 @@ Low coverage contigs
 .. raw:: html
 
     {table_lowcoverage_contigs}
+    
+Typing
+------
+
+MLST
+*****
+
+The *S. aureus* MLST scheme is based on the sequence of the following seven house-keeping genes:
+    
+1. arcC (Carbamate kinase)
+2. aroE (Shikimate dehydrogenase)
+3. glpF (Glycerol kinase)
+4. gmk (Guanylate kinase)
+5. pta (Phosphate acetyltransferase)
+6. tpi (Triosephosphate isomerase)
+7. yqi (Acetyle coenzyme A acetyltransferase)
+              
+The MLST was determined using the mlst_ software based on PubMLST_ typing schemes.
+    
+.. _PubMLST: https://pubmlst.org/
+.. _mlst: https://github.com/tseemann/mlst
+
+Phylogeny + MLST
+****************
+
+.. figure:: {mlst_tree} 
+   :alt: MST tree
+   :figwidth: 80%
+
+   This is the caption of the figure (a simple paragraph).
+
+MS tree (R)
+*********************
+
+- Size of the reference genome: {reference_genome_size}
+- Size of the core genome: {core_genome_size} ({fraction_core} % of the reference) 
+
+
+.. figure:: {spanning_tree_core} 
+   :alt: MST tree
+   :figwidth: 80%
+
+   This is the caption of the figure (a simple paragraph).
+   
+MS tree (js) 
+***********************
+
+.. raw:: html
+
+    <div id="cy" style="width:80%;height:700px; position: relative; border: 2px solid #212523"></div>
+
+SNP table
+***********
+
+.. raw:: html
+
+    {snp_heatmap}
 
 Virulence (VFDB)
 -----------------
 
+Overview
+*********
 The identification of virlence factors was performed with BLAST. Only hits exhibiting more 
 than 80% amino acid idenity to a known virulence factor from the VFDB database are considered. 
 
+.. figure:: {ete_figure_counts} 
+   :alt: MST tree
+   :figwidth: 80%
+
+   This is the caption of the figure (a simple paragraph).
+    
 Details
 ********
 
@@ -142,6 +294,13 @@ Details
 
     {table_virulence}
 
+Resistance (RGI/CARD)
+----------------------
+
+.. raw:: html
+
+    {table_resistance}
+    
 """
     with open(output_file, "w") as fh:
         publish_file(
@@ -151,10 +310,21 @@ Details
             settings_overrides={"stylesheet_path": ""},
         )
 
+
+
+net = convert2cytoscapeJSON(get_MN_tree(snp_table), leaf2mlst)
+
 write_report(output_file,
              STYLE,
-             SCRIPT,
+             SCRIPT % net,
              virulence_reports,
              blast_files,
+             resistance_reports,
+             spanning_tree_core,
              low_cov_fastas,
+             ete_figure_counts,
+             mlst_tree,
+             snp_table,
+             get_core_genome_size(core_genome_bed),
+             get_reference_genome_size(reference_genome),
              virulence_table)

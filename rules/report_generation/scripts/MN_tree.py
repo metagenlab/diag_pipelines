@@ -14,7 +14,7 @@ def find_clusters(G, node_list):
         if i[0] == i[1]:
             continue
         try:
-            print (G[i[0]][i[1]])
+            weight= (G[i[0]][i[1]])
         except:
             if len(groups)==0:
                 no_match=True
@@ -71,7 +71,6 @@ def convert2cytoscapeJSON(G, node2st=False):
         mlst_list = list(set(node2st.values()))
         mlst2color = dict(zip(mlst_list, get_spaced_colors(len(mlst_list))))
         mlst2color['-'] = 'white'
-    print(mlst2color)
     # load all nodes into nodes array
     final = {}
     final["nodes"] = []
@@ -88,12 +87,11 @@ def convert2cytoscapeJSON(G, node2st=False):
             except:
                 st = '-'
             nx["data"]["color"] = mlst2color[st]
-            nx["data"]["MLST"] = ST
+            nx["data"]["MLST"] = st
         else:
             nx["data"]["color"] = '#8A8A8A'
     #load all edges to edges array
     for edge in G.edges(data=True):
-        #print(edge)
         nx = {}
         nx["data"]={}
         nx["data"]["id"]=edge[0]+edge[1]

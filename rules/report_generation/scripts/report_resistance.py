@@ -10,15 +10,14 @@ from report import coverage_table, virulence_table, resistance_table, plot_heatm
 
 multiqc_report = snakemake.input["multiqc_report"]
 
-virulence_reports = snakemake.input["virulence_reports"]
 
 ordered_samples = snakemake.params["samples"]
 
+resistance_reports = snakemake.input["resistance_reports"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 
 output_file = snakemake.output[0]
 
-blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -28,14 +27,6 @@ STYLE = """
     .pull-left{
     .dataTables_filter {
        float: left !important;
-    }
-    #cy {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: 999;
     }
     </style>
     """
@@ -50,8 +41,9 @@ SCRIPT = """
     <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.2.4/cytoscape-cola.min.js"></script>
     
     <script>
+
     $(document).ready(function() {
-        $('#VF_table').DataTable( {
+        $('#RGI_table').DataTable( {
             dom: 'Bfrtip',
             "pageLength": 20,
             "searching": true,
@@ -59,7 +51,8 @@ SCRIPT = """
             "paging":   true,
             "info": false
         } );
-    } ); 
+    } );
+     
     $(document).ready(function() {
         $('#cov_table').DataTable( {
             dom: 'Bfrtip',
@@ -79,17 +72,15 @@ SCRIPT = """
 def write_report(output_file,
                  STYLE,
                  SCRIPT,
-                 virulence_reports,
-                 blast_files,
-                 low_cov_fasta,
-                 virulence_table):
+                 resistance_reports,
+                 low_cov_fasta):
     import io
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
 
     multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
     table_lowcoverage_contigs = coverage_table(low_cov_fasta)
-    table_virulence = virulence_table(virulence_reports,blast_files, ordered_samples)
+    table_resistance = resistance_table(resistance_reports)
 
     report_str = f"""
 
@@ -100,7 +91,7 @@ def write_report(output_file,
     {STYLE}
     
 =============================================================
-Diag Pipeline - Staphylococcus aureus virulence report
+Diag Pipeline - Resistance report
 =============================================================
 
 .. contents::
@@ -129,19 +120,13 @@ Low coverage contigs
 
     {table_lowcoverage_contigs}
 
-Virulence (VFDB)
------------------
-
-The identification of virlence factors was performed with BLAST. Only hits exhibiting more 
-than 80% amino acid idenity to a known virulence factor from the VFDB database are considered. 
-
-Details
-********
+Resistance (RGI/CARD)
+----------------------
 
 .. raw:: html
 
-    {table_virulence}
-
+    {table_resistance}
+    
 """
     with open(output_file, "w") as fh:
         publish_file(
@@ -154,7 +139,5 @@ Details
 write_report(output_file,
              STYLE,
              SCRIPT,
-             virulence_reports,
-             blast_files,
-             low_cov_fastas,
-             virulence_table)
+             resistance_reports,
+             low_cov_fastas)
