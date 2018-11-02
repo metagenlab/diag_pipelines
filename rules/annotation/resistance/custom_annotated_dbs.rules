@@ -22,7 +22,7 @@ rule decompose_multiallelic_positions_from_genotyping:
     output:
         genotype_decomposed = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf",
     log:
-        logging_folder + "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/snps_decomposed.g.vcf",
+        logging_folder + "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf",
     shell:
         """
         vt decompose -s {input[genotype]} | vt normalize -r {input[reference]} -o {output[genotype_decomposed]} - &> {log}

@@ -8,6 +8,8 @@ RUN apt-get install -y fontconfig
 
 RUN conda install snakemake=5.3.0
 
+#RUN conda install biopython=1.70
+
 ENV main=/home/pipeline_user
 
 ENV pipeline_folder=${main}/snakemake_pipeline
@@ -30,7 +32,7 @@ WORKDIR ${main}/data/
 
 # setup VFDB database
 
-RUN snakemake --snakefile ${pipeline_folder}/rules/downloading/fetch_VFDB.rules references/virulence/VFDB_larger_50aa.faa.phr references/virulence/VFDB_annotations.tab -j 4
+RUN snakemake --snakefile ${pipeline_folder}/rules/downloading/fetch_VFDB.rules --use-conda --conda-prefix ${conda_folder} references/virulence/VFDB_larger_50aa.faa.phr references/virulence/VFDB_annotations.tab -j 4
 
 #CREATE cgMLST BED FILES
 
@@ -60,7 +62,7 @@ RUN echo '' > links/Myco-10_S10_L001_R1.fastq.gz && echo '' > links/Myco-10_S10_
 
 RUN wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > ${main}/data/references/mash_sketch.msh
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml quality/multiqc/assembly/multiqc_report.html samples/M10/resistance/mykrobe.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_538048/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome_M10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg virulence_summary.xlsx typing/mlst/summary.xlsx resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/full_genome_538048/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/core_parsnp_538048/bwa/phylogeny_no_st.svg contamination/distances_formated.xlsx -j 4 --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
+RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml report/multiqc_assembly/multiqc_report.html samples/M10/resistance/mykrobe.tsv typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/core_parsnp_538048/bwa/distances_in_snp_mst_no_st.svg typing/gatk_gvcfs/full_genome_M10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg virulence_summary.xlsx typing/mlst/summary.xlsx resistance/rgi_summary.xlsx resistance/mykrobe_summary.xlsx phylogeny/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/full_genome_538048/bwa/phylogeny_no_st.svg phylogeny/gatk_gvcfs/core_parsnp_538048/bwa/phylogeny_no_st.svg contamination/distances_formated.xlsx -j 4 --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
 
 RUN patch /opt/conda/envs/356da27d/lib/python3.6/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
