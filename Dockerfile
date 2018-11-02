@@ -6,7 +6,7 @@ RUN useradd -r -u 1080 pipeline_user
 
 RUN apt-get install -y fontconfig
 
-RUN conda install snakemake=4.8.0=py36_0 unzip
+RUN conda install snakemake=5.3.0
 
 ENV main=/home/pipeline_user
 
