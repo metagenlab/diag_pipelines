@@ -28,8 +28,8 @@ ontology_table = pandas.read_csv(rgi_ontology,
                            delimiter='\t',
                            header=0)
 
-
 # calculate rgi hit(s) sequencing depth based on position of the CDS in contigs
+# todo
 def parse_smatools_depth(samtools_depth):
     import pandas
     with open(samtools_depth, 'r') as f:
@@ -154,8 +154,6 @@ new Chart(ctx, options);
 no_resistance_list = []
 resistance_list = []
 
-
-
 for contig in contig2gc_content:
     depth = contig2median_depth[contig]
     gc = contig2gc_content[contig]
@@ -182,10 +180,6 @@ buuble_chart_code = bubble_template % (dataset_template % ('No resistances',
                                                            '#ff6384',
                                                            '#ff6384'
                                                            ))
-
-# parse rgi ontology
-
-
 
 template = '''
 <!DOCTYPE html>
@@ -217,28 +211,8 @@ template = '''
     
     <h2>Detailed table<h2>
         <div id='vftable' style="max-width:100%%; padding-left:0px;">
-            <table class="display dataTable" id="res_table">
-                <thead>
-                    <tr>
-                      <th scope="col">Contig</th></th>
-                      <th scope="col">ORF</th>
-                      <th scope="col">ARO</th>
-                      <th scope="col">Model Type</th>
-                      <th scope="col">Variant</th>
-                      <th scope="col">Cov (%%)</th>
-                      <th scope="col">Identity (%%)</th>
-                      <th scope="col">Score</th>
-                      <th scope="col">Score cutoff</th>
-                      <th scope="col">Family</th>
-                      <th scope="col">Mechanism</th>
-                      <th scope="col">Resistance</th>
-                </thead>
-                <tbody>
-                    %s
-                </tbody>
-            </table>
+            %s
         </div>
-    <h2>Circos<h2>
     
 
 </body>
@@ -268,48 +242,45 @@ td { font-size: 11px; }
 
 '''
 
-row_template = '''
-    <tr>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>
-        <td>%s</td>        
-        <td>%s</td>
-    </tr>
-'''
+def resistance_table(rgi_table):
 
-table_rows = ''
-for n, one_resistance in rgi_table.iterrows():
-    contig = '_'.join(one_resistance["Contig"].split('_')[0:-1])
-    orf_id = one_resistance["Contig"].split('_')[-1]
-    cutoff = one_resistance["Cut_Off"]
-    name = one_resistance["Best_Hit_ARO"]
-    identity = one_resistance["Best_Identities"]
-    aro = one_resistance["ARO"]
-    cov = one_resistance["Percentage Length of Reference Sequence"]
-    bitscore = one_resistance["Best_Hit_Bitscore"]
-    pass_bitscore = one_resistance["Pass_Bitscore"]
-    mechanism = one_resistance["Resistance Mechanism"]
-    snps = one_resistance["SNPs_in_Best_Hit_ARO"]
-    model = one_resistance["Model_type"]
-    family = one_resistance["AMR Gene Family"]
-    antibio_res_list = list(ontology_table[ontology_table['Name'] == name]["Antibiotic resistance prediction"])
-    antibio_res_class_list = list(ontology_table[ontology_table['Name'] == name]["Class"])
+    header = ["Contig",
+              "ORF",
+              "ARO",
+              "Model Type",
+              "Variant",
+              "Cov (%)",
+              "Identity (%)",
+              "Score",
+              "Score cutoff",
+              "Family",
+              "Mechanism",
+              "Resistance"]
 
-    resistance_code = ''
-    for resistance, resistance_class in zip(antibio_res_list, antibio_res_class_list):
-        print(resistance, resistance_class)
-        resistance_code+='%s (%s) </br>' % (resistance, resistance_class)
+    table_rows = []
+    for n, one_resistance in rgi_table.iterrows():
+        contig = '_'.join(one_resistance["Contig"].split('_')[0:-1])
+        orf_id = one_resistance["Contig"].split('_')[-1]
+        cutoff = one_resistance["Cut_Off"]
+        name = one_resistance["Best_Hit_ARO"]
+        identity = one_resistance["Best_Identities"]
+        aro = one_resistance["ARO"]
+        cov = one_resistance["Percentage Length of Reference Sequence"]
+        bitscore = one_resistance["Best_Hit_Bitscore"]
+        pass_bitscore = one_resistance["Pass_Bitscore"]
+        mechanism = one_resistance["Resistance Mechanism"]
+        snps = one_resistance["SNPs_in_Best_Hit_ARO"]
+        model = one_resistance["Model_type"]
+        family = one_resistance["AMR Gene Family"]
+        antibio_res_list = list(ontology_table[ontology_table['Name'] == name]["Antibiotic resistance prediction"])
+        antibio_res_class_list = list(ontology_table[ontology_table['Name'] == name]["Class"])
 
+        resistance_code = ''
+        for resistance, resistance_class in zip(antibio_res_list, antibio_res_class_list):
+            print(resistance, resistance_class)
+            resistance_code += '%s (%s) </br>' % (resistance, resistance_class)
 
-    table_rows += row_template % (contig,
+        table_rows.append([contig,
                           orf_id,
                           "%s (%s)" % (name, aro),
                           model,
@@ -320,8 +291,22 @@ for n, one_resistance in rgi_table.iterrows():
                           pass_bitscore,
                           family,
                           mechanism,
-                          resistance_code)
+                          resistance_code])
+    print(len(table_rows[0]), len(header))
+    df = pandas.DataFrame(table_rows, columns=header)
 
+    # cell content is truncated if colwidth not set to -1
+    pandas.set_option('display.max_colwidth', -1)
+
+    df_str = df.to_html(
+        index=False,
+        bold_rows=False,
+        classes=["dataTable"],
+        table_id="res_table",
+        escape=False,
+        border=0)
+
+    return df_str.replace("\n", "\n" + 10 * " ")
 
 with open(report_file, 'w') as f:
-    f.write(template % (table_rows, buuble_chart_code))
+    f.write(template % (resistance_table(rgi_table), buuble_chart_code))

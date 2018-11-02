@@ -100,7 +100,7 @@ def write_report(output_file,
     {STYLE}
     
 =============================================================
-Diag Pipeline - Staphylococcus aureus virulence report
+Diag Pipeline - Virulence report
 =============================================================
 
 .. contents::

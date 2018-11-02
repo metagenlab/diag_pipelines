@@ -104,7 +104,7 @@ def write_report(output_file,
     {STYLE}
     
 =============================================================
-Diag Pipeline - strain characterization report
+Diag Pipeline - Strain characterization report
 =============================================================
 
 .. contents::

@@ -14,9 +14,9 @@ rule virulence:
 
 rule resistance:
     input:
-        "report/resistance.html",
+        "report/report_resistance.html",
 
-rule epidemiology_virulence_resistance:
+rule complete:
     input:
         "report/report_epidemiology_virulence_resistance.html",
 

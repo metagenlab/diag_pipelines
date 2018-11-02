@@ -79,7 +79,7 @@ for index, row in rgi_results.iterrows():
             mechanism = search_participating_mechanism(parent, obo2resistance_mechanism.keys())
             if mechanism:
                 break
-        print (snp)
+        #print (snp)
         pos = re.sub("[^0-9]", "", snp)
         ref = snp[0]
         mut = snp[-1]
@@ -96,7 +96,7 @@ for index, row in rgi_results.iterrows():
         hit_list = []
 
         term = aro["ARO:%s" % row["ARO"]]
-        print(term, term.id, term.name, '---------------')
+        #print(term, term.id, term.name, '---------------')
         fam = get_AMR_family(term, obo2AMR_family)
 
         # search recursively
@@ -105,7 +105,7 @@ for index, row in rgi_results.iterrows():
             if mechanism:
                 break
         gene = row["Best_Hit_ARO"].replace(" ", "_").strip()
-        print('relations', term.relations)
+        #print('relations', term.relations)
         for child in term.relations:
             print(child.obo_name)
             if child.obo_name=="confers_resistance_to_drug" or child.obo_name=="confers_resistance_to":
@@ -129,12 +129,12 @@ for index, row in rgi_results.iterrows():
                     else:
                         mechanism_name = 'Unknown'
 
-                    print('appaned:', [term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
+                    #print('appaned:', [term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
                     ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
-            print('parents', term.rparents())
+            #print('parents', term.rparents())
             for parent in term.rparents():
                 for child in parent.relations:
-                    print(child.obo_name)
+                    #print(child.obo_name)
                     if child.obo_name=="confers_resistance_to_drug" or child.obo_name=="confers_resistance_to":
                         for antibiotic in parent.relations[child]:
                             anti_class = get_drug_class(antibiotic, obo2drug_class)
@@ -156,7 +156,7 @@ for index, row in rgi_results.iterrows():
                                 mechanism_name = mechanism.name
                             else:
                                 mechanism_name = 'Unknown'
-                            print('append:', [term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
+                            #print('append:', [term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
                             ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
                             hit_list.append(parent)
 
