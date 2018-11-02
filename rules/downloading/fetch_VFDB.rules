@@ -46,7 +46,7 @@ rule format_VFDB_fasta:
 
 rule create_VFDB_blast_database:
     conda:
-        pipeline_path + "envs/blast.yml"
+        "../../envs/blast.yml"
     input:
         proteins = "references/virulence/VFDB_larger_50aa.faa",
     output:

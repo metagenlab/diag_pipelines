@@ -277,7 +277,7 @@ def resistance_table(rgi_table):
 
         resistance_code = ''
         for resistance, resistance_class in zip(antibio_res_list, antibio_res_class_list):
-            print(resistance, resistance_class)
+            #print(resistance, resistance_class)
             resistance_code += '%s (%s) </br>' % (resistance, resistance_class)
 
         table_rows.append([contig,
@@ -292,7 +292,6 @@ def resistance_table(rgi_table):
                           family,
                           mechanism,
                           resistance_code])
-    print(len(table_rows[0]), len(header))
     df = pandas.DataFrame(table_rows, columns=header)
 
     # cell content is truncated if colwidth not set to -1

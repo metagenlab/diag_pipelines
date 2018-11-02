@@ -245,9 +245,9 @@ Phylogeny + MLST
 
 .. figure:: {mlst_tree} 
    :alt: MST tree
-   :figwidth: 80%
+   :width: 80%
 
-   This is the caption of the figure (a simple paragraph).
+   MLST as determined by T. Seemann mlst_.
 
 MS tree (R)
 *********************
@@ -258,9 +258,9 @@ MS tree (R)
 
 .. figure:: {spanning_tree_core} 
    :alt: MST tree
-   :figwidth: 80%
+   :width: 80%
 
-   This is the caption of the figure (a simple paragraph).
+   Minimum spanning tree including all samples as well as the reference genome.
    
 MS tree (js) 
 ***********************
@@ -281,14 +281,15 @@ Virulence (VFDB)
 
 Overview
 *********
-The identification of virlence factors was performed with BLAST. Only hits exhibiting more 
-than 80% amino acid idenity to a known virulence factor from the VFDB database are considered. 
+
+The identification of virulence factors was performed with BLAST. Only hits exhibiting more 
+than 80% amino acid identity to a known virulence factor from the VFDB database are considered. 
 
 .. figure:: {ete_figure_counts} 
    :alt: MST tree
-   :figwidth: 80%
+   :width: 40%
 
-   This is the caption of the figure (a simple paragraph).
+   MLST as determined by T. Seemann mlst_.
     
 Details
 ********

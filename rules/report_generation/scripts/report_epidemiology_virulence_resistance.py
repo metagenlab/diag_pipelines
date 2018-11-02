@@ -61,8 +61,7 @@ SCRIPT = """
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
-    <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.2.19/cytoscape.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.2.4/cytoscape-cola.min.js"></script>
     
     <script>
@@ -242,9 +241,9 @@ Phylogeny + MLST
 
 .. figure:: {mlst_tree} 
    :alt: MST tree
-   :figwidth: 80%
+   :width: 40%
 
-   This is the caption of the figure (a simple paragraph).
+   MLST as determined by T. Seemann mlst_.
 
 MS tree (R)
 *********************
@@ -255,9 +254,9 @@ MS tree (R)
 
 .. figure:: {spanning_tree_core} 
    :alt: MST tree
-   :figwidth: 80%
+   :width: 80%
 
-   This is the caption of the figure (a simple paragraph).
+   Minimum spanning tree including all samples as well as the reference genome.
    
 MS tree (js) 
 ***********************
@@ -278,14 +277,15 @@ Virulence (VFDB)
 
 Overview
 *********
-The identification of virlence factors was performed with BLAST. Only hits exhibiting more 
-than 80% amino acid idenity to a known virulence factor from the VFDB database are considered. 
+
+The identification of virulence factors was performed with BLAST. Only hits exhibiting more 
+than 80% amino acid identity to a known virulence factor from the VFDB database are considered. 
 
 .. figure:: {ete_figure_counts} 
-   :alt: MST tree
-   :figwidth: 80%
+   :alt: VF tree
+   :width: 50%
 
-   This is the caption of the figure (a simple paragraph).
+   Number of identified VFs in each genome.
     
 Details
 ********

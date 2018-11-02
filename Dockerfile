@@ -28,6 +28,10 @@ RUN mkdir -p ${main}/data/links
 
 WORKDIR ${main}/data/
 
+# setup VFDB database
+
+RUN snakemake --snakefile ${pipeline_folder}/rules/downloading/fetch_VFDB.rules references/virulence/VFDB_larger_50aa.faa.phr references/virulence/VFDB_annotations.tab -j 4
+
 #CREATE cgMLST BED FILES
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Staphylococcus_aureus.bed core_genomes/cgMLST/Mycobacterium_tuberculosis.bed core_genomes/cgMLST/Listeria_monocytogenes.bed core_genomes/cgMLST/Klebsiella_pneumoniae.bed core_genomes/cgMLST/Enterococcus_faecium.bed core_genomes/cgMLST/Acinetobacter_baumannii.bed core_genomes/cgMLST/Legionella_pneumophila.bed core_genomes/cgMLST/Clostridioides_difficile.bed -j 4 

@@ -132,8 +132,8 @@ Low coverage contigs
 Virulence (VFDB)
 -----------------
 
-The identification of virlence factors was performed with BLAST. Only hits exhibiting more 
-than 80% amino acid idenity to a known virulence factor from the VFDB database are considered. 
+The identification of virulence factors was performed with BLAST. Only hits exhibiting more 
+than 80% amino acid identity to a known virulence factor from the VFDB database are considered. 
 
 Details
 ********

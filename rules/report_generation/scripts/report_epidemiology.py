@@ -209,9 +209,9 @@ Phylogeny + MLST
 
 .. figure:: {mlst_tree} 
    :alt: MST tree
-   :figwidth: 80%
+   :width: 40%
 
-   This is the caption of the figure (a simple paragraph).
+   MLST as determined by T. Seemann mlst_.
 
 MS tree (R)
 *********************
@@ -222,9 +222,9 @@ MS tree (R)
 
 .. figure:: {spanning_tree_core} 
    :alt: MST tree
-   :figwidth: 80%
+   :width: 80%
 
-   This is the caption of the figure (a simple paragraph).
+   Minimum spanning tree including all samples as well as the reference genome.
    
 MS tree (js) 
 ***********************
