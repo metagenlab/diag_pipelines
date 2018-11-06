@@ -1,9 +1,10 @@
 channels:
+ - plotly
  - bioconda
  - conda-forge
 dependencies:
  - biopython = 1.70=np112py36_1
  - plotly = 3.3.0
  - scipy = 1.1.0
- - pandas = 0.23.4
- - networkx = 2.2
+ - pandas = 0.22.0=py36_1
+ - networkx = 2.0=py36_1
