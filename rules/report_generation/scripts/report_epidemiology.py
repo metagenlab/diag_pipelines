@@ -251,7 +251,7 @@ SNP table
 
 
 
-net = convert2cytoscapeJSON(get_MN_tree(snp_table), leaf2mlst)
+net = ''#convert2cytoscapeJSON(get_MN_tree(snp_table), leaf2mlst)
 
 write_report(output_file,
              STYLE,

@@ -43,13 +43,22 @@ def get_spaced_colors(n):
 
 def merge_group_nodes(G, groups, node_list):
     for group in groups:
+        print(group)
+
+    for group_n, group in enumerate(groups):
         median_dico = {}
         for node in node_list:
             if node in group:
                 continue
             data = []
             for member in group:
+                '''
+                print ('member', member)
+                print ('node', node)
+                print (G[member])
+                '''
                 data.append(G[member][node]['weight'])
+
             m = numpy.median(data)
             median_dico[node] = m
         mapping = {group[0]: '\n'.join(group)}
