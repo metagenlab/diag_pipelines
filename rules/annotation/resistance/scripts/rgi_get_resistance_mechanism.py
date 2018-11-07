@@ -51,18 +51,19 @@ def search_participating_mechanism(obo_term, mechanism_list):
 term_nr_list = []
 for index, row in rgi_results.iterrows():
     gene = row["Best_Hit_ARO"]
-    for terms in row["ARO"].split(","):
-        term = aro[terms.strip()]
-        for i in term.rparents():
-            mechanism = search_participating_mechanism(i, obo2resistance_mechanism.keys())
-            if mechanism:
-                break
-        # remove redundancy
-        if mechanism is not None:
-            if [gene, mechanism.name] not in term_nr_list:
-                term_nr_list.append([gene, mechanism.name])
-        else:
-            term_nr_list.append([gene, "Unknown"])
+    aro_id = str(row["ARO"])
+    aro_term = "ARO:%s" % row["ARO"]
+    term = aro[aro_term]
+    for i in term.rparents():
+        mechanism = search_participating_mechanism(i, obo2resistance_mechanism.keys())
+        if mechanism:
+            break
+    # remove redundancy
+    if mechanism is not None:
+        if [gene, mechanism.name] not in term_nr_list:
+            term_nr_list.append([gene, mechanism.name])
+    else:
+        term_nr_list.append([gene, "Unknown"])
 
 df = pandas.DataFrame(term_nr_list, columns= ["Gene", "Resistance Mechanism"])
 

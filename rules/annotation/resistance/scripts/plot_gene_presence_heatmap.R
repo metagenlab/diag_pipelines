@@ -49,7 +49,7 @@ plot_list <- list()
 for (i in 1:length(unique(dataset$mechanism))){
     resistance_mechanism <- unique(dataset$mechanism)[i]
     mechanism_subset <- dataset[dataset$mechanism==resistance_mechanism,]
-    p <- ggplot(data = mechanism_subset, aes(x = sample, y = Best_Hit_ARO)) + geom_tile(aes(fill = CUT_OFF), height = 0.9, width=0.9)
+    p <- ggplot(data = mechanism_subset, aes(x = sample, y = Best_Hit_ARO)) + geom_tile(aes(fill = Cut_Off), height = 0.9, width=0.9)
     p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     p <- p + coord_fixed(ratio=1) + theme(legend.position="none") + ggtitle(resistance_mechanism) #+ theme(strip.text.x = element_text(size=8, angle=75))
     p <- p +   theme(axis.title.x=element_blank())
@@ -80,7 +80,7 @@ for (species in nr_species){
     for (i in 1:length(unique(sub_dataset$mechanism))){
         resistance_mechanism <- unique(sub_dataset$mechanism)[i]
         mechanism_subset <- sub_dataset[sub_dataset$mechanism==resistance_mechanism,]
-        p <- ggplot(data = mechanism_subset, aes(x = sample, y = Best_Hit_ARO)) + geom_tile(aes(fill = CUT_OFF), height = 0.9, width=0.9)
+        p <- ggplot(data = mechanism_subset, aes(x = sample, y = Best_Hit_ARO)) + geom_tile(aes(fill = Cut_Off), height = 0.9, width=0.9)
         p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
         p <- p + coord_fixed(ratio=1) + theme(legend.position="none") + ggtitle(resistance_mechanism) #+ theme(strip.text.x = element_text(size=8, angle=75))
         p <- p +   theme(axis.title.x=element_blank())
