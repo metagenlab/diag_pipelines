@@ -47,6 +47,31 @@ def coverage_table(low_cov_fastas):
     else:
         return 'No sample with low coverage contigs'
 
+def qualimap_table(qualimap_links):
+
+    header = ["Strain id","Number of contigs"]
+
+    cov_table = []
+    for qualimap in qualimap_links:
+        sample = re.search('report/qualimap/(.*)/bwa/.*_assembled_genome/qualimapReport.html', qualimap).group(1)
+        cov_table.append([sample, qualimap])
+
+    df = pandas.DataFrame(cov_table, columns=header)
+
+    # cell content is truncated if colwidth not set to -1
+    pandas.set_option('display.max_colwidth', -1)
+
+    df_str = df.to_html(
+        index=False,
+        bold_rows=False,
+        classes=["dataTable"],
+        table_id="qualimap_table",
+        escape=False,
+        border=0)
+
+    return df_str.replace("\n", "\n" + 10 * " ")
+
+
 def virulence_table(virulence_reports,
                     blast_files,
                     ordered_samples):

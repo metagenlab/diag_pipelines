@@ -6,7 +6,7 @@
 # n_samples = list(read_naming.keys()
 import pandas
 from MN_tree import get_MN_tree, convert2cytoscapeJSON
-from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
+from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size, qualimap_table
 
 multiqc_report = snakemake.input["multiqc_report"]
 
@@ -15,6 +15,8 @@ virulence_reports = snakemake.input["virulence_reports"]
 ordered_samples = snakemake.params["samples"]
 
 low_cov_fastas = snakemake.input["low_cov_fastas"]
+
+qualimap_reports = snakemake.input["qualimap_reports"]
 
 output_file = snakemake.output[0]
 
@@ -82,7 +84,8 @@ def write_report(output_file,
                  virulence_reports,
                  blast_files,
                  low_cov_fasta,
-                 virulence_table):
+                 virulence_table,
+                 qualimap_links):
     import io
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
@@ -90,6 +93,7 @@ def write_report(output_file,
     multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
     table_lowcoverage_contigs = coverage_table(low_cov_fasta)
     table_virulence = virulence_table(virulence_reports,blast_files, ordered_samples)
+    table_qualimap = qualimap_table(qualimap_links)
 
     report_str = f"""
 
@@ -129,6 +133,13 @@ Low coverage contigs
 
     {table_lowcoverage_contigs}
 
+Qualimap reports
+*****************
+
+.. raw:: html
+
+    {table_qualimap}
+
 Virulence (VFDB)
 -----------------
 
@@ -157,4 +168,5 @@ write_report(output_file,
              virulence_reports,
              blast_files,
              low_cov_fastas,
-             virulence_table)
+             virulence_table,
+             qualimap_reports)

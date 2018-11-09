@@ -115,6 +115,7 @@ rule report_virulence:
     conda:
         pipeline_path + "envs/report.yml"
     input:
+        qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
         multiqc_report = "report/multiqc_assembly/multiqc_report.html",
         virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
         blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
