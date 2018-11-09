@@ -5,8 +5,8 @@ rule assess_mapping_with_qualimap:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}.bam.bai"
     output:
-        report = "samples/{sample}/quality/mapping/{mapping_method}/{ref}/qualimap/qualimapReport.html",
-        genome_results = "samples/{sample}/quality/mapping/{mapping_method}/{ref}/qualimap/genome_results.txt",
+        report = "report/qualimap/{sample}/{mapping_method}/{ref}/qualimapReport.html",
+        genome_results = "report/qualimap/{sample}/{mapping_method}/{ref}/genome_results.txt",
         
     log:
         logging_folder+"samples/{sample}/logs/{mapping_method}/{ref}/qualimap.txt",

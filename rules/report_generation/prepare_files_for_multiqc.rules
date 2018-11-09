@@ -1,6 +1,6 @@
 rule copy_result_files_mapping_paired:
     input:
-        qualimap_report = "samples/{sample}/quality/mapping/{mapping_method}/{ref}/qualimap/qualimapReport.html",
+        qualimap_report = "report/qualimap/{sample}/{mapping_method}/{ref}/qualimapReport.html",
         fastqc_report = "samples/{sample}/reads/trimmed/fastqc/R1_paired_fastqc/summary.txt",
         trimmomatic_report = "samples/{sample}/reads/trimmed/summary.txt",
     output:
@@ -20,7 +20,7 @@ rule copy_result_files_mapping_paired:
 
 rule copy_result_files_mapping_single:
     input:
-        qualimap_report = "samples/{sample}/quality/mapping/{mapping_method}/{ref}/qualimap/qualimapReport.html",
+        qualimap_report = "report/qualimap/{sample}/{mapping_method}/{ref}/qualimapReport.html",
         fastqc_report = "samples/{sample}/reads/trimmed/fastqc/single_fastqc/summary.txt",
         trimmomatic_report = "samples/{sample}/reads/trimmed/summary.txt",
     output:
