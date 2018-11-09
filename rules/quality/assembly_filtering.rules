@@ -17,7 +17,20 @@ rule extract_contig_coverage:
         """
         sed -ne '/Coverage per contig/,$ p'  {input[genome_cov]} | grep contig_ | sed "s/^[ \\t]*//" > {output[extract]}
         """
-        
+
+rule extract_assembly_mean_sd_coverage:
+    input:
+        genome_cov="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/qualimap/genome_results.txt"
+    output:
+        extract="samples/{sample}/quality/assembly_coverage.txt"
+    shell:
+        """
+        mean=$(grep "mean coverageData" samples/1505151028/quality/mapping/bwa/1505151028_assembled_genome/qualimap/genome_results.txt  | sed 's/[^0-9\.]//g')
+        sd=$(grep "mean coverageData" samples/1505151028/quality/mapping/bwa/1505151028_assembled_genome/qualimap/genome_results.txt  | sed 's/[^0-9\.]//g' )
+        echo "mean_depth $mean" >  {output[extract]}
+        echo "sd_depth $mean" >>  {output[extract]}
+        """
+
 rule filter_contigs_on_coverage:
     params:
         cutoff = config["cov_cutoff"]
