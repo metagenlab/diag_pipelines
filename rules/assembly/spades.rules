@@ -14,7 +14,7 @@ rule correct_error_paired_reads_with_spades:
         logging_folder + "samples/{sample}/spades_read_correction.txt"
     shell:
          """
-         spades.py --only-error-correction -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $(dirname $(dirname {output[0]})) --threads {threads} > {log} 
+         spades.py --only-error-correction -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $(dirname $(dirname {output[0]})) --threads {threads} > {log}
          """
 
 rule correct_error_single_reads_with_spades:
@@ -30,7 +30,7 @@ rule correct_error_single_reads_with_spades:
         logging_folder + "samples/{sample}/spades_read_correction.txt"
     shell:
          """
-         spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log} 
+         spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log}
          """
 
 rule assemble_genome_corrected_paired_reads_with_spades:
@@ -46,7 +46,7 @@ rule assemble_genome_corrected_paired_reads_with_spades:
         contigs = "samples/{sample}/assembly/spades/contigs.fasta",
         graph = "samples/{sample}/assembly/spades/assembly_graph.fastg",
         scaffolds = "samples/{sample}/assembly/spades/scaffolds.fasta",
-        contigs_paths = "samples/{sample}/assembly/spades/contigs.paths",
+        contigs_paths = "samples/{sample}/assembly/spade/contigs.paths",
         scaffolds_paths = "samples/{sample}/assembly/spades/scaffolds.paths",
         log = "samples/{sample}/assembly/spades/spades.log",
     params:
@@ -78,7 +78,7 @@ rule assemble_genome_corrected_single_reads_with_spades:
         """
         spades.py --only-assembler -k {params.kmer_sizes} -s {input[single_corrected]} -o $(dirname {output[contigs]}) --threads {threads} > /dev/null
         """
-        
+
 rule assemble_genome_paired_reads_with_spades:
     threads:
         4
@@ -117,4 +117,3 @@ rule assemble_genome_single_reads_with_spades:
         """
         spades.py --only-assembler -s {input[single_trimmed]} -o $( dirname {output[contigs]}) > /dev/null
         """
-        

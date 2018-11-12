@@ -2,7 +2,7 @@ rule annotate_with_prokka:
     conda:
         pipeline_path + "envs/prokka.yml"
     input:
-        contigs = "samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta"
+        contigs = "samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_high_coverage.fasta"
     output:
         "samples/{sample}/annotation/{sample}.gff",
         "samples/{sample}/annotation/{sample}.faa",
@@ -64,7 +64,7 @@ rule remove_fasta_part_from_gff:
         "samples/{sample}/annotation/{sample}_truncated.gff"
     shell:
         "sed '/^##FASTA$/,$d' {input} > {output}"
-    
+
 rule get_CDS_and_contigs_depth:
     conda:
         pipeline_path + "envs/biopython.yml"

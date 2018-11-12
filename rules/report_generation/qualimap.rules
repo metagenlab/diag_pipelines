@@ -2,14 +2,13 @@ rule assess_mapping_with_qualimap:
     conda:
         pipeline_path + "envs/qualimap.yml"
     input:
-        bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
-        bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}.bam.bai"
+        bam = "samples/{sample}/mapping/bwa/{ref}.bam",
+        bam_bai = "samples/{sample}/mapping/bwa/{ref}.bam.bai"
     output:
-        report = "report/qualimap/{sample}/{mapping_method}/{ref}/qualimapReport.html",
-        genome_results = "report/qualimap/{sample}/{mapping_method}/{ref}/genome_results.txt",
-        
+        report = "report/qualimap/{sample}/bwa/{ref}/qualimapReport.html",
+        genome_results = "report/qualimap/{sample}/bwa/{ref}/genome_results.txt",
     log:
-        logging_folder+"samples/{sample}/logs/{mapping_method}/{ref}/qualimap.txt",
+        logging_folder+"samples/{sample}/logs/bwa/{ref}/qualimap.txt",
     shell:
         """
         qualimap bamqc -bam {input[bam]} -outdir $(dirname {output}) > {log[0]}

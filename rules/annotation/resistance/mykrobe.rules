@@ -26,7 +26,7 @@ rule search_resistance_paired_reads_with_mykrobe:
             fi
         fi
         """
-        
+
 rule search_resistance_single_reads_with_mykrobe:
     conda:
         pipeline_path + "envs/mykrobe.yml"
@@ -35,7 +35,7 @@ rule search_resistance_single_reads_with_mykrobe:
         species = mykrobe_species[species.split("_")[0]],
         confidence = mykrobe_confidence,
     input:
-        "samples/{sample}/reads/raw/{sample}_single.fastq.gz",
+        "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
     output:
         "samples/{sample}/resistance/mykrobe.json"
     log:
@@ -62,5 +62,3 @@ rule generate_mykrobe_tsv_file_from_json_file:
         "samples/{sample}/resistance/mykrobe.tsv"
     script:
         "scripts/mykrobe_json_to_tsv.py"
-
-   

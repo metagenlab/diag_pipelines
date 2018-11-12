@@ -29,7 +29,7 @@ rule convert_phylogeny_to_image_no_st:
         tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw",
         bootstraps = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
     output:
-        tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_no_st.svg",
+        tree = "report/figures/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_no_st.svg",
     shell:
         """
         nw_support {input[tree]} {input[bootstraps]} | nw_display -S -s -b 'opacity:0' -w {params.size} -I m -v 15 - > {output[tree]}

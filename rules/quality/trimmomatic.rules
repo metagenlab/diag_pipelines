@@ -26,7 +26,7 @@ rule trim_paired_reads_with_trimmomatic:
         """
         trimmomatic PE {input[0]} {input[1]} {output[0]} {output[1]} {output[2]} {output[3]} ILLUMINACLIP:{params.conda_path}/${{CONDA_DEFAULT_ENV}}/share/trimmomatic/adapters/{params.adapter_file_name}:{params.adapter_removal_param1}:{params.adapter_removal_param2}:{params.adapter_removal_param3} SLIDINGWINDOW:{params.sliding_window_size}:{params.sliding_window_quality_threshold} LEADING:{params.minqual} TRAILING:{params.minqual} MINLEN:{params.minlength} &> {log}
         cp {log} {output[4]}
-        """        
+        """
 
 
 
@@ -34,7 +34,7 @@ rule trim_single_reads_with_trimmomatic:
     conda:
         pipeline_path + "envs/trimmomatic.yml"
     input:
-        "samples/{sample}/reads/raw/{sample}_single.fastq.gz"
+        "samples/{sample}/reads/raw/single_{sample}.fastq.gz"
     params:
         conda_path = workflow.conda_prefix,
         minlength = config["minimum_read_length"],
