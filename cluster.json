@@ -46,19 +46,19 @@
 
     "genotype_with_freebayes_on_all_samples" :
     {
-        "memory_R"     :  "rusage[mem=16000]",                                                                                                                                                                              
+        "memory_R"     :  "rusage[mem=16000]",
         "memory_M"     :  "16000000",
         "n_cores"      :  4,
         "queue"        :  "long"
     },
 
-    "genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION" :                                                                                                                                                                    
-    {                                                                                                                                                                                                                       
+    "genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION" :
+    {
         "memory_R"     :  "rusage[mem=8000]",
 	"memory_M"     :  "8000000"
     },
      "merge_gvcf_files_with_CombineGVCFs_GATK":
-    {                                                                                                                                                                                                                       
+    {
         "memory_R"     :  "rusage[mem=16000]",
 	"memory_M"     :  "16000000"
     }
