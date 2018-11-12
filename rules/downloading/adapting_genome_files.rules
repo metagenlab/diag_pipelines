@@ -17,7 +17,7 @@ rule link_full_genome:
         """
         ln -sr {input[genome_ref]} {output[genome_full]}
         """
-    
+
 rule correct_gbk_extension_for_IGV_visualization:
     input:
         genome = "references/{ref}/genome_gbwithparts.gbwithparts",
