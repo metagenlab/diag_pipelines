@@ -80,9 +80,9 @@ WORKDIR ${main}/data/analysis/
 
 RUN wget https://card.mcmaster.ca/download/0/broadstreet-v3.0.0.tar.gz --no-check-certificate && tar xf broadstreet-v3.0.0.tar.gz
 
-RUN /bin/bash -c 'source activate /opt/conda/envs/803617ab/ && rgi load -i card.json'
+RUN /bin/bash -c 'source activate /opt/conda/envs/5181c089/ && rgi load -i card.json'
 
-RUN chmod -R 777 /opt/conda/envs/803617ab/lib/python2.7/site-packages/package/rgi/_db/
+RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python2.7/site-packages/package/rgi/_db/
 
 RUN chmod -R 777 /opt/conda/envs/356da27d/lib/python3.6/site-packages/mykatlas/
 
