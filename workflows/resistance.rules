@@ -13,7 +13,7 @@ else:
 
 upstream_downstream = 5000
 
-data_path = "/home/pipeline_user/data/" 
+#data_path = "/home/pipeline_user/data/" 
 
 mykrobe_species = {}
 mykrobe_species["Mycobacterium"]="tb"
@@ -39,7 +39,7 @@ if species in reference_assembly_for_resistance.keys():
         pipeline_path + "rules/annotation/resistance/custom_annotated_dbs.rules"
     include:
         pipeline_path + "rules/annotation/resistance/detect_insertions_or_deletions.rules"
-    
+
 if species.startswith("Staphylococcus") or species.startswith("Mycobacterium"):
     include:
         pipeline_path + "rules/annotation/resistance/mykrobe.rules"
@@ -52,5 +52,3 @@ else:
     rule all_resistance_summaries:
         input:
             rgi = "resistance/rgi_summary.xlsx",
-        
-

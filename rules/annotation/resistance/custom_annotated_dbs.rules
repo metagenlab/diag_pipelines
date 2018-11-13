@@ -4,7 +4,7 @@ rule keep_only_annotated_region:
     input:
         genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/snps.g.vcf.gz",
         genotype_tbi = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/snps.g.vcf.gz.tbi",
-        bed_gz_correct = data_path + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
+        bed_gz_correct = "data/resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
     output:
         genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf",
     shell:
@@ -18,7 +18,7 @@ rule decompose_multiallelic_positions_from_genotyping:
     input:
         genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf.gz",
         genotype_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf.gz.tbi",
-        reference = data_path + "references/" + reference_assembly_for_resistance[species] + "/genome_fasta.fasta",
+        reference = "references/" + reference_assembly_for_resistance[species] + "/genome_fasta.fasta",
     output:
         genotype_decomposed = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf",
     log:
@@ -27,13 +27,13 @@ rule decompose_multiallelic_positions_from_genotyping:
         """
         vt decompose -s {input[genotype]} | vt normalize -r {input[reference]} -o {output[genotype_decomposed]} - &> {log}
         """
-        
+
 rule annotate_positions_from_genotyping:
     conda:
         pipeline_path + "envs/bcftools.yml"
     input:
-        bed_gz_correct =  data_path + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
-        bed_tbi_correct =  data_path  + "resistance_db/" + species + "/mutations/{db}/correct.bed.gz.tbi", 
+        bed_gz_correct =  "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
+        bed_tbi_correct =  "resistance_db/" + species + "/mutations/{db}/correct.bed.gz.tbi",
         genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf.gz",
         genotype_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf.gz.tbi",
     output:
@@ -65,7 +65,7 @@ rule extract_mutated_codons_or_nucleotides:
         done
         touch {output[genotype]}
         """
-        
+
 rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
@@ -75,7 +75,7 @@ rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
         mutation = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.bed",
     script:
         "scripts/convert_position_to_mutation.py"
-        
+
 
 rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synonymous_mutations:
     conda:
@@ -93,6 +93,3 @@ rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synony
         echo '##INFO=<ID=MUTATED_CODON_NUCL,Number=1,Type=String,Description="Mutation in the context of the gene (can be codon or nucleotide)">' >> {output[header]}
         bcftools annotate --include 'FORMAT/AD[0:1]/FORMAT/DP>0.10' --annotation {input[mutation_gz]} --columns CHROM,FROM,TO,INFO/MUTATED_AA_NUCL,INFO/MUTATED_CODON_NUCL --header-lines {output[header]} {input[annotation]} | bcftools view --exclude 'INFO/WILDTYPE_AA_NUCL=INFO/MUTATED_AA_NUCL' > {output[mutation]}
         """
-
-
-        
