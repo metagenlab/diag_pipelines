@@ -32,8 +32,8 @@ rule annotate_positions_from_genotyping:
     conda:
         pipeline_path + "envs/bcftools.yml"
     input:
-        bed_gz_correct =  "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
-        bed_tbi_correct =  "resistance_db/" + species + "/mutations/{db}/correct.bed.gz.tbi",
+        bed_gz_correct =  "data/resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
+        bed_tbi_correct =  "data/resistance_db/" + species + "/mutations/{db}/correct.bed.gz.tbi",
         genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf.gz",
         genotype_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf.gz.tbi",
     output:
