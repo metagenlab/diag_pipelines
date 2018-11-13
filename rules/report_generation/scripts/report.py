@@ -54,7 +54,8 @@ def qualimap_table(qualimap_links):
     cov_table = []
     for qualimap in qualimap_links:
         sample = re.search('report/qualimap/(.*)/bwa/.*_assembled_genome/qualimapReport.html', qualimap).group(1)
-        cov_table.append([sample, qualimap])
+        mod_path = '/'.join(qualimap.split('/')[1:])
+        cov_table.append([sample, "<a href=%s>Qualimap report</a>" % mod_path])
 
     df = pandas.DataFrame(cov_table, columns=header)
 
