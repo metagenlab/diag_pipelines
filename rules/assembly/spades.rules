@@ -46,7 +46,7 @@ rule assemble_genome_corrected_paired_reads_with_spades:
         contigs = "samples/{sample}/assembly/spades/contigs.fasta",
         graph = "samples/{sample}/assembly/spades/assembly_graph.fastg",
         scaffolds = "samples/{sample}/assembly/spades/scaffolds.fasta",
-        contigs_paths = "samples/{sample}/assembly/spade/contigs.paths",
+        contigs_paths = "samples/{sample}/assembly/spades/contigs.paths",
         scaffolds_paths = "samples/{sample}/assembly/spades/scaffolds.paths",
         log = "samples/{sample}/assembly/spades/spades.log",
     params:
