@@ -82,7 +82,7 @@ RUN wget https://card.mcmaster.ca/download/0/broadstreet-v3.0.0.tar.gz --no-chec
 
 RUN /bin/bash -c 'source activate /opt/conda/envs/5181c089/ && rgi load -i card.json'
 
-RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python2.7/site-packages/package/rgi/_db/
+RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python3.6/site-packages/app/_data
 
 RUN chmod -R 777 /opt/conda/envs/356da27d/lib/python3.6/site-packages/mykatlas/
 
