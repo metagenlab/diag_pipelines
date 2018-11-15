@@ -84,6 +84,9 @@ RUN /bin/bash -c 'source activate /opt/conda/envs/5181c089/ && rgi load -i card.
 
 RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python3.6/site-packages/app/_data
 
+# give write acess to rgi database
+RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python3.6/site-packages/app/_db/
+
 RUN chmod -R 777 /opt/conda/envs/9d0a6ae9/lib/python2.7/site-packages/mykatlas/
 
 RUN chown -R pipeline_user ${main}/

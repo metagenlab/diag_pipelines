@@ -1,7 +1,9 @@
 
 import pandas
 import re
+import numpy
 
+# inputs
 rgi_tsv_output = snakemake.input[0]
 rgi_ontology = snakemake.input[1]
 gene_depth_file = snakemake.input[2]
@@ -9,7 +11,16 @@ contig_gc_depth_file = snakemake.input[3]
 samtools_depth = snakemake.input[4]
 sample = snakemake.params[0]
 
+# output
 report_file = snakemake.output[0]
+
+rgi_table = pandas.read_csv(rgi_tsv_output,
+                            delimiter='\t',
+                            header=0, index_col=0)
+
+ontology_table = pandas.read_csv(rgi_ontology,
+                                 delimiter='\t',
+                                 header=0)
 
 # parse rgi output file
 contig2resistances = {}
@@ -21,228 +32,157 @@ with open(rgi_tsv_output, 'r') as f:
             contig2resistances[contig] = [re.sub("'", "", data[8])]
         else:
             contig2resistances[contig].append(re.sub("'", "", data[8]))
-rgi_table = pandas.read_csv(rgi_tsv_output,
-                                      delimiter='\t',
-                                      header=0)
-ontology_table = pandas.read_csv(rgi_ontology,
-                           delimiter='\t',
-                           header=0)
-
-# calculate rgi hit(s) sequencing depth based on position of the CDS in contigs
-# todo
-def parse_smatools_depth(samtools_depth):
-    import pandas
-    with open(samtools_depth, 'r') as f:
-        table = pandas.read_csv(f, sep='\t', header=None, index_col=0)
-    return table
-samtools_dataframe = parse_smatools_depth(samtools_depth)
-hit2depth={}
 
 # get contig depth and GC
 contig2gc_content = pandas.read_csv(contig_gc_depth_file,
-                                      delimiter='\t',
-                                      header=0).set_index("contig").to_dict()["gc_content"]
+                                    delimiter='\t',
+                                    header=0).set_index("contig").to_dict()["gc_content"]
 
 contig2median_depth = pandas.read_csv(contig_gc_depth_file,
                                       delimiter='\t',
                                       header=0).set_index("contig").to_dict()["median_depth"]
 
 contig2size = pandas.read_csv(contig_gc_depth_file,
-                                      delimiter='\t',
-                                      header=0).set_index("contig").to_dict()["contig_size"]
-# prepare bubble plot GC vs Coverage
-
-dataset_template = '''
-        {
-        label: '%s',
-        data: [
-            %s
-        ],
-        backgroundColor:"%s",
-        hoverBackgroundColor: "%s"
-        }
-'''
-
-data_template = '''{
-            x: %s,
-            y: %s,
-            r: Math.log(%s),
-            l: "%s",
-          }'''
-
-bubble_template = '''
-var data = {
-    datasets: [
-      %s,
-      %s
-      ]
-  };
-
-var options = {
-         legend: {
-            display: false
-         },
-          type: 'bubble',
-          data: data,
-          options: {
-            tooltips: {
-              enabled: true,
-              callbacks: {
-                label: function(tooltipItem, data) {
-                  var label = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].l;
-                  return label;
-                }
-         
-            }
-            },
-          title:{
-              display: true,
-              text:'Depth vs GC plot'
-          },
-            scales: {
-                xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'GC(%%)'
-                        },
-                                                    ticks: {
-                            beginAtZero: true,
-                            steps: 10,
-                            stepValue: 10,
-                            max: 100
-                        }
-                    }],
-                yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Depth'
-                        },
-                                                    ticks: {
-                            beginAtZero: true,
-                        }
-                    }]
-            }, 
-        // Container for pan options
-        pan: {
-            // Boolean to enable panning
-            enabled: true,
-
-            // Panning directions. Remove the appropriate direction to disable 
-            // Eg. 'y' would only allow panning in the y direction
-            mode: 'xy'
-        },
-
-        // Container for zoom options
-        zoom: {
-            // Boolean to enable zooming
-            enabled: true,
-
-            // Zooming directions. Remove the appropriate direction to disable 
-            // Eg. 'y' would only allow zooming in the y direction
-            mode: 'x',
-        }
-
-              
-        }
-}
-var ctx = document.getElementById('chartJSContainer').getContext('2d');
-new Chart(ctx, options);
-'''
-
-no_resistance_list = []
-resistance_list = []
-
-for contig in contig2gc_content:
-    depth = contig2median_depth[contig]
-    gc = contig2gc_content[contig]
-    if contig in contig2resistances:
-        resistance_list.append(data_template % (gc,
-                                                depth,
-                                                contig2size[contig], # contig size
-                                                "%s (%sbp): %s" % (contig,
-                                                                   contig2size[contig],
-                                                                   ','.join(contig2resistances[contig]))))
-    else:
-        no_resistance_list.append(data_template % (gc,
-                                                depth,
-                                                contig2size[contig], # contig size
-                                                "%s (%sbp)" % (contig,
-                                                               contig2size[contig])))
-
-buuble_chart_code = bubble_template % (dataset_template % ('No resistances',
-                                                           ','.join(no_resistance_list),
-                                                           "rgba(22, 99, 132, 0.2)",
-                                                           "rgba(22, 99, 132, 0.2)"),
-                                       dataset_template % ('Resistances',
-                                                           ','.join(resistance_list),
-                                                           '#ff6384',
-                                                           '#ff6384'
-                                                           ))
-
-template = '''
-<!DOCTYPE html>
-<html>
-    <head>        
-
-        <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-
-    <script type="text/javascript" src="https://github.com/chartjs/Chart.js/releases/download/v2.7.1/Chart.bundle.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.5/chartjs-plugin-zoom.js"></script>
-
-    </head>
-<body style="max-width:95%%; padding-left:55px;">
-    <h1>Identification of resistance markers</h1>
-    
-    <h2>GC-coverage plot</h2>
-        <div style="width:400px;">
-        <canvas id="chartJSContainer" width="400" height="400"></canvas>       
-        </div>
-    
-    <h2>Detailed table<h2>
-        <div id='vftable' style="max-width:100%%; padding-left:0px;">
-            %s
-        </div>
-    
-
-</body>
-<script type="text/javascript">
-%s
-
-$(document).ready(function() {
-    $('#res_table').DataTable( {
-        dom: 'Bfrtip',
-        "pageLength": 10,
-        "searching": true,
-        "bLengthChange": false,
-        "paging":   true,
-        "info": false
-    } );
-} );
+                              delimiter='\t',
+                              header=0).set_index("contig").to_dict()["contig_size"]
 
 
-</script>
+# calculate rgi hit(s) sequencing depth based on position of the CDS in contigs
+def parse_smatools_depth(samtools_depth):
+    import pandas
+    with open(samtools_depth, 'r') as f:
+        table = pandas.read_csv(f, sep='\t', header=None, index_col=0)
+    return table
 
-<style>
-th { font-size: 12px; }
-td { font-size: 11px; }
-</style>
 
-</html>
+def make_div(figure_or_data,
+             include_plotlyjs=False,
+             show_link=False,
+             div_id=None):
 
-'''
+    from plotly import offline
 
-def resistance_table(rgi_table):
+    div = offline.plot(figure_or_data,
+                       include_plotlyjs=include_plotlyjs,
+                       show_link=show_link,
+                       output_type="div",
+                       )
+    if ".then(function ()" in div:
+        div = f"""{div.partition(".then(function ()")[0]}</script>"""
+    if div_id:
+        import re
+
+        try:
+            existing_id = re.findall(r'id="(.*?)"|$', div)[0]
+            div = div.replace(existing_id, div_id)
+        except IndexError:
+            pass
+    return div
+
+
+def get_gc_coverage_data(contig2gc_content,
+                         contig2resistances,
+                         contig2size):
+    import math
+
+    bubble_data = {}
+    bubble_data["with_resistance"] = {}
+    bubble_data["with_resistance"]["hover_text"] = []
+    bubble_data["with_resistance"]["contig_size"] = []
+    bubble_data["with_resistance"]["GC"] = []
+    bubble_data["with_resistance"]["depth"] = []
+
+    bubble_data["without_resistance"] = {}
+    bubble_data["without_resistance"]["hover_text"] = []
+    bubble_data["without_resistance"]["contig_size"] = []
+    bubble_data["without_resistance"]["GC"] = []
+    bubble_data["without_resistance"]["depth"] = []
+
+    for contig in contig2gc_content:
+        depth = contig2median_depth[contig]
+        gc = contig2gc_content[contig]
+        if contig in contig2resistances:
+            bubble_data["with_resistance"]["hover_text"].append("%s (%sbp): %s" % (contig,
+                                                                                   contig2size[contig],
+                                                                                   ','.join(contig2resistances[contig])))
+            bubble_data["with_resistance"]["contig_size"].append(float(contig2size[contig]) + 10000)
+            bubble_data["with_resistance"]["GC"].append(gc)
+            bubble_data["with_resistance"]["depth"].append(depth)
+
+        else:
+            bubble_data["without_resistance"]["hover_text"].append("%s (%sbp)" % (contig,
+                                                                                  contig2size[contig]))
+            bubble_data["without_resistance"]["contig_size"].append(float(contig2size[contig]) + 10000)
+            bubble_data["without_resistance"]["GC"].append(gc)
+            bubble_data["without_resistance"]["depth"].append(depth)
+
+    return bubble_data
+
+
+def bubble_plot_gc_depth(bubble_data):
+    import plotly.plotly as py
+    import plotly.graph_objs as go
+
+    import pandas as pd
+    import math
+
+    trace0 = go.Scatter(x=bubble_data["with_resistance"]["GC"],
+                        y=bubble_data["with_resistance"]["depth"],
+                        mode='markers',
+                        name='With resistance(s)',
+                        text=bubble_data["with_resistance"]["hover_text"],
+                        marker=dict(symbol='circle',
+                                    sizemode='area',
+                                    sizeref=2.*max(bubble_data["without_resistance"]["contig_size"])/(40.**2),
+                                    size=bubble_data["with_resistance"]["contig_size"],
+                                    line=dict(width=2),
+                                    )
+                        )
+
+    trace1 = go.Scatter(x=bubble_data["without_resistance"]["GC"],
+                        y=bubble_data["without_resistance"]["depth"],
+                        mode='markers',
+                        name='Without resistance',
+                        text=bubble_data["without_resistance"]["hover_text"],
+                        marker=dict(symbol='circle',
+                                    sizemode='area',
+                                    sizeref=2.*max(bubble_data["without_resistance"]["contig_size"])/(40.**2),
+                                    size=bubble_data["without_resistance"]["contig_size"],
+                                    line=dict(width=2),
+                                    )
+                        )
+    data = [trace0, trace1]
+    layout = go.Layout(title='GC vs sequencing Depth plot',
+                       width=1000,
+                       height=700,
+                       xaxis=dict(title='GC (%)',
+                                  gridcolor='rgb(255, 255, 255)',
+                                  # range=[2.003297660701705, 5.191505530708712],
+                                  zerolinewidth=1,
+                                  ticklen=5,
+                                  gridwidth=2,
+                                  ),
+                       yaxis=dict(title='Depth',
+                                  gridcolor='rgb(255, 255, 255)',
+                                  # range=[36.12621671352166, 91.72921793264332],
+                                  zerolinewidth=1,
+                                  ticklen=5,
+                                  gridwidth=2,
+                                  ),
+                       paper_bgcolor='rgb(243, 243, 243)',
+                       plot_bgcolor='rgb(243, 243, 243)',
+                       )
+    fig = go.Figure(data=data, layout=layout)
+
+    return (make_div(fig, div_id="bubble_plot"))
+
+
+def resistance_table(rgi_table,
+                     ontology_table,
+                     samtools_depth_df):
+
+    import numpy
+
 
     header = ["Contig",
               "ORF",
@@ -255,12 +195,16 @@ def resistance_table(rgi_table):
               "Score cutoff",
               "Family",
               "Mechanism",
-              "Resistance"]
+              "Resistance",
+              "Depth"]
 
     table_rows = []
     for n, one_resistance in rgi_table.iterrows():
         contig = '_'.join(one_resistance["Contig"].split('_')[0:-1])
         orf_id = one_resistance["Contig"].split('_')[-1]
+        gene_start = one_resistance["Start"]
+        gene_end = one_resistance["Stop"]
+        gene_depth = round(numpy.median(samtools_depth_df.loc[contig].iloc[gene_start:gene_end, 1]), 0)
         cutoff = one_resistance["Cut_Off"]
         name = one_resistance["Best_Hit_ARO"]
         identity = one_resistance["Best_Identities"]
@@ -277,21 +221,23 @@ def resistance_table(rgi_table):
 
         resistance_code = ''
         for resistance, resistance_class in zip(antibio_res_list, antibio_res_class_list):
-            #print(resistance, resistance_class)
+            # print(resistance, resistance_class)
             resistance_code += '%s (%s) </br>' % (resistance, resistance_class)
 
         table_rows.append([contig,
-                          orf_id,
-                          "%s (%s)" % (name, aro),
-                          model,
-                          snps,
-                          cov,
-                          identity,
-                          bitscore,
-                          pass_bitscore,
-                          family,
-                          mechanism,
-                          resistance_code])
+                           orf_id,
+                           "%s (%s)" % (name, aro),
+                           model,
+                           snps,
+                           cov,
+                           identity,
+                           bitscore,
+                           pass_bitscore,
+                           family,
+                           mechanism,
+                           resistance_code,
+                           gene_depth])
+
     df = pandas.DataFrame(table_rows, columns=header)
 
     # cell content is truncated if colwidth not set to -1
@@ -307,5 +253,147 @@ def resistance_table(rgi_table):
 
     return df_str.replace("\n", "\n" + 10 * " ")
 
-with open(report_file, 'w') as f:
-    f.write(template % (resistance_table(rgi_table), buuble_chart_code))
+
+STYLE = """
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"/>
+    <style type="text/css">
+    body{font-family:Helvetica,arial,sans-serif;font-size:14px;line-height:1.6;padding-bottom:10px;background-color:#fff;color:#333;margin:0}body>div .section::before{content:"";display:block;height:80px;margin:-80px 0 0}#bubble-plot::before{margin:0}.topic-title{font-size:18pt}body>div>.section{margin-left:255px;margin-bottom:3em}div.section{margin-right:20px}#contents>p{display:none}button,li p.first{display:inline-block}#contents{margin-top:80px;padding-left:0;width:235px;background-color:#f1f1f1;height:100%;position:fixed;overflow:auto}#contents ul{list-style-type:none}#contents ul>li{font-size:14pt}#contents ul>li a:hover{color:#151d26}button,h1.title{color:#fff;background-color:#151d26}#contents ul>li>ul>li{font-size:12pt}h1.title{margin-top:0;position:fixed;z-index:10;padding:20px;width:100%}code,table tr:nth-child(2n),tt{background-color:#f8f8f8}.one-col{min-width:310px;height:500px;margin:0 auto}.two-col-left{height:300px;width:49%;float:left}.two-col-right{height:300px;width:49%;float:right}button{margin:0 5px 0 0;padding:5px 25px;font-size:18px;line-height:1.8;appearance:none;box-shadow:none;border-radius:3px;border:none}button:focus{outline:0}button:hover{background-color:#4183C4}button:active{background-color:#27496d}.legend-rect{width:20px;height:20px;margin-right:8px;margin-left:20px;float:left;-webkit-border-radius:2px;border-radius:2px}a{color:#4183C4;text-decoration:none}a.absent{color:#c00}a.anchor{padding-left:30px;margin-left:-30px;cursor:pointer;position:absolute;top:0;left:0;bottom:0}dl,dl dt,dl dt:first-child,hr,table,table tr{padding:0}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px}h1,h2,h3,h4,h5,h6{margin:20px 0 10px;padding:0;font-weight:700;-webkit-font-smoothing:antialiased;cursor:text;position:relative}h1:hover a.anchor,h2:hover a.anchor,h3:hover a.anchor,h4:hover a.anchor,h5:hover a.anchor,h6:hover a.anchor{text-decoration:none}h1 code,h1 tt,h2 code,h2 tt,h3 code,h3 tt,h4 code,h4 tt,h5 code,h5 tt,h6 code,h6 tt{font-size:inherit}h1{font-size:28px;color:#151d26;border-bottom:1px solid #ccc}h2{font-size:24px;color:#000}h3{font-size:18px}h4{font-size:16px}dl dt,h5,h6{font-size:14px}h6{color:#777}blockquote,dl,li,ol,p,pre,table,ul{margin:15px 0}hr{background:url(http://tinyurl.com/bq5kskr) repeat-x;border:0;color:#ccc;height:4px}a:first-child h1,a:first-child h2,a:first-child h3,a:first-child h4,a:first-child h5,a:first-child h6{margin-top:0;padding-top:0}h1 p,h2 p,h3 p,h4 p,h5 p,h6 p{margin-top:0}dl dt{font-weight:700;font-style:italic;margin:15px 0 5px}blockquote>:first-child,dl dd>:first-child,dl dt>:first-child,table tr td :first-child,table tr th :first-child{margin-top:0}blockquote>:last-child,dl dd>:last-child,dl dt>:last-child{margin-bottom:0}dl dd{margin:0 0 15px;padding:0 15px}blockquote{border-left:4px solid #ddd;padding:0 15px;color:#777}table{border-spacing:0;border-collapse:collapse}table tr{border-top:1px solid #ccc;background-color:#fff;margin:0}table tr th{font-weight:700;margin:0}table tr td{margin:0}table tr td :last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}span.frame{display:block;overflow:hidden}span.frame>span{border:1px solid #ddd;display:block;float:left;overflow:hidden;margin:13px 0 0;padding:7px;width:auto}span.frame span img{display:block;float:left}span.frame span span{clear:both;color:#333;display:block;padding:5px 0 0}span.align-center{display:block;overflow:hidden;clear:both}span.align-center>span{display:block;overflow:hidden;margin:13px auto 0;text-align:center}span.align-center span img{margin:0 auto;text-align:center}span.align-right{display:block;overflow:hidden;clear:both}span.align-right>span{display:block;overflow:hidden;margin:13px 0 0;text-align:right}span.align-right span img{margin:0;text-align:right}span.float-left{display:block;margin-right:13px;overflow:hidden;float:left}span.float-left span{margin:13px 0 0}span.float-right{display:block;margin-left:13px;overflow:hidden;float:right}span.float-right>span{display:block;overflow:hidden;margin:13px auto 0;text-align:right}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;border-radius:3px}pre code{margin:0;padding:0;white-space:pre;background:0 0}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}pre code,pre tt{background-color:transparent;border:none}div#metadata{text-align:right}h1{line-height:1.6}.simple{padding-left:20px}.docutils.container{width:100%}
+    .pull-left{
+    .dataTables_filter {
+       float: left !important;
+    }
+    mark.red {
+        background-color: red;
+        color: red;
+    }
+    mark.green {
+        background-color: green;
+        color: green;
+    }
+    </style>
+    """
+
+SCRIPT = """
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+
+    $(document).ready(function() {
+        $('#res_table').DataTable( {
+            dom: 'Bfrtip',
+            "pageLength": 20,
+            "searching": true,
+            "bLengthChange": false,
+            "paging":   true,
+            "info": false,
+            'rowCallback': function(row, data, index){
+            if(data[6] < 90){
+                             $(row).find('td:eq(6)').css('background-color', 'rgba(255, 0, 0, 0.6)');
+                            }
+            if(data[5] < 90){
+                             $(row).find('td:eq(5)').css('background-color', 'rgba(0, 255, 0, 0.6)');
+                            }
+            },
+        } );
+    } );
+    </script>
+
+    """
+
+
+def write_report(output_file,
+                 STYLE,
+                 SCRIPT,
+                 table_rgi,
+                 bubble_plot,
+                 samtools_median_depth,
+                 samtools_mean_depth):
+
+    import io
+    from docutils.core import publish_file, publish_parts
+    from docutils.parsers.rst import directives
+
+    if samtools_median_depth < 50:
+        warning_type = 'danger'
+    else:
+        warning_type = 'info'
+
+    report_str = f"""
+
+.. raw:: html
+
+    {SCRIPT}
+
+    {STYLE}
+
+=============================================================
+RGI report
+=============================================================
+
+.. contents::
+    :backlinks: none
+    :depth: 2
+
+Bubble plot
+-----------
+
+
+.. raw:: html
+
+    {bubble_plot}
+
+
+Table
+------
+
+.. raw:: html
+
+
+    <div class="alert alert-{warning_type}" role="alert">
+      Median depth: <strong> {samtools_median_depth} </strong> </br>
+      Mean depth: <strong> {samtools_mean_depth} </strong>
+    </div>
+
+    <div class="alert alert-warning" role="alert">
+      Genes with a hit <span class="label label-default">coverage &lt; 90%</span> are highlighted in <span class="label label-success">green</span> (if any) </br>
+      Genes with an  <span class="label label-default">identity &lt; 90%</span> are highlighted in <span class="label label-danger">red</span> (if any)
+    </div>
+
+    {table_rgi}
+
+"""
+    with open(output_file, "w") as fh:
+        publish_file(
+            source=io.StringIO(report_str),
+            destination=fh,
+            writer_name="html",
+            settings_overrides={"stylesheet_path": ""},
+        )
+
+
+plot_data = get_gc_coverage_data(contig2gc_content,
+                                 contig2resistances,
+                                 contig2size)
+
+bubble_plot = bubble_plot_gc_depth(plot_data)
+
+samtools_depth_df = parse_smatools_depth(samtools_depth)
+
+samtools_mean_depth = round(numpy.mean(samtools_depth_df.iloc[:, 1]), 0)
+samtools_median_depth = round(numpy.median(samtools_depth_df.iloc[:, 1]), 0)
+
+rgi_table = resistance_table(rgi_table,
+                             ontology_table,
+                             samtools_depth_df)
+
+write_report(report_file,
+             STYLE,
+             SCRIPT,
+             rgi_table,
+             bubble_plot,
+             samtools_mean_depth,
+             samtools_median_depth)
