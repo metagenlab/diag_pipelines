@@ -68,8 +68,8 @@ rule plot_rgi:
     params:
         species = lambda wildcards: all_samples.loc[read_naming.keys(), "ScientificName"],
     output:
-        expand("resistance/{species}.pdf", species=list(set(all_samples.loc[read_naming.keys(), "ScientificName"]))),
-        rgi_plot="resistance/rgi_overview.pdf",
+        expand("report/resistance/{species}.svg", species=list(set(all_samples.loc[read_naming.keys(), "ScientificName"]))),
+        rgi_plot="report/resistance/rgi_overview.svg",
     script:
         "scripts/plot_gene_presence_heatmap.R"
 

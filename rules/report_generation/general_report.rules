@@ -103,6 +103,7 @@ rule report_resistance:
         multiqc_report = "report/multiqc_assembly/multiqc_report.html",
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+        rgi_overview = "report/resistance/rgi_overview.svg"
     params:
         samples = list(read_naming.keys()),
     output:

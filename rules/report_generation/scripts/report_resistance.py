@@ -9,8 +9,7 @@ from MN_tree import get_MN_tree, convert2cytoscapeJSON
 from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 
 multiqc_report = snakemake.input["multiqc_report"]
-
-
+rgi_overview = snakemake.input["rgi_overview"]
 ordered_samples = snakemake.params["samples"]
 
 resistance_reports = snakemake.input["resistance_reports"]
@@ -39,7 +38,7 @@ SCRIPT = """
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.2.4/cytoscape-cola.min.js"></script>
-    
+
     <script>
 
     $(document).ready(function() {
@@ -52,7 +51,7 @@ SCRIPT = """
             "info": false
         } );
     } );
-     
+
     $(document).ready(function() {
         $('#cov_table').DataTable( {
             dom: 'Bfrtip',
@@ -73,7 +72,8 @@ def write_report(output_file,
                  STYLE,
                  SCRIPT,
                  resistance_reports,
-                 low_cov_fasta):
+                 low_cov_fasta,
+                 rgi_overview):
     import io
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
@@ -89,7 +89,7 @@ def write_report(output_file,
     {SCRIPT}
 
     {STYLE}
-    
+
 =============================================================
 Diag Pipeline - Resistance report
 =============================================================
@@ -97,22 +97,22 @@ Diag Pipeline - Resistance report
 .. contents::
     :backlinks: none
     :depth: 2
-    
+
 Quality Control
 ---------------
 
 MultiQC
 *******
 
-MultiQC aggregate results from bioinformatics analyses across many samples into a single report. 
-The analyses covered here include genome assembly with spades, evaluation of the sequencing 
-depth by mapping of the reads against the assembly and annotation with prokka. 
+MultiQC aggregate results from bioinformatics analyses across many samples into a single report.
+The analyses covered here include genome assembly with spades, evaluation of the sequencing
+depth by mapping of the reads against the assembly and annotation with prokka.
 
 
 .. raw:: html
 
     {multiqc_link}
-    
+
 Low coverage contigs
 ********************
 
@@ -123,10 +123,20 @@ Low coverage contigs
 Resistance (RGI/CARD)
 ----------------------
 
+
+RGI Overview
+*************
+
+.. image:: {rgi_overview}
+   :width: 60%
+
+Detail
+*******
+
 .. raw:: html
 
     {table_resistance}
-    
+
 """
     with open(output_file, "w") as fh:
         publish_file(
@@ -140,4 +150,5 @@ write_report(output_file,
              STYLE,
              SCRIPT,
              resistance_reports,
-             low_cov_fastas)
+             low_cov_fastas,
+             rgi_overview)
