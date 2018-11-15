@@ -92,7 +92,7 @@ for (species in nr_species){
     # plot multiplot
     w <- length(unique(sub_dataset$species))*9
     h <- length(unique(sub_dataset$Best_Hit_ARO))/2
-    svglite(paste('resistance/', species, '.svg', sep=''), width=w, height=h)
+    svglite(paste('report/resistance/', species, '.svg', sep=''), width=w, height=h)
         ggarrange(plots=plot_list, ncol = 1, newpage = FALSE)
     dev.off()
 }

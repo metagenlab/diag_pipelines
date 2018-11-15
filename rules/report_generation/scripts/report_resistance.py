@@ -9,10 +9,12 @@ from MN_tree import get_MN_tree, convert2cytoscapeJSON
 from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 
 multiqc_report = snakemake.input["multiqc_report"]
-rgi_overview = snakemake.input["rgi_overview"]
+rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
+
 ordered_samples = snakemake.params["samples"]
 
 resistance_reports = snakemake.input["resistance_reports"]
+
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 
 output_file = snakemake.output[0]
