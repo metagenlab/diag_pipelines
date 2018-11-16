@@ -9,16 +9,25 @@ def get_core_genome_size(core_genome_bed):
     table = pandas.read_csv(core_genome_bed, delimiter="\t", names=['chromosome', 'start', 'end'])
     return sum(table["end"]-table["start"]+1)
 
+
 def get_reference_genome_size(reference_genome_file):
     from Bio import SeqIO
     records_len = [len(i) for i in SeqIO.parse(open(reference_genome_file, 'r'), 'fasta')]
     return sum(records_len)
 
 
-def coverage_table(low_cov_fastas):
+def quality_table(low_cov_fastas, undetermined_snps_files=False, core_genome_size=False):
 
-    header = ["Strain id","Number of contigs"]
+    header = ["Strain id", "Number of contigs"]
 
+    if undetermined_snps_files:
+        header.append("N. na SNPS")
+        header.append("Fraction core (%)")
+        sample2n_unknown = {}
+        for f in undetermined_snps_files:
+            # samples/{sample}/snps/gatk_gvcfs/cgMLST/bwa/unknowns.tab
+            sample = f.split('/')[1]
+            sample2n_unknown[sample] = len(pandas.read_csv(f, delimiter='\t'))
     cov_table = []
     for fasta in low_cov_fastas:
         sample = re.search('samples/(.*)/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta', fasta).group(1)
@@ -26,8 +35,13 @@ def coverage_table(low_cov_fastas):
             with open(fasta, 'r') as f:
                 n_records = len(SeqIO.read(f, 'fasta'))
         except ValueError:
-            continue
-        cov_table.append([sample, n_records])
+            n_records = 0
+        if undetermined_snps_files:
+            cov_table.append([sample,
+                              n_records, sample2n_unknown[sample],
+                              round((float(sample2n_unknown[sample]) / core_genome_size) * 100, 2)])
+        else:
+            cov_table.append([sample, n_records])
 
     if len(cov_table) > 0:
         df = pandas.DataFrame(cov_table, columns=header)

@@ -39,13 +39,14 @@ rule report_epidemiology:
         pipeline_path + "envs/report.yml"
     input:
         multiqc_report = "report/multiqc_assembly/multiqc_report.html",
-        spanning_tree_core="report/figures/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg",
-        mlst_tree="report/figures/mlst_tree.svg",
+        spanning_tree_core = "report/figures/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_with_st.svg",
+        mlst_tree = "report/figures/mlst_tree.svg",
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
         snp_table = "typing/gatk_gvcfs/cgMLST/bwa/distances_in_snp.tsv",
         reference_genome = "references/cgMLST/genome_fasta.fasta",
         core_genome_bed = "core_genomes/cgMLST/" + species + ".bed",
-        mlst='typing/mlst/summary.tsv',
+        mlst = 'typing/mlst/summary.tsv',
+        undetermined_positions = expand("samples/{sample}/snps/gatk_gvcfs/cgMLST/bwa/unknowns.tab", sample=read_naming.keys())
     params:
         samples = list(read_naming.keys()),
     output:

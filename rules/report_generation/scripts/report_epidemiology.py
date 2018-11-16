@@ -6,10 +6,12 @@
 # n_samples = list(read_naming.keys()
 import pandas
 from MN_tree import get_MN_tree, convert2cytoscapeJSON
-from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
+from report import quality_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 
 multiqc_report = snakemake.input["multiqc_report"]
 snp_table = snakemake.input["snp_table"]
+
+undetermined_snp_tables = snakemake.input["undetermined_positions"]
 
 ordered_samples = snakemake.params["samples"]
 spanning_tree_core = snakemake.input["spanning_tree_core"]
@@ -58,8 +60,8 @@ SCRIPT = """
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.2.4/cytoscape-cola.min.js"></script>
-    
-    <script> 
+
+    <script>
     $(document).ready(function() {
         $('#cov_table').DataTable( {
             dom: 'Bfrtip',
@@ -71,59 +73,9 @@ SCRIPT = """
         } );
     } );
 
-    document.addEventListener('DOMContentLoaded', function(){
-    
-        var cy = window.cy = cytoscape({
-            container: document.getElementById('cy'),
-    
-            autounselectify: true,
-            
-            boxSelectionEnabled: false,
-    
-            layout: {
-                name: 'cose',
-                idealEdgeLength: function(edge){ return 1/Math.log(edge.data('strength')); }, // edgeLength
-                padding: 30,
-                maxSimulationTime: 6000,
-                randomize: false,
-                nodeSpacing: 100,
-                animate: true
-    
-            },
-    
-            style: [
-                {
-                    selector: 'node',
-                    css: {
-                        'background-color': 'data(color)',
-                        'shape': 'roundrectangle',
-                        'width': function(node){ return 3*node.data('label').length; },
-                        'height': 7,
-                        'content': 'data(label)',
-                        'font-size': 5,
-                        'text-valign': 'center'
-                    }
-                },
-    
-                {
-                    selector: 'edge',
-                    css: {
-                        'line-color': 'data(color)',
-                        'label': 'data(strength)',
-                        'width': 'data(width)',
-                        'font-size': 4
-                    }
-                }
-            ],
-    
-            elements:  %s
-            });
-    
-    });
     </script>
 
     """
-
 
 
 def write_report(output_file,
@@ -134,13 +86,14 @@ def write_report(output_file,
                  mlst_tree,
                  snp_table,
                  core_genome_size,
-                 reference_genome_size):
+                 reference_genome_size,
+                 undetermined_snp_tables):
     import io
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
 
     multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
-    table_lowcoverage_contigs = coverage_table(low_cov_fasta)
+    table_lowcoverage_contigs = quality_table(low_cov_fasta, undetermined_snp_tables, core_genome_size)
 
     snp_heatmap = plot_heatmap_snps(snp_table)
     fraction_core = round(float(core_genome_size)/float(reference_genome_size)*100, 2)
@@ -152,7 +105,7 @@ def write_report(output_file,
     {SCRIPT}
 
     {STYLE}
-    
+
 =============================================================
 Diag Pipeline - Epidemiology
 =============================================================
@@ -160,29 +113,29 @@ Diag Pipeline - Epidemiology
 .. contents::
     :backlinks: none
     :depth: 2
-    
+
 Quality Control
 ---------------
 
 MultiQC
 *******
 
-MultiQC aggregate results from bioinformatics analyses across many samples into a single report. 
-The analyses covered here include genome assembly with spades, evaluation of the sequencing 
-depth by mapping of the reads against the assembly and annotation with prokka. 
+MultiQC aggregate results from bioinformatics analyses across many samples into a single report.
+The analyses covered here include genome assembly with spades, evaluation of the sequencing
+depth by mapping of the reads against the assembly and annotation with prokka.
 
 
 .. raw:: html
 
     {multiqc_link}
-    
+
 Low coverage contigs
 ********************
 
 .. raw:: html
 
     {table_lowcoverage_contigs}
-    
+
 Typing
 ------
 
@@ -190,7 +143,7 @@ MLST
 *****
 
 The *S. aureus* MLST scheme is based on the sequence of the following seven house-keeping genes:
-    
+
 1. arcC (Carbamate kinase)
 2. aroE (Shikimate dehydrogenase)
 3. glpF (Glycerol kinase)
@@ -198,16 +151,16 @@ The *S. aureus* MLST scheme is based on the sequence of the following seven hous
 5. pta (Phosphate acetyltransferase)
 6. tpi (Triosephosphate isomerase)
 7. yqi (Acetyle coenzyme A acetyltransferase)
-              
+
 The MLST was determined using the mlst_ software based on PubMLST_ typing schemes.
-    
+
 .. _PubMLST: https://pubmlst.org/
 .. _mlst: https://github.com/tseemann/mlst
 
 Phylogeny + MLST
 ****************
 
-.. figure:: {mlst_tree} 
+.. figure:: {mlst_tree}
    :alt: MST tree
    :width: 40%
 
@@ -217,16 +170,16 @@ MS tree (R)
 *********************
 
 - Size of the reference genome: {reference_genome_size}
-- Size of the core genome: {core_genome_size} ({fraction_core} % of the reference) 
+- Size of the core genome: {core_genome_size} ({fraction_core} % of the reference)
 
 
-.. figure:: {spanning_tree_core} 
+.. figure:: {spanning_tree_core}
    :alt: MST tree
    :width: 80%
 
    Minimum spanning tree including all samples as well as the reference genome.
-   
-MS tree (js) 
+
+MS tree (js)
 ***********************
 
 .. raw:: html
@@ -239,7 +192,7 @@ SNP table
 .. raw:: html
 
     {snp_heatmap}
-    
+
 """
     with open(output_file, "w") as fh:
         publish_file(
@@ -255,10 +208,11 @@ net = ''#convert2cytoscapeJSON(get_MN_tree(snp_table), leaf2mlst)
 
 write_report(output_file,
              STYLE,
-             SCRIPT % net,
+             SCRIPT,
              spanning_tree_core,
              low_cov_fastas,
              mlst_tree,
              snp_table,
              get_core_genome_size(core_genome_bed),
-             get_reference_genome_size(reference_genome))
+             get_reference_genome_size(reference_genome),
+             undetermined_snp_tables)
