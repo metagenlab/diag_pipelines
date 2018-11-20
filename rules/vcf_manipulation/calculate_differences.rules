@@ -8,8 +8,8 @@ rule calculate_pairwise_distances_by_type:
         dist_pair=temp("{any_analysis}/distances/{sample1}_-_{sample2}_distance_in_{type}.txt"),
     shell:
         """
-        snps=$(bcftools view --samples {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | awk '$1!=$2' | grep -c -v "\.") || true 
-        echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[dist_pair]}   
+        snps=$(bcftools view --samples {wildcards.sample1},{wildcards.sample2} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | awk '$1!=$2' | grep -c -v "\.") || true
+        echo {wildcards.sample1} {wildcards.sample2} ${{snps}} > {output[dist_pair]}
         """
 
 rule get_pairwise_snps_positions_by_type:
@@ -40,7 +40,7 @@ rule calculate_distance_with_ref_by_type:
         snps=$(bcftools view --samples {wildcards.sample} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | awk '{{s+=$1}} END {{print s}}')
         echo ref {wildcards.sample} ${{snps}} > {output[dist_ref]}
         """
- 
+
 rule agregate_distances_from_joint_genotyping_by_type:
     input:
         pairs=expand("{{any_analysis}}/distances/{sample1}_-_{sample2}_distance_in_{{type}}.txt", zip, sample1 = all_combined_1, sample2 = all_combined_2),
@@ -53,6 +53,3 @@ rule agregate_distances_from_joint_genotyping_by_type:
                 with open(fname) as infile:
                     outfile.write(infile.read())
 #we aggregate the files with python because sometimes bash can't handle the high number of files
-
-
-

@@ -13,7 +13,7 @@ rule decompose_multiallelics_and_normalize:
         """
         vt decompose -s {input[raw]} | vt normalize -r {input[ref]} -o {output[decomposed]} - &> {log}
         """
-        
+
 rule filter_on_coverage:
     params:
         min_cov=minimum_coverage,
@@ -41,7 +41,7 @@ rule filter_on_frequency_per_sample:
         """
         bcftools filter -s "freqalt" -S "." -e "GT='alt' & (FORMAT/AD[0:1])/(FORMAT/DP) < {params.min_alt}" {input[sample]} | bcftools filter -s "freqref" -S "." -e "GT='ref' & (FORMAT/AD[0:0])/(FORMAT/DP) < {params.min_alt}" > {output[freq]}
         """
-        
+
 rule extract_allele_by_type_from_gatk_gvcfs:
     conda:
         pipeline_path + "envs/gatk.yml"
@@ -86,4 +86,3 @@ rule extract_core_genome_parsnp:
         """
         bcftools view --regions-file {input[bed]} {input[vcf_mutation_type]} > {output[core_genome_vcf]}
         """
-    
