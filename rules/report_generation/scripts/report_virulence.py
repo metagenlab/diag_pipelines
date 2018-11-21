@@ -6,7 +6,7 @@
 # n_samples = list(read_naming.keys()
 import pandas
 from MN_tree import get_MN_tree, convert2cytoscapeJSON
-from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size, qualimap_table
+from report import quality_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size, qualimap_table
 
 multiqc_report = snakemake.input["multiqc_report"]
 
@@ -50,7 +50,7 @@ SCRIPT = """
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.2.4/cytoscape-cola.min.js"></script>
-    
+
     <script>
     $(document).ready(function() {
         $('#VF_table').DataTable( {
@@ -61,7 +61,7 @@ SCRIPT = """
             "paging":   true,
             "info": false
         } );
-    } ); 
+    } );
     $(document).ready(function() {
         $('#cov_table').DataTable( {
             dom: 'Bfrtip',
@@ -91,7 +91,7 @@ def write_report(output_file,
     from docutils.parsers.rst import directives
 
     multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
-    table_lowcoverage_contigs = coverage_table(low_cov_fasta)
+    table_lowcoverage_contigs = quality_table(low_cov_fasta)
     table_virulence = virulence_table(virulence_reports,blast_files, ordered_samples)
     table_qualimap = qualimap_table(qualimap_links)
 
@@ -102,7 +102,7 @@ def write_report(output_file,
     {SCRIPT}
 
     {STYLE}
-    
+
 =============================================================
 Diag Pipeline - Virulence report
 =============================================================
@@ -110,22 +110,22 @@ Diag Pipeline - Virulence report
 .. contents::
     :backlinks: none
     :depth: 2
-    
+
 Quality Control
 ---------------
 
 MultiQC
 *******
 
-MultiQC aggregate results from bioinformatics analyses across many samples into a single report. 
-The analyses covered here include genome assembly with spades, evaluation of the sequencing 
-depth by mapping of the reads against the assembly and annotation with prokka. 
+MultiQC aggregate results from bioinformatics analyses across many samples into a single report.
+The analyses covered here include genome assembly with spades, evaluation of the sequencing
+depth by mapping of the reads against the assembly and annotation with prokka.
 
 
 .. raw:: html
 
     {multiqc_link}
-    
+
 Low coverage contigs
 ********************
 
@@ -143,8 +143,8 @@ Qualimap reports
 Virulence (VFDB)
 -----------------
 
-The identification of virulence factors was performed with BLAST. Only hits exhibiting more 
-than 80% amino acid identity to a known virulence factor from the VFDB database are considered. 
+The identification of virulence factors was performed with BLAST. Only hits exhibiting more
+than 80% amino acid identity to a known virulence factor from the VFDB database are considered.
 
 Details
 ********

@@ -6,7 +6,7 @@
 # n_samples = list(read_naming.keys()
 import pandas
 from MN_tree import get_MN_tree, convert2cytoscapeJSON
-from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
+from report import quality_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 
 multiqc_report = snakemake.input["multiqc_report"]
 rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
@@ -81,7 +81,7 @@ def write_report(output_file,
     from docutils.parsers.rst import directives
 
     multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
-    table_lowcoverage_contigs = coverage_table(low_cov_fasta)
+    table_lowcoverage_contigs = quality_table(low_cov_fasta)
     table_resistance = resistance_table(resistance_reports)
 
     report_str = f"""
