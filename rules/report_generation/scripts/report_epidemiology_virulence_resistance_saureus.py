@@ -6,7 +6,7 @@
 # n_samples = list(read_naming.keys()
 import pandas
 from MN_tree import get_MN_tree, convert2cytoscapeJSON
-from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
+from report import quality_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 
 multiqc_report = snakemake.input["multiqc_report"]
 snp_table = snakemake.input["snp_table"]
@@ -67,7 +67,7 @@ SCRIPT = """
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.2.4/cytoscape-cola.min.js"></script>
-    
+
     <script>
     $(document).ready(function() {
         $('#VF_table').DataTable( {
@@ -88,7 +88,7 @@ SCRIPT = """
             "paging":   true,
             "info": false
         } );
-    } );    
+    } );
     $(document).ready(function() {
         $('#cov_table').DataTable( {
             dom: 'Bfrtip',
@@ -102,14 +102,14 @@ SCRIPT = """
 
 
     document.addEventListener('DOMContentLoaded', function(){
-    
+
         var cy = window.cy = cytoscape({
             container: document.getElementById('cy'),
-    
+
             autounselectify: true,
-            
+
             boxSelectionEnabled: false,
-    
+
             layout: {
                 name: 'cose',
                 idealEdgeLength: function(edge){ return 1/Math.log(edge.data('strength')); }, // edgeLength
@@ -118,9 +118,9 @@ SCRIPT = """
                 randomize: false,
                 nodeSpacing: 100,
                 animate: true
-    
+
             },
-    
+
             style: [
                 {
                     selector: 'node',
@@ -134,7 +134,7 @@ SCRIPT = """
                         'text-valign': 'center'
                     }
                 },
-    
+
                 {
                     selector: 'edge',
                     css: {
@@ -145,10 +145,10 @@ SCRIPT = """
                     }
                 }
             ],
-    
+
             elements:  %s
             });
-    
+
     });
     </script>
 
@@ -175,7 +175,7 @@ def write_report(output_file,
     from docutils.parsers.rst import directives
 
     multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
-    table_lowcoverage_contigs = coverage_table(low_cov_fasta)
+    table_lowcoverage_contigs = quality_table(low_cov_fasta)
     table_virulence = virulence_table(virulence_reports,blast_files, ordered_samples)
     table_resistance = resistance_table(resistance_reports)
     snp_heatmap = plot_heatmap_snps(snp_table)
@@ -188,7 +188,7 @@ def write_report(output_file,
     {SCRIPT}
 
     {STYLE}
-    
+
 =============================================================
 Diag Pipeline - Staphylococcus aureus virulence report
 =============================================================
@@ -196,29 +196,29 @@ Diag Pipeline - Staphylococcus aureus virulence report
 .. contents::
     :backlinks: none
     :depth: 2
-    
+
 Quality Control
 ---------------
 
 MultiQC
 *******
 
-MultiQC aggregate results from bioinformatics analyses across many samples into a single report. 
-The analyses covered here include genome assembly with spades, evaluation of the sequencing 
-depth by mapping of the reads against the assembly and annotation with prokka. 
+MultiQC aggregate results from bioinformatics analyses across many samples into a single report.
+The analyses covered here include genome assembly with spades, evaluation of the sequencing
+depth by mapping of the reads against the assembly and annotation with prokka.
 
 
 .. raw:: html
 
     {multiqc_link}
-    
+
 Low coverage contigs
 ********************
 
 .. raw:: html
 
     {table_lowcoverage_contigs}
-    
+
 Typing
 ------
 
@@ -226,7 +226,7 @@ MLST
 *****
 
 The *S. aureus* MLST scheme is based on the sequence of the following seven house-keeping genes:
-    
+
 1. arcC (Carbamate kinase)
 2. aroE (Shikimate dehydrogenase)
 3. glpF (Glycerol kinase)
@@ -234,16 +234,16 @@ The *S. aureus* MLST scheme is based on the sequence of the following seven hous
 5. pta (Phosphate acetyltransferase)
 6. tpi (Triosephosphate isomerase)
 7. yqi (Acetyle coenzyme A acetyltransferase)
-              
+
 The MLST was determined using the mlst_ software based on PubMLST_ typing schemes.
-    
+
 .. _PubMLST: https://pubmlst.org/
 .. _mlst: https://github.com/tseemann/mlst
 
 Phylogeny + MLST
 ****************
 
-.. figure:: {mlst_tree} 
+.. figure:: {mlst_tree}
    :alt: MST tree
    :width: 80%
 
@@ -253,16 +253,16 @@ MS tree (R)
 *********************
 
 - Size of the reference genome: {reference_genome_size}
-- Size of the core genome: {core_genome_size} ({fraction_core} % of the reference) 
+- Size of the core genome: {core_genome_size} ({fraction_core} % of the reference)
 
 
-.. figure:: {spanning_tree_core} 
+.. figure:: {spanning_tree_core}
    :alt: MST tree
    :width: 80%
 
    Minimum spanning tree including all samples as well as the reference genome.
-   
-MS tree (js) 
+
+MS tree (js)
 ***********************
 
 .. raw:: html
@@ -282,15 +282,15 @@ Virulence (VFDB)
 Overview
 *********
 
-The identification of virulence factors was performed with BLAST. Only hits exhibiting more 
-than 80% amino acid identity to a known virulence factor from the VFDB database are considered. 
+The identification of virulence factors was performed with BLAST. Only hits exhibiting more
+than 80% amino acid identity to a known virulence factor from the VFDB database are considered.
 
-.. figure:: {ete_figure_counts} 
+.. figure:: {ete_figure_counts}
    :alt: MST tree
    :width: 40%
 
    MLST as determined by T. Seemann mlst_.
-    
+
 Details
 ********
 
@@ -304,7 +304,7 @@ Resistance (RGI/CARD)
 .. raw:: html
 
     {table_resistance}
-    
+
 """
     with open(output_file, "w") as fh:
         publish_file(

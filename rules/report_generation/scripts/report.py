@@ -16,9 +16,16 @@ def get_reference_genome_size(reference_genome_file):
     return sum(records_len)
 
 
-def quality_table(low_cov_fastas, undetermined_snps_files=False, core_genome_size=False):
+def quality_table(low_cov_fastas,
+                  sample2gc,
+                  sample2median_depth,
+                  sampls2cumulated_size,
+                  sample2n_contigs,
+                  sample2scientific_name,
+                  undetermined_snps_files=False,
+                  core_genome_size=False):
 
-    header = ["Strain id", "Number of contigs"]
+    header = ["Strain id", "Scientific Name", "Contigs", "Contigs depth < 5", "GC", "Size (Mb)", "Median Depth"]
 
     if undetermined_snps_files:
         header.append("N. na SNPS")
@@ -38,10 +45,22 @@ def quality_table(low_cov_fastas, undetermined_snps_files=False, core_genome_siz
             n_records = 0
         if undetermined_snps_files:
             cov_table.append([sample,
-                              n_records, sample2n_unknown[sample],
+                              sample2scientific_name[sample],
+                              sample2n_contigs[sample],
+                              n_records,
+                              sample2gc[sample],
+                              round(sampls2cumulated_size[sample]/1000000, 2),
+                              sample2median_depth[sample],
+                              sample2n_unknown[sample],
                               round((float(sample2n_unknown[sample]) / core_genome_size) * 100, 2)])
         else:
-            cov_table.append([sample, n_records])
+            cov_table.append([sample,
+                              sample2scientific_name[sample],
+                              sample2n_contigs[sample],
+                              n_records,
+                              sample2gc[sample],
+                              round(sampls2cumulated_size[sample]/1000000, 2),
+                              sample2median_depth[sample]])
 
     if len(cov_table) > 0:
         df = pandas.DataFrame(cov_table, columns=header)

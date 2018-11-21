@@ -27,6 +27,7 @@ rule report_epidemiology_virulence_resistance_saureus:
         mlst='typing/mlst/summary.tsv',
     params:
         samples = list(read_naming.keys()),
+        sample_table = config["local_samples"]
     output:
         "report/report_epidemiology_virulence_resistance_saureus.html",
     script:
@@ -104,9 +105,12 @@ rule report_resistance:
         multiqc_report = "report/multiqc_assembly/multiqc_report.html",
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+        high_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta", sample=read_naming.keys()),
+        contig_gc_depth_file = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
         rgi_overview = "report/resistance/rgi_overview.svg"
     params:
         samples = list(read_naming.keys()),
+        sample_table = config["local_samples"]
     output:
         "report/report_resistance.html",
     script:

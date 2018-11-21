@@ -16,6 +16,7 @@ def get_contig_name2contig_coverage(samtool_depth_file):
             contig2depth[data[0]] = [int(data[2])]
         else:
             contig2depth[data[0]].append(int(data[2]))
+
     return contig2depth
 
 def get_contig_id2median_depth(contig2depth_list):
@@ -23,6 +24,8 @@ def get_contig_id2median_depth(contig2depth_list):
     for contig in contig2depth_list:
         m = numpy.median(contig2depth_list[contig])
         contig2med[contig] = m
+    compl_list = numpy.concatenate(list(contig2depth_list.values()))
+    contig2med["TOTAL"] = round(numpy.median(compl_list), 2)
     return contig2med
 
 def get_contig_id2mean_depth(contig2depth_list):
@@ -30,6 +33,9 @@ def get_contig_id2mean_depth(contig2depth_list):
     for contig in contig2depth_list:
         m = numpy.mean(contig2depth_list[contig])
         contig2mean[contig] = m
+    compl_list = numpy.concatenate(list(contig2depth_list.values()))
+
+    contig2mean["TOTAL"] = round(numpy.mean(compl_list), 2)
     return contig2mean
 
 def contig_id2contig_length(contigs_file):
@@ -38,8 +44,10 @@ def contig_id2contig_length(contigs_file):
 
     fasta_handle = open(contigs_file, 'r')
     id2length = {}
+
     for record in SeqIO.parse(fasta_handle, "fasta"):
         id2length[record.name] = len(record)
+    id2length["TOTAL"] = sum(list(id2length.values()))
     return id2length
 
 def contig_id2gc_content(contigs_file):
@@ -49,8 +57,11 @@ def contig_id2gc_content(contigs_file):
 
     fasta_handle = open(contigs_file, 'r')
     id2gc = {}
+    cumul_seq = ''
     for record in SeqIO.parse(fasta_handle, "fasta"):
         id2gc[record.name] = GC(record.seq)
+        cumul_seq += record.seq
+    id2gc["TOTAL"] = round(GC(cumul_seq), 2)
     return id2gc
 
 def gbk2CDS_loc(gbk_file):
@@ -118,3 +129,9 @@ with open(out_contig_depth, 'w') as g:
                                   contig2median_depth[contig],
                                   contig_id2contig_gc[contig],
                                   contig_id2contig_length[contig]))
+
+    g.write("%s\t%s\t%s\t%s\t%s\n" % ("TOTAL",
+                              contig2mean_depth["TOTAL"],
+                              contig2median_depth["TOTAL"],
+                              contig_id2contig_gc["TOTAL"],
+                              contig_id2contig_length["TOTAL"]))

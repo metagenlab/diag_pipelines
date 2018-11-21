@@ -5,21 +5,45 @@
 #    n_calls = sum(1 for l in vcf if not l.startswith("#"))
 # n_samples = list(read_naming.keys()
 import pandas
-from MN_tree import get_MN_tree, convert2cytoscapeJSON
-from report import quality_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
+from report import quality_table, resistance_table
 
 multiqc_report = snakemake.input["multiqc_report"]
 rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
-
 ordered_samples = snakemake.params["samples"]
-
 resistance_reports = snakemake.input["resistance_reports"]
-
 low_cov_fastas = snakemake.input["low_cov_fastas"]
-
 output_file = snakemake.output[0]
+high_cov_fastas = snakemake.input["high_cov_fastas"]
+contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file"]
 
+# get contig depth and GC
+sample2gc = {}
+sample2median_depth = {}
+sampls2cumulated_size = {}
+sample2n_contigs = {}
+for one_table in contig_gc_depth_file_list:
+    table = pandas.read_csv(one_table,
+                                        delimiter='\t',
+                                        header=0,
+                                        index_col=0)
 
+    data_whole_gnome = table.loc["TOTAL"]
+    n_contigs = len(table["gc_content"])-1
+
+    # samples/5965/quality/mapping/bwa/5965_assembled_genome/contig_gc_depth_500bp_high_coverage.tab
+    sample = one_table.split('/')[1]
+
+    sample2gc[sample] = data_whole_gnome["gc_content"]
+    sample2median_depth[sample] = data_whole_gnome["mean_depth"]
+    sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
+    sample2n_contigs[sample] = n_contigs
+
+sample2scientific_name = pandas.read_csv(snakemake.params["sample_table"],
+                                         dtype=object,
+                                    delimiter='\t',
+                                    header=0).set_index("SampleName").to_dict()["ScientificName"]
+print (sample2scientific_name)
+print(sample2scientific_name.keys())
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"/>
@@ -81,7 +105,12 @@ def write_report(output_file,
     from docutils.parsers.rst import directives
 
     multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
-    table_lowcoverage_contigs = quality_table(low_cov_fasta)
+    table_lowcoverage_contigs = quality_table(low_cov_fasta,
+                                              sample2gc,
+                                              sample2median_depth,
+                                              sampls2cumulated_size,
+                                              sample2n_contigs,
+                                              sample2scientific_name)
     table_resistance = resistance_table(resistance_reports)
 
     report_str = f"""
