@@ -1,8 +1,13 @@
 
-rule generate_snps_html_reports:
+rule generate_snps_html_report:
     input:
-        expand("samples/{sample}/snps/{snp_caller}/{reference}/{mapping_method}}/freq.vcf", sample=reads_naming.keys())
+        # samples/TATRas-control/snps/gatk_gvcfs/TATRas-control_assembled_genome/bwa/freq.vcf
+        # typing/gatk_gvcfs/full_genome_TATRas-control_assembled_genome/bwa/all_samples_snp.vcf
+        #
+        vcf_files = "samples/{sample}/snps/{snp_caller}/{reference}/{mapping_method}/freq.vcf",
+        merged_vcf = "typing/{snp_caller}/{reference}/{mapping_method}/all_samples_snp.vcf",
+        gbk_file = "samples/{reference}/annotation/{sample}.gbk"
     output:
-        "report/snps/{reference}/{mapping_method}/{snp_caller}.html"
+        html_file = "report/snps/{reference}/{mapping_method}/{snp_caller}/{sample}.html"
 
-    script: ""
+    script: "snps_reports.py"

@@ -50,6 +50,17 @@ def check_if_cgMLST():
     else:
         return None
 
+
+def get_snps_file_list(sample_list, reference_genomes, snp_caller):
+    import itertools
+    pairs = list(itertools.product(reference_genomes, sample_list))
+    all_outputs = []
+    for pair in pairs:
+        # "report/snps/{reference}/{mapping_method}/{snp_caller}/{sample}.html"
+        all_outputs.append("report/snps/%s/bwa/%s/%s.html" % (pair[0], snp_caller, pair[1]))
+    return all_outputs
+
+
 rule report_epidemiology:
     conda:
         pipeline_path + "envs/report.yml"
@@ -64,8 +75,7 @@ rule report_epidemiology:
         mlst = 'typing/mlst/summary.tsv',
         undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"]),
         contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
-        snps_reports = expand("", refernce=reference_genomes_dir) 
-
+        snps_reports = get_snps_file_list(read_naming.keys(), reference_genomes, config["snp_caller"])
     params:
         core_genome_bed = check_if_cgMLST(),
         samples = list(read_naming.keys()),
