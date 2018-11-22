@@ -64,6 +64,8 @@ rule report_epidemiology:
         mlst = 'typing/mlst/summary.tsv',
         undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"]),
         contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
+        snps_reports = expand("", refernce=reference_genomes_dir) 
+
     params:
         core_genome_bed = check_if_cgMLST(),
         samples = list(read_naming.keys()),

@@ -14,6 +14,7 @@ from docutils.parsers.rst import directives
 
 multiqc_assembly = snakemake.input["multiqc_assembly"]  # ok
 contig_gc_depth_file_list = snakemake.input["contig_gc_depth_files"]
+snps_individual = snakemake.input["snps_individual"]
 
 #### one per reference genome ###########################################
 multiqc_mapping_list = snakemake.input["multiqc_mapping_list"]  # ok
@@ -22,6 +23,7 @@ spanning_trees = snakemake.input["spanning_trees"]  # ok
 reference_genomes = snakemake.input["reference_genomes"]  # ok
 # multiple files of each reference genome
 undetermined_snp_tables = snakemake.input["undetermined_positions"]  # ok
+snps_merged = snakemake.input["snps_merged"]
 #########################################################################
 
 print("multiqc list",multiqc_mapping_list)

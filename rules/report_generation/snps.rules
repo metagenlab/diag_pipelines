@@ -1,0 +1,8 @@
+
+rule generate_snps_html_reports:
+    input:
+        expand("samples/{sample}/snps/{snp_caller}/{reference}/{mapping_method}}/freq.vcf", sample=reads_naming.keys())
+    output:
+        "report/snps/{reference}/{mapping_method}/{snp_caller}.html"
+
+    script: ""

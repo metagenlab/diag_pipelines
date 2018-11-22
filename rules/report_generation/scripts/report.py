@@ -262,3 +262,6 @@ def plot_heatmap_snps(mat):
     fig = go.Figure(data=data, layout=layout)
 
     return make_div(fig, div_id="heatmapPlot")
+
+def get_snps_table():
+    pass
