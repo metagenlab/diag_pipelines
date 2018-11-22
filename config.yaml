@@ -24,4 +24,12 @@ phylogeny_image_size: 800
 virulence_factors: /home/pipeline_user/snakemake_pipeline/data/staph/db/virulence_factors.tsv
 virulence_percentage_identity_cutoff: 80
 virulence_coverage_cutoff: 70
+# reference for snp calling:
+# 1. cgMLST
+# 2. one or multiple samples listed in local_samples/sra_samples (assembled genomes)
+# 3. one genome from NCBI using assembly UID (eg: 33148 for S. aureus COL genome, see page https://www.ncbi.nlm.nih.gov/assembly/GCF_000012045.1/)
+# TODO: 4. combination of options 1-3 (comma separated list) (not possible yet)
+reference: "cgMLST"
 
+# snp calling method: either "freebayes_joint_genotyping" or "gatk_gvcfs"
+snp_caller: "gatk_gvcfs"
