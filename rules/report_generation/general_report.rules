@@ -16,13 +16,13 @@ rule report_epidemiology_virulence_resistance_saureus:
         ete_figure = "report/figures/virulence_staph.svg",
         ete_figure_counts = "report/figures/virulence_counts.svg",
         virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
-        blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
-        spanning_tree_core = "report/figures/%s/%s/bwa/distances_in_snp_mst_with_st.svg" % (config["snp_caller"], config["reference"]),
+        blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample=read_naming.keys()),
+        spanning_tree_core = expand("report/figures/%s/{reference}/bwa/distances_in_snp_mst_with_st.svg" % config["snp_caller"], reference=reference_genomes),
         mlst_tree = "report/figures/mlst_tree.svg",
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-        snp_table = "typing/%s/%s/bwa/distances_in_snp.tsv" % (config["snp_caller"], config["reference"]),
-        reference_genome = "references/%s/genome_fasta.fasta" % config["reference"],
+        snp_tables = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
+        reference_genome = expand("references/%s/genome_fasta.fasta", reference=reference_genomes),
         core_genome_bed = "core_genomes/%s/" % config["reference"] + species + ".bed",
         mlst = 'typing/mlst/summary.tsv',
     params:
@@ -33,23 +33,41 @@ rule report_epidemiology_virulence_resistance_saureus:
     script:
         "scripts/report_epidemiology_virulence_resistance_saureus.py"
 
+
 # only ok for cgMLST core genomes
 # need further checks for parsnp core genomes
+def get_undetermined_file_list(sample_list, reference_genomes, snp_caller):
+    import itertools
+    pairs = list(itertools.product(sample_list, reference_genomes))
+    all_outputs = []
+    for pair in pairs:
+        all_outputs.append("samples/%s/snps/%s/%s/bwa/unknowns.tab" % (pair[0], snp_caller, pair[1]))
+    return all_outputs
+
+def check_if_cgMLST():
+    if 'cgMLST' in reference_genomes:
+        return "core_genomes/cgMLST/" + species + ".bed"
+    else:
+        return None
+
 rule report_epidemiology:
     conda:
         pipeline_path + "envs/report.yml"
     input:
-        multiqc_report = "report/multiqc_assembly/multiqc_report.html",
-        spanning_tree_core = "report/figures/%s/%s/bwa/distances_in_snp_mst_with_st.svg" % (config["snp_caller"], config["reference"]),
-        mlst_tree = "report/figures/mlst_tree.svg",
-        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-        snp_table = "typing/%s/%s/bwa/distances_in_snp.tsv" % (config["snp_caller"], config["reference"]),
-        reference_genome = "references/%s/genome_fasta.fasta" % config["reference"],
-        core_genome_bed = "core_genomes/%s/" % config["reference"] + species + ".bed",
+        multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
+        multiqc_mapping_list = expand("report/multiqc_mapping_to_{reference}/bwa/multiqc_report.html", reference=reference_genomes_dir),
+        spanning_trees = expand("report/figures/%s/{reference}/bwa/distances_in_snp_mst_with_st.svg" % config["snp_caller"], reference=reference_genomes),
+        #mlst_tree = "report/figures/mlst_tree.svg", ## TODO one tree for each reference genome
+        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+        snp_tables = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
+        reference_genomes = expand("references/{reference}/genome_fasta.fasta", reference=reference_genomes_dir),
         mlst = 'typing/mlst/summary.tsv',
-        undetermined_positions = expand("samples/{sample}/snps/%s/%s/bwa/unknowns.tab" % (config["snp_caller"], config["reference"]), sample=read_naming.keys())
+        undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"]),
+        contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
     params:
+        core_genome_bed = check_if_cgMLST(),
         samples = list(read_naming.keys()),
+        sample_table = config["local_samples"]
     output:
         "report/report_epidemiology.html",
     script:
@@ -64,15 +82,15 @@ rule report_epidemiology_virulence_resistance:
         multiqc_report = "report/multiqc_assembly/multiqc_report.html",
         ete_figure_counts = "report/figures/virulence_counts.svg",
         virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
-        blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
-        spanning_tree_core="report/figures/%s/%s/bwa/distances_in_snp_mst_with_st.svg" % (config["snp_caller"], config["reference"]),
+        blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample=read_naming.keys()),
+        spanning_tree_core = expand("report/figures/%s/{reference}/bwa/distances_in_snp_mst_with_st.svg" % config["snp_caller"], reference=reference_genomes),
         mlst_tree="report/figures/mlst_tree.svg",
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-        snp_table = "typing/%s/%s/bwa/distances_in_snp.tsv" % (config["snp_caller"], config["reference"]),
-        reference_genome = "references/%s/genome_fasta.fasta" % config["reference"],
-        core_genome_bed = "core_genomes/%s/" % config["reference"] + species + ".bed",
-        mlst='typing/mlst/summary.tsv',
+        snp_table = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
+        reference_genome = expand("references/{reference}/genome_fasta.fasta", reference=reference_genomes),
+        core_genome_bed = expand("core_genomes/{reference}/" + species + ".bed", reference=reference_genomes),
+        mlst = 'typing/mlst/summary.tsv',
     params:
         samples = list(read_naming.keys()),
     output:
@@ -87,7 +105,7 @@ rule report_strain_characterization:
     input:
         multiqc_report = "report/multiqc_assembly/multiqc_report.html",
         virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
-        blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
+        blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
     params:
@@ -106,7 +124,7 @@ rule report_resistance:
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
         high_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta", sample=read_naming.keys()),
-        contig_gc_depth_file = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
+        contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
         rgi_overview = "report/resistance/rgi_overview.svg"
     params:
         samples = list(read_naming.keys()),

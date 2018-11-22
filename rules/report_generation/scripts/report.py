@@ -5,9 +5,36 @@ from Bio import SeqIO
 from plotly import offline
 
 
+def get_multiqc_table(assembly_multiqc,
+                      mapping_multiqc=False):
+
+    mq_table = [["MultiQC genome assemblie(s)", '<a href="%s">MiltiQC</a>' % '/'.join(assembly_multiqc.split('/')[1:])]]
+    print('multiqc!!', mapping_multiqc)
+    if mapping_multiqc:
+
+        for multiqc in mapping_multiqc:
+            multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc.split('/')[1:])
+            mq_table.append(["multiQC mapping: ref=", multiqc_link])
+    header = ["Name", "Link"]
+    df = pandas.DataFrame(mq_table, columns=header)
+
+    # cell content is truncated if colwidth not set to -1
+    pandas.set_option('display.max_colwidth', -1)
+
+    df_str = df.to_html(
+        index=False,
+        bold_rows=False,
+        classes=["dataTable"],
+        table_id="multiqc_table",
+        escape=False,
+        border=0)
+
+    return df_str.replace("\n", "\n" + 10 * " ")
+
+
 def get_core_genome_size(core_genome_bed):
     table = pandas.read_csv(core_genome_bed, delimiter="\t", names=['chromosome', 'start', 'end'])
-    return sum(table["end"]-table["start"]+1)
+    return sum(table["end"] - table["start"]+1)
 
 
 def get_reference_genome_size(reference_genome_file):
@@ -28,38 +55,53 @@ def quality_table(low_cov_fastas,
     header = ["Strain id", "Scientific Name", "Contigs", "Contigs depth < 5", "GC", "Size (Mb)", "Median Depth"]
 
     if undetermined_snps_files:
-        header.append("N. na SNPS")
-        header.append("Fraction core (%)")
-        sample2n_unknown = {}
-        for f in undetermined_snps_files:
-            # samples/{sample}/snps/gatk_gvcfs/cgMLST/bwa/unknowns.tab
-            sample = f.split('/')[1]
-            sample2n_unknown[sample] = len(pandas.read_csv(f, delimiter='\t'))
+        # multiple files for each reference genome
+        # first sort files
+        reference2files = {}
+        for one_file in undetermined_snps_files:
+            # samples/{sample}/snps/{snp_caller}/{reference}/bwa/unknowns.tab
+            reference_name = one_file.split('/')[4]
+            if reference_name not in reference2files:
+                reference2files[reference_name] = [one_file]
+            else:
+                reference2files[reference_name].append(one_file)
+        reference2sample2n_unknown = {}
+        for reference in reference2files:
+            reference2sample2n_unknown[reference] = {}
+            header.append("N. na SNP (%s)" % reference_name)
+            if reference == 'cgMLST':
+                header.append("Fraction core (%)")
+            for f in reference2files[reference]:
+                sample = f.split('/')[1]
+                reference2sample2n_unknown[reference][sample] = len(pandas.read_csv(f, delimiter='\t'))
     cov_table = []
     for fasta in low_cov_fastas:
-        sample = re.search('samples/(.*)/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta', fasta).group(1)
+        sample = fasta.split("/")[1]
         try:
             with open(fasta, 'r') as f:
                 n_records = len(SeqIO.read(f, 'fasta'))
         except ValueError:
             n_records = 0
         if undetermined_snps_files:
-            cov_table.append([sample,
-                              sample2scientific_name[sample],
-                              sample2n_contigs[sample],
-                              n_records,
-                              sample2gc[sample],
-                              round(sampls2cumulated_size[sample]/1000000, 2),
-                              sample2median_depth[sample],
-                              sample2n_unknown[sample],
-                              round((float(sample2n_unknown[sample]) / core_genome_size) * 100, 2)])
+            tmp_lst = [sample,
+                       sample2scientific_name[sample],
+                       sample2n_contigs[sample],
+                       n_records,
+                       sample2gc[sample],
+                       round(sampls2cumulated_size[sample] / 1000000, 2),
+                       sample2median_depth[sample]]
+            for reference in reference2files:
+                tmp_lst.append(reference2sample2n_unknown[reference][sample])
+                if reference == "cgMLST":
+                    tmp_lst.append(round((float(reference2sample2n_unknown[reference][sample]) / core_genome_size) * 100, 2))
+                cov_table.append(tmp_lst)
         else:
             cov_table.append([sample,
                               sample2scientific_name[sample],
                               sample2n_contigs[sample],
                               n_records,
                               sample2gc[sample],
-                              round(sampls2cumulated_size[sample]/1000000, 2),
+                              round(sampls2cumulated_size[sample] / 1000000, 2),
                               sample2median_depth[sample]])
 
     if len(cov_table) > 0:
@@ -79,6 +121,7 @@ def quality_table(low_cov_fastas,
         return df_str.replace("\n", "\n" + 10 * " ")
     else:
         return 'No sample with low coverage contigs'
+
 
 def qualimap_table(qualimap_links):
 

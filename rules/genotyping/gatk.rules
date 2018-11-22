@@ -12,7 +12,7 @@ rule create_dictionary_for_reference:
         samtools faidx {input[ref]}
         gatk-launch CreateSequenceDictionary --REFERENCE {input[ref]} &> {log}
         """
-        
+
 rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     threads:
         2
@@ -79,7 +79,7 @@ rule genotype_with_GenotypeGVCFs_GATK:
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         combined = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/combined.vcf",
-        quality = "quality/multiqc/mapping_to_{ref}/{mapping_method}/multiqc_report.html",
+        quality = "report/multiqc_mapping_to_{ref}/{mapping_method}/multiqc_report.html",
     output:
         raw = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf",
     log:

@@ -7,29 +7,71 @@
 import pandas
 from MN_tree import get_MN_tree, convert2cytoscapeJSON
 from report import quality_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
+import report
+import io
+from docutils.core import publish_file, publish_parts
+from docutils.parsers.rst import directives
 
-multiqc_report = snakemake.input["multiqc_report"]
-snp_table = snakemake.input["snp_table"]
+multiqc_assembly = snakemake.input["multiqc_assembly"]  # ok
+contig_gc_depth_file_list = snakemake.input["contig_gc_depth_files"]
 
-undetermined_snp_tables = snakemake.input["undetermined_positions"]
+#### one per reference genome ###########################################
+multiqc_mapping_list = snakemake.input["multiqc_mapping_list"]  # ok
+snp_tables = snakemake.input["snp_tables"]  # ok
+spanning_trees = snakemake.input["spanning_trees"]  # ok
+reference_genomes = snakemake.input["reference_genomes"]  # ok
+# multiple files of each reference genome
+undetermined_snp_tables = snakemake.input["undetermined_positions"]  # ok
+#########################################################################
+
+print("multiqc list",multiqc_mapping_list)
 
 ordered_samples = snakemake.params["samples"]
-spanning_tree_core = snakemake.input["spanning_tree_core"]
-spanning_tree_core = '/'.join(spanning_tree_core.split('/')[1:])
 
-mlst_tree = snakemake.input["mlst_tree"]
-mlst_tree = '/'.join(mlst_tree.split('/')[1:])
+
+
+# mlst_tree = snakemake.input["mlst_tree"]
+mlst_tree = ""  #'/'.join(mlst_tree.split('/')[1:])
 
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 
-reference_genome = snakemake.input["reference_genome"]
-core_genome_bed = snakemake.input["core_genome_bed"]
+# optional params (if cgMLST among the reference genomes)
+core_genome_bed = snakemake.params["core_genome_bed"]
 
 output_file = snakemake.output[0]
 
-leaf2mlst= pandas.read_csv(snakemake.input["mlst"],
+leaf2mlst = pandas.read_csv(snakemake.input["mlst"],
                            delimiter='\t',
                            names=["leaf","species","mlst","1","2","3","4","5","6","7"]).set_index("leaf").to_dict()["mlst"]
+
+
+# get contig depth and GC
+sample2gc = {}
+sample2median_depth = {}
+sampls2cumulated_size = {}
+sample2n_contigs = {}
+for one_table in contig_gc_depth_file_list:
+    table = pandas.read_csv(one_table,
+                                        delimiter='\t',
+                                        header=0,
+                                        index_col=0)
+
+    data_whole_gnome = table.loc["TOTAL"]
+    n_contigs = len(table["gc_content"])-1
+
+    # samples/5965/quality/mapping/bwa/5965_assembled_genome/contig_gc_depth_500bp_high_coverage.tab
+    sample = one_table.split('/')[1]
+
+    sample2gc[sample] = data_whole_gnome["gc_content"]
+    sample2median_depth[sample] = data_whole_gnome["mean_depth"]
+    sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
+    sample2n_contigs[sample] = n_contigs
+
+sample2scientific_name = pandas.read_csv(snakemake.params["sample_table"],
+                                         dtype=object,
+                                         delimiter='\t',
+                                         header=0).set_index("SampleName").to_dict()["ScientificName"]
+
 
 
 STYLE = """
@@ -77,28 +119,60 @@ SCRIPT = """
 
     """
 
+if core_genome_bed:
+    core_size = get_core_genome_size(core_genome_bed)
+    for i in reference_genomes:
+        if "cgMLST" in i:
+            ref_size = get_reference_genome_size(i)
+    fraction_core = round(float(core_size) / float(ref_size) * 100, 2)
+    core_str = """
+    - Size of the reference genome: %s
+    - Size of the core genome: %s (%s % of the reference)
+    """ % (ref_size,
+           core_size,
+           fraction_core)
+else:
+    core_size = False
+    core_str = ""
 
-def write_report(output_file,
-                 STYLE,
-                 SCRIPT,
-                 spanning_tree_core,
-                 low_cov_fasta,
-                 mlst_tree,
-                 snp_table,
-                 core_genome_size,
-                 reference_genome_size,
-                 undetermined_snp_tables):
-    import io
-    from docutils.core import publish_file, publish_parts
-    from docutils.parsers.rst import directives
+multiqc_table = report.get_multiqc_table(multiqc_assembly,
+                                         multiqc_mapping_list)
 
-    multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
-    table_lowcoverage_contigs = quality_table(low_cov_fasta, undetermined_snp_tables, core_genome_size)
+table_lowcoverage_contigs = quality_table(low_cov_fastas,
+                                          sample2gc,
+                                          sample2median_depth,
+                                          sampls2cumulated_size,
+                                          sample2n_contigs,
+                                          sample2scientific_name,
+                                          undetermined_snps_files=undetermined_snp_tables,
+                                          core_genome_size=core_size)
 
-    snp_heatmap = plot_heatmap_snps(snp_table)
-    fraction_core = round(float(core_genome_size)/float(reference_genome_size)*100, 2)
+snp_heatmap_str = ""
+for n, snp_table in enumerate(snp_tables):
+    snp_heatmap_str += '''
 
-    report_str = f"""
+Ref baba
+***********
+
+    .. raw:: html
+
+        %s
+
+    ''' % (plot_heatmap_snps(snp_table))
+
+spanning_tree_str = ""
+for n, tree in enumerate(spanning_trees):
+    tree_path = '/'.join(tree.split('/')[1:])
+    print("tree-----------------------", tree_path)
+    spanning_tree_str += """
+    .. figure:: %s
+       :alt: MST tree
+       :width: 80%%
+    """ % tree_path
+
+print(spanning_tree_str)
+
+report_str = f"""
 
 .. raw:: html
 
@@ -127,7 +201,7 @@ depth by mapping of the reads against the assembly and annotation with prokka.
 
 .. raw:: html
 
-    {multiqc_link}
+    {multiqc_table}
 
 Low coverage contigs
 ********************
@@ -157,6 +231,30 @@ The MLST was determined using the mlst_ software based on PubMLST_ typing scheme
 .. _PubMLST: https://pubmlst.org/
 .. _mlst: https://github.com/tseemann/mlst
 
+
+
+MS tree(s)
+-----------
+
+{spanning_tree_str}
+
+MS tree (js)
+-------------
+
+
+.. raw:: html
+
+    <div id="cy" style="width:80%;height:700px; position: relative; border: 2px solid #212523"></div>
+
+SNP table(s)
+-------------
+
+{snp_heatmap_str}
+
+"""
+
+"""
+
 Phylogeny + MLST
 ****************
 
@@ -166,53 +264,18 @@ Phylogeny + MLST
 
    MLST as determined by T. Seemann mlst_.
 
-MS tree (R)
-*********************
-
-- Size of the reference genome: {reference_genome_size}
-- Size of the core genome: {core_genome_size} ({fraction_core} % of the reference)
-
-
-.. figure:: {spanning_tree_core}
-   :alt: MST tree
-   :width: 80%
-
-   Minimum spanning tree including all samples as well as the reference genome.
-
-MS tree (js)
-***********************
-
-.. raw:: html
-
-    <div id="cy" style="width:80%;height:700px; position: relative; border: 2px solid #212523"></div>
-
-SNP table
-***********
-
-.. raw:: html
-
-    {snp_heatmap}
-
 """
-    with open(output_file, "w") as fh:
-        publish_file(
-            source=io.StringIO(report_str),
-            destination=fh,
-            writer_name="html",
-            settings_overrides={"stylesheet_path": ""},
-        )
+
+print(report_str)
+
+with open(output_file, "w") as fh:
+    publish_file(
+        source=io.StringIO(report_str),
+        destination=fh,
+        writer_name="html",
+        settings_overrides={"stylesheet_path": ""},
+    )
 
 
 
-net = ''#convert2cytoscapeJSON(get_MN_tree(snp_table), leaf2mlst)
-
-write_report(output_file,
-             STYLE,
-             SCRIPT,
-             spanning_tree_core,
-             low_cov_fastas,
-             mlst_tree,
-             snp_table,
-             get_core_genome_size(core_genome_bed),
-             get_reference_genome_size(reference_genome),
-             undetermined_snp_tables)
+#net = ''#convert2cytoscapeJSON(get_MN_tree(snp_table), leaf2mlst)

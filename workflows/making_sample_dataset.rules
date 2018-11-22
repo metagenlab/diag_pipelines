@@ -1,6 +1,6 @@
 include:
     "logging.rules"
-    
+
 import sys
 import pandas
 import re
@@ -38,7 +38,7 @@ if "link_directory" in config.keys():
         link_directory = link_directory + "/"
 else:
     link_directory = "links/"
-    
+
 sras_ext = {}
 reads_sra = {}
 
@@ -88,7 +88,7 @@ if "sra_samples" in config.keys():
     else:
         all_sra_sample_names = "".join(list([str(x) for x in sra_data["LibraryName"]]))
     if "(" in all_sra_sample_names or ")" in all_sra_sample_names or "_-_" in all_sra_sample_names:
-        raise ValueError("Forbidden character in sample name in sra file") 
+        raise ValueError("Forbidden character in sample name in sra file")
     for i in sra_data.index:
         if "size_MB" in list(sra_data):
             if sra_data.loc[i, "size_MB"] < 20: #do not include samples with low amount of data
@@ -112,3 +112,27 @@ all_samples["ScientificName"] = all_samples["ScientificName"].str.replace(" ", "
 read_naming = {**reads_local, **sras_ext}
 original_names = {**original_names, **reads_sra}
 
+# preparing reference_genomes variable
+# 3 choices: cgMLST, local/sra sample or NCBI reference
+reference_genomes = []
+reference_genomes_dir = []
+
+ref_list = config["reference"].split(",")
+sample_references = []
+ncbi_reference = []
+
+for ref in ref_list:
+    if ref == "cgMLST":
+        reference_genomes.append("cgMLST")
+        reference_genomes_dir.append("cgMLST")
+    elif ref in read_naming.keys():
+        reference_genomes.append("full_genome_%s_assembled_genome" % ref)
+        reference_genomes_dir.append("%s_assembled_genome" % ref)
+    else:
+        try:
+            # NCBI reference should be an integer (UID)
+            test = int(ref)
+            reference_genomes.append("full_genome_%s" % ref)
+
+        except:
+            raise IOerror("Unexpected reference: %s" % ref)
