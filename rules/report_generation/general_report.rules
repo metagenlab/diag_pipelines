@@ -56,17 +56,24 @@ def get_snps_file_list(sample_list, reference_genomes, snp_caller):
     pairs = list(itertools.product(reference_genomes, sample_list))
     all_outputs = []
     for pair in pairs:
+        if pair[0] != 'cgMLST':
+            pair[0]= pair[0]+'_assembled_genome'
         # "report/snps/{reference}/{mapping_method}/{snp_caller}/{sample}.html"
-        all_outputs.append("report/snps/%s/bwa/%s/%s.html" % (pair[0], snp_caller, pair[1]))
+        path = "report/snps/%s/bwa/%s/%s.html" % (pair[0], snp_caller, pair[1])
+        print(path)
+        all_outputs.append(path)
     return all_outputs
 
 
+'''
+- we have to replace cgMLST by the actual genome if to get the right multiqc report (otherwise the pipeline will compute the whole analysis on the linked fasta cgMLST file)
+'''
 rule report_epidemiology:
     conda:
         pipeline_path + "envs/report.yml"
     input:
         multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
-        multiqc_mapping_list = expand("report/multiqc_mapping_to_{reference}/bwa/multiqc_report.html", reference=reference_genomes_dir),
+        multiqc_mapping_list = expand("report/multiqc_mapping_to_{reference}/bwa/multiqc_report.html", reference=[i for i in reference_genomes_dir if i != "cgMLST"] + [str(all_core_genome_dbs.loc[species, "ReferenceGenome"])]),
         spanning_trees = expand("report/figures/%s/{reference}/bwa/distances_in_snp_mst_with_st.svg" % config["snp_caller"], reference=reference_genomes),
         #mlst_tree = "report/figures/mlst_tree.svg", ## TODO one tree for each reference genome
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
@@ -75,7 +82,7 @@ rule report_epidemiology:
         mlst = 'typing/mlst/summary.tsv',
         undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"]),
         contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
-        snps_reports = get_snps_file_list(read_naming.keys(), reference_genomes, config["snp_caller"])
+        snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"])
     params:
         core_genome_bed = check_if_cgMLST(),
         samples = list(read_naming.keys()),

@@ -1,11 +1,25 @@
 
+
+'''
+Il y a 2 options possibles:
+1. La reference est un genome compltet => path est donc  typing/gatk_gvcfs/full_genome_{ref}/bwa/all_samples_snp.vcf
+2. La référence est un cgMLST ou un parsnp core genome => path est donc  typing/gatk_gvcfs/cgMLST/bwa/all_samples_snp.vcf
+
+Comme "full_genome_" peut être présent ou non, on ne peut pas capturer cette info dans une unique règle, à moins de rajouter
+une variable dans tous les path:
+
+- typing/gatk_gvcfs/full_genome/<sample_222>_assembled_genome/...
+- typing/gatk_gvcfs/core_genome/cgMLST/...
+- typing/gatk_gvcfs/core_genome/parsnp/...
+'''
+
 rule generate_snps_html_report:
     input:
         # samples/TATRas-control/snps/gatk_gvcfs/TATRas-control_assembled_genome/bwa/freq.vcf
         # typing/gatk_gvcfs/full_genome_TATRas-control_assembled_genome/bwa/all_samples_snp.vcf
         #
         vcf_files = "samples/{sample}/snps/{snp_caller}/{reference}/{mapping_method}/freq.vcf",
-        merged_vcf = "typing/{snp_caller}/{reference}/{mapping_method}/all_samples_snp.vcf",
+        # merged_vcf = "typing/{snp_caller}/{reference}/{mapping_method}/all_samples_snp.vcf",
         gbk_file = "samples/{reference}/annotation/{sample}.gbk"
     output:
         html_file = "report/snps/{reference}/{mapping_method}/{snp_caller}/{sample}.html"
