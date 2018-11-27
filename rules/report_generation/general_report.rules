@@ -56,14 +56,15 @@ def get_snps_file_list(sample_list, reference_genomes, snp_caller):
     pairs = list(itertools.product(reference_genomes, sample_list))
     all_outputs = []
     for pair in pairs:
-        if pair[0] != 'cgMLST':
-            pair[0]= pair[0]+'_assembled_genome'
+        pair = list(pair)
+        # if among local/sra sample, reference is an assembled genome
+        if pair[0] in read_naming.keys():
+            pair[0] = pair[0]+'_assembled_genome'
         # "report/snps/{reference}/{mapping_method}/{snp_caller}/{sample}.html"
         path = "report/snps/%s/bwa/%s/%s.html" % (pair[0], snp_caller, pair[1])
         print(path)
         all_outputs.append(path)
     return all_outputs
-
 
 '''
 - we have to replace cgMLST by the actual genome if to get the right multiqc report (otherwise the pipeline will compute the whole analysis on the linked fasta cgMLST file)
