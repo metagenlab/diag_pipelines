@@ -55,3 +55,13 @@ rule generate_snps_html_report:
         html_file = "report/snps/{reference}/{mapping_method}/{snp_caller}/{sample}.html"
 
     script: "scripts/snps_reports.py"
+
+rule generate_deletion_html_report:
+    conda:
+        pipeline_path + "envs/report.yml"
+    input:
+        deletion_bed = "samples/{sample}/indel/{mapping_method}/{reference}/indel.bed",
+        gbk_file = gbk_ref
+    output:
+        report_file = "report/indel/{reference}/{mapping_method}/{sample}.html"
+    script: "scripts/indel_reports.py"

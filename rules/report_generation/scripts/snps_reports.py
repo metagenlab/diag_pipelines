@@ -387,6 +387,7 @@ def write_report(output_file,
 SNPS report
 =============================================================
 
+Mapping on raw assembly, but filter based on gbk file annotted with prokka after filtering of small and spurious contigs (SNPS identified on spurious contigs, e.g low coverage contigs, are not reported in this table).
 
 Table
 ------
