@@ -115,14 +115,17 @@ def check_reference_mapping_GT(vcf_record_list,
     print(contig, position, sampe_reference)
     for record in vcf_record_list:
         if record.CHROM == contig and record.POS == position:
+            # search for reference sample
             for sample in record.samples:
                 if sample.sample == sampe_reference:
+                    # check if ALT position more supported than REF
                     if len(record.FILTER) == 0:
                         PASS = "PASS"
                     else:
                         PASS = "FAIL"
-
-                    if sample['GT'] not in ['.', 0]:
+                    print(sample.sample)
+                    print(type(sample['GT']))
+                    if sample['GT'] not in ['.', "0"]:
                         return [True, PASS]
                     else:
                         return [False, PASS]
@@ -169,7 +172,12 @@ def parse_vcf(vcf_file, gbk_file):
         for feature in record_alt.features:
             if int(record.POS) in feature and feature.type != "source":
                 mut_location = feature.type
-                orf_name = feature.qualifiers["locus_tag"][0]
+                if feature.type == 'mobile_element':
+                    orf_name = feature.qualifiers["mobile_element_type"][0]
+                elif feature.type == 'CDS':
+                    orf_name = feature.qualifiers["locus_tag"][0]
+                else:
+                    orf_name = "Unknown locus for feature: %s" % feature.type
                 try:
                     gene = feature.qualifiers["gene"][0]
                 except:
@@ -204,7 +212,8 @@ def parse_vcf(vcf_file, gbk_file):
         # print (filter_dico["PASS"].desc)
         contig = record.CHROM
         print("depth", record.samples[0]['AD'], record.samples[0]['DP'])
-        if record.samples[0]['GT'] in ['.', 0]:
+
+        if record.samples[0]['GT'] in ['.']:
             # print(type(ac))
             # if ac == 0:
             continue
@@ -348,6 +357,7 @@ SCRIPT = """
                              $(row).find('td:eq(16)').css('background-color', 'rgba(255, 0, 0, 0.6)');
                             }
             },
+
         } );
     } );
     </script>
@@ -377,22 +387,36 @@ def write_report(output_file,
 SNPS report
 =============================================================
 
-.. contents::
-    :backlinks: none
-    :depth: 2
-
-
-
 
 Table
 ------
 
+===========  ===================================================================================================
+Header name  Description
+===========  ===================================================================================================
+Contig       Contig name
+Length       Length of the contig
+Position     Position in the contig
+REF          Reference
+ALT          Alternative variant
+Location     Localization within or between ORFs
+Type         Either Indel, Synonymous mutation OR non synonymous mutation
+ORF          ORF accession
+Gene         Gene name
+orf_before   Closest ORF locate before the variant (intergenic only)
+orf_after    Closest ORF located after the variant (intergenic only)
+PASS         Passed all quality filters?
+Lowqual      Result of the quality filter (quality-score-threshold: 18)
+Lowcov       Result of the depth filter (fail if depth < 10)
+freqalt      Filter based on the minimum frequency of the alternative variant (fail if REF & REF freq < 75%)
+freqref      Filter based on the minimum frequency of the reference variant (fail if ALT & ALT freq < 75%)
+inref        Is this variant also present when mapping reads used to assemble the reference assembly? (optional)
+fail others  Is this variant also found in other sample but failed quality filters?
+===========  ===================================================================================================
+
+
 .. raw:: html
 
-    <div class="alert alert-warning" role="alert">
-      Genes with a hit <span class="label label-default">coverage &lt; 90%</span> are highlighted in <span class="label label-success">green</span> (if any) </br>
-      Genes with an  <span class="label label-default">identity &lt; 90%</span> are highlighted in <span class="label label-danger">red</span> (if any)
-    </div>
 
     {snp_table}
 

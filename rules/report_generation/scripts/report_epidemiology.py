@@ -14,7 +14,7 @@ from docutils.parsers.rst import directives
 
 multiqc_assembly = snakemake.input["multiqc_assembly"]  # ok
 contig_gc_depth_file_list = snakemake.input["contig_gc_depth_files"]
-snps_individual = snakemake.input["snps_individual"]
+#snps_individual = snakemake.input["snps_individual"]
 
 #### one per reference genome ###########################################
 multiqc_mapping_list = snakemake.input["multiqc_mapping_list"]  # ok
@@ -23,14 +23,15 @@ spanning_trees = snakemake.input["spanning_trees"]  # ok
 reference_genomes = snakemake.input["reference_genomes"]  # ok
 # multiple files of each reference genome
 undetermined_snp_tables = snakemake.input["undetermined_positions"]  # ok
-snps_merged = snakemake.input["snps_merged"]
+snps_reports = snakemake.input["snps_reports"]  # ok
+#snps_merged = snakemake.input["snps_merged"]
 #########################################################################
 
 print("multiqc list",multiqc_mapping_list)
 
 ordered_samples = snakemake.params["samples"]
 
-
+snp_detail_table = report.get_snp_detail_table(snps_reports)
 
 # mlst_tree = snakemake.input["mlst_tree"]
 mlst_tree = ""  #'/'.join(mlst_tree.split('/')[1:])
@@ -120,23 +121,25 @@ SCRIPT = """
     </script>
 
     """
-
+print("ok1", core_genome_bed)
 if core_genome_bed:
     core_size = get_core_genome_size(core_genome_bed)
     for i in reference_genomes:
         if "cgMLST" in i:
             ref_size = get_reference_genome_size(i)
     fraction_core = round(float(core_size) / float(ref_size) * 100, 2)
+    print(ref_size, core_size, fraction_core)
     core_str = """
     - Size of the reference genome: %s
-    - Size of the core genome: %s (%s % of the reference)
+    - Size of the core genome: %s (%s %% of the reference)
     """ % (ref_size,
            core_size,
            fraction_core)
+    print(core_str)
 else:
     core_size = False
     core_str = ""
-
+print("ok2")
 multiqc_table = report.get_multiqc_table(multiqc_assembly,
                                          multiqc_mapping_list)
 
@@ -153,24 +156,28 @@ snp_heatmap_str = ""
 for n, snp_table in enumerate(snp_tables):
     snp_heatmap_str += '''
 
-Ref baba
-***********
+%s
+******************************************************
 
-    .. raw:: html
+.. raw:: html
 
-        %s
+    %s
 
-    ''' % (plot_heatmap_snps(snp_table))
+
+    ''' % (snp_table.split("/")[2],
+           plot_heatmap_snps(snp_table, id=snp_table.split("/")[2] ))
 
 spanning_tree_str = ""
 for n, tree in enumerate(spanning_trees):
     tree_path = '/'.join(tree.split('/')[1:])
-    print("tree-----------------------", tree_path)
     spanning_tree_str += """
-    .. figure:: %s
-       :alt: MST tree
-       :width: 80%%
-    """ % tree_path
+
+%s
+***************************************************************
+.. figure:: %s
+   :alt: %s
+   :width: 60%%
+    """ % (tree.split("/")[3], tree_path, tree.split("/")[3])
 
 print(spanning_tree_str)
 
@@ -205,8 +212,8 @@ depth by mapping of the reads against the assembly and annotation with prokka.
 
     {multiqc_table}
 
-Low coverage contigs
-********************
+Overview quality
+*****************
 
 .. raw:: html
 
@@ -215,43 +222,26 @@ Low coverage contigs
 Typing
 ------
 
-MLST
-*****
-
-The *S. aureus* MLST scheme is based on the sequence of the following seven house-keeping genes:
-
-1. arcC (Carbamate kinase)
-2. aroE (Shikimate dehydrogenase)
-3. glpF (Glycerol kinase)
-4. gmk (Guanylate kinase)
-5. pta (Phosphate acetyltransferase)
-6. tpi (Triosephosphate isomerase)
-7. yqi (Acetyle coenzyme A acetyltransferase)
-
-The MLST was determined using the mlst_ software based on PubMLST_ typing schemes.
-
-.. _PubMLST: https://pubmlst.org/
-.. _mlst: https://github.com/tseemann/mlst
-
-
-
 MS tree(s)
 -----------
 
 {spanning_tree_str}
 
-MS tree (js)
--------------
-
-
-.. raw:: html
-
-    <div id="cy" style="width:80%;height:700px; position: relative; border: 2px solid #212523"></div>
 
 SNP table(s)
 -------------
 
 {snp_heatmap_str}
+
+
+Variant details
+***************
+
+Detailed list of variants identified compared to one or multiple reference genomes.
+
+.. raw:: html
+
+    {snp_detail_table}
 
 """
 
@@ -267,8 +257,6 @@ Phylogeny + MLST
    MLST as determined by T. Seemann mlst_.
 
 """
-
-print(report_str)
 
 with open(output_file, "w") as fh:
     publish_file(
