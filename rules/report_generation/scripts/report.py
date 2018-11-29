@@ -7,15 +7,16 @@ from plotly import offline
 
 def get_multiqc_table(assembly_multiqc,
                       mapping_multiqc=False):
-
+    print("multiqc table")
     mq_table = [["MultiQC genome assemblie(s)", '<a href="%s">MiltiQC</a>' % '/'.join(assembly_multiqc.split('/')[1:])]]
-    print('multiqc!!', mapping_multiqc)
-    if mapping_multiqc:
 
-        for multiqc in mapping_multiqc:
+    if mapping_multiqc:
+        for n, multiqc in enumerate(mapping_multiqc):
+            print(n, multiqc)
             multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc.split('/')[1:])
-            mq_table.append(["multiQC mapping: ref=", multiqc_link])
+            mq_table.append(["%s" % re.sub("_", " ", multiqc.split("/")[1]), multiqc_link])
     header = ["Name", "Link"]
+    print(mq_table)
     df = pandas.DataFrame(mq_table, columns=header)
 
     # cell content is truncated if colwidth not set to -1
@@ -68,14 +69,18 @@ def quality_table(low_cov_fastas,
         reference2sample2n_unknown = {}
         for reference in reference2files:
             reference2sample2n_unknown[reference] = {}
-            header.append("N. na SNP (%s)" % reference_name)
+            header.append("N. na SNP (%s)" % reference)
             if reference == 'cgMLST':
                 header.append("Fraction core (%)")
             for f in reference2files[reference]:
                 sample = f.split('/')[1]
-                reference2sample2n_unknown[reference][sample] = len(pandas.read_csv(f, delimiter='\t'))
+                try:
+                    reference2sample2n_unknown[reference][sample] = len(pandas.read_csv(f, delimiter='\t'))
+                except pandas.errors.EmptyDataError:
+                    reference2sample2n_unknown[reference][sample] = 0
     cov_table = []
     for fasta in low_cov_fastas:
+
         sample = fasta.split("/")[1]
         try:
             with open(fasta, 'r') as f:
@@ -94,15 +99,16 @@ def quality_table(low_cov_fastas,
                 tmp_lst.append(reference2sample2n_unknown[reference][sample])
                 if reference == "cgMLST":
                     tmp_lst.append(round((float(reference2sample2n_unknown[reference][sample]) / core_genome_size) * 100, 2))
-                cov_table.append(tmp_lst)
+
         else:
-            cov_table.append([sample,
-                              sample2scientific_name[sample],
-                              sample2n_contigs[sample],
-                              n_records,
-                              sample2gc[sample],
-                              round(sampls2cumulated_size[sample] / 1000000, 2),
-                              sample2median_depth[sample]])
+            tmp_lst = [sample,
+                       sample2scientific_name[sample],
+                       sample2n_contigs[sample],
+                       n_records,
+                       sample2gc[sample],
+                       round(sampls2cumulated_size[sample] / 1000000, 2),
+                       sample2median_depth[sample]]
+        cov_table.append(tmp_lst)
 
     if len(cov_table) > 0:
         df = pandas.DataFrame(cov_table, columns=header)
@@ -233,25 +239,28 @@ def make_div(figure_or_data, include_plotlyjs=False, show_link=False, div_id=Non
     return div
 
 
-def plot_heatmap_snps(mat):
+def plot_heatmap_snps(mat, id):
     import pandas
     import scipy.cluster.hierarchy as hc
     import plotly.figure_factory as ff
     import plotly.graph_objs as go
+    import numpy
 
     m = pandas.read_csv(mat, delimiter='\t', header=0, index_col=0)
+
     link = hc.linkage(m.values, method='centroid')
     o1 = hc.leaves_list(link)
-
     mat = m.iloc[o1, :]
-    mat = mat.iloc[:, o1[::-1]]
+    mat2 = mat.iloc[:, o1[::-1]].iloc[::-1]
 
-    nodes = ['S_' + str(i) for i in mat.index]
-
+    nodes = mat2.index.tolist()
+    print(nodes)
+    print(mat2)
+    print(mat2.values)
     data = ff.create_annotated_heatmap(
-        z=mat.values,  # squareform(m.values)
-        x=nodes,
-        y=nodes,
+        z=mat2.values,  # squareform(m.values)
+        x=mat2.columns.values.tolist(),
+        y=mat2.index.tolist(),  # need to reverse order for y axis
         colorscale='Reds'
     )
 
@@ -260,8 +269,67 @@ def plot_heatmap_snps(mat):
     )
 
     fig = go.Figure(data=data, layout=layout)
+    print(max([len(i) for i in nodes]))
+    fig.layout.margin.update({"l": 20 + (max([len(i) for i in nodes]) * 7),
+                              "r": 0,
+                              "b": 20,
+                              "t": 60,
+                              "pad": 10,
+                              })
+    return make_div(fig, div_id=id)
 
-    return make_div(fig, div_id="heatmapPlot")
 
-def get_snps_table():
-    pass
+def link_list2dico(link_list, label, index_sample, add_cgMLST=False):
+    reference2sample2link = {}
+    for link in link_list:
+        data = link.split("/")
+        reference = data[2]
+        sample = data[index_sample].split(".")[0]
+        if reference not in reference2sample2link:
+            reference2sample2link[reference] = {}
+        reference2sample2link[reference][sample] = '<a href="%s">%s</a>' % ('/'.join(data[1:]), label)
+    if add_cgMLST and not 'cgMLST' in reference2sample2link:
+        reference2sample2link["cgMLST"] = {}
+        for sample in reference2sample2link[reference]:
+            reference2sample2link["cgMLST"][sample] = "-"
+        print("--------------")
+        print(link_list)
+        print(reference2sample2link)
+    return reference2sample2link
+
+
+def get_snp_detail_table(snp_link_list, indel_link_list):
+    '''
+    report/snps/TATRas-control_assembled_genome/bwa/gatk_gvcfs/TATRas-control.html
+    report/snps/TATRas-control_assembled_genome/bwa/gatk_gvcfs/TATRas-mutant-A.html
+    report/snps/TATRas-control_assembled_genome/bwa/gatk_gvcfs/TATRas-mutant-B.html
+    report/snps/cgMLST/bwa/gatk_gvcfs/TATRas-control.html
+    report/snps/cgMLST/bwa/gatk_gvcfs/TATRas-mutant-A.html
+    report/snps/cgMLST/bwa/gatk_gvcfs/TATRas-mutant-B.html
+    '''
+    reference2sample2snp_link = link_list2dico(snp_link_list, "snps", 5)
+    reference2sample2indel_link = link_list2dico(indel_link_list, "del", 4, add_cgMLST=True)
+    print('indel list', indel_link_list)
+    print(reference2sample2indel_link)
+
+    reference_list = list(reference2sample2snp_link.keys())
+    header = ["Sample"] + ["Reference: %s" % i for i in reference_list]
+    rows = []
+    for sample in list(reference2sample2snp_link[reference_list[0]].keys()):
+        #try:
+        rows.append([sample] + ["%s / %s" % (reference2sample2snp_link[ref][sample], reference2sample2indel_link[ref][sample]) for ref in reference_list])
+        #rows.append([sample] + ["%s / %s" % (reference2sample2snp_link[ref][sample], "-") for ref in reference_list])
+    df = pandas.DataFrame(rows, columns=header)
+
+    # cell content is truncated if colwidth not set to -1
+    pandas.set_option('display.max_colwidth', -1)
+
+    df_str = df.to_html(
+        index=False,
+        bold_rows=False,
+        classes=["dataTable"],
+        table_id="snp_detail_table",
+        escape=False,
+        border=0)
+
+    return df_str.replace("\n", "\n" + 10 * " ")

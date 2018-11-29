@@ -30,17 +30,17 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
 
 include:
     pipeline_path + "rules/core_genome/bed_creation_parsnp.rules"
-    
+
 if species in all_core_genome_dbs.index:
     include:
         pipeline_path + "rules/core_genome/cgMLST.rules"
-        
+
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
 
 include:
     pipeline_path + "rules/downloading/adapting_genome_files.rules"
-    
+
 include:
     pipeline_path + "rules/mapping/find_closest_genomes.rules"
 
@@ -52,10 +52,10 @@ include:
 
 include:
     pipeline_path + "rules/vcf_manipulation/filtering.rules"
-    
+
 include:
     pipeline_path + "rules/vcf_manipulation/splitting_merging.rules"
-    
+
 include:
     pipeline_path + "rules/vcf_manipulation/indexing.rules"
 
@@ -83,8 +83,10 @@ include:
 include:
     pipeline_path + "rules/phylogeny/image_creation.rules"
 
+include:
+    pipeline_path + "rules/report_generation/snps.rules"
+
 if species in all_core_genome_dbs.index:
     rule all_typing:
         input:
             "typing/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg"
-

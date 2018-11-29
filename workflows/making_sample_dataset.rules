@@ -133,6 +133,7 @@ for ref in ref_list:
             # NCBI reference should be an integer (UID)
             test = int(ref)
             reference_genomes.append("full_genome_%s" % ref)
+            reference_genomes_dir.append(ref)
 
         except:
             raise IOerror("Unexpected reference: %s" % ref)

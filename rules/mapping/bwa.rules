@@ -5,7 +5,7 @@ rule map_paired_reads_with_bwa:
         platform = "ILLUMINA"
     input:
         fastq1 = "samples/{sample}/reads/trimmed/R1_paired.fastq",
-        fastq2 = "samples/{sample}/reads/trimmed/R2_paired.fastq",        
+        fastq2 = "samples/{sample}/reads/trimmed/R2_paired.fastq",
         ref = "references/{ref}/genome_fasta.fasta",
         ref_index = "references/{ref}/genome_fasta.fasta.bwt",
     output:
@@ -17,10 +17,10 @@ rule map_paired_reads_with_bwa:
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
         then
              rm {output[0]}.tmp*
-        fi 
+        fi
         (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq1]} {input[fastq2]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
-        
+
 rule map_single_reads_with_bwa:
     conda:
         pipeline_path + "envs/bwa-samtools.yml"
@@ -39,7 +39,7 @@ rule map_single_reads_with_bwa:
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
         then
              rm {output[0]}.tmp*
-        fi 
+        fi
         (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
 
@@ -62,7 +62,7 @@ rule map_paired_reads_with_bwa_for_direct_sequencing:
         platform = "ILLUMINA"
     input:
         fastq1 = "samples/{sample}/reads/trimmed/R1_paired.fastq",
-        fastq2 = "samples/{sample}/reads/trimmed/R2_paired.fastq",        
+        fastq2 = "samples/{sample}/reads/trimmed/R2_paired.fastq",
         ref = "references/{ref}/genome_fasta.fasta",
         ref_index = "references/{ref}/genome_fasta.fasta.bwt",
     output:
@@ -74,11 +74,11 @@ rule map_paired_reads_with_bwa_for_direct_sequencing:
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
         then
              rm {output[0]}.tmp*
-        fi 
+        fi
         (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq1]} {input[fastq2]} -v 1 -k 80 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
-        
-                
+
+
 rule map_single_reads_with_bwa_for_direct_sequencing:
     conda:
         pipeline_path + "envs/bwa-samtools.yml"
@@ -97,7 +97,7 @@ rule map_single_reads_with_bwa_for_direct_sequencing:
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
         then
              rm {output[0]}.tmp*
-        fi 
+        fi
         (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq]} -v 1 -k 80 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
 
@@ -116,10 +116,10 @@ rule filter_reads_on_quality:
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
         then
             rm {output[0]}.tmp*
-        fi 
+        fi
         samtools view -q 60 -b -u -F 3844 -T {input[ref]} {input[bam]} | samtools sort -O bam -o {output[0]}
         """
-        
+
 rule remove_duplicates_from_mapping:
     conda:
         pipeline_path + "envs/gatk.yml"
@@ -136,3 +136,17 @@ rule remove_duplicates_from_mapping:
         gatk-launch --java-options "-Xmx10G" MarkDuplicates --REMOVE_DUPLICATES true -I {input[bam]} -O {output[0]} -M {log[0]} &> {log[1]}
         """
 
+rule extract_large_deletion_from_mapping:
+    conda:
+        pipeline_path + "envs/bedtools.yml"
+    params:
+        indel_im_size = 10
+    input:
+        bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
+        bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}.bam.bai",
+    output:
+        "samples/{sample}/indel/{mapping_method}/{ref}/indel.bed",
+    shell:
+        """
+        bedtools genomecov -ibam {input[0]} -bga -split | grep -w 0$ | awk '($3-$2) >= {params[0]}' > {output[0]}
+        """
