@@ -4,11 +4,56 @@ import re
 from Bio import SeqIO
 from plotly import offline
 
+def get_mash_table(file_list):
+    '''
+    sample
+    hit 1: score (shared): name
+    hit 2:
+    hit 3:
 
-def get_multiqc_table(assembly_multiqc,
+    '''
+
+    row_list = []
+    for sample in file_list:
+        sample_name = sample.split('/')[1]
+        table = pandas.read_csv(sample, delimiter="\t", names=['score', 'shared_sketsh', 'e-value', 'description'])
+
+        hit_1 = table.iloc[0]
+        hit_2 = table.iloc[2]
+        hit_3 = table.iloc[3]
+
+        row = [sample_name,
+               hit_1[0],
+               hit_1[1],
+               "%s..." % hit_1[3][0:25],
+               hit_2[0],
+               hit_2[1],
+               "%s..." % hit_2[3][0:25],
+               hit_3[0],
+               hit_3[1],
+               "%s..." % hit_3[3][0:25]]
+
+        row_list.append(row)
+    header = ["sample", "score", "sketch", "description", "score", "sketch", "description","score", "sketch", "description"]
+    df = pandas.DataFrame(row_list, columns=header)
+    pandas.set_option('display.max_colwidth', -1)
+
+    df_str = df.to_html(
+        index=False,
+        bold_rows=False,
+        classes=["dataTable"],
+        table_id="mash_table",
+        escape=False,
+        border=0)
+
+    return df_str.replace("\n", "\n" + 10 * " ")
+
+def get_multiqc_table(assembly_multiqc=False,
                       mapping_multiqc=False):
-    print("multiqc table")
-    mq_table = [["MultiQC genome assemblie(s)", '<a href="%s">MiltiQC</a>' % '/'.join(assembly_multiqc.split('/')[1:])]]
+
+    mq_table = []
+    if assembly_multiqc:
+        mq_table.append(["MultiQC genome assemblie(s)", '<a href="%s">MiltiQC</a>' % '/'.join(assembly_multiqc.split('/')[1:])])
 
     if mapping_multiqc:
         for n, multiqc in enumerate(mapping_multiqc):
@@ -16,7 +61,7 @@ def get_multiqc_table(assembly_multiqc,
             multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc.split('/')[1:])
             mq_table.append(["%s" % re.sub("_", " ", multiqc.split("/")[1]), multiqc_link])
     header = ["Name", "Link"]
-    print(mq_table)
+
     df = pandas.DataFrame(mq_table, columns=header)
 
     # cell content is truncated if colwidth not set to -1
@@ -254,13 +299,11 @@ def plot_heatmap_snps(mat, id):
     mat2 = mat.iloc[:, o1[::-1]].iloc[::-1]
 
     nodes = mat2.index.tolist()
-    print(nodes)
-    print(mat2)
-    print(mat2.values)
+
     data = ff.create_annotated_heatmap(
-        z=mat2.values,  # squareform(m.values)
-        x=mat2.columns.values.tolist(),
-        y=mat2.index.tolist(),  # need to reverse order for y axis
+        z= mat2.values,  # squareform(m.values)
+        x=['S_' + str(i) for i in mat2.columns.values.tolist()],
+        y=['S_' + str(i) for i in mat2.index.tolist()],  # need to reverse order for y axis
         colorscale='Reds'
     )
 
@@ -269,7 +312,6 @@ def plot_heatmap_snps(mat, id):
     )
 
     fig = go.Figure(data=data, layout=layout)
-    print(max([len(i) for i in nodes]))
     fig.layout.margin.update({"l": 20 + (max([len(i) for i in nodes]) * 7),
                               "r": 0,
                               "b": 20,
@@ -307,18 +349,19 @@ def get_snp_detail_table(snp_link_list, indel_link_list):
     report/snps/cgMLST/bwa/gatk_gvcfs/TATRas-mutant-A.html
     report/snps/cgMLST/bwa/gatk_gvcfs/TATRas-mutant-B.html
     '''
+
     reference2sample2snp_link = link_list2dico(snp_link_list, "snps", 5)
-    reference2sample2indel_link = link_list2dico(indel_link_list, "del", 4, add_cgMLST=True)
-    print('indel list', indel_link_list)
-    print(reference2sample2indel_link)
+    if len(indel_link_list) > 0:
+        reference2sample2indel_link = link_list2dico(indel_link_list, "del", 4, add_cgMLST=True)
 
     reference_list = list(reference2sample2snp_link.keys())
     header = ["Sample"] + ["Reference: %s" % i for i in reference_list]
     rows = []
     for sample in list(reference2sample2snp_link[reference_list[0]].keys()):
-        #try:
-        rows.append([sample] + ["%s / %s" % (reference2sample2snp_link[ref][sample], reference2sample2indel_link[ref][sample]) for ref in reference_list])
-        #rows.append([sample] + ["%s / %s" % (reference2sample2snp_link[ref][sample], "-") for ref in reference_list])
+        try:
+            rows.append([sample] + ["%s / %s" % (reference2sample2snp_link[ref][sample], reference2sample2indel_link[ref][sample]) for ref in reference_list])
+        except:
+            rows.append([sample] + ["%s / %s" % (reference2sample2snp_link[ref][sample], "-") for ref in reference_list])
     df = pandas.DataFrame(rows, columns=header)
 
     # cell content is truncated if colwidth not set to -1

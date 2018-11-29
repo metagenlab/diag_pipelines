@@ -13,8 +13,6 @@ merged_vcf = snakemake.input["merged_vcf"]
 gbk_file = snakemake.input["gbk_file"]
 reference = snakemake.params["reference"]
 
-print("reference", gbk_file)
-
 # rename reference if assembled genome
 if "_assembled_genome" in reference:
     reference = re.sub("_assembled_genome", "", reference)
@@ -50,18 +48,16 @@ def get_neiboring_orf(position, feature_list):
         return ['%s (%s)' % (locus_tag, gene), '-']
     first_feature = False
     for n, feature in enumerate(feature_list):
-        if not first_feature:
-            if int(position) < int(feature.location.start):
-
-                try:
-                    gene = feature.qualifiers["gene"][0]
-                    locus_tag = feature.qualifiers["locus_tag"][0]
-                except KeyError:
-                    gene = '-'
-                    locus_tag = feature.qualifiers["locus_tag"][0]
-                return ["-", "%s (%s)" % (locus_tag, gene)]
-        if feature.type != 'source':
-            first_feature = True
+        if feature.type in ['source', 'regulatory']:
+            continue
+        if int(position) < int(feature.location.start):
+            try:
+                gene = feature.qualifiers["gene"][0]
+                locus_tag = feature.qualifiers["locus_tag"][0]
+            except KeyError:
+                gene = '-'
+                locus_tag = feature.qualifiers["locus_tag"][0]
+            return ["-", "%s (%s)" % (locus_tag, gene)]
 
         if int(position) > int(feature.location.end) and int(position) < int(feature_list[n + 1].location.start):
             try:
@@ -125,7 +121,7 @@ def search_mutated_feature(vcf_record, gbk_dico):
     record_alt = copy(gbk_dico[vcf_record.CHROM])
     record_alt.seq = MutableSeq(str(record_alt.seq), generic_dna)
 
-    results = {"mut_location": 'Intergenic',
+    results = {"mut_location": "Intergenic",
                "mut_type": '-',
                "orf_name": '-',
                "gene": '-'}
@@ -159,6 +155,8 @@ def search_mutated_feature(vcf_record, gbk_dico):
                         results["mut_type"] = 'S'
                     else:
                         results["mut_type"] = 'NS'
+            return results
+    # if no match, return empty results
     return results
 
 
@@ -178,8 +176,8 @@ def parse_vcf(vcf_file, gbk_file):
 
     table_rows = []
     for n, vcf_record in enumerate(vcf_reader):
+        print("vcf:", n)
 
-        print(gbk_file, gbk_dico.keys())
         contig = gbk_dico[vcf_record.CHROM]
 
         variant_feature = search_mutated_feature(vcf_record, gbk_dico)
@@ -192,7 +190,7 @@ def parse_vcf(vcf_file, gbk_file):
         contig_name = vcf_record.CHROM
 
         # skip ppositions with genomtype identical to REF
-        if vcf_record.samples[0]['GT'] in ['.']:
+        if vcf_record.samples[0]['GT'] in ['.', '0']:
             continue
         position = vcf_record.POS
 
@@ -346,8 +344,12 @@ SCRIPT = """
 
 
 
-
-snp_table = parse_vcf(vcf_file, gbk_file)
+vcf_reader = vcf.Reader(open(vcf_file, 'r'))
+n_snps_record = len([i for i in vcf_reader])
+if n_snps_record > 200:
+    snp_table = "too much snps"
+else:
+    snp_table = parse_vcf(vcf_file, gbk_file)
 
 report_str = f"""
 

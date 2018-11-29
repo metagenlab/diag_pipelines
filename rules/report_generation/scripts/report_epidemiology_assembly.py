@@ -12,15 +12,23 @@ import io
 from docutils.core import publish_file, publish_parts
 from docutils.parsers.rst import directives
 
+multiqc_assembly = snakemake.input["multiqc_assembly"]  # ok
+contig_gc_depth_file_list = snakemake.input["contig_gc_depth_files"]
+#snps_individual = snakemake.input["snps_individual"]
+
+#### one per reference genome ###########################################
 multiqc_mapping_list = snakemake.input["multiqc_mapping_list"]  # ok
 snp_tables = snakemake.input["snp_tables"]  # ok
 spanning_trees = snakemake.input["spanning_trees"]  # ok
 reference_genomes = snakemake.input["reference_genomes"]  # ok
 # multiple files of each reference genome
 undetermined_snp_tables = snakemake.input["undetermined_positions"]  # ok
-mash_results = snakemake.input["mash_results"]  # ok
 snps_reports = snakemake.input["snps_reports"]  # ok
 indel_reports = snakemake.input["indel_reports"]
+#snps_merged = snakemake.input["snps_merged"]
+#########################################################################
+
+print("multiqc list", multiqc_mapping_list)
 
 ordered_samples = snakemake.params["samples"]
 
@@ -29,23 +37,46 @@ snp_detail_table = report.get_snp_detail_table(snps_reports, indel_reports)
 # mlst_tree = snakemake.input["mlst_tree"]
 mlst_tree = ""  #'/'.join(mlst_tree.split('/')[1:])
 
+low_cov_fastas = snakemake.input["low_cov_fastas"]
+
 # optional params (if cgMLST among the reference genomes)
 core_genome_bed = snakemake.params["core_genome_bed"]
 
 output_file = snakemake.output[0]
 
-'''
 leaf2mlst = pandas.read_csv(snakemake.input["mlst"],
                            delimiter='\t',
                            names=["leaf","species","mlst","1","2","3","4","5","6","7"]).set_index("leaf").to_dict()["mlst"]
-'''
+
+
+# get contig depth and GC
+sample2gc = {}
+sample2median_depth = {}
+sampls2cumulated_size = {}
+sample2n_contigs = {}
+for one_table in contig_gc_depth_file_list:
+    table = pandas.read_csv(one_table,
+                                        delimiter='\t',
+                                        header=0,
+                                        index_col=0)
+
+    data_whole_gnome = table.loc["TOTAL"]
+    n_contigs = len(table["gc_content"])-1
+
+    # samples/5965/quality/mapping/bwa/5965_assembled_genome/contig_gc_depth_500bp_high_coverage.tab
+    sample = one_table.split('/')[1]
+
+    sample2gc[sample] = data_whole_gnome["gc_content"]
+    sample2median_depth[sample] = data_whole_gnome["mean_depth"]
+    sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
+    sample2n_contigs[sample] = n_contigs
 
 sample2scientific_name = pandas.read_csv(snakemake.params["sample_table"],
                                          dtype=object,
                                          delimiter='\t',
                                          header=0).set_index("SampleName").to_dict()["ScientificName"]
 
-mash_table = report.get_mash_table(mash_results)
+
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -87,27 +118,7 @@ SCRIPT = """
             "info": false
         } );
     } );
-    $(document).ready(function() {
-        $('#mash_table').DataTable( {
-            dom: 'Bfrtip',
-            "pageLength": 20,
-            "searching": true,
-            "bLengthChange": false,
-            "paging":   true,
-            "info": false,
-            'rowCallback': function(row, data, index){
-                $(row).find('td:eq(1)').css('background-color', 'rgba(255, 0, 0, 0.2)');
-                $(row).find('td:eq(2)').css('background-color', 'rgba(255, 0, 0, 0.2)');
-                $(row).find('td:eq(3)').css('background-color', 'rgba(255, 0, 0, 0.2)');
-                $(row).find('td:eq(4)').css('background-color', 'rgba(0,128,0, 0.2)');
-                $(row).find('td:eq(5)').css('background-color', 'rgba(0,128,0, 0.2)');
-                $(row).find('td:eq(6)').css('background-color', 'rgba(0,128,0, 0.2)');
-                $(row).find('td:eq(7)').css('background-color', 'rgba(128,128,128, 0.2)');
-                $(row).find('td:eq(8)').css('background-color', 'rgba(128,128,128, 0.2)');
-                $(row).find('td:eq(9)').css('background-color', 'rgba(128,128,128, 0.2)');
-            },
-        } );
-    } );
+
     </script>
 
     """
@@ -128,7 +139,17 @@ else:
     core_size = False
     core_str = ""
 
-multiqc_table = report.get_multiqc_table(mapping_multiqc=multiqc_mapping_list)
+multiqc_table = report.get_multiqc_table(multiqc_assembly,
+                                         multiqc_mapping_list)
+
+table_lowcoverage_contigs = quality_table(low_cov_fastas,
+                                          sample2gc,
+                                          sample2median_depth,
+                                          sampls2cumulated_size,
+                                          sample2n_contigs,
+                                          sample2scientific_name,
+                                          undetermined_snps_files=undetermined_snp_tables,
+                                          core_genome_size=core_size)
 
 snp_heatmap_str = ""
 for n, snp_table in enumerate(snp_tables):
@@ -189,12 +210,12 @@ If reads were mapped against multiple reference genomes, on report per reference
 
     {multiqc_table}
 
-Contamination check: mash
-**************************
+Overview quality
+*****************
 
 .. raw:: html
 
-    {mash_table}
+    {table_lowcoverage_contigs}
 
 Typing
 ------

@@ -54,8 +54,9 @@ def check_if_cgMLST():
 
 
 def get_snps_file_list(sample_list, reference_genomes, snp_caller):
-
+    print("get table list")
     pairs = list(itertools.product(reference_genomes, sample_list))
+    print(pairs)
     all_outputs = []
     for pair in pairs:
         pair = list(pair)
@@ -83,7 +84,7 @@ def get_indel_file_list(sample_list, reference_genomes):
 '''
 - we have to replace cgMLST by the actual genome if to get the right multiqc report (otherwise the pipeline will compute the whole analysis on the linked fasta cgMLST file)
 '''
-rule report_epidemiology:
+rule report_epidemiology_assembly:
     conda:
         pipeline_path + "envs/report.yml"
     input:
@@ -99,6 +100,29 @@ rule report_epidemiology:
         contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
         snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"]),
         indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir)
+    params:
+        core_genome_bed = check_if_cgMLST(),
+        samples = list(read_naming.keys()),
+        sample_table = config["local_samples"]
+    output:
+        "report/report_epidemiology_assembly.html",
+    script:
+        "scripts/report_epidemiology.py"
+
+rule report_epidemiology:
+    conda:
+        pipeline_path + "envs/report.yml"
+    input:
+        multiqc_mapping_list = expand("report/multiqc_mapping_to_{reference}/bwa/multiqc_report.html", reference=[i for i in reference_genomes_dir if i != "cgMLST"] + [str(all_core_genome_dbs.loc[species, "ReferenceGenome"])]),
+        spanning_trees = expand("report/figures/%s/{reference}/bwa/distances_in_snp_mst_no_st.svg" % config["snp_caller"], reference=reference_genomes),
+        #mlst_tree = "report/figures/mlst_tree.svg", ## TODO one tree for each reference genome
+        snp_tables = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
+        reference_genomes = expand("references/{reference}/genome_fasta.fasta", reference=reference_genomes_dir),
+        #mlst = 'typing/mlst/summary.tsv',
+        undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"]),
+        snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"]),
+        indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir),
+        mash_results = expand('samples/{sample}/contamination/mash/fastq/distances_formated_no_virus.tsv', sample=read_naming.keys())
     params:
         core_genome_bed = check_if_cgMLST(),
         samples = list(read_naming.keys()),
