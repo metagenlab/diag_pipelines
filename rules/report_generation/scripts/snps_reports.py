@@ -13,6 +13,8 @@ merged_vcf = snakemake.input["merged_vcf"]
 gbk_file = snakemake.input["gbk_file"]
 reference = snakemake.params["reference"]
 
+print("reference", gbk_file)
+
 # rename reference if assembled genome
 if "_assembled_genome" in reference:
     reference = re.sub("_assembled_genome", "", reference)
@@ -25,7 +27,8 @@ merged_vcf_records = [i for i in vcf.Reader(open(merged_vcf, 'r'))]
 
 
 def parse_gbk(gbk_file):
-    record_dict = SeqIO.to_dict(SeqIO.parse(gbk_file, 'genbank'))
+    with open(gbk_file, "r") as f:
+        record_dict = SeqIO.to_dict(SeqIO.parse(f, 'genbank'))
     return record_dict
 
 
@@ -99,8 +102,6 @@ def check_reference_mapping_GT(vcf_record_list,
                         PASS = "PASS"
                     else:
                         PASS = "FAIL"
-                    print(sample.sample)
-                    print(type(sample['GT']))
                     if sample['GT'] not in ['.', "0"]:
                         return [True, PASS]
                     else:
@@ -178,6 +179,7 @@ def parse_vcf(vcf_file, gbk_file):
     table_rows = []
     for n, vcf_record in enumerate(vcf_reader):
 
+        print(gbk_file, gbk_dico.keys())
         contig = gbk_dico[vcf_record.CHROM]
 
         variant_feature = search_mutated_feature(vcf_record, gbk_dico)
@@ -190,7 +192,7 @@ def parse_vcf(vcf_file, gbk_file):
         contig_name = vcf_record.CHROM
 
         # skip ppositions with genomtype identical to REF
-        if vcf_record.samples[0]['GT'] in ['.', '0']:
+        if vcf_record.samples[0]['GT'] in ['.']:
             continue
         position = vcf_record.POS
 

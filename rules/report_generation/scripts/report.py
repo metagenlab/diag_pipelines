@@ -7,14 +7,16 @@ from plotly import offline
 
 def get_multiqc_table(assembly_multiqc,
                       mapping_multiqc=False):
-
+    print("multiqc table")
     mq_table = [["MultiQC genome assemblie(s)", '<a href="%s">MiltiQC</a>' % '/'.join(assembly_multiqc.split('/')[1:])]]
 
     if mapping_multiqc:
-        for multiqc in mapping_multiqc:
+        for n, multiqc in enumerate(mapping_multiqc):
+            print(n, multiqc)
             multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc.split('/')[1:])
             mq_table.append(["%s" % re.sub("_", " ", multiqc.split("/")[1]), multiqc_link])
     header = ["Name", "Link"]
+    print(mq_table)
     df = pandas.DataFrame(mq_table, columns=header)
 
     # cell content is truncated if colwidth not set to -1
@@ -78,10 +80,12 @@ def quality_table(low_cov_fastas,
                     reference2sample2n_unknown[reference][sample] = 0
     cov_table = []
     for fasta in low_cov_fastas:
+
         sample = fasta.split("/")[1]
         try:
             with open(fasta, 'r') as f:
-                n_records = len(SeqIO.read(f, 'fasta'))
+                parsed_fasta = [i for i in SeqIO.parse(f, 'fasta')]
+                n_records = len(parsed_fasta)
         except ValueError:
             n_records = 0
         if undetermined_snps_files:

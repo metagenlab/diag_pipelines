@@ -88,6 +88,6 @@ rule copy_filtered_assembly_to_reference_folder:
         gbk_ref = "references/{sample}_assembled_genome/genome_filtered.gbk",
     shell:
         """
-        ln -s ../../samples/{sample}/annotation/{sample}.fna {output[fasta_ref]}
-        ln -s ../../samples/{sample}/annotation/{sample}.gbk {output[gbk_ref]}
+        ln -s ../../{input[0]} {output[fasta_ref]}
+        ln -s ../../{input[1]} {output[gbk_ref]}
         """

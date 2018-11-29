@@ -28,7 +28,7 @@ indel_reports = snakemake.input["indel_reports"]
 #snps_merged = snakemake.input["snps_merged"]
 #########################################################################
 
-print("multiqc list",multiqc_mapping_list)
+print("multiqc list", multiqc_mapping_list)
 
 ordered_samples = snakemake.params["samples"]
 
@@ -122,25 +122,23 @@ SCRIPT = """
     </script>
 
     """
-print("ok1", core_genome_bed)
+
 if core_genome_bed:
     core_size = get_core_genome_size(core_genome_bed)
     for i in reference_genomes:
         if "cgMLST" in i:
             ref_size = get_reference_genome_size(i)
     fraction_core = round(float(core_size) / float(ref_size) * 100, 2)
-    print(ref_size, core_size, fraction_core)
     core_str = """
     - Size of the reference genome: %s
     - Size of the core genome: %s (%s %% of the reference)
     """ % (ref_size,
            core_size,
            fraction_core)
-    print(core_str)
 else:
     core_size = False
     core_str = ""
-print("ok2")
+
 multiqc_table = report.get_multiqc_table(multiqc_assembly,
                                          multiqc_mapping_list)
 
@@ -180,8 +178,6 @@ for n, tree in enumerate(spanning_trees):
    :width: 60%%
     """ % (tree.split("/")[3], tree_path, tree.split("/")[3])
 
-print(spanning_tree_str)
-
 report_str = f"""
 
 .. raw:: html
@@ -207,6 +203,7 @@ MultiQC
 MultiQC aggregate results from bioinformatics analyses across many samples into a single report.
 The analyses covered here include genome assembly with spades, evaluation of the sequencing
 depth by mapping of the reads against the assembly and annotation with prokka.
+If reads were mapped against multiple reference genomes, on report per reference is generated.
 
 
 .. raw:: html
