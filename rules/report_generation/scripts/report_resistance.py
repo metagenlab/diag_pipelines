@@ -14,7 +14,7 @@ resistance_reports = snakemake.input["resistance_reports"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 output_file = snakemake.output[0]
 high_cov_fastas = snakemake.input["high_cov_fastas"]
-contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file"]
+contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 
 # get contig depth and GC
 sample2gc = {}

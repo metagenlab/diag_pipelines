@@ -64,7 +64,7 @@ rule report_epidemiology:
         mlst = 'typing/mlst/summary.tsv',
         undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"]),
         contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
-        snps_reports = expand("", refernce=reference_genomes_dir) 
+        snps_reports = expand("", refernce=reference_genomes_dir)
 
     params:
         core_genome_bed = check_if_cgMLST(),
@@ -126,7 +126,7 @@ rule report_resistance:
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
         high_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta", sample=read_naming.keys()),
-        contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
+        contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
         rgi_overview = "report/resistance/rgi_overview.svg"
     params:
         samples = list(read_naming.keys()),

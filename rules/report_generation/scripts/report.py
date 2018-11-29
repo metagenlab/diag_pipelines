@@ -79,7 +79,7 @@ def quality_table(low_cov_fastas,
         sample = fasta.split("/")[1]
         try:
             with open(fasta, 'r') as f:
-                n_records = len(SeqIO.read(f, 'fasta'))
+                n_records = len([i for i in SeqIO.parse(f, 'fasta')])
         except ValueError:
             n_records = 0
         if undetermined_snps_files:
