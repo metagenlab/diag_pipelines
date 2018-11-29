@@ -1,54 +1,31 @@
 
 import pandas
 import re
-import numpy
 import vcf
 from Bio import SeqIO
+from report import make_div
+import io
+from docutils.core import publish_file
 
 # inputs
 vcf_file = snakemake.input["vcf_file"]
 merged_vcf = snakemake.input["merged_vcf"]
 gbk_file = snakemake.input["gbk_file"]
 reference = snakemake.params["reference"]
+
+# rename reference if assembled genome
 if "_assembled_genome" in reference:
     reference = re.sub("_assembled_genome", "", reference)
-    assembleg_genome = True
 
 # output
 report_file = snakemake.output["html_file"]
 
+# parse vcf
 merged_vcf_records = [i for i in vcf.Reader(open(merged_vcf, 'r'))]
-
-def make_div(figure_or_data,
-             include_plotlyjs=False,
-             show_link=False,
-             div_id=None):
-
-    from plotly import offline
-
-    div = offline.plot(figure_or_data,
-                       include_plotlyjs=include_plotlyjs,
-                       show_link=show_link,
-                       output_type="div",
-                       )
-    if ".then(function ()" in div:
-        div = f"""{div.partition(".then(function ()")[0]}</script>"""
-    if div_id:
-        import re
-
-        try:
-            existing_id = re.findall(r'id="(.*?)"|$', div)[0]
-            div = div.replace(existing_id, div_id)
-        except IndexError:
-            pass
-    return div
 
 
 def parse_gbk(gbk_file):
-    print("gb", gbk_file)
     record_dict = SeqIO.to_dict(SeqIO.parse(gbk_file, 'genbank'))
-    print("record_dict", record_dict)
-
     return record_dict
 
 
@@ -111,8 +88,7 @@ def check_reference_mapping_GT(vcf_record_list,
     Input: merged VCF file with all variant positions (all_samples_snp.vcf).
     Return False if a variant is found at the given position.
     '''
-    print("vcf check--------------")
-    print(contig, position, sampe_reference)
+
     for record in vcf_record_list:
         if record.CHROM == contig and record.POS == position:
             # search for reference sample
@@ -131,26 +107,66 @@ def check_reference_mapping_GT(vcf_record_list,
                         return [False, PASS]
     return [None, None]
 
+
+def search_mutated_feature(vcf_record, gbk_dico):
+    '''
+    - Search if mutation is located within a coding sequence
+    - determine if mutation is synonymous or not using a MutableSeq record (copy of the original record with mutation)
+    '''
+    from Bio.Seq import Seq
+    from Bio.SeqRecord import SeqRecord
+    from copy import copy
+    from Bio.Alphabet import IUPAC
+    from Bio.Seq import MutableSeq
+    from Bio.Alphabet import generic_dna
+
+    # create
+    record_alt = copy(gbk_dico[vcf_record.CHROM])
+    record_alt.seq = MutableSeq(str(record_alt.seq), generic_dna)
+
+    results = {"mut_location": 'Intergenic',
+               "mut_type": '-',
+               "orf_name": '-',
+               "gene": '-'}
+
+    for feature in record_alt.features:
+        if int(vcf_record.POS) in feature and feature.type != "source":
+            results["mut_location"] = feature.type
+            if feature.type == 'mobile_element':
+                results["orf_name"] = feature.qualifiers["mobile_element_type"][0]
+            elif feature.type == 'CDS':
+                results["orf_name"] = feature.qualifiers["locus_tag"][0]
+            else:
+                results["orf_name"] = "Unknown locus for feature: %s" % feature.type
+            try:
+                results["gene"] = feature.qualifiers["gene"][0]
+            except KeyError:
+                results["gene"] = '-'
+            if feature.type == 'CDS':
+
+                if len(vcf_record.ALT[0]) > 1:
+                    results["mut_type"] = 'INDEL'
+                    continue
+                else:
+                    aa_seq_ref = str(feature.extract(record_alt.seq).translate())
+                    # mutate reference sequence
+                    record_alt.seq[int(vcf_record.POS) - 1] = str(vcf_record.ALT[0])
+
+                    # check if synonymous or not
+                    aa_seq_alt = str(feature.extract(record_alt.seq).translate())
+                    if str(aa_seq_ref) == str(aa_seq_alt):
+                        results["mut_type"] = 'S'
+                    else:
+                        results["mut_type"] = 'NS'
+    return results
+
+
 def parse_vcf(vcf_file, gbk_file):
     '''
     Given a vcf input file and the gbk of the reference genome, return an html table of identified variants.
     '''
-
-    from copy import copy
-    from Bio.Seq import Seq
-    from Bio.SeqRecord import SeqRecord
-    from Bio.Alphabet import IUPAC
-    from Bio.Seq import MutableSeq
-    from Bio.Alphabet import generic_dna
-    import numpy
-
     vcf_reader = vcf.Reader(open(vcf_file, 'r'))
     gbk_dico = parse_gbk(gbk_file)
-    print(gbk_dico.keys())
-    intergenic = 0
-    synonymous = 0
-    non_synonymous = 0
-    indel = 0
 
     filter_head = ['%s' % (vcf_reader.filters[i].id) for i in vcf_reader.filters]
     header = ["contig", "length", "position", "REF", "ALT", "location", "type", "ORF", "gene", "orf_before", "orf_after"]
@@ -160,83 +176,44 @@ def parse_vcf(vcf_file, gbk_file):
         header.append("Fail Others")
 
     table_rows = []
-    for n, record in enumerate(vcf_reader):
+    for n, vcf_record in enumerate(vcf_reader):
 
-        record_alt = copy(gbk_dico[record.CHROM])
-        record_alt.seq = MutableSeq(str(record_alt.seq), generic_dna)
-        # default to intergenic (modigied if feature match found)
-        mut_location = 'Intergenic'
-        mut_type = '-'
-        orf_name = '-'
-        gene = '-'
-        for feature in record_alt.features:
-            if int(record.POS) in feature and feature.type != "source":
-                mut_location = feature.type
-                if feature.type == 'mobile_element':
-                    orf_name = feature.qualifiers["mobile_element_type"][0]
-                elif feature.type == 'CDS':
-                    orf_name = feature.qualifiers["locus_tag"][0]
-                else:
-                    orf_name = "Unknown locus for feature: %s" % feature.type
-                try:
-                    gene = feature.qualifiers["gene"][0]
-                except:
-                    gene = '-'
-                # print("SNP in feature--------------------------------------------:", feature.type, feature.location)
-                if feature.type == 'CDS':
+        contig = gbk_dico[vcf_record.CHROM]
 
-                    if len(record.ALT[0]) > 1:
-                        mut_type = 'INDEL'
-                        indel += 1
-                        continue
-                    else:
-                        aa_seq_ref = str(feature.extract(record_alt.seq).translate())
-                        # mutate reference sequence
-                        record_alt.seq[int(record.POS) - 1] = str(record.ALT[0])
-                        # check if synonymous or not
-                        aa_seq_alt = str(feature.extract(record_alt.seq).translate())
+        variant_feature = search_mutated_feature(vcf_record, gbk_dico)
 
-                        if str(aa_seq_ref) == str(aa_seq_alt):
-                            mut_type = 'S'
-                            synonymous += 1
-                        else:
-                            mut_type = 'NS'
-                            if len(record.FILTER) == 0:
-                                non_synonymous+=1
-                        #print (str(aa_seq_ref.translate()) == str(record_alt.translate()))
-        if mut_location == 'Intergenic':
-            orf_before, orf_after = get_neiboring_orf(int(record.POS), record_alt.features)
+        if variant_feature["mut_location"] == 'Intergenic':
+            orf_before, orf_after = get_neiboring_orf(int(vcf_record.POS), contig.features)
         else:
             orf_before, orf_after = ['-', '-']
-        # print (filter_dico["PASS"].id)
-        # print (filter_dico["PASS"].desc)
-        contig = record.CHROM
-        print("depth", record.samples[0]['AD'], record.samples[0]['DP'])
 
-        if record.samples[0]['GT'] in ['.']:
-            # print(type(ac))
-            # if ac == 0:
+        contig_name = vcf_record.CHROM
+
+        # skip ppositions with genomtype identical to REF
+        if vcf_record.samples[0]['GT'] in ['.', '0']:
             continue
-        position = record.POS
-        ref = "%s (%s/%s)" % (record.REF,
-                              record.samples[0]['AD'][0],
-                              record.samples[0]['DP'])
-        if len(record.ALT[0]) == 1:
-            alt = "%s (%s/%s)" % (record.ALT[0],
-                                  record.samples[0]['AD'][1],
-                                  record.samples[0]['DP'])
+        position = vcf_record.POS
+
+        #  REF and ALT with respective depth in parenthesis
+        ref = "%s (%s/%s)" % (vcf_record.REF,
+                              vcf_record.samples[0]['AD'][0],
+                              vcf_record.samples[0]['DP'])
+        if len(vcf_record.ALT[0]) == 1:
+            alt = "%s (%s/%s)" % (vcf_record.ALT[0],
+                                  vcf_record.samples[0]['AD'][1],
+                                  vcf_record.samples[0]['DP'])
         else:
-            alt = "%sbp (%s/%s)" % (len(record.ALT[0]),
-                                    record.samples[0]['AD'][1],
-                                    record.samples[0]['DP'])
+            alt = "%sbp (%s/%s)" % (len(vcf_record.ALT[0]),
+                                    vcf_record.samples[0]['AD'][1],
+                                    vcf_record.samples[0]['DP'])
         filter_status = []
 
         # if any of the test failed, set PASS as failed
-        if len(record.FILTER) != 0:
-            record.FILTER.append('PASS')
+        if len(vcf_record.FILTER) != 0:
+            vcf_record.FILTER.append('PASS')
 
         for filter_name in vcf_reader.filters:
-            if filter_name in record.FILTER:
+            if filter_name in vcf_record.FILTER:
                 if filter_name == 'PASS':
                     filter_status.append('NO')
                 else:
@@ -246,26 +223,27 @@ def parse_vcf(vcf_file, gbk_file):
                     filter_status.append('YES')
                 else:
                     filter_status.append('+')
-        row = [contig,
-               len(record_alt),
+        row = [contig_name,
+               len(contig),
                position,
                ref,
                alt,
-               mut_location,
-               mut_type,
-               orf_name,
-               gene,
+               variant_feature["mut_location"],
+               variant_feature["mut_type"],
+               variant_feature["orf_name"],
+               variant_feature["gene"],
                orf_before,
                orf_after]
 
         row += list(filter_status)
 
+        #  if comparison to assembled genome, add data about self mapping
+        #  (IF A VARIANT IS ALSO IDENTIFIED IN THAT MAPPING, PROBABLY A FALSE POSITIVE)
         if 'assembled' in vcf_file:
             GT, PASS = check_reference_mapping_GT(merged_vcf_records,
-                                            contig,
-                                            position,
-                                            reference)
-            print("################# GT #################")
+                                                  contig_name,
+                                                  position,
+                                                  reference)
             row.append(GT)
             row.append(PASS)
 
@@ -365,23 +343,17 @@ SCRIPT = """
     """
 
 
-def write_report(output_file,
-                 STYLE,
-                 SCRIPT):
 
-    import io
-    from docutils.core import publish_file, publish_parts
-    from docutils.parsers.rst import directives
 
-    snp_table = parse_vcf(vcf_file, gbk_file)
+snp_table = parse_vcf(vcf_file, gbk_file)
 
-    report_str = f"""
+report_str = f"""
 
 .. raw:: html
 
-    {SCRIPT}
+{SCRIPT}
 
-    {STYLE}
+{STYLE}
 
 =============================================================
 SNPS report
@@ -422,14 +394,10 @@ fail others  Is this variant also found in other sample but failed quality filte
     {snp_table}
 
 """
-    with open(output_file, "w") as fh:
-        publish_file(
-            source=io.StringIO(report_str),
-            destination=fh,
-            writer_name="html",
-            settings_overrides={"stylesheet_path": ""},
-        )
-
-write_report(report_file,
-             STYLE,
-             SCRIPT)
+with open(report_file, "w") as fh:
+    publish_file(
+        source=io.StringIO(report_str),
+        destination=fh,
+        writer_name="html",
+        settings_overrides={"stylesheet_path": ""},
+    )

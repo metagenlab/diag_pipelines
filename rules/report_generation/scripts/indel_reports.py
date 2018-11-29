@@ -4,54 +4,26 @@ import re
 import numpy
 import vcf
 from Bio import SeqIO
-
+from report import make_div
 # inputs
 bed_file = snakemake.input["deletion_bed"]
 gbk_file = snakemake.input["gbk_file"]
 report_file = snakemake.output["report_file"]
 
-def make_div(figure_or_data,
-             include_plotlyjs=False,
-             show_link=False,
-             div_id=None):
-
-    from plotly import offline
-
-    div = offline.plot(figure_or_data,
-                       include_plotlyjs=include_plotlyjs,
-                       show_link=show_link,
-                       output_type="div",
-                       )
-    if ".then(function ()" in div:
-        div = f"""{div.partition(".then(function ()")[0]}</script>"""
-    if div_id:
-        import re
-
-        try:
-            existing_id = re.findall(r'id="(.*?)"|$', div)[0]
-            div = div.replace(existing_id, div_id)
-        except IndexError:
-            pass
-    return div
-
 
 def parse_gbk(gbk_file):
-    print("gb", gbk_file)
     record_dict = SeqIO.to_dict(SeqIO.parse(gbk_file, 'genbank'))
-    print("record_dict", record_dict)
-
     return record_dict
 
 
 def get_indel_orf(del_start, del_end, feature_list):
     '''
+    Sarch overlap between bed ranges (region with depth of 0) and feature list.
+
+    format of the bed file:
     contig_11	0	29	0
     contig_11	110	125	0
     contig_37	0	126	0
-    contig_80	0	11	0
-    contig_80	161	525	0
-    contig_76	0	596	0
-    contig_82	0	500	0
     '''
     match_type = False
     match_list = []
@@ -81,21 +53,38 @@ def bed2annotated_html_table(gbk_file, bed_file):
     feature_table = []
     for i, row in bed_table.iterrows():
         gap_n += 1
-        rec = records_dico[row.name]
-        match_list = get_indel_orf(row[0], row[1], rec.features)
-        if len(match_list) > 0:
-            for match in match_list:
-                if match[0].type == 'CDS':
-                    if "gene" in match[0].qualifiers:
-                        feature_table.append([row.name, len(rec.seq), gap_n, int(row[1]) - int(row[0]), match[1], match[0].location.start,match[0].location.end, match[0].type, match[0].qualifiers["gene"][0]])
-                    else:
-                        feature_table.append([row.name, len(rec.seq), gap_n, int(row[1]) - int(row[0]), match[1], match[0].location.start,match[0].location.end, match[0].type, "-"])
-                elif match[0].type != 'gene':
-                    feature_table.append([row.name, len(rec.seq), gap_n, int(row[1]) - int(row[0]), match[1], match[0].location.start, match[0].location.end, match[0].type, "-"])
-                else:
-                    continue
+        try:
+            rec = records_dico[row.name]
+        except KeyError:
+            # contig removed based on length or low depth
+            feature_table.append([row.name, "removed", gap_n, int(row[1]) - int(row[0]), "-", "-", "-", "-", "-"])
         else:
-            feature_table.append([row.name, len(rec.seq), gap_n, int(row[1]) - int(row[0]), "-", "-", "-", "-", "-"])
+
+            match_list = get_indel_orf(row[0], row[1], rec.features)
+            if len(match_list) > 0:
+                for match in match_list:
+                    if match[0].type == 'CDS':
+                        if "gene" in match[0].qualifiers:
+                            gene = match[0].qualifiers["gene"][0]
+                        else:
+                            gene = '-'
+                    # of other kind of feature than CDS or gene
+                    elif match[0].type != 'gene':
+                        gene = '-'
+                    else:
+                        continue
+                    feature_table.append([row.name,
+                                          len(rec.seq),
+                                          gap_n,
+                                          int(row[1]) - int(row[0]),  # gap length
+                                          match[1],
+                                          match[0].location.start,
+                                          match[0].location.end,
+                                          match[0].type,
+                                          gene])
+
+            else:
+                feature_table.append([row.name, len(rec.seq), gap_n, int(row[1]) - int(row[0]), "-", "-", "-", "-", "-"])
 
     header = ["record", "record length", "gap", "gap length", "localization", "feature_start", "feature_end", "type", "gene"]
     df = pandas.DataFrame(feature_table, columns=header)
@@ -111,6 +100,7 @@ def bed2annotated_html_table(gbk_file, bed_file):
         escape=False,
         border=0)
 
+    bed_table['contig'] = bed_table.index
     df_str2 = bed_table.to_html(
         index=False,
         bold_rows=False,

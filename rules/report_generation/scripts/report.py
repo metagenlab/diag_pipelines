@@ -276,7 +276,26 @@ def plot_heatmap_snps(mat, id):
     return make_div(fig, div_id=id)
 
 
-def get_snp_detail_table(link_list):
+def link_list2dico(link_list, label, index_sample, add_cgMLST=False):
+    reference2sample2link = {}
+    for link in link_list:
+        data = link.split("/")
+        reference = data[2]
+        sample = data[index_sample].split(".")[0]
+        if reference not in reference2sample2link:
+            reference2sample2link[reference] = {}
+        reference2sample2link[reference][sample] = '<a href="%s">%s</a>' % ('/'.join(data[1:]), label)
+    if add_cgMLST and not 'cgMLST' in reference2sample2link:
+        reference2sample2link["cgMLST"] = {}
+        for sample in reference2sample2link[reference]:
+            reference2sample2link["cgMLST"][sample] = "-"
+        print("--------------")
+        print(link_list)
+        print(reference2sample2link)
+    return reference2sample2link
+
+
+def get_snp_detail_table(snp_link_list, indel_link_list):
     '''
     report/snps/TATRas-control_assembled_genome/bwa/gatk_gvcfs/TATRas-control.html
     report/snps/TATRas-control_assembled_genome/bwa/gatk_gvcfs/TATRas-mutant-A.html
@@ -285,20 +304,18 @@ def get_snp_detail_table(link_list):
     report/snps/cgMLST/bwa/gatk_gvcfs/TATRas-mutant-A.html
     report/snps/cgMLST/bwa/gatk_gvcfs/TATRas-mutant-B.html
     '''
-    reference2sample2link = {}
-    for link in link_list:
-        data = link.split("/")
-        reference = data[2]
-        sample = data[5].split(".")[0]
-        if reference not in reference2sample2link:
-            reference2sample2link[reference] = {}
-        reference2sample2link[reference][sample] = '<a href="%s">link</a>' % '/'.join(data[1:])
-    reference_list = list(reference2sample2link.keys())
+    reference2sample2snp_link = link_list2dico(snp_link_list, "snps", 5)
+    reference2sample2indel_link = link_list2dico(indel_link_list, "del", 4, add_cgMLST=True)
+    print('indel list', indel_link_list)
+    print(reference2sample2indel_link)
+
+    reference_list = list(reference2sample2snp_link.keys())
     header = ["Sample"] + ["Reference: %s" % i for i in reference_list]
     rows = []
-    for sample in list(reference2sample2link[reference_list[0]].keys()):
-        rows.append([sample] + [reference2sample2link[ref][sample] for ref in reference_list])
-
+    for sample in list(reference2sample2snp_link[reference_list[0]].keys()):
+        #try:
+        rows.append([sample] + ["%s / %s" % (reference2sample2snp_link[ref][sample], reference2sample2indel_link[ref][sample]) for ref in reference_list])
+        #rows.append([sample] + ["%s / %s" % (reference2sample2snp_link[ref][sample], "-") for ref in reference_list])
     df = pandas.DataFrame(rows, columns=header)
 
     # cell content is truncated if colwidth not set to -1
