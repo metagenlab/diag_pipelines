@@ -10,7 +10,7 @@ include:
 
 include:
     pipeline_path + "rules/read_manipulation/get_sras.rules"
-    
+
 include:
     pipeline_path + "rules/quality/trimmomatic.rules"
 
@@ -34,7 +34,7 @@ include:
 
 include:
     pipeline_path + "rules/report_generation/prepare_files_for_multiqc.rules"
-    
+
 include:
     pipeline_path + "rules/report_generation/multiqc.rules"
 
@@ -46,8 +46,9 @@ include:
 
 include:
     pipeline_path + "rules/report_generation/qualimap.rules"
-    
 
+include:
+    pipeline_path + "rules/report_generation/contamination.rules"
 
 rule all_assembly_quality:
     input:

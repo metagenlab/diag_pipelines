@@ -96,10 +96,15 @@ def quality_table(low_cov_fastas,
                   sample2n_contigs,
                   sample2scientific_name,
                   undetermined_snps_files=False,
-                  core_genome_size=False):
+                  core_genome_size=False,
+                  low_cov_detail=False):
 
     header = ["Strain id", "Scientific Name", "Contigs", "Contigs depth < 5", "GC", "Size (Mb)", "Median Depth"]
-
+    if low_cov_detail:
+        sample2locov_path = {}
+        for link in low_cov_detail:
+            sample = link.split("/")[-1].split(".")[0]
+            sample2locov_path[sample] = '/'.join(link.split("/")[1:])
     if undetermined_snps_files:
         # multiple files for each reference genome
         # first sort files
@@ -132,11 +137,17 @@ def quality_table(low_cov_fastas,
                 n_records = len([i for i in SeqIO.parse(f, 'fasta')])
         except ValueError:
             n_records = 0
+        if n_records > 0:
+            low_cov_str = '%s (<a href="%s">detail<a>)' % (n_records, sample2locov_path[sample])
+        else:
+            low_cov_str = n_records
+            
         if undetermined_snps_files:
+
             tmp_lst = [sample,
                        sample2scientific_name[sample],
                        sample2n_contigs[sample],
-                       n_records,
+                       low_cov_str,
                        sample2gc[sample],
                        round(sampls2cumulated_size[sample] / 1000000, 2),
                        sample2median_depth[sample]]
@@ -149,7 +160,7 @@ def quality_table(low_cov_fastas,
             tmp_lst = [sample,
                        sample2scientific_name[sample],
                        sample2n_contigs[sample],
-                       n_records,
+                       low_cov_str,
                        sample2gc[sample],
                        round(sampls2cumulated_size[sample] / 1000000, 2),
                        sample2median_depth[sample]]

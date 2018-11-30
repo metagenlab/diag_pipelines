@@ -182,11 +182,12 @@ rule report_resistance:
         qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
         multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
-        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-        high_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta", sample=read_naming.keys()),
+        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+        high_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_high_coverage.fasta", sample=read_naming.keys()),
         contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
         rgi_overview = "report/resistance/rgi_overview.svg",
-        mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys())
+        mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
+        low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys())
     params:
         samples = list(read_naming.keys()),
         sample_table = config["local_samples"]

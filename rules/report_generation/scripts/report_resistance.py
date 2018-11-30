@@ -18,6 +18,7 @@ high_cov_fastas = snakemake.input["high_cov_fastas"]
 contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 mash_results = snakemake.input["mash_results"]  # ok
 qualimap_reports = snakemake.input["qualimap_reports"]
+low_cov_detail = snakemake.input["low_cov_detail"]
 
 # get contig depth and GC
 sample2gc = {}
@@ -137,7 +138,8 @@ def write_report(output_file,
                                               sample2median_depth,
                                               sampls2cumulated_size,
                                               sample2n_contigs,
-                                              sample2scientific_name)
+                                              sample2scientific_name,
+                                              low_cov_detail=low_cov_detail)
     table_resistance = resistance_table(resistance_reports)
 
     report_str = f"""
