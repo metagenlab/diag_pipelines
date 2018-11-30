@@ -53,12 +53,16 @@ for (i in 1:length(unique(dataset$mechanism))){
     p <- ggplot(data = mechanism_subset, aes(x = sample, y = Best_Hit_ARO)) + geom_tile(aes(fill = Cut_Off), height = 0.9, width=0.9)
     p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     p <- p + coord_fixed(ratio=1) + theme(legend.position="none") + ggtitle(resistance_mechanism) #+ theme(strip.text.x = element_text(size=8, angle=75))
-    p <- p +   theme(axis.title.x=element_blank())
-    p <- p +   theme(axis.title.y=element_blank())
+    p <- p + theme(axis.title.x=element_blank())
+    p <- p + theme(axis.title.y=element_blank())
     plot_list[[i]] <- p
 }
-
-svglite(snakemake@output[["rgi_plot"]], height=25,width=0.5*length(rgi_files))
+# with of the plot should take into accounts:
+# 1) the number of trains
+# 2) the length of labels
+label_length <- lapply(as.character(dataset$Best_Hit_ARO), nchar)
+longest_label <- max(unlist(label_length))
+svglite(snakemake@output[["rgi_plot"]], height=25,width=longest_label/15 + (0.5*length(rgi_files)))
 #p <- ggplot(data = dataset, aes(x = sample, y = Best_Hit_ARO)) + geom_raster(aes(fill = CUT_OFF))
 #p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 #print (p + coord_fixed(ratio=1))
