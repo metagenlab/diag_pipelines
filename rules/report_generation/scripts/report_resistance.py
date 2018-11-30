@@ -6,8 +6,9 @@
 # n_samples = list(read_naming.keys()
 import pandas
 from report import quality_table, resistance_table
+import report
 
-multiqc_report = snakemake.input["multiqc_report"]
+multiqc_assembly = snakemake.input["multiqc_assembly"]
 rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
 ordered_samples = snakemake.params["samples"]
 resistance_reports = snakemake.input["resistance_reports"]
@@ -127,7 +128,8 @@ def write_report(output_file,
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
 
-    multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
+    multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
+
     table_lowcoverage_contigs = quality_table(low_cov_fasta,
                                               sample2gc,
                                               sample2median_depth,
@@ -165,7 +167,7 @@ depth by mapping of the reads against the assembly and annotation with prokka.
 
 .. raw:: html
 
-    {multiqc_link}
+    {multiqc_table}
 
 Low coverage contigs
 ********************
