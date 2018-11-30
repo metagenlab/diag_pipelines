@@ -17,6 +17,7 @@ output_file = snakemake.output[0]
 high_cov_fastas = snakemake.input["high_cov_fastas"]
 contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 mash_results = snakemake.input["mash_results"]  # ok
+qualimap_reports = snakemake.input["qualimap_reports"]
 
 # get contig depth and GC
 sample2gc = {}
@@ -129,6 +130,7 @@ def write_report(output_file,
     from docutils.parsers.rst import directives
 
     multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
+    qualimap_table = report.qualimap_table(qualimap_reports)
 
     table_lowcoverage_contigs = quality_table(low_cov_fasta,
                                               sample2gc,
@@ -182,6 +184,13 @@ Contamination check: mash (assembly)
 .. raw:: html
 
     {mash_table}
+
+Qualimap reports (self mapping)
+********************************
+
+.. raw:: html
+
+    {qualimap_table}
 
 Resistance (RGI/CARD)
 ----------------------

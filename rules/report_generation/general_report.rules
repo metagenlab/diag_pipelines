@@ -179,6 +179,7 @@ rule report_resistance:
     conda:
         pipeline_path + "envs/report.yml"
     input:
+        qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
         multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
         resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
