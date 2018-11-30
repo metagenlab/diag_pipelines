@@ -33,3 +33,6 @@ reference: "cgMLST"
 
 # snp calling method: either "freebayes_joint_genotyping" or "gatk_gvcfs"
 snp_caller: "gatk_gvcfs"
+
+# mapping: either bwa or bwa_stringent
+mapping: "bwa"

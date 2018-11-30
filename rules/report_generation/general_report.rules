@@ -38,12 +38,12 @@ rule report_epidemiology_virulence_resistance_saureus:
 
 # only ok for cgMLST core genomes
 # need further checks for parsnp core genomes
-def get_undetermined_file_list(sample_list, reference_genomes, snp_caller):
+def get_undetermined_file_list(sample_list, reference_genomes, snp_caller, mapping_method):
     import itertools
     pairs = list(itertools.product(sample_list, reference_genomes))
     all_outputs = []
     for pair in pairs:
-        all_outputs.append("samples/%s/snps/%s/%s/bwa/unknowns.tab" % (pair[0], snp_caller, pair[1]))
+        all_outputs.append("samples/%s/snps/%s/%s/%s/unknowns.tab" % (pair[0], snp_caller, pair[1], mapping_method))
     return all_outputs
 
 def check_if_cgMLST():
@@ -53,7 +53,7 @@ def check_if_cgMLST():
         return None
 
 
-def get_snps_file_list(sample_list, reference_genomes, snp_caller):
+def get_snps_file_list(sample_list, reference_genomes, snp_caller, mapping_method):
     print("get table list")
     pairs = list(itertools.product(reference_genomes, sample_list))
     print(pairs)
@@ -64,12 +64,12 @@ def get_snps_file_list(sample_list, reference_genomes, snp_caller):
         if pair[0] in read_naming.keys():
             pair[0] = pair[0]+'_assembled_genome'
         # "report/snps/{reference}/{mapping_method}/{snp_caller}/{sample}.html"
-        path = "report/snps/%s/bwa/%s/%s.html" % (pair[0], snp_caller, pair[1])
+        path = "report/snps/%s/%s/%s/%s.html" % (pair[0], mapping_method, snp_caller, pair[1])
         all_outputs.append(path)
     return all_outputs
 
 
-def get_indel_file_list(sample_list, reference_genomes):
+def get_indel_file_list(sample_list, reference_genomes, mapping_method):
     "report/indel/79781/bwa/TATRas-control.html"
     pairs = list(itertools.product(reference_genomes, sample_list))
     all_outputs = []
@@ -77,7 +77,7 @@ def get_indel_file_list(sample_list, reference_genomes):
         pair = list(pair)
         if pair[0] == 'cgMLST':
             continue
-        path = "report/indel/%s/bwa/%s.html" % (pair[0], pair[1])
+        path = "report/indel/%s/%s/%s.html" % (pair[0], mapping_method, pair[1])
         all_outputs.append(path)
     return all_outputs
 
@@ -96,10 +96,10 @@ rule report_epidemiology_assembly:
         snp_tables = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
         reference_genomes = expand("references/{reference}/genome_fasta.fasta", reference=reference_genomes_dir),
         mlst = 'typing/mlst/summary.tsv',
-        undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"]),
+        undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"], config["mapping"]),
         contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
-        snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"]),
-        indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir)
+        snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"],config["mapping"]),
+        indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir, config["mapping"])
     params:
         core_genome_bed = check_if_cgMLST(),
         samples = list(read_naming.keys()),
@@ -113,15 +113,15 @@ rule report_epidemiology:
     conda:
         pipeline_path + "envs/report.yml"
     input:
-        multiqc_mapping_list = expand("report/multiqc_mapping_to_{reference}/bwa/multiqc_report.html", reference=[i for i in reference_genomes_dir if i != "cgMLST"] + [str(all_core_genome_dbs.loc[species, "ReferenceGenome"])]),
-        spanning_trees = expand("report/figures/%s/{reference}/bwa/distances_in_snp_mst_no_st.svg" % config["snp_caller"], reference=reference_genomes),
+        multiqc_mapping_list = expand("report/multiqc_mapping_to_{reference}/%s/multiqc_report.html" % config["mapping"], reference=[i for i in reference_genomes_dir if i != "cgMLST"] + [str(all_core_genome_dbs.loc[species, "ReferenceGenome"])]),
+        spanning_trees = expand("report/figures/%s/{reference}/%s/distances_in_snp_mst_no_st.svg" % (config["snp_caller"], config["mapping"]), reference=reference_genomes),
         #mlst_tree = "report/figures/mlst_tree.svg", ## TODO one tree for each reference genome
-        snp_tables = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
+        snp_tables = expand("typing/%s/{reference}/%s/distances_in_snp.tsv" % (config["snp_caller"], config["mapping"]), reference=reference_genomes),
         reference_genomes = expand("references/{reference}/genome_fasta.fasta", reference=reference_genomes_dir),
         #mlst = 'typing/mlst/summary.tsv',
-        undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"]),
-        snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"]),
-        indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir),
+        undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"], config["mapping"]),
+        snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"], config["mapping"]),
+        indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir, config["mapping"]),
         mash_results = expand('samples/{sample}/contamination/mash/fastq/distances_formated_no_virus.tsv', sample=read_naming.keys())
     params:
         core_genome_bed = check_if_cgMLST(),
