@@ -19,6 +19,7 @@ contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 mash_results = snakemake.input["mash_results"]  # ok
 qualimap_reports = snakemake.input["qualimap_reports"]
 low_cov_detail = snakemake.input["low_cov_detail"]
+mash_detail = snakemake.input["mash_detail"]
 
 # get contig depth and GC
 sample2gc = {}
@@ -27,9 +28,9 @@ sampls2cumulated_size = {}
 sample2n_contigs = {}
 for one_table in contig_gc_depth_file_list:
     table = pandas.read_csv(one_table,
-                                        delimiter='\t',
-                                        header=0,
-                                        index_col=0)
+                            delimiter='\t',
+                            header=0,
+                            index_col=0)
 
     data_whole_gnome = table.loc["TOTAL"]
     n_contigs = len(table["gc_content"])-1
@@ -47,7 +48,7 @@ sample2scientific_name = pandas.read_csv(snakemake.params["sample_table"],
                                     delimiter='\t',
                                     header=0).set_index("SampleName").to_dict()["ScientificName"]
 
-mash_table = report.get_mash_table(mash_results)
+mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -102,15 +103,15 @@ SCRIPT = """
             "paging":   true,
             "info": false,
             'rowCallback': function(row, data, index){
-                $(row).find('td:eq(1)').css('background-color', 'rgba(255, 0, 0, 0.2)');
                 $(row).find('td:eq(2)').css('background-color', 'rgba(255, 0, 0, 0.2)');
                 $(row).find('td:eq(3)').css('background-color', 'rgba(255, 0, 0, 0.2)');
-                $(row).find('td:eq(4)').css('background-color', 'rgba(0,128,0, 0.2)');
+                $(row).find('td:eq(4)').css('background-color', 'rgba(255, 0, 0, 0.2)');
                 $(row).find('td:eq(5)').css('background-color', 'rgba(0,128,0, 0.2)');
                 $(row).find('td:eq(6)').css('background-color', 'rgba(0,128,0, 0.2)');
-                $(row).find('td:eq(7)').css('background-color', 'rgba(128,128,128, 0.2)');
+                $(row).find('td:eq(7)').css('background-color', 'rgba(0,128,0, 0.2)');
                 $(row).find('td:eq(8)').css('background-color', 'rgba(128,128,128, 0.2)');
                 $(row).find('td:eq(9)').css('background-color', 'rgba(128,128,128, 0.2)');
+                $(row).find('td:eq(10)').css('background-color', 'rgba(128,128,128, 0.2)');
             },
         } );
     } );

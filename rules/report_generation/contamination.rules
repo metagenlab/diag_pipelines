@@ -1,4 +1,13 @@
 
+rule mash_report:
+    conda:
+        pipeline_path + "envs/report.yml"
+    input:
+        low_cov_contigs_fasta = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv",
+    output:
+        "report/contamination/mash/{fastq_or_assembly}/{sample}.html"
+    script: "scripts/report_mash.py"
+
 rule low_coverage_contig_report:
     conda:
         pipeline_path + "envs/report.yml"

@@ -4,7 +4,7 @@ import re
 from Bio import SeqIO
 from plotly import offline
 
-def get_mash_table(file_list):
+def get_mash_table(file_list, mash_detail, sample2scientific_name):
     '''
     sample
     hit 1: score (shared): name
@@ -12,6 +12,10 @@ def get_mash_table(file_list):
     hit 3:
 
     '''
+    sample2detail_link = {}
+    for link in mash_detail:
+        sample = link.split("/")[-1].split('.')[0]
+        sample2detail_link[str(sample)] = '/'.join(link.split("/")[1:])
 
     row_list = []
     for sample in file_list:
@@ -23,18 +27,20 @@ def get_mash_table(file_list):
         hit_3 = table.iloc[3]
 
         row = [sample_name,
-               hit_1[0],
-               hit_1[1],
+               sample2scientific_name[sample_name],
+               round(hit_1[0], 3),
+               hit_1[1].split("/")[0],
                "%s..." % hit_1[3][0:25],
-               hit_2[0],
-               hit_2[1],
+               round(hit_2[0], 3),
+               hit_2[1].split("/")[0],
                "%s..." % hit_2[3][0:25],
-               hit_3[0],
-               hit_3[1],
-               "%s..." % hit_3[3][0:25]]
+               round(hit_3[0], 3),
+               hit_3[1].split("/")[0],
+               "%s..." % hit_3[3][0:25],
+               '<a href="%s">detail</a>' % sample2detail_link[str(sample_name)]]
 
         row_list.append(row)
-    header = ["sample", "score", "sketch", "description", "score", "sketch", "description","score", "sketch", "description"]
+    header = ["sample", "expected", "score", "sketch", "description", "score", "sketch", "description","score", "sketch", "description", "detail"]
     df = pandas.DataFrame(row_list, columns=header)
     pandas.set_option('display.max_colwidth', -1)
 
@@ -141,7 +147,7 @@ def quality_table(low_cov_fastas,
             low_cov_str = '%s (<a href="%s">detail<a>)' % (n_records, sample2locov_path[sample])
         else:
             low_cov_str = n_records
-            
+
         if undetermined_snps_files:
 
             tmp_lst = [sample,

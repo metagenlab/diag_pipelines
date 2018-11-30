@@ -53,9 +53,9 @@ rule get_taxonomy_from_mash_results:
     conda:
         pipeline_path + "envs/entrez-direct.yml"
     input:
-        distances = "samples/{sample}/contamination/mash/distances.tsv"
+        distances = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv"
     output:
-        taxonomy = "samples/{sample}/contamination/mash/taxonomy.txt"
+        taxonomy = "samples/{sample}/contamination/mash/{fastq_or_assembly}/taxonomy.txt"
     shell:
         """
         sort -gr {input[0]}  | cut -f5  | sed "s/\(GCF_[0-9]\+\.[0-9]\+\)_.*/\\1/" | xargs -I % sh -c "esearch -db assembly -query % | efetch -db assembly -format docsum | xtract -pattern DocumentSummary -element SpeciesName" > {output[taxonomy]}
