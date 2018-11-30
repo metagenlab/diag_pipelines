@@ -2,7 +2,7 @@ rule extract_sample_entry_from_vcf:
     conda:
         pipeline_path + "envs/bcftools.yml",
     input:
-        vcf_cov="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/..vcf",
+        vcf_cov="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/cov_decomposed_normalized.vcf",
     output:
         vcf_sample=temp("samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/raw.vcf"),
     shell:
