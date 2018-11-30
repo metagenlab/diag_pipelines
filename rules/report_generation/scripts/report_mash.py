@@ -89,6 +89,9 @@ SCRIPT = """
             if(string.includes("phage")){
                              $(row).css('background-color', 'rgba(200, 222, 222, 0.8)');
                             }
+            if(string.includes("plasmid")){
+                             $(row).css('background-color', 'rgba(200, 100, 222, 0.7)');
+                            }
             },
         } );
     } );
