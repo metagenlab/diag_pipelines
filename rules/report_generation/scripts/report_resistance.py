@@ -15,6 +15,7 @@ low_cov_fastas = snakemake.input["low_cov_fastas"]
 output_file = snakemake.output[0]
 high_cov_fastas = snakemake.input["high_cov_fastas"]
 contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
+mash_results = snakemake.input["mash_results"]  # ok
 
 # get contig depth and GC
 sample2gc = {}
@@ -42,8 +43,9 @@ sample2scientific_name = pandas.read_csv(snakemake.params["sample_table"],
                                          dtype=object,
                                     delimiter='\t',
                                     header=0).set_index("SampleName").to_dict()["ScientificName"]
-print (sample2scientific_name)
-print(sample2scientific_name.keys())
+
+mash_table = report.get_mash_table(mash_results)
+
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"/>
@@ -86,6 +88,27 @@ SCRIPT = """
             "bLengthChange": false,
             "paging":   true,
             "info": false
+        } );
+    } );
+    $(document).ready(function() {
+        $('#mash_table').DataTable( {
+            dom: 'Bfrtip',
+            "pageLength": 20,
+            "searching": true,
+            "bLengthChange": false,
+            "paging":   true,
+            "info": false,
+            'rowCallback': function(row, data, index){
+                $(row).find('td:eq(1)').css('background-color', 'rgba(255, 0, 0, 0.2)');
+                $(row).find('td:eq(2)').css('background-color', 'rgba(255, 0, 0, 0.2)');
+                $(row).find('td:eq(3)').css('background-color', 'rgba(255, 0, 0, 0.2)');
+                $(row).find('td:eq(4)').css('background-color', 'rgba(0,128,0, 0.2)');
+                $(row).find('td:eq(5)').css('background-color', 'rgba(0,128,0, 0.2)');
+                $(row).find('td:eq(6)').css('background-color', 'rgba(0,128,0, 0.2)');
+                $(row).find('td:eq(7)').css('background-color', 'rgba(128,128,128, 0.2)');
+                $(row).find('td:eq(8)').css('background-color', 'rgba(128,128,128, 0.2)');
+                $(row).find('td:eq(9)').css('background-color', 'rgba(128,128,128, 0.2)');
+            },
         } );
     } );
     </script>
@@ -150,6 +173,13 @@ Low coverage contigs
 .. raw:: html
 
     {table_lowcoverage_contigs}
+
+Contamination check: mash (assembly)
+************************************
+
+.. raw:: html
+
+    {mash_table}
 
 Resistance (RGI/CARD)
 ----------------------
