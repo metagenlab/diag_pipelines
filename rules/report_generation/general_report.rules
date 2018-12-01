@@ -122,7 +122,8 @@ rule report_epidemiology:
         undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"], config["mapping"]),
         snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"], config["mapping"]),
         indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir, config["mapping"]),
-        mash_results = expand('samples/{sample}/contamination/mash/fastq/distances_formated_no_virus.tsv', sample=read_naming.keys())
+        mash_results = expand('samples/{sample}/contamination/mash/fastq/distances_formated_no_virus.tsv', sample=read_naming.keys()),
+        mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
     params:
         core_genome_bed = check_if_cgMLST(),
         samples = list(read_naming.keys()),

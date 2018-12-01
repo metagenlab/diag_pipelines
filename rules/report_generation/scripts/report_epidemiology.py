@@ -21,6 +21,7 @@ undetermined_snp_tables = snakemake.input["undetermined_positions"]  # ok
 mash_results = snakemake.input["mash_results"]  # ok
 snps_reports = snakemake.input["snps_reports"]  # ok
 indel_reports = snakemake.input["indel_reports"]
+mash_detail = snakemake.input["mash_detail"]
 
 ordered_samples = snakemake.params["samples"]
 
@@ -45,7 +46,7 @@ sample2scientific_name = pandas.read_csv(snakemake.params["sample_table"],
                                          delimiter='\t',
                                          header=0).set_index("SampleName").to_dict()["ScientificName"]
 
-mash_table = report.get_mash_table(mash_results)
+mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
