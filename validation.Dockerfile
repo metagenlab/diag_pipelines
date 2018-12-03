@@ -8,8 +8,6 @@ RUN git pull
 
 RUN git fetch
 
-RUN conda install unzip
-
 RUN mkdir -p ${main}/data/validation/MTB-XTR/
 
 WORKDIR ${main}/data/validation/MTB-XTR/
