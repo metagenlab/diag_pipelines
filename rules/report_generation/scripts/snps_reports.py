@@ -6,6 +6,7 @@ from Bio import SeqIO
 from report import make_div
 import io
 from docutils.core import publish_file
+import codecs
 
 # inputs
 vcf_file = snakemake.input["vcf_file"]
@@ -20,8 +21,9 @@ if "_assembled_genome" in reference:
 # output
 report_file = snakemake.output["html_file"]
 
+print(merged_vcf)
 # parse vcf
-merged_vcf_records = [i for i in vcf.Reader(open(merged_vcf, 'r'))]
+merged_vcf_records = [i for i in vcf.Reader(codecs.open(merged_vcf, 'r', 'latin-1'))]
 
 
 def parse_gbk(gbk_file):
@@ -164,7 +166,7 @@ def parse_vcf(vcf_file, gbk_file):
     '''
     Given a vcf input file and the gbk of the reference genome, return an html table of identified variants.
     '''
-    vcf_reader = vcf.Reader(open(vcf_file, 'r'))
+    vcf_reader = vcf.Reader(codecs.open(vcf_file, 'r', 'latin-1'))
     gbk_dico = parse_gbk(gbk_file)
 
     filter_head = ['%s' % (vcf_reader.filters[i].id) for i in vcf_reader.filters]
@@ -344,7 +346,7 @@ SCRIPT = """
 
 
 
-vcf_reader = vcf.Reader(open(vcf_file, 'r'))
+vcf_reader = vcf.Reader(codecs.open(vcf_file, 'r', 'latin-1'))
 n_snps_record = len([i for i in vcf_reader])
 if n_snps_record > 200:
     snp_table = "too much snps"
