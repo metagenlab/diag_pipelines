@@ -10,6 +10,8 @@ RUN conda install snakemake=5.3.0
 
 RUN conda install unzip
 
+RUN export NCBI_API_KEY="719f6e482d4cdfa315f8d525843c02659408"
+
 #RUN conda install biopython=1.70
 
 ENV main=/home/pipeline_user
