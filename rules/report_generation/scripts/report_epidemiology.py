@@ -97,15 +97,15 @@ SCRIPT = """
             "paging":   true,
             "info": false,
             'rowCallback': function(row, data, index){
-                $(row).find('td:eq(1)').css('background-color', 'rgba(255, 0, 0, 0.2)');
                 $(row).find('td:eq(2)').css('background-color', 'rgba(255, 0, 0, 0.2)');
                 $(row).find('td:eq(3)').css('background-color', 'rgba(255, 0, 0, 0.2)');
-                $(row).find('td:eq(4)').css('background-color', 'rgba(0,128,0, 0.2)');
+                $(row).find('td:eq(4)').css('background-color', 'rgba(255, 0, 0, 0.2)');
                 $(row).find('td:eq(5)').css('background-color', 'rgba(0,128,0, 0.2)');
                 $(row).find('td:eq(6)').css('background-color', 'rgba(0,128,0, 0.2)');
-                $(row).find('td:eq(7)').css('background-color', 'rgba(128,128,128, 0.2)');
+                $(row).find('td:eq(7)').css('background-color', 'rgba(0,128,0, 0.2)');
                 $(row).find('td:eq(8)').css('background-color', 'rgba(128,128,128, 0.2)');
                 $(row).find('td:eq(9)').css('background-color', 'rgba(128,128,128, 0.2)');
+                $(row).find('td:eq(10)').css('background-color', 'rgba(128,128,128, 0.2)');
             },
         } );
     } );
