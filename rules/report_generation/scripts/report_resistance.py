@@ -174,8 +174,8 @@ depth by mapping of the reads against the assembly and annotation with prokka.
 
     {multiqc_table}
 
-Low coverage contigs
-********************
+Assembly overview
+******************
 
 .. raw:: html
 
@@ -183,6 +183,8 @@ Low coverage contigs
 
 Contamination check: mash (assembly)
 ************************************
+
+Three best Mash hits (excluding phages).
 
 .. raw:: html
 
