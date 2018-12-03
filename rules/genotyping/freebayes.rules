@@ -1,5 +1,5 @@
 rule genotype_with_freebayes_on_all_samples:
-    conda:        
+    conda:
         pipeline_path + "envs/freebayes.yml"
     threads:
         4
@@ -8,7 +8,7 @@ rule genotype_with_freebayes_on_all_samples:
         bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}_deduplicated_filtered.bam.bai", sample=read_naming.keys()),
         ref="references/{ref}/genome_fasta.fasta",
         ref_fai="references/{ref}/genome_fasta.fasta.fai",
-        quality = "quality/multiqc/mapping_to_{ref}/{mapping_method}/multiqc_report.html",
+        quality = "report/multiqc_mapping_to_{ref}/{mapping_method}/multiqc_report.html",
     output:
         vcf="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf"
     log:
@@ -24,10 +24,10 @@ rule genotype_with_freebayes_one_sample_second_pass:
         pipeline_path + "envs/freebayes.yml"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
-        bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai", 
+        bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
         ref = "references/{ref}/genome_fasta.fasta",
         ref_fai = "references/{ref}/genome_fasta.fasta.fai",
-        quality = "quality/multiqc/mapping_to_{ref}/multiqc_report.html",
+        quality = "report/multiqc_mapping_to_{ref}/multiqc_report.html",
         variants = "typing/freebayes_two_pass/full_genome_{ref}/{mapping_method}/positions.vcf",
     output:
         vcf = temp("samples/{sample}/typing/freebayes/second_pass/full_genome_{ref}/{mapping_method}/genotyping.vcf")

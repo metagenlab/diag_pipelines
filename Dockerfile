@@ -8,6 +8,8 @@ RUN apt-get install -y fontconfig
 
 RUN conda install snakemake=5.3.0
 
+RUN conda install unzip
+
 #RUN conda install biopython=1.70
 
 ENV main=/home/pipeline_user
