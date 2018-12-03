@@ -9,6 +9,8 @@ import re
 
 link = snakemake.input[0]
 output_file = snakemake.output[0]
+expected_genus = snakemake.params["expected_genus"]
+print("expected genus", expected_genus)
 
 def get_mash_table(link):
     header = ["score",
@@ -92,12 +94,15 @@ SCRIPT = """
             if(string.includes("plasmid")){
                              $(row).css('background-color', 'rgba(200, 100, 222, 0.7)');
                             }
+            if (!(string.includes("%s"))){
+                             $(row).css('background-color', 'rgba(255, 0, 0, 0.7)');
+                            }
             },
         } );
     } );
     </script>
 
-    """
+    """ % expected_genus
 
 
 
