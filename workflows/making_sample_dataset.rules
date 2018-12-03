@@ -112,8 +112,8 @@ all_samples["ScientificName"] = all_samples["ScientificName"].str.replace(" ", "
 read_naming = {**reads_local, **sras_ext}
 original_names = {**original_names, **reads_sra}
 
-for key in read_naming:
-    print("%s\t%s\t%s" % (key, read_naming[key], original_names[key]))
+#for key in read_naming:
+#    print("%s\t%s\t%s" % (key, read_naming[key], original_names[key]))
 
 # preparing reference_genomes variable
 # 3 choices: cgMLST, local/sra sample or NCBI reference
