@@ -18,7 +18,7 @@ rule download_sra:
 
 rule sra_convert_to_fastq_paired:
     conda:
-        "envs/sra-tools.yml"
+        pipeline_path + "envs/sra-tools.yml"
     input:
         "%s/sra/{sample}.sra" % sra_download_dir,
     output:
@@ -26,11 +26,21 @@ rule sra_convert_to_fastq_paired:
         temp(link_directory + "{sample,[A-Za-z0-9]+}_2.fastq.gz"),
     log:
         "log/sra_download/{sample}_dump.txt"
-    params:
-        sra_dir = sra_download_dir
     shell:
         """
-        vdb-config --restore-defaults
-        cache_dir=$(vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g")
-        fastq-dump --split-3 --gzip --log-level 1 --disable-multithreading --minReadLen 0 --outdir $(dirname {output[0]}) {input[0]}
+        fastq-dump --split-3 --gzip --log-level 1 --disable-multithreading --minReadLen 0 --outdir $(dirname {output[0]}) {input[0]} &> {log}
+        """
+
+rule sra_convert_to_fastq_single:
+    conda:
+        pipeline_path + "envs/sra-tools.yml"
+    input:
+        "%s/sra/{sample}.sra" % sra_download_dir,
+    output:
+        temp(link_directory + "{sample,[A-Za-z0-9]+}.fastq.gz"),
+    log:
+        "log/sra_download/{sample}_dump.txt"
+    shell:
+        """
+        fastq-dump --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
         """
