@@ -41,10 +41,7 @@ leaf2mlst = pandas.read_csv(snakemake.input["mlst"],
                            names=["leaf","species","mlst","1","2","3","4","5","6","7"]).set_index("leaf").to_dict()["mlst"]
 '''
 
-sample2scientific_name = pandas.read_csv(snakemake.params["sample_table"],
-                                         dtype=object,
-                                         delimiter='\t',
-                                         header=0).set_index("SampleName").to_dict()["ScientificName"]
+sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 
 mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 

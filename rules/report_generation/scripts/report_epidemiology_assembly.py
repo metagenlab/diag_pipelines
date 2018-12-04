@@ -71,12 +71,7 @@ for one_table in contig_gc_depth_file_list:
     sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
     sample2n_contigs[sample] = n_contigs
 
-sample2scientific_name = pandas.read_csv(snakemake.params["sample_table"],
-                                         dtype=object,
-                                         delimiter='\t',
-                                         header=0).set_index("SampleName").to_dict()["ScientificName"]
-
-
+sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>

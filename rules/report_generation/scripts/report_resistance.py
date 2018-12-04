@@ -43,10 +43,7 @@ for one_table in contig_gc_depth_file_list:
     sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
     sample2n_contigs[sample] = n_contigs
 
-sample2scientific_name = pandas.read_csv(snakemake.params["sample_table"],
-                                         dtype=object,
-                                    delimiter='\t',
-                                    header=0).set_index("SampleName").to_dict()["ScientificName"]
+snp_detail_table = report.get_snp_detail_table(snps_reports, indel_reports)
 
 mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 

@@ -29,7 +29,7 @@ rule report_epidemiology_virulence_resistance_saureus:
         mlst = 'typing/mlst/summary.tsv',
     params:
         samples = list(read_naming.keys()),
-        sample_table = config["local_samples"]
+        sample_table = all_samples
     output:
         "report/report_epidemiology_virulence_resistance_saureus.html",
     script:
@@ -101,7 +101,7 @@ rule report_epidemiology_assembly:
     params:
         core_genome_bed = check_if_cgMLST(),
         samples = list(read_naming.keys()),
-        sample_table = config["local_samples"]
+        sample_table = all_samples
     output:
         "report/report_epidemiology_assembly.html",
     script:
@@ -125,7 +125,7 @@ rule report_epidemiology:
     params:
         core_genome_bed = check_if_cgMLST(),
         samples = list(read_naming.keys()),
-        sample_table = config["local_samples"]
+        sample_table = all_samples
     output:
         "report/report_epidemiology.html",
     script:
@@ -190,7 +190,7 @@ rule report_resistance:
         mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
     params:
         samples = list(read_naming.keys()),
-        sample_table = config["local_samples"]
+        sample_table = all_samples
     output:
         "report/report_resistance.html",
     script:

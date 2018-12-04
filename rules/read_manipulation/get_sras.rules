@@ -1,49 +1,36 @@
-rule download_sra_single:
+
+
+sra_download_dir = subprocess.Popen('''vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g"''', shell=True, stdout=subprocess.PIPE).stdout.read().rstrip().decode('UTF-8').replace(' ','')
+
+rule download_sra:
     conda:
         pipeline_path + "envs/sra-tools.yml"
     output:
-        temp(link_directory + "{sample,[A-Za-z0-9]+}.fastq.gz"),
+        temp("%s/sra/{sample}.sra" % sra_download_dir),
     log:
         logging_folder + "samples/{sample}/sras/dump.txt"
     shell:
         """
         vdb-config --restore-defaults
-        fastq-dump --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
         cache_dir=$(vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g")
-        if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra ]
-        then
-            rm ${{cache_dir}}/sra/{wildcards.sample}.sra
-        fi
-        if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra.cache ]
-        then
-            rm ${{cache_dir}}/sra/{wildcards.sample}.sra.cache
-        fi
+        prefetch -v {wildcards.sample} --max-size 100000000 &> {log}
         """
 
-
-rule download_sra_paired:
+rule sra_convert_to_fastq_paired:
     conda:
-        pipeline_path + "envs/sra-tools.yml"
+        "envs/sra-tools.yml"
+    input:
+        "%s/sra/{sample}.sra" % sra_download_dir,
     output:
         temp(link_directory + "{sample,[A-Za-z0-9]+}_1.fastq.gz"),
         temp(link_directory + "{sample,[A-Za-z0-9]+}_2.fastq.gz"),
     log:
-        logging_folder + "samples/{sample}/sras/dump.txt"
+        "log/sra_download/{sample}_dump.txt"
+    params:
+        sra_dir = sra_download_dir
     shell:
         """
         vdb-config --restore-defaults
-        fastq-dump --split-3 --gzip --outdir $(dirname {output[0]}) --log-level 0 --disable-multithreading --minReadLen 0 {wildcards.sample} &> {log}
         cache_dir=$(vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g")
-        if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra ]
-        then
-            rm ${{cache_dir}}/sra/{wildcards.sample}.sra
-        fi
-        if [ -f ${{cache_dir}}/sra/{wildcards.sample}.sra.cache ]
-        then
-            rm ${{cache_dir}}/sra/{wildcards.sample}.sra.cache
-        fi
+        fastq-dump --split-3 --gzip --log-level 1 --disable-multithreading --minReadLen 0 --outdir $(dirname {output[0]}) {input[0]}
         """
-
-
-
-
