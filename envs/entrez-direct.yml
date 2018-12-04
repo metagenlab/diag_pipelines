@@ -2,4 +2,4 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
- - entrez-direct = 7.70=pl5.22.0_0
+ - entrez-direct = 10.2
