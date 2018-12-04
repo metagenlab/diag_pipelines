@@ -36,6 +36,8 @@ WORKDIR ${main}/data/
 
 ENV NCBI_API_KEY=719f6e482d4cdfa315f8d525843c02659408
 
+RUN vdb-config --restore-defaults
+
 # setup VFDB database
 
 RUN snakemake --snakefile ${pipeline_folder}/rules/downloading/fetch_VFDB.rules --use-conda --conda-prefix ${conda_folder} references/virulence/VFDB_larger_50aa.faa.phr references/virulence/VFDB_annotations.tab -j 4
