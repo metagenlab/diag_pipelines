@@ -339,7 +339,7 @@ def plot_heatmap_snps(mat, id):
     )
 
     fig = go.Figure(data=data, layout=layout)
-    fig.layout.margin.update({"l": 20 + (max([len(i) for i in nodes]) * 7),
+    fig.layout.margin.update({"l": 20 + (max([len(str(i)) for i in nodes]) * 7),
                               "r": 0,
                               "b": 20,
                               "t": 60,

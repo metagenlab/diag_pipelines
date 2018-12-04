@@ -348,6 +348,7 @@ SCRIPT = """
 
 vcf_reader = vcf.Reader(codecs.open(vcf_file, 'r', 'latin-1'))
 n_snps_record = len([i for i in vcf_reader])
+print("numer of SNPs:", n_snps_record)
 if n_snps_record > 200:
     snp_table = "too much snps"
 else:

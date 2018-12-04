@@ -18,6 +18,8 @@ RUN ln -s ${main}/data/references/ references
 
 RUN ln -s ${main}/data/resistance_db/ resistance_db
 
+RUN vdb-config --restore-defaults
+
 # THESE ARE SRAS I SELECTED FROM TB PORTALS NIAID FROM SAMPLES THAT ARE XTR
 
 RUN /bin/bash -c 'source activate /opt/conda/envs/db3680fa/ && esearch -db sra -query "SRR1158874[ID] OR SRR1158923[ID] OR SRR1158907[ID] OR SRR1158898[ID]" | efetch -db sra -format runinfo | sed "s/,/\t/g" > MTB-XTR.tsv'
