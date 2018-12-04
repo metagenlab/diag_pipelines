@@ -76,7 +76,7 @@ RUN patch /opt/conda/envs/9d0a6ae9/lib/python2.7/site-packages/mykatlas/typing/t
 
 RUN mkdir -p ${main}/data/references/1493941/
 
-RUN  /bin/bash -c 'source activate /opt/conda/envs/b933a827/ && efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${main}/data/references/1493941/genome_fasta.fasta'
+RUN  /bin/bash -c 'source activate /opt/conda/envs/db3680fa/ && efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${main}/data/references/1493941/genome_fasta.fasta'
 
 #RUN  /bin/bash -c 'source activate /opt/conda/envs/c327f08f/ && mash sketch -o ${main}/data/references/mash_sketch_human.msh ${main}/data/references/1493941/genome_fasta.fasta'
 
