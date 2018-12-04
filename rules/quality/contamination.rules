@@ -5,7 +5,6 @@ rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
         pipeline_path + "envs/mash.yml"
     input:
         mash_sketch = "references/mash_sketch.msh",
-        mash_human = "references/mash_sketch_human.msh",
         R1 = "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         R2 = "samples/{sample}/reads/raw/{sample}_R2.fastq.gz",
     output:
@@ -13,7 +12,6 @@ rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
     shell:
         """
         cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_sketch]} - > {output[distances]} 2> /dev/null
-        cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_human]} - >> {output[distances]} 2> /dev/null
         """
 
 rule calculate_distance_assembly_from_refseq_genomes_with_mash:
@@ -23,7 +21,6 @@ rule calculate_distance_assembly_from_refseq_genomes_with_mash:
         pipeline_path + "envs/mash.yml"
     input:
         mash_sketch = "references/mash_sketch.msh",
-        mash_human = "references/mash_sketch_human.msh",
         assembly = "samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_high_coverage.fasta",
     output:
         distances = "samples/{sample}/contamination/mash/assembly/distances.tsv"
@@ -39,14 +36,12 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
         pipeline_path + "envs/mash.yml"
     input:
         mash_sketch = "references/mash_sketch.msh",
-        mash_human = "references/mash_sketch_human.msh",
         single = "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
     output:
         distances = "samples/{sample}/contamination/mash/fastq/distances.tsv"
     shell:
         """
         cat {input[single]} | mash screen -w {input[mash_sketch]} - > {output[distances]} 2> /dev/null
-        cat {input[single]} | mash screen -w {input[mash_human]} - >> {output[distances]} 2> /dev/null
         """
 
 rule get_taxonomy_from_mash_results:
