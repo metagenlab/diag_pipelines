@@ -193,13 +193,22 @@ def quality_table(low_cov_fastas,
 
 def qualimap_table(qualimap_links):
 
-    header = ["Strain id","Number of contigs"]
-
     cov_table = []
+    sample2ref2link = {}
     for qualimap in qualimap_links:
-        sample = re.search('report/qualimap/(.*)/bwa/.*_assembled_genome/qualimapReport.html', qualimap).group(1)
+        search = re.search('report/qualimap/(.*)/.*/(.*)/qualimapReport.html', qualimap)
+        sample = search.group(1)
+        ref = search.group(2)
         mod_path = '/'.join(qualimap.split('/')[1:])
-        cov_table.append([sample, "<a href=%s>Qualimap report</a>" % mod_path])
+        if sample not in sample2ref2link:
+            sample2ref2link[sample] = {}
+            sample2ref2link[sample][ref] = "<a href=%s>Qualimap report</a>" % mod_path
+        else:
+            sample2ref2link[sample][ref] = "<a href=%s>Qualimap report</a>" % mod_path
+    for sample in sample2ref2link:
+        cov_table.append([sample] + [sample2ref2link[sample][i] for i in sample2ref2link[sample]])
+
+    header = ["Strain id"] + ["Ref: %s" % i for i in sample2ref2link[sample]]
 
     df = pandas.DataFrame(cov_table, columns=header)
 

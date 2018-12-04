@@ -128,6 +128,7 @@ else:
     core_str = ""
 
 multiqc_table = report.get_multiqc_table(mapping_multiqc=multiqc_mapping_list)
+print(qualimap_reports)
 qualimap_table = report.qualimap_table(qualimap_reports)
 
 snp_heatmap_str = ""
@@ -196,8 +197,8 @@ Contamination check: mash
 
     {mash_table}
 
-Qualimap reports (self mapping)
-********************************
+Qualimap reports
+*****************
 
 .. raw:: html
 

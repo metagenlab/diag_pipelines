@@ -74,9 +74,17 @@ def get_indel_file_list(sample_list, reference_genomes, mapping_method):
     for pair in pairs:
         pair = list(pair)
         if pair[0] == 'cgMLST':
-            continue
-        path = "report/indel/%s/%s/%s.html" % (pair[0], mapping_method, pair[1])
+            # replace it by complete genome
+            ref_id = str(all_core_genome_dbs.loc[species, "ReferenceGenome"])
+            if ref_id not in reference_genomes:
+                path = "report/indel/%s/%s/%s.html" % (ref_id, mapping_method, pair[1])
+            else:
+                continue
+        else:
+            path = "report/indel/%s/%s/%s.html" % (pair[0], mapping_method, pair[1])
+
         all_outputs.append(path)
+    print(all_outputs)
     return all_outputs
 
 def get_qualimap_file_list(sample_list, reference_genomes, mapping_method):
@@ -87,7 +95,15 @@ def get_qualimap_file_list(sample_list, reference_genomes, mapping_method):
     all_outputs = []
     for pair in pairs:
         pair = list(pair)
-        path = "report/qualimap/%s/%s/%s/qualimapReport.html" % (pair[1], mapping_method, pair[0])
+        if pair[0] == 'cgMLST':
+            # replace it by complete genome if not among the refference genomes
+            ref_id = str(all_core_genome_dbs.loc[species, "ReferenceGenome"])
+            if ref_id not in reference_genomes:
+                path = "report/qualimap/%s/%s/%s/qualimapReport.html" % (pair[1], mapping_method, ref_id)
+            else:
+                continue
+        else:
+            path = "report/qualimap/%s/%s/%s/qualimapReport.html" % (pair[1], mapping_method, pair[0])
         all_outputs.append(path)
     print(all_outputs)
     return all_outputs
@@ -109,7 +125,7 @@ rule report_epidemiology_assembly:
         mlst = 'typing/mlst/summary.tsv',
         undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"], config["mapping"]),
         contig_gc_depth_files = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
-        snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"],config["mapping"]),
+        snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"], config["mapping"]),
         indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir, config["mapping"])
     params:
         core_genome_bed = check_if_cgMLST(),

@@ -12,8 +12,6 @@ RUN conda install unzip
 
 RUN conda install sra-tools=2.9.0
 
-RUN export NCBI_API_KEY="719f6e482d4cdfa315f8d525843c02659408"
-
 #RUN conda install biopython=1.70
 
 ENV main=/home/pipeline_user
@@ -35,6 +33,8 @@ RUN tar xf parsnp.tar.gz && mv Parsnp-Linux64-v1.2/parsnp . && rm -rf Parsnp-Lin
 RUN mkdir -p ${main}/data/links
 
 WORKDIR ${main}/data/
+
+ENV NCBI_API_KEY=719f6e482d4cdfa315f8d525843c02659408
 
 # setup VFDB database
 
