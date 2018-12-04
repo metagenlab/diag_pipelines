@@ -191,7 +191,7 @@ def quality_table(low_cov_fastas,
         return 'No sample with low coverage contigs'
 
 
-def qualimap_table(qualimap_links):
+def qualimap_table(qualimap_links, self_mapping=False):
 
     cov_table = []
     sample2ref2link = {}
@@ -199,6 +199,8 @@ def qualimap_table(qualimap_links):
         search = re.search('report/qualimap/(.*)/.*/(.*)/qualimapReport.html', qualimap)
         sample = search.group(1)
         ref = search.group(2)
+        if sample in ref:
+            ref = "self mapping"
         mod_path = '/'.join(qualimap.split('/')[1:])
         if sample not in sample2ref2link:
             sample2ref2link[sample] = {}
@@ -209,7 +211,6 @@ def qualimap_table(qualimap_links):
         cov_table.append([sample] + [sample2ref2link[sample][i] for i in sample2ref2link[sample]])
 
     header = ["Strain id"] + ["Ref: %s" % i for i in sample2ref2link[sample]]
-
     df = pandas.DataFrame(cov_table, columns=header)
 
     # cell content is truncated if colwidth not set to -1

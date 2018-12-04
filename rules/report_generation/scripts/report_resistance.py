@@ -21,6 +21,8 @@ qualimap_reports = snakemake.input["qualimap_reports"]
 low_cov_detail = snakemake.input["low_cov_detail"]
 mash_detail = snakemake.input["mash_detail"]
 
+sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
+
 # get contig depth and GC
 sample2gc = {}
 sample2median_depth = {}
@@ -42,8 +44,6 @@ for one_table in contig_gc_depth_file_list:
     sample2median_depth[sample] = data_whole_gnome["mean_depth"]
     sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
     sample2n_contigs[sample] = n_contigs
-
-snp_detail_table = report.get_snp_detail_table(snps_reports, indel_reports)
 
 mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 
@@ -129,7 +129,7 @@ def write_report(output_file,
     from docutils.parsers.rst import directives
 
     multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
-    qualimap_table = report.qualimap_table(qualimap_reports)
+    qualimap_table = report.qualimap_table(qualimap_reports, self_mapping=True)
 
     table_lowcoverage_contigs = quality_table(low_cov_fasta,
                                               sample2gc,
