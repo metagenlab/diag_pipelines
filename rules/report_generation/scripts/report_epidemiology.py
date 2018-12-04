@@ -22,6 +22,7 @@ mash_results = snakemake.input["mash_results"]  # ok
 snps_reports = snakemake.input["snps_reports"]  # ok
 indel_reports = snakemake.input["indel_reports"]
 mash_detail = snakemake.input["mash_detail"]
+qualimap_reports = snakemake.input["qualimap_reports"]
 
 ordered_samples = snakemake.params["samples"]
 
@@ -127,6 +128,7 @@ else:
     core_str = ""
 
 multiqc_table = report.get_multiqc_table(mapping_multiqc=multiqc_mapping_list)
+qualimap_table = report.qualimap_table(qualimap_reports)
 
 snp_heatmap_str = ""
 for n, snp_table in enumerate(snp_tables):
@@ -193,6 +195,13 @@ Contamination check: mash
 .. raw:: html
 
     {mash_table}
+
+Qualimap reports (self mapping)
+********************************
+
+.. raw:: html
+
+    {qualimap_table}
 
 Typing
 ------

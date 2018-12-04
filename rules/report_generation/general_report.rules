@@ -111,6 +111,7 @@ rule report_epidemiology:
     conda:
         pipeline_path + "envs/report.yml"
     input:
+        qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
         multiqc_mapping_list = expand("report/multiqc_mapping_to_{reference}/%s/multiqc_report.html" % config["mapping"], reference=[i for i in reference_genomes_dir if i != "cgMLST"] + [str(all_core_genome_dbs.loc[species, "ReferenceGenome"])]),
         spanning_trees = expand("report/figures/%s/{reference}/%s/distances_in_snp_mst_no_st.svg" % (config["snp_caller"], config["mapping"]), reference=reference_genomes),
         #mlst_tree = "report/figures/mlst_tree.svg", ## TODO one tree for each reference genome
