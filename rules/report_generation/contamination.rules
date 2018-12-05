@@ -14,7 +14,7 @@ rule low_coverage_contig_report:
     conda:
         pipeline_path + "envs/report.yml"
     input:
-        low_cov_contigs_fasta = "samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_low_coverage.fasta",
+        low_cov_contigs_fasta = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta",
     output:
         "report/contamination/low_coverage_contigs/{sample}.html"
     script: "scripts/report_lowcov_contigs.py"
