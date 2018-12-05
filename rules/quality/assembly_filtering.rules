@@ -11,9 +11,9 @@ rule copy_raw_assembly_to_reference_folder:
 rule extract_contig_coverage:
     input:
         # report/qualimap/{sample}/{mapping_method}/{ref}/
-        genome_cov = "report/qualimap/{sample}/bwa/{sample}_assembled_genome/genome_results.txt"
+        genome_cov = "report/qualimap/{sample}/{mapping_method}/{sample}_assembled_genome/genome_results.txt"
     output:
-        extract = "samples/{sample}/bwa/{sample}_assembled_genome/contig_coverage.txt"
+        extract = "samples/{sample}/{mapping_method}/{sample}_assembled_genome/contig_coverage.txt"
     shell:
         """
         sed -ne '/Coverage per contig/,$ p'  {input[genome_cov]} | grep contig_ | sed "s/^[ \\t]*//" > {output[extract]}
@@ -21,9 +21,9 @@ rule extract_contig_coverage:
 
 rule extract_assembly_mean_sd_coverage:
     input:
-        genome_cov ="report/qualimap/{sample}/bwa/{sample}_assembled_genome/genome_results.txt"
+        genome_cov ="report/qualimap/{sample}/{mapping_method}/{sample}_assembled_genome/genome_results.txt"
     output:
-        extract = "samples/{sample}/bwa/{ref}/assembly_coverage.txt"
+        extract = "samples/{sample}/{mapping_method}/{ref}/assembly_coverage.txt"
     shell:
         """
         mean=$(grep "mean coverageData" {input[genome_cov]}  | sed 's/[^0-9\.]//g')
@@ -37,10 +37,10 @@ rule filter_contigs_on_coverage:
         cutoff = config["cov_cutoff"]
     input:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
-        "samples/{sample}/bwa/{sample}_assembled_genome/contig_coverage.txt"
+        "samples/{sample}/{mapping_method}/{sample}_assembled_genome/contig_coverage.txt"
     output:
-        "samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_high_coverage.fasta",
-        "samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_low_coverage.fasta"
+        "samples/{sample}/assembly/spades/coverage_filtered/{mapping_method}/contigs_500bp_high_coverage.fasta",
+        "samples/{sample}/assembly/spades/coverage_filtered/{mapping_method}/contigs_500bp_low_coverage.fasta"
     shell:
         """
         awk '$4 < {params.cutoff}' {input[1]} | cut -f 1 | xargs -I % grep -A 1 "^>%$" {input[0]} > {output[1]}

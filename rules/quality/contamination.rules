@@ -21,7 +21,7 @@ rule calculate_distance_assembly_from_refseq_genomes_with_mash:
         pipeline_path + "envs/mash.yml"
     input:
         mash_sketch = "references/mash_sketch.msh",
-        assembly = "samples/{sample}/assembly/spades/coverage_filtered_bwa/contigs_500bp_high_coverage.fasta",
+        assembly = "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
     output:
         distances = "samples/{sample}/contamination/mash/assembly/distances.tsv"
     shell:
