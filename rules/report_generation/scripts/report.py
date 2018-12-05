@@ -59,7 +59,7 @@ def get_multiqc_table(assembly_multiqc=False,
 
     mq_table = []
     if assembly_multiqc:
-        mq_table.append(["MultiQC genome assemblie(s)", '<a href="%s">MiltiQC</a>' % '/'.join(assembly_multiqc.split('/')[1:])])
+        mq_table.append(["MultiQC genome assemblie(s)", '<a href="%s">MultiQC</a>' % '/'.join(assembly_multiqc.split('/')[1:])])
 
     if mapping_multiqc:
         for n, multiqc in enumerate(mapping_multiqc):
@@ -339,7 +339,7 @@ def plot_heatmap_snps(mat, id):
     )
 
     fig = go.Figure(data=data, layout=layout)
-    fig.layout.margin.update({"l": 20 + (max([len(str(i)) for i in nodes]) * 7),
+    fig.layout.margin.update({"l": 20 + (max([len(i) for i in nodes]) * 7),
                               "r": 0,
                               "b": 20,
                               "t": 60,
