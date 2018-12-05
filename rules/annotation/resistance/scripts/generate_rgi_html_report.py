@@ -200,10 +200,18 @@ def resistance_table(rgi_table,
 
     table_rows = []
     for n, one_resistance in rgi_table.iterrows():
-        contig = '_'.join(one_resistance["Contig"].split('_')[0:-1])
+        conting_str = one_resistance["Contig"].split('_')
+        if len(conting_str) == 3:
+            contig = '_'.join(conting_str[0:-1])
+        elif len(conting_str) == 2:
+            contig = one_resistance["Contig"]
+        else:
+            raise IOError("Unexpected contig format")
+
         orf_id = one_resistance["Contig"].split('_')[-1]
         gene_start = one_resistance["Start"]
         gene_end = one_resistance["Stop"]
+        print(contig, n, one_resistance["Contig"])
         gene_depth = round(numpy.median(samtools_depth_df.loc[contig].iloc[gene_start:gene_end, 1]), 0)
         cutoff = one_resistance["Cut_Off"]
         name = one_resistance["Best_Hit_ARO"]
