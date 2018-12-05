@@ -43,9 +43,11 @@ nb_vertex <- nb_vertex - length(to_be_deleted)
 
 
 #Merging clones
-graph <- contract(graph, mapping, vertex.attr.comb = "concat")
+graph <- contract(graph, mapping, vertex.attr.comb = list(name = function(x) paste(x, collapse="\n")))
+graph <- simplify(graph, edge.attr.comb = list(weight = "median"))
 #Deleting useless vertices
-graph <- delete_vertices(graph, to_be_deleted)
+w<- which(V(graph)$name == "")
+graph <- delete_vertices(graph, w)
 
 
 #Creation of the minimum spanning tree graph
@@ -66,7 +68,7 @@ mst_graph <- set_edge_attr(mst_graph, "label", value=edge_attr(mst_graph, "weigh
 #We transform the weight so that smaller distances weight more. I tried an inverse square root and inverse log transformations, inverse log appears better.
 mst_graph <- set_edge_attr(mst_graph, "weight", value=1/log(0.5+edge_attr(mst_graph, "weight")))
 
-vertices_sizes <- sapply(vertex_attr(mst_graph, "name"), length, simplify=TRUE)*5
+vertices_sizes <- sapply(vertex_attr(mst_graph, "name"), function(x) length(unlist(strsplit(x, "\n"))), simplify=TRUE)*5
 #Vertices sizes are proportional to the number of sample they represent
 
 
