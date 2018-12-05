@@ -9,6 +9,15 @@ import itertools
 # spanning_tree_st152 ="typing/gatk_gvcfs/full_genome_1411181071_assembled_genome/bwa/distances_in_snp_mst_with_st.svg"
 
 # todo: add heatmaps overview
+
+
+def resistance_tables():
+    print(species)
+    if species in ["Staphylococcus_aureus", "Mycobacterium_tuberculosis"]:
+        return ["resistance/rgi_summary.xlsx", "resistance/mykrobe_summary.xlsx"]
+    else:
+        return ["resistance/rgi_summary.xlsx"]
+
 rule report_resistance:
     conda:
         pipeline_path + "envs/report.yml"
@@ -23,6 +32,7 @@ rule report_resistance:
         mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
         low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
         mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
+        resistance_tables = resistance_tables(),
     params:
         samples = list(read_naming.keys()),
         sample_table = all_samples
