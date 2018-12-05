@@ -21,7 +21,6 @@ if "_assembled_genome" in reference:
 # output
 report_file = snakemake.output["html_file"]
 
-print(merged_vcf)
 # parse vcf
 merged_vcf_records = [i for i in vcf.Reader(codecs.open(merged_vcf, 'r', 'latin-1'))]
 
@@ -177,11 +176,13 @@ def parse_vcf(vcf_file, gbk_file):
         header.append("Fail Others")
 
     table_rows = []
+    snp_count = 0
     for n, vcf_record in enumerate(vcf_reader):
-        print("vcf:", n)
-
-        contig = gbk_dico[vcf_record.CHROM]
-
+        try:
+            contig = gbk_dico[vcf_record.CHROM]
+        except KeyError:
+            print("Missing contig", vcf_record.CHROM)
+            continue
         variant_feature = search_mutated_feature(vcf_record, gbk_dico)
 
         if variant_feature["mut_location"] == 'Intergenic':
@@ -194,6 +195,7 @@ def parse_vcf(vcf_file, gbk_file):
         # skip ppositions with genomtype identical to REF
         if vcf_record.samples[0]['GT'] in ['.', '0']:
             continue
+        snp_count += 1
         position = vcf_record.POS
 
         #  REF and ALT with respective depth in parenthesis
@@ -344,11 +346,10 @@ SCRIPT = """
 
     """
 
-
-
 vcf_reader = vcf.Reader(codecs.open(vcf_file, 'r', 'latin-1'))
-n_snps_record = len([i for i in vcf_reader])
+n_snps_record = len([vcf_record for vcf_record in vcf_reader if vcf_record.samples[0]['GT'] not in ['.', '0']])
 print("numer of SNPs:", n_snps_record)
+
 if n_snps_record > 200:
     snp_table = "too much snps"
 else:
