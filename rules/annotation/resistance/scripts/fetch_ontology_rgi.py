@@ -87,10 +87,11 @@ for index, row in rgi_results.iterrows():
             if child.obo_name=="confers_resistance_to_drug" or child.obo_name=="confers_resistance_to":
                 for antibiotic in term.relations[child]:
                     anti = antibiotic.name.replace("antibiotic", "").strip()
+                    anti_aro = antibiotic.id
                     anti_class = get_drug_class(antibiotic, obo2drug_class)
                     if anti_class is not None:
                         anti_class = anti_class.replace("antibiotic", "")
-                    ontology_results.append([term.id, term.name, "rgi", gene, "variant model", ref+str(pos)+mut, anti, anti_class, mechanism.name, fam])
+                    ontology_results.append([term.id, term.name, "rgi", gene, "variant model", ref+str(pos)+mut, anti, anti_aro, anti_class, mechanism.name, fam])
 
     elif row["Model_type"] == "protein homolog model":
         hit_list = []
@@ -114,7 +115,7 @@ for index, row in rgi_results.iterrows():
                     if anti_class is not None:
                         anti_class = anti_class.replace("antibiotic", "")
                     anti = antibiotic.name.replace("antibiotic", "").strip()
-
+                    anti_aro = antibiotic.id
                     # check if it is a parent of already included antibio
                     # if yes, skip (same thing)
                     parent_of = False
@@ -130,7 +131,7 @@ for index, row in rgi_results.iterrows():
                         mechanism_name = 'Unknown'
 
                     #print('appaned:', [term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
-                    ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
+                    ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_aro, anti_class, mechanism_name, fam])
             #print('parents', term.rparents())
             for parent in term.rparents():
                 for child in parent.relations:
@@ -139,7 +140,7 @@ for index, row in rgi_results.iterrows():
                         for antibiotic in parent.relations[child]:
                             anti_class = get_drug_class(antibiotic, obo2drug_class)
                             anti = antibiotic.name.replace("antibiotic", "").strip()
-
+                            anti_aro = antibiotic.id
                             # check if it is a parent of already included antibio
                             # if yes, skip (same thing)
                             parent_of = False
@@ -157,11 +158,11 @@ for index, row in rgi_results.iterrows():
                             else:
                                 mechanism_name = 'Unknown'
                             #print('append:', [term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
-                            ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_class, mechanism_name, fam])
+                            ontology_results.append([term.id, term.name, "rgi", gene, "homology model", "", anti, anti_aro, anti_class, mechanism_name, fam])
                             hit_list.append(parent)
 
 
-df = pandas.DataFrame(ontology_results, columns= ["ARO","Name", "Software", "Gene", "Resistance Type", "Variant", "Antibiotic resistance prediction", "Class", "Mechanism", "AMR family"])
+df = pandas.DataFrame(ontology_results, columns= ["ARO","Name", "Software", "Gene", "Resistance Type", "Variant", "Antibiotic resistance prediction", "ARO_antibiotic", "Class", "Mechanism", "AMR family"])
 
 writer = pandas.ExcelWriter(snakemake.output["xlsx"])
 df.drop_duplicates().to_excel(writer, snakemake.wildcards["sample"], index=False)
