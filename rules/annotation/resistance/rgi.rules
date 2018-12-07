@@ -45,6 +45,7 @@ rule extract_resistance_mechanism_from_ontology:
     script:
         "scripts/rgi_get_resistance_mechanism.py"
 
+'''
 rule generate_rgi_tsv_file_from_json_file:
     conda:
         pipeline_path + "envs/rgi.yml"
@@ -58,6 +59,18 @@ rule generate_rgi_tsv_file_from_json_file:
         rgi tab -i {input[0]}
         mv $(dirname {output[0]})/rgi.txt {output[0]}
         """
+'''
+
+rule generate_rgi_tsv_file_from_json_file:
+    conda:
+        pipeline_path + "envs/simplejson.yml"
+    input:
+        "samples/{sample}/resistance/rgi.json"
+    output:
+        "samples/{sample}/resistance/rgi.tsv",
+
+    script: "scripts/rgi_json2tsv.py"
+
 
 rule plot_rgi:
     conda:
