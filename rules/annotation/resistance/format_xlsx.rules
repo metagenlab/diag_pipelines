@@ -7,7 +7,7 @@ rule convert_tsv_to_xlsx:
         xlsx = "samples/{sample}/resistance/{software,[a-z]+}.xlsx",
     script:
         "scripts/convert_tsv_to_xlsx.py"
-        
+
 
 rule merge_rgi_or_mykrobe_xlsx:
     conda:
@@ -15,7 +15,7 @@ rule merge_rgi_or_mykrobe_xlsx:
     input:
         xlsx = expand("samples/{sample}/resistance/{{software}}.xlsx", sample=read_naming.keys())
     output:
-        "resistance/{software,[A-Z,a-z]+}_summary.xlsx"
+        "report/resistance/{software,[A-Z,a-z]+}_summary.xlsx"
     script:
         "scripts/merge_non_empty_results.py"
 
@@ -25,6 +25,6 @@ rule merge_rgi_ontology_xlsx:
     input:
         xlsx = expand("samples/{sample}/resistance/rgi_ontology.xlsx", sample=read_naming.keys())
     output:
-        "resistance/rgi_ontology.xlsx"
+        "report/resistance/rgi_ontology.xlsx"
     script:
         "scripts/merge_non_empty_results.py"
