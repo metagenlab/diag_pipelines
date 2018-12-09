@@ -3,7 +3,7 @@ rule mash_report:
     conda:
         pipeline_path + "envs/report.yml"
     input:
-        low_cov_contigs_fasta = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv",
+        mash_results = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv",
     params:
         expected_genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[0]
     output:
