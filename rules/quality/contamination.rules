@@ -87,6 +87,6 @@ rule merge_all_xlsx_mash_results:
     input:
         xlsx = expand("samples/{sample}/contamination/mash/{{fastq_or_assembly}}/{{results}}.xlsx", sample=read_naming.keys())
     output:
-        xlsx_out = "contamination/{fastq_or_assembly}/{results}.xlsx",
+        xlsx_out = "report/contamination/mash/{fastq_or_assembly}/{results}.xlsx",
     script:
         pipeline_path + "rules/annotation/resistance/scripts/merge_non_empty_results.py"
