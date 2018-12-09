@@ -12,11 +12,10 @@ import itertools
 
 
 def resistance_tables():
-    print(species)
     if species in ["Staphylococcus_aureus", "Mycobacterium_tuberculosis"]:
-        return ["resistance/rgi_summary.xlsx", "resistance/mykrobe_summary.xlsx"]
+        return ["report/resistance/rgi_summary.xlsx", "report/resistance/mykrobe_summary.xlsx"]
     else:
-        return ["resistance/rgi_summary.xlsx"]
+        return ["report/resistance/rgi_summary.xlsx"]
 
 rule report_resistance:
     conda:
