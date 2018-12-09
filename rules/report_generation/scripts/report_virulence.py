@@ -6,21 +6,44 @@
 # n_samples = list(read_naming.keys()
 import pandas
 from MN_tree import get_MN_tree, convert2cytoscapeJSON
-from report import quality_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size, qualimap_table
+import report
+import io
+from docutils.core import publish_file, publish_parts
+from docutils.parsers.rst import directives
 
-multiqc_report = snakemake.input["multiqc_report"]
-
+multiqc_assembly = snakemake.input["multiqc_assembly"]
 virulence_reports = snakemake.input["virulence_reports"]
-
 ordered_samples = snakemake.params["samples"]
-
 low_cov_fastas = snakemake.input["low_cov_fastas"]
-
 qualimap_reports = snakemake.input["qualimap_reports"]
-
 output_file = snakemake.output[0]
-
+low_cov_detail = snakemake.input["low_cov_detail"]
+mash_results = snakemake.input["mash_results"]
+contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
+mash_detail = snakemake.input["mash_detail"]
+
+# get contig depth and GC
+sample2gc = {}
+sample2median_depth = {}
+sampls2cumulated_size = {}
+sample2n_contigs = {}
+for one_table in contig_gc_depth_file_list:
+    table = pandas.read_csv(one_table,
+                            delimiter='\t',
+                            header=0,
+                            index_col=0)
+
+    data_whole_gnome = table.loc["TOTAL"]
+    n_contigs = len(table["gc_content"])-1
+
+    # samples/5965/quality/mapping/bwa/5965_assembled_genome/contig_gc_depth_500bp_high_coverage.tab
+    sample = one_table.split('/')[1]
+
+    sample2gc[sample] = data_whole_gnome["gc_content"]
+    sample2median_depth[sample] = data_whole_gnome["mean_depth"]
+    sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
+    sample2n_contigs[sample] = n_contigs
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -39,6 +62,27 @@ STYLE = """
         top: 0;
         z-index: 999;
     }
+    $(document).ready(function() {
+        $('#mash_table').DataTable( {
+            dom: 'Bfrtip',
+            "pageLength": 20,
+            "searching": true,
+            "bLengthChange": false,
+            "paging":   true,
+            "info": false,
+            'rowCallback': function(row, data, index){
+                $(row).find('td:eq(2)').css('background-color', 'rgba(255, 0, 0, 0.2)');
+                $(row).find('td:eq(3)').css('background-color', 'rgba(255, 0, 0, 0.2)');
+                $(row).find('td:eq(4)').css('background-color', 'rgba(255, 0, 0, 0.2)');
+                $(row).find('td:eq(5)').css('background-color', 'rgba(0,128,0, 0.2)');
+                $(row).find('td:eq(6)').css('background-color', 'rgba(0,128,0, 0.2)');
+                $(row).find('td:eq(7)').css('background-color', 'rgba(0,128,0, 0.2)');
+                $(row).find('td:eq(8)').css('background-color', 'rgba(128,128,128, 0.2)');
+                $(row).find('td:eq(9)').css('background-color', 'rgba(128,128,128, 0.2)');
+                $(row).find('td:eq(10)').css('background-color', 'rgba(128,128,128, 0.2)');
+            },
+        } );
+    } );
     </style>
     """
 
@@ -78,24 +122,27 @@ SCRIPT = """
 
 
 
-def write_report(output_file,
-                 STYLE,
-                 SCRIPT,
-                 virulence_reports,
-                 blast_files,
-                 low_cov_fasta,
-                 virulence_table,
-                 qualimap_links):
-    import io
-    from docutils.core import publish_file, publish_parts
-    from docutils.parsers.rst import directives
+sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 
-    multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
-    table_lowcoverage_contigs = quality_table(low_cov_fasta)
-    table_virulence = virulence_table(virulence_reports,blast_files, ordered_samples)
-    table_qualimap = qualimap_table(qualimap_links)
+table_lowcoverage_contigs = report.quality_table(low_cov_fastas,
+                                          sample2gc,
+                                          sample2median_depth,
+                                          sampls2cumulated_size,
+                                          sample2n_contigs,
+                                          sample2scientific_name,
+                                          low_cov_detail=low_cov_detail)
 
-    report_str = f"""
+table_virulence = report.virulence_table(virulence_reports,
+                                  blast_files,
+                                  ordered_samples)
+
+mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
+
+multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
+
+qualimap_table = report.qualimap_table(qualimap_reports, self_mapping=True)
+
+report_str = f"""
 
 .. raw:: html
 
@@ -124,21 +171,30 @@ depth by mapping of the reads against the assembly and annotation with prokka.
 
 .. raw:: html
 
-    {multiqc_link}
+    {multiqc_table}
 
-Low coverage contigs
+Assembly overview
 ********************
 
 .. raw:: html
 
     {table_lowcoverage_contigs}
 
+Contamination check: mash (assembly)
+************************************
+
+Three best Mash hits (excluding phages).
+
+.. raw:: html
+
+    {mash_table}
+
 Qualimap reports
 *****************
 
 .. raw:: html
 
-    {table_qualimap}
+    {qualimap_table}
 
 Virulence (VFDB)
 -----------------
@@ -154,19 +210,10 @@ Details
     {table_virulence}
 
 """
-    with open(output_file, "w") as fh:
-        publish_file(
-            source=io.StringIO(report_str),
-            destination=fh,
-            writer_name="html",
-            settings_overrides={"stylesheet_path": ""},
-        )
-
-write_report(output_file,
-             STYLE,
-             SCRIPT,
-             virulence_reports,
-             blast_files,
-             low_cov_fastas,
-             virulence_table,
-             qualimap_reports)
+with open(output_file, "w") as fh:
+    publish_file(
+        source=io.StringIO(report_str),
+        destination=fh,
+        writer_name="html",
+        settings_overrides={"stylesheet_path": ""},
+    )

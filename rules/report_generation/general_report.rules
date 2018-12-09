@@ -6,6 +6,8 @@ import itertools
 # todo: build phylogeny from a set of core markers?
 # todo: parsnp core genome automatic setup
 # todo: donwload assemblies of a given taxon and build core genome phylogeny
+# todo: SNPS: count numer of failed or undeterined positions in vcf (for complete genome or cgMLST)
+# todo: count proposrtion of genome with depth lower than 10. If more than xx, highlight in red
 
 def resistance_tables():
     if species in ["Staphylococcus_aureus", "Mycobacterium_tuberculosis"]:
@@ -42,12 +44,19 @@ rule report_virulence:
         pipeline_path + "envs/report.yml"
     input:
         qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
-        multiqc_report = "report/multiqc_assembly/multiqc_report.html",
+        multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
         virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
-        blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
+        blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
         low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+        contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
+        sample=read_naming.keys()),
+        low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
+        mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
+        mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
+
     params:
         samples = list(read_naming.keys()),
+        sample_table = all_samples
     output:
         "report/report_virulence.html",
     script:
