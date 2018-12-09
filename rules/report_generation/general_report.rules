@@ -2,14 +2,10 @@
 
 import itertools
 
-# add options in config file?
-# core genome vs complete genome
-# one strain as reference?
-# spanning_tree_all="typing/gatk_gvcfs/full_genome_33148/bwa/distances_in_snp_mst_with_st.svg",
-# spanning_tree_st152 ="typing/gatk_gvcfs/full_genome_1411181071_assembled_genome/bwa/distances_in_snp_mst_with_st.svg"
-
 # todo: add heatmaps overview
-
+# todo: build phylogeny from a set of core markers?
+# todo: parsnp core genome automatic setup
+# todo: donwload assemblies of a given taxon and build core genome phylogeny
 
 def resistance_tables():
     if species in ["Staphylococcus_aureus", "Mycobacterium_tuberculosis"]:
@@ -40,7 +36,7 @@ rule report_resistance:
     script:
         "scripts/report_resistance.py"
 
-# todo: build phylogeny from a set of core markers?
+
 rule report_virulence:
     conda:
         pipeline_path + "envs/report.yml"
@@ -58,8 +54,6 @@ rule report_virulence:
         "scripts/report_virulence.py"
 
 if "snp_caller" in config:
-    # need further checks for parsnp core genomes. Add it as option?
-
     rule report_epidemiology_virulence_resistance_saureus:
         conda:
             pipeline_path + "envs/report.yml"
@@ -86,8 +80,6 @@ if "snp_caller" in config:
             "scripts/report_epidemiology_virulence_resistance_saureus.py"
 
 
-    # only ok for cgMLST core genomes
-    # need further checks for parsnp core genomes
     def get_undetermined_file_list(sample_list, reference_genomes, snp_caller, mapping_method):
         import itertools
         pairs = list(itertools.product(sample_list, reference_genomes))
@@ -118,7 +110,12 @@ if "snp_caller" in config:
 
 
     def get_indel_file_list(sample_list, reference_genomes, mapping_method):
+        '''
+        We have to replace cgMLST by the actual genome if we don't want some parts
+        of the workflow to be executed twice.
+        (otherwise the pipeline will compute the whole analysis on the linked fasta cgMLST file)
         "report/indel/79781/bwa/TATRas-control.html"
+        '''
         pairs = list(itertools.product(reference_genomes, sample_list))
         all_outputs = []
         for pair in pairs:
@@ -136,7 +133,13 @@ if "snp_caller" in config:
             all_outputs.append(path)
         return all_outputs
 
+
     def get_qualimap_file_list(sample_list, reference_genomes, mapping_method):
+        '''
+        We have to replace cgMLST by the actual genome if we don't want some parts
+        of the workflow to be executed twice.
+        (otherwise the pipeline will compute the whole analysis on the linked fasta cgMLST file)
+        '''
         pairs = list(itertools.product(reference_genomes, sample_list))
         all_outputs = []
         for pair in pairs:
@@ -153,9 +156,7 @@ if "snp_caller" in config:
             all_outputs.append(path)
         return all_outputs
 
-    '''
-    - we have to replace cgMLST by the actual genome if to get the right multiqc report (otherwise the pipeline will compute the whole analysis on the linked fasta cgMLST file)
-    '''
+
     rule report_epidemiology_assembly:
         conda:
             pipeline_path + "envs/report.yml"
@@ -180,6 +181,7 @@ if "snp_caller" in config:
             "report/report_epidemiology_assembly.html",
         script:
             "scripts/report_epidemiology.py"
+
 
     rule report_epidemiology:
         conda:
@@ -206,8 +208,7 @@ if "snp_caller" in config:
         script:
             "scripts/report_epidemiology.py"
 
-    # only ok for cgMLST core genomes
-    # need further checks for parsnp core genomes
+
     rule report_epidemiology_virulence_resistance:
         conda:
             pipeline_path + "envs/report.yml"
@@ -231,7 +232,7 @@ if "snp_caller" in config:
         script:
             "scripts/report_epidemiology_virulence_resistance.py"
 
-    # todo: donwload assemblies of a given taxon and build core genome phylogeny
+
     rule report_strain_characterization:
         conda:
             pipeline_path + "envs/report.yml"
