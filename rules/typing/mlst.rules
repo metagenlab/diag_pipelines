@@ -10,14 +10,14 @@ rule determine_mlst:
         mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
         """
 
-        
+
 rule merge_mlst_from_all_samples:
     conda:
         pipeline_path + "envs/mlst.yml"
     input:
         mlsts = expand("samples/{sample}/typing/mlst.txt", sample=read_naming.keys())
     output:
-        "typing/mlst/summary.tsv"
+        "report/typing/mlst/summary.tsv"
     shell:
         """
         cat {input[mlsts]} > {output}

@@ -11,7 +11,7 @@ rule determine_mlst_from_trimmed_reads:
         species=lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].replace(" ", "_"),
     shell:
         """
-        mentalist call -o {output[0]} --db references/mentalist/{params.species}/mlst.db -1 {input.fastq1} -2 {input.fastq2} 
+        mentalist call -o {output[0]} --db references/mentalist/{params.species}/mlst.db -1 {input.fastq1} -2 {input.fastq2}
         """
 
 rule merge_mentalist_from_all_samples:
@@ -22,7 +22,7 @@ rule merge_mentalist_from_all_samples:
     params:
         samples=list(read_naming.keys())
     output:
-        "typing/mlst/mentalist_summary.tsv"
+        "report/typing/mlst/mentalist_summary.tsv"
     shell:
         """
         for i in {params.samples}; do
