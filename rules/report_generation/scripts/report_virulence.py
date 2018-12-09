@@ -11,39 +11,20 @@ import io
 from docutils.core import publish_file, publish_parts
 from docutils.parsers.rst import directives
 
+rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
+resistance_reports = snakemake.input["resistance_reports"]
 multiqc_assembly = snakemake.input["multiqc_assembly"]
 virulence_reports = snakemake.input["virulence_reports"]
 ordered_samples = snakemake.params["samples"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 qualimap_reports = snakemake.input["qualimap_reports"]
-output_file = snakemake.output[0]
 low_cov_detail = snakemake.input["low_cov_detail"]
 mash_results = snakemake.input["mash_results"]
 contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
 mash_detail = snakemake.input["mash_detail"]
 
-# get contig depth and GC
-sample2gc = {}
-sample2median_depth = {}
-sampls2cumulated_size = {}
-sample2n_contigs = {}
-for one_table in contig_gc_depth_file_list:
-    table = pandas.read_csv(one_table,
-                            delimiter='\t',
-                            header=0,
-                            index_col=0)
-
-    data_whole_gnome = table.loc["TOTAL"]
-    n_contigs = len(table["gc_content"])-1
-
-    # samples/5965/quality/mapping/bwa/5965_assembled_genome/contig_gc_depth_500bp_high_coverage.tab
-    sample = one_table.split('/')[1]
-
-    sample2gc[sample] = data_whole_gnome["gc_content"]
-    sample2median_depth[sample] = data_whole_gnome["mean_depth"]
-    sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
-    sample2n_contigs[sample] = n_contigs
+output_file = snakemake.output[0]
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -120,7 +101,27 @@ SCRIPT = """
 
     """
 
+# get contig depth and GC
+sample2gc = {}
+sample2median_depth = {}
+sampls2cumulated_size = {}
+sample2n_contigs = {}
+for one_table in contig_gc_depth_file_list:
+    table = pandas.read_csv(one_table,
+                            delimiter='\t',
+                            header=0,
+                            index_col=0)
 
+    data_whole_gnome = table.loc["TOTAL"]
+    n_contigs = len(table["gc_content"])-1
+
+    # samples/5965/quality/mapping/bwa/5965_assembled_genome/contig_gc_depth_500bp_high_coverage.tab
+    sample = one_table.split('/')[1]
+
+    sample2gc[sample] = data_whole_gnome["gc_content"]
+    sample2median_depth[sample] = data_whole_gnome["mean_depth"]
+    sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
+    sample2n_contigs[sample] = n_contigs
 
 sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 

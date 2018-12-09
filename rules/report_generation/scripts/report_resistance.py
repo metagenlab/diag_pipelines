@@ -7,6 +7,9 @@
 import pandas
 from report import quality_table, resistance_table
 import report
+import io
+from docutils.core import publish_file, publish_parts
+from docutils.parsers.rst import directives
 
 multiqc_assembly = snakemake.input["multiqc_assembly"]
 rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
@@ -20,32 +23,8 @@ mash_results = snakemake.input["mash_results"]  # ok
 qualimap_reports = snakemake.input["qualimap_reports"]
 low_cov_detail = snakemake.input["low_cov_detail"]
 mash_detail = snakemake.input["mash_detail"]
-
 sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 
-# get contig depth and GC
-sample2gc = {}
-sample2median_depth = {}
-sampls2cumulated_size = {}
-sample2n_contigs = {}
-for one_table in contig_gc_depth_file_list:
-    table = pandas.read_csv(one_table,
-                            delimiter='\t',
-                            header=0,
-                            index_col=0)
-
-    data_whole_gnome = table.loc["TOTAL"]
-    n_contigs = len(table["gc_content"])-1
-
-    # samples/5965/quality/mapping/bwa/5965_assembled_genome/contig_gc_depth_500bp_high_coverage.tab
-    sample = one_table.split('/')[1]
-
-    sample2gc[sample] = data_whole_gnome["gc_content"]
-    sample2median_depth[sample] = data_whole_gnome["mean_depth"]
-    sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
-    sample2n_contigs[sample] = n_contigs
-
-mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -116,31 +95,42 @@ SCRIPT = """
 
     """
 
+# get contig depth and GC
+sample2gc = {}
+sample2median_depth = {}
+sampls2cumulated_size = {}
+sample2n_contigs = {}
+for one_table in contig_gc_depth_file_list:
+    table = pandas.read_csv(one_table,
+                            delimiter='\t',
+                            header=0,
+                            index_col=0)
 
+    data_whole_gnome = table.loc["TOTAL"]
+    n_contigs = len(table["gc_content"])-1
 
-def write_report(output_file,
-                 STYLE,
-                 SCRIPT,
-                 resistance_reports,
-                 low_cov_fasta,
-                 rgi_overview):
-    import io
-    from docutils.core import publish_file, publish_parts
-    from docutils.parsers.rst import directives
+    # samples/5965/quality/mapping/bwa/5965_assembled_genome/contig_gc_depth_500bp_high_coverage.tab
+    sample = one_table.split('/')[1]
 
-    multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
-    qualimap_table = report.qualimap_table(qualimap_reports, self_mapping=True)
+    sample2gc[sample] = data_whole_gnome["gc_content"]
+    sample2median_depth[sample] = data_whole_gnome["mean_depth"]
+    sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
+    sample2n_contigs[sample] = n_contigs
 
-    table_lowcoverage_contigs = quality_table(low_cov_fasta,
-                                              sample2gc,
-                                              sample2median_depth,
-                                              sampls2cumulated_size,
-                                              sample2n_contigs,
-                                              sample2scientific_name,
-                                              low_cov_detail=low_cov_detail)
-    table_resistance = resistance_table(resistance_reports)
+mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
+multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
+qualimap_table = report.qualimap_table(qualimap_reports, self_mapping=True)
 
-    report_str = f"""
+table_lowcoverage_contigs = quality_table(low_cov_fasta,
+                                          sample2gc,
+                                          sample2median_depth,
+                                          sampls2cumulated_size,
+                                          sample2n_contigs,
+                                          sample2scientific_name,
+                                          low_cov_detail=low_cov_detail)
+table_resistance = resistance_table(resistance_reports)
+
+report_str = f"""
 
 .. raw:: html
 

@@ -6,19 +6,29 @@
 # n_samples = list(read_naming.keys()
 import pandas
 from MN_tree import get_MN_tree, convert2cytoscapeJSON
-from report import coverage_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
+import report
+import io
+from docutils.core import publish_file, publish_parts
+from docutils.parsers.rst import directives
 
-multiqc_report = snakemake.input["multiqc_report"]
-
+multiqc_assembly = snakemake.input["multiqc_assembly"]
+virulence_reports = snakemake.input["virulence_reports"]
+blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
+multiqc_assembly = snakemake.input["multiqc_assembly"]
 virulence_reports = snakemake.input["virulence_reports"]
 ordered_samples = snakemake.params["samples"]
-
-resistance_reports = snakemake.input["resistance_reports"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
-
+qualimap_reports = snakemake.input["qualimap_reports"]
 output_file = snakemake.output[0]
+low_cov_detail = snakemake.input["low_cov_detail"]
+mash_results = snakemake.input["mash_results"]
+contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
+mash_detail = snakemake.input["mash_detail"]
+resistance_reports = snakemake.input["resistance_reports"]
+rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
 
+sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -40,7 +50,7 @@ SCRIPT = """
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.2.4/cytoscape-cola.min.js"></script>
-    
+
     <script>
     $(document).ready(function() {
         $('#VF_table').DataTable( {
@@ -61,7 +71,7 @@ SCRIPT = """
             "paging":   true,
             "info": false
         } );
-    } );    
+    } );
     $(document).ready(function() {
         $('#cov_table').DataTable( {
             dom: 'Bfrtip',
@@ -76,33 +86,59 @@ SCRIPT = """
 
     """
 
+sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 
 
-def write_report(output_file,
-                 STYLE,
-                 SCRIPT,
-                 virulence_reports,
-                 blast_files,
-                 resistance_reports,
-                 low_cov_fasta,
-                 virulence_table):
-    import io
-    from docutils.core import publish_file, publish_parts
-    from docutils.parsers.rst import directives
+# get contig depth and GC
+sample2gc = {}
+sample2median_depth = {}
+sampls2cumulated_size = {}
+sample2n_contigs = {}
+for one_table in contig_gc_depth_file_list:
+    table = pandas.read_csv(one_table,
+                            delimiter='\t',
+                            header=0,
+                            index_col=0)
 
-    multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
-    table_lowcoverage_contigs = coverage_table(low_cov_fasta)
-    table_virulence = virulence_table(virulence_reports,blast_files, ordered_samples)
-    table_resistance = resistance_table(resistance_reports)
+    data_whole_gnome = table.loc["TOTAL"]
+    n_contigs = len(table["gc_content"])-1
 
-    report_str = f"""
+    # samples/5965/quality/mapping/bwa/5965_assembled_genome/contig_gc_depth_500bp_high_coverage.tab
+    sample = one_table.split('/')[1]
+
+    sample2gc[sample] = data_whole_gnome["gc_content"]
+    sample2median_depth[sample] = data_whole_gnome["mean_depth"]
+    sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
+    sample2n_contigs[sample] = n_contigs
+
+table_lowcoverage_contigs = report.quality_table(low_cov_fastas,
+                                          sample2gc,
+                                          sample2median_depth,
+                                          sampls2cumulated_size,
+                                          sample2n_contigs,
+                                          sample2scientific_name,
+                                          low_cov_detail=low_cov_detail)
+
+table_virulence = report.virulence_table(virulence_reports,
+                                  blast_files,
+                                  ordered_samples)
+
+mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
+
+multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
+
+qualimap_table = report.qualimap_table(qualimap_reports, self_mapping=True)
+
+table_resistance = report.resistance_table(resistance_reports)
+
+report_str = f"""
 
 .. raw:: html
 
     {SCRIPT}
 
     {STYLE}
-    
+
 =============================================================
 Diag Pipeline - Strain characterization report
 =============================================================
@@ -110,35 +146,39 @@ Diag Pipeline - Strain characterization report
 .. contents::
     :backlinks: none
     :depth: 2
-    
+
 Quality Control
 ---------------
 
-MultiQC
-*******
-
-MultiQC aggregate results from bioinformatics analyses across many samples into a single report. 
-The analyses covered here include genome assembly with spades, evaluation of the sequencing 
-depth by mapping of the reads against the assembly and annotation with prokka. 
-
-
-.. raw:: html
-
-    {multiqc_link}
-    
-Low coverage contigs
+Assembly overview
 ********************
 
 .. raw:: html
 
     {table_lowcoverage_contigs}
 
+Contamination check: mash (assembly)
+************************************
+
+Three best Mash hits (excluding phages).
+
+.. raw:: html
+
+    {mash_table}
+
+Qualimap reports
+*****************
+
+.. raw:: html
+
+    {qualimap_table}
+
 Virulence (VFDB)
 -----------------
 
-The identification of virulence factors was performed with BLAST. Only hits exhibiting more 
-than 80% amino acid identity to a known virulence factor from the VFDB database are considered. 
-    
+The identification of virulence factors was performed with BLAST. Only hits exhibiting more
+than 80% amino acid identity to a known virulence factor from the VFDB database are considered.
+
 Details
 ********
 
@@ -149,24 +189,24 @@ Details
 Resistance (RGI/CARD)
 ----------------------
 
+RGI Overview
+*************
+
+.. image:: {rgi_overview}
+   :width: 60%
+
+Detail
+*******
+
 .. raw:: html
 
     {table_resistance}
-    
-"""
-    with open(output_file, "w") as fh:
-        publish_file(
-            source=io.StringIO(report_str),
-            destination=fh,
-            writer_name="html",
-            settings_overrides={"stylesheet_path": ""},
-        )
 
-write_report(output_file,
-             STYLE,
-             SCRIPT,
-             virulence_reports,
-             blast_files,
-             resistance_reports,
-             low_cov_fastas,
-             virulence_table)
+"""
+with open(output_file, "w") as fh:
+    publish_file(
+        source=io.StringIO(report_str),
+        destination=fh,
+        writer_name="html",
+        settings_overrides={"stylesheet_path": ""},
+    )
