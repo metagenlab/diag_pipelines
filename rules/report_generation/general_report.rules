@@ -79,7 +79,6 @@ if "snp_caller" in config:
         script:
             "scripts/report_epidemiology_virulence_resistance_saureus.py"
 
-
     def get_undetermined_file_list(sample_list, reference_genomes, snp_caller, mapping_method):
         import itertools
         pairs = list(itertools.product(sample_list, reference_genomes))
@@ -94,7 +93,6 @@ if "snp_caller" in config:
         else:
             return None
 
-
     def get_snps_file_list(sample_list, reference_genomes, snp_caller, mapping_method):
         pairs = list(itertools.product(reference_genomes, sample_list))
         all_outputs = []
@@ -107,7 +105,6 @@ if "snp_caller" in config:
             path = "report/snps/%s/%s/%s/%s.html" % (pair[0], mapping_method, snp_caller, pair[1])
             all_outputs.append(path)
         return all_outputs
-
 
     def get_indel_file_list(sample_list, reference_genomes, mapping_method):
         '''
@@ -133,7 +130,6 @@ if "snp_caller" in config:
             all_outputs.append(path)
         return all_outputs
 
-
     def get_qualimap_file_list(sample_list, reference_genomes, mapping_method):
         '''
         We have to replace cgMLST by the actual genome if we don't want some parts
@@ -155,7 +151,6 @@ if "snp_caller" in config:
                 path = "report/qualimap/%s/%s/%s/qualimapReport.html" % (pair[1], mapping_method, pair[0])
             all_outputs.append(path)
         return all_outputs
-
 
     rule report_epidemiology_assembly:
         conda:
@@ -182,7 +177,6 @@ if "snp_caller" in config:
         script:
             "scripts/report_epidemiology.py"
 
-
     rule report_epidemiology:
         conda:
             pipeline_path + "envs/report.yml"
@@ -208,7 +202,6 @@ if "snp_caller" in config:
         script:
             "scripts/report_epidemiology.py"
 
-
     rule report_epidemiology_virulence_resistance:
         conda:
             pipeline_path + "envs/report.yml"
@@ -218,7 +211,7 @@ if "snp_caller" in config:
             virulence_reports = expand("report/virulence/{sample}_VFDB_report.html", sample=read_naming.keys()),
             blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample=read_naming.keys()),
             spanning_tree_core = expand("report/figures/%s/{reference}/bwa/distances_in_snp_mst_with_st.svg" % config["snp_caller"], reference=reference_genomes),
-            mlst_tree="report/figures/mlst_tree.svg",
+            mlst_tree = "report/figures/mlst_tree.svg",
             resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
             low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
             snp_table = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
@@ -231,7 +224,6 @@ if "snp_caller" in config:
             "report/report_epidemiology_virulence_resistance.html",
         script:
             "scripts/report_epidemiology_virulence_resistance.py"
-
 
     rule report_strain_characterization:
         conda:
