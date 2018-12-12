@@ -1,0 +1,108 @@
+
+
+rule link_genomes_to_checkm_folder:
+    input:
+        fastas = "samples/{sample}/annotation/{sample}.fna"
+    output:
+        links = "phylogeny/checkm/assemblies/{sample}.fna"
+    shell:
+        """
+        ln -s ../../../{input[0]} {output[0]}
+        """
+
+
+rule checkm_analyse:
+    conda:
+        pipeline_path + "envs/checkm.yml"
+    params:
+        markers = pipeline_path + 'data/checkm/bacteria.ms'
+    threads:
+        8
+    input:
+        fastas = expand("phylogeny/checkm/assemblies/{sample}.fna", sample=read_naming.keys())
+    output:
+        check_results = expand("phylogeny/checkm/analyse/bins/{sample}/hmmer.analyze.txt", sample=read_naming.keys())
+    shell:
+        """
+        checkm  analyze {params[0]} phylogeny/checkm/assemblies phylogeny/checkm/analyse -t 8 --nt
+        """
+
+rule checkm_qa:
+    conda:
+        pipeline_path + "envs/checkm.yml"
+    params:
+        markers = pipeline_path + 'data/checkm/bacteria.ms'
+    threads:
+        8
+    input:
+        fastas = expand("phylogeny/checkm/analyse/bins/{sample}/hmmer.analyze.txt", sample=read_naming.keys())
+    output:
+        checkm_table = "phylogeny/checkm/analyse/qa_results.txt"
+    shell:
+        """
+        checkm qa {params[0]} phylogeny/checkm/analyse -o 2 --tab_table > {output[0]}
+        """
+
+rule checkm_markers:
+    conda:
+        pipeline_path + "envs/checkm.yml"
+    params:
+        markers = pipeline_path + 'data/checkm/bacteria.ms'
+    threads:
+        8
+    input:
+        fastas = expand("phylogeny/checkm/analyse/bins/{sample}/hmmer.analyze.txt", sample=read_naming.keys())
+    output:
+        checkm_table = "phylogeny/checkm/analyse/markers.tab"
+    shell:
+        """
+        checkm qa {params[0]} phylogeny/checkm/analyse -o 5 --tab_table > {output[0]}
+        """
+
+rule checkm_markers_fastas:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+    params:
+        markers = pipeline_path + 'data/checkm/bacteria.ms'
+    threads:
+        8
+    input:
+        checkm_table = "phylogeny/checkm/analyse/markers.tab",
+        checkm_fastas = expand("phylogeny/checkm/analyse/bins/{sample}/genes.faa", sample=read_naming.keys())
+    output:
+        marker_fastas = dynamic("phylogeny/checkm/marker_fastas/{marker}.faa")
+    script: "scripts/get_checkm_markers_fastas.py"
+
+
+rule align_marker_fasta_with_mafft:
+    conda:
+        pipeline_path + "envs/mafft.yml"
+    input:
+        fasta = "phylogeny/checkm/marker_fastas/{marker}.faa"
+    output:
+        alignment = "phylogeny/checkm/marker_alignments/{marker}_mafft.faa"
+    shell:
+        """
+        mafft --auto --maxiterate 1000 {input[0]} > {output[0]}
+        """
+
+rule concatenate_checkm_fastas:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+    input:
+        marker_fastas = dynamic("phylogeny/checkm/marker_alignments/{marker}_mafft.faa")
+    output:
+        alignment = "phylogeny/checkm/concatenated_alignment.faa"
+    script: "scripts/concat_align.py"
+
+rule build_phylogeny_with_fasttree:
+    conda:
+        pipeline_path + "envs/fasttree.yml"
+    input:
+        alignment = "phylogeny/checkm/concatenated_alignment.faa"
+    output:
+        tree = "phylogeny/checkm/tree.nwk"
+    shell:
+        """
+        fasttree {input[0]} > {output[0]}
+        """

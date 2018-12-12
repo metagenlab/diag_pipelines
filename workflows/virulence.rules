@@ -15,3 +15,6 @@ include:
 
 include:
     pipeline_path + "rules/report_generation/general_report.rules"
+
+include:
+    pipeline_path + "rules/phylogeny/checkm.rules"
