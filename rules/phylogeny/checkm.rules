@@ -21,7 +21,8 @@ rule checkm_analyse:
     input:
         fastas = expand("phylogeny/checkm/assemblies/{sample}.fna", sample=read_naming.keys())
     output:
-        check_results = expand("phylogeny/checkm/analyse/bins/{sample}/hmmer.analyze.txt", sample=read_naming.keys())
+        check_results = expand("phylogeny/checkm/analyse/bins/{sample}/hmmer.analyze.txt", sample=read_naming.keys()),
+        faa = expand("phylogeny/checkm/analyse/bins/{sample}/genes.fna", sample=read_naming.keys())
     shell:
         """
         checkm  analyze {params[0]} phylogeny/checkm/assemblies phylogeny/checkm/analyse -t 8 --nt
@@ -68,7 +69,7 @@ rule checkm_markers_fastas:
         8
     input:
         checkm_table = "phylogeny/checkm/analyse/markers.tab",
-        checkm_fastas = expand("phylogeny/checkm/analyse/bins/{sample}/genes.faa", sample=read_naming.keys())
+        checkm_fastas = expand("phylogeny/checkm/analyse/bins/{sample}/genes.fna", sample=read_naming.keys())
     output:
         marker_fastas = dynamic("phylogeny/checkm/marker_fastas/{marker}.faa")
     script: "scripts/get_checkm_markers_fastas.py"

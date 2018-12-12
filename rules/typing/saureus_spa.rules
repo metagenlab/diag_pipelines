@@ -12,6 +12,6 @@ rule merge_spa_from_all_samples:
     input:
         spas = expand("samples/{sample}/typing/spa.txt", sample=read_naming.keys())
     output:
-        "typing/spa/summary.tsv",
+        "report/typing/spa/summary.tsv",
     shell:
         "cat {input[spas]} | grep -v SAMPLENAME > {output}"

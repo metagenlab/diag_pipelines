@@ -24,7 +24,7 @@ def parse_checkm_marker_table(checkm_table):
             marker2sample2records[marker][sample_id].append(gene_id)
     # remove hits with multiple copies
     for marker in marker2sample2records:
-        for sample in marker2sample2records[marker]:
+        for sample in list(marker2sample2records[marker].keys()):
             if len(marker2sample2records[marker][sample]) > 1:
                 marker2sample2records[marker].pop(sample)
     return marker2sample2records
@@ -49,7 +49,6 @@ marker2records = {}
 for marker in marker_genes:
     marker_records = []
     for sample in marker_genes[marker]:
-        print("%s\t%s\t%s" % (marker, sample, marker_genes[marker][sample]))
         record = fasta_dico[str(sample)][marker_genes[marker][sample][0]]
         record.name = str(sample)
         record.id = str(sample)
@@ -57,5 +56,4 @@ for marker in marker_genes:
         record.seq = record.seq[0:-1]
         marker_records.append(record)
     with open("phylogeny/checkm/marker_fastas/%s.faa" % marker, "w") as f:
-        print(marker_records)
         SeqIO.write(marker_records, f, "fasta")
