@@ -4,6 +4,42 @@ import re
 from Bio import SeqIO
 from plotly import offline
 
+
+def get_centrifuge_table(centrifuge_links, sample2scientific_name):
+    row_list = []
+    for sample in centrifuge_links:
+        sample_name = sample.split('/')[-2]
+        table = pandas.read_csv(sample, delimiter="\t", names=["name", "taxid", "rank", "n_reads", "percent_reads"])
+
+        hit_1 = table.iloc[0]
+        hit_2 = table.iloc[1]
+        hit_3 = table.iloc[2]
+
+        row = [sample_name,
+               sample2scientific_name[sample_name],
+               hit_1["name"],
+               hit_1["percent_reads"],
+               hit_2["name"],
+               hit_3["percent_reads"],
+               hit_3["name"],
+               hit_3["percent_reads"],
+               '<a href="%s">detail</a>' % '/'.join(sample.split('/')[1:])]
+
+        row_list.append(row)
+    header = ["sample", "expected", "taxon 1", "% reads", "taxon 2", "% reads", "taxon 3", "% reads", "detail"]
+    df = pandas.DataFrame(row_list, columns=header)
+    pandas.set_option('display.max_colwidth', -1)
+
+    df_str = df.to_html(
+        index=False,
+        bold_rows=False,
+        classes=["dataTable"],
+        table_id="mash_table",
+        escape=False,
+        border=0)
+
+    return df_str.replace("\n", "\n" + 10 * " ")
+
 def get_mash_table(file_list, mash_detail, sample2scientific_name):
     '''
     sample
@@ -23,8 +59,8 @@ def get_mash_table(file_list, mash_detail, sample2scientific_name):
         table = pandas.read_csv(sample, delimiter="\t", names=['score', 'shared_sketsh', 'e-value', 'description'])
 
         hit_1 = table.iloc[0]
-        hit_2 = table.iloc[2]
-        hit_3 = table.iloc[3]
+        hit_2 = table.iloc[1]
+        hit_3 = table.iloc[2]
 
         row = [sample_name,
                sample2scientific_name[sample_name],

@@ -23,6 +23,7 @@ snps_reports = snakemake.input["snps_reports"]  # ok
 indel_reports = snakemake.input["indel_reports"]
 mash_detail = snakemake.input["mash_detail"]
 qualimap_reports = snakemake.input["qualimap_reports"]
+centrifuge_tables = snakemake.input["centrifuge_tables"]
 
 ordered_samples = snakemake.params["samples"]
 
@@ -45,6 +46,8 @@ leaf2mlst = pandas.read_csv(snakemake.input["mlst"],
 sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 
 mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
+centrifuge_table = report.get_centrifuge_table(centrifuge_tables, sample2scientific_name)
+
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -196,6 +199,15 @@ Contamination check: mash
 .. raw:: html
 
     {mash_table}
+
+
+Contamination check: Centrifuge
+********************************
+
+.. raw:: html
+
+    {centrifuge_table}
+
 
 Qualimap reports
 *****************
