@@ -27,7 +27,7 @@ rule determine_mlst_reference_genome:
     conda:
         pipeline_path + "envs/mlst.yml"
     input:
-        genome="references/{ref}/genome_fasta.fasta"
+        genome = "references/{ref}/genome_fasta.fasta"
     output:
         "references/{ref}/mlst.tsv"
     shell:
@@ -39,8 +39,8 @@ rule generate_xlsx_file_from_mlst_results:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     input:
-        ""report/typing/mlst/{file}.tsv"
+        "report/typing/mlst/{file}.tsv"
     output:
-        ""report/typing/mlst/{file}.xlsx"
+        "report/typing/mlst/{file}.xlsx"
     script:
         "scripts/mlst_csv_to_xlsx.py"

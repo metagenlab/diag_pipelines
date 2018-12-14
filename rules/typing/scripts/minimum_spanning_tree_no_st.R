@@ -38,7 +38,7 @@ nb_vertex <- nb_vertex - length(to_be_deleted)
 
 #Merging clones
 graph <- contract(graph, mapping, vertex.attr.comb = list(name = function(x) paste(x, collapse="\n")))
-graph <- simplify(graph, edge.attr.comb = list(weight = "median"))
+graph <- simplify(graph, edge.attr.comb = list(weight = function(x) median(x)))
 #Deleting useless vertices
 w<- which(V(graph)$name == "")
 graph <- delete_vertices(graph, w)
