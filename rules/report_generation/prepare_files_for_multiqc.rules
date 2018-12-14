@@ -1,3 +1,6 @@
+
+ruleorder: copy_result_files_mapping_paired > copy_result_files_mapping_single
+
 rule copy_result_files_mapping_paired:
     input:
         qualimap_report = "report/qualimap/{sample}/{mapping_method}/{ref}/qualimapReport.html",

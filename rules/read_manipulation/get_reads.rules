@@ -1,3 +1,6 @@
+
+ruleorder: copy_fastq_paired_from_link > copy_fastq_single_from_link
+
 rule copy_fastq_paired_from_link:
     input:
         lambda wildcards: expand(link_directory + original_names[wildcards.sample] + "_{ext}", ext=read_naming[wildcards.sample])

@@ -1,3 +1,6 @@
+
+ruleorder: trim_paired_reads_with_trimmomatic > trim_single_reads_with_trimmomatic
+
 rule trim_paired_reads_with_trimmomatic:
     conda:
         pipeline_path + "envs/trimmomatic.yml"

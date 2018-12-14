@@ -1,3 +1,6 @@
+
+ruleorder: map_paired_reads_with_bwa > map_single_reads_with_bwa
+
 rule map_paired_reads_with_bwa:
     conda:
         pipeline_path + "envs/bwa-samtools.yml"
