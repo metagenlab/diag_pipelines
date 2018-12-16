@@ -14,9 +14,6 @@ except:
     records = []
 output_file = snakemake.output[0]
 
-print(snakemake.input["low_cov_contigs_fasta"])
-print("number of records", len(records))
-
 def get_fasta_table(fasta_records):
     header = ["contig",
               "contig_length",

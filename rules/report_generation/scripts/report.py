@@ -99,7 +99,6 @@ def get_multiqc_table(assembly_multiqc=False,
 
     if mapping_multiqc:
         for n, multiqc in enumerate(mapping_multiqc):
-            print(n, multiqc)
             multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc.split('/')[1:])
             mq_table.append(["%s" % re.sub("_", " ", multiqc.split("/")[1]), multiqc_link])
     header = ["Name", "Link"]
@@ -397,9 +396,6 @@ def link_list2dico(link_list, label, index_sample, add_cgMLST=False):
         reference2sample2link["cgMLST"] = {}
         for sample in reference2sample2link[reference]:
             reference2sample2link["cgMLST"][sample] = "-"
-        print("--------------")
-        print(link_list)
-        print(reference2sample2link)
     return reference2sample2link
 
 

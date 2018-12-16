@@ -5,7 +5,6 @@ for (i in snakemake@input){
     }
 
 data <- Reduce(function(dtf1, dtf2) merge(dtf1, dtf2, by = 0, all = TRUE), data)
-print(sum(data[,3]<1))
 
 log1 <- replace(data[,3], data[,3]<1, 0.5)
 log2 <- replace(data[,2], data[,2]<1, 0.5)

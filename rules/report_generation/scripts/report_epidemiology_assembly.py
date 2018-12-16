@@ -28,8 +28,6 @@ indel_reports = snakemake.input["indel_reports"]
 #snps_merged = snakemake.input["snps_merged"]
 #########################################################################
 
-print("multiqc list", multiqc_mapping_list)
-
 ordered_samples = snakemake.params["samples"]
 
 snp_detail_table = report.get_snp_detail_table(snps_reports, indel_reports)
