@@ -110,6 +110,23 @@ rule paired_reads_classification_with_centrifuge:
         centrifuge -x ${{a/.1.cf/}} -1 {input[0]} -2 {input[1]} --report-file {output[0]} -S {output[1]}
         """
 
+rule single_reads_classification_with_centrifuge:
+    threads:
+        4
+    conda:
+        pipeline_path + "envs/centrifuge.yml"
+    input:
+        single = "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
+        database = "references/centrifuge_db/p_compressed+h+v.1.cf"
+    output:
+        report = "samples/{sample}/contamination/centrifuge/report.tsv",
+        detail = "samples/{sample}/contamination/centrifuge/results.tsv",
+    shell:
+        """
+        a=$(echo {input[1]})
+        centrifuge -x ${{a/.1.cf/}} -1 {input[0]} --report-file {output[0]} -S {output[1]}
+        """
+
 rule format_centrifuge_output:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
