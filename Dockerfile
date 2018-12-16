@@ -97,7 +97,7 @@ RUN patch /opt/conda/envs/9d0a6ae9/lib/python2.7/site-packages/mykatlas/typing/t
 
 #RUN rm -rf ${main}/data/references/1493941/
 
-RUN rm -rf links/ &&  rm core_genomes/parsnp/Mycobacterium_tuberculosis/parsnp.xmfa && rm config.yaml && rm *.tsv
+#RUN rm -rf links/ &&  rm core_genomes/parsnp/Mycobacterium_tuberculosis/parsnp.xmfa && rm config.yaml && rm *.tsv
 
 RUN mkdir ${main}/data/analysis/
 
