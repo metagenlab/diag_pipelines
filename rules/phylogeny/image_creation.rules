@@ -6,7 +6,7 @@ rule convert_phylogeny_to_image_with_st:
     input:
         tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/normal_run/RAxML_bestTree.nw",
         bootstraps = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/bootstrap_run/RAxML_bootstrap.nw",
-        st_samples="typing/mlst/summary.tsv",
+        st_samples="report/typing/mlst/summary.tsv",
     output:
         new_names = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/renaming_with_st.txt",
         tree = "phylogeny/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/phylogeny_with_st.svg",
