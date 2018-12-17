@@ -11,7 +11,7 @@ rule distance_columns_to_matrix:
     script:
         "scripts/distance_columns_to_matrix.py"
 
-        
+
 rule compute_minimum_spanning_tree_with_st:
     params:
         threshold = config["snp_threshold"],
@@ -20,7 +20,7 @@ rule compute_minimum_spanning_tree_with_st:
         pipeline_path + "envs/igraph.yml"
     input:
         dist = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
-        mlst_samples = "typing/mlst/summary.tsv",
+        mlst_samples = "report/typing/mlst/summary.tsv",
     output:
         mst = "report/figures/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_with_st.svg"
     log:
@@ -28,7 +28,7 @@ rule compute_minimum_spanning_tree_with_st:
     script:
         "scripts/minimum_spanning_tree_with_st.R"
 
-        
+
 rule compute_minimum_spanning_tree_no_st:
     params:
         threshold=config["snp_threshold"],
@@ -43,6 +43,3 @@ rule compute_minimum_spanning_tree_no_st:
         logging_folder + "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}_mst_no_st.txt"
     script:
         "scripts/minimum_spanning_tree_no_st.R"
-
-        
-        

@@ -79,7 +79,7 @@ if "snp_caller" in config:
             snp_tables = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
             reference_genome = expand("references/%s/genome_fasta.fasta", reference=reference_genomes),
             core_genome_bed = "core_genomes/%s/" % config["reference"] + species + ".bed",
-            mlst = 'typing/typing/mlst/summary.tsv',
+            mlst = 'report/typing/mlst/summary.tsv',
         params:
             samples = list(read_naming.keys()),
             sample_table = all_samples
