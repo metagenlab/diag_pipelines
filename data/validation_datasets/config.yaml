@@ -17,3 +17,4 @@ spades_kmer_sizes: 21,33,55,77,99,111,127
 reference: "cgMLST"
 snp_caller: "gatk_gvcfs"
 mapping: "bwa"
+virulence_factors: /home/pipeline_user/snakemake_pipeline/data/staph/db/virulence_factors.tsv
