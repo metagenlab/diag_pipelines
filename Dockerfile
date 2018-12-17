@@ -67,8 +67,6 @@ RUN cp ${pipeline_folder}/*.tsv . && cp ${pipeline_folder}/config.yaml .
 RUN mkdir -p core_genomes/parsnp/Mycobacterium_tuberculosis/
 
 RUN echo '' > links/Myco-10_S10_L001_R1.fastq.gz && echo '' > links/Myco-10_S10_L001_R2.fastq.gz && echo '' > core_genomes/parsnp/Mycobacterium_tuberculosis/parsnp.xmfa
-RUN echo '' > links/ERR2130394.fastq.gz && echo '' > links/ERR2130394.fastq.gz
-RUN echo '' > links/SRR6936587.gz && echo '' > links/SRR6936587.fastq.gz
 #&& echo '' > ${main}/data/references/mash_sketch_human.msh
 
 RUN wget -qO- https://gembox.cbcb.umd.edu/mash/refseq.genomes.k21s1000.msh > ${main}/data/references/mash_sketch.msh
@@ -78,6 +76,9 @@ RUN mkdir -p ${main}/data/references/centrifuge_db/
 RUN wget -qO- ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/data/p_compressed+h+v.tar.gz | tar xvz -C ${main}/data/references/centrifuge_db/
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml report/multiqc_assembly/multiqc_report.html samples/M10/resistance/mykrobe.tsv report/figures/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg report/figures/gatk_gvcfs/core_parsnp_538048/bwa/distances_in_snp_mst_no_st.svg report/figures/gatk_gvcfs/full_genome_M10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg virulence_summary.xlsx report/typing/mlst/summary.xlsx report/resistance/rgi_summary.xlsx report/resistance/mykrobe_summary.xlsx report/figures/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg report/figures/gatk_gvcfs/full_genome_538048/bwa/phylogeny_no_st.svg report/figures/gatk_gvcfs/core_parsnp_538048/bwa/phylogeny_no_st.svg report/contamination/mash/assembly/distances_formated.xlsx samples/SE1/contamination/centrifuge/report.tsv -j 4 --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
+
+RUN echo '' > links/ERR2130394.fastq.gz
+RUN echo '' > links/SRR6936587.fastq.gz
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml epidemiology --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
 
