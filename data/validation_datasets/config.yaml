@@ -18,3 +18,5 @@ reference: "cgMLST"
 snp_caller: "gatk_gvcfs"
 mapping: "bwa"
 virulence_factors: /home/pipeline_user/snakemake_pipeline/data/staph/db/virulence_factors.tsv
+virulence_percentage_identity_cutoff: 80
+virulence_coverage_cutoff: 70
