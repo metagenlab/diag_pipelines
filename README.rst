@@ -103,6 +103,9 @@ All Deliverables
 Here is a list of all deliverables currently available:
 
 - assembly_
+- virulence_
+- resistance_
+- epidemiology_
 
 .. _assembly: docs/assembly_deliverables.rst
 .. _virulence: docs/virulence_deliverables.rst
