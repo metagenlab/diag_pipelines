@@ -25,6 +25,8 @@ An example of each variable value is provided in ``config.yaml`` of the github r
 Configuration file
 ------------------
 
+Example of configuration file. All parameters are not necessary for all 4 workflows.
+
 .. code-block:: yaml
 
   #mandatory, one of them or both
