@@ -102,7 +102,7 @@ All Deliverables
 
 Here is a list of all deliverables currently available:
 
-.. include:: docs/assembly_deliverables.rst
+.. _docs/assembly_deliverables.rst
 .. include:: docs/virulence_deliverables.rst
 .. include:: docs/resistance_deliverables.rst
 .. include:: docs/epidemiology_deliverables.rst
