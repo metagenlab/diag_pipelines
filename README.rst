@@ -70,7 +70,9 @@ Epidemiological analysis
 		epidemiology'
 
 This will perform quality checks, map reads against one or multiple reference genome, calculate pairwise number of SNPs
-and generate a minimum spanning tree.
+and generate a minimum spanning tree. The reference genome can be one of the assembled genome or an assembly available on
+the NCBI website. The analysis can also be restricted to the core genome as defined by existing cgMLST schemes or by
+computing a custom core genome with help of parsnp_ (see documentation https://metagenlabdiag-pipelines.readthedocs.io/en/latest/core_genomes.html).
 
 ------
 Annotation of virulence factors
@@ -123,7 +125,9 @@ help of the `rgi software`_ and CARD_ database and search for known virulence fa
 Generating specific files of interest
 ============================
 
-If you want to execute a specific analysis, you can request files of interest for a particular analysis. Consult the full documentation to know what files can be generated. Main examples are provided below:
+If you want to execute a specific analysis, you can request files of interest for a particular analysis. Consult the
+full documentation to know what files can be generated (http://metagenlabdiag-pipelines.readthedocs.io/en/latest/ ).
+Main examples are provided below:
 
 .. code-block:: bash
 
@@ -132,7 +136,7 @@ If you want to execute a specific analysis, you can request files of interest fo
    metagenlab/diag_pipelines:latest \
    sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
    --use-conda --conda-prefix $conda_folder --configfile config.yaml\
-   quality/multiqc/assembly/multiqc_report.html'
+   report/multiqc_assembly/multiqc_report.html'
 
 This will assemble and annotate every samples, and generate a multiqc report for all samples.
 
@@ -188,3 +192,4 @@ Here is a list of all deliverables currently available:
 .. _VFDB:  http://www.mgc.ac.cn/VFs/
 .. _rgi software: https://card.mcmaster.ca/analyze/rgi
 .. _CARD: https://card.mcmaster.ca/
+.. _parsnp: https://harvest.readthedocs.io/en/latest/content/parsnp.html
