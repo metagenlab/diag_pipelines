@@ -176,4 +176,4 @@ Here is a list of all deliverables currently available:
 .. _virulence: docs/virulence_deliverables.rst
 .. _resistance: docs/resistance_deliverables.rst
 .. _epidemiology: docs/epidemiology_deliverables.rst
-.. _VFDB: www.mgc.ac.cn/VFs/
+.. _VFDB:  http://www.mgc.ac.cn/VFs/
