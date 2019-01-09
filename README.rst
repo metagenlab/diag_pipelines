@@ -69,6 +69,9 @@ Epidemiological analysis
 		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
 		epidemiology'
 
+This will perform quality checks, map reads against one or multiple reference genome, calculate pairwise number of SNPs
+and generate a minimum spanning tree.
+
 ------
 Annotation of virulence factors
 ------
@@ -111,6 +114,10 @@ Characterization of one or multiple strains
 		sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
 		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
 		strain_characterization'
+
+This will perform quality checks, assemble the genome and search for known antibiotic resistance determinants with
+help of the `rgi software`_ and CARD_ database and search for known virulence factors from the VFDB_ database.
+
 
 
 Generating specific files of interest
