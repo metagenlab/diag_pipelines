@@ -82,6 +82,8 @@ Annotation of virulence factors
 		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
 		virulence'
 
+This will perform quality checks, assemble the genome and search for known virulence factors from the VFDB_ database.
+
 ------
 Annotation of resistance markers
 ------
@@ -174,3 +176,4 @@ Here is a list of all deliverables currently available:
 .. _virulence: docs/virulence_deliverables.rst
 .. _resistance: docs/resistance_deliverables.rst
 .. _epidemiology: docs/epidemiology_deliverables.rst
+.. _VFDB: www.mgc.ac.cn/VFs/
