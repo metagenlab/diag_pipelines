@@ -61,48 +61,52 @@ Epidemiological analysis
 ------
 
 .. code-block:: bash
-	docker run -t --rm \
-	--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
-	metagenlab/diag_pipelines:latest \
-	sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
-	--use-conda --conda-prefix $conda_folder --configfile config.yaml\
-	epidemiology'
+
+		docker run -t --rm \
+		--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
+		metagenlab/diag_pipelines:latest \
+		sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
+		epidemiology'
 
 ------
 Annotation of virulence factors
 ------
 
 .. code-block:: bash
-	docker run -t --rm \
-	--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
-	metagenlab/diag_pipelines:latest \
-	sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
-	--use-conda --conda-prefix $conda_folder --configfile config.yaml\
-	virulence'
+
+		docker run -t --rm \
+		--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
+		metagenlab/diag_pipelines:latest \
+		sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
+		virulence'
 
 ------
 Annotation of resistance markers
 ------
 
 .. code-block:: bash
-	docker run -t --rm \
-	--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
-	metagenlab/diag_pipelines:latest \
-	sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
-	--use-conda --conda-prefix $conda_folder --configfile config.yaml\
-	resistance'
+
+		docker run -t --rm \
+		--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
+		metagenlab/diag_pipelines:latest \
+		sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
+		resistance'
 
 ------
 Characterization of one or multiple strains
 ------
 
 .. code-block:: bash
-	docker run -t --rm \
-	--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
-	metagenlab/diag_pipelines:latest \
-	sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
-	--use-conda --conda-prefix $conda_folder --configfile config.yaml\
-	strain_characterization'
+
+		docker run -t --rm \
+		--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
+		metagenlab/diag_pipelines:latest \
+		sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
+		strain_characterization'
 
 
 Generating specific files of interest
