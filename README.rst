@@ -97,6 +97,8 @@ Annotation of resistance markers
 		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
 		resistance'
 
+This will perform quality checks, assemble the genome and search for known antibiotic resistance determinants with help of the `rgi software`_ and CARD_ database.
+
 ------
 Characterization of one or multiple strains
 ------
@@ -177,3 +179,5 @@ Here is a list of all deliverables currently available:
 .. _resistance: docs/resistance_deliverables.rst
 .. _epidemiology: docs/epidemiology_deliverables.rst
 .. _VFDB:  http://www.mgc.ac.cn/VFs/
+.. _rgi software: https://card.mcmaster.ca/analyze/rgi
+.. _CARD: https://card.mcmaster.ca/
