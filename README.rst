@@ -44,10 +44,71 @@ Once you have pulled the docker image on your computer:
 
 Update the config file for your needs. If you have read files you want to analyse, they should be stored in the ``links`` folder from your current working directory.
 
-Generating files of interest
+Run one of the 4 workflows
 ============================
 
-The pipeline works by requesting the generation of the files of interest for a particular analysis. Consult the full documentation to know what files can be generated. Main examples are provided below:
+The pipeline implement four main workflows.
+
+1. `Epidemiological analysis`_
+2. `Annotation of virulence factors`_
+3. `Annotation of resistance markers`_
+4. `Characterization of one or multiple strains`_
+
+An *html* report summarizing results is generated upon completion of the workflow.
+
+------
+Epidemiological analysis
+------
+
+.. code-block:: bash
+	docker run -t --rm \
+	--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
+	metagenlab/diag_pipelines:latest \
+	sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+	--use-conda --conda-prefix $conda_folder --configfile config.yaml\
+	epidemiology'
+
+------
+Annotation of virulence factors
+------
+
+.. code-block:: bash
+	docker run -t --rm \
+	--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
+	metagenlab/diag_pipelines:latest \
+	sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+	--use-conda --conda-prefix $conda_folder --configfile config.yaml\
+	virulence'
+
+------
+Annotation of resistance markers
+------
+
+.. code-block:: bash
+	docker run -t --rm \
+	--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
+	metagenlab/diag_pipelines:latest \
+	sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+	--use-conda --conda-prefix $conda_folder --configfile config.yaml\
+	resistance'
+
+------
+Characterization of one or multiple strains
+------
+
+.. code-block:: bash
+	docker run -t --rm \
+	--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
+	metagenlab/diag_pipelines:latest \
+	sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+	--use-conda --conda-prefix $conda_folder --configfile config.yaml\
+	strain_characterization'
+
+
+Generating specific files of interest
+============================
+
+If you want to execute a specific analysis, you can request files of interest for a particular analysis. Consult the full documentation to know what files can be generated. Main examples are provided below:
 
 .. code-block:: bash
 
@@ -92,8 +153,6 @@ This will generate a snp-distance matrix of all samples, only on the core genome
    typing/mlst/summary.xlsx'
 
 This will generate an Excel summary file of the MLST of all samples, based on the software `mlst <https://github.com/tseemann/mlst>`_.
-
-
 
 
 ----------------
