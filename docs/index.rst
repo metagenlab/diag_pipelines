@@ -15,8 +15,6 @@ Documentation for the genomics and metagenomics workflows
    virulence.rst
    resistance.rst
    epidemiology.rst
+   all_deliverables.rst
    :maxdepth: 2
    :caption: Contents:
-   
-
-
