@@ -30,6 +30,8 @@ output_file = snakemake.output[0]
 if "custom_virulence" in snakemake.input.keys():
     custom_virulence_reports = snakemake.input["custom_virulence"]
     custom_virulence_fasta = snakemake.input["custom_virulence_fasta"]
+    virulence_percentage_identity_cutoff = snakemake.params["virulence_percentage_identity_cutoff"]
+    virulence_coverage_cutoff = snakemake.params["virulence_coverage_cutoff"]
 
     table_virulence = report.virulence_table(custom_virulence_reports,
                                              custom_virulence_fasta,
@@ -42,7 +44,7 @@ Virulence (Uniprot)
 --------------------
 
 The identification of virulence factors was performed with BLAST. Only hits exhibiting more
-than XX%% amino acid identity to a known virulence factor database are considered.
+than %s%% amino acid identity and %s%% coverage to a known virulence factor database are considered.
 
 Details
 ********
@@ -51,7 +53,9 @@ Details
 
     %s
 
-    ''' % table_virulence
+    ''' % (virulence_percentage_identity_cutoff,
+           virulence_coverage_cutoff,
+           table_virulence)
 else:
 
     custom_VFs = ''

@@ -39,7 +39,6 @@ rule report_resistance:
         "scripts/report_resistance.py"
 
 if "virulence_factors" in config:
-    print ("ok------------------")
     rule report_virulence:
         conda:
             pipeline_path + "envs/report.yml"
@@ -58,13 +57,14 @@ if "virulence_factors" in config:
             custom_virulence_fasta = expand("samples/{sample}/virulence/proteins.fasta", sample=read_naming.keys()),
         params:
             samples = list(read_naming.keys()),
-            sample_table = all_samples
+            sample_table = all_samples,
+            virulence_percentage_identity_cutoff = config["virulence_percentage_identity_cutoff"],
+            virulence_coverage_cutoff = config["virulence_coverage_cutoff"]
         output:
             "report/report_virulence.html",
         script:
             "scripts/report_virulence.py"
 else:
-    print ("PAS ok------------------")
     rule report_virulence:
         conda:
             pipeline_path + "envs/report.yml"

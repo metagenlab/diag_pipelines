@@ -278,9 +278,9 @@ def virulence_table(virulence_reports,
             sample2n_VFs[sample] = len([i for i in SeqIO.parse(open(blast_files[n], 'r'), "fasta")])
 
     vf_data = []
-    report_template = '<a href="virulence/%s_.*_report.html">Details</a>'
+    report_template = '<a href="virulence/%s_report.html">Details</a>'
     for report in virulence_reports:
-        sample = re.search('report/virulence/.*/(.*)_.*_report.html', report).group(1)
+        sample = re.search('report/virulence/.*/(.*)_report.html', report).group(1)
         vf_data.append([sample,
                       sample2n_VFs[sample],
                       report_template % sample])
