@@ -1,15 +1,34 @@
+if "virulence_factors" in config:
 
-rule plot_virulence_ete_tree:
-    conda:
-        pipeline_path + "envs/pandas-ete3-matplotlib.yml",
-    input:
-        nr_blast_results=expand("samples/{sample}/virulence/results_blast_not_redundant.tsv", sample = read_naming.keys()),
-        best_tree = "phylogeny/gatk_gvcfs/cgMLST/bwa/normal_run/RAxML_bestTree.nw",
-        vf_table=config["virulence_factors"]
-    output:
-        "report/figures/virulence.svg",
-    script:
-        "scripts/plot_ete_virulence.py"
+    rule plot_virulence_ete_tree:
+        conda:
+            pipeline_path + "envs/pandas-ete3-matplotlib.yml",
+        input:
+            nr_blast_results=expand("samples/{sample}/virulence/results_blast_not_redundant.tsv", sample = read_naming.keys()),
+            best_tree = "phylogeny/gatk_gvcfs/cgMLST/bwa/normal_run/RAxML_bestTree.nw",
+            vf_table=config["virulence_factors"]
+        output:
+            "report/figures/virulence.svg",
+        script:
+            "scripts/plot_ete_virulence.py"
+
+    rule plot_virulence_ete_tree_s_aureus:
+        conda:
+            pipeline_path + "envs/pandas-ete3-matplotlib.yml",
+        input:
+            nr_blast_results=expand("samples/{sample}/virulence/results_blast_not_redundant.tsv", sample = read_naming.keys()),
+            best_tree = "phylogeny/checkm/tree.nwk",
+            vf_table=config["virulence_factors"],
+            spa_typing='report/typing/spa/summary.tsv',
+            mlst='report/typing/mlst/summary.tsv',
+            resistance_tables = expand("samples/{sample}/resistance/rgi.tsv", sample = read_naming.keys()),
+        params:
+            samples = list(read_naming.keys()),
+        output:
+            "report/figures/virulence_staph.svg",
+            "virulence/virulence_staph.tab",
+        script:
+            "scripts/plot_ete_virulence.py"
 
 rule plot_MLST_ete_tree:
     conda:
@@ -21,24 +40,6 @@ rule plot_MLST_ete_tree:
         "report/figures/mlst_tree.svg",
     script:
         "scripts/plot_ete_MLST.py"
-
-rule plot_virulence_ete_tree_s_aureus:
-    conda:
-        pipeline_path + "envs/pandas-ete3-matplotlib.yml",
-    input:
-        nr_blast_results=expand("samples/{sample}/virulence/results_blast_not_redundant.tsv", sample = read_naming.keys()),
-        best_tree = "phylogeny/checkm/tree.nwk",
-        vf_table=config["virulence_factors"],
-        spa_typing='report/typing/spa/summary.tsv',
-        mlst='report/typing/mlst/summary.tsv',
-        resistance_tables = expand("samples/{sample}/resistance/rgi.tsv", sample = read_naming.keys()),
-    params:
-        samples = list(read_naming.keys()),
-    output:
-        "report/figures/virulence_staph.svg",
-        "virulence/virulence_staph.tab",
-    script:
-        "scripts/plot_ete_virulence.py"
 
 rule plot_VFDB_ete_tree_counts:
     conda:

@@ -19,7 +19,7 @@ rule blast_virulence_protein_to_proteome_or_contigs:
             result=""
             seq_prot_virulence=$(grep -v "^>" ${{i}} | tr -d '[:space:]' )
             if [ "${{#seq_prot_virulence}}" -gt "50" ]
-            then                                             
+            then
                 result=$(blastp -query ${{i}} -db {input[3]} -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore sseq qcovs" | awk '$3>{params.perc_id_cutoff}' | awk '$14>{params.cov_cutoff}' | head -n 1)
                 if [ ! -z "${{result}}" ]
                 then
@@ -31,7 +31,7 @@ rule blast_virulence_protein_to_proteome_or_contigs:
                 then
                    echo ${{result}} tblastn | sed "s/ /\\t/g" >> {output[0]}
                 fi
-            fi 
+            fi
         done
         """
 
@@ -43,7 +43,7 @@ rule remove_redundancy_from_blast_results:
     script:
         "scripts/remove_overlap_from_blast_results.py"
 
-        
+
 rule extract_protein_sequences_from_blast_results:
     conda:
         pipeline_path + "envs/samtools.yml"
@@ -57,27 +57,28 @@ rule extract_protein_sequences_from_blast_results:
         awk '$15=="blastp"' {input[blast_res]} | cut -f1,2 > {output[virulence_fasta]}.tmp
         awk '$15=="blastp"' {input[blast_res]} | cut -f2 | xargs -n 1 samtools faidx {input[annotation_prot]} > {output[virulence_fasta]}
         while read hit prokka
-        do 
+        do
            sed -i "s/${{prokka}}/{wildcards.sample}_${{prokka}}_(${{hit}}_homolog)/" {output[virulence_fasta]}
         done < {output[virulence_fasta]}.tmp
         awk '$15=="tblastn"' {input[blast_res]} | cut -f 13 | sed "s/-//g" > {output[virulence_fasta]}.tmp
         awk '$15=="tblastn"' {input[blast_res]} | cut -f1 | sed "s/^/>{wildcards.sample}_/" | sed "s/$/_homolog/" | paste -d"\\n" - {output[virulence_fasta]}.tmp >> {output[virulence_fasta]}
         rm {output[virulence_fasta]}.tmp
         """
-        
-rule add_description_to_blast_results:
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
-    input:
-        "samples/{sample}/virulence/results_blast_not_redundant.tsv",
-        config["virulence_factors"]
-    output:
-        "samples/{sample}/virulence/{sample}_virulence.tsv",
-        "samples/{sample}/virulence/{sample}_virulence_summary.xlsx"
-    script:
-        "scripts/merge_result_and_description.py"
-        
-    
+
+if "virulence_factors" in config:        
+    rule add_description_to_blast_results:
+        conda:
+            pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+        input:
+            "samples/{sample}/virulence/results_blast_not_redundant.tsv",
+            config["virulence_factors"]
+        output:
+            "samples/{sample}/virulence/{sample}_virulence.tsv",
+            "samples/{sample}/virulence/{sample}_virulence_summary.xlsx"
+        script:
+            "scripts/merge_result_and_description.py"
+
+
 rule merge_samples_summary:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml",

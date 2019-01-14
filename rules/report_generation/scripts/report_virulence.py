@@ -11,8 +11,8 @@ import io
 from docutils.core import publish_file, publish_parts
 from docutils.parsers.rst import directives
 
-rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
-resistance_reports = snakemake.input["resistance_reports"]
+#rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
+#resistance_reports = snakemake.input["resistance_reports"]
 multiqc_assembly = snakemake.input["multiqc_assembly"]
 virulence_reports = snakemake.input["virulence_reports"]
 ordered_samples = snakemake.params["samples"]
@@ -25,6 +25,10 @@ blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input
 mash_detail = snakemake.input["mash_detail"]
 
 output_file = snakemake.output[0]
+
+# only if a custom list of uniprot accession was provided
+if "custom_virulence" in snakemake.input:
+    custom_virulence = snakemake.input["custom_virulence"]
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
