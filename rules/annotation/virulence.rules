@@ -65,7 +65,7 @@ rule extract_protein_sequences_from_blast_results:
         rm {output[virulence_fasta]}.tmp
         """
 
-if "virulence_factors" in config:        
+if "virulence_factors" in config:
     rule add_description_to_blast_results:
         conda:
             pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
@@ -89,6 +89,18 @@ rule merge_samples_summary:
         "virulence_summary.xlsx"
     script:
         pipeline_path + "rules/annotation/resistance/scripts/merge_non_empty_results.py"
+
+rule generate_html_report:
+    conda:
+        pipeline_path + "envs/report.yml",
+    input:
+        blast_results="samples/{sample}/virulence/{sample}_virulence_summary.xlsx",
+    params:
+        sample="{sample}",
+    output:
+        "report/virulence/custom/{sample}_VF_report.html"
+    script:
+        "scripts/generate_virulence_html_report.py"
 
 rule blast_proteome_to_VFDB:
     params:
@@ -115,7 +127,7 @@ rule generate_VFDB_report:
     params:
         sample="{sample}",
     output:
-        "report/virulence/{sample}_VFDB_report.html"
+        "report/virulence/VFDB/{sample}_VFDB_report.html"
     script:
         "scripts/generate_VFDB_html_report.py"
 

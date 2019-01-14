@@ -264,18 +264,23 @@ def qualimap_table(qualimap_links, self_mapping=False):
 
 def virulence_table(virulence_reports,
                     blast_files,
-                    ordered_samples):
+                    ordered_samples,
+                    fasta_files=False):
 
     header = ["Strain id","Number of VFs","Virulence Report"]
 
     sample2n_VFs = {}
     for n, sample in enumerate(ordered_samples):
-        sample2n_VFs[sample] = len(blast_files[n])
+        print(n, sample)
+        if not fasta_files:
+            sample2n_VFs[sample] = len(blast_files[n])
+        else:
+            sample2n_VFs[sample] = len([i for i in SeqIO.parse(open(blast_files[n], 'r'), "fasta")])
 
     vf_data = []
-    report_template = '<a href="virulence/%s_VFDB_report.html">VFDB report</a>'
+    report_template = '<a href="virulence/%s_.*_report.html">Details</a>'
     for report in virulence_reports:
-        sample = re.search('report/virulence/(.*)_VFDB_report.html', report).group(1)
+        sample = re.search('report/virulence/.*/(.*)_.*_report.html', report).group(1)
         vf_data.append([sample,
                       sample2n_VFs[sample],
                       report_template % sample])

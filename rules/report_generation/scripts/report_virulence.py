@@ -27,8 +27,34 @@ mash_detail = snakemake.input["mash_detail"]
 output_file = snakemake.output[0]
 
 # only if a custom list of uniprot accession was provided
-if "custom_virulence" in snakemake.input:
-    custom_virulence = snakemake.input["custom_virulence"]
+if "custom_virulence" in snakemake.input.keys():
+    custom_virulence_reports = snakemake.input["custom_virulence"]
+    custom_virulence_fasta = snakemake.input["custom_virulence_fasta"]
+
+    table_virulence = report.virulence_table(custom_virulence_reports,
+                                             custom_virulence_fasta,
+                                             ordered_samples,
+                                             fasta_files=True)
+
+    custom_VFs = '''
+
+Virulence (Uniprot)
+--------------------
+
+The identification of virulence factors was performed with BLAST. Only hits exhibiting more
+than XX%% amino acid identity to a known virulence factor database are considered.
+
+Details
+********
+
+.. raw:: html
+
+    %s
+
+    ''' % table_virulence
+else:
+
+    custom_VFs = ''
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -213,6 +239,8 @@ Details
 .. raw:: html
 
     {table_virulence}
+
+{custom_VFs}
 
 """
 with open(output_file, "w") as fh:
