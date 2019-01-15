@@ -34,7 +34,8 @@ include:
 if species in all_core_genome_dbs.index:
     include:
         pipeline_path + "rules/core_genome/cgMLST.rules"
-
+    ruleorder: extract_individual_cgMLST_regions_from_vcf > filter_on_frequency_per_sample
+    
 include:
     pipeline_path + "rules/downloading/fetch_single_reference.rules"
 
