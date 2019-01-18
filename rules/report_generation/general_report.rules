@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import itertools
+import sys
+
 
 # todo: add heatmaps overview
 # todo: build phylogeny from a set of core markers?
@@ -15,80 +17,84 @@ def resistance_tables():
     else:
         return ["report/resistance/rgi_summary.xlsx"]
 
-rule report_resistance:
-    conda:
-        pipeline_path + "envs/report.yml"
-    input:
-        qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
-        multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
-        resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
-        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-        high_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta", sample=read_naming.keys()),
-        contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
-        rgi_overview = "report/resistance/rgi_overview.svg",
-        mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
-        low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
-        mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
-        resistance_tables = resistance_tables(),
-    params:
-        samples = list(read_naming.keys()),
-        sample_table = all_samples
-    output:
-        "report/report_resistance.html",
-    script:
-        "scripts/report_resistance.py"
+if "resistance" in sys.argv:
 
-if "virulence_factors" in config:
-    rule report_virulence:
+    rule report_resistance:
         conda:
             pipeline_path + "envs/report.yml"
         input:
             qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
             multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
-            virulence_reports = expand("report/virulence/VFDB/{sample}_VFDB_report.html", sample=read_naming.keys()),
-            blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
+            resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
             low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-            contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
-            sample=read_naming.keys()),
-            low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
+            high_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta", sample=read_naming.keys()),
+            contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
+            rgi_overview = "report/resistance/rgi_overview.svg",
             mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
-            mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
-            custom_virulence = expand("report/virulence/custom/{sample}_VF_report.html", sample=read_naming.keys()),
-            custom_virulence_fasta = expand("samples/{sample}/virulence/proteins.fasta", sample=read_naming.keys()),
-        params:
-            samples = list(read_naming.keys()),
-            sample_table = all_samples,
-            virulence_percentage_identity_cutoff = config["virulence_percentage_identity_cutoff"],
-            virulence_coverage_cutoff = config["virulence_coverage_cutoff"]
-        output:
-            "report/report_virulence.html",
-        script:
-            "scripts/report_virulence.py"
-else:
-    rule report_virulence:
-        conda:
-            pipeline_path + "envs/report.yml"
-        input:
-            qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
-            multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
-            virulence_reports = expand("report/virulence/VFDB/{sample}_VFDB_report.html", sample=read_naming.keys()),
-            blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
-            low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-            contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
-            sample=read_naming.keys()),
             low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
-            mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
             mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
-
+            resistance_tables = resistance_tables(),
         params:
             samples = list(read_naming.keys()),
             sample_table = all_samples
         output:
-            "report/report_virulence.html",
+            "report/report_resistance.html",
         script:
-            "scripts/report_virulence.py"
+            "scripts/report_resistance.py"
 
-if "snp_caller" in config:
+if "virulence" in sys.argv:
+
+    if "virulence_factors" in config:
+        rule report_virulence:
+            conda:
+                pipeline_path + "envs/report.yml"
+            input:
+                qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
+                multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
+                virulence_reports = expand("report/virulence/VFDB/{sample}_VFDB_report.html", sample=read_naming.keys()),
+                blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
+                low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+                contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
+                sample=read_naming.keys()),
+                low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
+                mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
+                mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
+                custom_virulence = expand("report/virulence/custom/{sample}_VF_report.html", sample=read_naming.keys()),
+                custom_virulence_fasta = expand("samples/{sample}/virulence/proteins.fasta", sample=read_naming.keys()),
+            params:
+                samples = list(read_naming.keys()),
+                sample_table = all_samples,
+                virulence_percentage_identity_cutoff = config["virulence_percentage_identity_cutoff"],
+                virulence_coverage_cutoff = config["virulence_coverage_cutoff"]
+            output:
+                "report/report_virulence.html",
+            script:
+                "scripts/report_virulence.py"
+    else:
+        rule report_virulence:
+            conda:
+                pipeline_path + "envs/report.yml"
+            input:
+                qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
+                multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
+                virulence_reports = expand("report/virulence/VFDB/{sample}_VFDB_report.html", sample=read_naming.keys()),
+                blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
+                low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+                contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
+                sample=read_naming.keys()),
+                low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
+                mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
+                mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
+
+            params:
+                samples = list(read_naming.keys()),
+                sample_table = all_samples
+            output:
+                "report/report_virulence.html",
+            script:
+                "scripts/report_virulence.py"
+
+if "epidemiology" in sys.argv:
     rule report_epidemiology_virulence_resistance_saureus:
         conda:
             pipeline_path + "envs/report.yml"
@@ -250,6 +256,7 @@ if "snp_caller" in config:
         script:
             "scripts/report_epidemiology_virulence_resistance.py"
 
+if "strain_characterization" in sys.argv:
     rule report_strain_characterization:
         conda:
             pipeline_path + "envs/report.yml"
