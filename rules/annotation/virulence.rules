@@ -98,7 +98,7 @@ rule generate_html_report:
     params:
         sample="{sample}",
     output:
-        "report/virulence/custom/{sample}_VF_report.html"
+        "report/virulence/custom/{sample}_report.html"
     script:
         "scripts/generate_virulence_html_report.py"
 
@@ -127,7 +127,7 @@ rule generate_VFDB_report:
     params:
         sample="{sample}",
     output:
-        "report/virulence/VFDB/{sample}_VFDB_report.html"
+        "report/virulence/VFDB/{sample}_report.html"
     script:
         "scripts/generate_VFDB_html_report.py"
 

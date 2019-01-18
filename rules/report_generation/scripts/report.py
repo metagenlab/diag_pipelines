@@ -271,7 +271,6 @@ def virulence_table(virulence_reports,
 
     sample2n_VFs = {}
     for n, sample in enumerate(ordered_samples):
-        print(n, sample)
         if not fasta_files:
             sample2n_VFs[sample] = len(blast_files[n])
         else:
@@ -282,8 +281,8 @@ def virulence_table(virulence_reports,
     for report in virulence_reports:
         sample = re.search('report/virulence/.*/(.*)_report.html', report).group(1)
         vf_data.append([sample,
-                      sample2n_VFs[sample],
-                      report_template % sample])
+                        sample2n_VFs[sample],
+                        report_template % sample])
 
     df = pandas.DataFrame(vf_data, columns=header)
 

@@ -121,7 +121,7 @@ mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_
 multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
 qualimap_table = report.qualimap_table(qualimap_reports, self_mapping=True)
 
-table_lowcoverage_contigs = quality_table(low_cov_fasta,
+table_lowcoverage_contigs = quality_table(low_cov_fastas,
                                           sample2gc,
                                           sample2median_depth,
                                           sampls2cumulated_size,
@@ -202,17 +202,10 @@ Detail
     {table_resistance}
 
 """
-    with open(output_file, "w") as fh:
-        publish_file(
-            source=io.StringIO(report_str),
-            destination=fh,
-            writer_name="html",
-            settings_overrides={"stylesheet_path": ""},
-        )
-
-write_report(output_file,
-             STYLE,
-             SCRIPT,
-             resistance_reports,
-             low_cov_fastas,
-             rgi_overview)
+with open(output_file, "w") as fh:
+    publish_file(
+        source=io.StringIO(report_str),
+        destination=fh,
+        writer_name="html",
+        settings_overrides={"stylesheet_path": ""},
+    )
