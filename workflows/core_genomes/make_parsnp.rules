@@ -7,15 +7,15 @@ include:
     pipeline_path + "rules/downloading/fetch_references.rules"
 
 rule calculate_core_genome_parsnp:
+    conda:
+        pipeline_path + "envs/parsnp.yml"
     input:
         "references/{spec}/all_complete_genomes_log.txt"
     output:
         "core_genomes/parsnp/{spec}/parsnp.xmfa"
     log:
-        logging_folder + "core_genome/parsnp/log.txt"
+        logging_folder + "core_genome/parsnp/{spec}_log.txt"
     shell:
         """
         parsnp -r ! -c -d $(dirname {input[0]})/all_complete_genomes/ -o $(dirname {output[0]})
         """
-
-        
