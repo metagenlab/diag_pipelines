@@ -200,11 +200,11 @@ if "epidemiology" in sys.argv:
         lst = []
         for i in reference_genomes_dir:
             if i == "cgMLST":
-                lst.append(multiqc_template % (mapping,
-                                               str(all_core_genome_dbs.loc[species, "ReferenceGenome"])))
+                lst.append(multiqc_template % (str(all_core_genome_dbs.loc[species, "ReferenceGenome"]),
+                                               mapping))
             else:
-                lst.append(multiqc_template % (mapping,
-                                               i))
+                lst.append(multiqc_template % (i,
+                                               mapping))
         return lst
 
     rule report_epidemiology:
