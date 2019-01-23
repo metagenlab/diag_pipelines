@@ -36,9 +36,12 @@ def vcf_ref(wildcards):
     # typing/gatk_gvcfs/full_genome_79781/bwa/filtering/freq_cov_decomposed_normalized.vcf
     if "_assembled_genome" in wildcards.reference:
         return "typing/" + wildcards.snp_caller + "/full_genome_" + wildcards.reference + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
-    else:
+    elif "cgMLST" in wildcards.reference:
         return "typing/" + wildcards.snp_caller + "/full_genome_" + str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
-
+    elif "parsnp" in wildcards.reference:
+         return "typing/" + wildcards.snp_caller + "/" + wildcards.reference + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
+    else:
+        raise IOError("wrong reference")
 rule generate_snps_html_report:
     conda:
         pipeline_path + "envs/report.yml"

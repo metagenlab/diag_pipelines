@@ -16,10 +16,6 @@ rule resistance:
     input:
         "report/report_resistance.html",
 
-rule complete:
-    input:
-        "report/report_epidemiology_virulence_resistance.html",
-
 rule strain_characterization:
     input:
         "report/report_strain_characterization.html",
@@ -29,5 +25,3 @@ rule strain_characterization:
 - we set a rule order to be able to extract core SNP data from the complete reference genome data
 (without mapping of the linked cgMLST genome which is the same as the reference one)
 '''
-
-ruleorder: extract_individual_cgMLST_regions_from_vcf > filter_on_frequency_per_sample

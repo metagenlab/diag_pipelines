@@ -129,6 +129,10 @@ if "reference" in config:
         if ref == "cgMLST":
             reference_genomes.append("cgMLST")
             reference_genomes_dir.append("cgMLST")
+        elif 'parsnp' in ref:
+            print("parsnp")
+            reference_genomes.append(ref)
+            reference_genomes_dir.append(ref)
         elif ref in read_naming.keys():
             reference_genomes.append("full_genome_%s_assembled_genome" % ref)
             reference_genomes_dir.append("%s_assembled_genome" % ref)
@@ -140,4 +144,4 @@ if "reference" in config:
                 reference_genomes_dir.append(ref)
 
             except:
-                raise IOerror("Unexpected reference: %s" % ref)
+                raise IOError("Unexpected reference: %s" % ref)
