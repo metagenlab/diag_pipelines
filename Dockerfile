@@ -10,7 +10,7 @@ RUN conda install snakemake=5.3.0
 
 RUN conda install unzip
 
-RUN conda install sra-tools=2.9.0
+RUN conda install sra-tools=2.9.1
 
 #RUN conda install biopython=1.70
 
