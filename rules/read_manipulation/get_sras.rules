@@ -15,8 +15,6 @@ rule download_sra:
         sra_dir = "$HOME/ncbi/public"
     shell:
         """
-        #vdb-config --restore-defaults
-        vdb-config -s /repository/user/main/public/root="{params.sra_dir}"
         #cache_dir=$(vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g")
         prefetch -v {wildcards.sample} --max-size 100000000 &> {log}
         """

@@ -36,7 +36,7 @@ WORKDIR ${main}/data/
 
 ENV NCBI_API_KEY=719f6e482d4cdfa315f8d525843c02659408
 
-RUN vdb-config --restore-defaults
+RUN vdb-config -s /repository/user/main/public/root="/home/pipeline_user/ncbi/public"
 
 # setup VFDB database
 
