@@ -1,14 +1,15 @@
 
-try:
-    sra_download_dir = subprocess.Popen('''vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g"''', shell=True, stdout=subprocess.PIPE).stdout.read().rstrip().decode('UTF-8').replace(' ','')
-except:
-    raise IOError("Sra-tools need to be install and the sra donwload dir need to be set to perform the analysis")
+#try:
+#    sra_download_dir = subprocess.Popen('''vdb-config --cfg -o n | grep "/repository/user/main/public/root" | cut -f2 -d'=' | sed "s/\\"//g"''', shell=True, stdout=subprocess.PIPE).stdout.read().rstrip().decode('UTF-8').replace(' ','')
+#except:
+#    raise IOError("Sra-tools need to be install and the sra donwload dir need to be set to perform the analysis")
 
 rule download_sra:
     conda:
         pipeline_path + "envs/sra-tools.yml"
     output:
-        temp("%s/sra/{sample}.sra" % sra_download_dir),
+        # /home/pipeline_user/ncbi/public
+        temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
     log:
         logging_folder + "samples/{sample}/sras/dump.txt"
     params:
@@ -24,12 +25,12 @@ rule sra_convert_to_fastq_paired:
     conda:
         pipeline_path + "envs/sra-tools.yml"
     input:
-        "%s/sra/{sample}.sra" % sra_download_dir,
+        temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
     output:
         temp(link_directory + "{sample,[A-Za-z0-9]+}_1.fastq.gz"),
         temp(link_directory + "{sample,[A-Za-z0-9]+}_2.fastq.gz"),
     log:
-        "log/sra_download/{sample}_dump.txt"
+        "log/sra_download/{sample}_dump.txt",
     shell:
         """
         fastq-dump --split-3 --gzip --log-level 1 --disable-multithreading --minReadLen 0 --outdir $(dirname {output[0]}) {input[0]} &> {log}
@@ -39,7 +40,7 @@ rule sra_convert_to_fastq_single:
     conda:
         pipeline_path + "envs/sra-tools.yml"
     input:
-        "%s/sra/{sample}.sra" % sra_download_dir,
+        temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
     output:
         temp(link_directory + "{sample,[A-Za-z0-9]+}.fastq.gz"),
     log:
