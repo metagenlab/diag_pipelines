@@ -4,7 +4,10 @@ RUN conda config --add channels defaults && conda config --add channels conda-fo
 
 RUN useradd -r -u 1080 pipeline_user
 
-RUN conda install -c anaconda fontconfig
+# qualimap dependancy
+RUN export DEBIAN_FRONTEND=noninteractive TERM=linux && \
+  apt-get update && \
+  apt-get -y --no-install-recommends install libfontconfig1
 
 RUN conda install snakemake=5.3.0
 
