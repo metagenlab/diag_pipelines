@@ -9,20 +9,24 @@ def get_centrifuge_table(centrifuge_links, sample2scientific_name):
     row_list = []
     for sample in centrifuge_links:
         sample_name = sample.split('/')[-2]
-        table = pandas.read_csv(sample, delimiter="\t", names=["name", "taxid", "rank", "n_reads", "percent_reads"])
+        table = pandas.read_csv(sample, delimiter="\t", names=["percent_root", "number_rooted", "number_assigned","rank", "taxid", "name"])
 
+        total_alligned_reads = sum(table["number_assigned"])
+        table["percent_assigned"] = round((table["number_assigned"] / total_alligned_reads) * 100, 2)
+
+        #unclassified = table.iloc[0]
         hit_1 = table.iloc[0]
         hit_2 = table.iloc[1]
         hit_3 = table.iloc[2]
 
         row = [sample_name,
                sample2scientific_name[sample_name],
-               hit_1["name"],
-               hit_1["percent_reads"],
-               hit_2["name"],
-               hit_3["percent_reads"],
-               hit_3["name"],
-               hit_3["percent_reads"],
+               "%s (%s)" % (hit_1["name"], hit_1["rank"]),
+               hit_1["percent_assigned"],
+               "%s (%s)" % (hit_2["name"], hit_2["rank"]),
+               hit_2["percent_assigned"],
+               "%s (%s)" % (hit_3["name"], hit_3["rank"]),
+               hit_3["percent_assigned"],
                '<a href="%s">detail</a>' % '/'.join(sample.split('/')[1:])]
 
         row_list.append(row)

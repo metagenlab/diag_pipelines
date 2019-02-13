@@ -223,7 +223,7 @@ if "epidemiology" in sys.argv:
             indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir, config["mapping"]),
             mash_results = expand('samples/{sample}/contamination/mash/fastq/distances_formated_no_virus.tsv', sample=read_naming.keys()),
             mash_detail = expand("report/contamination/mash/fastq/{sample}.html", sample=read_naming.keys()),
-            centrifuge_tables = expand("report/contamination/centrifuge/{sample}/formatted.tsv", sample=read_naming.keys()),
+            centrifuge_tables = expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
         params:
             core_genome_bed = check_if_cgMLST(),
             samples = list(read_naming.keys()),

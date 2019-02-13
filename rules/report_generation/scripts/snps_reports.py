@@ -45,6 +45,7 @@ def get_neiboring_orf(position, feature_list):
             locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
         except KeyError:
             gene = '-'
+            print(feature_list[-1])
             locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
         return ['%s (%s)' % (locus_tag, gene), '-']
     first_feature = False
@@ -57,7 +58,12 @@ def get_neiboring_orf(position, feature_list):
                 locus_tag = feature.qualifiers["locus_tag"][0]
             except KeyError:
                 gene = '-'
-                locus_tag = feature.qualifiers["locus_tag"][0]
+                print(feature)
+                locus_tag = feature.type
+                if 'mobile_element_type' in feature.qualifiers:
+                    gene = feature.qualifiers["mobile_element_type"]
+                else:
+                    gene = '-'
             return ["-", "%s (%s)" % (locus_tag, gene)]
 
         if int(position) > int(feature.location.end) and int(position) < int(feature_list[n + 1].location.start):
