@@ -147,6 +147,6 @@ if "reference" in config:
                 test = int(ref)
                 reference_genomes.append("full_genome_%s" % ref)
                 reference_genomes_dir.append(ref)
-
+                print("NCBI reference")
             except:
                 raise IOError("Unexpected reference: %s" % ref)
