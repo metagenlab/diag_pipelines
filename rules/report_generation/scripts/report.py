@@ -281,12 +281,14 @@ def virulence_table(virulence_reports,
             sample2n_VFs[sample] = len([i for i in SeqIO.parse(open(blast_files[n], 'r'), "fasta")])
 
     vf_data = []
-    report_template = '<a href="virulence/%s_report.html">Details</a>'
+    # report/virulence/VFDB/{sample}_report.html
+    report_template = '<a href="virulence/%s/%s_report.html">Details</a>'
     for report in virulence_reports:
         sample = re.search('report/virulence/.*/(.*)_report.html', report).group(1)
+        type = re.search('report/virulence/(.*)/.*_report.html', report).group(1)
         vf_data.append([sample,
                         sample2n_VFs[sample],
-                        report_template % sample])
+                        report_template % (type, sample)])
 
     df = pandas.DataFrame(vf_data, columns=header)
 
@@ -306,7 +308,7 @@ def virulence_table(virulence_reports,
 
 def resistance_table(resistance_reports):
 
-    header = ["Strain id","Resistance Report"]
+    header = ["Strain id", "Resistance Report"]
 
     rgi_data = []
     report_template = '<a href="resistance/%s_rgi_report.html">RGI report</a>'
