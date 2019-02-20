@@ -149,7 +149,7 @@ rule format_centrifuge_kraken:
     input:
         report = "report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt",
     output:
-        formatted_out = "report/contamination/centrifuge/{sample}/centrifuge_kraken_format_parcent.tsv",
+        formatted_out = "report/contamination/centrifuge/{sample}/centrifuge_kraken_format_percent.tsv",
     script:
         "scripts/format_centrifuge_kraken.py"
 
