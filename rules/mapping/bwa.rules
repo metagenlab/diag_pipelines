@@ -148,5 +148,5 @@ rule extract_large_deletion_from_mapping:
         "samples/{sample}/indel/{mapping_method}/{ref}/indel.bed",
     shell:
         """
-        bedtools genomecov -ibam {input[0]} -bga -split | grep -w 0$ || true | awk '($3-$2) >= {params[0]}' > {output[0]}
+        bedtools genomecov -ibam {input[0]} -bga -split | (grep -w 0$) || true | awk '($3-$2) >= {params[0]}' > {output[0]}
         """
