@@ -7,7 +7,7 @@ RUN useradd -r -u 1080 pipeline_user
 # qualimap dependancy
 RUN export DEBIAN_FRONTEND=noninteractive TERM=linux && \
   apt-get update && \
-  apt-get -y --no-install-recommends install libfontconfig1 file
+  apt-get -y --no-install-recommends install libfontconfig1 file procps
 
 RUN conda install snakemake=5.3.0
 
