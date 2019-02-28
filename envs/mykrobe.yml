@@ -3,3 +3,4 @@ channels:
  - conda-forge
 dependencies:
  - mykrobe = 0.5.6=py27_0
+ - openssl = 1.0.2p=h470a237_1

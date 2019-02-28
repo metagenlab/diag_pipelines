@@ -90,7 +90,7 @@ RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --notemp
 
 #TYPING ON 4 M. TB ISOLATES
 
-RUN /bin/bash -c 'source activate /opt/conda/envs/db3680fa/ && esearch -db sra -query "PRJEB12011[BIOPROJECT] AND \"Mycobacterium tuberculosis complex\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 5 > PRJEB12011_Mycobacterium-tuberculosis.tsv'
+RUN /bin/bash -c 'source activate /opt/conda/envs/db3680fa/ && esearch -db sra -query "PRJEB12011[BIOPROJECT] AND \"Mycobacterium tuberculosis complex\"[ORGANISM]" | efetch -db sra -format runinfo | sed "s/,/\t/g" | head -n 4 > PRJEB12011_Mycobacterium-tuberculosis.tsv'
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/resistance.rules --use-conda --conda-prefix $conda_folder --configfile ${pipeline_folder}/data/validation_datasets/config.yaml -j 4 report/figures/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg report/figures/gatk_gvcfs/cgMLST/bwa/distances_in_snp_mst_no_st.svg report/figures/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg report/resistance/mykrobe_summary.xlsx typing/freebayes_joint_genotyping/cgMLST/bwa/vcfs/SAMEA3697004_-_SAMEA3697005_in_snp.vcf report/figures/gatk_gvcfs/full_genome_SAMEA3697006_assembled_genome/bwa/distances_in_snp_mst_no_st.svg --config sra_samples=PRJEB12011_Mycobacterium-tuberculosis.tsv species="Mycobacterium_tuberculosis"
 

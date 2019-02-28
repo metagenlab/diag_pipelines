@@ -89,7 +89,7 @@ RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml virulence --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml strain_characterization --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
+RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml strain_characterization phylogeny/checkm/tree.nwk --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
 
 RUN patch /opt/conda/envs/9d0a6ae9/lib/python2.7/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
