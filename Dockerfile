@@ -91,7 +91,7 @@ RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml strain_characterization phylogeny/checkm/tree.nwk --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
 
-RUN patch /opt/conda/envs/9d0a6ae9/lib/python2.7/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
+RUN patch /opt/conda/envs/951e3846/lib/python2.7/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
 #RUN mkdir -p ${main}/data/references/1493941/
 
@@ -116,7 +116,7 @@ RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python3.6/site-packages/app/_data
 # give write acess to rgi database
 RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python3.6/site-packages/app/_db/
 
-RUN chmod -R 777 /opt/conda/envs/9d0a6ae9/lib/python2.7/site-packages/mykatlas/
+RUN chmod -R 777 /opt/conda/envs/951e3846/lib/python2.7/site-packages/mykatlas/
 
 RUN chown -R pipeline_user ${main}/
 
