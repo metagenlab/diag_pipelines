@@ -69,8 +69,20 @@ with open(rgi_json) as f:
     gene2snps = {}
     for contig in data.keys():
         for hit in data[contig]:
+            if not 'hsp_num:0' in hit:
+                continue
             amr_data = {}
             if data[contig][hit]["type_match"] != "Loose":
+                for key in data[contig][hit]["ARO_category"]:
+                    if data[contig][hit]["ARO_category"][key]["category_aro_class_name"] == 'Resistance Mechanism':
+                        amr_data["Resistance Mechanism"] = data[contig][hit]["ARO_category"][key]['category_aro_name']
+                    elif data[contig][hit]["ARO_category"][key]["category_aro_class_name"] == 'AMR Gene Family':
+                        amr_data["AMR Gene Family"] = data[contig][hit]["ARO_category"][key]["category_aro_name"]
+                    else:
+                        #print("-------- ARO: %s ---------" % data[contig][hit]['ARO_accession'])
+                        #print ("%s\t%s\t%s\t%s" % (contig, hit, key, data[contig][hit]["ARO_category"][key]))
+                        amr_data["Resistance Mechanism"] = data[contig][hit]["ARO_category"][key]['category_aro_name']
+
                 amr_data["ORF_ID"] = contig
                 amr_data["Contig"] = data[contig][hit]['orf_from']
                 amr_data["Start"] = data[contig][hit]['orf_start']
@@ -86,17 +98,15 @@ with open(rgi_json) as f:
                 amr_data["SNPs_in_Best_Hit_ARO"] = "n/a"
                 amr_data["Other_SNPs"] = "n/a"
                 amr_data["Drug Class"] = "n/a"
-                amr_data["Resistance Mechanism"] = "n/a"
-                amr_data["AMR Gene Family"] = "n/a"
                 amr_data["Predicted_DNA"] = data[contig][hit]['orf_dna_sequence']
                 amr_data["Predicted_Protein"] = data[contig][hit]['orf_prot_sequence']
                 amr_data["CARD_Protein_Sequence"] = data[contig][hit]['sequence_from_db']
                 seq1 = data[contig][hit]['match']
                 seq2 = data[contig][hit]['sequence_from_broadstreet']
-                print(amr_data["Best_Hit_ARO"])
-                print ("seq1", seq1)
-                print("seq2", seq2)
-                print(data[contig][hit])
+                #print(amr_data["Best_Hit_ARO"])
+                #print ("seq1", seq1)
+                #print("seq2", seq2)
+                #print(data[contig][hit])
                 try:
                     amr_data["Percentage Length of Reference Sequence"] = round((len(seq1)/len(seq2))*100, 2)
                 except:
