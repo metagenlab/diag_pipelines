@@ -234,7 +234,7 @@ def resistance_table(rgi_table,
 
         table_rows.append([contig,
                            orf_id,
-                           "%s (%s)" % (name, aro),
+                           '<a href="https://card.mcmaster.ca/aro/%s">%s</a>' % (aro, name),
                            model,
                            snps,
                            cov,

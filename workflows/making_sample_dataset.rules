@@ -55,12 +55,13 @@ if "local_samples" in config.keys():
     if "(" in all_local_sample_names or ")" in all_local_sample_names or "_-_" in all_local_sample_names:
         raise ValueError("Forbidden character in sample name in sample name file")
     reads_local = get_read_naming_patterns(link_directory)
+    #print(reads_local)
     original_names = { x : x for x in reads_local.keys() }
     read_correct = {}
     original_correct = {}
     if "OldSampleName" not in list(local_data):
         for i in list(local_data.index):
-            regex = re.compile(r'%s([^a-zA-Z0-9]|$)' % i) # this regex ensures that the matching of the sample names end at the end of the str, to prevent S1 matching S10 for instance
+            regex = re.compile(r'%s([^-a-zA-Z0-9]|$)' % i) # this regex ensures that the matching of the sample names end at the end of the str, to prevent S1 matching S10 for instance
             match = [bool(re.match(regex, x)) for x in sorted(list(original_names.keys()))]
             if sum(match) != 1: #there must be one and only one entry matching one sample name
                 raise ValueError("Problem matching SampleName to read file names")
@@ -69,10 +70,11 @@ if "local_samples" in config.keys():
             read_correct[i] = reads_local[sample]
     else:
         for i in list(local_data["OldSampleName"]):
-            regex = re.compile(r'%s([^a-zA-Z0-9]|$)' % i)
+            regex = re.compile(r'%s([^-a-zA-Z0-9]|$)' % i)
             match = [bool(re.match(regex, x)) for x in sorted(list(original_names.keys()))]
             if sum(match) != 1:
-                raise ValueError("Problem matching OldSampleName to read file names")
+                match_list = [x for x in sorted(list(original_names.keys())) if re.match(regex, x)]
+                raise ValueError("Problem matching OldSampleName to read file names. OldSampleName %s match mutiple fastq files prefix: %s" % (i, match_list))
             old_sample_name=str(sorted(list(original_names.keys()))[match.index(True)])
             sample=str(local_data.index[local_data['OldSampleName'] == i][0])
             original_correct[sample] = original_names[old_sample_name]
@@ -115,6 +117,9 @@ original_names = {**original_names, **reads_sra}
 #for key in read_naming:
 #    print("%s\t%s\t%s" % (key, read_naming[key], original_names[key]))
 
+#for i in list(read_naming.keys()):
+#    print ("%s\t%s\t%s" % (i, read_naming[i], original_names[i]))
+
 if "reference" in config:
     # preparing reference_genomes variable
     # 3 choices: cgMLST, local/sra sample or NCBI reference
@@ -142,6 +147,6 @@ if "reference" in config:
                 test = int(ref)
                 reference_genomes.append("full_genome_%s" % ref)
                 reference_genomes_dir.append(ref)
-
+                print("NCBI reference")
             except:
                 raise IOError("Unexpected reference: %s" % ref)

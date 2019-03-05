@@ -65,7 +65,7 @@ Epidemiological analysis
 		docker run -t --rm \
 		--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
 		metagenlab/diag_pipelines:latest \
-		sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+		sh -c 'snakemake --snakefile $pipeline_folder/workflows/full_pipeline.rules\
 		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
 		epidemiology'
 
@@ -83,7 +83,7 @@ Annotation of virulence factors
 		docker run -t --rm \
 		--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
 		metagenlab/diag_pipelines:latest \
-		sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+		sh -c 'snakemake --snakefile $pipeline_folder/workflows/full_pipeline.rules\
 		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
 		virulence'
 
@@ -98,7 +98,7 @@ Annotation of resistance markers
 		docker run -t --rm \
 		--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
 		metagenlab/diag_pipelines:latest \
-		sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+		sh -c 'snakemake --snakefile $pipeline_folder/workflows/full_pipeline.rules\
 		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
 		resistance'
 
@@ -113,7 +113,7 @@ Characterization of one or multiple strains
 		docker run -t --rm \
 		--mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
 		metagenlab/diag_pipelines:latest \
-		sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+		sh -c 'snakemake --snakefile $pipeline_folder/workflows/full_pipeline.rules\
 		--use-conda --conda-prefix $conda_folder --configfile config.yaml\
 		strain_characterization'
 
@@ -134,7 +134,7 @@ Main examples are provided below:
    docker run -t --rm \
    --mount source="$(pwd)",target=/home/pipeline_user/data/analysis/,type=bind \
    metagenlab/diag_pipelines:latest \
-   sh -c 'snakemake --snakefile $pipeline_folder/workflows/assembly_quality.rules\
+   sh -c 'snakemake --snakefile $pipeline_folder/workflows/full_pipeline.rules\
    --use-conda --conda-prefix $conda_folder --configfile config.yaml\
    report/multiqc_assembly/multiqc_report.html'
 

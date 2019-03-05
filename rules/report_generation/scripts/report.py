@@ -9,20 +9,24 @@ def get_centrifuge_table(centrifuge_links, sample2scientific_name):
     row_list = []
     for sample in centrifuge_links:
         sample_name = sample.split('/')[-2]
-        table = pandas.read_csv(sample, delimiter="\t", names=["name", "taxid", "rank", "n_reads", "percent_reads"])
+        table = pandas.read_csv(sample, delimiter="\t", names=["percent_root", "number_rooted", "number_assigned","rank", "taxid", "name"])
 
+        total_alligned_reads = sum(table["number_assigned"])
+        table["percent_assigned"] = round((table["number_assigned"] / total_alligned_reads) * 100, 2)
+
+        #unclassified = table.iloc[0]
         hit_1 = table.iloc[0]
         hit_2 = table.iloc[1]
         hit_3 = table.iloc[2]
 
         row = [sample_name,
                sample2scientific_name[sample_name],
-               hit_1["name"],
-               hit_1["percent_reads"],
-               hit_2["name"],
-               hit_3["percent_reads"],
-               hit_3["name"],
-               hit_3["percent_reads"],
+               "%s (%s)" % (hit_1["name"], hit_1["rank"]),
+               hit_1["percent_assigned"],
+               "%s (%s)" % (hit_2["name"], hit_2["rank"]),
+               hit_2["percent_assigned"],
+               "%s (%s)" % (hit_3["name"], hit_3["rank"]),
+               hit_3["percent_assigned"],
                '<a href="%s">detail</a>' % '/'.join(sample.split('/')[1:])]
 
         row_list.append(row)
@@ -277,12 +281,14 @@ def virulence_table(virulence_reports,
             sample2n_VFs[sample] = len([i for i in SeqIO.parse(open(blast_files[n], 'r'), "fasta")])
 
     vf_data = []
-    report_template = '<a href="virulence/%s_report.html">Details</a>'
+    # report/virulence/VFDB/{sample}_report.html
+    report_template = '<a href="virulence/%s/%s_report.html">Details</a>'
     for report in virulence_reports:
         sample = re.search('report/virulence/.*/(.*)_report.html', report).group(1)
+        type = re.search('report/virulence/(.*)/.*_report.html', report).group(1)
         vf_data.append([sample,
                         sample2n_VFs[sample],
-                        report_template % sample])
+                        report_template % (type, sample)])
 
     df = pandas.DataFrame(vf_data, columns=header)
 
@@ -302,7 +308,7 @@ def virulence_table(virulence_reports,
 
 def resistance_table(resistance_reports):
 
-    header = ["Strain id","Resistance Report"]
+    header = ["Strain id", "Resistance Report"]
 
     rgi_data = []
     report_template = '<a href="resistance/%s_rgi_report.html">RGI report</a>'

@@ -127,6 +127,32 @@ rule single_reads_classification_with_centrifuge:
         centrifuge -x ${{a/.1.cf/}} -U {input[0]} --report-file {output[0]} -S {output[1]}
         """
 
+rule convert_centrifuge_to_kraken_output:
+    threads:
+        4
+    conda:
+        pipeline_path + "envs/centrifuge.yml"
+    input:
+        detail = "samples/{sample}/contamination/centrifuge/results.tsv",
+        database = "references/centrifuge_db/p_compressed+h+v.1.cf"
+    output:
+        report = "report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt",
+    shell:
+        """
+        a=$(echo {input[1]})
+        centrifuge-kreport -x ${{a/.1.cf/}} {input[0]} | sed -e 's/  \+//g' | sort -nrk3 > {output[0]}
+        """
+
+rule format_centrifuge_kraken:
+    conda:
+        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+    input:
+        report = "report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt",
+    output:
+        formatted_out = "report/contamination/centrifuge/{sample}/centrifuge_kraken_format_percent.tsv",
+    script:
+        "scripts/format_centrifuge_kraken.py"
+
 rule format_centrifuge_output:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"

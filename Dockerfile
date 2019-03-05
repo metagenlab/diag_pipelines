@@ -4,13 +4,16 @@ RUN conda config --add channels defaults && conda config --add channels conda-fo
 
 RUN useradd -r -u 1080 pipeline_user
 
-RUN conda install -c anaconda fontconfig
+# qualimap dependancy
+RUN export DEBIAN_FRONTEND=noninteractive TERM=linux && \
+  apt-get update && \
+  apt-get -y --no-install-recommends install libfontconfig1 file procps libsm6 libxext6
 
 RUN conda install snakemake=5.3.0
 
 RUN conda install unzip
 
-RUN conda install sra-tools=2.9.0
+RUN conda install sra-tools=2.9.1
 
 #RUN conda install biopython=1.70
 
@@ -36,7 +39,7 @@ WORKDIR ${main}/data/
 
 ENV NCBI_API_KEY=719f6e482d4cdfa315f8d525843c02659408
 
-RUN vdb-config --restore-defaults
+#RUN vdb-config -s /repository/user/main/public/root="/home/pipeline_user/ncbi/public"
 
 # setup VFDB database
 
@@ -86,9 +89,9 @@ RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use
 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml virulence --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
 
-RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml epidemiology --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
+RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml strain_characterization phylogeny/checkm/tree.nwk --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
 
-RUN patch /opt/conda/envs/9d0a6ae9/lib/python2.7/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
+RUN patch /opt/conda/envs/951e3846/lib/python2.7/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
 #RUN mkdir -p ${main}/data/references/1493941/
 
@@ -113,7 +116,7 @@ RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python3.6/site-packages/app/_data
 # give write acess to rgi database
 RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python3.6/site-packages/app/_db/
 
-RUN chmod -R 777 /opt/conda/envs/9d0a6ae9/lib/python2.7/site-packages/mykatlas/
+RUN chmod -R 777 /opt/conda/envs/951e3846/lib/python2.7/site-packages/mykatlas/
 
 RUN chown -R pipeline_user ${main}/
 

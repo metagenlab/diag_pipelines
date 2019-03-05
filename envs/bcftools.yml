@@ -3,3 +3,4 @@ channels:
  - conda-forge
 dependencies:
  - bcftools = 1.7=0
+ - openssl = 1.0.2p=h470a237_1
