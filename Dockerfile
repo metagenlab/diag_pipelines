@@ -1,5 +1,14 @@
 FROM continuumio/miniconda3:4.5.12
 
+ENV TZ Europe/Zurich
+
+RUN echo $TZ > /etc/timezone && \
+    apt-get update && apt-get install -y tzdata && \
+    rm /etc/localtime && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get clean
+
 RUN conda config --add channels defaults && conda config --add channels conda-forge && conda config --add channels bioconda
 
 RUN useradd -r -u 1080 pipeline_user
