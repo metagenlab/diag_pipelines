@@ -41,7 +41,9 @@ def vcf_ref(wildcards):
     elif "parsnp" in wildcards.reference:
          return "typing/" + wildcards.snp_caller + "/" + wildcards.reference + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
     else:
-        raise IOError("wrong reference")
+        # NCBI reference?
+        return "typing/" + wildcards.snp_caller + "/full_genome_" + wildcards.reference + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
+        #raise IOError("wrong reference")
 
 rule generate_snps_html_report:
     conda:
