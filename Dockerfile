@@ -36,12 +36,6 @@ RUN mkdir -p /opt/conda/envs/
 
 ENV conda_folder=/opt/conda/envs/
 
-WORKDIR /usr/local/bin
-
-RUN wget -qO- https://github.com/marbl/parsnp/releases/download/v1.2/parsnp-Linux64-v1.2.tar.gz > parsnp.tar.gz
-
-RUN tar xf parsnp.tar.gz && mv Parsnp-Linux64-v1.2/parsnp . && rm -rf Parsnp-Linux64-v1.2/
-
 RUN mkdir -p ${main}/data/links
 
 WORKDIR ${main}/data/
