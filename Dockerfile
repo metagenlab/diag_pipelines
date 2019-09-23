@@ -110,17 +110,6 @@ RUN mkdir ${main}/data/analysis/
 
 WORKDIR ${main}/data/analysis/
 
-RUN wget https://card.mcmaster.ca/download/0/broadstreet-v3.0.0.tar.gz --no-check-certificate && tar xf broadstreet-v3.0.0.tar.gz
-
-RUN /bin/bash -c 'source activate /opt/conda/envs/5181c089/ && rgi load -i card.json'
-
-RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python3.6/site-packages/app/_data
-
-# give write acess to rgi database
-RUN chmod -R 777 /opt/conda/envs/5181c089/lib/python3.6/site-packages/app/_db/
-
-RUN chmod -R 777 /opt/conda/envs/951e3846/lib/python2.7/site-packages/mykatlas/
-
 RUN chown -R pipeline_user ${main}/
 
 USER pipeline_user

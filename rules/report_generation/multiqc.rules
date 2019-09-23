@@ -3,6 +3,8 @@ rule create_multiqc_report_for_assembly:
         configfile = multiqc_configfile
     conda:
         pipeline_path + "envs/multiqc.yml"
+    singularity:
+        "docker://quay.io/biocontainers/multiqc:1.7--py_4"         
     input:
         assembly=expand("samples/{sample}/multiqc/assembly/log.txt", sample = list(read_naming.keys())),
         mapping=expand("samples/{sample}/multiqc/mapping_to_{sample}_assembled_genome/bwa/log.txt", sample = list(read_naming.keys())),
@@ -21,6 +23,8 @@ rule create_multiqc_report_for_mapping:
         configfile = multiqc_configfile
     conda:
         pipeline_path + "envs/multiqc.yml"
+    singularity:
+        "docker://quay.io/biocontainers/multiqc:1.7--py_4" 
     input:
         mapping = expand("samples/{sample}/multiqc/mapping_to_{{ref}}/{{mapping_method}}/log.txt", sample = list(read_naming.keys())),
     output:

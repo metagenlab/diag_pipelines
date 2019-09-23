@@ -48,6 +48,8 @@ def vcf_ref(wildcards):
 rule generate_snps_html_report:
     conda:
         pipeline_path + "envs/report.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-report:1.2"  
     input:
         # samples/TATRas-control/snps/gatk_gvcfs/TATRas-control_assembled_genome/bwa/freq.vcf
         # typing/gatk_gvcfs/full_genome_TATRas-control_assembled_genome/bwa/all_samples_snp.vcf
@@ -65,6 +67,8 @@ rule generate_snps_html_report:
 rule generate_deletion_html_report:
     conda:
         pipeline_path + "envs/report.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-report:1.2"   
     input:
         deletion_bed = "samples/{sample}/indel/{mapping_method}/{reference}/indel.bed",
         gbk_file = gbk_ref

@@ -1,6 +1,6 @@
 rule search_resistance_paired_reads_with_mykrobe:
-    conda:
-        pipeline_path + "envs/mykrobe.yml"
+    singularity:
+        "docker://quay.io/biocontainers/mykrobe:0.7.0--py37h2666aa9_0"
     params:
         panel = mykrobe_panel,
         species = mykrobe_species[species.split("_")[0]],
@@ -28,8 +28,8 @@ rule search_resistance_paired_reads_with_mykrobe:
         """
 
 rule search_resistance_single_reads_with_mykrobe:
-    conda:
-        pipeline_path + "envs/mykrobe.yml"
+    singularity:
+        "docker:quay.io/biocontainers/mykrobe:0.7.0--py37h2666aa9_0"
     params:
         panel = mykrobe_panel,
         species = mykrobe_species[species.split("_")[0]],
@@ -44,13 +44,13 @@ rule search_resistance_single_reads_with_mykrobe:
         """
         if [ "{params.species}" = "staph" ]
         then
-            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --format json > {output[0]} 2> {log}
         else
             if [ -z "{params.panel}" ]
             then
-                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf  {params.confidence} --format json > {output[0]} 2> {log}
             else
-                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
+                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]} --format json > {output[0]} 2> {log}
             fi
         fi
         """

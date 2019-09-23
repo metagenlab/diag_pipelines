@@ -1,6 +1,8 @@
 rule map_paired_reads_with_bwa:
     conda:
         pipeline_path + "envs/bwa-samtools.yml"
+    singularity:
+        "docker://metagenlab/bwa-samtools:1.0"
     params:
         platform = "ILLUMINA"
     input:
@@ -24,6 +26,8 @@ rule map_paired_reads_with_bwa:
 rule map_single_reads_with_bwa:
     conda:
         pipeline_path + "envs/bwa-samtools.yml"
+    singularity:
+        "docker://metagenlab/bwa-samtools:1.0"
     params:
         platform = "ILLUMINA"
     input:
@@ -46,6 +50,8 @@ rule map_single_reads_with_bwa:
 rule mapping_depth:
     conda:
         pipeline_path + "envs/bwa-samtools.yml"
+    singularity:
+        "docker://metagenlab/bwa-samtools:1.0"  
     input:
         "samples/{sample}/mapping/bwa/{ref}.bam",
     output:
@@ -58,6 +64,8 @@ rule mapping_depth:
 rule map_paired_reads_with_bwa_for_direct_sequencing:
     conda:
         pipeline_path + "envs/bwa-samtools.yml"
+    singularity:
+        "docker://quay.io/biocontainers/bwa:0.7.4--hed695b0_2"
     params:
         platform = "ILLUMINA"
     input:
@@ -82,6 +90,8 @@ rule map_paired_reads_with_bwa_for_direct_sequencing:
 rule map_single_reads_with_bwa_for_direct_sequencing:
     conda:
         pipeline_path + "envs/bwa-samtools.yml"
+    singularity:
+        "docker://metagenlab/bwa-samtools:1.0"
     params:
         platform = "ILLUMINA"
     input:
@@ -104,6 +114,8 @@ rule map_single_reads_with_bwa_for_direct_sequencing:
 rule filter_reads_on_quality:
     conda:
         pipeline_path + "envs/bwa-samtools.yml"
+    singularity:
+        "docker://metagenlab/bwa-samtools:1.0"     
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}.bam.bai",
@@ -123,6 +135,8 @@ rule filter_reads_on_quality:
 rule remove_duplicates_from_mapping:
     conda:
         pipeline_path + "envs/gatk.yml"
+    singularity:
+        "docker://quay.io/biocontainers/gatk4:4.0.2.0--0"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam.bai",
@@ -139,6 +153,8 @@ rule remove_duplicates_from_mapping:
 rule extract_large_deletion_from_mapping:
     conda:
         pipeline_path + "envs/bedtools.yml"
+    singularity:
+        "docker://quay.io/biocontainers/bedtools:2.29.0--h6ed99ea_1"        
     params:
         indel_im_size = 10
     input:

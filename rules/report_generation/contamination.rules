@@ -2,6 +2,8 @@
 rule mash_report:
     conda:
         pipeline_path + "envs/report.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-report:1.2"
     input:
         mash_results = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv",
     params:
@@ -13,6 +15,8 @@ rule mash_report:
 rule low_coverage_contig_report:
     conda:
         pipeline_path + "envs/report.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-report:1.2"
     input:
         low_cov_contigs_fasta = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta",
     output:

@@ -1,6 +1,8 @@
 rule annotate_with_prokka:
     conda:
         pipeline_path + "envs/prokka.yml"
+    singularity:
+        "docker://quay.io/biocontainers/prokka:1.14.0--pl526_0"
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta"
     output:
@@ -22,6 +24,8 @@ rule annotate_with_prokka:
 rule annotate_with_prokka_unfiltered_assembly:
     conda:
         pipeline_path + "envs/prokka.yml"
+    singularity:
+        "docker://quay.io/biocontainers/prokka:1.14.0--pl526_0"
     input:
         contigs = "samples/{sample}/assembly/spades_no_correction/contigs.fasta"
     output:

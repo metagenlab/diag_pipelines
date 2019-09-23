@@ -3,6 +3,8 @@ rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
         8
     conda:
         pipeline_path + "envs/mash.yml"
+    singularity:
+        "docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0" 
     input:
         mash_sketch = "references/mash_sketch.msh",
         R1 = "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
@@ -19,6 +21,8 @@ rule calculate_distance_assembly_from_refseq_genomes_with_mash:
         8
     conda:
         pipeline_path + "envs/mash.yml"
+    singularity:
+        "docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0"
     input:
         mash_sketch = "references/mash_sketch.msh",
         assembly = "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
@@ -34,6 +38,8 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
         8
     conda:
         pipeline_path + "envs/mash.yml"
+    singularity:
+        "docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0"
     input:
         mash_sketch = "references/mash_sketch.msh",
         single = "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
@@ -97,6 +103,8 @@ rule paired_reads_classification_with_centrifuge:
         4
     conda:
         pipeline_path + "envs/centrifuge.yml"
+    singularity:
+        "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
     input:
         R1_trimmed = "samples/{sample}/reads/trimmed/R1_paired.fastq",
         R2_trimmed = "samples/{sample}/reads/trimmed/R2_paired.fastq",
@@ -115,6 +123,8 @@ rule single_reads_classification_with_centrifuge:
         4
     conda:
         pipeline_path + "envs/centrifuge.yml"
+    singularity:
+        "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
     input:
         single = "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
         database = "references/centrifuge_db/p_compressed+h+v.1.cf"
@@ -132,6 +142,8 @@ rule convert_centrifuge_to_kraken_output:
         4
     conda:
         pipeline_path + "envs/centrifuge.yml"
+    singularity:
+        "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
     input:
         detail = "samples/{sample}/contamination/centrifuge/results.tsv",
         database = "references/centrifuge_db/p_compressed+h+v.1.cf"

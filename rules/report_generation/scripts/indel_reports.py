@@ -4,12 +4,31 @@ import re
 import numpy
 import vcf
 from Bio import SeqIO
-from report import make_div
 # inputs
 bed_file = snakemake.input["deletion_bed"]
 gbk_file = snakemake.input["gbk_file"]
 report_file = snakemake.output["report_file"]
 
+
+def make_div(figure_or_data, include_plotlyjs=False, show_link=False, div_id=None):
+    div = offline.plot(
+        figure_or_data,
+        include_plotlyjs=include_plotlyjs,
+        show_link=show_link,
+        output_type="div",
+    )
+    if ".then(function ()" in div:
+        div = f"""{div.partition(".then(function ()")[0]}</script>"""
+    if div_id:
+        import re
+
+        try:
+            existing_id = re.findall(r'id="(.*?)"|$', div)[0]
+            div = div.replace(existing_id, div_id)
+        except IndexError:
+            pass
+    return div
+    
 
 def parse_gbk(gbk_file):
     record_dict = SeqIO.to_dict(SeqIO.parse(gbk_file, 'genbank'))

@@ -2,6 +2,8 @@
 rule calculate_assembly_statistics_with_quast:
     conda:
         pipeline_path + "envs/quast.yml"
+    singularity:
+        "docker://quay.io/biocontainers/quast:5.0.2--py35pl526ha92aebf_0"
     input:
         "samples/{sample}/annotation/{sample}.fsa"
     output:

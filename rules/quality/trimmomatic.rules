@@ -1,6 +1,8 @@
 rule trim_paired_reads_with_trimmomatic:
     conda:
         pipeline_path + "envs/trimmomatic.yml"
+    singularity:
+        "docker://quay.io/biocontainers/trimmomatic:0.32--3"         
     input:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"

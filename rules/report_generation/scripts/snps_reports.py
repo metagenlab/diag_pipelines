@@ -3,7 +3,6 @@ import pandas
 import re
 import vcf
 from Bio import SeqIO
-from report import make_div
 import io
 from docutils.core import publish_file
 import codecs
@@ -23,6 +22,26 @@ report_file = snakemake.output["html_file"]
 
 # parse vcf
 merged_vcf_records = [i for i in vcf.Reader(codecs.open(merged_vcf, 'r', 'latin-1'))]
+
+
+def make_div(figure_or_data, include_plotlyjs=False, show_link=False, div_id=None):
+    div = offline.plot(
+        figure_or_data,
+        include_plotlyjs=include_plotlyjs,
+        show_link=show_link,
+        output_type="div",
+    )
+    if ".then(function ()" in div:
+        div = f"""{div.partition(".then(function ()")[0]}</script>"""
+    if div_id:
+        import re
+
+        try:
+            existing_id = re.findall(r'id="(.*?)"|$', div)[0]
+            div = div.replace(existing_id, div_id)
+        except IndexError:
+            pass
+    return div
 
 
 def parse_gbk(gbk_file):

@@ -1,6 +1,8 @@
 rule create_dictionary_for_reference:
     conda:
         pipeline_path + "envs/gatk.yml"
+    singularity:
+        "docker://broadinstitute/gatk:4.0.2.0"
     input:
         ref = "references/{ref}/genome_fasta.fasta"
     output:
@@ -10,7 +12,7 @@ rule create_dictionary_for_reference:
     shell:
         """
         samtools faidx {input[ref]}
-        gatk-launch CreateSequenceDictionary --REFERENCE {input[ref]} &> {log}
+        gatk CreateSequenceDictionary --REFERENCE {input[ref]} &> {log}
         """
 
 rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
@@ -18,6 +20,8 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
         2
     conda:
         pipeline_path + "envs/gatk.yml"
+    singularity:
+        "docker://broadinstitute/gatk:4.0.2.0"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
@@ -30,12 +34,14 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
         logging_folder + "samples/{sample}/snps/gatk/{mapping_method}/mapping_to_{ref}_haplotypecaller_gvcf.txt",
     shell:
         """
-        gatk-launch HaplotypeCaller --sample-ploidy 1 --output {output[gvcf]} --input {input[bam]} --reference {input[ref]} -ERC BP_RESOLUTION &> {log[0]}
+        gatk HaplotypeCaller --sample-ploidy 1 --output {output[gvcf]} --input {input[bam]} --reference {input[ref]} -ERC BP_RESOLUTION &> {log[0]}
         """
 
 rule merge_gvcf_files_with_GenomicsDBImport_GATK:
     conda:
         pipeline_path + "envs/gatk.yml"
+    singularity:
+        "docker://broadinstitute/gatk:4.0.2.0"
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
@@ -51,12 +57,14 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
         fi
         acc=$(grep ">" {input[ref]} | sed "s/ .*//" | sed "s/>/--intervals /g")
         var=$(echo {input[gvcfs]} | sed "s/ / --variant /g")
-        gatk-launch GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[header]}) --variant ${{var}} ${{acc}} &> {log}
+        gatk GenomicsDBImport --genomicsdb-workspace-path  $(dirname {output[header]}) --variant ${{var}} ${{acc}} &> {log}
         """
 
 rule merge_gvcf_files_with_CombineGVCFs_GATK:
     conda:
         pipeline_path + "envs/gatk.yml"
+    singularity:
+        "docker://broadinstitute/gatk:4.0.2.0"
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
@@ -68,7 +76,7 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
     shell:
         """
         var=$(echo {input[gvcfs]} | sed "s/ / --variant /g")
-        gatk-launch CombineGVCFs --output {output[combined]} --variant ${{var}} --reference {input[ref]} &> {log}
+        gatk CombineGVCFs --output {output[combined]} --variant ${{var}} --reference {input[ref]} &> {log}
         """
 
 rule genotype_with_GenotypeGVCFs_GATK:
@@ -76,6 +84,8 @@ rule genotype_with_GenotypeGVCFs_GATK:
         4
     conda:
         pipeline_path + "envs/gatk.yml"
+    singularity:
+        "docker://broadinstitute/gatk:4.0.2.0"
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         combined = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/combined.vcf",
@@ -86,5 +96,5 @@ rule genotype_with_GenotypeGVCFs_GATK:
         logging_folder + "gatk_gvcfs/full_genome_{ref}/{mapping_method}/genotype_gvcf.txt",
     shell:
         """
-        gatk-launch GenotypeGVCFs --use-new-qual-calculator --sample-ploidy 1 --reference {input[ref]} --annotations-to-exclude InbreedingCoeff --variant {input[combined]} --output {output[raw]} &> {log}
+        gatk GenotypeGVCFs --use-new-qual-calculator --sample-ploidy 1 --reference {input[ref]} --annotations-to-exclude InbreedingCoeff --variant {input[combined]} --output {output[raw]} &> {log}
         """

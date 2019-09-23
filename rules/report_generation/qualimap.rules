@@ -1,6 +1,8 @@
 rule assess_mapping_with_qualimap:
     conda:
         pipeline_path + "envs/qualimap.yml"
+    singularity:
+        "docker://metagenlab/qualimap:1.2"     
     input:
         # samples/{sample}/mapping/bwa/{ref}.bam
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
@@ -12,7 +14,7 @@ rule assess_mapping_with_qualimap:
         logging_folder+"samples/{sample}/logs/{mapping_method}/{ref}/qualimap.txt",
     shell:
         """
-        qualimap bamqc -bam {input[bam]} -outdir $(dirname {output}) > {log[0]}
+        qualimap bamqc -bam {input[bam]} -outdir $(dirname {output[0]}) > {log[0]}
         if [ ! -f {output[report]} ]
         then
             touch {output[report]}

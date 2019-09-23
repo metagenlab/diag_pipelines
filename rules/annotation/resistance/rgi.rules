@@ -1,8 +1,8 @@
 rule search_resistance_with_rgi:
     threads:
         4
-    conda:
-        pipeline_path + "envs/rgi.yml"
+    singularity:
+        "docker://metagenlab/rgi:5.0.0-v3.0.4"
     input:
         "samples/{sample}/annotation/{sample}.fsa"
     output:
@@ -21,6 +21,8 @@ rule extract_resistance_from_ontology:
         aro_categories = card_categories_file,
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+    singularity:
+        "docker://metagenlab/pandas-openpyxl-pronto-xlrd:1.1"
     input:
         rgi = "samples/{sample}/resistance/rgi.tsv"
     output:
@@ -37,6 +39,8 @@ rule extract_resistance_mechanism_from_ontology:
         aro_categories = card_categories_file,
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+    singularity:
+        "docker://metagenlab/pandas-openpyxl-pronto-xlrd:1.1"
     input:
         rgi = "samples/{sample}/resistance/rgi.tsv"
     output:

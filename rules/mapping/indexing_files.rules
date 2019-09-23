@@ -1,6 +1,8 @@
 rule index_reference_fasta:
     conda:
         "../../envs/bwa-samtools.yml"
+    singularity:
+        "docker://metagenlab/bwa-samtools:1.0"
     input:
         "{any_genome}.fasta"
     output:
@@ -15,6 +17,8 @@ rule index_reference_fasta:
 rule index_bam_file:
     conda:
         "../../envs/bwa-samtools.yml"
+    singularity:
+        "docker://metagenlab/bwa-samtools:1.0"
     input:
         "{any_bam}.bam"
     output:
