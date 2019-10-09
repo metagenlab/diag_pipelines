@@ -19,7 +19,10 @@ RUN conda config --add channels defaults  && conda config --add channels conda-f
 
 RUN mkdir -p /diag_pipeline
 
-ADD ./* /diag_pipeline/
+ADD ./data /diag_pipeline/data/
+ADD ./workflows /diag_pipeline/workflows/
+ADD ./rules /diag_pipeline/rules/
+ADD ./envs /diag_pipeline/envs/
 #RUN git clone --single-branch --branch d18793ecba244a3e96a49e511a17106b2e9bd66f https://github.com/metagenlab/diag_pipelines /diag_pipeline
 
 RUN conda install snakemake=5.7.0 singularity=3.0.1
