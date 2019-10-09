@@ -20,7 +20,7 @@ rule create_multiqc_report_for_assembly:
 
 rule create_multiqc_report_for_mapping:
     params:
-        configfile = multiqc_configfile
+        configfile = "data/configuration_files/multiqc/config.yaml"
     conda:
         pipeline_path + "envs/multiqc.yml"
     singularity:
