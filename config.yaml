@@ -21,7 +21,7 @@ snp_threshold: 0
 minimum_spanning_tree_size: 10
 phylogeny_image_size: 800
 #virulence
-virulence_factors: /home/pipeline_user/snakemake_pipeline/data/staph/db/virulence_factors.tsv
+virulence_factors: virulence_factors.tsv
 virulence_percentage_identity_cutoff: 80
 virulence_coverage_cutoff: 70
 # reference for snp calling:

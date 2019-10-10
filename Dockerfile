@@ -48,7 +48,7 @@ RUN conda config --add channels defaults && conda config --add channels conda-fo
 RUN conda install snakemake=5.7.0 unzip sra-tools=2.9.1 biopython=1.72
 
 # setup pipeline
-RUN git clone https://github.com/metagenlab/diag_pipelines --single-branch --branch dev $pipeline_folder
+RUN git clone https://github.com/metagenlab/diag_pipelines --single-branch --branch dev $pipeline_folder && echo ok
 RUN mkdir -p /opt/conda/envs/
 ENV conda_folder=/opt/conda/envs/
 
@@ -61,9 +61,6 @@ RUN snakemake --snakefile ${pipeline_folder}/rules/downloading/fetch_VFDB.rules 
 RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Staphylococcus_aureus.bed core_genomes/cgMLST/Mycobacterium_tuberculosis.bed core_genomes/cgMLST/Listeria_monocytogenes.bed core_genomes/cgMLST/Klebsiella_pneumoniae.bed core_genomes/cgMLST/Enterococcus_faecium.bed core_genomes/cgMLST/Acinetobacter_baumannii.bed core_genomes/cgMLST/Legionella_pneumophila.bed core_genomes/cgMLST/Clostridioides_difficile.bed -j 4
 RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Salmonella_enterica.bed core_genomes/cgMLST/Escherichia_coli.bed references/538048/genome_gbwithparts.gbwithparts -j 4
 RUN snakemake --snakefile ${pipeline_folder}/rules/downloading/adapting_genome_files.rules --use-conda --conda-prefix ${conda_folder} references/538048/genome_gbwithparts.gbk
-
-RUN mv core_genomes /data 
-RUN mv references /data
 
 # CREATE MTB RESISTANCE DATABASES
 #RUN mkdir -p resistance_db/Mycobacterium_tuberculosis/mutations/
@@ -78,17 +75,22 @@ RUN mv references /data
 # fake dataset
 WORKDIR /tmp 
 RUN mkdir links
-RUN echo '' > links/ERR2130394.fastq.gz
-RUN echo '' > links/SRR6936587.fastq.gz
+RUN echo '' > links/Myco-10_S10_R1.fastq.gz
+RUN echo '' > links/Myco-10_S10_R2.fastq.gz
+#RUN echo '' > links/ERR2130394.fastq.gz
+#RUN echo '' > links/SRR6936587.fastq.gz
 RUN ln -s /data/references .
 RUN ln -s /data/core_genomes .
 RUN ln -s ${pipeline_folder}/config.yaml .
+RUN ln -s ${pipeline_folder}/data/Staphylococcus_aureus/virulence_factors.tsv .
+RUN ln -s ${pipeline_folder}/example_local_samples.tsv .
+RUN ln -s ${pipeline_folder}/example_sra_samples.tsv .
 # setup envs
 #RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml report/multiqc_assembly/multiqc_report.html samples/M10/resistance/mykrobe.tsv report/figures/freebayes_joint_genotyping/cgMLST/bwa/distances_in_snp_mst_no_st.svg report/figures/gatk_gvcfs/core_parsnp_538048/bwa/distances_in_snp_mst_no_st.svg report/figures/gatk_gvcfs/full_genome_M10_assembled_genome/bwa/distances_in_snp_mst_no_st.svg virulence_summary.xlsx report/typing/mlst/summary.xlsx report/resistance/rgi_summary.xlsx report/resistance/mykrobe_summary.xlsx report/figures/freebayes_joint_genotyping/cgMLST/bwa/phylogeny_no_st.svg report/figures/gatk_gvcfs/full_genome_538048/bwa/phylogeny_no_st.svg report/figures/gatk_gvcfs/core_parsnp_538048/bwa/phylogeny_no_st.svg report/contamination/mash/assembly/distances_formated.xlsx samples/SE1/contamination/centrifuge/report.tsv -j 4 --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
-RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml epidemiology --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
-RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml resistance --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
-RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml virulence --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
-RUN snakemake --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} --configfile config.yaml strain_characterization phylogeny/checkm/tree.nwk --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
+RUN snakemake --configfile config.yaml --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} epidemiology --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
+RUN snakemake --configfile config.yaml --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} resistance --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
+RUN snakemake --configfile config.yaml --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} virulence --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
+RUN snakemake --configfile config.yaml --snakefile ${pipeline_folder}/workflows/full_pipeline.rules --use-conda --create-envs-only --conda-prefix ${conda_folder} strain_characterization phylogeny/checkm/tree.nwk --config species="Mycobacterium_tuberculosis" && conda clean --all --yes
 RUN patch /opt/conda/envs/951e3846/lib/python2.7/site-packages/mykatlas/typing/typer/presence.py < ${pipeline_folder}/patches/mykrobe.patch
 
 RUN conda init bash

@@ -15,7 +15,7 @@ rule checkm_analyse:
     conda:
         pipeline_path + "envs/checkm.yml"
     params:
-        markers = pipeline_path + 'data/checkm/bacteria.ms'
+        markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
     threads:
         8
     input:
@@ -32,7 +32,7 @@ rule checkm_qa:
     conda:
         pipeline_path + "envs/checkm.yml"
     params:
-        markers = pipeline_path + 'data/checkm/bacteria.ms'
+        markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
     threads:
         8
     input:
@@ -48,7 +48,7 @@ rule checkm_markers:
     conda:
         pipeline_path + "envs/checkm.yml"
     params:
-        markers = pipeline_path + 'data/checkm/bacteria.ms'
+        markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
     threads:
         8
     input:
@@ -64,7 +64,7 @@ rule checkm_markers_fastas:
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
     params:
-        markers = pipeline_path + 'data/checkm/bacteria.ms'
+        markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
     threads:
         8
     input:
