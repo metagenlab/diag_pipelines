@@ -23,10 +23,10 @@ reference_assembly_for_resistance = {}
 reference_assembly_for_resistance["Mycobacterium_tuberculosis"] = "538048"
 reference_assembly_for_resistance["Escherichia_coli"] = "79781"
 
-ontology_file_aro = pipeline_path + "data/card/obo_files/aro.obo"
-ontology_file_mo = pipeline_path + "data/card/obo_files/mo.obo"
-ontology_file_ro = pipeline_path + "data/card/obo_files/ro.obo"
-card_categories_file = pipeline_path + "data/card/aro_categories.csv"
+ontology_file_aro = "references/card/obo_files/aro.obo"
+ontology_file_mo = "references/card/obo_files/mo.obo"
+ontology_file_ro = "references/card/obo_files/ro.obo"
+card_categories_file = "references/card/aro_categories.tsv"
 
 include:
     pipeline_path + "rules/annotation/resistance/format_xlsx.rules"

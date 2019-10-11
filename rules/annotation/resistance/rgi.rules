@@ -93,6 +93,8 @@ rule plot_rgi:
 rule generate_rgi_report:
     conda:
         pipeline_path + "envs/report.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-report:1.2"        
     input:
         rgi_tsv_output="samples/{sample}/resistance/rgi.tsv",
         rgi_ontology="samples/{sample}/resistance/rgi_ontology.tsv",

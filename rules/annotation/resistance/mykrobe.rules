@@ -16,13 +16,13 @@ rule search_resistance_paired_reads_with_mykrobe:
         """
         if [ "{params.species}" = "staph" ]
         then
-            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+            mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
         else
             if [ -z "{params.panel}" ]
             then
-                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
             else
-                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
+                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
             fi
         fi
         """
@@ -44,13 +44,13 @@ rule search_resistance_single_reads_with_mykrobe:
         """
         if [ "{params.species}" = "staph" ]
         then
-            mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --format json > {output[0]} 2> {log}
+            mykrobe predict "{wildcards.sample}" --format json "{params.species}" --seq {input} --min_variant_conf {params.confidence} --format json > {output[0]} 2> {log}
         else
             if [ -z "{params.panel}" ]
             then
-                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf  {params.confidence} --format json > {output[0]} 2> {log}
+                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf  {params.confidence} --format json > {output[0]} 2> {log}
             else
-                mykrobe predict "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]} --format json > {output[0]} 2> {log}
+                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]} --format json > {output[0]} 2> {log}
             fi
         fi
         """
