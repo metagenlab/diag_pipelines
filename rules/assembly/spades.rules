@@ -1,10 +1,10 @@
 rule correct_error_paired_reads_with_spades:
-    threads:
-        4
     conda:
         pipeline_path + "envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+    threads:
+        4
     input:
         R1_trimmed = "samples/{sample}/reads/trimmed/R1_paired.fastq",
         R2_trimmed = "samples/{sample}/reads/trimmed/R2_paired.fastq",
@@ -20,12 +20,12 @@ rule correct_error_paired_reads_with_spades:
          """
 
 rule correct_error_single_reads_with_spades:
-    threads:
-        4
     conda:
         pipeline_path + "envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+    threads:
+        4
     input:
         single_trimmed = "samples/{sample}/reads/trimmed/single.fastq",
     output:
@@ -38,12 +38,12 @@ rule correct_error_single_reads_with_spades:
          """
 
 rule assemble_genome_corrected_paired_reads_with_spades:
-    threads:
-        4
     conda:
         pipeline_path + "envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+    threads:
+        4
     input:
         R1_corrected = "samples/{sample}/reads/corrected/R1_paired.00.0_0.cor.fastq.gz",
         R2_corrected = "samples/{sample}/reads/corrected/R2_paired.00.0_0.cor.fastq.gz",
@@ -65,12 +65,12 @@ rule assemble_genome_corrected_paired_reads_with_spades:
 
 
 rule assemble_genome_corrected_single_reads_with_spades:
-    threads:
-        4
     conda:
         pipeline_path + "envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+    threads:
+        4
     input:
         single_corrected = "samples/{sample}/reads/corrected/single.00.0_0.cor.fastq.gz",
     output:
@@ -88,12 +88,12 @@ rule assemble_genome_corrected_single_reads_with_spades:
         """
 
 rule assemble_genome_paired_reads_with_spades:
-    threads:
-        4
-    singularity:
-        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
     conda:
         pipeline_path + "envs/spades.yml"
+    singularity:
+        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+    threads:
+        4
     input:
         R1_trimmed = "samples/{sample}/reads/trimmed/R1_paired.fastq",
         R2_trimmed = "samples/{sample}/reads/trimmed/R2_paired.fastq",
@@ -110,12 +110,12 @@ rule assemble_genome_paired_reads_with_spades:
         """
 
 rule assemble_genome_single_reads_with_spades:
-    threads:
-        4
-    singularity:
-        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
     conda:
         pipeline_path + "envs/spades.yml"
+    singularity:
+        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+    threads:
+        4
     input:
         single_trimmed = "samples/{sample}/reads/trimmed/single.fastq",
     output:

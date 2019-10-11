@@ -1,11 +1,11 @@
 rule blast_virulence_protein_to_proteome_or_contigs:
-    params:
-        perc_id_cutoff=config["virulence_percentage_identity_cutoff"],
-        cov_cutoff=config["virulence_coverage_cutoff"],
     conda:
         pipeline_path + "envs/blast.yml"
     singularity:
         "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
+    params:
+        perc_id_cutoff=config["virulence_percentage_identity_cutoff"],
+        cov_cutoff=config["virulence_coverage_cutoff"],
     input:
         "virulence/protein_fastas/log.txt",
         "samples/{sample}/annotation/{sample}.fsa",
@@ -38,6 +38,10 @@ rule blast_virulence_protein_to_proteome_or_contigs:
         """
 
 rule remove_redundancy_from_blast_results:
+    conda:
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         "samples/{sample}/virulence/results_blast.tsv",
     output:
@@ -49,6 +53,8 @@ rule remove_redundancy_from_blast_results:
 rule extract_protein_sequences_from_blast_results:
     conda:
         pipeline_path + "envs/samtools.yml"
+    singularity:
+        "docker://metagenlab/bwa-samtools:1.0"
     input:
         blast_res = "samples/{sample}/virulence/results_blast_not_redundant.tsv",
         annotation_prot = "samples/{sample}/annotation/{sample}.faa",
@@ -70,7 +76,9 @@ rule extract_protein_sequences_from_blast_results:
 if "virulence_factors" in config:
     rule add_description_to_blast_results:
         conda:
-            pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+            pipeline_path + "envs/python-r.yml"
+        singularity:
+            "docker://metagenlab/diag-pipeline-python-r:1.0"
         input:
             "samples/{sample}/virulence/results_blast_not_redundant.tsv",
             config["virulence_factors"]
@@ -83,7 +91,9 @@ if "virulence_factors" in config:
 
 rule merge_samples_summary:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml",
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         xlsx=expand("samples/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys()),
         fasta=expand("samples/{sample}/virulence/proteins.fasta", sample = read_naming.keys()),
@@ -94,7 +104,9 @@ rule merge_samples_summary:
 
 rule generate_html_report:
     conda:
-        pipeline_path + "envs/report.yml",
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         blast_results="samples/{sample}/virulence/{sample}_virulence_summary.xlsx",
     params:
@@ -105,11 +117,13 @@ rule generate_html_report:
         "scripts/generate_virulence_html_report.py"
 
 rule blast_proteome_to_VFDB:
+    conda:
+        pipeline_path + "envs/blast.yml"
+    singularity:
+        "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
     params:
         perc_id_cutoff=config["virulence_percentage_identity_cutoff"],
         cov_cutoff=config["virulence_coverage_cutoff"],
-    conda:
-        pipeline_path + "envs/blast.yml"
     input:
         "references/virulence/VFDB_larger_50aa.faa",
         "samples/{sample}/annotation/{sample}.faa",
@@ -123,6 +137,10 @@ rule blast_proteome_to_VFDB:
         """
 
 rule generate_VFDB_report:
+    conda:
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         blast_results="samples/{sample}/virulence/VFDB_results_blast.tsv",
         VFDB_annotation="references/virulence/VFDB_annotations.tab",
@@ -137,7 +155,9 @@ rule generate_VFDB_report:
 # tab file with contig, start, end label (and color)
 rule prepare_label_file_for_circos:
     conda:
-        pipeline_path + "envs/biopython.yml"
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         gbk_file="samples/{sample}/annotation/{sample}.gbk",
         blast_results="samples/{sample}/virulence/VFDB_results_blast.tsv",

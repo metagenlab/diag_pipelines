@@ -19,6 +19,10 @@ rule link_full_genome:
         """
 
 rule correct_gbk_extension_for_IGV_visualization:
+    conda:
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         genome = "references/{ref}/genome_gbwithparts.gbwithparts",
     output:

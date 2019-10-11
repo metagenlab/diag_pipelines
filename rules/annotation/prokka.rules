@@ -19,7 +19,11 @@ rule annotate_with_prokka:
         genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[0],
         spec = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[1]
     shell:
-        "prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
+        """
+        export LC_ALL=C
+        prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'
+        unset LC_ALL
+        """
 
 rule annotate_with_prokka_unfiltered_assembly:
     conda:
@@ -34,7 +38,11 @@ rule annotate_with_prokka_unfiltered_assembly:
         genus = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[0],
         spec = lambda wildcards: all_samples.loc[wildcards.sample, "ScientificName"].split("_")[1],
     shell:
-        "prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'"
+        """
+        export LC_ALL=C
+        prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'
+        unset LC_ALL
+        """
 
 
 rule create_blast_database_from_protein_sequences:
@@ -66,6 +74,10 @@ rule create_blast_database_from_contig_sequences:
         """
 
 rule remove_fasta_part_from_gff:
+    conda:
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         "samples/{sample}/annotation/{sample}.gff"
     output:

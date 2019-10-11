@@ -136,7 +136,7 @@ rule remove_duplicates_from_mapping:
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
-        "docker://quay.io/biocontainers/gatk4:4.0.2.0--0"
+        "docker://broadinstitute/gatk:4.0.2.0"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam.bai",
@@ -147,7 +147,7 @@ rule remove_duplicates_from_mapping:
          logging_folder + "samples/{sample}/mapping/{mapping_method}/{ref}/markduplicates.txt",
     shell:
         """
-        gatk-launch --java-options "-Xmx10G" MarkDuplicates --REMOVE_DUPLICATES true -I {input[bam]} -O {output[0]} -M {log[0]} &> {log[1]}
+        gatk --java-options "-Xmx10G" MarkDuplicates --REMOVE_DUPLICATES true -I {input[bam]} -O {output[0]} -M {log[0]} &> {log[1]}
         """
 
 rule extract_large_deletion_from_mapping:

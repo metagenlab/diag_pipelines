@@ -14,6 +14,8 @@ rule link_genomes_to_checkm_folder:
 rule checkm_analyse:
     conda:
         pipeline_path + "envs/checkm.yml"
+    singularity:
+        "docker://quay.io/biocontainers/checkm-genome:1.0.18--py_0"
     params:
         markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
     threads:
@@ -31,6 +33,8 @@ rule checkm_analyse:
 rule checkm_qa:
     conda:
         pipeline_path + "envs/checkm.yml"
+    singularity:
+        "docker://quay.io/biocontainers/checkm-genome:1.0.18--py_0"
     params:
         markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
     threads:
@@ -47,6 +51,8 @@ rule checkm_qa:
 rule checkm_markers:
     conda:
         pipeline_path + "envs/checkm.yml"
+    singularity:
+        "docker://quay.io/biocontainers/checkm-genome:1.0.18--py_0"
     params:
         markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
     threads:
@@ -62,7 +68,9 @@ rule checkm_markers:
 
 rule checkm_markers_fastas:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     params:
         markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
     threads:
@@ -78,6 +86,8 @@ rule checkm_markers_fastas:
 rule align_marker_fasta_with_mafft:
     conda:
         pipeline_path + "envs/mafft.yml"
+    singularity:
+        "docker://quay.io/biocontainers/mafft:7.407--hf484d3e_2"
     input:
         fasta = "phylogeny/checkm/marker_fastas/{marker}.faa"
     output:
@@ -89,7 +99,9 @@ rule align_marker_fasta_with_mafft:
 
 rule concatenate_checkm_fastas:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         marker_fastas = dynamic("phylogeny/checkm/marker_alignments/{marker}_mafft.faa")
     output:
@@ -99,6 +111,8 @@ rule concatenate_checkm_fastas:
 rule build_phylogeny_with_fasttree:
     conda:
         pipeline_path + "envs/fasttree.yml"
+    singularity:
+        "docker://quay.io/biocontainers/fasttree:2.1.10--h14c3975_3"        
     input:
         alignment = "phylogeny/checkm/concatenated_alignment.faa"
     output:

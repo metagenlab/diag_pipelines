@@ -2,4 +2,4 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
- - mash = 2.0=gsl1.16_0
+ - mash = 2.2.1

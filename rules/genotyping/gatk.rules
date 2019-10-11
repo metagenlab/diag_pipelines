@@ -16,12 +16,12 @@ rule create_dictionary_for_reference:
         """
 
 rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
-    threads:
-        2
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
         "docker://broadinstitute/gatk:4.0.2.0"
+    threads:
+        2
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
@@ -80,12 +80,12 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
         """
 
 rule genotype_with_GenotypeGVCFs_GATK:
-    threads:
-        4
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
         "docker://broadinstitute/gatk:4.0.2.0"
+    threads:
+        4
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         combined = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/combined.vcf",
