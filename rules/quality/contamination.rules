@@ -1,19 +1,21 @@
 rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
-    threads:
-        8
     conda:
         pipeline_path + "envs/mash.yml"
     singularity:
         "docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0" 
+    threads:
+        8
     input:
         mash_sketch = "references/mash_sketch.msh",
         R1 = "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         R2 = "samples/{sample}/reads/raw/{sample}_R2.fastq.gz",
     output:
         distances = "samples/{sample}/contamination/mash/fastq/distances.tsv"
+    log:
+        logging_folder+"mash/{sample}.log"
     shell:
         """
-        cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_sketch]} - > {output[distances]} 2> /dev/null
+        cat {input[R1]} {input[R2]} | mash screen -w  {input[mash_sketch]} - > {output[distances]} 2> {log}
         """
 
 rule calculate_distance_assembly_from_refseq_genomes_with_mash:
@@ -28,9 +30,11 @@ rule calculate_distance_assembly_from_refseq_genomes_with_mash:
         assembly = "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
     output:
         distances = "samples/{sample}/contamination/mash/assembly/distances.tsv"
+    log:
+        logging_folder+"mash/{sample}.log"
     shell:
         """
-        mash screen -w  {input[mash_sketch]} {input[assembly]} > {output[distances]} 2> /dev/null
+        mash screen -w  {input[mash_sketch]} {input[assembly]} > {output[distances]} 2> {log}
         """
 
 rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
@@ -45,9 +49,11 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
         single = "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
     output:
         distances = "samples/{sample}/contamination/mash/fastq/distances.tsv"
+    log:
+        logging_folder+"mash/{sample}.log"
     shell:
         """
-        cat {input[single]} | mash screen -w {input[mash_sketch]} - > {output[distances]} 2> /dev/null
+        cat {input[single]} | mash screen -w {input[mash_sketch]} - > {output[distances]} 2> {log}
         """
 
 rule get_taxonomy_from_mash_results:
