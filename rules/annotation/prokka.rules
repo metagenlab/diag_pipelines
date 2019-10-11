@@ -40,6 +40,8 @@ rule annotate_with_prokka_unfiltered_assembly:
 rule create_blast_database_from_protein_sequences:
     conda:
         pipeline_path + "envs/blast.yml"
+    singularity:
+        "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
     input:
         proteins = "samples/{sample}/annotation/{sample}.faa",
     output:
@@ -52,6 +54,8 @@ rule create_blast_database_from_protein_sequences:
 rule create_blast_database_from_contig_sequences:
     conda:
         pipeline_path + "envs/blast.yml"
+    singularity:
+        "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
     input:
         contigs = "samples/{sample}/annotation/{sample}.fsa",
     output:
@@ -72,6 +76,8 @@ rule remove_fasta_part_from_gff:
 rule get_CDS_and_contigs_depth:
     conda:
         pipeline_path + "envs/biopython.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-report:1.2"
     input:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
         "samples/{sample}/annotation/{sample}.gbk",

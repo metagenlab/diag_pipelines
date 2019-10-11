@@ -3,6 +3,8 @@ rule get_refseq_urls_complete_genomes:
         excluded_id = "" #excl_id,
     conda:
         pipeline_path + "envs/entrez-direct.yml"
+    singularity:
+        "docker://quay.io/biocontainers/entrez-direct:11.0--pl526_0"
     output:
         "references/{spec}/url_complete_genomes.txt"
     shell:
@@ -20,6 +22,8 @@ rule get_refseq_urls_complete_genomes:
 rule download_all_complete_genomes_fasta:
     conda:
         pipeline_path + "envs/entrez-direct.yml"
+    singularity:
+        "docker://quay.io/biocontainers/entrez-direct:11.0--pl526_0"
     input:
         "references/{spec}/url_complete_genomes.txt"
     output:

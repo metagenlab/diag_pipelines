@@ -1,6 +1,8 @@
 rule download_reference_from_refseq:
     conda:
         "../../envs/entrez-direct.yml"
+    singularity:
+        "docker://quay.io/biocontainers/entrez-direct:11.0--pl526_0"
     output:
         genome="references/{ref,[0-9]+}/genome_{format}.{format}",
     shell:
@@ -14,6 +16,8 @@ rule download_reference_from_refseq:
 rule download_reference_from_nucleotide:
     conda:
         "../../envs/entrez-direct.yml"
+    singularity:
+        "docker://quay.io/biocontainers/entrez-direct:11.0--pl526_0"
     output:
         genome="references/NC{ref}/genome_{format}.{format}",
     shell:
@@ -26,6 +30,8 @@ rule download_reference_from_nucleotide:
 rule get_strain_subvalue_identifier_reference:
     conda:
         "../../envs/entrez-direct.yml"
+    singularity:
+        "docker://quay.io/biocontainers/entrez-direct:11.0--pl526_0"
     output:
         subvalue="references/{ref,[0-9]+}/genome_subvalue.txt",
     shell:
@@ -37,6 +43,8 @@ rule get_strain_subvalue_identifier_reference:
 rule download_gff_for_reference_from_refseq:
     conda:
         pipeline_path + "envs/entrez-direct.yml"
+    singularity:
+        "docker://quay.io/biocontainers/entrez-direct:11.0--pl526_0"
     output:
         gff="references/{ref,[0-9]+}/genome.gff"
     shell:

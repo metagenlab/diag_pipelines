@@ -48,7 +48,7 @@ RUN conda config --add channels defaults && conda config --add channels conda-fo
 RUN conda install snakemake=5.7.0 unzip sra-tools=2.9.1 biopython=1.72
 
 # setup pipeline
-RUN git clone https://github.com/metagenlab/diag_pipelines --single-branch --branch dev $pipeline_folder && echo ok
+RUN git clone https://github.com/metagenlab/diag_pipelines --single-branch --branch dev $pipeline_folder && echo ok2
 RUN mkdir -p /opt/conda/envs/
 ENV conda_folder=/opt/conda/envs/
 

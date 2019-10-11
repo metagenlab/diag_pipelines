@@ -4,8 +4,16 @@
 # with open(input[0]) as vcf:
 #    n_calls = sum(1 for l in vcf if not l.startswith("#"))
 # n_samples = list(read_naming.keys()
+
+import os
+print(os.environ['PYTHONPATH'].split(os.pathsep))
+#script_dir_path = os.path.dirname(os.path.realpath(__file__))
+#os.chdir(script_dir_path)
+#for x in os.listdir('.'):
+#    print ("---->", x)
+
+
 import pandas
-from MN_tree import get_MN_tree, convert2cytoscapeJSON
 from report import quality_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 import report
 import io
@@ -263,6 +271,3 @@ with open(output_file, "w") as fh:
         settings_overrides={"stylesheet_path": ""},
     )
 
-
-
-#net = ''#convert2cytoscapeJSON(get_MN_tree(snp_table), leaf2mlst)

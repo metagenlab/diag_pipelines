@@ -4,6 +4,8 @@ rule blast_virulence_protein_to_proteome_or_contigs:
         cov_cutoff=config["virulence_coverage_cutoff"],
     conda:
         pipeline_path + "envs/blast.yml"
+    singularity:
+        "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
     input:
         "virulence/protein_fastas/log.txt",
         "samples/{sample}/annotation/{sample}.fsa",

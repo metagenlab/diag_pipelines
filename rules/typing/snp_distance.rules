@@ -3,6 +3,8 @@ rule distance_columns_to_matrix:
         samples = list(read_naming.keys())
     conda:
         pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+    singularity:
+        "docker://metagenlab/pandas-openpyxl-pronto-xlrd:1.1"       
     input:
         "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.txt",
     output:
@@ -18,6 +20,8 @@ rule compute_minimum_spanning_tree_with_st:
         mst_size = config["minimum_spanning_tree_size"],
     conda:
         pipeline_path + "envs/igraph.yml"
+    singularity:
+        "docker://metagenlab/r-igraph:1.1"    
     input:
         dist = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
         mlst_samples = "report/typing/mlst/summary.tsv",
@@ -35,6 +39,8 @@ rule compute_minimum_spanning_tree_no_st:
         mst_size = config["minimum_spanning_tree_size"],
     conda:
         pipeline_path + "envs/igraph.yml"
+    singularity:
+        "docker://metagenlab/r-igraph:1.1"    
     input:
         dist="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/{distance_type}.tsv",
     output:

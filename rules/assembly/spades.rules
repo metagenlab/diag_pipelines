@@ -24,6 +24,8 @@ rule correct_error_single_reads_with_spades:
         4
     conda:
         pipeline_path + "envs/spades.yml"
+    singularity:
+        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
     input:
         single_trimmed = "samples/{sample}/reads/trimmed/single.fastq",
     output:

@@ -5,7 +5,6 @@
 #    n_calls = sum(1 for l in vcf if not l.startswith("#"))
 # n_samples = list(read_naming.keys()
 import pandas
-from MN_tree import get_MN_tree, convert2cytoscapeJSON
 from report import quality_table, virulence_table, resistance_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 
 multiqc_report = snakemake.input["multiqc_report"]

@@ -1,6 +1,8 @@
 rule merge_multiallelic_by_sample:
     conda:
         pipeline_path + "envs/bcftools.yml"
+    singularity:
+        "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
         vcf="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/all_samples_snp.vcf.gz",
         vcf_tbi="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/all_samples_snp.vcf.gz.tbi",
@@ -15,6 +17,8 @@ rule merge_multiallelic_by_sample:
 rule extract_alternative_positions_and_unknown_positions:
     conda:
         pipeline_path + "envs/bcftools.yml"
+    singularity:
+        "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
         merged_multi = "samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz",
         merged_multi_tbi = "samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/snps.vcf.gz.tbi",
@@ -31,6 +35,8 @@ rule extract_alternative_positions_and_unknown_positions:
 rule create_consensus_sequence_by_sample:
     conda:
         pipeline_path + "envs/bcftools.yml"
+    singularity:
+        "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
         alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alternative_snp.vcf.gz",
         alt_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alternative_snp.vcf.gz.tbi",
