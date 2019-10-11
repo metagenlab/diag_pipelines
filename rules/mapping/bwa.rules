@@ -136,7 +136,7 @@ rule remove_duplicates_from_mapping:
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
-        "docker://broadinstitute/gatk:4.0.2.0"
+        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam.bai",

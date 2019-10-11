@@ -1,8 +1,8 @@
 rule search_resistance_with_rgi:
-    threads:
-        4
     singularity:
         "docker://metagenlab/rgi:5.0.0-v3.0.4"
+    threads:
+        4
     input:
         "samples/{sample}/annotation/{sample}.fsa"
     output:
@@ -14,15 +14,15 @@ rule search_resistance_with_rgi:
         """
 
 rule extract_resistance_from_ontology:
+    conda:
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     params:
         ontology_aro = ontology_file_aro,
         ontology_mo = ontology_file_mo,
         ontology_ro = ontology_file_ro,
         aro_categories = card_categories_file,
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
-    singularity:
-        "docker://metagenlab/pandas-openpyxl-pronto-xlrd:1.1"
     input:
         rgi = "samples/{sample}/resistance/rgi.tsv"
     output:
@@ -32,15 +32,15 @@ rule extract_resistance_from_ontology:
         "scripts/fetch_ontology_rgi.py"
 
 rule extract_resistance_mechanism_from_ontology:
+    conda:
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     params:
         ontology_aro = ontology_file_aro,
         ontology_mo = ontology_file_mo,
         ontology_ro = ontology_file_ro,
         aro_categories = card_categories_file,
-    conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
-    singularity:
-        "docker://metagenlab/pandas-openpyxl-pronto-xlrd:1.1"
     input:
         rgi = "samples/{sample}/resistance/rgi.tsv"
     output:
@@ -67,7 +67,9 @@ rule generate_rgi_tsv_file_from_json_file:
 
 rule generate_rgi_tsv_file_from_json_file:
     conda:
-        pipeline_path + "envs/simplejson.yml"
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         "samples/{sample}/resistance/rgi.json"
     output:
@@ -78,7 +80,9 @@ rule generate_rgi_tsv_file_from_json_file:
 
 rule plot_rgi:
     conda:
-        pipeline_path + "envs/ggplot2-gridextra.yml"
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         rgi_files=expand("samples/{sample}/resistance/rgi.tsv", sample=read_naming.keys()),
         rgi_mechanism_files=expand("samples/{sample}/resistance/rgi_mechanism.tsv", sample=read_naming.keys()),
@@ -92,9 +96,9 @@ rule plot_rgi:
 
 rule generate_rgi_report:
     conda:
-        pipeline_path + "envs/report.yml"
+        pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-report:1.2"        
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         rgi_tsv_output="samples/{sample}/resistance/rgi.tsv",
         rgi_ontology="samples/{sample}/resistance/rgi_ontology.tsv",

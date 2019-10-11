@@ -47,7 +47,7 @@ def vcf_ref(wildcards):
 
 rule generate_snps_html_report:
     conda:
-        pipeline_path + "envs/report.yml"
+        pipeline_path + "envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
@@ -66,7 +66,7 @@ rule generate_snps_html_report:
 
 rule generate_deletion_html_report:
     conda:
-        pipeline_path + "envs/report.yml"
+        pipeline_path + "envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:

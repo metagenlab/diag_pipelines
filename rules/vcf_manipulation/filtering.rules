@@ -52,7 +52,7 @@ rule extract_allele_by_type_from_gatk_gvcfs:
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
-        "docker://broadinstitute/gatk:4.0.2.0"
+        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
         joint_genotype_vcf="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
         joint_genotype_vcf_tbi="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz.tbi",

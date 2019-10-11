@@ -1,17 +1,19 @@
+
+
 rule create_dictionary_for_reference:
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
-        "docker://broadinstitute/gatk:4.0.2.0"
+        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
-        ref = "references/{ref}/genome_fasta.fasta"
+        ref = "references/{ref}/genome_fasta.fasta",
+        index = "references/{ref}/genome_fasta.fasta.fai"
     output:
         dictionary = "references/{ref}/genome_fasta.dict"
     log:
         logging_folder + "logs/references/{ref}/create_dictionnary.txt"
     shell:
         """
-        samtools faidx {input[ref]}
         gatk CreateSequenceDictionary --REFERENCE {input[ref]} &> {log}
         """
 
@@ -19,7 +21,7 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
-        "docker://broadinstitute/gatk:4.0.2.0"
+        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     threads:
         2
     input:
@@ -41,7 +43,7 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
-        "docker://broadinstitute/gatk:4.0.2.0"
+        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
@@ -64,7 +66,7 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
-        "docker://broadinstitute/gatk:4.0.2.0"
+        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
@@ -83,7 +85,7 @@ rule genotype_with_GenotypeGVCFs_GATK:
     conda:
         pipeline_path + "envs/gatk.yml"
     singularity:
-        "docker://broadinstitute/gatk:4.0.2.0"
+        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     threads:
         4
     input:

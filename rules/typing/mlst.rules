@@ -37,7 +37,9 @@ rule determine_mlst_reference_genome:
 
 rule generate_xlsx_file_from_mlst_results:
     conda:
-        pipeline_path + "envs/pandas-openpyxl-pronto-xlrd.yml"
+        pipeline_path + "envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
         "report/typing/mlst/{file}.tsv"
     output:
