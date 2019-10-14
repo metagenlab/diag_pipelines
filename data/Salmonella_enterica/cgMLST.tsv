@@ -1,0 +1,3003 @@
+Scheme name	Locus tag	Description
+cgMLST V2	STMMW_23011 (nrdA)	Ribonucleotide reductase class 1a alpha subunit
+cgMLST V2	STMMW_14251 (ssaS)	EscS/YscS/HrcS family type III secretion system export apparatus protein
+cgMLST V2	STMMW_33821 (yhdG)	tRNA dihydrouridine synthase DusB
+cgMLST V2	STMMW_04381 (prpB)	methylisocitrate lyase
+cgMLST V2	STMMW_08801 (glnP)	polar amino acid ABC transporter inner membrane subunit
+cgMLST V2	STMMW_34881 (hslO)	molecular chaperone Hsp33
+cgMLST V2	STMMW_18671 (zwf)	glucose-6-phosphate dehydrogenase
+cgMLST V2	STMMW_14121 (ssaH)	SsaI
+cgMLST V2	STMMW_05161 (yajG)	putative lipoprotein YajG precursor
+cgMLST V2	STMMW_15991 (ydcP)	collagenase
+cgMLST V2	STMMW_02351 (lpxB)	lipid-A-disaccharide synthase
+cgMLST V2	STMMW_24541 (pdxK)	pyridoxal-pyridoxamine kinase/hydroxymethylpyrimidine kinase
+cgMLST V2	STMMW_40641 (metJ)	met repressor
+cgMLST V2	STMMW_34081 (pez)	DNA-directed RNA polymerase subunit alpha
+cgMLST V2	STMMW_06841 (citG)	2-(5'-triphosphoribosyl)-3'-dephospho CoA synthase
+cgMLST V2	STMMW_14021 (sseA)	type III secretion system chaperone SseA
+cgMLST V2	STMMW_05381 (ylaB)	cyclic diguanylate phosphodiesterase
+cgMLST V2	STMMW_42861 (sugE)	multidrug SMR transporter
+cgMLST V2	STMMW_31101 (hypO)	hydrogenase 2 small subunit
+cgMLST V2	STMMW_25141 (uraA)	uracil/xanthine transporter
+cgMLST V2	STMMW_25411 (yfgA)	cytoskeleton protein RodZ
+cgMLST V2	STMMW_17221 (trpA)	tryptophan synthase subunit alpha
+cgMLST V2	STMMW_10921 (yccV)	heat-shock protein HspQ
+cgMLST V2	STMMW_27811 (emrA)	multidrug transporter
+cgMLST V2	STMMW_33081 (yrbB)	anti-sigma factor antagonist
+cgMLST V2	STMMW_41771 (malF)	maltose ABC transporter permease
+cgMLST V2	STMMW_12071 (pabC)	aminodeoxychorismate lyase
+cgMLST V2	STMMW_36901 (grxC)	glutaredoxin 3
+cgMLST V2	STMMW_39101 (cyaA)	"adenylate cyclase, class I"
+cgMLST V2	STMMW_30761 (yqgA)	YqgA
+cgMLST V2	STMMW_38501 (atpD)	ATP synthase subunit beta
+cgMLST V2	STMMW_37231 (rph)	ribonuclease PH
+cgMLST V2	STMMW_39191 (yigA)	DUF484 domain-containing protein
+cgMLST V2	STMMW_16171 (ydcG)	glucan biosynthesis protein D
+cgMLST V2	STMMW_19331 (fliY)	Cystine ABC transporter
+cgMLST V2	STMMW_18311 (kdgR)	DNA-binding transcriptional regulator KdgR
+cgMLST V2	STMMW_07401 (nagC)	DNA-binding transcriptional dual regulator NagC
+cgMLST V2	STMMW_02431 (rof)	Rho-binding antiterminator
+cgMLST V2	STMMW_28591 (invE)	type III secretion system regulator InvE
+cgMLST V2	STMMW_11331 (putA)	trifunctional transcriptional regulator/proline dehydrogenase/L-glutamate gamma-semialdehyde dehydrogenase
+cgMLST V2	STMMW_34501 (yheR)	potassium transporter KefG
+cgMLST V2	STMMW_22261 (yeiG)	S-formylglutathione hydrolase
+cgMLST V2	STMMW_36011 (kdgK)	2-dehydro-3-deoxygluconate kinase
+cgMLST V2	STMMW_45101 (deoA)	thymidine phosphorylase
+cgMLST V2	STMMW_42101 (siiC)	putative ABC exporter outer membrane component
+cgMLST V2	STMMW_42451 (adiC)	arginine:agmatine antiporter
+cgMLST V2	STMMW_43851	transcriptional regulator
+cgMLST V2	STMMW_08121 (aroG)	"3-deoxy-D-arabinoheptulosonate-7-phosphate synthase (DAHP synthetase, phenylalanine repressible)"
+cgMLST V2	STMMW_09521 (ybjD)	ATP-dependent endonuclease of the OLD family
+cgMLST V2	STMMW_09291 (potG)	putrescine transporter ATP-binding subunit
+cgMLST V2	STMMW_00441 (rpsT)	30S ribosomal protein S20
+cgMLST V2	STMMW_35271 (glgB)	"1,4-alpha-glucan branching enzyme"
+cgMLST V2	STMMW_24731 (eutR)	transcriptional regulator EutR
+cgMLST V2	STMMW_04711 (malZ)	maltodextrin glucosidase
+cgMLST V2	STMMW_24041 (yfcA)	membrane protein
+cgMLST V2	STMMW_09741 (ycaJ)	recombinase RarA
+cgMLST V2	STMMW_07021 (dacA)	D-alanyl-D-alanine carboxypeptidase DacA
+cgMLST V2	STMMW_29511 (mltA)	murein transglycosylase A
+cgMLST V2	STMMW_01381 (ftsA)	cell division protein FtsA
+cgMLST V2	STMMW_20921 (dacD)	D-alanyl-D-alanine carboxypeptidase
+cgMLST V2	STMMW_31371 (ygiX)	Two-component system response regulator QseB
+cgMLST V2	STMMW_06431 (nfnB)	NAD(P)H nitroreductase
+cgMLST V2	STMMW_00651 (dapB)	4-hydroxy-tetrahydrodipicolinate reductase
+cgMLST V2	STMMW_00121 (dnaJ)	molecular chaperone DnaJ
+cgMLST V2	STMMW_17471 (galU)	UTP--glucose-1-phosphate uridylyltransferase
+cgMLST V2	STMMW_01521 (ampD)	"1,6-anhydro-N-acetylmuramyl-L-alanine amidase AmpD"
+cgMLST V2	STMMW_26771 (yfiH)	hypothetical protein
+cgMLST V2	STMMW_30971 (uxaC)	uronate isomerase
+cgMLST V2	STMMW_24951 (ypfG)	putative exported protein
+cgMLST V2	STMMW_28601 (invG)	type III secretion system outer membrane pore InvG
+cgMLST V2	STMMW_13201 (celB)	"PTS system N,N'-diacetylchitobiose-specific transporter subunit IIC"
+cgMLST V2	STMMW_41901 (yjbJ)	"stress-induced protein, UPF0337 family"
+cgMLST V2	STMMW_21521 (asmA)	outer membrane assembly protein AsmA
+cgMLST V2	STMMW_26801 (yfiA)	translation inhibitor protein RaiA
+cgMLST V2	STMMW_28741	drug resistance transporter EmrB
+cgMLST V2	STMMW_38752	hypothetical protein
+cgMLST V2	STMMW_44621 (yjiJ)	sugar transporter
+cgMLST V2	STMMW_25601 (iscS)	cysteine desulfurase IscS
+cgMLST V2	STMMW_16781 (tyrR)	TyrR family transcriptional regulator
+cgMLST V2	STMMW_33691 (maf-b)	septum formation inhibitor Maf
+cgMLST V2	STMMW_27601 (gabP)	GABA Gamma-aminobutyrate transporter
+cgMLST V2	STMMW_11521 (csgA)	major curlin subunit
+cgMLST V2	STMMW_11831 (flgC)	flagellar basal body rod protein FlgC
+cgMLST V2	STMMW_41011 (nusG)	transcription termination/antitermination factor NusG
+cgMLST V2	STMMW_18871 (yecN)	inner membrane protein
+cgMLST V2	STMMW_17781 (hyaA)	"hydrogenase 1, small subunit"
+cgMLST V2	STMMW_16431 (hslJ)	heat shock protein HslJ
+cgMLST V2	STMMW_35041 (malP)	maltodextrin phosphorylase
+cgMLST V2	STMMW_04541 (psiF)	Phosphate starvation-inducible protein PsiF
+cgMLST V2	STMMW_39931 (yiiD)	GNAT family acetyltransferase
+cgMLST V2	STMMW_11781 (mviN)	Proposed peptidoglycan lipid II flippase MurJ
+cgMLST V2	STMMW_22381 (fruB)	bifunctional PTS system fructose-specific transporter subunit IIA/HPr protein
+cgMLST V2	STMMW_32921 (glmM)	phosphoglucosamine mutase
+cgMLST V2	STMMW_44991 (rsmC)	16S rRNA methyltransferase
+cgMLST V2	STMMW_14491 (anmK)	anhydro-N-acetylmuramic acid kinase
+cgMLST V2	STMMW_36461	Putative outer membrane lipoprotein
+cgMLST V2	STMMW_07361 (ubiF)	"Putative 2-octaprenyl-3-methyl-6-methoxy-1,4-benzoquinol hydroxylase"
+cgMLST V2	STMMW_23651 (ulaB)	PTS mannitol transporter subunit IIB
+cgMLST V2	STMMW_04811 (yajD)	HNH endonuclease
+cgMLST V2	STMMW_08821 (dps)	DNA starvation/stationary phase protection protein
+cgMLST V2	STMMW_18691 (pykA)	pyruvate kinase II
+cgMLST V2	STMMW_34311 (rplD)	50S ribosomal protein L4
+cgMLST V2	STMMW_09191	transporter/regulator
+cgMLST V2	STMMW_14141 (ssaJ)	EscJ/YscJ/HrcJ family type III secretion inner membrane ring protein
+cgMLST V2	STMMW_00461 (ribF)	bifunctional riboflavin kinase/FMN adenylyltransferase
+cgMLST V2	STMMW_33921 (yrdA)	"gamma carbonic anhydrase family protein, partial"
+cgMLST V2	STMMW_23031 (yfaE)	(2Fe-2S) ferredoxin
+cgMLST V2	STMMW_14001 (ssaD)	EscD/YscD/HrpQ family type III secretion system inner membrane ring protein
+cgMLST V2	STMMW_09991 (kdsB)	3-deoxy-manno-octulosonate cytidylyltransferase
+cgMLST V2	STMMW_42841 (ecnB)	entericidin B
+cgMLST V2	STMMW_31161	cytoplasmic protein
+cgMLST V2	STMMW_01731 (yacC)	putative chaperone lipoprotein YacC
+cgMLST V2	STMMW_25161 (purM)	phosphoribosylaminoimidazole synthetase
+cgMLST V2	STMMW_17201 (trpC)	bifunctional indole-3-glycerol phosphate synthase/phosphoribosylanthranilate isomerase
+cgMLST V2	STMMW_39341 (yigM)	membrane protein yigM
+cgMLST V2	STMMW_30561 (gshB)	glutathione synthetase
+cgMLST V2	STMMW_33061 (murA)	UDP-N-acetylglucosamine 1-carboxyvinyltransferase
+cgMLST V2	STMMW_37781 (uhpB)	two-component system sensor histidine kinase UhpB
+cgMLST V2	STMMW_41711 (yjbE)	Exopolysaccharide production secreted protein
+cgMLST V2	STMMW_36921 (pmgI)	"2,3-bisphosphoglycerate-independent phosphoglycerate mutase"
+cgMLST V2	STMMW_33201 (yhbH)	ribosome hibernation promoting factor
+cgMLST V2	STMMW_37251	"Transcriptional regulator, LysR family"
+cgMLST V2	STMMW_19641 (yodD)	putative cytoplasmic protein
+cgMLST V2	STMMW_19311 (yecS)	ABC transporter permease
+cgMLST V2	STMMW_18991 (cheY)	two-component system response regulator
+cgMLST V2	STMMW_36251 (yhjW)	"putative membrane-associated, metal-dependent hydrolase"
+cgMLST V2	STMMW_02411 (yaeR)	lyase
+cgMLST V2	STMMW_14791 (pntA)	NAD(P) transhydrogenase subunit alpha
+cgMLST V2	STMMW_22241 (yeiB)	Putative inner membrane protein
+cgMLST V2	STMMW_36071 (yhjN)	cellulose synthase regulatory subunit
+cgMLST V2	STMMW_07281 (gltK)	amino acid ABC transporter permease
+cgMLST V2	STMMW_42431 (basR)	DNA-binding transcriptional regulator BasR
+cgMLST V2	STMMW_17651 (ychA)	transcriptional regulator
+cgMLST V2	STMMW_35781 (pitA)	Low-affinity inorganic phosphate transporter
+cgMLST V2	STMMW_15151 (ydeI)	TIGR00156 family protein
+cgMLST V2	STMMW_08101 (ybgR)	zinc transporter ZitB
+cgMLST V2	STMMW_04481 (yaiY)	Inner membrane protein yaiY
+cgMLST V2	STMMW_11641 (yceA)	sulfurtransferase
+cgMLST V2	STMMW_18191	putative diguanylate cyclase/phosphodiesterase
+cgMLST V2	STMMW_11311 (ycdC)	transcriptional regulator RutR of pyrimidine catabolism
+cgMLST V2	STMMW_12661	ABC transport ATP-binding subunit
+cgMLST V2	STMMW_35251 (glgC)	glucose-1-phosphate adenylyltransferase
+cgMLST V2	STMMW_35521 (livH)	branched-chain amino acid ABC transporter permease LivH
+cgMLST V2	STMMW_40881 (argH)	argininosuccinate lyase
+cgMLST V2	STMMW_04731 (yajB)	ACP phosphodiesterase
+cgMLST V2	STMMW_13211 (celC)	PTS N N'-diacetylchitobiose transporter subunit IIA
+cgMLST V2	STMMW_34781 (comE)	DNA transporter HofQ
+cgMLST V2	STMMW_29531 (argA)	N-acetylglutamate synthase
+cgMLST V2	STMMW_43521 (msrA)	peptide-methionine (S)-S-oxide reductase
+cgMLST V2	STMMW_10061 (ycbB)	"L,D-transpeptidase YcbB"
+cgMLST V2	STMMW_18731 (znuC)	zinc ABC transporter ATPase
+cgMLST V2	STMMW_05281 (cof)	thiamin pyrimidine pyrophosphate hydrolase
+cgMLST V2	STMMW_09501 (hcp)	hydroxylamine reductase
+cgMLST V2	STMMW_02251 (frr)	ribosome recycling factor
+cgMLST V2	STMMW_34121 (rpmJb)	50S ribosomal protein L36
+cgMLST V2	STMMW_21721 (fbaB)	fructose-bisphosphate aldolase
+cgMLST V2	STMMW_01501 (pilA)	type IV pilin PilA
+cgMLST V2	STMMW_26711 (yfiQ)	acyl-CoA synthetase
+cgMLST V2	STMMW_30951 (uxuA)	putative mannonate hydrolase
+cgMLST V2	STMMW_24971	beta-lactamase
+cgMLST V2	STMMW_28621 (invH)	invasion protein H
+cgMLST V2	STMMW_14941 (opuBD)	Osmoprotectant ABC transporter ATP-binding subunit YehX
+cgMLST V2	STMMW_21091 (hisI)	bifunctional phosphoribosyl-AMP cyclohydrolase/phosphoribosyl-ATP pyrophosphatase
+cgMLST V2	STMMW_41961 (dnaB)	replicative DNA helicase
+cgMLST V2	STMMW_26821	gluconolactonase
+cgMLST V2	STMMW_04561 (proC)	pyrroline-5-carboxylate reductase
+cgMLST V2	STMMW_39571 (hemG)	protoporphyrinogen oxidase
+cgMLST V2	STMMW_30041 (xerD)	site-specific tyrosine recombinase XerD
+cgMLST V2	STMMW_28721 (mutS)	DNA mismatch repair protein MutS
+cgMLST V2	STMMW_38771 (ilvM)	acetolactate synthase isozyme 2 small subunit
+cgMLST V2	STMMW_13081 (nudG)	pyrimidine (deoxy)nucleoside triphosphate pyrophosphohydrolase
+cgMLST V2	STMMW_25591 (nifU)	iron-sulfur cluster scaffold-like protein
+cgMLST V2	STMMW_27441 (iroN)	outer membrane receptor FepA
+cgMLST V2	STMMW_13881 (ttrA)	tetrathionate reductase subunit A
+cgMLST V2	STMMW_27991 (srlR)	DNA-bindng transcriptional regulator SrlR
+cgMLST V2	STMMW_41381 (yjbB)	"inorganic phosphate transporter, sodium-dependent"
+cgMLST V2	STMMW_17591 (narL)	two-component system response regulator
+cgMLST V2	STMMW_25621 (trmJ)	tRNA (cytosine(32)/uridine(32)-2'-O)-methyltransferase TrmJ
+cgMLST V2	STMMW_17411 (oppA)	"ABC superfamily (periplasm), oligopeptide transport protein with chaperone properties"
+cgMLST V2	STMMW_12681	ferredoxin
+cgMLST V2	STMMW_19101 (yecG)	universal stress protein C
+cgMLST V2	STMMW_19451 (yedE)	paral putative membrane component of transport system
+cgMLST V2	STMMW_27661 (stpA)	"DNA binding protein, nucleoid-associated, partial"
+cgMLST V2	STMMW_41031 (rplA)	50S ribosomal protein L1
+cgMLST V2	STMMW_11811 (flgA)	flagella basal body P-ring formation protein FlgA
+cgMLST V2	STMMW_18851 (yecD)	putative hydrolase
+cgMLST V2	STMMW_22011 (yohC)	transporter
+cgMLST V2	STMMW_29091 (cysH)	phosphoadenosine phosphosulfate reductase
+cgMLST V2	STMMW_12351 (potA)	putrescine/spermidine ABC transporter ATPase
+cgMLST V2	STMMW_32631 (yraL)	16S rRNA (cytidine(1402)-2'-O)-methyltransferase
+cgMLST V2	STMMW_39911 (rbn)	ribonuclease BN
+cgMLST V2	STMMW_42601	periplasmic or exported protein
+cgMLST V2	STMMW_08591 (ybhL)	permease
+cgMLST V2	STMMW_33261 (yhbL)	glutamine amidotransferase
+cgMLST V2	STMMW_36441 (glyS)	glycine--tRNA ligase subunit beta
+cgMLST V2	STMMW_07611 (kdpD)	two-component system sensor histidine kinase KdbD
+cgMLST V2	STMMW_24361 (yfeD)	hypothetical protein
+cgMLST V2	STMMW_08371 (ybhE)	6-phosphogluconolactonase
+cgMLST V2	STMMW_04831 (tsx)	nucleoside channel; receptor of phage T6 and colicin K
+cgMLST V2	STMMW_11101 (hpaR)	"homoprotocatechuate degradation operon regulator, HpaR"
+cgMLST V2	STMMW_34331 (rpsJ)	30S ribosomal protein S10
+cgMLST V2	STMMW_05611 (gsk)	inosine/guanosine kinase
+cgMLST V2	STMMW_22901 (ada)	bifunctional transcriptional regulator/O6-methylguanine-DNA methyltransferase
+cgMLST V2	STMMW_14161 (ssaK)	secretion system apparatus
+cgMLST V2	STMMW_43951 (nrdG)	anaerobic ribonucleoside-triphosphate reductase activating protein
+cgMLST V2	STMMW_40971 (birA)	bifunctional biotin--[acetyl-CoA-carboxylase] synthetase/biotin operon repressor
+cgMLST V2	STMMW_24501 (ptsH)	PTS sugar transporter
+cgMLST V2	STMMW_40601 (priA)	Helicase PriA essential for oriC
+cgMLST V2	STMMW_31141	ATP-dependent RNA helicase
+cgMLST V2	STMMW_25361 (engA)	ribosome biogenesis GTPase Der
+cgMLST V2	STMMW_30231 (rpiA)	ribose-5-phosphate isomerase
+cgMLST V2	STMMW_39361 (metE)	5-methyltetrahydropteroyltriglutamate--homocysteine methyltransferase
+cgMLST V2	STMMW_30541 (endA)	Endonuclease I precursor
+cgMLST V2	STMMW_37011 (rfaC)	ADP-heptose--LPS heptosyl transferase I
+cgMLST V2	STMMW_38091 (torT)	TMAO reductase
+cgMLST V2	STMMW_41731 (yjbG)	periplasmic protein
+cgMLST V2	STMMW_17081 (cysB)	LysR family transcriptional regulator CysB
+cgMLST V2	STMMW_39141 (cyaY)	iron donor protein CyaY
+cgMLST V2	STMMW_06991 (ybeF)	LysR family transcriptional regulator
+cgMLST V2	STMMW_00931 (apaH)	bis(5'-nucleosyl)-tetraphosphatase (symmetrical)
+cgMLST V2	STMMW_19661 (gcpA)	diguanylate cyclase
+cgMLST V2	STMMW_33041 (ispB)	octaprenyl diphosphate synthase
+cgMLST V2	STMMW_27851 (gshA)	glutamate--cysteine ligase
+cgMLST V2	STMMW_32791 (mtr)	probable amino acid permease
+cgMLST V2	STMMW_17621 (chaB)	Cation transport regulator ChaB
+cgMLST V2	STMMW_02471 (cutF)	lipoporotein NlpE
+cgMLST V2	STMMW_19591 (fliP)	"flagellar biosynthesis protein FliP, partial"
+cgMLST V2	STMMW_37271	Putative inner membrane protein
+cgMLST V2	STMMW_33951 (yrdC)	L-threonylcarbamoyladenylate synthase TsaC
+cgMLST V2	STMMW_38542 (atpE)	F0F1 ATP synthase subunit C
+cgMLST V2	STMMW_38541 (atpF)	ATP synthase subunit B
+cgMLST V2	STMMW_22221 (mglB)	Galactose/methyl galactoside ABC transport
+cgMLST V2	STMMW_11481 (csgF)	curli assembly protein CsgF
+cgMLST V2	STMMW_11161 (hpaI)	"2,4-dihydroxyhept-2-ene-1,7-dioic acid aldolase"
+cgMLST V2	STMMW_11661 (yceJ)	cytochrome b
+cgMLST V2	STMMW_29281 (yqcB)	tRNA pseudouridine(65) synthase TruC
+cgMLST V2	STMMW_23171	competence/damage-inducible protein A
+cgMLST V2	STMMW_35501 (livG)	leucine/isoleucine/valine transporter ATP-binding subunit
+cgMLST V2	STMMW_24771 (eutB)	ethanolamine ammonia lyase large subunit
+cgMLST V2	STMMW_42411 (proP)	L-Proline/Glycine betaine transporter ProP
+cgMLST V2	STMMW_42141 (yjcB)	membrane protein
+cgMLST V2	STMMW_17321 (tonB)	"energy transducer; uptake of iron, cyanocobalimin; sensitivity to phages, colicins"
+cgMLST V2	STMMW_31081 (hybB)	hydrogenase 2 b cytochrome subunit
+cgMLST V2	STMMW_43541 (ytfN)	translocation and assembly module TamB
+cgMLST V2	STMMW_10041 (mukE)	condensin subunit E
+cgMLST V2	STMMW_08781 (ybiO)	mechanosensitive channel protein
+cgMLST V2	STMMW_18711 (yebA)	peptidase
+cgMLST V2	STMMW_05261 (ybaX)	7-cyano-7-deazaguanine synthase QueC
+cgMLST V2	STMMW_09561 (cspD)	stationary phase/starvation inducible regulatory protein CspD
+cgMLST V2	STMMW_02271 (uppS)	"ditrans,polycis-undecaprenyl-diphosphate synthase ((2E,6E)-farnesyl-diphosphate specific)"
+cgMLST V2	STMMW_16911 (sapF)	peptide transport system ATP-binding protein SapF
+cgMLST V2	STMMW_34101 (rpsK)	30S ribosomal protein S11
+cgMLST V2	STMMW_34601 (pabA)	Para-aminobenzoate synthase- amidotransferase
+cgMLST V2	STMMW_25821 (purG)	phosphoribosylformylglycinamidine synthase
+cgMLST V2	STMMW_00161	membrane protein
+cgMLST V2	STMMW_26731 (yfiM)	protein yfiM
+cgMLST V2	STMMW_30681 (yggN)	putative exported protein
+cgMLST V2	STMMW_30931	carbon-nitrogen hydrolase
+cgMLST V2	STM1940	putative cell wall-associated hydrolase
+cgMLST V2	STMMW_24991 (narQ)	nitrate/nitrite two-component system sensor histidine kinase
+cgMLST V2	STMMW_06691 (ybdM)	transcriptional regulator
+cgMLST V2	STMMW_13531 (ydiE)	hemin uptake protein hemP
+cgMLST V2	STMMW_13241 (celG)	chitooligosaccharide deacetylase
+cgMLST V2	STMMW_41941 (pspG)	pspG Phage shock protein G (Phageshock_PspG)
+cgMLST V2	STMMW_31331 (plsC)	1-acyl-sn-glycerol-3-phosphate acyltransferase
+cgMLST V2	STMMW_39551 (yigZ)	YigZ family protein
+cgMLST V2	STMMW_26841 (aroF)	phospho-2-dehydro-3-deoxyheptonate aldolase Tyr-sensitive
+cgMLST V2	STMMW_30061 (ygfX)	Putative inner membrane protein
+cgMLST V2	STMMW_06031 (lpxH)	"UDP-2,3-diacylglucosamine hydrolase"
+cgMLST V2	STMMW_29111 (cysJ)	sulfite reductase subunit alpha
+cgMLST V2	STMMW_12111 (ycfH)	metal-dependent hydrolase
+cgMLST V2	STMMW_26591 (rseA)	"anti sigma E (sigma 24) factor, negative regulator"
+cgMLST V2	STMMW_19121 (otsB)	trehalose-6-phosphate phosphatase
+cgMLST V2	STMMW_01981 (fhuC)	Ferric hydroxamate ABC transporter FhuC
+cgMLST V2	STMMW_27641	transcriptional regulator
+cgMLST V2	STMMW_11871 (flgG)	flagellar basal body rod protein FlgG
+cgMLST V2	STMMW_22031 (yohF)	"oxidoreductase, short chain dehydrogenase/reductase family"
+cgMLST V2	STMMW_41051 (rplL)	50S ribosomal protein L7/L12
+cgMLST V2	STMMW_45281 (gpmB)	phosphoglycerate mutase GpmB
+cgMLST V2	STMMW_14261 (ssaT)	EscT/YscT/HrcT family type III secretion system export apparatus protein
+cgMLST V2	STMMW_32961 (ftsJ)	ribosomal RNA large subunit methyltransferase E
+cgMLST V2	STMMW_08571 (moaD)	molybdopterin synthase sulfur carrier subunit
+cgMLST V2	STMMW_11291 (wrbA)	NAD(P)H dehydrogenase (quinone)
+cgMLST V2	STMMW_12801	"Phage Tail Collar Domain protein, partial"
+cgMLST V2	STMMW_23341 (menF)	menaquinone-specific isochorismate synthase
+cgMLST V2	STMMW_23342 (elaB)	ElaB protein
+cgMLST V2	STMMW_07321 (ybeX)	cobalt transporter
+cgMLST V2	STMMW_23611 (yfcC)	putative membrane protein
+cgMLST V2	STMMW_16471 (ynaF)	universal stress protein F
+cgMLST V2	STMMW_24341 (yfeA)	diguanylate cyclase
+cgMLST V2	STMMW_08311 (modE)	molybdenum-dependent transcriptional regulator
+cgMLST V2	STMMW_24691 (amiA)	N-acetylmuramoyl-l-alanine amidase I
+cgMLST V2	STMMW_11121 (hpaE)	5-carboxymethyl-2-hydroxymuconate semialdehyde dehydrogenase
+cgMLST V2	STMMW_34351 (bfr)	bacterioferritin
+cgMLST V2	STMMW_14181 (ssaM)	type III secretion system protein SsaM
+cgMLST V2	STMMW_22961 (gyrA)	DNA gyrase subunit A
+cgMLST V2	STMMW_32211 (ygjO)	ribosomal RNA large subunit methyltransferase G
+cgMLST V2	STMMW_43971	hypothetical protein
+cgMLST V2	STMMW_28091 (hycG)	formate hydrogenlyase subunit 7
+cgMLST V2	STMMW_42881 (frdD)	fumarate reductase subunit D
+cgMLST V2	STMMW_09951 (msbA)	lipid A export ATP-binding/permease MsbA
+cgMLST V2	STMMW_17981 (nhaB)	Na+/H+ antiporter NhaB
+cgMLST V2	STMMW_04671 (phoB)	two-component system response regulator
+cgMLST V2	STMMW_04851 (nrdR)	NrdR family transcriptional regulator
+cgMLST V2	STMMW_09041 (bssR)	biofilm regulator BssR
+cgMLST V2	STMMW_01771 (yadF)	putative carbonic anhydrase
+cgMLST V2	STMMW_43281 (sgaB)	ascorbate-specific phosphotransferase enzyme IIB component
+cgMLST V2	STMMW_24521 (crr)	glucose-specific phosphotransferase enzyme IIA component
+cgMLST V2	STMMW_21111 (udg)	UDP-glucose 6-dehydrogenase
+cgMLST V2	STMMW_25121 (yfgD)	arsenate reductase (glutaredoxin)
+cgMLST V2	STMMW_43021 (yjeE)	tRNA (N6-adenosine(37)-N6)-threonylcarbamoyltransferase complex ATPase TsaE
+cgMLST V2	STMMW_30211 (ygfA)	5-formyltetrahydrofolate cyclo-ligase
+cgMLST V2	STMMW_10981 (yccA)	"BAX inhibitor protein, partial"
+cgMLST V2	STMMW_39301 (rhtC)	threonine efflux system
+cgMLST V2	STMMW_40481 (yiiR)	membrane protein
+cgMLST V2	STMMW_41281 (purD)	phosphoribosylamine--glycine ligase
+cgMLST V2	STMMW_12581 (ibpA)	molecular chaperone
+cgMLST V2	STMMW_26691 (trxC)	thiol disulfide reductase thioredoxin
+cgMLST V2	STMMW_24831 (eutN)	ethanolamine utilization protein EutN
+cgMLST V2	STMMW_13181 (osmE)	transcriptional regulator
+cgMLST V2	STMMW_19601 (fliQ)	flagellar biosynthetic protein FliQ
+cgMLST V2	STMMW_04391 (prpC)	2-methylcitrate synthase
+cgMLST V2	STMMW_13761 (sufB)	cysteine desulfurase activator complex subunit SufB
+cgMLST V2	STMMW_33021 (rpmA)	50S ribosomal protein L27
+cgMLST V2	STMMW_37071 (rfaI)	lipopolysaccharide 1%2C3-galactosyltransferase (plasmid)
+cgMLST V2	STMMW_17601 (ychP)	invasin
+cgMLST V2	STMMW_07131 (leuS)	"Aminoacyl-tRNA synthetase, class Ia"
+cgMLST V2	STMMW_37291 (gmk)	guanylate kinase
+cgMLST V2	STMMW_38211 (recF)	DNA recombination protein RecF
+cgMLST V2	STMMW_33791 (yhdT)	membrane protein
+cgMLST V2	STMMW_11461 (ycdZ)	putative membrane protein
+cgMLST V2	STMMW_18951 (flhE)	flagellar biosynthesis protein FlhE
+cgMLST V2	STMMW_00471 (ileS)	isoleucine tRNA synthetase
+cgMLST V2	STMMW_03321 (proB)	glutamate 5-kinase
+cgMLST V2	STMMW_15111 (ydfG)	3-hydroxy acid dehydrogenase
+cgMLST V2	STMMW_39891 (yihW)	DeoR family transcriptional regulator
+cgMLST V2	STMMW_11601 (yceK)	"Putative outer membrane lipoprotein, partial"
+cgMLST V2	STMMW_22201 (mglC)	galactoside ABC transporter permease MglC
+cgMLST V2	STMMW_23401 (nuoM)	NADH-quinone oxidoreductase subunit M
+cgMLST V2	STMMW_07861 (abrB)	AbrB family transcriptional regulator
+cgMLST V2	STMMW_24751 (eutL)	microcompartment protein EutL
+cgMLST V2	STMMW_00951 (ksgA)	ribosomal RNA small subunit methyltransferase A
+cgMLST V2	STMMW_42161 (soxS)	transcriptional regulator
+cgMLST V2	STMMW_20981 (sbcB)	exodeoxyribonuclease I
+cgMLST V2	STMMW_14642 (blr)	beta-lactam resistance membrane protein
+cgMLST V2	STMMW_14641 (ydgT)	nucleoid-associated protein
+cgMLST V2	STMMW_09231 (grxA)	"glutaredoxin, GrxA family"
+cgMLST V2	STMMW_05241 (comE1)	competence protein ComEA
+cgMLST V2	STMMW_09541 (macA)	efflux transporter periplasmic adaptor subunit
+cgMLST V2	STMMW_02211 (map)	type I methionyl aminopeptidase
+cgMLST V2	STMMW_34161 (rpsE)	30S ribosomal protein S5
+cgMLST V2	STMMW_00141	bacteriophage protein
+cgMLST V2	STMMW_38851 (ppiC)	peptidyl-prolyl cis-trans isomerase
+cgMLST V2	STMMW_21851 (mrp)	Fe-S-binding ATPase
+cgMLST V2	STMMW_25801 (yfhG)	putative transcriptional regulator of two-component regulator protein (EBP familiiy)
+cgMLST V2	STMMW_16881 (sapB)	peptide ABC transporter permease
+cgMLST V2	STMMW_17461 (hns)	transcriptional regulator
+cgMLST V2	STMMW_39531 (fadB)	multifunctional fatty acid oxidation complex subunit alpha
+cgMLST V2	STMMW_30001 (lysS)	lysine--tRNA ligase
+cgMLST V2	STMMW_01231 (ilvH)	acetolactate synthase isozyme III small subunit
+cgMLST V2	STMMW_01541	alpha-N-arabinofuranosidase 2
+cgMLST V2	STMMW_06011 (purK)	phosphoribosylaminoimidazole carboxylase ATPase subunit
+cgMLST V2	STMMW_25661 (asrB)	anaerobic sulfite reductase subunit B
+cgMLST V2	STMMW_10001	aminoglycoside phosphotransferase
+cgMLST V2	STMMW_17451 (tdk)	thymidine kinase
+cgMLST V2	STMMW_28981 (cysD)	Sulfate adenylyltransferase subunit 2 1
+cgMLST V2	STMMW_38661 (rbsA)	Ribose ABC transport system ATP-binding protein RbsA
+cgMLST V2	STMMW_11851 (flgE)	flagellar hook protein FlgE
+cgMLST V2	STMMW_41071 (rpoC)	DNA-directed RNA polymerase subunit beta'
+cgMLST V2	STMMW_12391 (ycfD)	50S ribosomal protein L16 arginine hydroxylase
+cgMLST V2	STMMW_44641 (yjiO)	multidrug transporter
+cgMLST V2	STMMW_33581 (argR)	arginine repressor
+cgMLST V2	STMMW_32981 (greA)	transcription elongation factor GreA
+cgMLST V2	STMMW_19411 (fliS)	flagellar protein FliS
+cgMLST V2	STMMW_19141 (ftnB)	ferritin
+cgMLST V2	STMMW_08081 (nadA)	"quinolinate synthetase complex, A subunit"
+cgMLST V2	STMMW_14431 (sodCb)	Superoxide dismutase [Cu-Zn] 2
+cgMLST V2	STMMW_36401	Putative periplasmic or exported protein
+cgMLST V2	STMMW_12821 (yaoF)	hemolysin
+cgMLST V2	STMMW_07651 (ybfA)	putative exported protein
+cgMLST V2	STMMW_07301 (gltI)	"ABC superfamily (bind_prot), glutamate/aspartate transporter"
+cgMLST V2	STMMW_11141 (hpaF)	5-carboxymethyl-2-hydroxymuconate isomerase
+cgMLST V2	STMMW_22941 (rcsB)	DNA-binding response regulator
+cgMLST V2	STMMW_22412 (yeiW)	protein YeiW
+cgMLST V2	STMMW_05651 (ybaK)	aminoacyl-tRNA deacylase
+cgMLST V2	STMMW_23091 (glpB)	anaerobic glycerol-3-phosphate dehydrogenase subunit B
+cgMLST V2	STMMW_08551 (moaB)	molybdenum cofactor biosynthesis protein B
+cgMLST V2	STMMW_09681 (cydC)	cysteine/glutathione ABC transporter ATP-binding protein/permease CydC
+cgMLST V2	STMMW_09931 (himD)	integration host factor subunit beta
+cgMLST V2	STMMW_38251 (rnpA)	ribonuclease P protein component
+cgMLST V2	STMMW_23891 (dedA)	DedA protein (dsg-1 protein)
+cgMLST V2	STMMW_04871 (ribH)	"6,7-dimethyl-8-ribityllumazine synthase"
+cgMLST V2	STMMW_04301 (cydA)	cytochrome D ubiquinol oxidase subunit I CydA
+cgMLST V2	STMMW_08881 (ybiS)	"L,D-transpeptidase"
+cgMLST V2	STMMW_24321 (mntH)	divalent metal cation transporter
+cgMLST V2	STMMW_40931 (trmA)	tRNA (uridine(54)-C5)-methyltransferase TrmA
+cgMLST V2	STMMW_43001 (yjeS)	tRNA epoxyqueuosine(34) reductase QueG
+cgMLST V2	STMMW_39321 (pldB)	lysophospholipase L2
+cgMLST V2	STMMW_30271 (yggA)	arginine transporter
+cgMLST V2	STMMW_26671 (ung)	uracil-DNA glycosylase
+cgMLST V2	STMMW_05441 (ybaJ)	Hha toxicity attenuator
+cgMLST V2	STMMW_39181 (dapF)	98% identity with E. coli diaminopimelate epimerase (DAPF) (SP:P08885)
+cgMLST V2	STMMW_13161 (cho)	nucleotide excision repair endonuclease
+cgMLST V2	STMMW_14391 (nemA)	alkene reductase
+cgMLST V2	STMMW_00971 (surA)	peptidyl-prolyl cis-trans isomerase
+cgMLST V2	STMMW_40201 (sodA)	superoxide dismutase [Mn]
+cgMLST V2	STMMW_19621 (rcsA)	helix-turn-helix transcriptional regulator
+cgMLST V2	STMMW_37051 (rfaY)	LPS core heptose(II) kinase RfaY
+cgMLST V2	STMMW_13701 (ydiK)	inner membrane protein YdiK
+cgMLST V2	STMMW_33001 (obgE)	Obg family GTPase CgtA
+cgMLST V2	STMMW_36891 (secB)	protein-export protein SecB
+cgMLST V2	STMMW_32751 (yhbV)	U32 family peptidase
+cgMLST V2	STMMW_17661 (sirC)	transcriptional regulator
+cgMLST V2	STMMW_44581 (iadA)	beta-aspartyl-peptidase
+cgMLST V2	STMMW_16391 (ydbL)	putative conserved protein
+cgMLST V2	STMMW_28511 (spaQ)	type III secretion system protein SpaQ
+cgMLST V2	STMMW_38581 (gidA)	tRNA uridine(34) 5-carboxymethylaminomethyl synthesis enzyme MnmG
+cgMLST V2	STMMW_38271 (yidC)	insertase
+cgMLST V2	STMMW_19081 (flhD)	Flagellar transcriptional regulator FlhD
+cgMLST V2	STMMW_18971 (flhB)	"flagellar biosynthesis protein FlhB, partial"
+cgMLST V2	STMMW_17131 (yciK)	YciK family oxidoreductase
+cgMLST V2	STMMW_04461 (sbmA)	microcin B17 transporter
+cgMLST V2	STMMW_11621 (yceE)	multidrug efflux transporter
+cgMLST V2	STMMW_22771 (narP)	two-component system response regulator
+cgMLST V2	STMMW_36091 (yhjQ)	cellulose biosynthesis protein BcsQ
+cgMLST V2	STMMW_14921 (opuBD)	osmoprotectant import permease OsmW
+cgMLST V2	STMMW_23421 (nuoJ)	NADH:ubiquinone oxidoreductase subunit J
+cgMLST V2	STMMW_35541 (yhhK)	PanD maturation factor
+cgMLST V2	STMMW_18281 (ftsI2)	peptidoglycan synthetase FtsI
+cgMLST V2	STMMW_19201 (yecA)	hypothetical protein
+cgMLST V2	STMMW_35701 (yhhS)	major facilitator superfamily transporter
+cgMLST V2	STMMW_18751 (ruvB)	Holliday junction DNA helicase RuvB
+cgMLST V2	STMMW_18021	hypothetical protein
+cgMLST V2	STMMW_09211	transporter
+cgMLST V2	STMMW_14661 (add)	adenosine deaminase
+cgMLST V2	STMMW_05221 (hupB)	transcriptional regulator
+cgMLST V2	STMMW_07511 (fur)	ferric uptake regulator
+cgMLST V2	STMMW_02231 (tsf)	Translation elongation factor Ts
+cgMLST V2	STMMW_34631 (ppiA)	peptidyl-prolyl cis-trans isomerase
+cgMLST V2	STMMW_34141 (rplO)	50S ribosomal protein L15
+cgMLST V2	STMMW_04401 (prpD)	2-methylcitrate dehydratase
+cgMLST V2	STMMW_31041 (hybF)	hydrogenase nickel incorporation protein HybF
+cgMLST V2	STMMW_31511	hypothetical protein
+cgMLST V2	STMMW_30641 (yggV)	"non-canonical purine NTP pyrophosphatase, RdgB/HAM1 family"
+cgMLST V2	STMMW_30391 (speB)	agmatinase
+cgMLST V2	STMMW_29481 (ygdK)	CsdA-binding activator
+cgMLST V2	STMMW_01211 (leuO)	putative transcriptional activator for LeuABCD operon
+cgMLST V2	STMMW_27421 (iroD)	Trilactone hydrolase IroD
+cgMLST V2	STMMW_27931 (mltB)	Membrane-bound lytic murein transglycosylase B precursor
+cgMLST V2	STMMW_25681	nickel transporter
+cgMLST V2	STMMW_21301 (wcaM)	colanic acid biosynthesis protein WcaM
+cgMLST V2	STMMW_41891	UPF0337 protein yjbJ
+cgMLST V2	STMMW_15031 (ynfB)	putative secreted protein
+cgMLST V2	STMMW_12151 (ycfL)	membrane protein
+cgMLST V2	STMMW_29151 (eno)	phosphopyruvate hydratase
+cgMLST V2	STMMW_26881 (trmD)	tRNA (guanosine(37)-N1)-methyltransferase TrmD
+cgMLST V2	STMMW_30021 (recJ)	single-stranded-DNA-specific exonuclease RecJ
+cgMLST V2	STMMW_39041 (rffM)	UDP-N-acetyl-D-mannosaminuronic acid transferase
+cgMLST V2	STMMW_33611 (yhcO)	barnase inhibitor
+cgMLST V2	STMMW_27681 (ygaC)	Putative cytoplasmic protein
+cgMLST V2	STMMW_38641 (kup)	potassium transporter Kup
+cgMLST V2	STMMW_36391 (cspA)	cold-shock protein
+cgMLST V2	STMMW_19161	lipoprotein
+cgMLST V2	STMMW_18561 (yobA)	putative cation resistance protein
+cgMLST V2	STMMW_14411 (ydhL)	oxidoreductase
+cgMLST V2	STMMW_12841 (yeaO)	MarR family transcriptional regulator
+cgMLST V2	STMMW_33211 (ptsN)	PTS sugar transporter subunit IIA
+cgMLST V2	STMMW_07671 (ybgH)	POT proton-dependent oligopeptide transporter (PTR)
+cgMLST V2	STMMW_23301 (menC)	o-succinylbenzoate synthase
+cgMLST V2	STMMW_22431 (yeiR)	Putative GTPase
+cgMLST V2	STMMW_32251 (ygjT)	"integral membrane protein TerC, partial"
+cgMLST V2	STMMW_01851 (yadE)	polysaccharide deacetylase
+cgMLST V2	STMMW_08531 (ybhK)	gluconeogenesis factor
+cgMLST V2	STMMW_09911 (cmk)	cytidylate kinase
+cgMLST V2	STMMW_42221 (cidA)	murein hydrolase regulator LrgA
+cgMLST V2	STMMW_35151 (glpD)	Aerobic glycerol-3-phosphate dehydrogenase
+cgMLST V2	STMMW_24301 (gpr)	glyceraldehyde 3-phosphate reductase
+cgMLST V2	STMMW_24651	putative iron-dependent peroxidase
+cgMLST V2	STMMW_04631 (yajF)	ROK family Glucokinase
+cgMLST V2	STMMW_09001 (yliB)	glutathione ABC transporter substrate-binding protein GsiB
+cgMLST V2	STMMW_43241 (yjfP)	esterase
+cgMLST V2	STMMW_40911 (yijC)	DNA-binding transcriptional regulator FabR
+cgMLST V2	STMMW_31701 (rpsU)	30S ribosomal protein S21
+cgMLST V2	STMMW_31251 (dkgA)	"2,5-diketo-D-gluconic acid reductase A"
+cgMLST V2	STMMW_43791 (yjgA)	transporter
+cgMLST V2	STMMW_43061 (hfq)	RNA chaperone Hfq
+cgMLST V2	STMMW_01661 (yacL)	putative cytoplasmic protein
+cgMLST V2	STMMW_24871 (eutQ)	Ethanolamine utilization protein eutQ
+cgMLST V2	STMMW_28141 (hycB)	formate hydrogenlyase
+cgMLST V2	STMMW_13141 (astE)	succinylglutamate desuccinylase
+cgMLST V2	STMMW_13491 (btuD)	vitamin B12-transporter ATPase
+cgMLST V2	STMMW_28071 (hycI)	hydrogenase 3 maturation endopeptidase HyCI
+cgMLST V2	STMMW_17391 (oppC)	peptide ABC transporter permease
+cgMLST V2	STMMW_40261 (fieF)	divalent metal cation transporter FieF
+cgMLST V2	STMMW_13721 (menI)	ydiI hotdog fold superfamily
+cgMLST V2	STMMW_41791 (malK)	maltose/maltodextrin transport ATP-binding protein
+cgMLST V2	STMMW_44561 (racD)	aspartate racemase
+cgMLST V2	STMMW_39701 (glnL)	two-component system sensor histidine kinase NtrB
+cgMLST V2	STMMW_28531 (spaO)	surface presentation of antigens protein (associated with type III secretion and virulence)
+cgMLST V2	STMMW_33281 (yhcC)	TIGR01212 family radical SAM protein
+cgMLST V2	STMMW_33931 (yrdB)	periplasmic protein
+cgMLST V2	STMMW_41131 (thiG)	thiazole synthase
+cgMLST V2	STMMW_18911 (yecM)	metalloprotein
+cgMLST V2	STMMW_32881 (yhbC)	Ribosome maturation factor RimP
+cgMLST V2	STMMW_12451 (ymfB)	Nudix-like NDP and NTP phosphohydrolase YmfB
+cgMLST V2	STMMW_32731 (yhbT)	lipid carrier protein
+cgMLST V2	STMMW_17641 (kdsA)	3-deoxy-8-phosphooctulonate synthase
+cgMLST V2	STMMW_16511 (dbpA)	ATP-dependent RNA helicase DbpA
+cgMLST V2	STMMW_39851 (yihS)	sulfoquinovose isomerase
+cgMLST V2	STMMW_37961 (yidH)	membrane protein
+cgMLST V2	STMMW_35831 (prlC)	oligopeptidase A
+cgMLST V2	STMMW_08271 (galT)	galactose-1-phosphate uridylyltransferase
+cgMLST V2	STMMW_18001	tellurite resistance protein B
+cgMLST V2	STMMW_05201 (clpX)	ATP-dependent Clp protease ATP-binding subunit ClpX
+cgMLST V2	STMMW_05751 (ybbO)	Putative NAD(P)-dependent oxidoreductase EC-YbbO
+cgMLST V2	STMMW_17331 (yciI)	YciI-like protein
+cgMLST V2	STMMW_09271 (ybjN)	YbjN sensory transduction regulator
+cgMLST V2	STMMW_23441 (nuoH)	NADH-quinone oxidoreductase subunit H
+cgMLST V2	STMMW_24461 (lig)	DNA ligase (NAD(+)) LigA
+cgMLST V2	STMMW_28331 (prgK)	EscJ/YscJ/HrcJ family type III secretion inner membrane ring protein
+cgMLST V2	STMMW_34611 (fic)	pot. cell division protein (fic); putative
+cgMLST V2	STMMW_31061 (hybD)	hydrogenase 2 maturation endopeptidase
+cgMLST V2	STMMW_40071	"toxin-antitoxin system, antitoxin component, Xre family"
+cgMLST V2	STMMW_14271 (ssaU)	EscU/YscU/HrcU family type III secretion system export apparatus switch protein
+cgMLST V2	STMMW_31391 (mdaB)	Modulator of drug activity B
+cgMLST V2	STMMW_06581 (ybdA)	enterobactin exporter EntS
+cgMLST V2	STMMW_43471 (cpdB)	"2',3'-cyclic-nucleotide 2'-phosphodiesterase"
+cgMLST V2	STMMW_01581 (aceE)	"pyruvate dehydrogenase (acetyl-transferring), homodimeric type"
+cgMLST V2	STMMW_01271 (ftsL)	cell division protein FtsL
+cgMLST V2	STMMW_30621 (yggT)	resistance protein
+cgMLST V2	STMMW_39281 (pldA)	detergent-resistant phospholipase A
+cgMLST V2	STMMW_13801 (ynhA)	"cysteine desufuration protein SufE, partial"
+cgMLST V2	STMMW_27911 (recA)	recombinase A
+cgMLST V2	STMMW_37391 (yicJ)	sugar transporter
+cgMLST V2	STMMW_12601	cytochrome b561
+cgMLST V2	STMMW_39061 (hemY)	HemY
+cgMLST V2	STMMW_29791 (kduD)	2-deoxy-D-gluconate 3-dehydrogenase
+cgMLST V2	STMMW_33631 (yhcQ)	p-hydroxybenzoic acid efflux pump subunit AaeA
+cgMLST V2	STMMW_38621 (yieM)	protoheme IX farnesyltransferase
+cgMLST V2	STMMW_02611 (yafS)	SAM-dependent methyltransferase
+cgMLST V2	STMMW_06051 (cysS)	cysteine--tRNA ligase
+cgMLST V2	STMMW_06721 (dsbG)	disulfide isomerase/thiol-disulfide oxidase
+cgMLST V2	STMMW_36371 (yiaF)	lipoprotein
+cgMLST V2	STMMW_28941 (ftsB)	cell division protein FtsB
+cgMLST V2	STMMW_28491 (spaS)	EscU/YscU/HrcU family type III secretion system export apparatus switch protein
+cgMLST V2	STMMW_12861 (yeaM)	AraC family transcriptional regulator
+cgMLST V2	STMMW_12862 (yeaL)	membrane protein
+cgMLST V2	STMMW_14471 (slyA)	SlyA family transcriptional regulator
+cgMLST V2	STMMW_36111 (yhjS)	protease
+cgMLST V2	STMMW_09491 (hcr)	NADH oxidoreductase for hcp gene product
+cgMLST V2	STMMW_23321 (yfbB)	"2-succinyl-6-hydroxy-2,4-cyclohexadiene-1-carboxylate synthase"
+cgMLST V2	STMMW_45221 (radA)	DNA repair protein RadA
+cgMLST V2	STMMW_42021	Putative inner membrane protein
+cgMLST V2	STMMW_42791 (groEL)	molecular chaperone GroEL
+cgMLST V2	STMMW_22451 (spr)	"outer membrane lipoprotein, partial"
+cgMLST V2	STMMW_32271 (yqjA)	membrane protein
+cgMLST V2	STMMW_27001 (rnfH)	RnfH family protein
+cgMLST V2	STMMW_09641	LysR family transcriptional regulator
+cgMLST V2	STMMW_42241 (actP)	cation acetate symporter
+cgMLST V2	STMMW_09391 (artQ)	polar amino acid ABC transporter inner membrane subunit
+cgMLST V2	STMMW_23851 (cvpA)	colicin V production protein
+cgMLST V2	STMMW_17921 (ldcA)	"L,D-carboxypeptidase A"
+cgMLST V2	STMMW_23581	putative membrane protein
+cgMLST V2	STMMW_35131 (glpG)	rhomboid family intramembrane serine protease GlpG
+cgMLST V2	STMMW_04611 (yaiE)	DUF1255 Cytoplasmic protein YaiE
+cgMLST V2	STMMW_11181 (hpaA)	4-hydroxyphenylacetate catabolism regulatory protein HpaA
+cgMLST V2	STMMW_24671 (yfeZ)	membrane protein
+cgMLST V2	STMMW_34841 (nudE)	ADP compounds hydrolase NudE
+cgMLST V2	STMMW_25981 (lepB)	S26 family signal peptidase
+cgMLST V2	STMMW_43261 (yjfR)	L-ascorbate-6-phosphate lactonase
+cgMLST V2	STMMW_00051 (yaaJ)	amino acid sodium/proton transporter
+cgMLST V2	STMMW_31721 (rpoD)	RNA polymerase sigma factor RpoD
+cgMLST V2	STMMW_31231 (yqhC)	AraC family transcriptional regulator
+cgMLST V2	STMMW_29781 (araE)	galactose-proton symporter galactose transporter
+cgMLST V2	STMMW_34261 (rpsC)	30S ribosomal protein S3
+cgMLST V2	STMMW_09021 (yliD)	glutathione ABC transporter permease GsiD
+cgMLST V2	STMMW_05561 (recR)	recombination protein RecR
+cgMLST V2	STMMW_26981 (recN)	recombinase
+cgMLST V2	STMMW_01641 (acnB)	bifunctional aconitate hydratase 2/2-methylisocitrate dehydratase
+cgMLST V2	STMMW_26631 (srmB)	ATP-dependent RNA helicase SrmB
+cgMLST V2	STMMW_24851 (eutD)	phosphate acetyltransferase
+cgMLST V2	STMMW_06911 (citB)	two-component response regulator DpiA
+cgMLST V2	STMMW_28161 (hypA)	hydrogenase nickel incorporation protein
+cgMLST V2	STMMW_13121 (astD)	N-succinylglutamate 5-semialdehyde dehydrogenase
+cgMLST V2	STMMW_25181 (ppk)	RNA degradosome polyphosphate kinase
+cgMLST V2	STMMW_10831 (ompA)	outer membrane protien A
+cgMLST V2	STMMW_39491 (yigC)	3-octaprenyl-4-hydroxybenzoate carboxy-lyase
+cgMLST V2	STMMW_40531 (yiiU)	septal ring assembly protein ZapB
+cgMLST V2	STMMW_40241 (cpxR)	DNA-binding response regulator
+cgMLST V2	STMMW_37761 (uhpT)	hexose phosphate transporter
+cgMLST V2	STMMW_44091	C4-dicarboxylate ABC transporter
+cgMLST V2	STMMW_39721	putative cytoplasmic protein
+cgMLST V2	STMMW_17041 (yciS)	"inner membrane protein, partial"
+cgMLST V2	STMMW_28551 (invI)	SpaM
+cgMLST V2	STMMW_27581 (gabD)	NAD-dependent succinate-semialdehyde dehydrogenase
+cgMLST V2	STMMW_25721 (glyA)	serine hydroxymethyltransferase
+cgMLST V2	STMMW_12291 (ycfX)	Latent glucokinase ycfX
+cgMLST V2	STMMW_15241 (yneI)	succinate-semialdehyde dehydrogenase
+cgMLST V2	STMMW_27761 (proV)	glycine betaine/L-proline ABC transporter ATP-binding protein
+cgMLST V2	STMMW_37181 (radC)	DNA repair protein RadC
+cgMLST V2	STMMW_32711 (yhbQ)	GIY-YIG nuclease
+cgMLST V2	STMMW_32861 (infB)	translation initiation factor IF-2
+cgMLST V2	STMMW_17111 (yciN)	hypothetical protein
+cgMLST V2	STMMW_35721 (acpT)	4'-phosphopantetheinyl transferase
+cgMLST V2	STMMW_16571 (ydaA)	universal stress protein E
+cgMLST V2	STMMW_37981 (hslS)	heat-shock protein IbpB
+cgMLST V2	STMMW_33401 (sspB)	stringent starvation protein B
+cgMLST V2	STMMW_39871 (yihU)	NADH-dependent gamma-hydroxybutyrate dehydrogenase
+cgMLST V2	STMMW_35631 (yhhM)	receptor
+cgMLST V2	STMMW_29201 (rumA)	23S rRNA (uracil(1939)-C(5))-methyltransferase RlmD
+cgMLST V2	STMMW_05141 (cyoA)	cytochrome ubiquinol oxidase subunit II
+cgMLST V2	STMMW_44891 (dnaC)	DNA replication protein DnaC
+cgMLST V2	STMMW_35581 (ftsX)	"ABC transporter, FtsX cell division permease"
+cgMLST V2	STMMW_35851 (yhiR)	ribosomal RNA large subunit methyltransferase J
+cgMLST V2	STMMW_45051 (yjjU)	"phospholipase, patatin family"
+cgMLST V2	STMMW_18241 (manZ)	PTS system mannose-specific transporter subunit IID
+cgMLST V2	STMMW_42491 (melA)	alpha-glucosidase/alpha-galactosidase
+cgMLST V2	STMMW_14591 (rnfD)	electron transport complex subunit D
+cgMLST V2	STMMW_08701	transporter
+cgMLST V2	STMMW_08251 (galM)	galactose mutarotase
+cgMLST V2	STMMW_34451 (fkpA)	FKBP-type peptidyl-prolyl cis-trans isomerase FkpA
+cgMLST V2	STMMW_18061 (minC)	septum formation inhibitor
+cgMLST V2	STMMW_14621 (rnfA)	electron transport complex subunit A
+cgMLST V2	STMMW_02521 (yaeE)	methionine ABC transporter permease
+cgMLST V2	STMMW_09251 (mdaA)	oxygen-insensitive NADPH nitroreductase
+cgMLST V2	STMMW_23461 (nuoF)	NADH dehydrogenase I subunit F
+cgMLST V2	STMMW_07551 (seqA)	"negative modulator of initiation of replication, inhibits open complex formation, mutation in gene alters cell membrane"
+cgMLST V2	STMMW_24111 (fadI)	3-ketoacyl-CoA thiolase
+cgMLST V2	STMMW_16992	hypothetical protein
+cgMLST V2	STMMW_34671 (nirC)	nitrite transporter NirC
+cgMLST V2	STMMW_05481 (aefA)	Potassium efflux system KefA protein
+cgMLST V2	STMMW_31001 (yghU)	glutathione-dependent disulfide-bond oxidoreductase
+cgMLST V2	STMMW_16891 (sapC)	peptide ABC transporter permease
+cgMLST V2	STMMW_01071 (araD)	L-ribulose-5-phosphate 4-epimerase UlaF
+cgMLST V2	STMMW_15871 (ydcY)	hypothetical protein
+cgMLST V2	STMMW_00701 (caiF)	transcriptional regulator
+cgMLST V2	STMMW_25531 (pepB)	peptidase B
+cgMLST V2	STMMW_01251 (mraZ)	division/cell wall cluster transcriptional repressor MraZ
+cgMLST V2	STMMW_30601 (pilT)	"Type II secretion, ATP-binding, protein"
+cgMLST V2	STMMW_30351 (ecfA1)	ABC-type cobalt transport system ATP-binding component
+cgMLST V2	STMMW_14831 (ydgE)	multidrug transporter
+cgMLST V2	STMMW_21431 (wcaE)	colanic acid biosynthesis glycosyltransferase WcaE
+cgMLST V2	STMMW_41321 (aceB)	malate synthase A
+cgMLST V2	STMMW_21341 (wcaJ)	Colanic acid biosynthsis UDP-glucose lipid carrier transferase WcaJ
+cgMLST V2	STMMW_29191 (relA)	GTP pyrophosphokinase
+cgMLST V2	STMMW_39001 (rffA)	UDP-4-amino-4-deoxy-L-arabinose-oxoglutarateaminotransferase UDP-(beta-L-threo-pentapyranosyl-4''-ulose diphosphate) aminotransferase; UDP-Ara4O aminotransferase
+cgMLST V2	STMMW_44151 (argI)	ornithine carbamoyltransferase subunit I
+cgMLST V2	STMMW_02631 (dnaQ)	DNA polymerase III subunit epsilon
+cgMLST V2	STMMW_06701 (ybdN)	phosphoadenosine phosphosulfate reductase
+cgMLST V2	STMMW_27971 (gutD)	sorbitol 6-phosphate dehydrogenase
+cgMLST V2	STMMW_17561 (narG)	nitrate reductase subunit alpha
+cgMLST V2	STMMW_36351 (yiaD)	putative outer membrane lipoprotein
+cgMLST V2	STMMW_28961 (cysC)	adenylyl-sulfate kinase
+cgMLST V2	STMMW_38601 (asnCb)	transcriptional regulator
+cgMLST V2	STMMW_33651 (yhcS)	LysR family transcriptional regulator
+cgMLST V2	STMMW_12881 (yeaK)	conserved hypothetical protein
+cgMLST V2	STMMW_14451 (ydhJ)	putative multidrug resistance efflux pump
+cgMLST V2	STMMW_14361 (ydhD)	glutaredoxin
+cgMLST V2	STMMW_45201 (smp)	"Virulence factor, hemolysin regulator"
+cgMLST V2	STMMW_32291 (yqjC)	putative exported protein
+cgMLST V2	STMMW_32292 (yqjD)	putative inner membrane protein
+cgMLST V2	STMMW_08061 (pal)	peptidoglycan-associated lipoprotein
+cgMLST V2	STMMW_27021 (smpB)	SsrA-binding protein
+cgMLST V2	STMMW_11211 (yccD)	chaperone-modulator protein CbpM
+cgMLST V2	STMMW_07941 (sucB)	dihydrolipoamide succinyltransferase
+cgMLST V2	STMMW_23871 (folC)	bifunctional tetrahydrofolate synthase/dihydrofolate synthase
+cgMLST V2	STMMW_17901 (ycgR)	flagellar brake protein YcgR
+cgMLST V2	STMMW_35441 (ugpE)	sn-glycerol 3-phosphate ABC transporter permease
+cgMLST V2	STMMW_04361 (yahO)	Putative Periplasmic Protein
+cgMLST V2	STMMW_08391 (hutI)	imidazolonepropionase
+cgMLST V2	STMMW_24611 (cysW)	sulfate/thiosulfate transporter permease subunit
+cgMLST V2	STMMW_34861 (yrfG)	GMP/IMP nucleotidase
+cgMLST V2	STMMW_22471 (yejA)	peptide ABC transporter substrate-binding protein
+cgMLST V2	STMMW_25381 (yfgM)	putative inner membrane protein
+cgMLST V2	STMMW_23701 (yfcF)	glutathione S-transferase
+cgMLST V2	STMMW_24331 (nupC)	nucleoside transporter NupC
+cgMLST V2	STMMW_10101 (ompF)	porin
+cgMLST V2	STMMW_09621	Isochorismatase hydrolase
+cgMLST V2	STMMW_08931 (ybiV(1))	sugar phosphatase SupH
+cgMLST V2	STMMW_04941 (xseB)	exodeoxyribonuclease VII small subunit
+cgMLST V2	STMMW_34241 (rpsQ)	30S ribosomal protein S17
+cgMLST V2	STMMW_34242 (rpmC)	50S ribosomal protein L29
+cgMLST V2	STMMW_05541 (dnaX)	DNA polymerase III subunit gamma/tau
+cgMLST V2	STMMW_26611 (nadB)	L-aspartate oxidase
+cgMLST V2	STMMW_01621	putative secreted protein
+cgMLST V2	STMMW_00131	LysR family transcriptional regulator
+cgMLST V2	STMMW_06931 (pagP)	phospholipid:lipid A palmitoyltransferase
+cgMLST V2	STMMW_13101 (argDa)	succinylornithine aminotransferase
+cgMLST V2	STMMW_14332 (ynhF)	transporter
+cgMLST V2	STMMW_13451 (pheT)	phenylalanine--tRNA ligase subunit beta
+cgMLST V2	STMMW_28101 (hycF)	formate hydrogenlyase complex iron-sulfur subunit
+cgMLST V2	STMMW_42911 (frdA)	fumarate reductase
+cgMLST V2	STMMW_31211 (metC)	cystathionine beta-lyase
+cgMLST V2	STMMW_10811 (lonH)	ATP-dependent protease La
+cgMLST V2	STMMW_30161 (visC)	FAD-dependent 2-octaprenylphenol hydroxylase
+cgMLST V2	STMMW_40511 (glpK)	glycerol kinase
+cgMLST V2	STMMW_27561 (csiD)	carbon starvation induced protein
+cgMLST V2	STMMW_28571 (invB)	type III secretion system chaperone SpaK
+cgMLST V2	STMMW_25701 (csiE)	stationary phase inducible protein CsiE
+cgMLST V2	STMMW_12271 (lolD)	"peptide ABC transporter ATP-binding protein, partial"
+cgMLST V2	STMMW_15261 (yneG)	DUF4186 domain-containing protein
+cgMLST V2	STMMW_41171 (thiC)	phosphomethylpyrimidine synthase ThiC
+cgMLST V2	STMMW_17681 (prfA)	peptide chain release factor 1
+cgMLST V2	STMMW_36831 (yibK)	tRNA (cytosine(34)-2'-O)-methyltransferase TrmL
+cgMLST V2	STMMW_32841 (truB)	tRNA pseudouridine(55) synthase TruB
+cgMLST V2	STMMW_17171 (trpH)	S-adenosylmethionine tRNA ribosyltransferase
+cgMLST V2	STMMW_19241 (pgsA)	CDP-diacylglycerol--glycerol-3-phosphate 3-phosphatidyltransferase
+cgMLST V2	STMMW_39811 (yihO)	GPH family transporter
+cgMLST V2	STMMW_33461 (yhcB)	cytochrome d ubiquinol oxidase subunit III
+cgMLST V2	STMMW_11681 (solA)	N-methyl-L-tryptophan oxidase
+cgMLST V2	STMMW_17101 (topA)	DNA topoisomerase I subunit omega
+cgMLST V2	STMMW_45071 (yjjW)	YjjW family glycine radical enzyme activase
+cgMLST V2	STMMW_16501 (ydaO)	tRNA 2-thiocytidine(32) synthetase TtcA
+cgMLST V2	STMMW_18261 (yebN)	manganese efflux pump MntP
+cgMLST V2	STMMW_13271 (ydjN)	L-cystine transporter tcyP
+cgMLST V2	STMMW_07711 (ybgL)	putative lactam utilization protein
+cgMLST V2	STMMW_16551 (ogt)	cysteine methyltransferase
+cgMLST V2	STMMW_08721 (rhlE)	ATP-dependent RNA helicase RhlE
+cgMLST V2	STMMW_18041 (ycgM)	Fumarylacetoacetate hydrolase
+cgMLST V2	STMMW_34471 (slyD)	FKBP-type peptidyl-prolyl cis-trans isomerase
+cgMLST V2	STMMW_22861 (napF)	ferredoxin
+cgMLST V2	STMMW_05711 (ybbK)	paraslipin
+cgMLST V2	STMMW_07571	putative 5-nitroimidazole antibiotic resistance
+cgMLST V2	STMMW_28371 (hilD)	transcriptional regulator hilD
+cgMLST V2	STMMW_34651 (nirB)	nitrite reductase large subunit
+cgMLST V2	STMMW_00491 (fkpB)	probable FkbB-type 16 kD peptidyl-prolyl cis-trans isomerase
+cgMLST V2	STMMW_01011 (hepA)	RNA polymerase-binding ATPase
+cgMLST V2	STMMW_15851 (yncA)	GNAT family acetyltransferase
+cgMLST V2	STMMW_24131 (fadL)	long-chain fatty acid outer membrane transporter
+cgMLST V2	STMMW_00721 (caiD)	carnitinyl-CoA dehydratase
+cgMLST V2	STMMW_25551 (fdx)	"ferredoxin, 2Fe-2S type, ISC system"
+cgMLST V2	STMMW_43431 (ytfE)	"iron-sulfur cluster repair di-iron protein, partial"
+cgMLST V2	STMMW_30371 (tktA)	transketolase
+cgMLST V2	STMMW_12641	peptide ABC transporter permease
+cgMLST V2	STMMW_02381 (accA)	acetyl-CoA carboxylase carboxyltransferase subunit alpha
+cgMLST V2	STMMW_30081 (ygfZ)	global regulator
+cgMLST V2	STMMW_39021 (wecF)	TDP-N-acetylfucosamine:lipid II N-acetylfucosaminyltransferase
+cgMLST V2	STMMW_06541 (fepE)	LPS O-antigen length regulator
+cgMLST V2	STMMW_06891 (citC)	[citrate (pro-3S)-lyase] ligase
+cgMLST V2	STMMW_14341 (sodB)	superoxide dismutase [Fe]
+cgMLST V2	STMMW_30881 (ordL)	FAD-dependent oxidoreductase
+cgMLST V2	STMMW_27951 (srlE)	PTS sorbitol transporter subunit IIB
+cgMLST V2	STMMW_06091 (ybcJ)	ribosome-associated protein
+cgMLST V2	STMMW_37351 (gltS)	sodium/glutamate symporter
+cgMLST V2	STMMW_17541 (narJ)	nitrate reductase molybdenum cofactor assembly chaperone
+cgMLST V2	STMMW_36331 (yiaC)	GNAT family acetyltransferase
+cgMLST V2	STMMW_19491 (fliF)	flagellar M-ring protein FliF
+cgMLST V2	STMMW_16761 (ycjG)	dipeptide epimerase
+cgMLST V2	STMMW_28901 (surE)	5'/3'-nucleotidase SurE
+cgMLST V2	STMMW_38371 (yieH)	Putative phosphatase YieH
+cgMLST V2	STMMW_37531 (mgtC)	magnesium transporter
+cgMLST V2	STMMW_36481 (xylB)	Xylulose kinase
+cgMLST V2	STMMW_07381 (asnB)	asparagine synthase B
+cgMLST V2	STMMW_38561 (atpI)	"membrane-bound ATP synthase subunit, F1-F0-type proton-ATPase"
+cgMLST V2	STMMW_45261 (trpR)	Trp operon repressor
+cgMLST V2	STMMW_35681 (yhhQ)	conserved hypothetical integral membrane protein
+cgMLST V2	STMMW_27041 (lapE)	TolC family type I secretion outer membrane protein
+cgMLST V2	STMMW_37821 (rbsK)	ribokinase
+cgMLST V2	STMMW_07961 (sucD)	succinate--CoA ligase subunit alpha
+cgMLST V2	STMMW_23811	putative amino acid transporter
+cgMLST V2	STMMW_17961 (ycgB)	SpoVR family protein
+cgMLST V2	STMMW_35461 (ugpB)	glycerol-3-phosphate ABC transporter substrate-binding protein
+cgMLST V2	STMMW_24631 (cysP)	thiosulfate transporter subunit
+cgMLST V2	STMMW_22491 (yejE)	microcin C ABC transporter permease
+cgMLST V2	STMMW_42061 (ssb)	"single-stranded DNA-binding protein, partial"
+cgMLST V2	STMMW_43221 (yjfN)	membrane protein
+cgMLST V2	STMMW_23721 (yfcH)	epimerase
+cgMLST V2	STMMW_07451 (ybfM)	chitoporin
+cgMLST V2	STMMW_42281 (nrfA)	nitrite reductase (cytochrome; ammonia-forming) c552 subunit
+cgMLST V2	STMMW_43081 (hflK)	protease modulator HflK
+cgMLST V2	STMMW_12441 (mnmA)	tRNA 2-thiouridine(34) synthase MnmA
+cgMLST V2	STMMW_04921 (dxs)	1-deoxy-D-xylulose-5-phosphate synthase
+cgMLST V2	STMMW_24091 (sixA)	phosphohistidine phosphatase
+cgMLST V2	STMMW_34221 (rplX)	50S ribosomal protein L24
+cgMLST V2	STMMW_38971 (rffG)	"dTDP-glucose 4,6-dehydratase"
+cgMLST V2	STMMW_05031 (thiJ)	oxidative-stress-resistance chaperone
+cgMLST V2	STMMW_25941 (pdxJ)	pyridoxine 5'-phosphate synthase
+cgMLST V2	STMMW_05521	putative membrane protein
+cgMLST V2	STMMW_10781 (ymbA)	lipoprotein
+cgMLST V2	STMMW_40751 (talC)	fructose-6-phosphate aldolase
+cgMLST V2	STMMW_24891 (eutS)	ethanolamine utilization protein EutS
+cgMLST V2	STMMW_28121 (hycD)	hydrogenase 3 membrane subunit
+cgMLST V2	STMMW_06951 (ccrB)	putative fluoride ion transporter CrcB
+cgMLST V2	STMMW_42931 (yjeM)	inner membrane transporter YjeM
+cgMLST V2	STMMW_14311 (ydhC)	Bcr/CflA family multidrug efflux MFS transporter
+cgMLST V2	STMMW_30141 (gcvH)	glycine cleavage system protein H
+cgMLST V2	STMMW_10871 (yccF)	Inner membrane protein YccF
+cgMLST V2	STMMW_40281 (sbp)	sulfate transporter subunit
+cgMLST V2	STMMW_40571 (hslV)	HslU--HslV peptidase proteolytic subunit
+cgMLST V2	STMMW_13781 (sufD)	FeS cluster assembly protein SufD
+cgMLST V2	STMMW_01601 (lpdA)	dihydrolipoyl dehydrogenase
+cgMLST V2	STMMW_01351 (murC)	UDP-N-acetylmuramate--L-alanine ligase
+cgMLST V2	STMMW_27651 (ygaP)	Rhodanese-like sulfurtransferase
+cgMLST V2	STMMW_27541 (tctB)	tricarboxylate transporter TctB
+cgMLST V2	STMMW_33991 (def)	peptide deformylase
+cgMLST V2	STMMW_25761 (cadA)	lysine decarboxylase inducible
+cgMLST V2	STMMW_29651 (nudH)	RNA pyrophosphohydrolase
+cgMLST V2	STMMW_12251 (mfd)	transcription-repair coupling factor
+cgMLST V2	STMMW_12781 (yoaG)	putative protein YoaG
+cgMLST V2	STMMW_05231 (cypD)	peptidyl-prolyl cis-trans isomerase
+cgMLST V2	STMMW_27721 (nrdH)	NrdH-redoxin
+cgMLST V2	STMMW_33191 (rpoN)	RNA polymerase sigma-54 factor (sigma-N)
+cgMLST V2	STMMW_41151 (thiF)	adenylyltransferase ThiF
+cgMLST V2	STMMW_03231 (yafK)	transpeptidase
+cgMLST V2	STMMW_36811 (lctR)	transcriptional regulator LldR
+cgMLST V2	STMMW_32821 (pnp)	Polyribonucleotide nucleotidyl transferase
+cgMLST V2	STMMW_17151 (yciL)	Ribosomal large subunit pseudouridine synthase B
+cgMLST V2	STMMW_44501	iicA
+cgMLST V2	STMMW_44051 (pyrB)	aspartate carbamoyltransferase catalytic subunit
+cgMLST V2	STMMW_33331 (codA)	cytosine deaminase
+cgMLST V2	STMMW_33441 (rplM)	50S ribosomal protein L13
+cgMLST V2	STMMW_19001 (cheB)	chemotaxis response regulator protein-glutamate methylesterase
+cgMLST V2	STMMW_21031 (hisD)	histidinol dehydrogenase
+cgMLST V2	STMMW_45011 (rimI)	modification of 30S ribosomal subunit protein S18
+cgMLST V2	STMMW_12921 (mipA)	"MltA-interacting protein MipA, partial"
+cgMLST V2	STMMW_19261 (sirA)	two-component system response regulator UvrY
+cgMLST V2	STMMW_34411 (yheL)	sulfur transfer complex subunit TusB
+cgMLST V2	STMMW_05731 (ybbM)	iron export ABC transporter permease subunit FetB
+cgMLST V2	STMMW_22801 (napC)	"cytochrome c-type protein NapC, partial"
+cgMLST V2	STMMW_32311 (yqjK)	membrane protein
+cgMLST V2	STMMW_07591 (speF)	ornithine decarboxylase
+cgMLST V2	STMMW_28301 (orgC)	putative type III secretion system effector protein OrgC
+cgMLST V2	STMMW_32441 (tdcB)	serine/threonine dehydratase
+cgMLST V2	STMMW_42541 (dcuR)	fumarate respiration transcriptional regulator DcuR
+cgMLST V2	STMMW_21921 (mlrA)	transcriptional regulator
+cgMLST V2	STMMW_03291 (frsA)	esterase
+cgMLST V2	STMMW_09161 (ybjG)	putative undecaprenyl-diphosphatase YbjG
+cgMLST V2	STMMW_05191 (clpP)	ATP-dependent Clp protease proteolytic subunit
+cgMLST V2	STMMW_35321 (gntR)	Gluconate utilization system Gnt-I transcriptional repressor
+cgMLST V2	STMMW_15831 (yncC)	colanic acid/biofilm transcriptional regulator
+cgMLST V2	STMMW_24151 (yfdC)	transport
+cgMLST V2	STMMW_25571 (hscB)	co-chaperone HscB
+cgMLST V2	STMMW_03271 (pepD)	cytosol nonspecific dipeptidase
+cgMLST V2	STMMW_29401 (fucK)	L-fuculose kinase
+cgMLST V2	STMMW_01291 (murE)	"UDP-N-acetylmuramoyl-L-alanyl-D-glutamate--2,6-diaminopimelate ligase"
+cgMLST V2	STMMW_43411 (fklB)	peptidyl-prolyl cis-trans isomerase
+cgMLST V2	STMMW_39221 (uvrD)	ATP-dependent DNA helicase UvrD
+cgMLST V2	STMMW_41811 (lamB)	LamB porin
+cgMLST V2	STMMW_21471 (wcaA)	Colanic acid biosynthesis glycosyl transferase WcaA
+cgMLST V2	STMMW_41361 (iclR)	IclR family transcriptional regulator
+cgMLST V2	STMMW_31401 (ygiN)	quinol monooxygenase
+cgMLST V2	STMMW_39591 (mobA)	molybdenum cofactor guanylyltransferase MobA
+cgMLST V2	STMMW_16841 (pspB)	phage shock protein B
+cgMLST V2	STMMW_06561 (fepG)	iron-enterobactin transporter permease
+cgMLST V2	STMMW_06741 (ahpF)	alkyl hydroperoxide reductase subunit F
+cgMLST V2	STMMW_40141 (rhaR)	HTH-type transcriptional activator RhaR
+cgMLST V2	STMMW_13311	fructosamine kinase
+cgMLST V2	STMMW_37331 (recG)	ATP-dependent DNA helicase RecG
+cgMLST V2	STMMW_36311 (yhjY)	lipase
+cgMLST V2	STMMW_28921 (ispF)	"2-C-methyl-D-erythritol 2,4-cyclodiphosphate synthase"
+cgMLST V2	STMMW_28431 (iacP)	sipF
+cgMLST V2	STMMW_33831 (fis)	Fis family transcriptional regulator
+cgMLST V2	STMMW_45241 (yjjK)	energy-dependent translational throttle protein EttA
+cgMLST V2	STMMW_35661 (tcp)	methyl-accepting chemotaxis citrate transducer
+cgMLST V2	STMMW_27061 (lapC)	HlyD family type I secretion periplasmic adaptor subunit
+cgMLST V2	STMMW_37801	deoxyribose mutarotase
+cgMLST V2	STMMW_11251 (scsC)	suppressor for copper-sensitivity C
+cgMLST V2	STMMW_29381 (fucP)	L-fucose transporter
+cgMLST V2	STMMW_17941 (alr-a)	alanine racemase catabolic
+cgMLST V2	STMMW_23521 (lrhA)	DNA-binding transcriptional repressor LrhA
+cgMLST V2	STMMW_23291 (menE)	2-succinylbenzoate-CoA ligase
+cgMLST V2	STMMW_07901 (sdhD)	succinate dehydrogenase cytochrome b556 small membrane subunit
+cgMLST V2	STMMW_35401 (ggt)	gamma-glutamyltransferase
+cgMLST V2	STMMW_42731 (cutA)	divalent-cation tolerance protein CutA
+cgMLST V2	STMMW_42041 (uvrA)	excinuclease ABC subunit A
+cgMLST V2	STMMW_23741 (hisM)	amino acid ABC transporter permease
+cgMLST V2	STMMW_08681 (ybhS)	inner membrane transport permease YbhS
+cgMLST V2	STMMW_00041 (yaaA)	hypothetical protein
+cgMLST V2	STMMW_18431	inner membrane protein
+cgMLST V2	STMMW_14761 (ydgC)	putative membrane protein
+cgMLST V2	STMMW_09371 (artJ)	amino acid ABC transporter substrate-binding protein
+cgMLST V2	STMMW_04901 (pgpA)	phosphatidylglycerophosphatase A
+cgMLST V2	STMMW_08971 (moeA)	Molybdopterin molybdenumtransferase
+cgMLST V2	STMMW_34201 (rpsN)	30S ribosomal protein S14
+cgMLST V2	STMMW_34751 (damX)	cell division protein DamX
+cgMLST V2	STMMW_25961 (era)	GTPase Era
+cgMLST V2	STMMW_38951 (rffE)	UDP-N-acetyl glucosamine 2-epimerase
+cgMLST V2	STMMW_05051 (yajQ)	N-(5'phosphoribosyl)anthranilate isomerase
+cgMLST V2	STMMW_00021 (thrB)	homoserine kinase
+cgMLST V2	STMMW_02081 (hemL)	"glutamate-1-semialdehyde 2,1-aminomutase"
+cgMLST V2	STMMW_14371 (rnt)	ribonuclease T
+cgMLST V2	STMMW_09881 (serC)	3-phosphoserine/phosphohydroxythreonine aminotransferase
+cgMLST V2	STMMW_01191 (leuA)	2-isopropylmalate synthase
+cgMLST V2	STMMW_40551 (menA)	"1,4-dihydroxy-2-naphthoate polyprenyltransferase"
+cgMLST V2	STMMW_01371 (ftsQ)	cell division protein FtsQ
+cgMLST V2	STMMW_26921 (corE)	cytochrome c assembly protein
+cgMLST V2	STMMW_06351 (apeE)	outer membrane esterase
+cgMLST V2	STMMW_27521 (tctD)	two-component system response regulator
+cgMLST V2	STMMW_21041 (hisC)	histidinol-phosphate aminotransferase
+cgMLST V2	STMMW_25741 (cadC)	transcriptional regulator CadC
+cgMLST V2	STMMW_17071 (acnA)	aconitate hydratase 1
+cgMLST V2	STMMW_12061 (fabF)	3-oxoacyl-(acyl carrier protein) synthase II
+cgMLST V2	STMMW_12231 (ycfR)	putative multiple stress resistance protein BhsA
+cgMLST V2	STMMW_10851 (sxy)	Crp/Fnr family transcriptional regulator
+cgMLST V2	STMMW_15221 (sotB)	sugar efflux transporter
+cgMLST V2	STMMW_38781 (ilvE)	branched chain amino acid aminotransferase
+cgMLST V2	STMMW_32801 (deaD)	DEAD/DEAH box helicase
+cgMLST V2	STMMW_36871 (cysE)	serine O-acetyltransferase
+cgMLST V2	STMMW_35621 (yhhL)	putative inner membrane protein
+cgMLST V2	STMMW_16041 (tehA)	potassium-tellurite ethidium and proflavin transporter
+cgMLST V2	STMMW_19061 (motA)	"flagellar motor protein MotA, partial"
+cgMLST V2	STMMW_18221 (manX)	PTS mannose transporter subunit EIIAB
+cgMLST V2	STMMW_18881 (yecO)	tRNA (uridine-5-oxyacetic acid methyl ester)(34) synthase TrmP
+cgMLST V2	STMMW_12901 (yeaH)	hypothetical protein
+cgMLST V2	STMMW_14571 (rnfE)	electron transport complex subunit RsxE
+cgMLST V2	STMMW_02501 (rcsF)	RcsF protein
+cgMLST V2	STMMW_02531 (abc)	putative ABC superfamily (atp_bind) transport system
+cgMLST V2	STMMW_19281 (yecF)	hypothetical protein
+cgMLST V2	STMMW_16591 (ynaI)	"transporter, small conductance mechanosensitive ion channel family protein"
+cgMLST V2	STM2932	putative inner membrane protein
+cgMLST V2	STMMW_34921 (ompR)	DNA-binding response regulator
+cgMLST V2	STMMW_18081 (minE)	cell division topological specificity factor MinE
+cgMLST V2	STMMW_34431 (yheN)	tRNA 2-thiouridine(34) synthase TusD
+cgMLST V2	STMMW_22351 (nfo)	deoxyribonuclease IV
+cgMLST V2	STMMW_29841	amino acid transporter
+cgMLST V2	STMMW_14681 (manA)	"mannose-6-phosphate isomerase, class I"
+cgMLST V2	STMMW_36691	putative sugar kinase
+cgMLST V2	STMMW_32371 (yhaL)	hypothetical protein
+cgMLST V2	STMMW_23191 (yfaO)	nucleoside triphosphatase
+cgMLST V2	STMMW_45031 (prfC)	peptide chain release factor 3
+cgMLST V2	STMMW_38891 (gppA)	guanosine polyphosphate pyrophosphohydrolase
+cgMLST V2	STMMW_17881 (treA)	"alpha,alpha-trehalase"
+cgMLST V2	STMMW_08761 (ybiI)	protein YbiI
+cgMLST V2	STMMW_04591 (yaiA)	hypothetical protein
+cgMLST V2	STMMW_09141 (dacC)	D-alanyl-D-alanine carboxypeptidase DacC
+cgMLST V2	STMMW_38461 (glmS)	glutamine--fructose-6-phosphate transaminase (isomerizing)
+cgMLST V2	STMMW_43381 (rplI)	50S ribosomal protein L9
+cgMLST V2	STMMW_15811	"periplasmic protein, partial"
+cgMLST V2	STMMW_35341 (yhhX)	oxidoreductase
+cgMLST V2	STMMW_29461 (ygdI)	DUF903 domain-containing protein
+cgMLST V2	STMMW_38011 (yidR)	"putative ATP/GTP-binding protein, partial"
+cgMLST V2	STMMW_30331 (qrtT)	signal transduction histidine kinase
+cgMLST V2	STMMW_39201 (xerC)	tyrosine recombinase XerC
+cgMLST V2	STMMW_31421 (yqiA)	cyclic 3'%2C5'-adenosine monophosphate phosphodiesterase
+cgMLST V2	STMMW_00761 (caiT)	L-carnitine:gamma-butyrobetaine antiporter
+cgMLST V2	STMMW_05311 (mdlA)	multidrug ABC transporter permease/ATP-binding protein
+cgMLST V2	STMMW_21671 (yegQ)	U32 family peptidase
+cgMLST V2	STMMW_01411 (yacA)	SecA regulator SecM
+cgMLST V2	STMMW_40121 (rhaB)	rhamnulokinase
+cgMLST V2	STMMW_13331 (pfkB)	6-phosphofructokinase class 2
+cgMLST V2	STMMW_37311 (spoT)	"bifunctional (p)ppGpp synthetase II/ guanosine-3',5'-bis pyrophosphate 3'-pyrophosphohydrolase"
+cgMLST V2	STMMW_21901 (yehT)	two-component system response regulator YehT
+cgMLST V2	STMMW_41831 (ubiC)	chorismate--pyruvate lyase
+cgMLST V2	STMMW_21451 (wcaC)	colanic acid biosynthesis glycosyltransferase WcaC
+cgMLST V2	STMMW_36991 (rfaD)	ADP-glyceromanno-heptose 6-epimerase
+cgMLST V2	STMMW_27881 (csrA)	carbon storage regulator
+cgMLST V2	STMMW_17501 (ychJ)	protein YchJ
+cgMLST V2	STMMW_17051 (pgpB)	phosphatidylglycerophosphatase B
+cgMLST V2	STMMW_19541 (fliK)	flagellar hook-length control protein
+cgMLST V2	STMMW_35641 (yhhN)	membrane protein
+cgMLST V2	STMMW_33761 (msrQ)	sulfoxide reductase heme-binding subunit YedZ
+cgMLST V2	STMMW_11271 (agp)	bifunctional glucose-1-phosphatase/inositol phosphatase
+cgMLST V2	STMMW_11901 (flgJ)	peptidoglycan hydrolase FlgJ
+cgMLST V2	STMMW_37861	YsdA
+cgMLST V2	STMMW_36191 (dppC)	peptide ABC transporter permease
+cgMLST V2	STMMW_35421 (ugpQ)	glycerophosphoryl diester phosphodiesterase
+cgMLST V2	STMMW_04691 (brnQ)	branched-chain amino acid transport system 2 carrier protein BrnQ
+cgMLST V2	STMMW_42711 (yjdC)	transcriptional regulator
+cgMLST V2	STMMW_18141 (yoaB)	endoribonuclease L-PSP
+cgMLST V2	STMMW_18411 (yebW)	secreted protein
+cgMLST V2	STMMW_09311 (potI)	putrescine transporter subunit: membrane component of ABC superfamily
+cgMLST V2	STMMW_23501 (nuoA)	NADH-quinone oxidoreductase subunit A
+cgMLST V2	STMMW_07921 (sdhB)	succinate dehydrogenase iron-sulfur subunit
+cgMLST V2	STMMW_08401 (hutG)	formimidoylglutamase
+cgMLST V2	STMMW_08951 (pflE)	putative pyruvate formate-lyase 3 activating enzyme
+cgMLST V2	STMMW_28251 (sitC)	iron transporter inner membrane component
+cgMLST V2	STMMW_34771 (aroK)	shikimate kinase
+cgMLST V2	STMMW_38931 (rfe)	undecaprenyl-phosphate alpha-N-acetylglucosaminyl 1-phosphate transferase
+cgMLST V2	STMMW_23761 (hisJ)	zinc transporter
+cgMLST V2	STMMW_24231	membrane protein
+cgMLST V2	STMMW_40711 (metF)	"5,10-methylenetetrahydrofolate reductase"
+cgMLST V2	STMMW_13431 (rpl20)	50S ribosomal protein L20
+cgMLST V2	STMMW_42971 (yjeQ)	ribosome small subunit-dependent GTPase A
+cgMLST V2	STMMW_05461 (acrA)	MexE family multidrug efflux RND transporter periplasmic adaptor subunit
+cgMLST V2	STMMW_01171 (leuC)	3-isopropylmalate dehydratase large subunit
+cgMLST V2	STMMW_43591 (fbp)	"fructose-1,6-bisphosphatase class 1"
+cgMLST V2	STMMW_26901 (rps16)	30S ribosomal protein S16
+cgMLST V2	STMMW_01311 (mraY)	phospho-N-acetylmuramoyl-pentapeptide-transferase
+cgMLST V2	STMMW_15591 (yddX)	biofilm-dependent modulation protein
+cgMLST V2	STMMW_06331 (pheP)	aromatic amino acid transporter
+cgMLST V2	STMMW_27501 (nixA)	nickel/cobalt transporter NixA
+cgMLST V2	STMMW_13291 (yniC)	2-deoxyglucose-6-phosphate hydrolase YniC
+cgMLST V2	STMMW_25011 (yffB)	glutathione-dependent thiol reductase
+cgMLST V2	STMMW_21021 (hisG)	ATP phosphoribosyltransferase
+cgMLST V2	STMMW_41991 (aphA)	acid phosphatase AphA
+cgMLST V2	STMMW_29611 (comN)	"prepilin peptidase dependent protein A, partial"
+cgMLST V2	STMMW_12211 (ycfJ)	Rick_17kDa_Anti super famil
+cgMLST V2	STMMW_39411 (ubiE)	ubiquinone biosynthesis methyltransferase UbiE
+cgMLST V2	STMMW_33151 (yrbI)	3-deoxy-D-manno-octulosonate 8-phosphate phosphatase KdsC
+cgMLST V2	STMMW_37101 (rfaP)	lipopolysaccharide core heptose(I) kinase RfaP
+cgMLST V2	STMMW_41191 (nudC)	NADH pyrophosphatase
+cgMLST V2	STMMW_17191 (trpD)	bifunctional glutamine amidotransferase/anthranilate phosphoribosyltransferase
+cgMLST V2	STMMW_33371 (nanT)	sialic acid transporter
+cgMLST V2	STMMW_16061 (rimL)	ribosomal-protein-L7/L12-serine acetyltransferase
+cgMLST V2	STMMW_19041 (cheA)	histidine kinase CheA
+cgMLST V2	STMMW_28881 (nlpD)	murein hydrolase activator NlpD
+cgMLST V2	STMMW_11591 (mdoH)	Glucans biosynthesis glucosyltransferase H
+cgMLST V2	STMMW_14511 (pdxH)	pyridoxine/pyridoxamine 5'-phosphate oxidase
+cgMLST V2	STMMW_13261 (cedA)	cell division activator CedA
+cgMLST V2	STMMW_36501 (xylR)	XylR family transcriptional regulator
+cgMLST V2	STMMW_32681 (yraR)	putative nucleoside-diphosphate-sugar epimerase
+cgMLST V2	STMMW_07001 (lipB)	lipoyl(octanoyl) transferase
+cgMLST V2	STMMW_22371 (fruK)	1-phosphofructokinase
+cgMLST V2	STMMW_32351 (yhaJ)	LysR family transcriptional regulator
+cgMLST V2	STMMW_32421 (tdcD)	propionate kinase
+cgMLST V2	STMMW_44901 (dnaT)	Primosomal protein 1 Primosomal protein I
+cgMLST V2	STMMW_01951 (hrpB)	ATP-dependent RNA helicase HrpB
+cgMLST V2	STMMW_04421 (hemB)	delta-aminolevulinic acid dehydratase
+cgMLST V2	STM2666	hypothetical protein
+cgMLST V2	STMMW_15601 (rpsV)	30S ribosomal subunit S22
+cgMLST V2	STMMW_11731 (grxB)	glutaredoxin 2
+cgMLST V2	STMMW_34901 (pckA)	phosphoenolpyruvate carboxykinase (ATP)
+cgMLST V2	STMMW_43361 (priB)	primosomal replication protein N
+cgMLST V2	STMMW_29441 (ygdD)	membrane protein
+cgMLST V2	STMMW_31621 (glnE)	bifunctional glutamine synthetase adenylyltransferase/deadenyltransferase
+cgMLST V2	STMMW_31191 (exbB)	biopolymer transporter ExbB
+cgMLST V2	STMMW_43101 (purA)	adenylosuccinate synthetase
+cgMLST V2	STMMW_18601 (opdB)	oligopeptidase B
+cgMLST V2	STMMW_31441 (yqiB)	dehydrogenase
+cgMLST V2	STMMW_01781 (yadG)	"ABC-type multidrug transport system, ATPase component"
+cgMLST V2	STMMW_02321 (lpxD)	UDP-3-O-(3-hydroxymyristoyl) glucosamine N-acyltransferase
+cgMLST V2	STMMW_39081 (hemD)	uroporphyrinogen III methyltransferase
+cgMLST V2	STMMW_06521 (ybdZ)	invasin
+cgMLST V2	STMMW_06831 (citT)	anion permease
+cgMLST V2	STMMW_34011 (fmu)	16S rRNA m5C967 methyltransferase
+cgMLST V2	STMMW_00781 (fixB)	electron transfer flavoprotein subunit alpha FixB
+cgMLST V2	STMMW_05331 (glnK)	nitrogen regulatory protein P-II 2
+cgMLST V2	STMMW_01431 (mutT)	nucleoside triphosphate pyrophosphohydrolase
+cgMLST V2	STMMW_30861	APC family amino acid permease
+cgMLST V2	STMMW_40101 (rhaD)	rhamnulose-1-phosphate aldolase
+cgMLST V2	STMMW_13351 (lpxR)	putative outer membrane protein
+cgMLST V2	STMMW_41851 (plsB)	glycerol-3-phosphate 1-O-acyltransferase
+cgMLST V2	STMMW_39621 (dsbA)	periplasmic protein disulfide isomerase I
+cgMLST V2	STMMW_30711 (mutY)	A/G-specific adenine glycosylase
+cgMLST V2	STMMW_28471 (sipB)	"pathogenicity island 1 effector protein SipB, partial"
+cgMLST V2	STMMW_38681 (rbsB)	D-ribose ABC transporter substrate-binding protein
+cgMLST V2	STMMW_25461 (dmsB)	"dimethylsulfoxide reductase, chain B"
+cgMLST V2	STMMW_17291 (yciC)	putative membrane protein
+cgMLST V2	STMMW_13971 (ssrA)	hybrid sensor histidine kinase/response regulator
+cgMLST V2	STMMW_41271 (hydG)	Response regulator of zinc sigma-54-dependent two-component system
+cgMLST V2	STMMW_12001 (rpl32)	50S ribosomal protein L32
+cgMLST V2	STMMW_12551 (pagC)	"Attachment invasion locus protein precursor, partial"
+cgMLST V2	STMMW_17072 (ymiA)	hypothetical protein
+cgMLST V2	STMMW_19561 (fliM)	flagellar motor switch protein FliM
+cgMLST V2	STMMW_35991 (yhjG)	AsmA family protein
+cgMLST V2	STMMW_33741 (yhdH)	quinone oxidoreductase YhdH/YhfP family
+cgMLST V2	STMMW_37841 (ilvN)	acetolactate synthase isozyme 1 small subunit
+cgMLST V2	STMMW_11921 (flgL)	flagellar hook-associated protein FlgL
+cgMLST V2	STMMW_22161 (sanA)	vancomycin sensitivity
+cgMLST V2	STMMW_32161 (yqjI)	PadR family transcriptional regulator
+cgMLST V2	STMMW_18381	Paraquat-inducible protein B
+cgMLST V2	STMMW_42771 (yjeH)	L-methionine/branched-chain amino acid transporter
+cgMLST V2	STMMW_34571 (crp)	cAMP-activated global transcriptional regulator CRP
+cgMLST V2	STMMW_18161 (pabB)	aminodeoxychorismate synthase component I
+cgMLST V2	STMMW_14721 (rstB)	two-component system sensor histidine kinase RstB
+cgMLST V2	STMMW_36711 (selA)	L-seryl-tRNA(Sec) selenium transferase
+cgMLST V2	STMMW_23561 (yfbT)	putative phosphatase
+cgMLST V2	STMMW_24031 (yfcM)	elongation factor P hydroxylase
+cgMLST V2	STMMW_30841	LysR family transcriptional regulator
+cgMLST V2	STMMW_24781 (eutA)	reactivating factor for ethanolamine ammonia lyase
+cgMLST V2	STMMW_34711 (trpS)	tryptophan--tRNA ligase
+cgMLST V2	STMMW_38911 (trxA)	thiol reductase thioredoxin
+cgMLST V2	STMMW_42191 (yjcD)	Xanthine/uracil/thiamine/ascorbate permease
+cgMLST V2	STMMW_25921 (yfhL)	ferredoxin
+cgMLST V2	STMMW_23781 (ubiX)	3-octaprenyl-4-hydroxybenzoate carboxy-lyase
+cgMLST V2	STMMW_24251 (yfdZ)	alanine transaminase
+cgMLST V2	STMMW_28181 (hypC)	hydrogenase assembly protein HypC
+cgMLST V2	STMMW_09841 (pflB)	formate acetyltransferase
+cgMLST V2	STMMW_01151 (yabN)	transcriptional regulator SgrR
+cgMLST V2	STMMW_01152 (sgrT)	inhibitor of glucose uptake transporter
+cgMLST V2	STMMW_40841 (ppc)	phosphoenolpyruvate carboxylase
+cgMLST V2	STMMW_34021 (sapG)	potassium transporter peripheral membrane component
+cgMLST V2	STMMW_22841 (napA)	nitrate reductase catalytic subunit
+cgMLST V2	STMMW_29581 (comQ)	prepilin peptidase dependent protein C
+cgMLST V2	STMMW_01331 (ftsW)	flippase
+cgMLST V2	STMMW_10721 (ycbW)	cell division protein ZapC
+cgMLST V2	STMMW_10091 (aspC)	aromatic amino acid aminotransferase
+cgMLST V2	STMMW_21001 (yeeY)	LysR family transcriptional regulator
+cgMLST V2	STMMW_21551 (yegE)	diguanylate cyclase/phosphodiesterase
+cgMLST V2	STMMW_25071 (dapA)	4-hydroxy-tetrahydrodipicolinate synthase
+cgMLST V2	STMMW_12761 (yeaS)	"leucine export protein LeuE, partial"
+cgMLST V2	STMMW_29631 (lgt)	prolipoprotein diacylglyceryl transferase
+cgMLST V2	STMMW_10891 (mgsA)	methylglyoxal synthase
+cgMLST V2	STMMW_39431 (aarF)	ubiquinone biosynthesis regulatory protein kinase UbiB
+cgMLST V2	STMMW_30471 (speA)	arginine decarboxylase
+cgMLST V2	STMMW_40591 (cytR)	DNA-binding transcriptional regulator CytR
+cgMLST V2	STMMW_37121 (rfaQ)	LPS core heptosyltransferase RfaQ
+cgMLST V2	STY1774	hypothetical protein
+cgMLST V2	STMMW_44031 (yjgF)	reactive intermediate/imine deaminase
+cgMLST V2	STMMW_26781 (rluD)	ribosomal large subunit pseudouridine synthase D
+cgMLST V2	STMMW_02151 (htrA)	periplasmic serine endoprotease DegP
+cgMLST V2	STMMW_06641 (ybdB)	thioesterase in enterobactin biosynthesis EntH
+cgMLST V2	STMMW_06311 (ykgB)	membrane protein
+cgMLST V2	STMMW_19711 (dcm)	DNA cytosine methyltransferase
+cgMLST V2	STMMW_28861	4-hydroxybenzoate decarboxylase subunit D
+cgMLST V2	STMMW_13011 (ansA)	cytoplasmic L-asparaginase I
+cgMLST V2	STMMW_33171 (yhbN)	LPS transport periplasmic protein LptA
+cgMLST V2	STMMW_27781 (proX)	glycine betaine transporter periplasmic subunit
+cgMLST V2	STMMW_22571 (yejK)	nucleoid-associated protein YejK
+cgMLST V2	STMMW_17711 (ipk)	4-(cytidine 5'-diphospho)-2-C-methyl-D-erythritol kinase
+cgMLST V2	STMMW_24441 (yfeH)	transporter bile acid/Na+ symporter family
+cgMLST V2	STMMW_07061 (ybeA)	23S rRNA (pseudouridine(1915)-N(3))-methyltransferase RlmH
+cgMLST V2	STMMW_38471 (glmU)	bifunctional N-acetylglucosamine-1-phosphate uridyltransferase/glucosamine-1-phosphate acetyltransferase
+cgMLST V2	STMMW_34181 (rplF)	50S ribosomal protein L6
+cgMLST V2	STMMW_42341 (gltP)	glutamate/aspartate:proton symporter GltP
+cgMLST V2	STMMW_33231 (ptsO)	phosphocarrier protein
+cgMLST V2	STMMW_44961 (fhuF)	ferric iron reductase involved in ferric hydroximate transport
+cgMLST V2	STMMW_33941 (aroE)	Shikimate 5-dehydrogenase I alpha
+cgMLST V2	STMMW_01931 (sfsA)	DNA-binding transcriptional regulator
+cgMLST V2	STMMW_07681 (ybgI)	Nif3-like dinuclear metal center hexameric protein
+cgMLST V2	STMMW_39981 (fdhE)	formate dehydrogenase accessory protein FdhE
+cgMLST V2	STMMW_04261	sialic acid transporter
+cgMLST V2	STMMW_11711 (pyrC)	dihydroorotase (aa 1-348)
+cgMLST V2	STMMW_29801 (kduI)	5-keto-4-deoxyuronate isomerase
+cgMLST V2	STMMW_34961 (feoB)	ferrous iron transporter B
+cgMLST V2	STMMW_23041	MFS-type transporter ytbD
+cgMLST V2	STMMW_18591 (exoX)	DNA polymerase III subunit epsilon
+cgMLST V2	STMMW_42521 (dcuB)	anaerobic C4-dicarboxylate transporter
+cgMLST V2	STMMW_43121 (rnr)	3'-to-5' exoribonuclease RNase R
+cgMLST V2	STMMW_04881 (nusB)	N utilization substance protein B
+cgMLST V2	STMMW_34381 (fusA)	translation elongation factor G
+cgMLST V2	STMMW_18621 (yebF)	putative protein YebF
+cgMLST V2	STMMW_05131 (cyoB)	cytochrome o ubiquinol oxidase subunit I
+cgMLST V2	STMMW_05681 (copA)	copper-exporting P-type ATPase A
+cgMLST V2	STMMW_09451	NAD dependent epimerase/dehydratase
+cgMLST V2	STMMW_02301 (yaeT)	outer membrane protein assembly factor BamA
+cgMLST V2	STMMW_06811 (rnk)	nucleoside diphosphate kinase regulator
+cgMLST V2	STMMW_42831 (efp)	elongation factor P
+cgMLST V2	STMMW_05351 (tesB)	acyl-CoA thioesterase II
+cgMLST V2	STMMW_21631 (baeR)	two-component system response regulator
+cgMLST V2	STMMW_01451 (yacF)	cell division protein ZapD
+cgMLST V2	STMMW_10971 (yccK)	sulfurtransferase TusE
+cgMLST V2	STMMW_40471 (yiiQ)	putative periplasmic protein
+cgMLST V2	STMMW_14891 (bioDb)	dethiobiotin synthase
+cgMLST V2	STMMW_21491 (wzb)	tyrosine phosphatase
+cgMLST V2	STMMW_21941 (yehW)	Osmoprotectant ABC transporter ATP-binding subunit YehX
+cgMLST V2	STMMW_41871 (lexA)	repressor LexA
+cgMLST V2	STMMW_31461 (tolC)	"outer membrane channel; specific tolerance to colicin E1; segregation of daughter chromosomes, role in organic solvent tolerance"
+cgMLST V2	STMMW_39601 (yihD)	Protein yihD
+cgMLST V2	STMMW_30731 (mltC)	Membrane-bound lytic murein transglycosylase C
+cgMLST V2	STMMW_28451 (sipD)	pathogenicity island 1 effector protein
+cgMLST V2	STMMW_25441	polyferredoxin
+cgMLST V2	STMMW_06101 (folD)	"bifunctional 5,10-methylene-tetrahydrofolate dehydrogenase/5,10-methylene-tetrahydrofolate cyclohydrolase"
+cgMLST V2	STMMW_13951 (orf242)	helix-turn-helix-type transcriptional regulator
+cgMLST V2	STMMW_41251 (zraP)	"zinc resistance protein, partial"
+cgMLST V2	STMMW_36951 (yibD)	putative glycosyl transferase
+cgMLST V2	STMMW_12021 (fabH)	3-oxoacyl-ACP synthase III
+cgMLST V2	STMMW_35971 (yhjD)	inner membrane protein YhjD
+cgMLST V2	STMMW_19501 (fliG)	flagellar motor switch protein FliG
+cgMLST V2	STMMW_33721 (mreB)	rod shape-determining protein
+cgMLST V2	STMMW_22141 (yohK)	CidB/LrgB family autolysis modulator
+cgMLST V2	STMMW_29321 (ygdH)	lysine decarboxylase
+cgMLST V2	STMMW_17281	ferredoxin
+cgMLST V2	STMMW_42751 (aspA)	aspartate ammonia-lyase
+cgMLST V2	STMMW_02481 (proS)	proline--tRNA ligase
+cgMLST V2	STMMW_34551 (prkB)	phosphoribulokinase
+cgMLST V2	STMMW_18101 (fadD)	long-chain fatty acid--CoA ligase
+cgMLST V2	STMMW_14701 (fumC)	class II fumarate hydratase
+cgMLST V2	STMMW_36771 (yibL)	Uncharacterized protein YibL
+cgMLST V2	STMMW_05551 (ybaB)	nucleoid-associated protein
+cgMLST V2	STMMW_23541 (yfbR)	5'-deoxynucleotidase YfbR
+cgMLST V2	STMMW_08441 (ybhB)	kinase inhibitor
+cgMLST V2	STMMW_34731 (rpe)	ribulose-phosphate 3-epimerase
+cgMLST V2	STMMW_28211 (fhlA)	formate hydrogenlyase transcriptional activator
+cgMLST V2	STMMW_00081 (yaaH)	YaaH protein
+cgMLST V2	STMMW_43801 (pmbA)	metalloprotease PmbA
+cgMLST V2	STMMW_09861 (ycaO)	"ribosomal protein S12 methylthiotransferase accessory factor YcaO, partial"
+cgMLST V2	STMMW_01131 (thiP)	thiamine/thiamine pyrophosphate ABC transporter permease ThiP
+cgMLST V2	STMMW_04741 (queA)	tRNA preQ1(34) S-adenosylmethionine ribosyltransferase-isomerase QueA
+cgMLST V2	STMMW_21791	nickel/cobalt homeostasis protein RcnB
+cgMLST V2	STMMW_09711 (lrp)	leucine-responsive transcriptional regulator
+cgMLST V2	STMMW_25271 (guaA)	GMP synthetase
+cgMLST V2	STMMW_12541 (pagD)	virulence factor
+cgMLST V2	STMMW_24271 (glk)	glucokinase
+cgMLST V2	STMMW_20951 (phsA)	thiosulfate reductase PhsA
+cgMLST V2	STMMW_21571 (yegD)	molecular chaperone
+cgMLST V2	STMMW_25051 (purC)	phosphoribosylaminoimidazolesuccinocarboxamide synthase
+cgMLST V2	STMMW_39451 (tatB)	sec-independent translocase
+cgMLST V2	STMMW_06481 (ybdK)	carboxylate--amine ligase
+cgMLST V2	STMMW_22572 (yejL)	UPF0352 protein YejL
+cgMLST V2	STMMW_02171 (yaeH)	hypothetical protein
+cgMLST V2	STMMW_14281 (norM)	MATE family efflux transporter
+cgMLST V2	STMMW_17481 (hnr)	response regulator of RpoS
+cgMLST V2	STMMW_16021	putative membrane lipoprotein clustered with tellurite resistance proteins TehA/TehB
+cgMLST V2	STMMW_28841 (ubiX)	phenolic acid decarboxylase subunit B
+cgMLST V2	STMMW_13031 (ydjA)	NAD(P)H nitroreductase
+cgMLST V2	STMMW_33111 (yrbE)	toluene ABC transporter permease
+cgMLST V2	STMMW_37141 (coaD)	phosphopantetheine adenylyltransferase
+cgMLST V2	STMMW_32641 (yraM)	penicillin-binding protein activator LpoA
+cgMLST V2	STMMW_17731 (ychM)	C4-dicarboxylic acid transporter DauA
+cgMLST V2	STMMW_38491 (atpC)	F0F1 ATP synthase subunit epsilon
+cgMLST V2	STMMW_39481 (rfaH)	transcriptional activator RfaH
+cgMLST V2	STMMW_32461	hypothetical protein
+cgMLST V2	STMMW_44941 (bglJ)	transcriptional regulator (activator) of bgl operon (LuxR/UhpA family)
+cgMLST V2	STMMW_01911 (yadB)	putative glutamyl t-RNA synthetase
+cgMLST V2	STMMW_19191 (tyrP)	aromatic amino acid transporter
+cgMLST V2	STMMW_45091 (deoC)	2-deoxyribose-5-phosphate aldolase
+cgMLST V2	STMMW_11551	RNase III inhibitor
+cgMLST V2	STMMW_18821 (yebC)	transcriptional regulator
+cgMLST V2	STMMW_11881 (flgH)	flagellar basal body L-ring protein
+cgMLST V2	STMMW_22551 (rplY)	50S ribosomal protein L25
+cgMLST V2	STMMW_23681	NUDIX hydrolase YfcD
+cgMLST V2	STMMW_17861	cytochrome bd-II oxidase subunit
+cgMLST V2	STMMW_23931 (div)	flagella biosynthesis regulator
+cgMLST V2	STMMW_04531 (yaiB)	anti-RssB factor
+cgMLST V2	STMMW_11081 (hpaC)	4-hydroxyphenylacetate 3-monooxygenase reductase component
+cgMLST V2	STMMW_11771 (mviM)	putative virulence factor MviM
+cgMLST V2	STMMW_34941 (yhgF)	putative RNase R
+cgMLST V2	STMMW_22881 (yojI)	multidrug transporter membrane component/ATP-binding component
+cgMLST V2	STMMW_22331 (yeiE)	LysR family transcriptional regulator YeiE
+cgMLST V2	STMMW_23061 (glpQ)	glycerophosphoryl diester phosphodiesterase periplasmic
+cgMLST V2	STMMW_43321 (sgaE)	L-ribulose-5-phosphate 4-epimerase UlaF
+cgMLST V2	STMMW_15701	TetR family transcriptional regulator
+cgMLST V2	STMMW_24481 (cysZ)	sulfate transporter CysZ
+cgMLST V2	STMMW_33351 (nanK)	N-acetylmannosamine kinase
+cgMLST V2	STMMW_43491 (ytfJ)	transcriptional regulator
+cgMLST V2	STMMW_08871 (ybiR)	anion transporter
+cgMLST V2	STMMW_18641 (purT)	phosphoribosylglycinamide formyltransferase 2
+cgMLST V2	STMMW_14111 (ssaG)	type III secretion system needle protein SsaG
+cgMLST V2	STMMW_10071 (ycbK)	Peptidase_M15_3
+cgMLST V2	STMMW_05111 (cyoD)	cytochrome o ubiquinol oxidase subunit IV
+cgMLST V2	STMMW_09471 (ltaA)	low-specificity L-threonine aldolase
+cgMLST V2	STMMW_02361 (rnhB)	ribonuclease HII
+cgMLST V2	STMMW_06871 (citE)	citrate (pro-3S)-lyase subunit beta
+cgMLST V2	STMMW_28021 (norV)	anaerobic nitric oxide reductase flavorubredoxin
+cgMLST V2	STMMW_05371 (ybaZ)	putative methylated-DNA methyltransferase
+cgMLST V2	STMMW_42811 (yjeJ)	Conserved inner membrane protein
+cgMLST V2	STMMW_31661 (bacA)	undecaprenyl-diphosphatase
+cgMLST V2	STMMW_30531 (sprT)	SprT family protein
+cgMLST V2	STMMW_10911	succinyl-CoA synthetase subunit alpha-like enzyme
+cgMLST V2	STMMW_30281 (yggB)	mechanosensitive ion channel protein MscS
+cgMLST V2	STMMW_21961 (yehY)	osmoprotectant uptake system permease
+cgMLST V2	STMMW_31481 (ygiC)	glutathionylspermidine synthase
+cgMLST V2	STMMW_39661	"putative cytoplasmic protein, partial"
+cgMLST V2	STMMW_06291 (ykgC)	pyridine nucleotide-disulfide oxidoreductase
+cgMLST V2	STMMW_38391 (pstB)	phosphate ABC transporter ATP-binding protein
+cgMLST V2	STMMW_25421 (yfgB)	bifunctional tRNA (adenosine(37)-C2)-methyltransferase TrmG/ribosomal RNA large subunit methyltransferase RlmN
+cgMLST V2	STMMW_29771 (ygeA)	Putative aspartate racemase
+cgMLST V2	STMMW_17251 (yciE)	Ferritin diiron-carboxylate
+cgMLST V2	STMMW_01471 (guaC)	guanosine monophosphate reductase
+cgMLST V2	STMMW_19341 (fliZ)	Flagellar biosynthesis protein FliZ
+cgMLST V2	STMMW_19691 (yedA)	inner membrane transporter yedA
+cgMLST V2	STMMW_03181 (sciZ)	VirG
+cgMLST V2	STMMW_13931 (orf70)	pathogenicity island protein
+cgMLST V2	SEN0401 (thiL)	thiamine-monophosphate kinase
+cgMLST V2	STMMW_17031 (yciM)	lipopolysaccharide assembly protein LapB
+cgMLST V2	STMMW_07461 (ybfN)	putative lipoprotein YbfN
+cgMLST V2	STMMW_12041 (fabG)	beta-ketoacyl-ACP reductase
+cgMLST V2	STMMW_36971 (tdh)	L-threonine 3-dehydrogenase
+cgMLST V2	STMMW_15091 (ydfZ)	selenoprotein YdfZ
+cgMLST V2	STMMW_33701 (mreD)	"rod shape-determining protein MreD, partial"
+cgMLST V2	STMMW_38531 (atpH)	ATP F0F1 synthase subunit delta
+cgMLST V2	STMMW_37881	transporter
+cgMLST V2	STMMW_29301 (syd)	SecY interacting protein Syd
+cgMLST V2	STMMW_00981 (imp)	LPS assembly protein LptD
+cgMLST V2	STMMW_44771 (yjiX)	hypothetical protein
+cgMLST V2	STMMW_45421 (yjjY)	hypothetical protein
+cgMLST V2	STMMW_18341 (prc)	Tail-specific protease precursor
+cgMLST V2	STMMW_17341 (cls)	cardiolipin synthase A
+cgMLST V2	STMMW_07181 (ybeL)	Putative alpha helical protein
+cgMLST V2	STMMW_19521 (fliI)	Flagellum-specific ATP synthase FliI
+cgMLST V2	STMMW_35951 (yhjB)	LuxR family transcriptional regulator
+cgMLST V2	STMMW_11341 (putP)	proline:sodium symporter PutP
+cgMLST V2	STMMW_34531 (yheT)	putative hydrolase. Alpha/beta-hydrolase fold
+cgMLST V2	STMMW_18121 (yeaZ)	tRNA N6-adenosine(37)-N6-threonylcarbamoyltransferase complex dimerization subunit TsaB
+cgMLST V2	STMMW_36751 (mtlR)	mannitol operon repressor
+cgMLST V2	STMMW_36021 (yhjJ)	peptidase
+cgMLST V2	STMMW_07981 (cydB)	cytochrome d ubiquinol oxidase subunit I
+cgMLST V2	STMMW_34281 (rpsS)	30S ribosomal protein S19
+cgMLST V2	STMMW_34111 (rpsM)	30S ribosomal protein S13
+cgMLST V2	STMMW_05581 (adk)	adenylate kinase
+cgMLST V2	STMMW_21861 (metG)	methionyl tRNA synthetase
+cgMLST V2	STMMW_05471 (acrR)	transcriptional regulator
+cgMLST V2	STMMW_12081 (yceG)	putative aminodeoxychorismate lyase
+cgMLST V2	STMMW_04761 (yajC)	preprotein translocase subunit YajC
+cgMLST V2	STMMW_08461 (bioB)	biotin synthase
+cgMLST V2	STMMW_21771 (thiD)	bifunctional hydroxymethylpyrimidine kinase/phosphomethylpyrimidine kinase
+cgMLST V2	STMMW_13551 (ydiA)	transcriptional regulator
+cgMLST V2	STMMW_09731 (lolA)	outer membrane lipoprotein carrier protein LolA
+cgMLST V2	STMMW_25211	"putative cytoplasmic protein, partial"
+cgMLST V2	STMMW_29541 (recD)	Exodeoxyribonuclease V alpha chain RecD
+cgMLST V2	STMMW_10761 (pqiA)	paraquat-inducible membrane protein A
+cgMLST V2	STMMW_24291 (ipdC)	indolepyruvate decarboxylase
+cgMLST V2	STMMW_41421 (yjbC)	23S rRNA pseudouridine synthase F
+cgMLST V2	STMMW_21511 (yegH)	putative membrane protein
+cgMLST V2	STMMW_31341 (parC)	DNA topoisomerase 4 subunit A
+cgMLST V2	STMMW_12721	transcriptional regulator
+cgMLST V2	STMMW_39471 (tatD)	deoxyribonuclease TatD
+cgMLST V2	STMMW_06461 (ramA)	transcriptional activator RamA
+cgMLST V2	STMMW_26741 (kgtP)	alpha-ketoglutarate transporter
+cgMLST V2	STMMW_40081 (yiiL)	L-rhamnose mutarotase
+cgMLST V2	STMMW_24921 (tal)	transaldolase A
+cgMLST V2	STMMW_14911 (opuA)	Osmoprotectant ABC transporter ATP-binding subunit YehX
+cgMLST V2	STMMW_12181 (nagZ)	beta-hexosaminidase
+cgMLST V2	STMMW_12401 (phoQ)	signal transduction histidine kinase
+cgMLST V2	STMMW_14201 (ssaN)	EscN/YscN/HrcN family type III secretion system ATPase
+cgMLST V2	STMMW_19751 (cspB)	"cold shock protein, partial"
+cgMLST V2	STMMW_37161 (rpmG)	50S ribosomal protein L33
+cgMLST V2	STMMW_38701 (rbsR)	transcriptional repressor for rbs operon
+cgMLST V2	STMMW_13051 (topB)	DNA topoisomerase III
+cgMLST V2	STMMW_33131 (yrbG)	putative calcium/sodium:proton antiporter
+cgMLST V2	STMMW_32661 (yraO)	DnaA initiator-associating protein DiaA
+cgMLST V2	STMMW_17751 (pth)	aminoacyl-tRNA hydrolase
+cgMLST V2	STMMW_33391 (yhcK)	transcriptional regulator NanR
+cgMLST V2	STMMW_11571 (mdoC)	glucan biosynthesis protein C
+cgMLST V2	STMMW_22531 (rsuA)	16S rRNA pseudouridine(516) synthase
+cgMLST V2	STMMW_23911 (usg)	aspartate-semialdehyde dehydrogenase
+cgMLST V2	STMMW_23661 (ulaC)	putative sugar phosphotransferase component II A
+cgMLST V2	STMMW_16401 (ynbE)	lipoprotein
+cgMLST V2	STMMW_17801 (hyaC)	Ni/Fe hydrogenase 1 b-type cytochrome subunit
+cgMLST V2	STMMW_35031 (malQ)	4-alpha-glucanotransferase
+cgMLST V2	STMMW_04511	extensin
+cgMLST V2	STMMW_11751 (rimJ)	alanine acetyltransferase
+cgMLST V2	STMMW_42651 (rtsA)	Type III secretion and flagellar regulator RtsA
+cgMLST V2	STMMW_32911 (secG)	preprotein translocase subunit SecG
+cgMLST V2	STMMW_23001 (ubiG)	3-demethylubiquinone-9 3-methyltransferase and 2-octaprenyl-6-hydroxy phenol methylase
+cgMLST V2	STMMW_43301 (sgaH)	putative hexulose phosphate synthase (arabino hexulose phosphate formaldehyde lyase)
+cgMLST V2	STMMW_08811 (glnH)	amino acid ABC transporter substrate-binding protein
+cgMLST V2	STMMW_18661 (edd)	phosphogluconate dehydratase
+cgMLST V2	STMMW_01761 (hpt)	hypoxanthine phosphoribosyltransferase
+cgMLST V2	STMMW_02341 (lpxA)	acyl-[acyl-carrier-protein]--UDP-N-acetylglucosamine O-acyltransferase
+cgMLST V2	STMMW_15981 (yncJ)	protein yncJ
+cgMLST V2	STMMW_40651 (metB)	cystathionine gamma-synthase
+cgMLST V2	STMMW_14051 (sseC)	SseC
+cgMLST V2	STMMW_34071 (rplQ)	50S ribosomal protein L17
+cgMLST V2	STMMW_42871 (blc)	Outer membrane lipoprotein Blc
+cgMLST V2	STMMW_31131 (yqhA)	TIGR00645 family protein
+cgMLST V2	STMMW_31641 (ygiM)	arylsulfatase
+cgMLST V2	STMMW_30511 (metK)	S-adenosylmethionine synthase
+cgMLST V2	STMMW_21981 (bglX)	glycosyl hydrolase
+cgMLST V2	STMMW_25401 (gcpE)	4-hydroxy-3-methylbut-2-en-1-yl diphosphate synthase (flavodoxin)
+cgMLST V2	STMMW_25151 (upp)	uracil phosphoribosyltransferase
+cgMLST V2	STMMW_29751 (lysA)	diaminopimelate decarboxylase
+cgMLST V2	STMMW_01491 (pilB)	type II secretion system protein GspE
+cgMLST V2	STMMW_10931 (yccW)	ribosomal RNA large subunit methyltransferase I
+cgMLST V2	STMMW_27801 (emrR)	transcriptional regulator
+cgMLST V2	STMMW_06141 (fimD)	FimD
+cgMLST V2	STMMW_33091 (yrbC)	organic solvent ABC transporter substrate-binding protein
+cgMLST V2	STMMW_13911 (ttrS)	tetrathionate reductase complex: sensory transduction histidine kinase
+cgMLST V2	STMMW_41741 (yjbH)	membrane protein
+cgMLST V2	STMMW_36911 (yibN)	rhodanese-like domain-containing protein
+cgMLST V2	STMMW_39641 (polA)	DNA polymerase I
+cgMLST V2	STMMW_37201 (dut)	deoxyuridine 5'-triphosphate nucleotidohydrolase
+cgMLST V2	STMMW_33271 (arcB)	aerobic respiration two-component sensor histidine kinase ArcB
+cgMLST V2	STMMW_29361 (fucO)	lactaldehyde reductase
+cgMLST V2	STMMW_19321 (dcyD)	D-cysteine desulfhydrase
+cgMLST V2	STMMW_15051 (rspA)	bifunctional D-altronate/D-mannonate dehydratase
+cgMLST V2	STMMW_18321 (yebQ)	multidrug MFS transporter
+cgMLST V2	STMMW_35931	membrane protein
+cgMLST V2	STMMW_34511 (yheS)	ABC transporter ATP-binding protein
+cgMLST V2	STMMW_11321	Putative secreted protein
+cgMLST V2	STMMW_36001 (yhjH)	cyclic-guanylate-specific phosphodiesterase
+cgMLST V2	STMMW_45111 (deoB)	phosphopentomutase
+cgMLST V2	STMMW_43841	transcriptional regulator
+cgMLST V2	STMMW_17401 (oppB)	oligopeptide permease ABC transporter membrane component
+cgMLST V2	STMMW_08661 (ybhQ)	membrane protein
+cgMLST V2	STMMW_09531 (ybjX)	Homolog of virK
+cgMLST V2	STMMW_09281 (potF)	spermidine/putrescine ABC transporter substrate-binding protein PotF
+cgMLST V2	STMMW_34031 (mscL)	large-conductance mechanosensitive channel
+cgMLST V2	STMMW_23491 (nuoB)	NADH dehydrogenase subunit B
+cgMLST V2	STMMW_24051 (mepA)	penicillin-insensitive murein endopeptidase
+cgMLST V2	STMMW_08481 (bioC)	8-amino-7-oxononanoate synthase
+cgMLST V2	STMMW_09751 (serS)	serine--tRNA ligase
+cgMLST V2	STMMW_25231	membrane protein
+cgMLST V2	STMMW_31581 (glgS)	glycogen synthase
+cgMLST V2	STMMW_29561 (ptr)	Protease III precursor
+cgMLST V2	STMMW_43511 (ytfL)	hemolysin
+cgMLST V2	STMMW_01391 (ftsZ)	cell division protein FtsZ
+cgMLST V2	STMMW_10031 (mukF)	condensin subunit F
+cgMLST V2	STMMW_10741 (rlmL)	ribosomal RNA large subunit methyltransferase K/L
+cgMLST V2	STMMW_20911 (gyrI)	DNA gyrase inhibitor
+cgMLST V2	STMMW_41911 (zur)	zinc uptake transcriptional repressor
+cgMLST V2	STMMW_29691 (tas)	NADP(H)-dependent aldo-keto reductase
+cgMLST V2	STMMW_02281 (cdsA)	phosphatidate cytidylyltransferase
+cgMLST V2	STMMW_30181 (pepP)	proline aminopeptidase II
+cgMLST V2	STMMW_16961 (fabI)	enoyl-ACP reductase
+cgMLST V2	STMMW_06441 (ybdF)	tetR family transcriptional regulator
+cgMLST V2	STMMW_01531 (ampE)	transcriptional regulator
+cgMLST V2	STMMW_26761 (clpB)	Clp protease ClpB
+cgMLST V2	STMMW_02131 (mtn)	5'-methylthioadenosine/S-adenosylhomocysteine nucleosidase
+cgMLST V2	STMMW_24941	Putative cytoplasmic protein
+cgMLST V2	STMMW_28611 (invF)	transcriptional regulator InvF
+cgMLST V2	STMMW_06621 (entB)	isochorismatase
+cgMLST V2	STMMW_14931 (opuC)	Putative ABC transporter periplasmic binding protein
+cgMLST V2	STMMW_07111 (holA)	DNA polymerase III subunit delta
+cgMLST V2	STMMW_21531 (dcd)	dCTP deaminase
+cgMLST V2	STMMW_25091 (bcp)	peroxiredoxin
+cgMLST V2	STMMW_26811 (pheA)	bifunctional chorismate mutase/prephenate dehydratase
+cgMLST V2	STMMW_42001 (yjbQ)	secondary thiamine-phosphate synthase enzyme
+cgMLST V2	STMMW_13071	putative exported protein
+cgMLST V2	STMMW_38721 (yieP)	putative HTH-type transcriptional regulator YieP
+cgMLST V2	STMMW_00071 (mog)	molybdopterin adenylyltransferase
+cgMLST V2	STMMW_44631 (yjiN)	membrane protein
+cgMLST V2	STMMW_44981	membrane protein
+cgMLST V2	STMMW_16791 (ycjF)	putative membrane protein
+cgMLST V2	STMMW_38231 (dnaA)	chromosomal replication initiator protein DnaA
+cgMLST V2	STMMW_27631 (yqaE)	transporter
+cgMLST V2	STMMW_41001 (secE)	preprotein translocase subunit SecE
+cgMLST V2	STMMW_11511 (csgB)	nucleation component of curlin monomers
+cgMLST V2	STMMW_22041 (yohG)	multidrug transporter permease
+cgMLST V2	STMMW_22511 (yejG)	Putative cytoplasmic protein
+cgMLST V2	STMMW_12301 (cobB)	NAD-dependent deacylase
+cgMLST V2	STMMW_33221 (yhbJ)	RNase adaptor protein RapZ
+cgMLST V2	STMMW_23641 (ulaA)	PTS ascorbate transporter subunit IIC
+cgMLST V2	STMMW_23391 (nuoN)	NADH dehydrogenase I chain N
+cgMLST V2	STMMW_17821 (hyaE)	"hydrogenase-1 operon protein HyaE, partial"
+cgMLST V2	STMMW_16421 (ldhA)	lactate dehydrogenase
+cgMLST V2	STMMW_35051 (malT)	HTH-type transcriptional regulator malT
+cgMLST V2	STMMW_39921 (yihZ)	D-aminoacyl-tRNA deacylase
+cgMLST V2	STMMW_04571 (yaiI)	hypothetical protein
+cgMLST V2	STMMW_32931 (folP)	dihydropteroate synthase
+cgMLST V2	STMMW_43981 (treC)	trehalose-6-phosphate hydrolase
+cgMLST V2	STMMW_40871 (argB)	Acetylglutamate kinase
+cgMLST V2	STMMW_14481 (slyB)	"outer membrane lipoprotein pcp, partial"
+cgMLST V2	STMMW_08831 (ybiF)	threonine/homoserine exporter RhtA
+cgMLST V2	STMMW_08341 (modB)	molybdate ABC transporter permease
+cgMLST V2	STMMW_18681 (hexR)	transcriptional regulator HexR
+cgMLST V2	STMMW_34891 (yhgE)	transporter
+cgMLST V2	STMMW_05151 (ampG)	AmpG family muropeptide MFS transporter
+cgMLST V2	STMMW_05621 (ybaL)	Kef family K(+) transporter
+cgMLST V2	STMMW_23021 (nrdB)	Ribonucleotide reductase of class 1a beta subunit
+cgMLST V2	STMMW_40981 (coaA)	type I pantothenate kinase
+cgMLST V2	STMMW_24551 (ptsJ)	transcriptional regulator PtsJ
+cgMLST V2	STMMW_40982	putative cytoplasmic protein
+cgMLST V2	STMMW_34091 (rpsD)	30S ribosomal protein S4
+cgMLST V2	STMMW_42851 (ecnR)	helix-turn-helix transcriptional regulator
+cgMLST V2	STMMW_14031 (sseBa)	"pathogenicity island 2 effector protein SseB, partial"
+cgMLST V2	STMMW_31111 (yghW)	hypothetical protein
+cgMLST V2	STMMW_00681 (carA)	carbamoyl phosphate synthase small subunit
+cgMLST V2	STMMW_25391 (hisS)	histidyl-tRNA synthetase
+cgMLST V2	STMMW_25171 (purN)	phosphoribosylglycinamide formyltransferase
+cgMLST V2	STMMW_17211 (trpB)	tryptophan synthase subunit beta
+cgMLST V2	STMMW_29731 (galR)	LacI family transcriptional regulator
+cgMLST V2	STMMW_30571 (yqgE)	putative ACR
+cgMLST V2	STMMW_33071 (yrbA)	BolA family transcriptional regulator
+cgMLST V2	STMMW_27821 (emrB)	Inner membrane component of tripartite multidrug resistance system
+cgMLST V2	STMMW_41761 (malG)	maltose ABC transporter permease
+cgMLST V2	STMMW_36931 (yibP)	murein hydrolase activator EnvC
+cgMLST V2	STMMW_17271 (ompW)	Outer membrane protein W precursor
+cgMLST V2	STMMW_37221 (pyrE)	orotate phosphoribosyltransferase
+cgMLST V2	STMMW_38571 (gidB)	ribosomal RNA small subunit methyltransferase G
+cgMLST V2	STMMW_19651 (mngB)	Putative mannosyl-3-phosphoglycerate phosphatase
+cgMLST V2	STMMW_18301	YobH-like protein
+cgMLST V2	STMMW_07411 (nagA)	N-acetylglucosamine-6-phosphate deacetylase
+cgMLST V2	STMMW_00061 (talB)	transaldolase B
+cgMLST V2	STMMW_22251 (folE)	type I GTP cyclohydrolase I FolE
+cgMLST V2	STMMW_36061 (bcsC)	endonuclease III
+cgMLST V2	STMMW_23251 (arnT)	Undecaprenyl phosphate-alpha-4-amino-4-deoxy-L-arabinose arabinosyl transferase
+cgMLST V2	STMMW_38991 (rffC)	"62-84% identity (with one gap) with E. coli lipopolysaccharide biosynthesis protein (WECD) (SP:P27832); contains similarity to Pfam family PF00583 (Acetyltransferase (GNAT) family), score=68.3, E=1.6e-16, N=1"
+cgMLST V2	STMMW_42441 (yjdB)	phosphoethanolamine transferase EptA
+cgMLST V2	STMMW_23351 (elaA)	GNAT family N-acetyltransferase
+cgMLST V2	STMMW_04491 (yaiZ)	membrane protein
+cgMLST V2	STMMW_08641 (ybhO)	cardiolipin synthase B
+cgMLST V2	STMMW_11301 (ymdF)	"stress-induced protein, partial"
+cgMLST V2	STMMW_11651 (yceI)	Protein YceI
+cgMLST V2	STMMW_09511 (ybjE)	surface protein YbjE
+cgMLST V2	STMMW_35261 (glgX)	glycogen debranching enzyme
+cgMLST V2	STMMW_04721 (tsaA)	peroxiredoxin
+cgMLST V2	STMMW_34791 (comD)	DNA utilization protein HofP
+cgMLST V2	STMMW_31561 (ribB)	"3,4-dihydroxy-2-butanone-4-phosphate synthase"
+cgMLST V2	STMMW_29501 (ygdL)	tRNA threonylcarbamoyladenosine dehydratase
+cgMLST V2	STMMW_43531 (ytfM)	translocation and assembly module TamA
+cgMLST V2	STMMW_10011 (ycbC)	membrane protein
+cgMLST V2	STMMW_20931 (phsC)	thiosulfate reductase cytochrome B subunit
+cgMLST V2	STMMW_17011 (yciH)	translation initiation factor Sui1
+cgMLST V2	STMMW_14331 (purR)	PurR family transcriptional regulator
+cgMLST V2	STMMW_34131 (prlA)	preprotein translocase subunit SecY
+cgMLST V2	STMMW_05451 (acrB)	multidrug efflux RND transporter permease subunit
+cgMLST V2	STMMW_01511 (nadC)	nicotinate-nucleotide pyrophosphorylase [carboxylating]
+cgMLST V2	STMMW_30961 (uxuB)	fructuronate reductase
+cgMLST V2	STMMW_24961 (yffH)	"nudix hydrolase, YffH family"
+cgMLST V2	STMMW_14521 (tyrS)	Tyrosine--tRNA ligase
+cgMLST V2	STMMW_14951 (ynfI)	Tat proofreading chaperone DmsD
+cgMLST V2	STMMW_21081 (hisF)	imidazole glycerol phosphate synthase cyclase subunit
+cgMLST V2	STMMW_41971 (alr-b)	alanine racemase biosynthetic
+cgMLST V2	STMMW_39561 (trkH)	potassium transporter
+cgMLST V2	STMMW_26831 (tyrA)	bifunctional chorismate mutase/prephenate dehydrogenase
+cgMLST V2	STMMW_13091 (xthA)	exodeoxyribonuclease III
+cgMLST V2	STMMW_38741 (yifE)	"LOW QUALITY PROTEIN: yifE protein, partial"
+cgMLST V2	STMMW_13891 (ttrC)	tetrathionate reductase subunit C
+cgMLST V2	STMMW_25611 (yfhP)	Fe-S cluster assembly transcriptional regulator IscR
+cgMLST V2	STMMW_19461 (yedF)	SirA-like protein
+cgMLST V2	STMMW_33681 (cafA)	ribonuclease G
+cgMLST V2	STMMW_18841 (aspS)	aspartate--tRNA ligase
+cgMLST V2	STMMW_11821 (flgB)	"flagellar basal body rod protein FlgB, partial"
+cgMLST V2	STMMW_11531 (csgC)	"curli production assembly protein CsgC, partial"
+cgMLST V2	STMMW_22061 (yohI)	tRNA dihydrouridine synthase DusC
+cgMLST V2	STMMW_41021 (rplK)	50S ribosomal protein L11
+cgMLST V2	STMMW_17791 (hyaB)	hydrogenase 2 large subunit
+cgMLST V2	STMMW_12321 (potC)	Spermidine Putrescine ABC transporter permease component PotC
+cgMLST V2	STMMW_16441	hypothetical protein
+cgMLST V2	STMMW_39901 (yihX)	haloacid dehalogenase-like hydrolase
+cgMLST V2	STMMW_04551 (adrA)	diguanylate cyclase AdrA
+cgMLST V2	STMMW_11791 (flgN)	flagella synthesis chaperone protein FlgN
+cgMLST V2	STMMW_22391 (setB)	sugar efflux transporter B
+cgMLST V2	STMMW_32951 (ftsH)	ATP-dependent zinc metalloprotease FtsH
+cgMLST V2	STMMW_08581 (moaE)	"molybdopterin converting factor, subunit 2"
+cgMLST V2	STMMW_15561	Putative outer membrane or secreted lipoprotein
+cgMLST V2	STMMW_36471 (yiaH)	acyltransferase 3
+cgMLST V2	STMMW_07601 (kdpE)	two-component system response regulator
+cgMLST V2	STMMW_07351 (miaB)	tRNA (N6-isopentenyl adenosine(37)-C2)-methylthiotransferase MiaB
+cgMLST V2	STMMW_23621 (tktA)	transketolase
+cgMLST V2	STMMW_34301 (rplW)	50S ribosomal protein L23
+cgMLST V2	STMMW_22931 (yojN)	putative regulator YojN
+cgMLST V2	STMMW_05601 (aes)	acetyl esterase
+cgMLST V2	STMMW_40611 (rpmE)	50S ribosomal protein L31
+cgMLST V2	STMMW_40961 (murB)	UDP-N-acetylenolpyruvoylglucosamine reductase
+cgMLST V2	STMMW_09981 (ycaR)	putative inner membrane protein
+cgMLST V2	STMMW_18361 (yebR)	free methionine-R-sulfoxide reductase
+cgMLST V2	STMMW_31171 (yghA)	NAD(P)-dependent oxidoreductase
+cgMLST V2	STMMW_25371 (yfgL)	outer membrane protein assembly factor BamB
+cgMLST V2	STMMW_01721 (speE)	polyamine aminopropyltransferase
+cgMLST V2	STMMW_25111	Exported zinc metalloprotease YfgC precursor
+cgMLST V2	STMMW_39351 (metR)	DNA-binding transcriptional regulator MetR
+cgMLST V2	STMMW_30221 (serA)	D-3-phosphoglycerate dehydrogenase
+cgMLST V2	STMMW_37021 (rfaL)	Oligosaccharide repeat unit polymerase Wzy%2C O-antigen ligase
+cgMLST V2	STMMW_37791 (uhpA)	"response regulator (repressor) in two-component regulatory system wtih UhpB, regulates uhpT operon (LuxR/UhpA family)"
+cgMLST V2	STMMW_33051 (nlp)	transcriptional regulator
+cgMLST V2	STMMW_41701 (pgi)	glucose-6-phosphate isomerase
+cgMLST V2	STMMW_07471 (citA)	citrate-proton symporter
+cgMLST V2	STMMW_39682 (yshB)	small predicted membrane protein
+cgMLST V2	STMMW_39681 (hemN)	oxygen-independent coproporphyrinogen III oxidase
+cgMLST V2	STMMW_39171 (yifL)	membrane protein
+cgMLST V2	STMMW_06981 (lipA)	lipoyl synthase
+cgMLST V2	STMMW_37241 (yicC)	hypothetical protein
+cgMLST V2	STMMW_00921 (folA)	dihydrofolate reductase
+cgMLST V2	STMMW_19671	putative cytoplasmic protein
+cgMLST V2	STMMW_27841 (luxS)	"quorum-sensing autoinducer 2 (AI-2), LuxS"
+cgMLST V2	STMMW_18981 (cheZ)	chemotaxis regulator CheZ
+cgMLST V2	STMMW_17631 (chaA)	sodium:proton antiporter
+cgMLST V2	STMMW_17351 (yciU)	dsDNA-mimic protein
+cgMLST V2	STMMW_19581 (fliO)	flagellar biosynthesis
+cgMLST V2	STMMW_38551 (atpB)	F0F1 ATP synthase subunit A
+cgMLST V2	STMMW_38221 (dnaN)	DNA polymerase III subunit beta
+cgMLST V2	STMMW_22231 (galS)	DNA-binding transcriptional regulator GalS
+cgMLST V2	STMMW_14781 (ydgH)	Protein ydgH precursor
+cgMLST V2	STMMW_36041 (yhjK)	biofilm formation regulator HmsP
+cgMLST V2	STMMW_28391 (iagB)	"invasion protein IagB, partial"
+cgMLST V2	STMMW_07291 (gltJ)	glutamate/aspartate ABC transporter permease GltJ
+cgMLST V2	STMMW_35791 (uspB)	universal stress protein B
+cgMLST V2	STMMW_08111 (ybgS)	homeobox protein
+cgMLST V2	STMMW_12091 (tmk)	thymidylate kinase
+cgMLST V2	STMMW_11671 (yceO)	putative inner membrane protein
+cgMLST V2	STMMW_18181 (sdaA)	L-serine ammonia-lyase
+cgMLST V2	STMMW_05401 (rpmJa)	50S ribosomal protein L36
+cgMLST V2	STMMW_03201 (fadE)	acyl-CoA dehydrogenase
+cgMLST V2	STMMW_35531 (livK)	branched chain amino acid ABC transporter substrate-binding protein
+cgMLST V2	STMMW_35241 (glgA)	glycogen synthase
+cgMLST V2	STMMW_24761 (eutC)	ethanolamine ammonia-lyase light chain
+cgMLST V2	STMMW_31091 (hybA)	hydrogenase 2 4Fe-4S ferredoxin-type component
+cgMLST V2	STMMW_29521 (amiC)	N-acetylmuramoyl-L-alanine amidase
+cgMLST V2	STMMW_43551 (ytfP)	gamma-glutamylcyclotransferase
+cgMLST V2	STMMW_15551	malto-oligosyltrehalose trehalohydrolase
+cgMLST V2	STMMW_18721 (znuA)	ABC superfamily high affinity Zn transport protein
+cgMLST V2	STMMW_09571 (clpS)	ATP-dependent Clp protease adaptor ClpS
+cgMLST V2	STMMW_05291 (cysK)	putative cysteine synthase/cystathionine beta-synthase
+cgMLST V2	STMMW_02241 (pyrH)	UMP kinase
+cgMLST V2	STMMW_02181 (ydfJ)	MFS transporter
+cgMLST V2	STMMW_16921	diguanylate phosphodiesterase
+cgMLST V2	STMMW_28381 (hilA)	transcriptional regulator HilA
+cgMLST V2	STMMW_21711 (yegS)	lipid kinase YegS
+cgMLST V2	STMMW_09791 (ycaD)	MFS transporter
+cgMLST V2	STMMW_00111 (dnaK)	molecular chaperone DnaK
+cgMLST V2	STMMW_26721 (pssA)	phosphatidylserine synthase (CDP-diacylglycerol-serine O-phosphatidyltransferase)
+cgMLST V2	STMMW_01571 (pdhR)	PdhR family transcriptional regulator
+cgMLST V2	STMMW_30941 (exuT)	hexuronate transporter ExuT
+cgMLST V2	STMMW_24981 (aegA)	oxidoreductase FeS-binding subunit
+cgMLST V2	STMMW_13521 (ydiU)	hypothetical protein
+cgMLST V2	STMMW_41951 (qor)	"oxidoreductase, zinc-binding dehydrogenase family"
+cgMLST V2	STMMW_31321 (sufI)	cell division protein FtsP
+cgMLST V2	STMMW_12411 (phoP)	DNA-binding response regulator
+cgMLST V2	STMMW_26581 (rseB)	sigma-E factor regulatory protein RseB
+cgMLST V2	STMMW_26851 (yfiR)	putative exported protein
+cgMLST V2	STMMW_14211 (ssaO)	Secretion system apparatus SsaO
+cgMLST V2	STMMW_30051 (fldB)	flavodoxin 2
+cgMLST V2	STMMW_39541 (pepQ)	Xaa-Pro dipeptidase
+cgMLST V2	STMMW_38761 (ilvG)	acetolactate synthase 2 catalytic subunit
+cgMLST V2	STMMW_25581 (iscA)	iron-sulfur cluster assembly protein
+cgMLST V2	STMMW_27981 (gutM)	DNA-binding transcriptional activator GutM
+cgMLST V2	STMMW_25631 (suhB)	inositol monophosphatase
+cgMLST V2	STMMW_12121 (ptsG)	PTS glucose EIICB component
+cgMLST V2	STMMW_12691	putative zinc-binding lipoprotein ZinT
+cgMLST V2	STMMW_01991 (fhuD)	iron-hydroxamate transporter substrate-binding subunit
+cgMLST V2	STMMW_19111 (otsA)	trehalose-6-phosphate synthase
+cgMLST V2	STMMW_27671	L-alanine exporter AlaE
+cgMLST V2	STMMW_11801 (flgM)	Negative regulator of flagellin synthesis
+cgMLST V2	STMMW_41041 (rplJ)	50S ribosomal protein L10
+cgMLST V2	STMMW_22001 (pbpG)	D-alanyl-D-alanine endopeptidase precursor
+cgMLST V2	STMMW_32971 (yhbY)	"putative RNA-binding protein, YhbY family"
+cgMLST V2	STMMW_08561 (moaC)	cyclic pyranopterin monophosphate synthase accessory protein
+cgMLST V2	STMMW_36451 (glyQ)	glycine--tRNA ligase subunit alpha
+cgMLST V2	STMMW_23601 (pta)	phosphate acetyltransferase
+cgMLST V2	STMMW_07621 (kdpC)	potassium-transporting ATPase C chain
+cgMLST V2	STMMW_16461 (nifJ)	pyruvate:ferredoxin (flavodoxin) oxidoreductase
+cgMLST V2	STMMW_24371 (gltX)	glutamate--tRNA ligase
+cgMLST V2	STMMW_11111 (hpaG)	4-hydroxyphenylacetate degradation bifunctional isomerase/decarboxylase
+cgMLST V2	STMMW_34321 (rplC)	50S ribosomal protein L3
+cgMLST V2	STMMW_14191 (ssaV)	EscV/YscV/HrcV family type III secretion system export apparatus protein
+cgMLST V2	STMMW_22911 (apbE)	thiamine biosynthesis protein ApbE
+cgMLST V2	STMMW_32201 (fadH)	"NADPH-dependent 2,4-dienoyl-CoA reductase"
+cgMLST V2	STMMW_24511 (ptsI)	phosphoenolpyruvate--protein phosphotransferase
+cgMLST V2	STMMW_09961 (lpxK)	tetraacyldisaccharide 4'-kinase
+cgMLST V2	STMMW_42891 (frdC)	fumarate reductase subunit C
+cgMLST V2	STMMW_31151	cytoplasmic protein
+cgMLST V2	STMMW_25351 (yfgJ)	"putative cytoplasmic protein, partial"
+cgMLST V2	STMMW_08841 (ompX)	outer membrane protein X
+cgMLST V2	STMMW_01741 (cueO)	Blue copper oxidase CueO precursor
+cgMLST V2	STMMW_25131 (yfgE)	DnaA regulatory inactivator Hda
+cgMLST V2	STMMW_30201 (ygfE)	cell division protein ZapA
+cgMLST V2	STMMW_40491 (fpr)	ferredoxin--NADP(+) reductase
+cgMLST V2	STMMW_41721 (yjbF)	putative outer membrane lipoprotein
+cgMLST V2	STMMW_00401 (nhaA)	Na+/H+ antiporter NhaA
+cgMLST V2	STMMW_07031 (rlpA)	"rare lipoprotein A, partial"
+cgMLST V2	STMMW_00901 (yabF)	potassium transporter KefF
+cgMLST V2	STMMW_08991 (yliA)	"putative ATPase components of ABC-type transport system, contain duplicated ATPase domain"
+cgMLST V2	STMMW_40231 (cpxA)	two-component system sensor histidine kinase CpxA
+cgMLST V2	STMMW_19611 (fliR)	fliR
+cgMLST V2	STMMW_27861 (yqaA)	membrane protein
+cgMLST V2	STMMW_13751 (sufA)	Fe-S cluster assembly scaffold SufA
+cgMLST V2	STMMW_37001 (rfaF)	ADP-heptose--LPS heptosyltransferase II
+cgMLST V2	STMMW_33031 (rplU)	50S ribosomal protein L21
+cgMLST V2	STMMW_17611 (ychN)	ACR family transporter
+cgMLST V2	STMMW_36201 (dppB)	peptide ABC transporter permease
+cgMLST V2	STMMW_07101 (nadD)	DNA polymerase III subunit delta
+cgMLST V2	STMMW_33781 (accC)	acetyl-CoA carboxylase biotin carboxylase subunit
+cgMLST V2	STMMW_38201 (gyrB)	DNA gyrase subunit B
+cgMLST V2	STMMW_11471 (csgG)	assembly/transport component in curli production
+cgMLST V2	STMMW_03331 (proA)	gamma-glutamyl-phosphate reductase
+cgMLST V2	STMMW_15101 (ydfH)	GntR family transcriptional regulator
+cgMLST V2	STMMW_11611 (msyB)	SecY/SecA suppressor protein
+cgMLST V2	STMMW_17431 (ychE)	membrane protein
+cgMLST V2	STMMW_35511 (livM)	high-affinity branched-chain amino acid ABC transporter permease LivM
+cgMLST V2	STMMW_24741 (eutK)	carboxysome structural protein EutK
+cgMLST V2	STMMW_28031 (norW)	nitric oxide reductase FlRd-NAD+ reductase
+cgMLST V2	STMMW_42401 (phnA)	phosphonoacetate hydrolase
+cgMLST V2	STMMW_10701 (pepN)	aminopeptidase N
+cgMLST V2	STMMW_10051 (mukB)	cell division protein MukB
+cgMLST V2	STMMW_08791 (glnQ)	glutamine ABC transporter ATP-binding protein
+cgMLST V2	STMMW_05271 (ybaE)	nickel ABC-type transport system
+cgMLST V2	STMMW_09221 (ybjM)	Inner membrane protein ybjM
+cgMLST V2	STMMW_01081 (araA)	L-arabinose isomerase
+cgMLST V2	STMMW_02261 (dxr)	1-deoxy-D-xylulose 5-phosphate reductoisomerase
+cgMLST V2	STMMW_16901 (sapD)	peptide ABC transporter ATPase
+cgMLST V2	STMMW_34171 (rl18)	50S ribosomal protein L18
+cgMLST V2	STMMW_38841 (ilvC)	ketol-acid reductoisomerase
+cgMLST V2	STMMW_00171 (chiA)	chitinase
+cgMLST V2	STMMW_30921	xylanase deacetylase
+cgMLST V2	STMMW_30691 (yggL)	uncharacterized protein YggL
+cgMLST V2	STMMW_40001 (fdoH)	formate dehydrogenase subunit beta
+cgMLST V2	STMMW_06681 (ybdL)	putative aminotransferase
+cgMLST V2	STMMW_13501 (nlpC)	endopeptidase
+cgMLST V2	STMMW_02461 (yaeJ)	aminoacyl-tRNA hydrolase
+cgMLST V2	STMMW_30071 (ygfY)	antitoxin CptB
+cgMLST V2	STMMW_39521 (fadA)	small (beta) subunit of the fatty acid-oxidizing multienzyme complex
+cgMLST V2	STMMW_01551	GPH family transporter
+cgMLST V2	STMMW_01221 (ilvI)	acetolactate synthase isozyme 3 large subunit
+cgMLST V2	STMMW_06021 (purE)	Phosphoribosylaminoimidazole carboxylase catalytic subunit
+cgMLST V2	STMMW_21331 (wzx)	colanic acid exporter
+cgMLST V2	t1733	hypothetical protein
+cgMLST V2	STMMW_25651 (asrA)	Anaerobic sulfite reductase subunit A
+cgMLST V2	STMMW_29101 (cysI)	sulfite reductase subunit beta
+cgMLST V2	STMMW_12101 (holB)	DNA polymerase III delta prime subunit
+cgMLST V2	STMMW_26871 (rpl19)	50S ribosomal protein L19
+cgMLST V2	STMMW_19421 (fliT)	"flagellar biosynthesis protein FliT, partial"
+cgMLST V2	STMMW_27652	Rhodanese-related sulfurtransferase
+cgMLST V2	STMMW_41061 (rpoB)	DNA-directed RNA polymerase subunit beta
+cgMLST V2	STMMW_11861 (flgF)	flagellar basal body rod protein FlgF
+cgMLST V2	STMMW_22021 (yohD)	DedA family inner membrane protein YohD
+cgMLST V2	STMMW_44121 (arcA)	Arginine deiminase
+cgMLST V2	STMMW_45291 (rob)	right oriC-binding transcriptional activator
+cgMLST V2	STMMW_33571 (mdh)	malate dehydrogenase
+cgMLST V2	STMMW_32991 (dacB)	serine-type D-Ala-D-Ala carboxypeptidase
+cgMLST V2	STMMW_19131 (araH)	Putative intracellular protease/amidase
+cgMLST V2	STMMW_08541 (moaA)	cyclic pyranopterin phosphate synthase MoaA
+cgMLST V2	STMMW_08091 (pnuC)	nicotinamide riboside transporter PnuC
+cgMLST V2	STMMW_11281 (yccJ)	hypothetical protein
+cgMLST V2	STMMW_18551 (pcoD)	putative cation transporter
+cgMLST V2	STM3624	endoglucanase
+cgMLST V2	STMMW_14421 (ydhF)	aldo/keto reductase
+cgMLST V2	STMMW_12811 (yeaQ)	membrane protein
+cgMLST V2	STMMW_32191 (oat)	Putrescine aminotransferase
+cgMLST V2	STMMW_07311 (lnt)	apolipoprotein N-acyltransferase
+cgMLST V2	STMMW_07642 (kdpF)	conserved sORF
+cgMLST V2	STMMW_07641 (kdpA)	potassium-transporting ATPase subunit KdpA
+cgMLST V2	STMMW_16481 (emrE)	Multidrug resistance efflux transporter EmrE
+cgMLST V2	STMMW_40861 (argC)	N-acetyl-gamma-glutamyl-phosphate reductase
+cgMLST V2	STMMW_11131 (hpaD)	"3,4-dihydroxyphenylacetate 2,3-dioxygenase"
+cgMLST V2	STMMW_24681	GNAT family acetyltransferase
+cgMLST V2	STMMW_34341 (hopD)	type III leader peptidase
+cgMLST V2	STMMW_32221 (ygjP)	metal-dependent hydrolase
+cgMLST V2	STMMW_43961 (nrdD)	anaerobic ribonucleoside triphosphate reductase
+cgMLST V2	STMMW_23081 (glpA)	sn-glycerol-3-phosphate dehydrogenase subunit A
+cgMLST V2	STMMW_28081 (hycH)	formate hydrogenlyase maturation protein HycH
+cgMLST V2	STMMW_09941 (rec2)	ComEC family protein
+cgMLST V2	STMMW_17991 (dsbB)	"disulfide bond formation protein B, partial"
+cgMLST V2	STMMW_23881 (accD)	acetyl-coenzyme A carboxylase carboxyl transferase subunit beta
+cgMLST V2	STMMW_08321 (ybhT)	membrane protein
+cgMLST V2	STMMW_04661 (sbcD)	exonuclease sbcCD subunit D
+cgMLST V2	STMMW_24351 (yfeC)	Putative negative regulator
+cgMLST V2	STMMW_04841 (yajI)	Putative outer membrane lipoprotein
+cgMLST V2	STMMW_33811 (prmA)	ribosomal protein L11 methyltransferase
+cgMLST V2	STMMW_40921 (yijD)	membrane protein
+cgMLST V2	STMMW_24531	cytoplasmic protein
+cgMLST V2	STMMW_25481 (pbpC)	penicillin-binding protein 1C
+cgMLST V2	STMMW_21101 (wzzB)	chain length determinant protein WzzB
+cgMLST V2	STMMW_43031 (amiB)	N-acetylmuramoyl-L-alanine amidase AmiB
+cgMLST V2	STMMW_39311 (rhtB)	homoserine transporter
+cgMLST V2	STMMW_30261 (yggE)	"oxidative stress defense protein, partial"
+cgMLST V2	STMMW_41291 (purH)	bifunctional phosphoribosylaminoimidazolecarboxamide formyltransferase/inosine monophosphate cyclohydrolase
+cgMLST V2	STMMW_26681 (yfiF)	putative RNA methyltransferase
+cgMLST V2	STMMW_24821 (eutE)	aldehyde dehydrogenase EutE
+cgMLST V2	STMMW_13191 (celA)	"PTS system N,N'-diacetylchitobiose-specific transporter subunit IIB"
+cgMLST V2	STMMW_00961 (pdxAa)	4-hydroxythreonine-4-phosphate dehydrogenase PdxA
+cgMLST V2	STMMW_30481 (yqgB)	hypothetical protein
+cgMLST V2	STMMW_38041 (yhjA)	cytochrome c551 peroxidase
+cgMLST V2	STMMW_13771 (sufC)	Fe-S cluster assembly ATPase SufC
+cgMLST V2	STMMW_13991 (ssaC)	Secretion system apparatus SsaC
+cgMLST V2	STMMW_37061 (rfaJ)	"lipopolysaccharide alpha-1,3-glucosyltransferase WaaO"
+cgMLST V2	STMMW_32761 (yhbW)	possible monooxygenase
+cgMLST V2	STMMW_17671 (hemK)	N5-glutamine S-adenosyl-L-methionine-dependent methyltransferase
+cgMLST V2	STMMW_36881 (gpsA)	glycerol-3-phosphate dehydrogenase (NAD(P)(+))
+cgMLST V2	STMMW_02441 (yaeP)	cytoplasmic protein
+cgMLST V2	STMMW_28501 (spaR)	EscT/YscT/HrcT family type III secretion system export apparatus protein
+cgMLST V2	STMMW_05771 (ybbA)	"phosphonate ABC transporter ATP-binding protein, partial"
+cgMLST V2	STMMW_37281 (ligB)	DNA ligase B
+cgMLST V2	STMMW_38591 (mioC)	Flavodoxin
+cgMLST V2	STMMW_38261	membrane protein insertion efficiency factor YidD
+cgMLST V2	STMMW_36081 (bcsA)	cellulose synthase catalytic subunit
+cgMLST V2	STMMW_04451 (ampH)	D-alanyl-D-alanine-carboxypeptidase/endopeptidase AmpH
+cgMLST V2	STMMW_18941 (yteR)	glycosyl hydrolase family 88
+cgMLST V2	STMMW_11451 (ycdY)	Nitrate reductase subunit delta
+cgMLST V2	STMMW_03311 (phoE)	porin
+cgMLST V2	STMMW_39881 (yihV)	Sugar kinase YihV
+cgMLST V2	STMMW_11631 (htrB)	lipid A biosynthesis lauroyl (or palmitoleoyl) acyltransferase
+cgMLST V2	STMMW_23411 (nuoL)	NADH-quinone oxidoreductase subunit L
+cgMLST V2	STMMW_23412 (nuoK)	NADH:ubiquinone oxidoreductase subunit K
+cgMLST V2	STMMW_07871 (gltA)	type II citrate synthase
+cgMLST V2	STMMW_35281 (asd)	aspartate semialdehyde dehydrogenase
+cgMLST V2	STMMW_35571 (rpoH)	RNA polymerase sigma-32 factor
+cgMLST V2	STMMW_29291 (yqcC)	putative cytoplasmic protein
+cgMLST V2	STMMW_04781 (secF)	"preprotein translocase subunit SecF, partial"
+cgMLST V2	STMMW_42171 (soxR)	redox-sensitive transcriptional activator SoxR
+cgMLST V2	STMMW_20991 (yeeF)	putrescine/spermidine ABC transporter
+cgMLST V2	STMMW_18761 (ruvA)	Holliday junction ATP-dependent DNA helicase ruvA
+cgMLST V2	STMMW_34481 (yheV)	Putative cytoplasmic protein
+cgMLST V2	STMMW_14651 (ydgJ)	putative oxidoreductase
+cgMLST V2	STMMW_05781 (ybbP)	sugar ABC transporter permease
+cgMLST V2	STMMW_17001 (yciT)	DeoR family transcriptional regulator
+cgMLST V2	STMMW_13441 (pheS)	phenylalanine--tRNA ligase subunit alpha
+cgMLST V2	STMMW_02201 (glnD)	"UTP-GlnB uridylyltransferase, GlnD"
+cgMLST V2	STMMW_34151 (rpmD)	50S ribosomal protein L30
+cgMLST V2	STMMW_34621 (yhfG)	"putative toxin-antitoxin system, antitoxin component"
+cgMLST V2	STMMW_25811 (yfhK)	sensory kinase in regulatory system
+cgMLST V2	STMMW_05431 (hha)	transcriptional regulator
+cgMLST V2	STMMW_31501 (ygiE)	zinc transporter ZupT
+cgMLST V2	STMMW_31051 (hybE)	hydrogenase 2-specific chaperone
+cgMLST V2	STMMW_14241 (ssaR)	EscR/YscR/HrcR family type III secretion system export apparatus protein
+cgMLST V2	STMMW_07041 (mrdB)	cell wall shape-determining protein
+cgMLST V2	STMMW_01201 (leuL)	leu operon leader peptide
+cgMLST V2	STMMW_41881 (dinF)	MATE family efflux transporter DinF
+cgMLST V2	STMMW_21311 (wcaL)	colanic acid biosynthesis glycosyltransferase WcaL
+cgMLST V2	STMMW_25671 (asrC)	sulfite reductase subunit C
+cgMLST V2	STMMW_29121 (ptpS)	6-carboxytetrahydropterin synthase QueD
+cgMLST V2	STMMW_26891 (rimM)	Ribosome maturation factor RimM
+cgMLST V2	STMMW_39501 (fre)	NAD(P)H-flavin reductase
+cgMLST V2	STMMW_39051 (yifK)	D-alanine/D-serine/glycine permease
+cgMLST V2	STMMW_28991 (iap)	Zn-dependent exopeptidase M28
+cgMLST V2	STMMW_38671 (rbsC)	ribose ABC transporter permease
+cgMLST V2	STMMW_11841 (flgD)	flagellar basal body rod modification protein FlgD
+cgMLST V2	STMMW_33591 (yhcN)	membrane protein
+cgMLST V2	STMMW_19401 (fliD)	flagellar filament capping protein FliD
+cgMLST V2	STMMW_18571 (holE)	DNA polymerase III subunit theta
+cgMLST V2	STMMW_12831	periplasmic protein
+cgMLST V2	STMMW_14401 (ydhM)	TetR family transcriptional regulator
+cgMLST V2	STMMW_07661 (phrB)	deoxyribodipyrimidine photo-lyase
+cgMLST V2	STMMW_23311 (menB)	"1,4-dihydroxy-2-naphthoyl-CoA synthase"
+cgMLST V2	STMMW_34811 (comB)	Type IV pilus biogenesis protein PilN
+cgMLST V2	STMMW_11151 (hpaH)	"2-oxo-hepta-3-ene-1,7-dioic acid hydratase"
+cgMLST V2	STMMW_34361 (bfd)	bacterioferritin-associated ferredoxin
+cgMLST V2	STMMW_15571 (hdeB)	acid-resistance protein
+cgMLST V2	STMMW_22951 (rcsC)	two-component system sensor histidine kinase/response regulator
+cgMLST V2	STMMW_32241 (ygjR)	putative oxidoreductase YgjR
+cgMLST V2	STMMW_01841 (yadI)	PTS sugar transporter subunit IIA
+cgMLST V2	STMMW_42231	LrgB
+cgMLST V2	STMMW_09921 (rpsA)	30S ribosomal protein S1
+cgMLST V2	STMMW_09691 (cydD)	thiol reductant ABC exporter subunit CydD
+cgMLST V2	STMMW_35141 (glpE)	Thiosulfate sulfurtransferase glpE
+cgMLST V2	STMMW_04641 (araJ)	transmembrane efflux protein
+cgMLST V2	STMMW_04861 (ribD)	bifunctional diaminohydroxyphosphoribosylaminopyrimidine deaminase/5-amino-6-(5-phosphoribosylamino)uracil reductase
+cgMLST V2	STMMW_10151 (pncB)	nicotinate phosphoribosyltransferase
+cgMLST V2	STMMW_40901 (udhA)	soluble pyridine nucleotide transhydrogenase
+cgMLST V2	STMMW_43011 (yjeF)	bifunctional ADP-dependent (S)-NAD(P)H-hydrate dehydratase/NAD(P)H-hydrate epimerase
+cgMLST V2	STMMW_30241 (iciA)	chromosome initiation inhibitor
+cgMLST V2	STMMW_39331 (yigL)	hydrolase Cof
+cgMLST V2	STMMW_12511 (msgA)	virulence protein MsgA
+cgMLST V2	STMMW_13171 (nadE)	NAD(+) synthetase
+cgMLST V2	STMMW_14381 (gloA)	S-D-lactoylglutathione methylglyoxal lyase
+cgMLST V2	STMMW_07441 (glnS)	glutamine--tRNA ligase
+cgMLST V2	STMMW_21121 (gnd)	"phosphogluconate dehydrogenase (NADP(+)-dependent, decarboxylating)"
+cgMLST V2	STMMW_00941 (apaG)	Co2+/Mg2+ efflux protein ApaG
+cgMLST V2	STMMW_17381 (oppD)	oligopeptide transporter ATP-binding component
+cgMLST V2	STMMW_40271 (pfkA)	ATP-dependent 6-phosphofructokinase
+cgMLST V2	STMMW_37041 (rfaZ)	3-deoxy-D-manno-oct-2-ulosonate III transferase WaaZ
+cgMLST V2	STMMW_44591 (yjiG)	membrane protein
+cgMLST V2	STMMW_38241 (rpmH)	50S ribosomal protein L34
+cgMLST V2	STMMW_33291 (gltB)	glutamate synthase large subunit
+cgMLST V2	STMMW_27751 (nrdF)	ribonucleotide reductase of class 1b subunit beta
+cgMLST V2	STMMW_18961 (flhAa)	"flagellar biosynthesis protein FlhA, partial"
+cgMLST V2	STMMW_35011 (yhgI)	Fe-S biogenesis protein NfuA
+cgMLST V2	STMMW_11431 (ycdW)	glyoxylate/hydroxypyruvate reductase A
+cgMLST V2	STMMW_17121 (sohB)	putative signal peptide peptidase SppA
+cgMLST V2	STMMW_32741 (yhbU)	U32 family peptidase
+cgMLST V2	STMMW_19211	glucose-6-phosphate dehydrogenase
+cgMLST V2	STMMW_33431 (rpsI)	30S ribosomal protein S9
+cgMLST V2	STMMW_37951 (yidG)	membrane protein
+cgMLST V2	STMMW_03211 (gmhA)	phosphoheptose isomerase
+cgMLST V2	STMMW_35801 (uspA)	universal stress protein A
+cgMLST V2	STMMW_18294 (yobG)	PhoP family transcriptional regulator
+cgMLST V2	STMMW_18292 (yobF)	DUF2527 domain-containing protein
+cgMLST V2	STMMW_18293	hypothetical protein
+cgMLST V2	STMMW_18031 (ycgN)	YcgN
+cgMLST V2	STMMW_18741 (znuB)	high-affinity zinc transporter membrane component
+cgMLST V2	STMMW_14671 (ydgA)	periplasmic protein
+cgMLST V2	STMMW_09261 (rimK)	"ribosomal protein S6 modification protein, partial"
+cgMLST V2	STMMW_23431 (nuoI)	NADH-quinone oxidoreductase subunit I
+cgMLST V2	STMMW_07851 (nei)	endonuclease VIII
+cgMLST V2	STMMW_02221 (rpsB)	30S ribosomal protein S2
+cgMLST V2	STMMW_24471 (zipA)	cell division protein involved in FtsZ ring
+cgMLST V2	STMMW_02191 (dapD)	"2,3,4,5-tetrahydropyridine-2,6-dicarboxylate N-succinyltransferase"
+cgMLST V2	STMMW_28321 (orgA)	oxygen-regulated invasion protein OrgA
+cgMLST V2	STMMW_38801 (ilvA)	PLP-dependent threonine dehydratase
+cgMLST V2	STMMW_25871 (murQ)	N-acetylmuramic acid 6-phosphate etherase
+cgMLST V2	STMMW_17141 (btuR)	"cob(I)yrinic acid a,c-diamide adenosyltransferase"
+cgMLST V2	STMMW_31071 (hybC)	hydrogenase 2 large subunit
+cgMLST V2	STMMW_30381 (yggG)	peptidase M48
+cgMLST V2	STMMW_13541 (aroH)	phospho-2-dehydro-3-deoxyheptonate aldolase Trp-sensitive
+cgMLST V2	STMMW_09481 (poxB)	pyruvate dehydrogenase
+cgMLST V2	STMMW_31381 (ygiY)	two-component system sensor histidine kinase QseC
+cgMLST V2	STMMW_14221 (ssaP)	"type III secretion system protein SsaP, partial"
+cgMLST V2	STMMW_29491	permease
+cgMLST V2	STMMW_33851 (yhdU)	Putative periplasmic protein
+cgMLST V2	STMMW_43461 (ytfH)	Redox-sensing transcriptional regulator QorR
+cgMLST V2	STMMW_01261 (mraW)	ribosomal RNA small subunit methyltransferase H
+cgMLST V2	STMMW_39291 (recQ)	ATP-dependent DNA helicase RecQ (plasmid)
+cgMLST V2	STMMW_30651 (yggW)	YggW family oxidoreductase
+cgMLST V2	STMMW_27921 (ygaD)	competence damage-inducible protein A
+cgMLST V2	STMMW_13811 (ynhG)	murein transpeptidase
+cgMLST V2	STMMW_27431 (iroE)	Periplasmic esterase IroE
+cgMLST V2	STMMW_37381 (yicI)	alpha-xylosidase
+cgMLST V2	STMMW_14841 (ydgD)	serine protease
+cgMLST V2	STMMW_25691	ABC transporter
+cgMLST V2	STMMW_41311 (metA)	homoserine O-succinyltransferase
+cgMLST V2	STMMW_21371 (wcaI)	colanic acid biosynthesis glycosyltransferase WcaI
+cgMLST V2	STMMW_12631	peptide ABC transporter permease
+cgMLST V2	STMMW_29141 (ygcF)	7-carboxy-7-deazaguanine synthase QueE
+cgMLST V2	STMMW_12141 (ycfF)	purine nucleoside phosphoramidase
+cgMLST V2	STMMW_39071 (hemX)	putative uroporphyrinogen-III C-methyltransferase
+cgMLST V2	STMMW_30031 (dsbC)	protein disulfide isomerase II DsbC
+cgMLST V2	STMMW_33601	membrane protein
+cgMLST V2	STMMW_38651 (rbsD)	D-ribose pyranase
+cgMLST V2	STMMW_44161 (yjgD)	regulator of ribonuclease activity B
+cgMLST V2	STMMW_36381 (yiaG)	transcriptional regulator
+cgMLST V2	STMMW_19171 (ftn)	ferritin
+cgMLST V2	STMMW_27691 (ygaM)	membrane protein
+cgMLST V2	STMMW_14461 (ydhI)	putative inner membrane protein
+cgMLST V2	STMMW_36161 (yhjV)	serine transporter
+cgMLST V2	STMMW_12851 (yeaN)	cyanate transporter
+cgMLST V2	STMMW_42031	Putative outer membrane lipoprotein
+cgMLST V2	STMMW_32261 (ygjU)	serine/threonine transporter SstT
+cgMLST V2	STMMW_42781 (groES)	molecular chaperone GroES
+cgMLST V2	STMMW_01861 (panD)	aspartate 1-decarboxylase
+cgMLST V2	STMMW_08501 (uvrB)	excision nuclease ABC subunit B
+cgMLST V2	STMMW_08051 (tolB)	Tol-Pal system beta propeller repeat protein TolB
+cgMLST V2	STMMW_42251 (yjcH)	putative inner membrane protein
+cgMLST V2	STMMW_23841 (purF)	amidophosphoribosyltransferase
+cgMLST V2	STMMW_23591 (ackA)	acetate kinase A/propionate kinase 2
+cgMLST V2	STMMW_35121 (glpR)	glycerol-3-phosphate regulon repressor
+cgMLST V2	STMMW_24641 (ucpA)	NAD(P)-dependent oxidoreductase
+cgMLST V2	STMMW_04621 (rdgC)	putative exonuclease involved in removal of stalled replication fork
+cgMLST V2	STMMW_24311 (ypeC)	hypothetical protein
+cgMLST V2	STMMW_34831 (mrcA)	transpeptidase of penicillin-binding protein 1a (peptidoglycan synthetase)
+cgMLST V2	STMMW_11171 (hpaX)	4-hydroxyphenylacetate permease
+cgMLST V2	STMMW_09011 (yliC)	glutathione ABC transporter permease GsiC
+cgMLST V2	STMMW_25991 (lepA)	Translation elongation factor LepA
+cgMLST V2	STMMW_43251 (yjfQ)	transcriptional repressor UlaR
+cgMLST V2	STMMW_31711 (dnaG)	DNA primase
+cgMLST V2	STMMW_31241 (yqhD)	alcohol dehydrogenase
+cgMLST V2	STMMW_43071 (hflX)	GTPase HflX
+cgMLST V2	STMMW_00501 (ispH)	4-hydroxy-3-methylbut-2-enyl diphosphate reductase
+cgMLST V2	STMMW_05571 (htpG)	molecular chaperone HtpG
+cgMLST V2	STMMW_24861 (eutT)	ethanolamine utilization cobalamin adenosyltransferase
+cgMLST V2	STMMW_28151 (hycA)	transcriptional regulator
+cgMLST V2	STMMW_13151	ATP-independent periplasmic protein-refolding chaperone
+cgMLST V2	STMMW_13481 (btuE)	glutathione peroxidase
+cgMLST V2	STMMW_25191 (ppx)	exopolyphosphatase
+cgMLST V2	STMMW_00911 (kefC)	potassium transporter KefC
+cgMLST V2	STMMW_10821 (ycbG)	macrodomain Ter protein
+cgMLST V2	STMMW_40251 (cpxP)	periplasmic repressor CpxP
+cgMLST V2	STMMW_40521 (glpF)	glycerol uptake facilitator GlpF
+cgMLST V2	STMMW_38001 (yidQ)	Outer membrane lipoprotein YidQ
+cgMLST V2	STMMW_13731 (ydiH)	hypothetical protein
+cgMLST V2	STMMW_41781 (malE)	"ABC superfamily (bind_prot) maltose transport protein, substrate recognition for transport and chemotaxis"
+cgMLST V2	STMMW_44571 (yjiE)	LysR family transcriptional regulator
+cgMLST V2	STMMW_39711 (glnA)	glutamine synthetase
+cgMLST V2	STMMW_27591 (gabT)	4-aminobutyrate aminotransferase
+cgMLST V2	STMMW_28541 (invJ)	surface presentation of antigens protein SpaN
+cgMLST V2	STMMW_25731 (hmpA)	nitric oxide dioxygenase
+cgMLST V2	STMMW_15251 (yneH)	glutaminase A
+cgMLST V2	STMMW_27771 (proW)	proline/betaine ABC transporter permease ProW
+cgMLST V2	STMMW_18901 (cutC)	Cytoplasmic copper homeostasis protein CutC
+cgMLST V2	STMMW_32721 (yhbS)	GNAT family acetyltransferase
+cgMLST V2	STMMW_35711 (yhhT)	pheromone autoinducer 2 transporter
+cgMLST V2	STMMW_33411 (sspA)	stringent starvation protein A
+cgMLST V2	STMMW_37971 (yidE)	transporter
+cgMLST V2	STMMW_45042	membrane protein
+cgMLST V2	STMMW_45041 (osmY)	BON domain-containing protein
+cgMLST V2	STMMW_27871 (yqaB)	"HAD-superfamily hydrolase, subfamily IA"
+cgMLST V2	STMMW_34051 (zntR)	heavy metal-responsive transcriptional regulator
+cgMLST V2	STMMW_02591 (dniR)	murein transglycosylase D
+cgMLST V2	STMMW_08261 (galK)	galactokinase
+cgMLST V2	STMMW_04291	hypothetical protein
+cgMLST V2	STMMW_34441 (yheO)	"Putative DNA-binding protein, partial"
+cgMLST V2	STMMW_18011	GnsA/GnsB family
+cgMLST V2	STMMW_22851 (napD)	Periplasmic nitrate reductase component NapD
+cgMLST V2	STMMW_34991 (bioH)	carboxylesterase
+cgMLST V2	STMMW_09241 (ybjC)	putative inner membrane protein
+cgMLST V2	STMMW_05741 (ybbN)	co-chaperone YbbN
+cgMLST V2	STMMW_14611 (rnfB)	electron transport complex subunit RsxB
+cgMLST V2	STMMW_05211 (lon)	endopeptidase La
+cgMLST V2	STMMW_07521 (fldA)	flavodoxin-1
+cgMLST V2	STMMW_23451 (nuoG)	NADH dehydrogenase I chain G
+cgMLST V2	STMMW_23101 (glpC)	sn-glycerol-3-phosphate dehydrogenase subunit C
+cgMLST V2	STMMW_24101 (fadJ)	multifunctional fatty acid oxidation complex subunit alpha
+cgMLST V2	STMMW_24451	negative regulator
+cgMLST V2	STMMW_34191 (rpsH)	30S ribosomal protein S8
+cgMLST V2	STMMW_34661 (nirD)	nitrite reductase small subunit
+cgMLST V2	STMMW_02451 (yaeQ)	YaeQ protein
+cgMLST V2	STMMW_40061	branched-chain amino acid ABC transporter permease
+cgMLST V2	STMMW_05411 (ylaC)	sigma70 family sigma factor YlaC
+cgMLST V2	STMMW_15881 (srfA)	ssrAB activated gene
+cgMLST V2	STMMW_06591 (fepB)	Fe2+-enterobactin ABC transporter substrate-binding protein
+cgMLST V2	STMMW_25501 (sseA)	3-mercaptopyruvate sulfurtransferase
+cgMLST V2	STMMW_01241 (fruR)	DNA-binding transcriptional regulator FruR
+cgMLST V2	STMMW_43441 (ytfF)	Putative membrane protein
+cgMLST V2	STMMW_39271 (yigI)	outer membrane phospholipase A
+cgMLST V2	STMMW_30631 (yggU)	YggU family protein
+cgMLST V2	STMMW_37361 (yicE)	Nucleobase-ascorbate transporter 6 AtNAT6
+cgMLST V2	STMMW_13831 (pykF)	pyruvate kinase I
+cgMLST V2	STMMW_14821 (ydgF)	multidrug transporter
+cgMLST V2	STMMW_21421 (wcaF)	colanic acid biosynthesis acetyltransferase WcaF
+cgMLST V2	STMMW_41331 (aceA)	isocitrate lyase
+cgMLST V2	STMMW_12611	Putative outer membrane lipoprotein
+cgMLST V2	STMMW_29161 (pyrG)	CTP synthetase
+cgMLST V2	STMMW_33971 (smg)	hypothetical protein
+cgMLST V2	STMMW_38631 (yieN)	regulatory ATPase RavA
+cgMLST V2	STMMW_02601 (gloB)	hydroxyacylglutathione hydrolase
+cgMLST V2	STMMW_06731 (ahpC)	alkyl hydroperoxide reductase subunit C
+cgMLST V2	STMMW_27901 (oraA)	recombination regulator RecX
+cgMLST V2	STMMW_06041 (ppiB)	peptidyl-prolyl cis-trans isomerase
+cgMLST V2	STMMW_16751 (ycjI)	murein peptide amidase A
+cgMLST V2	STMMW_28481 (sicA)	CesD/SycD/LcrH family type III secretion system chaperone
+cgMLST V2	STMMW_33621 (yhcP)	p-hydroxybenzoic acid efflux pump subunit AaeB
+cgMLST V2	STMMW_14441	transporter
+cgMLST V2	STMMW_45231 (nadR)	trifunctional nicotinamide-nucleotide adenylyltransferase/ribosylnicotinamide kinase/transcriptional regulator NadR
+cgMLST V2	STMMW_32281 (yqjB)	EnvZ/OmpR regulon moderator
+cgMLST V2	STMMW_42011 (yjbR)	hypothetical protein
+cgMLST V2	STMMW_22441 (yeiU)	permease
+cgMLST V2	STMMW_08071 (ybgF)	cell division protein CpoB
+cgMLST V2	STMMW_11991 (yceD)	hypothetical protein
+cgMLST V2	STMMW_09381 (artM)	arginine transporter permease subunit ArtM
+cgMLST V2	STMMW_07951 (sucC)	succinyl-CoA ligase subunit beta
+cgMLST V2	STMMW_23861 (dedD)	cell division protein DedD
+cgMLST V2	STMMW_35451 (ugpA)	sn-glycerol 3-phosphate ABC transporter permease
+cgMLST V2	STMMW_24661 (yfeY)	DUF1131 domain-containing protein
+cgMLST V2	STMMW_04351 (yahN)	RhtC-like transporter
+cgMLST V2	STMMW_08381 (ybhC)	acyl-CoA thioesterase
+cgMLST V2	STMMW_04601 (aroM)	AroM family protein
+cgMLST V2	STMMW_11191	MBL fold metallo-hydrolase
+cgMLST V2	STMMW_34851 (igaA)	"intracellular growth attenuator protein IgaA, partial"
+cgMLST V2	STMMW_23711 (yfcG)	thiol:disulfide oxidoreductase
+cgMLST V2	STMMW_10111 (asnCa)	asparagine tRNA synthetase
+cgMLST V2	STMMW_24591 (cysM)	cysteine synthase B (O-acetylserine sulfhydrolase B)
+cgMLST V2	STMMW_09651 (infA)	translation initiation factor IF-1
+cgMLST V2	STMMW_31221 (yghB)	"DedA-family integral membrane protein, partial"
+cgMLST V2	STMMW_43051 (miaA)	tRNA (adenosine(37)-N6)-dimethylallyltransferase MiaA
+cgMLST V2	STMMW_34271 (rplV)	50S ribosomal protein L22
+cgMLST V2	STMMW_09031 (rimO)	ribosomal protein S12 methylthiotransferase RimO
+cgMLST V2	STMMW_26621 (yfiC)	tRNA (adenosine(37)-N6)-methyltransferase TrmM
+cgMLST V2	STMMW_26991 (smpA)	outer membrane biogenesis protein BamE
+cgMLST V2	STMMW_24841 (eutM)	carboxysome structural protein EutM
+cgMLST V2	STMMW_28171 (hypB)	hydrogenase nickel incorporation protein HypB
+cgMLST V2	STMMW_06921 (dcuC)	anaerobic C4-dicarboxylate transporter DcuC
+cgMLST V2	STMMW_42901 (frdB)	fumarate reductase iron-sulfur subunit
+cgMLST V2	STMMW_13131 (astB)	succinylarginine dihydrolase
+cgMLST V2	STMMW_30171 (ubiH)	2-octaprenyl-6-methoxyphenyl hydroxylase
+cgMLST V2	STMMW_10801 (fabA)	beta-hydroxydecanoyl-ACP dehydratase
+cgMLST V2	STMMW_40501 (glpX)	"fructose-1,6-bisphosphatase, class II"
+cgMLST V2	STMMW_37771 (uhpC)	transcriptional regulator
+cgMLST V2	STMMW_39731 (typA)	GTP-binding protein TypA
+cgMLST V2	STMMW_44081	ArgR family transcriptional regulator
+cgMLST V2	STMMW_28561 (invC)	secretory apparatus ATP synthase (associated with virulence)
+cgMLST V2	STMMW_27571 (ygaF)	GAB DTP gene cluster repressor
+cgMLST V2	STMMW_38281 (thdF)	tRNA uridine(34) 5-carboxymethylaminomethyl synthesis GTPase MnmE
+cgMLST V2	STMMW_25711 (hcaT)	3-phenylpropionic acid transporter
+cgMLST V2	STMMW_12261 (ycfU)	ABC transporter integral membrane subunit
+cgMLST V2	STMMW_00001 (thrL)	thr operon leader peptide
+cgMLST V2	STMMW_19031 (cheW)	chemotaxis protein CheW
+cgMLST V2	STMMW_37191 (dfp)	bifunctional phosphopantothenoylcysteine decarboxylase/phosphopantothenate synthase
+cgMLST V2	STMMW_18921 (argS)	arginine--tRNA ligase
+cgMLST V2	STMMW_32871 (nusA)	transcription elongation factor NusA
+cgMLST V2	STMMW_36821 (lctD)	alpha-hydroxy-acid oxidizing enzyme
+cgMLST V2	STMMW_17691 (hemA)	glutamyl-tRNA reductase
+cgMLST V2	STMMW_17161 (yciO)	threonylcarbamoyl-AMP synthase
+cgMLST V2	STMMW_32701 (yhbP)	hypothetical protein
+cgMLST V2	STMMW_44551 (hilE)	"type VI secretion system effector, Hcp1 family"
+cgMLST V2	STMMW_16561 (fnr)	fumarate/nitrate reduction transcriptional regulator
+cgMLST V2	STMMW_19251 (uvrC)	excinuclease ABC subunit C
+cgMLST V2	STMMW_35731 (nikR)	Nickel responsive regulator NikR
+cgMLST V2	STMMW_37991 (hslT)	heat-shock protein IbpA
+cgMLST V2	STMMW_33471 (degQ)	serine endoprotease DegQ
+cgMLST V2	STMMW_11691 (bssS)	biofilm formation regulatory protein BssS
+cgMLST V2	STMMW_45061 (yjjV)	deoxyribonuclease YjjV
+cgMLST V2	STMMW_18251	putative membrane protein
+cgMLST V2	STMMW_14581 (rnfG)	electron transport complex subunit G
+cgMLST V2	STMMW_42481 (melR)	DNA-binding transcriptional regulator MelR
+cgMLST V2	STMMW_08711 (ybiH)	"Transcriptional regulator YbiH, TetR family"
+cgMLST V2	STMMW_08241 (gpmA)	"2,3-bisphosphoglycerate-dependent phosphoglycerate mutase"
+cgMLST V2	STMMW_34461 (slyX)	phi X174 lysis protein
+cgMLST V2	STMMW_18071 (minD)	cell division inhibitor MinD
+cgMLST V2	STMMW_05761 (tesA)	"multifunctional acyl-CoA thioesterase I; also functions as protease I, lysophospholipaseL(I)"
+cgMLST V2	STMMW_22871 (eco)	ecotin precursor
+cgMLST V2	STMMW_14631 (ydgK)	Putative inner membrane protein
+cgMLST V2	STMMW_07891 (sdhC)	succinate dehydrogenase cytochrome b556 large membrane subunit
+cgMLST V2	STMMW_23471 (nuoE)	NADH-quinone oxidoreductase subunit E
+cgMLST V2	STMMW_35591 (ftsE)	cell division protein FtsE
+cgMLST V2	STMMW_24121 (yfcZ)	hypothetical protein
+cgMLST V2	STMMW_16981 (rnb)	exoribonuclease 2
+cgMLST V2	STMMW_34641 (yhfC)	transporter
+cgMLST V2	STMMW_28361 (prgH)	type III secretion system needle complex protein PrgH
+cgMLST V2	STMMW_13471 (btuC)	vitamin B12 import system permease BtuC
+cgMLST V2	STMMW_31031 (hybG)	hydrogenase 2 accessory protein HypG
+cgMLST V2	STMMW_01001 (rluA)	bifunctional tRNA pseudouridine(32) synthase TrmQ/ribosomal large subunit pseudouridine synthase RluA
+cgMLST V2	STMMW_33251 (mtgA)	monofunctional biosynthetic peptidoglycan transglycosylase
+cgMLST V2	STMMW_25521 (sseBb)	enhances serine sensitivity
+cgMLST V2	STMMW_31691 (gcp)	tRNA N6-adenosine(37)-threonylcarbamoyltransferase complex transferase subunit TsaD
+cgMLST V2	STMMW_30341 (ecfT)	cobalt ABC transporter permease
+cgMLST V2	STMMW_30611 (yggS)	YggS family pyridoxal phosphate enzyme
+cgMLST V2	STMMW_20351 (yeeI)	DgsA anti-repressor MtfA
+cgMLST V2	STMMW_07051 (mrdA)	penicillin-binding protein 2
+cgMLST V2	STMMW_12671	Mechanosensitive ion channel IM
+cgMLST V2	STMMW_39031 (rffT)	putative enterobacterial common antigen polymerase
+cgMLST V2	STMMW_02621 (rnhA)	"RNase HI, degrades RNA of DNA-RNA hybrids"
+cgMLST V2	STMMW_14801 (pntB)	pyridine nucleotide transhydrogenase beta subunit
+cgMLST V2	STMMW_27961 (slrB)	PTS system glucitol/sorbitol-specific transporter subunit IIA
+cgMLST V2	STMMW_17571 (narK)	nitrate/nitrite transporter NarK
+cgMLST V2	STMMW_16771 (tpx)	2-Cys peroxiredoxin
+cgMLST V2	STMMW_28971 (cysN)	sulfate adenylyltransferase subunit CysN
+cgMLST V2	STMMW_37521 (mgtB)	magnesium-translocating P-type ATPase
+cgMLST V2	STMMW_38341 (yieE)	4'-phosphopantetheinyl transferase
+cgMLST V2	STMMW_33641 (yhcR)	protein AaeX
+cgMLST V2	STMMW_38611 (asnA)	asparagine synthetase A
+cgMLST V2	STMMW_36121 (yhjT)	membrane protein
+cgMLST V2	STMMW_07391 (nagD)	UMP phosphatase
+cgMLST V2	STMMW_45211 (serB)	phosphoserine phosphatase SerB
+cgMLST V2	STMMW_35691	DcrB protein
+cgMLST V2	STMMW_15041 (ynfA)	UPF0060 membrane protein CKO_01576
+cgMLST V2	STMMW_37831 (deoR)	DeoR family transcriptional regulator
+cgMLST V2	STMMW_08011 (ybgC)	acyl-CoA thioesterase
+cgMLST V2	STMMW_11201	anti-adapter protein IraM
+cgMLST V2	STMMW_17911 (emtA)	lytic murein transglycosylase
+cgMLST V2	STMMW_07971 (cydA)	cytochrome bd-I ubiquinol oxidase subunit I
+cgMLST V2	STMMW_23801	amino-acid racemase
+cgMLST V2	STMMW_04371 (prpR)	propionate catabolism operon regulatory protein PrpR
+cgMLST V2	STMMW_24601 (cysA)	sulfate/thiosulfate transporter subunit
+cgMLST V2	STMMW_34871 (hslR)	heat-shock protein Hsp15
+cgMLST V2	STMMW_22461 (rtn)	diguanylate phosphodiesterase
+cgMLST V2	STMMW_23731 (hisP)	histidine/lysine/arginine/ornithine transporter subunit
+cgMLST V2	STMMW_43211 (aidB)	isovaleryl CoA dehydrogenase
+cgMLST V2	STMMW_18441 (sopE2)	guanine nucleotide exchange factor sopE2
+cgMLST V2	STMMW_00361	arylsulfatase
+cgMLST V2	STMMW_09631	"quercetin 2,3-dioxygenase"
+cgMLST V2	STMMW_04951 (thiI)	tRNA 4-thiouridine(8) synthase ThiI
+cgMLST V2	STMMW_34251 (rplP)	50S ribosomal protein L16
+cgMLST V2	STMMW_25951 (recO)	DNA repair protein RecO
+cgMLST V2	STMMW_05531 (apt)	adenine phosphoribosyltransferase
+cgMLST V2	STMMW_26971 (ppnK)	inorganic polyphosphate/ATP-NAD kinase
+cgMLST V2	STMMW_26601 (rpoE)	ECF RNA polymerase sigma-E factor
+cgMLST V2	STMMW_10791 (rmf)	ribosome modulation factor
+cgMLST V2	STMMW_40741 (gldA)	glycerol dehydrogenase
+cgMLST V2	STMMW_21061 (hisH)	imidazole glycerol phosphate synthase subunit HisH
+cgMLST V2	STMMW_14321 (ydhB)	LysR family transcriptional regulator
+cgMLST V2	STMMW_28111 (hycE)	hydrogenase 3 large subunit
+cgMLST V2	STMMW_42921 (yjeA)	elongation factor P--(R)-beta-lysine ligase
+cgMLST V2	STMMW_31201	membrane protein
+cgMLST V2	STMMW_10861 (yccS)	Putative efflux (PET) family inner membrane protein YccS
+cgMLST V2	STMMW_30151 (gcvT)	aminomethyltransferase
+cgMLST V2	STMMW_40561 (hslU)	ATP-dependent protease ATP-binding subunit HslU
+cgMLST V2	STMMW_37751 (yicN)	protein yicN
+cgMLST V2	STMMW_17371 (oppF)	oligopeptide ABC transporter ATP-binding protein OppF
+cgMLST V2	STMMW_27551 (tctA)	tripartite tricarboxylate transporter TctA
+cgMLST V2	STMMW_33981 (dprA)	DNA protecting protein DprA
+cgMLST V2	STMMW_29641 (ptsP)	phosphoenolpyruvate-protein phosphotransferase PtsP
+cgMLST V2	STMMW_17361 (kch)	putative voltage-gated potassium channel
+cgMLST V2	STMMW_12791	nitric oxide reductase
+cgMLST V2	STMMW_19011 (cheR)	chemotaxis protein methyltransferase
+cgMLST V2	STMMW_27731 (nrdI)	ribonucleotide reductase assembly protein NrdI
+cgMLST V2	STMMW_15211 (marC)	stress protection protein MarC
+cgMLST V2	STMMW_33181 (yhbG)	ABC transporter ATP-binding protein
+cgMLST V2	STM0834	phosphoethanolamine transferase
+cgMLST V2	STMMW_41161 (thiE)	thiamine phosphate synthase
+cgMLST V2	STMMW_12421 (purB)	adenylosuccinate lyase
+cgMLST V2	STMMW_32851 (rbfA)	ribosome-binding factor A
+cgMLST V2	STMMW_05421 (maa)	maltose O-acetyltransferase
+cgMLST V2	STMMW_44531 (uxuR)	Uxu operon transcriptional regulator
+cgMLST V2	STMMW_33451 (yhcM)	AFG1 family ATPase
+cgMLST V2	STMMW_38401 (pstA)	phosphate transporter permease subunit PtsA
+cgMLST V2	STMMW_39801 (ompL)	outer membrane porin L
+cgMLST V2	STMMW_45001 (holD)	DNA polymerase III subunit psi
+cgMLST V2	STMMW_18271 (rrmA)	23S rRNA (guanine(745)-N(1))-methyltransferase
+cgMLST V2	STMMW_04501 (ddlA)	D-alanine--D-alanine ligase A
+cgMLST V2	STMMW_07701 (ybgK)	allophanate hydrolase
+cgMLST V2	STMMW_16541 (ydaL)	DNA endonuclease SmrA
+cgMLST V2	STMMW_34401 (rpsL)	30S ribosomal protein S12
+cgMLST V2	STMMW_22811 (napB)	nitrate reductase cytochrome C550 subunit
+cgMLST V2	STMMW_32321 (yqjF)	putative inner membrane protein YqjF
+cgMLST V2	STMMW_05701 (ybbJ)	nodulation efficiency protein D
+cgMLST V2	STMMW_07561 (pgm)	"phosphoglucomutase, alpha-D-glucose phosphate-specific"
+cgMLST V2	STMMW_35861 (gor)	glutathione-disulfide reductase
+cgMLST V2	STMMW_28341 (prgJ)	"type III secretion system needle complex protein PrgJ, partial"
+cgMLST V2	STMMW_03281 (gpt)	xanthine phosphoribosyltransferase
+cgMLST V2	STMMW_08731 (dinG)	ATP-dependent DNA helicase DinG
+cgMLST V2	STMMW_28231 (sitA)	Manganese ABC transporter SitA
+cgMLST V2	STMMW_00481 (lspA)	signal peptidase II
+cgMLST V2	STMMW_09171 (mdfA)	multidrug transporter MdfA
+cgMLST V2	STMMW_12431 (ycfC)	putative lysogenization regulator
+cgMLST V2	STMMW_01021 (polB)	DNA polymerase II
+cgMLST V2	STMMW_14231 (ssaQ)	"type III secretion system protein SsaQ, partial"
+cgMLST V2	STMMW_35311 (gntK)	gluconate kinase
+cgMLST V2	STMMW_33841 (yhdJ)	methyltransferase
+cgMLST V2	STMMW_24141 (vacJ)	ABC transporter permease
+cgMLST V2	STMMW_00731 (caiC)	ATP-dependent acyl-CoA ligase
+cgMLST V2	STMMW_25541 (yfhJ)	Fe-S assembly protein IscX
+cgMLST V2	STMMW_29431 (ygdE)	ribosomal RNA large subunit methyltransferase M
+cgMLST V2	STMMW_43401 (ytfB)	opacity-associated protein
+cgMLST V2	STMMW_39231 (corA)	magnesium transporter CorA
+cgMLST V2	STMMW_41371 (metH)	"B12-dependent homocysteine-N5-methyltetrahydrofolate transmethylase, repressor of metE and metF"
+cgMLST V2	STMMW_21461 (wcaB)	Colanic acid biosynthesis acetyl transferase WcaB
+cgMLST V2	STMMW_31411 (parE)	DNA topoisomerase IV subunit B
+cgMLST V2	STMMW_12651	ABC transporter ATPase
+cgMLST V2	STMMW_30091 (yqfA)	hemolysin
+cgMLST V2	STMMW_06551 (fepC)	ferric enterobactin transport ATP-binding protein FepC
+cgMLST V2	STMMW_06881 (citD)	citrate lyase subunit gamma
+cgMLST V2	STMMW_38411 (pstC)	phosphate transporter permease subunit PstC
+cgMLST V2	STMMW_30891 (feaB)	NAD-dependent phenylacetaldehyde dehydrogenase
+cgMLST V2	STMMW_13301 (yniB)	yfeABCD regulator yfeE
+cgMLST V2	STMMW_27941 (srlA)	PTS system glucitol/sorbitol-specific transporter subunit IIC
+cgMLST V2	STMMW_13651 (aroD)	3-dehydroquinate dehydratase
+cgMLST V2	STMMW_37321 (spoU)	tRNA (guanosine(18)-2'-O)-methyltransferase TrmH
+cgMLST V2	STMMW_17551 (narH)	nitrate reductase subunit beta
+cgMLST V2	STMMW_36321 (tag)	"3-methyl-adenine DNA glycosylase I, constitutive"
+cgMLST V2	STMMW_19481 (fliE)	flagellar hook-basal body complex protein FliE
+cgMLST V2	STMMW_28911 (truD)	tRNA pseudouridine(13) synthase TruD
+cgMLST V2	STMMW_33661 (tldD)	suppresses inhibitory activity of CsrA
+cgMLST V2	STMMW_36491 (xylA)	xylose isomerase
+cgMLST V2	STMMW_45271 (yjjX)	non-canonical purine NTP phosphatase
+cgMLST V2	STMMW_35671 (yhhP)	tRNA 2-thiouridine(34) synthase TusA
+cgMLST V2	STMMW_08031 (tolR)	colicin transporter TolR
+cgMLST V2	STMMW_27051 (lapB)	"Putative type I secretion protein, ATP-binding protein"
+cgMLST V2	STMMW_11221 (cbpA)	curved DNA-binding protein CbpA
+cgMLST V2	STMMW_37811 (fucP)	L-fucose:H+ symporter permease
+cgMLST V2	STMMW_29391 (fucI)	L-fucose isomerase
+cgMLST V2	STMMW_23531 (yfbQ)	Alanine transaminase
+cgMLST V2	STMMW_23281 (pmrD)	PmrD
+cgMLST V2	STMMW_17971 (fadR)	fatty acid metabolism regulator protein
+cgMLST V2	STMMW_35411 (yhhA)	Putative outer membrane protein
+cgMLST V2	STMMW_24621 (cysU)	sulfate ABC transporter permease
+cgMLST V2	STMMW_42051	hypothetical protein
+cgMLST V2	STMMW_42721 (dipZ)	thiol:disulfide interchange protein DsbD
+cgMLST V2	STMMW_23751 (hisQ)	amino acid ABC transporter permease
+cgMLST V2	STMMW_43231 (yjfO)	transporter
+cgMLST V2	STMMW_08691 (ybhF)	ABC transporter multidrug efflux pump protein
+cgMLST V2	STMMW_18421 (pphA)	"serine/threonine protein phosphatase, partial"
+cgMLST V2	STMMW_14771 (ydgI)	amino acid transporter
+cgMLST V2	STMMW_24081 (yfcN)	hypothetical protein
+cgMLST V2	STMMW_04931 (ispA)	geranyl transferase
+cgMLST V2	STMMW_08961 (moeB)	molybdopterin-synthase adenylyltransferase MoeB
+cgMLST V2	STMMW_28281 (sprB)	AraC family transcriptional regulator
+cgMLST V2	STMMW_00031 (thrC)	threonine synthase
+cgMLST V2	STMMW_38961 (rffD)	UDP-N-acetyl-D-mannosaminuronic acid dehydrogenase
+cgMLST V2	STMMW_05041 (apbA)	2-dehydropantoate 2-reductase
+cgMLST V2	STMMW_25971 (rnc)	ribonuclease 3
+cgMLST V2	STMMW_02091 (clcA)	ClC family H(+)/Cl(-) exchange transporter
+cgMLST V2	STMMW_05101 (cyoE)	protohaeme IX farnesyltransferase (haeme O biosynthesis)
+cgMLST V2	STMMW_24881 (eutP)	ethanolamine utilization protein EutP
+cgMLST V2	STMMW_06961 (ybeM)	Carbon-nitrogen hydrolase
+cgMLST V2	STMMW_13461 (himA)	integration host factor subunit alpha
+cgMLST V2	STMMW_28131 (hycC)	formate hydrogenlyase subunit 3
+cgMLST V2	STMMW_43092 (yjeT)	putative inner membrane protein YjeT (clustered with HflC)
+cgMLST V2	STMMW_43091 (hflC)	protease modulator HflC
+cgMLST V2	STMMW_30131 (gcvP)	glycine dehydrogenase (aminomethyl-transferring)
+cgMLST V2	STMMW_40541 (menG)	ribonuclease E activity regulator RraA
+cgMLST V2	STMMW_13791 (sufS)	bifunctional cysteine desulfurase/selenocysteine lyase
+cgMLST V2	STMMW_15021 (speG)	spermidine N1-acetyltransferase
+cgMLST V2	STMMW_25281 (guaB)	IMP dehydrogenase
+cgMLST V2	STMMW_24071 (yfcB)	N5-glutamine S-adenosyl-L-methionine-dependent methyltransferase
+cgMLST V2	STMMW_01341 (murG)	UDP-N-acetylglucosamine--N-acetylmuramyl-(pentapeptide) pyrophosphoryl-undecaprenol N-acetylglucosamine transferase
+cgMLST V2	STMMW_06341 (ybdG)	miniconductance mechanosensitive channel
+cgMLST V2	STMMW_27531 (tctC)	tricarboxylic transporter
+cgMLST V2	STMMW_25751 (cadB)	probable cadaverine/lysine antiporter
+cgMLST V2	STMMW_21071 (hisA)	1-(5-phosphoribosyl)-5-((5-phosphoribosylamino)methylideneamino)imidazole-4-carboxamide isomerase
+cgMLST V2	STMMW_25021 (dapE)	succinyl-diaminopimelate desuccinylase
+cgMLST V2	STMMW_29661 (mutH)	DNA mismatch repair endonuclease MutH
+cgMLST V2	STMMW_17301 (ispZ)	intracellular septation protein A
+cgMLST V2	STMMW_10841 (sulA)	cell division inhibitor SulA
+cgMLST V2	STMMW_15231 (yneJ)	LysR family transcriptional regulator
+cgMLST V2	STMMW_38791 (ilvD)	Putative dihydroxyacid dehydratase
+cgMLST V2	STMMW_41141 (thiS)	thiamine biosynthesis protein ThiS
+cgMLST V2	STMMW_32831 (rpsO)	30S ribosomal protein S15
+cgMLST V2	STMMW_44041 (pyrI)	aspartate carbamoyltransferase regulatory subunit
+cgMLST V2	STMMW_44511	membrane protein
+cgMLST V2	STMMW_38421 (pstS)	"phosphate ABC transporter, phosphate-binding protein PstS"
+cgMLST V2	STMMW_28011 (norR)	nitric oxide reductase transcription regulator
+cgMLST V2	STMMW_12171 (thiK)	thiamine kinase
+cgMLST V2	STMMW_19071 (flhC)	regulator of flagellar biosynthesis
+cgMLST V2	STMMW_18211	putative cytoplasmic protein
+cgMLST V2	STMMW_14541 (gst)	glutathione S-transferase
+cgMLST V2	STMMW_12911 (yeaG)	serine protein kinase PrkA
+cgMLST V2	STMMW_19291 (sdiA)	LuxR family transcriptional regulator
+cgMLST V2	STMMW_26861 (yfiN)	putative inner membrane diguanylate cyclase
+cgMLST V2	STMMW_34421 (yheM)	tRNA 2-thiouridine(34) synthase TusC
+cgMLST V2	STMMW_34931 (greB)	transcription elongation factor GreB
+cgMLST V2	STMMW_11071 (uraH)	5-hydroxyisourate hydrolase
+cgMLST V2	STMMW_22831 (napG)	quinol dehydrogenase
+cgMLST V2	STMMW_22341 (yeiH)	"Putative membrane protein YeiH, partial"
+cgMLST V2	STMMW_36681 (aldB)	Aldehyde dehydrogenase B
+cgMLST V2	STMMW_32301 (yqjE)	putative inner membrane protein
+cgMLST V2	STMMW_05721 (ybbL)	putrescine/spermidine ABC transporter ATP-binding protein
+cgMLST V2	STMMW_07581 (potE)	putrescine-ornithine antiporter
+cgMLST V2	STMMW_45021 (yjjG)	putative haloacid dehalogenase-like hydrolase
+cgMLST V2	STMMW_34681 (cysG)	siroheme synthase
+cgMLST V2	STMMW_42551 (dcuS)	two-component system sensor histidine kinase DcuS
+cgMLST V2	STMMW_38881 (rep)	"rep helicase, a single-stranded DNA dependent ATPase"
+cgMLST V2	STMMW_17891 (ymgE)	transglycosylase associated protein
+cgMLST V2	STMMW_04581 (aroL)	shikimate kinase II
+cgMLST V2	STMMW_08751 (ybiJ)	putative periplasmic protein
+cgMLST V2	STMMW_09401 (artI)	"arginine ABC transporter, periplasmic arginine-binding protein ArtI"
+cgMLST V2	STMMW_05181 (tig)	trigger factor
+cgMLST V2	STMMW_07121 (rlpB)	rare lipoprotein B precursor
+cgMLST V2	STMMW_09151 (deoR)	DeoR family transcriptional regulator
+cgMLST V2	STMMW_35331 (yhhW)	"quercetin 2,3-dioxygenase"
+cgMLST V2	STMMW_00751 (caiA)	crotonobetainyl-CoA dehydrogenase
+cgMLST V2	STMMW_29411 (fucU)	L-fucose mutarotase
+cgMLST V2	STMMW_39211 (yigB)	flavin mononucleotide phosphatase
+cgMLST V2	STMMW_30301 (pgk)	phosphoglycerate kinase
+cgMLST V2	STMMW_41821 (malM)	maltose operon periplasmic protein
+cgMLST V2	STMMW_31431 (cpdA)	"3',5'-cyclic-AMP phosphodiesterase"
+cgMLST V2	STMMW_16851 (pspA)	phage shock protein PspA
+cgMLST V2	STMMW_06571 (fepD)	ferric anguibactin ABC transporter permease
+cgMLST V2	STMMW_01401 (lpxC)	UDP-3-O-[3-hydroxymyristoyl] N-acetylglucosamine deacetylase
+cgMLST V2	STMMW_40151 (rhaT)	l-rhamnose-proton symporter
+cgMLST V2	STMMW_37301 (rpoZ)	DNA-directed RNA polymerase subunit omega
+cgMLST V2	STMMW_13321 (ydiZ)	hypothetical protein
+cgMLST V2	STMMW_21441 (wcaD)	putative colanic acid polymerase WcaD
+cgMLST V2	STMMW_21911 (yehU)	putative two-component system sensor kinase
+cgMLST V2	STMMW_17531 (narI)	respiratory nitrate reductase subunit gamma
+cgMLST V2	STMMW_28931 (ispD)	2-C-methyl-D-erythritol 4-phosphate cytidylyltransferase
+cgMLST V2	STMMW_44251 (yjgP)	LPS export ABC transporter permease LptF
+cgMLST V2	STMMW_45251 (slt)	soluble lytic murein transglycosylase
+cgMLST V2	STMMW_35651 (zntA)	zinc/cadmium/mercury/lead-transporting ATPase
+cgMLST V2	STMMW_15001 (ynfD)	putative outer membrane protein
+cgMLST V2	STMMW_37871	type I toxin-antitoxin system toxin TisB
+cgMLST V2	STMMW_11240 (scsA)	copper-sensitivity suppressor A
+cgMLST V2	STMMW_11241 (scsB)	copper-sensitivity suppressor B
+cgMLST V2	STMMW_22131 (yohJ)	putative effector of murein hydrolase LrgA
+cgMLST V2	STMMW_32151 (yqjH)	NADPH-dependent ferric siderophore reductase
+cgMLST V2	STMMW_17951 (dadA)	D-amino acid dehydrogenase small subunit
+cgMLST V2	STMMW_35431 (ugpC)	glycerol-3-phosphate transporter ATP-binding subunit
+cgMLST V2	STMMW_20891 (yeeX)	protein YeeX
+cgMLST V2	STMMW_18401	hypothetical protein
+cgMLST V2	STMMW_18151 (yoaH)	UPF0181 protein CKO_01169
+cgMLST V2	STMMW_07931 (sucA)	2-oxoglutarate dehydrogenase subunit E1
+cgMLST V2	STMMW_08941 (pflF)	glycyl radical enzyme
+cgMLST V2	STMMW_08411 (hutC)	histidine utilization repressor
+cgMLST V2	STMMW_34741 (dam)	DNA adenine methylase
+cgMLST V2	STMMW_34211 (rplE)	50S ribosomal protein L5
+cgMLST V2	STMMW_05061 (yajR)	putative MFS family transporter
+cgMLST V2	STMMW_38941 (wzzE)	polysaccharide chain length modulation protein
+cgMLST V2	STMMW_42961 (psd)	phosphatidylserine decarboxylase proenzyme
+cgMLST V2	STMMW_13401 (thrS)	threonine--tRNA ligase
+cgMLST V2	STMMW_09891 (aroA)	"5-enolpyruvylshikimate-3-phosphate synthase, EC 2.5.1.19"
+cgMLST V2	STMMW_13231 (celF)	6-phospho-beta-glucosidase
+cgMLST V2	STMMW_01181 (leuB)	3-isopropylmalate dehydrogenase
+cgMLST V2	STMMW_40831 (yijP)	phosphoethanolamine transferase CptA
+cgMLST V2	STMMW_34231 (rplN)	50S ribosomal protein L14
+cgMLST V2	STMMW_05511 (priC)	Primosomal replication protein N prime prime
+cgMLST V2	STMMW_01361 (ddl)	D-alanine--D-alanine ligase B
+cgMLST V2	STMMW_15581 (osmC)	peroxiredoxin OsmC
+cgMLST V2	STMMW_27511 (tctE)	putative two-component system sensor kinase
+cgMLST V2	STMMW_06321	Putative ATPase involved in DNA repair
+cgMLST V2	STMMW_21051 (hisB)	bifunctional imidazole glycerol-phosphate dehydratase/histidinol phosphatase
+cgMLST V2	STMMW_12201 (ndh)	NADH dehydrogenase
+cgMLST V2	STMMW_12751 (aroQ)	Periplasmic chorismate mutase I precursor
+cgMLST V2	STMMW_29601 (comO)	prepilin peptidase dependent protein B
+cgMLST V2	STMMW_30111 (bglA)	6-phospho-beta-glucosidase BglA
+cgMLST V2	STMMW_33141 (yrbH)	arabinose 5-phosphate isomerase KdsD
+cgMLST V2	STMMW_04471 (yaiW)	putative lipoprotein
+cgMLST V2	STMMW_17181 (trpE)	anthranilate synthase component 1
+cgMLST V2	STMMW_32811 (nlpI)	lipoprotein NlpI
+cgMLST V2	STMMW_44061 (pyrL)	pyrBI operon leader peptide
+cgMLST V2	STMMW_23361 (elaC)	putative metal-dependent hydrolase
+cgMLST V2	STMMW_33361 (nanE)	bifunctional enzyme NanE/nanK
+cgMLST V2	STMMW_29271	flavodoxin
+cgMLST V2	STMMW_19051 (motB)	flagellar motor protein MotB
+cgMLST V2	STMMW_16051 (ydcK)	acetyltransferase
+cgMLST V2	STMMW_19721 (yedJ)	phosphohydrolase
+cgMLST V2	STMMW_28891 (pcm)	L-isoaspartyl protein carboxyl methyltransferase type II
+cgMLST V2	STMMW_18891 (yecP)	tRNA 5-methoxyuridine(34) synthase CmoB
+cgMLST V2	STMMW_11581 (mdoG)	glucan biosynthesis protein D
+cgMLST V2	STMMW_18231 (manY)	PTS mannose/fructose/sorbose transporter subunit IIC
+cgMLST V2	STMMW_22581 (yejM)	sulfatase
+cgMLST V2	STMMW_14561 (nth)	endonuclease III
+cgMLST V2	STMMW_36511 (bax)	protein bax
+cgMLST V2	STMMW_12971 (gapA)	Glyceraldehyde 3-phosphate dehydrogenase A
+cgMLST V2	STMMW_02511 (metQ)	DL-methionine transporter substrate-binding subunit
+cgMLST V2	SNSL254_A1382	Uncharacterized membrane protein yoaK
+cgMLST V2	STMMW_16581 (ynaJ)	putative inner membrane protein
+cgMLST V2	STMMW_34911 (envZ)	Osmolarity sensory histidine kinase EnvZ
+cgMLST V2	SC0831	small protein MntS
+cgMLST V2	STMMW_14691 (fumA)	"fumarate hydratase class I, anaerobic"
+cgMLST V2	STMMW_42391 (phnB)	hypothetical protein
+cgMLST V2	STMMW_32361 (yhaK)	pirin
+cgMLST V2	STMMW_44931 (yjjQ)	helix-turn-helix transcriptional regulator
+cgMLST V2	STMMW_17021 (pyrF)	Orotidine 5'-phosphate decarboxylase
+cgMLST V2	STMMW_14301 (cfa)	cyclopropane fatty acyl phospholipid synthase
+cgMLST V2	STMMW_23181 (yfaZ)	YfaZ superfamily
+cgMLST V2	STMMW_01961 (mrcB)	bifunctional glycosyl transferase/transpeptidase
+cgMLST V2	STMMW_15611 (sfcA)	NAD-linked malic enzyme%3B malate oxidoreductase
+cgMLST V2	STMMW_08771 (ybiN)	ribosomal RNA large subunit methyltransferase F
+cgMLST V2	STMMW_11721 (yceB)	lipoprotein
+cgMLST V2	STMMW_18091 (rnd)	ribonuclease D
+cgMLST V2	STMMW_09421 (ybjP)	lipoprotein
+cgMLST V2	STMMW_09131 (yliJ)	glutathione S-transferase
+cgMLST V2	STMMW_43371 (rpsR)	30S ribosomal protein S18
+cgMLST V2	STMMW_15801	"putative lipoprotein, partial"
+cgMLST V2	STMMW_38521 (atpA)	ATP synthase subunit alpha
+cgMLST V2	STMMW_31631 (ygiF)	Adenylate cyclase
+cgMLST V2	STMMW_31181 (exbD)	TonB system transport protein ExbD
+cgMLST V2	STMMW_29471 (csdA)	cysteine sulfinate desulfinase
+cgMLST V2	STMMW_43111 (nsrR)	transcriptional regulator
+cgMLST V2	STMMW_30321	regulator of transporter operon
+cgMLST V2	STMMW_31451 (nudF)	ADP-ribose pyrophosphatase
+cgMLST V2	STMMW_01791 (yadH)	ABC transporter permease
+cgMLST V2	STMMW_39091 (hemC)	porphobilinogen deaminase (hydroxymethylbilane synthase)
+cgMLST V2	STMMW_16871 (sapA)	peptide ABC transporter substrate-binding protein SapA
+cgMLST V2	STMMW_34001 (fmt)	methionyl-tRNA formyltransferase
+cgMLST V2	STMMW_06511 (fes)	enterochelin esterase
+cgMLST V2	STMMW_05301 (ybaO)	Putative HTH-type transcriptional regulator ybaO
+cgMLST V2	STMMW_00821	conserved domain protein
+cgMLST V2	STMMW_01421 (secA)	preprotein translocase subunit SecA
+cgMLST V2	STMMW_30851	cytoplasmic protein
+cgMLST V2	STMMW_30581 (yqgF)	Holliday junction DNA helicase
+cgMLST V2	STMMW_40131 (rhaS)	AraC family transcriptional regulator
+cgMLST V2	STMMW_13341 (ydiY)	outer membrane protein
+cgMLST V2	STMMW_21931 (yohO)	membrane protein
+cgMLST V2	STMMW_41841 (ubiA)	4-hydroxybenzoate octaprenyltransferase
+cgMLST V2	STMMW_36981 (kbl)	2-amino-3-ketobutyrate CoA ligase
+cgMLST V2	STMMW_39631 (yihG)	1-acyl-sn-glycerol-3-phosphate acyltransferase
+cgMLST V2	STMMW_33801 (panF)	sodium/panthothenate symporter
+cgMLST V2	STMMW_44231 (pepA)	leucyl aminopeptidase
+cgMLST V2	STMMW_27891 (alaS)	alanine--tRNA ligase
+cgMLST V2	STMMW_13961 (ssrB)	Secretion system regulator of DegU/UvrY/BvgA type
+cgMLST V2	STMMW_41261 (hydH)	Sensor protein of zinc sigma-54-dependent two-component system
+cgMLST V2	STMMW_12561 (pliC)	lysozyme inhibitor
+cgMLST V2	STMMW_12562	"putative lipoprotein, partial"
+cgMLST V2	STMMW_17511 (purU)	formyltetrahydrofolate deformylase
+cgMLST V2	STMMW_35981 (yhjE)	Proline/betaine transporter Proline porter II
+cgMLST V2	STMMW_19551 (fliL)	flagellar biosynthesis
+cgMLST V2	STMMW_37851 (ilvB)	acetolactate synthase catalytic subunit
+cgMLST V2	STMMW_33771 (accB)	acetyl-CoA carboxylase
+cgMLST V2	STMMW_37852 (ivbL)	IlvBN operon leader peptide
+cgMLST V2	STMMW_11911 (flgK)	flagellar hook-associated protein 1
+cgMLST V2	STMMW_11261 (scsD)	suppressor for copper-sensitivity D
+cgMLST V2	STMMW_32171 (mcpC)	Methyl-accepting chemotaxis protein I (serine chemoreceptor protein)
+cgMLST V2	STMMW_04681 (phoR)	two-component system sensor histidine kinase PhoR
+cgMLST V2	STMMW_18391 (yebU)	ribosomal RNA small subunit methyltransferase F
+cgMLST V2	STMMW_42761 (fxsA)	phage T7 F exclusion suppressor FxsA
+cgMLST V2	STMMW_05251 (ybaW)	thioesterase
+cgMLST V2	STMMW_18171 (yeaB)	coenzyme A pyrophosphatase
+cgMLST V2	STMMW_34581 (yhfK)	putative inner membrane protein
+cgMLST V2	STMMW_36721 (yibF)	glutathione S-transferase
+cgMLST V2	STMMW_09301 (potH)	putrescine transporter subunit: membrane component of ABC superfamily
+cgMLST V2	STMMW_07261 (rihA)	pyrimidine-specific ribonucleoside hydrolase RihA
+cgMLST V2	STMMW_23571 (yfbU)	"YfbU protein, partial"
+cgMLST V2	STMMW_08431 (hutH)	histidine ammonia-lyase
+cgMLST V2	STMMW_28241 (sitB)	manganese transporter
+cgMLST V2	STMMW_34761 (aroB)	3-dehydroquinate synthase
+cgMLST V2	STMMW_42181 (gst)	glutathione S-transferase
+cgMLST V2	STMMW_25931 (acpS)	holo-ACP synthase
+cgMLST V2	STMMW_38921 (rho)	transcription termination factor Rho
+cgMLST V2	STMMW_08331 (modA)	molybdate ABC transporter substrate-binding protein
+cgMLST V2	STMMW_40721 (katG)	catalase peroxidase
+cgMLST V2	STMMW_42981 (orn)	oligoribonuclease
+cgMLST V2	STMMW_13421 (rpl35)	50S ribosomal protein L35
+cgMLST V2	STMMW_01161 (leuD)	3-isopropylmalate dehydratase small subunit
+cgMLST V2	STMMW_40851 (argE)	acetylornithine deacetylase
+cgMLST V2	STMMW_12981 (yeaA)	Peptide methionine sulfoxide reductase MsrB
+cgMLST V2	STMMW_29591 (comP)	putative exported protein
+cgMLST V2	STMMW_43581 (ppa)	inorganic pyrophosphatase
+cgMLST V2	STMMW_10731	flavodoxin reductase family 1
+cgMLST V2	STMMW_01301 (murF)	UDP-N-acetylmuramoyl-tripeptide--D-alanyl-D-alanine ligase
+cgMLST V2	STMMW_26911 (ffh)	signal recognition particle protein
+cgMLST V2	STMMW_10081 (ycbL)	MBL fold hydrolase
+cgMLST V2	STMMW_13281 (ydjM)	putative membrane-bound metal-dependent hydrolase
+cgMLST V2	STMMW_41981 (tyrB)	aromatic amino acid aminotransferase
+cgMLST V2	STMMW_12221 (ycfQ)	TetR family transcriptional regulator
+cgMLST V2	STMMW_25061 (nlpB)	outer membrane protein assembly factor BamC
+cgMLST V2	STMMW_29621 (thyA)	thymidylate synthase
+cgMLST V2	STMMW_12771 (yeaR)	"putative cytoplasmic protein, partial"
+cgMLST V2	STMMW_39401 (yigN)	recombinase RmuC
+cgMLST V2	STMMW_37111 (rfaG)	glucosyltransferase I RfaG
+cgMLST V2	STMMW_33161 (yrbK)	LPS export ABC transporter periplasmic protein LptC
+cgMLST V2	STMMW_41181 (rsd)	anti-RNA polymerase sigma 70 factor
+cgMLST V2	SPAB_04503 (ldr)	"toxic polypeptide, small"
+cgMLST V2	STMMW_02141 (dgt)	deoxyguanosinetriphosphate triphosphohydrolase
+cgMLST V2	STMMW_44001 (treR)	trehalose operon repressor
+cgMLST V2	STMMW_06301	hypothetical secreted protein
+cgMLST V2	STMMW_06651 (cstAa)	carbon starvation protein A
+cgMLST V2	STMMW_00151	glycosyl hydrolase lysozyme (N-acetylmuramidase)
+cgMLST V2	STMMW_28871 (rpoS)	RNA polymerase sigma factor RpoS
+cgMLST V2	STMMW_19701 (vsr)	very short patch repair endonuclease
+cgMLST V2	STMMW_27791	MFS transporter
+cgMLST V2	STMMW_12951 (yeaD)	D-hexose-6-phosphate mutarotase
+cgMLST V2	STMMW_17701 (hemM)	"outer membrane lipoprotein LolB, partial"
+cgMLST V2	STMMW_14501 (mliC)	Membrane-bound lysozyme inhibitor of C-type lysozyme precursor
+cgMLST V2	STMMW_36531 (avtA)	"aminotransferase, class I/II"
+cgMLST V2	STMMW_32691 (yhbO)	glutamine amidotransferase
+cgMLST V2	STMMW_02532 (yaeD)	"D-glycero-beta-D-manno-heptose 1,7-bisphosphate 7-phosphatase"
+cgMLST V2	STMMW_07011 (ybeD)	"Proposed lipoate regulatory protein YbeD, partial"
+cgMLST V2	STMMW_33341 (yhcH)	sugar isomerase involved in processing of exogenous sialic acid
+cgMLST V2	STMMW_30671 (ansB)	L-asparaginase 2
+cgMLST V2	STMMW_32431 (tdcC)	HAAAP family serine/threonine permease
+cgMLST V2	STMMW_32341 (yhaH)	inner membrane protein YhaH
+cgMLST V2	STMMW_44911	putative inner membrane protein
+cgMLST V2	STMMW_01941 (ligT)	2'-5' RNA ligase
+cgMLST V2	STMMW_25022	membrane protein
+cgMLST V2	STMMW_45431 (lasT)	tRNA/rRNA methyltransferase
+cgMLST V2	STMMW_04271 (mod)	type III restriction-modification system StyLTI enzyme mod
+cgMLST V2	STMMW_34971 (yhgG)	ferrous iron transporter C
+cgMLST V2	STMMW_43351 (rpsF)	30S ribosomal protein S6
+cgMLST V2	STMMW_34291 (rplB)	50S ribosomal protein L2
+cgMLST V2	STMMW_13561 (pps)	phosphoenolpyruvate synthase
+cgMLST V2	STMMW_31611 (rfaE)	bifunctional heptose 7-phosphate kinase/heptose 1-phosphate adenyltransferase
+cgMLST V2	STMMW_29451 (gcvA)	transcriptional regulator GcvA
+cgMLST V2	STMMW_43131 (yjfH)	"TrmH family RNA methyltransferase, group 3"
+cgMLST V2	STMMW_18611 (yebE)	membrane protein
+cgMLST V2	STMMW_34391 (rpsG)	30S ribosomal protein S7
+cgMLST V2	STMMW_02331 (fabZ)	beta-hydroxyacyl-ACP dehydratase
+cgMLST V2	STMMW_06821 (rna)	ribonuclease I precursor
+cgMLST V2	STMMW_14081 (sscB)	type III secretion low calcium response chaperone LcrH/SycD
+cgMLST V2	STMMW_28051 (hydN)	formate dehydrogenase-H ferredoxin subunit
+cgMLST V2	STMMW_21621 (baeS)	two-component system sensor histidine kinase BaeA
+cgMLST V2	STMMW_00791 (fixC)	oxidoreductase FixC
+cgMLST V2	STMMW_05321 (mdlB)	multidrug ABC transporter permease/ATP-binding protein
+cgMLST V2	STMMW_01441 (yacG)	DNA gyrase inhibitor YacG
+cgMLST V2	STMMW_33301 (gltD)	glutamate synthase subunit beta
+cgMLST V2	STMMW_30871	cytoplasmic protein
+cgMLST V2	STMMW_06791 (ybdQ)	universal stress protein UspG
+cgMLST V2	STMMW_40111 (rhaA)	L-rhamnose isomerase
+cgMLST V2	STMMW_14881 (mlc)	transcriptional regulator Mic
+cgMLST V2	STMMW_41861 (dgkA)	diacylglycerol kinase
+cgMLST V2	STMMW_21481 (wzc)	tyrosine kinase
+cgMLST V2	STMMW_21951 (yehX)	"osmoprotectant uptake system ATP-binding protein, partial"
+cgMLST V2	STMMW_31471 (ygiB)	membrane protein
+cgMLST V2	STMMW_30701 (trmB)	tRNA (guanosine(46)-N7)-methyltransferase TrmB
+cgMLST V2	STMMW_39611 (rodA)	stress response kinase A
+cgMLST V2	STMMW_28461 (sipC)	translocation machinery component
+cgMLST V2	STMMW_38691 (rbsK)	ribokinase
+cgMLST V2	STMMW_03171 (pagN)	outer membrane adhesin
+cgMLST V2	STMMW_13941 (orf319)	pathogenicity island protein
+cgMLST V2	STMMW_41241 (yjaH)	membrane protein
+cgMLST V2	STMMW_12011 (plsX)	putative phosphate acyltransferase
+cgMLST V2	STMMW_17061 (ribA)	GTP cyclohydrolase II
+cgMLST V2	STMMW_35611 (rsmD)	Ribosomal RNA small subunit methyltransferase D
+cgMLST V2	STMMW_35961 (yhjC)	LysR family transcriptional regulator
+cgMLST V2	STMMW_19571 (fliN)	flagellar motor switch protein FliN
+cgMLST V2	STMMW_33751 (msrP)	putative sulfite oxidase subunit YedY
+cgMLST V2	STMMW_29331 (sdaC)	HAAAP family serine/threonine permease
+cgMLST V2	STMMW_22171 (b2145)	Putative membrane protein
+cgMLST V2	STMMW_44211 (valS)	valine--tRNA ligase
+cgMLST V2	STMMW_18371 (yebS)	integral membrane protein PqiA family
+cgMLST V2	STMMW_42741 (dcuA)	anaerobic C4-dicarboxylate transporter
+cgMLST V2	STMMW_02491 (yaeB)	tRNA-Thr(GGU) m(6)t(6)A37 methyltransferase TsaA
+cgMLST V2	STMMW_08631 (ybhN)	membrane protein
+cgMLST V2	STMMW_34561 (yhfA)	OsmC family protein
+cgMLST V2	STMMW_18111 (yeaY)	Starvation lipoprotein Slp -like protein
+cgMLST V2	STMMW_14711 (tus)	DNA sequence-specific contrahelicase
+cgMLST V2	STMMW_36701 (selB)	selenocysteinyl-tRNA-specific translation elongation factor SelB
+cgMLST V2	STMMW_09321 (ybjO)	putative inner membrane protein
+cgMLST V2	STMMW_23551 (yfbS)	transcriptional regulator
+cgMLST V2	STMMW_24021 (yfcL)	YfcL protein
+cgMLST V2	STMMW_24791 (eutH)	ethanolamine utilization protein EutH
+cgMLST V2	STMMW_28261 (sitD)	iron transporter inner membrane component
+cgMLST V2	STMMW_38901 (rhlB)	ATP-dependent RNA helicase RhlB
+cgMLST V2	STMMW_43831	glycine dehydrogenase
+cgMLST V2	STMMW_24241 (lpxP)	lipid A biosynthesis palmitoleoyl acyltransferase
+cgMLST V2	STMMW_24242 (ypdK)	conserved sORF
+cgMLST V2	STMMW_28191 (hypD)	hydrogenase formation protein HypD
+cgMLST V2	STMMW_09851 (focA)	"putative FNT family, formate transporter (formate channel 1)"
+cgMLST V2	STMMW_05171 (bolA)	BolA family transcriptional regulator
+cgMLST V2	STMMW_01141 (tbpA)	thiamine transporter substrate binding subunit
+cgMLST V2	STMMW_01321 (murD)	UDP-N-acetylmuramoylalanine--D-glutamate ligase
+cgMLST V2	STMMW_10711 (pyrD)	dihydroorotate dehydrogenase 2
+cgMLST V2	STMMW_20941 (phsB)	thiosulfate reductase electron transporter PhsB
+cgMLST V2	STMMW_25041	neutral zinc metallopeptidase
+cgMLST V2	STMMW_21541 (udk)	uridine kinase
+cgMLST V2	STMMW_21011 (yeeZ)	NAD(P)-dependent oxidoreductase
+cgMLST V2	STMMW_12711	putative response regulator
+cgMLST V2	STMMW_39421 (yigP)	ubiquinone biosynthesis protein UbiJ
+cgMLST V2	STMMW_26791 (yfiO)	outer membrane biogenesis protein BamD
+cgMLST V2	STMMW_06671 (ybdH)	oxidoreductase
+cgMLST V2	STMMW_17491 (ychK)	patatin family protein
+cgMLST V2	STMMW_12161 (ycfM)	"penicillin-binding protein activator LpoB, partial"
+cgMLST V2	STMMW_38051 (torD)	trimethylamine N-oxide reductase I catalytic subunit
+cgMLST V2	STMMW_28851	phenolic acid decarboxylase subunit C
+cgMLST V2	STMMW_13001 (nam)	nicotinamidase/pyrazinamidase
+cgMLST V2	STMMW_37131 (kdtA)	3-deoxy-D-manno-octulosonic acid transferase
+cgMLST V2	STMMW_33101 (yrbD)	outer membrane lipid asymmetry maintenance protein MlaD
+cgMLST V2	STMMW_10751 (uup)	ABC transporter ATPase
+cgMLST V2	STMMW_22541 (yejH)	ATP-dependent helicase
+cgMLST V2	STMMW_17721 (prs)	ribose-phosphate pyrophosphokinase
+cgMLST V2	STMMW_10021 (smtA)	S-adenosylmethionine-dependent methyltransferase Functionally Coupled to the MukBEF Chromosome Partitioning Mechanism
+cgMLST V2	STMMW_44971	diguanylate cyclase
+cgMLST V2	STMMW_19181 (yecH)	putative metal-binding protein
+cgMLST V2	STMMW_01921 (dksA)	RNA polymerase-binding transcription factor DksA
+cgMLST V2	STMMW_45081 (yjjI)	"glycine radical enzyme, YjjI family"
+cgMLST V2	STMMW_11541 (ymdA)	periplasmic protein
+cgMLST V2	STMMW_11891 (flgI)	Flagellar P-ring protein
+cgMLST V2	STMMW_07691 (ybgJ)	allophanate hydrolase
+cgMLST V2	STMMW_23941	transporter
+cgMLST V2	STMMW_17871 (gdhA)	putative Homolog of glutamic dehyrogenase
+cgMLST V2	STMMW_04521 (mdtG)	multidrug efflux transporter
+cgMLST V2	STMMW_39991 (fdoI)	formate dehydrogenase-N subunit gamma
+cgMLST V2	STMMW_34951 (feoA)	ferrous iron transporter A
+cgMLST V2	STMMW_11761 (yceH)	YceH protein
+cgMLST V2	STMMW_22321 (lysP)	lysine transporter
+cgMLST V2	STMMW_22891 (alkB)	alpha-ketoglutarate-dependent dioxygenase AlkB
+cgMLST V2	STMMW_29811 (yqeF)	acetyl-CoA acetyltransferase
+cgMLST V2	STMMW_23051	LysR family transcriptional regulator
+cgMLST V2	STMMW_39391 (udp)	uridine phosphorylase
+cgMLST V2	STMMW_24491 (cysK)	cysteine synthase A
+cgMLST V2	STMMW_18581	carbon-nitrogen family hydrolase
+cgMLST V2	STMMW_42531	hypothetical protein
+cgMLST V2	STMMW_43481 (cysQ)	"3'(2'),5'-bisphosphate nucleotidase CysQ"
+cgMLST V2	STMMW_18631 (yebG)	DNA damage-inducible protein YebG
+cgMLST V2	STMMW_09461 (ybjT)	NAD(P)-dependent oxidoreductase
+cgMLST V2	STMMW_05121 (cyoC)	cytochrome o ubiquinol oxidase subunit III
+cgMLST V2	STMMW_05691 (cueR)	heavy metal-responsive transcriptional regulator
+cgMLST V2	STMMW_02311 (hlpA)	outer membrane chaperone Skp
+cgMLST V2	STMMW_06801 (ybdR)	glutathione-dependent formaldehyde dehydrogenase
+cgMLST V2	STMMW_16831 (pspC)	DNA-binding transcriptional activator PspC
+cgMLST V2	STMMW_14061 (sseD)	"pathogenicity island 2 effector protein SseD, partial"
+cgMLST V2	STMMW_34041 (arfA)	ribosome rescue factor A
+cgMLST V2	STMMW_42821 (yjeK)	EF-P beta-lysylation protein EpmB
+cgMLST V2	STMMW_05341 (amtB)	putative ammonium transporter
+cgMLST V2	STMMW_31671 (folB)	dihydroneopterin aldolase
+cgMLST V2	STMMW_33911 (yhdV)	membrane protein
+cgMLST V2	STMMW_10961 (yccX)	acylphosphatase
+cgMLST V2	STMMW_40461 (tpiA)	triose-phosphate isomerase
+cgMLST V2	STMMW_21971 (yehZ)	transporter
+cgMLST V2	STMMW_31491 (ygiD)	"extradiol ring-cleavage dioxygenase, class III enzyme, subunit B"
+cgMLST V2	STMMW_30721 (yggX)	Fe(2+)-trafficking protein
+cgMLST V2	STMMW_39671 (yihI)	GTPase activator
+cgMLST V2	STMMW_28441 (sipA)	pathogenicity island 1 effector protein SipA
+cgMLST V2	STMMW_17261 (katN)	Mn-containing catalase
+cgMLST V2	STMMW_01461 (coaE)	dephospho-CoA kinase
+cgMLST V2	STMMW_03191 (yafV)	amidohydrolase
+cgMLST V2	STMMW_13921 (ttrR)	two-component system response regulator
+cgMLST V2	STMMW_41221 (yjaG)	hypothetical protein
+cgMLST V2	STMMW_12031 (fabD)	malonyl CoA-ACP transacylase
+cgMLST V2	STMMW_36941 (yigQ)	putative exported protein
+cgMLST V2	STMMW_12521 (envE)	putative lipoprotein envE precursor
+cgMLST V2	STMMW_17002 (osmB)	osmotically-inducible lipoprotein B
+cgMLST V2	STMMW_19511 (fliH)	flagellar assembly protein FliH
+cgMLST V2	STMMW_37891 (emrD)	multidrug resistance protein D
+cgMLST V2	STMMW_33731 (yhdA)	RNase E specificity factor CsrD
+cgMLST V2	STMMW_29311 (queF)	NADPH-dependent 7-cyano-7-deazaguanine reductase QueF
+cgMLST V2	STMMW_22151 (cdd)	cytidine deaminase
+cgMLST V2	STMMW_44761 (yjiA)	GTPase
+cgMLST V2	STMMW_45411 (arcA)	DNA-binding response regulator
+cgMLST V2	STMMW_18351 (proQ)	RNA chaperone ProQ
+cgMLST V2	STMMW_16351 (ydcF)	protein possibly involved in murein
+cgMLST V2	STMMW_18131 (yoaA)	ATP-dependent helicase
+cgMLST V2	STMMW_34541 (yheU)	alcohol O-acetyltransferase
+cgMLST V2	STMMW_02121 (btuF)	vitamin B12 ABC transporter substrate-binding protein BtuF
+cgMLST V2	STMMW_07991 (ybgT)	cyd operon protein YbgT
+cgMLST V2	STMMW_23201 (ais)	heptose kinase
+cgMLST V2	STMMW_35491 (livF)	Branched-chain amino acid transport ATP-binding protein LivF
+cgMLST V2	STMMW_30991 (gsp)	bifunctional glutathionylspermidine amidase/glutathionylspermidine synthetase
+cgMLST V2	STMMW_34721 (gph)	phosphoglycolate phosphatase
+cgMLST V2	STMMW_05591 (hemH)	ferrochelatase
+cgMLST V2	STMMW_43811 (cybC)	soluble cytochrome b562
+cgMLST V2	STMMW_09871 (ycaP)	membrane protein
+cgMLST V2	STMMW_14901 (clcB)	voltage-gated ClC-type chloride channel ClcB
+cgMLST V2	STMMW_35231 (glgP)	glycogen phosphorylase
+cgMLST V2	STMMW_04751 (tgt)	tRNA-guanine(34) transglycosylase
+cgMLST V2	STMMW_09701 (trxB)	thioredoxin-disulfide reductase
+cgMLST V2	STMMW_25201	cyclic di-GMP phosphodiesterase
+cgMLST V2	STMMW_29551 (recB)	exodeoxyribonuclease V subunit beta
+cgMLST V2	STMMW_10771 (pqiB)	paraquat-inducible protein B
+cgMLST V2	STMMW_21561 (alkA)	3-methyladenine DNA glycosylase 2
+cgMLST V2	STMMW_41411	nucleoprotein/polynucleotide-associated enzyme
+cgMLST V2	STMMW_12731	histidine kinase
+cgMLST V2	STMMW_05501 (ybaM)	transposase
+cgMLST V2	STMMW_03301 (crl)	transcriptional regulator
+cgMLST V2	STMMW_39441 (tatA)	twin arginine translocase A
+cgMLST V2	STMMW_06472 (ybdJ)	Putative inner membrane protein
+cgMLST V2	STMMW_40891 (oxyR)	DNA-binding transcriptional regulator OxyR
+cgMLST V2	STMMW_37941 (yidF)	Transcriptional regulator
+cgMLST V2	STMMW_24911 (maeB)	bifunctional malic enzyme oxidoreductase/phosphotransacetylase
+cgMLST V2	STMMW_40091 (adh)	lactaldehyde reductase
+cgMLST V2	STMMW_06611 (entE)	enterobactin synthase subunit E
+cgMLST V2	STMMW_14291 (ribE)	riboflavin synthase subunit alpha
+cgMLST V2	STMMW_12191 (ycfP)	esterase
+cgMLST V2	STMMW_16031 (tehB)	tellurite resistance methyltransferase TehB
+cgMLST V2	STMMW_28831	transcriptional regulator hosA
+cgMLST V2	STMMW_33121 (yrbF)	ABC transporter
+cgMLST V2	STMMW_13021 (sppA)	signal peptide peptidase SppA
+cgMLST V2	STMMW_41211 (nfi)	endonuclease V
+cgMLST V2	STMMW_37151 (mutM)	formamidopyrimidine-DNA glycosylase
+cgMLST V2	STMMW_32651 (yraN)	hypothetical protein
+cgMLST V2	STMMW_12991 (yeaC)	general negative regulator of transcription subunit 1
+cgMLST V2	STMMW_17741 (ychH)	membrane protein
+cgMLST V2	STMMW_02571 (yafD)	conserved hypothetical protein
+cgMLST V2	STMMW_33381 (nanA)	N-acetylneuraminate lyase
+cgMLST V2	STMMW_44951	cys-tRNA(pro)/cys-tRNA(cys) deacylase
+cgMLST V2	STMMW_01901 (pcnB)	polynucleotide adenylyltransferase PcnB
+cgMLST V2	STMMW_18831 (ntpA)	Dihydroneopterin triphosphate pyrophosphohydrolase type 2 NudB
+cgMLST V2	STMMW_11561 (ymdC)	Cardiolipin synthetase Cardiolipin synthase%3B CL synthase
+cgMLST V2	STMMW_13411 (infC)	translation initiation factor IF-3
+cgMLST V2	STMMW_22521 (bcr)	Bcr/CflA family multidrug efflux MFS transporter
+cgMLST V2	STMMW_23921 (pdxB)	erythronate-4-phosphate dehyrogenase
+cgMLST V2	STMMW_17811 (hyaD)	hydrogenase 1 maturation protease
+cgMLST V2	STMMW_23691 (yfcE)	phosphodiesterase
+cgMLST V2	STMMW_35001 (comF)	DNA utilization protein GntX
+cgMLST V2	STMMW_03221 (yafJ)	class II glutamine amidotransferase
+cgMLST V2	STMMW_08281 (galE)	UDP-glucose 4-epimerase
+cgMLST V2	STMMW_11741 (yceL)	multidrug resistance protein MdtH
+cgMLST V2	STMMW_32381 (yhaN)	membrane protein
+cgMLST V2	STMMW_43311 (sgaU)	L-ribulose-5-phosphate 3-epimerase UlaE
+cgMLST V2	STMMW_23071 (glpT)	sn-glycerol-3-phosphate transporter
+cgMLST V2	STMMW_38511 (atpG)	ATP synthase subunit gamma
+cgMLST V2	STMMW_08861 (mntR)	transcriptional regulator MntR
+cgMLST V2	STMMW_18651 (eda)	ketohydroxyglutarate aldolase
+cgMLST V2	STMMW_14101 (sseG)	pathogenicity island 2 effector protein SseG
+cgMLST V2	STMMW_02371 (dnaE)	DNA polymerase III subunit alpha
+cgMLST V2	STMMW_40661 (metL)	bifunctional aspartokinase II/homoserine dehydrogenase II
+cgMLST V2	STMMW_34061 (yhdN)	molecular chaperone DnaJ
+cgMLST V2	STMMW_06861 (citF)	citrate lyase subunit alpha
+cgMLST V2	STMMW_42801 (yjeI)	membrane protein
+cgMLST V2	STMMW_14041 (sscA)	type III secretion low calcium response chaperone LcrH/SycD
+cgMLST V2	STMMW_05361 (ybaY)	glycoprotein-polysaccharide metabolism
+cgMLST V2	STMMW_31651 (cca)	multifunctional CCA tRNA nucleotidyl transferase/2'3'-cyclic phosphodiesterase/2'nucleotidase/phosphatase
+cgMLST V2	STMMW_31121 (mcpB)	methyl-accepting chemotaxis sensory transducer
+cgMLST V2	STMMW_30521 (galP)	galactose-proton symport (galactose transporter)
+cgMLST V2	STMMW_30291 (fba)	class II fructose-bisphosphate aldolase
+cgMLST V2	STMMW_10901 (yccT)	putative secreted protein
+cgMLST V2	STMMW_39381 (dlhH)	dienelactone hydrolase
+cgMLST V2	STMMW_21991 (dld)	D-lactate dehydrogenase
+cgMLST V2	STMMW_06281 (ykgD)	Putative HTH-type transcriptional regulator YkgD
+cgMLST V2	STMMW_38381 (phoU)	transcriptional regulator PhoU
+cgMLST V2	STMMW_25431 (ndk)	nucleoside-diphosphate kinase
+cgMLST V2	STMMW_29761 (lysR)	transcriptional activator protein LysR
+cgMLST V2	STMMW_17241 (yciF)	hypothetical protein
+cgMLST V2	STMMW_01481 (pilC)	type IV pilin biogenesis protein
+cgMLST V2	STMMW_06131 (fimC)	Fimbrial periplasmic chaperone SfmC
+cgMLST V2	STMMW_13901 (ttrB)	tetrathionate reductase subunit B
+cgMLST V2	STMMW_41201 (hemE)	uroporphyrinogen decarboxylase
+cgMLST V2	STMMW_41751 (yjbA)	phosphate-starvation-inducible protein PsiE
+cgMLST V2	STMMW_12051 (acpP)	acyl carrier protein
+cgMLST V2	STMMW_39651 (engB)	"YihA family ribosome biogenesis GTP-binding protein, partial"
+cgMLST V2	STMMW_33241 (yrbL)	hypothetical protein
+cgMLST V2	STMMW_37211 (slmA)	nucleoid occlusion factor SlmA
+cgMLST V2	STMMW_29371 (fucA)	fuculose phosphate aldolase
+cgMLST V2	STMMW_00991 (djlA)	molecular chaperone DjlA
+cgMLST V2	STMMW_19351 (fliA)	RNA polymerase sigma factor FliA
+cgMLST V2	STMMW_45121 (deoD)	purine-nucleoside phosphorylase
+cgMLST V2	STMMW_18331 (htpX)	protease HtpX
+cgMLST V2	STMMW_07421 (nagB)	glucosamine-6-phosphate deaminase
+cgMLST V2	STMMW_16371 (acpD)	FMN-dependent NADH-azoreductase
+cgMLST V2	STMMW_35921 (treF)	trehalase
+cgMLST V2	STMMW_19531 (fliJ)	flagellar biosynthesis chaperone FliJ
+cgMLST V2	STMMW_29991 (idi)	isopentenyl-diphosphate Delta-isomerase
+cgMLST V2	STMMW_34521	monooxygenase ydhR
+cgMLST V2	STMMW_36031 (dctA)	C4-dicarboxylate ABC transporter
+cgMLST V2	STMMW_36741 (mtlD)	mannitol-1-phosphate 5-dehydrogenase
+cgMLST V2	STMMW_23261 (arnE)	4-amino-4-deoxy-L-arabinose-phosphoundecaprenol flippase subunit ArnE
+cgMLST V2	STMMW_28221 (ygbA)	hypothetical protein
+cgMLST V2	STMMW_42471 (adi)	biodegradative arginine decarboxylase
+cgMLST V2	STMMW_00801 (fixX)	ferredoxin FixX
+cgMLST V2	STMMW_08671 (ybhR)	ABC transporter G family member 20
+cgMLST V2	STMMW_23481 (nuoC)	NADH-quinone oxidoreductase subunit C/D
+cgMLST V2	STMMW_17311 (yciA)	"Acyl-CoA thioesterase YciA, involved in membrane biogenesis"
+cgMLST V2	STMMW_01101 (araC)	arabinose operon regulatory protein
+cgMLST V2	STMMW_08491 (bioDa)	dithiobiotin synthetase
+cgMLST V2	STMMW_04771 (secD)	SecD
+cgMLST V2	STMMW_24061 (aroC)	chorismate synthase
+cgMLST V2	STMMW_21761 (yegW)	GntR family transcriptional regulator
+cgMLST V2	STMMW_25881 (yfhH)	transcriptional regulator
+cgMLST V2	STMMW_29571 (recC)	exonuclease V subunit gamma
+cgMLST V2	STMMW_41921	conjugal transfer protein
+cgMLST V2	STMMW_25081 (gcvR)	Glycine cleavage system transcriptional antiactivator GcvR
+cgMLST V2	STMMW_21501 (wza)	Amylovoran export outer membrane protein AmsH
+cgMLST V2	STMMW_41431 (yjbD)	YjbD family (DUF3811)
+cgMLST V2	STMMW_29681 (ygdR)	lipoprotein
+cgMLST V2	STMMW_30191 (ygfB)	hypothetical protein
+cgMLST V2	STMMW_02291 (yaeL)	regulator of sigma E protease
+cgMLST V2	STMMW_39461 (tatC)	twin-arginine protein translocation system subunit TatC
+cgMLST V2	STMMW_06451 (ramR)	TetR family transcriptional regulator
+cgMLST V2	STMMW_06631 (entA)	"2,3-dihydro-2,3-dihydroxybenzoate dehydrogenase"
+cgMLST V2	STMMW_13221 (celD)	DNA-binding transcriptional regulator ChbR
+cgMLST V2	STMMW_26571 (rseC)	Sigma factor RpoE regulatory protein RseC
+cgMLST V2	STMMW_38731 (yifA)	HTH-type transcriptional regulator HdfR
+cgMLST V2	STMMW_13041 (selD)	"selenide,water dikinase SelD"
+cgMLST V2	STMMW_37171 (rpmB)	50S ribosomal protein L28
+cgMLST V2	STMMW_41691 (lysC)	lysine-sensitive aspartokinase 3
+cgMLST V2	STMMW_27481 (virK)	virulence factor VirK
+cgMLST V2	STMMW_27621 (ygaU)	Peptidoglycan-binding LysM
+cgMLST V2	STMMW_18811 (ruvC)	crossover junction endodeoxyribonuclease RuvC
+cgMLST V2	STMMW_22501 (yejF)	microcin C ABC transporter ATP-binding protein YejF
+cgMLST V2	STMMW_17761 (ychF)	GTP-binding and nucleic acid-binding protein YchF
+cgMLST V2	STMMW_12311 (potD)	spermidine/putrescine ABC transporter substrate-binding protein
+cgMLST V2	STMMW_32671 (yraP)	osmotically-inducible protein OsmY
+cgMLST V2	STMMW_23671	LacI family transcriptional regulator
+cgMLST V2	STMMW_23901 (truA)	"tRNA pseudouridine(38,39,40) synthase TruA"
+cgMLST V2	STMMW_16411 (ydbH)	putative exported protein
+cgMLST V2	STMMW_35021 (gntT)	high-affinity gluconate transporter
+cgMLST V2	STMMW_15691 (smvA)	methyl viologen resistance protein SmvA
+cgMLST V2	STMMW_03241 (dbh)	DNA polymerase IV
+cgMLST V2	STMMW_42311 (nrfD)	cytochrome c nitrite reductase subunit NrfD
+cgMLST V2	STMMW_32451 (tdcA)	DNA-binding transcriptional activator TdcA
+cgMLST V2	STMMW_01711 (speD)	S-adenosylmethionine decarboxylase proenzyme
+cgMLST V2	STMMW_30501 (yqgD)	inner membrane protein
+cgMLST V2	STMMW_06151 (fimH)	Fimbriae-like adhesin SfmH
+cgMLST V2	STMMW_29351 (exo)	"exonuclease IX, 5'-3' exonuclease"
+cgMLST V2	STMMW_23241 (arnD)	4-deoxy-4-formamido-L-arabinose-phosphoundecaprenol deformylase ArnD
+cgMLST V2	STMMW_08651 (ybhP)	endonuclease/exonuclease/phosphatase
+cgMLST V2	STMMW_43501 (ytfK)	putative cytoplasmic protein
+cgMLST V2	STMMW_21741 (yegU)	ADP-ribosylglycohydrolase
+cgMLST V2	STMMW_13061 (gdhA)	glutamate dehydrogenase (EC 1.4.1.4)
+cgMLST V2	STMMW_19471	"putative 50S ribosomal protein, partial"
+cgMLST V2	STMMW_15321 (hyaF2)	hydrogenase maturation factor HoxQ
+cgMLST V2	STMMW_08351 (modC)	molybdenum import ATP-binding protein ModC
+cgMLST V2	STMMW_05631 (fsr)	fosmidomycin resistance protein
+cgMLST V2	STMMW_06171 (fimZ)	two-component system response regulator
+cgMLST V2	STMMW_16331	methyltransferase type 12
+cgMLST V2	STMMW_44871 (mdoB)	phosphoglycerol transferase I
+cgMLST V2	STMMW_30981 (mcpA)	methyl-accepting chemotaxis protein
+cgMLST V2	STMMW_04411 (prpE)	propionate--CoA ligase
+cgMLST V2	STMMW_00101 (yaaI)	UPF0412 protein yaaI Flags: Precursor
+cgMLST V2	STMMW_20411 (amn)	AMP nucleosidase
+cgMLST V2	STMMW_16451	reverse transcriptase
+cgMLST V2	STMMW_09971 (ycaQ)	hypothetical protein
+cgMLST V2	STMMW_01751 (gcd)	glucose dehydrogenase
+cgMLST V2	STMMW_25101 (perM)	AI-2E family transporter
+cgMLST V2	STMMW_14871 (ynfL)	LysR family transcriptional regulator
+cgMLST V2	STMMW_16131	transcriptional regulator DeoR
+cgMLST V2	STMMW_13741	L-cystine transporter tcyP
+cgMLST V2	STMMW_37901	periplasmic protein
+cgMLST V2	STMMW_19431 (amyA)	alpha-amylase
+cgMLST V2	STMMW_15361 (hyaC2)	"Ni/Fe-hydrogenase, b-type cytochrome subunit"
+cgMLST V2	STMMW_44661 (gabD)	succinate-semialdehyde dehydrogenase
+cgMLST V2	STMMW_44481	hypothetical protein
+cgMLST V2	STMMW_42081 (siiA)	"inner membrane or exported protein, partial"
+cgMLST V2	STMMW_40951 (murI)	glutamate racemase
+cgMLST V2	STMMW_06201 (fimW)	helix-turn-helix transcriptional regulator
+cgMLST V2	STMMW_13981 (ssaB)	pathogenicity island chaperone protein SpiC
+cgMLST V2	STMMW_36211 (dppA)	"Dipeptide-binding ABC transporter, periplasmic substrate-binding component"
+cgMLST V2	STMMW_35741 (yhhJ)	ABC transporter
+cgMLST V2	STMMW_05791	"outer membrane protein, partial"
+cgMLST V2	STMMW_01091 (araB)	ribulokinase
+cgMLST V2	STMMW_13511 (ydiV)	cyclic di-GMP regulator CdgR
+cgMLST V2	STMMW_21581 (mdtA)	multidrug transporter subunit MdtA
+cgMLST V2	STMMW_15341 (hypC)	hydrogenase isoenzymes formation protein
+cgMLST V2	STMMW_42201 (yjcE)	Na+/H+ antiporter
+cgMLST V2	STMMW_04651 (sbcC)	exonuclease subunit SbcC
+cgMLST V2	STMMW_11441 (ycdX)	phosphatase
+cgMLST V2	STMMW_35761 (yhiI)	auxiliary transporter membrane fusion protein
+cgMLST V2	STMMW_25861 (scrA)	PTS N-acetylmuramic acid IIB component / PTS N-acetylmuramic acid IIC component
+cgMLST V2	STMMW_40051	branched-chain amino acid transport
+cgMLST V2	STMMW_14351 (ydhO)	putative cell wall-associated hydrolase
+cgMLST V2	STMMW_12621	ABC-type transporter%2C periplasmic subunit
+cgMLST V2	STMMW_37551	hypothetical protein
+cgMLST V2	STMMW_44111 (arcC)	carbamate kinase
+cgMLST V2	STMMW_44191 (yjgM)	putative acetyltransferase
+cgMLST V2	STMMW_34821 (comA)	Type IV pilus biogenesis protein PilM
+cgMLST V2	STMMW_09661	"inner membrane protein, partial"
+cgMLST V2	STMMW_38071 (torC)	trimethylamine N-oxide reductase cytochrome c-type subunit
+cgMLST V2	STMMW_27741 (nrdE)	ribonucleoside-diphosphate reductase subunit alpha
+cgMLST V2	STMMW_25841 (yfhC)	tRNA adenosine(34) deaminase TadA
+cgMLST V2	STM4351 (artJ)	arginine ABC transporter substrate-binding protein
+cgMLST V2	STMMW_41301 (yjaB)	"acetyltransferase, GNAT family"
+cgMLST V2	STMMW_21361 (cpsB)	Mannose-1-phosphate guanylyltransferase ManC
+cgMLST V2	STMMW_22181 (preT)	NAD-dependent dihydropyrimidine dehydrogenase subunit PreT homolog
+cgMLST V2	STMMW_11981 (maf-a)	septum formation inhibitor Maf
+cgMLST V2	STMMW_43041 (mutL)	DNA mismatch repair protein MutL
+cgMLST V2	STMMW_44541 (trpS2)	tryptophan--tRNA ligase
+cgMLST V2	STMMW_04281 (res)	Type III restriction-modification system StyLTI enzyme res
+cgMLST V2	STMMW_16991 (yciR)	RNase II stability modulator
+cgMLST V2	STMMW_21691 (srcA)	tir chaperone
+cgMLST V2	STMMW_37371 (yicH)	Putative exported protein
+cgMLST V2	STMMW_15531 (treX)	glycogen debranching enzyme GlgX
+cgMLST V2	STMMW_42261 (acs)	acetyl-coenzyme A synthetase
+cgMLST V2	STMMW_15191 (marA)	DNA-binding transcriptional activator MarA
+cgMLST V2	STMMW_11021 (pipC)	type III secretion chaperone protein SigE
+cgMLST V2	STMMW_32331 (yqjG)	glutathione-dependent reductase
+cgMLST V2	STMMW_31021	ABC transporter
+cgMLST V2	STMMW_35301 (gntU)	low affinity gluconate transporter
+cgMLST V2	STMMW_29421 (fucR)	DNA-binding transcriptional activator FucR
+cgMLST V2	STMMW_28751	LysR family transcriptional regulator
+cgMLST V2	STMMW_14811 (tqsA)	pheromone autoinducer 2 transporter
+cgMLST V2	STMMW_33671 (yhdP)	possible exported protein
+cgMLST V2	STMMW_43881 (pyrC)	dihydroorotase
+cgMLST V2	STMMW_09351 (ulaB)	"phosphotransferase enzyme II, B component"
+cgMLST V2	STMMW_15201 (marR)	MarR family transcriptional regulator
+cgMLST V2	STMMW_14551 (tppB)	dipeptide and tripeptide permease A
+cgMLST V2	STMMW_19262	hypothetical protein
+cgMLST V2	STMMW_00741 (caiB)	L-carnitine CoA-transferase
+cgMLST V2	STMMW_44261 (yjgQ)	LPS export ABC transporter permease LptG
+cgMLST V2	STMMW_23831 (rocR)	sigma-54-dependent Fis family transcriptional regulator
+cgMLST V2	STMMW_14991 (dmsA1)	"putative dimethyl sulfoxide reductase, chain A1"
+cgMLST V2	STMMW_25031 (ypfI)	tRNA cytosine(34) acetyltransferase TmcA
+cgMLST V2	STMMW_11061 (copR)	Putative two-component system response regulator YedW
+cgMLST V2	STMMW_01971 (fhuA)	ferrichrome outer membrane transporter
+cgMLST V2	STMMW_15541 (treY)	malto-oligosyltrehalose synthase
+cgMLST V2	STMMW_06501 (fepA)	outer membrane receptor FepA
+cgMLST V2	STMMW_20501 (cbiP)	cobyric acid synthase CobQ
+cgMLST V2	STMMW_37641 (bglA)	glycosyl hydrolase
+cgMLST V2	STMMW_28411 (sicP)	"chaperone protein SicP, partial"
+cgMLST V2	STMMW_34591 (argDb)	acetylornithine aminotransferase
+cgMLST V2	STMMW_09761 (dmsA)	dimethyl sulfoxide reductase subunit A
+cgMLST V2	STMMW_42501 (melB)	melibiose/sodium symporter
+cgMLST V2	STMMW_09431	hypothetical protein
+cgMLST V2	STMMW_16801 (ycjX)	"YcjX-like family, DUF463"
+cgMLST V2	STMMW_01891 (folK)	2-amino-4-hydroxy-6-hydroxymethyldihydropteridine pyrophosphokinase
+cgMLST V2	STMMW_07491 (cobZ)	precorrin 3B synthase CobZ
+cgMLST V2	STMMW_08421 (hutU)	urocanate hydratase
+cgMLST V2	STMMW_36521 (malS)	Periplasmic alpha-amylase
+cgMLST V2	STMMW_22311 (cirA)	catecholate siderophore receptor CirA
+cgMLST V2	STMMW_15621 (adhP)	zinc-dependent alcohol dehydrogenase
+cgMLST V2	STMMW_14091 (sseF)	SseF
+cgMLST V2	STMMW_12531 (cspH)	cold-shock protein CspH
+cgMLST V2	STMMW_35601 (ftsY)	signal recognition particle-docking protein FtsY
+cgMLST V2	STMMW_23231 (yfbG)	bifunctional UDP-glucuronic acid oxidase/UDP-4-amino-4-deoxy-L-arabinose formyltransferase
+cgMLST V2	STMMW_12701 (aadA)	streptomycin 3''-adenylyltransferase
+cgMLST V2	STMMW_22081 (nagL)	glutathione S-transferase
+cgMLST V2	STMMW_36541 (ysaA)	electron transporter
+cgMLST V2	STMMW_14071 (sseE)	"pathogenicity island 2 effector protein SseE, partial"
+cgMLST V2	STMMW_06121 (fimI)	fimbrin-like protein FimI
+cgMLST V2	STMMW_37081 (rfaB)	glycosyl transferase
+cgMLST V2	STMMW_16341 (cybB)	cytochrome b561
+cgMLST V2	STMMW_16611	B3/4 domain-containing protein
+cgMLST V2	STMMW_23211 (yfbE)	putative DegT/DnrJ/EryC1/StrS family
+cgMLST V2	STMMW_43861	membrane protein
+cgMLST V2	STMMW_01111 (yabI)	DedA family inner membrane protein YabI
+cgMLST V2	STMMW_00011 (thrA)	bifunctional aspartate kinase/homoserine dehydrogenase I
+cgMLST V2	STMMW_06601 (entC)	isochorismate synthase EntC
+cgMLST V2	STMMW_38351 (yieF)	putative oxidoreductase
+cgMLST V2	STMMW_28821 (ygbI)	DeoR family transcriptional regulator
+cgMLST V2	STMMW_28791 (ygbL)	class II aldolase
+cgMLST V2	STMMW_42301 (nrfC)	cytochrome c nitrite reductase Fe-S protein
+cgMLST V2	T_RS21320 (fdoG)	"formate dehydrogenase H, possible pseudogene"
+cgMLST V2	T_RS21325 (fdoG)	spermidine/putrescine ABC transporter substrate-binding protein
+cgMLST V2	STMMW_14131 (ssaI)	EscI/YscI/HrpB family type III secretion system inner rod protein
+cgMLST V2	STMMW_00451 (yaaY)	hypothetical protein
+cgMLST V2	STMMW_17581 (narX)	nitrate/nitrite two-component system sensor histidine kinase
+cgMLST V2	STMMW_16181 (pnbA)	carboxylesterase
+cgMLST V2	STMMW_16361 (hrpA)	ATP-dependent RNA helicase HrpA
+cgMLST V2	STMMW_23271 (arnF)	4-amino-4-deoxy-L-arabinose-phospho-UDP flippase
+cgMLST V2	STMMW_42461 (adiY)	Regulator of catabolic arginine decarboxylase (adiA)
+cgMLST V2	STMMW_04701 (proY)	proline-specific permease ProY
+cgMLST V2	STMMW_21751 (yegV)	putative sugar kinase
+cgMLST V2	STMMW_28771	NAD dependent epimerase/dehydratase
+cgMLST V2	STMMW_13371	putative DNA/RNA non-specific endonuclease
+cgMLST V2	STMMW_15681	"glutathione-dependent formaldehyde-activating, GFA"
+cgMLST V2	STMMW_14151	Type III secretion bridge between inner and outermembrane lipoprotein (YscJ%2CHrcJ%2CEscJ%2C PscJ)
+cgMLST V2	STMMW_16161	putative exported protein
+cgMLST V2	STMMW_06161 (fimF)	adhesin
+cgMLST V2	STMMW_21731 (yegT)	nucleoside transporter yegT
+cgMLST V2	STMMW_15331 (hyaE2)	hydrogenase maturation factor hoxO
+cgMLST V2	STMMW_29081 (sopD)	possible secreted protein
+cgMLST V2	STMMW_14171 (ssaL)	"type III secretion effector delivery regulator, TyeA family"
+cgMLST V2	STMMW_29711 (aas)	bifunctional 2-acylglycerophosphoethanolamine acyltransferase/acyl-ACP synthetase
+cgMLST V2	STMMW_38081 (torR)	"response regulator in multi-component regualtory system wtih TorS (sensory kinase) and TorT (periplasmic sensor), regulates tor operon (TorR family)"
+cgMLST V2	STMMW_06181 (fimY)	regulator of fimbriae expression FimY
+cgMLST V2	STMMW_11491 (csgE)	curli production assembly/transport component CsgE
+cgMLST V2	STMMW_42421 (basS)	two-component system sensor histidine kinase BasS
+cgMLST V2	STMMW_13251 (katE)	catalase HPII
+cgMLST V2	STMMW_44672 (yjiS)	putative cytoplasmic protein
+cgMLST V2	STMMW_42091 (siiB)	methyl-accepting chemotaxis protein
+cgMLST V2	STMMW_28291 (hilC)	transcriptional regulator SirC
+cgMLST V2	STMMW_12591	BNR/Asp-box repeat domain protein
+cgMLST V2	STM0942 (macB)	MacB family efflux pump subunit
+cgMLST V2	STMMW_42151 (yjcC)	putative diguanylate cyclase/phosphodiesterase
+cgMLST V2	STMMW_25831 (yfhD)	lytic transglycosylase F
+cgMLST V2	STMMW_21591 (yegN)	multidrug transporter subunit MdtB
+cgMLST V2	STMMW_15371 (hyaB2)	hydrogenase large subunit
+cgMLST V2	STMMW_19631 (dsrB)	dextransucrase DSRB
+cgMLST V2	STMMW_35751 (yhiH)	mtultidrug ABC transporter permease/ATPase
+cgMLST V2	STMMW_15121 (dcp)	dipeptidyl carboxypeptidase II
+cgMLST V2	STMMW_27411 (iroC)	multidrug ABC transporter ATPase
+cgMLST V2	STMMW_15351 (hyaD2)	hydrogenase 2 maturation protease
+cgMLST V2	STMMW_37541 (yicL)	drug/metabolite DMT transporter permease
+cgMLST V2	STMMW_43901	2-dehydro-3-deoxyphosphooctonate aldolase
+cgMLST V2	STMMW_31261	sodium:sulfate symporter
+cgMLST V2	STMMW_24801 (eutG)	ethanol dehydrogenase EutG
+cgMLST V2	STMMW_13711 (ydiJ)	oxidase
+cgMLST V2	STMMW_16521 (zntB)	zinc transporter ZntB
+cgMLST V2	STMMW_07501 (tcuR)	LysR family transcriptional regulator
+cgMLST V2	STMMW_01591 (aceF)	pyruvate dehydrogenase complex dihydrolipoyllysine-residue acetyltransferase
+cgMLST V2	STMMW_37561 (dgaF)	2-dehydro-3-deoxy-phosphogluconate aldolase
+cgMLST V2	STMMW_23331 (menD)	2-succinyl-5-enolpyruvyl-6-hydroxy-3- cyclohexene-1-carboxylic-acid synthase
+cgMLST V2	STMMW_43921	probable licABCH operon regulator Includes: putative phosphotransferase enzyme IIB component; Putative PTS system EIIB component; Includes: RecName: Full=Putative phosphotransferase enzyme IIA component; Putative PTS system EIIA component
+cgMLST V2	STMMW_09671 (aat)	leucyl/phenylalanyl-tRNA--protein transferase
+cgMLST V2	STMMW_06901 (citA)	sensor histidine kinase
+cgMLST V2	STMMW_12281 (ycfW)	lipoprotein transporter subunit LolE
+cgMLST V2	STMMW_41121 (thiH)	2-iminoacetate synthase
+cgMLST V2	STMMW_00191	cytoplasmic protein
+cgMLST V2	STMMW_25851 (yfhB)	HAD family hydrolase
+cgMLST V2	STMMW_39011 (wzxE)	O-antigen translocase
+cgMLST V2	STMMW_44141 (yjgK)	toxin-antitoxin biofilm protein TabA
+cgMLST V2	STMMW_22191 (yeiA)	dihydropyrimidine dehydrogenase subunit B
+cgMLST V2	STMMW_17931 (cvrA)	K+/H+ antiporter NhaP2
+cgMLST V2	STM1092	"putative cytoplasmic protein, partial"
+cgMLST V2	STMMW_31731 (mug)	mismatch-specific DNA-glycosylase
+cgMLST V2	STMMW_04441 (yaiV)	transcriptional regulator
+cgMLST V2	STMMW_39861 (yihT)	sulfofructosephosphate aldolase
+cgMLST V2	STMMW_29211 (barA)	two-component sensor histidine kinase BarA
+cgMLST V2	STMMW_44881 (yjjA)	putative secreted protein
+cgMLST V2	STMMW_11031 (sopB)	inositol phosphate phosphatase SopB
+cgMLST V2	STMMW_24431 (yfeR)	LysR family transcriptional regulator YfeR
+cgMLST V2	STMMW_15861 (ydcZ)	inner membrane protein YdcZ
+cgMLST V2	STMMW_36341 (bisC)	trimethylamine N-oxide reductase I catalytic subunit
+cgMLST V2	STMMW_13111 (astA)	arginine N-succinyltransferase
+cgMLST V2	STMMW_15901 (srfC)	virulence effector SrfC
+cgMLST V2	STMMW_12931	anaerobic sulfatase maturase
+cgMLST V2	STMMW_18051 (ycgL)	Protein YcgL
+cgMLST V2	STMMW_15841 (yncB)	putative NADP-dependent oxidoreductase
+cgMLST V2	STMMW_23821 (lysA)	diaminopimelate decarboxylase
+cgMLST V2	STMMW_22481 (yejB)	microcin C ABC transporter permease YejB
+cgMLST V2	STMMW_43891 (selA)	L-seryl-tRNA selenium transferase
+cgMLST V2	STMMW_09341 (ulaA)	PTS ascorbate transporter subunit IIC
+cgMLST V2	STMMW_01611	outer membrane protein
+cgMLST V2	STMMW_39821 (yihP)	membrane permease
+cgMLST V2	STMMW_43391 (yifZ)	Permease of the drug/metabolite transporter
+cgMLST V2	STMMW_15821 (yncD)	putative outer membrane receptor
+cgMLST V2	STMMW_15791 (ansP)	amino acid permease
+cgMLST V2	STMMW_24161 (pgtE)	outer membrane protease E
+cgMLST V2	STMMW_37651 (nepI)	purine ribonucleoside efflux pump NepI
+cgMLST V2	STMMW_09361	sulfatase
+cgMLST V2	STMMW_14751 (rstA)	two-component system response regulator RstA
+cgMLST V2	STMMW_04911 (yajO)	aryl-alcohol dehydrogenase W
+cgMLST V2	STMMW_26931 (corB)	corB transporter
+cgMLST V2	STMMW_22361 (fruA)	PTS fructose transporter subunit EIIBC
+cgMLST V2	STMMW_15771 (nhoA)	N-hydroxyarylamine O-acetyltransferase
+cgMLST V2	STMMW_21601 (yegO)	multidrug transporter subunit MdtC
+cgMLST V2	STMMW_01881 (panB)	3-methyl-2-oxobutanoate hydroxymethyltransferase
+cgMLST V2	STMMW_07481 (citB)	citrate utilization protein B
+cgMLST V2	STMMW_23791	putative amino acid transporter
+cgMLST V2	STMMW_10881 (helD)	DNA helicase IV
+cgMLST V2	STM3624A	methionine gamma-lyase
+cgMLST V2	STMMW_09441 (ybjR)	N-acetylmuramoyl-L-alanine amidase amid
+cgMLST V2	STMMW_06531 (entF)	enterobactin synthase subunit F
+cgMLST V2	STMMW_23221 (pmrF)	undecaprenyl-phosphate 4-deoxy-4-formamido-L-arabinose transferase
+cgMLST V2	STMMW_08451 (bioA)	adenosylmethionine--8-amino-7-oxononanoate aminotransferase BioA
+cgMLST V2	STMMW_34703 (yhfL)	putative outer membrane lipoprotein
+cgMLST V2	STMMW_00091 (htgA)	hypothetical protein
+cgMLST V2	STMMW_14861 (ynfM)	MFS transporter
+cgMLST V2	STMMW_22091 (nagK)	5-carboxymethyl-2-hydroxymuconate isomerase
+cgMLST V2	STMMW_07071 (ybeB)	ribosome silencing factor RsfS
+cgMLST V2	STMMW_11091 (hpaB)	"4-hydroxyphenylacetate 3-monooxygenase, oxygenase component"
+cgMLST V2	STMMW_42351 (yjcO)	tetratricopeptide repeat protein
+cgMLST V2	STMMW_43331 (yjfY)	outer membrane protein
+cgMLST V2	STMMW_37631	secreted protein
+cgMLST V2	STMMW_06111 (fimA)	Fimbriae-like adhesin SfmA
+cgMLST V2	STMMW_16601	XRE family transcriptional regulator
+cgMLST V2	STMMW_28201 (hypE)	putative hydrogenase expression/formation protein
+cgMLST V2	STMMW_08471 (bioF)	8-amino-7-oxononanoate synthase
+cgMLST V2	STMMW_24261	hypothetical protein
+cgMLST V2	STMMW_02101 (yadR)	iron-sulfur cluster insertion protein ErpA
+cgMLST V2	STM3012	LacI family transcriptional regulator
+cgMLST V2	STMMW_42331 (nrfG)	formate-dependent nitrite reductase complex subunit NrfG
+cgMLST V2	STMMW_19681 (yedI)	membrane protein
+cgMLST V2	STMMW_09811 (pflA)	pyruvate formate lyase activating enzyme 1
+cgMLST V2	STMMW_07431 (nagE)	PTS N-acetyl glucosamine specific transporter subunits IIABC
+cgMLST V2	STMMW_24281	voltage-gated family Cl-channel protein
+cgMLST V2	STMMW_20901 (yeeA)	"inner membrane protein YeeA, partial"
+cgMLST V2	STMMW_15921 (ydcW)	putative aldehyde dehydrogenase
+cgMLST V2	STMMW_26751	cytoplasmic protein
+cgMLST V2	STMMW_28761	gluconate permease
+cgMLST V2	STMMW_11501 (csgD)	helix-turn-helix transcriptional regulator
+cgMLST V2	STMMW_17831 (hyaF)	hydrogenase maturation factor HoxQ
+cgMLST V2	STMMW_42641 (rtsB)	LuxR family transcriptional regulator
