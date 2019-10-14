@@ -1,4 +1,6 @@
 rule search_resistance_paired_reads_with_mykrobe:
+    conda:
+        pipeline_path + "envs/mykrobe.yml"
     singularity:
         "docker://quay.io/biocontainers/mykrobe:0.7.0--py37h2666aa9_0"
     params:
@@ -28,6 +30,8 @@ rule search_resistance_paired_reads_with_mykrobe:
         """
 
 rule search_resistance_single_reads_with_mykrobe:
+    conda:
+        pipeline_path + "envs/mykrobe.yml"
     singularity:
         "docker:quay.io/biocontainers/mykrobe:0.7.0--py37h2666aa9_0"
     params:

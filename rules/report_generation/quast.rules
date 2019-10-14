@@ -11,5 +11,9 @@ rule calculate_assembly_statistics_with_quast:
     log:
         logging_folder+"samples/{sample}/logs/assembly/quast.txt",
     shell:
-        "quast.py {input[0]} -o $( dirname {output[0]}) &> {log}"
-
+        """
+        export LANG=en_US.UTF-8  
+        export LANGUAGE=en_US:en  
+        export LC_ALL=en_US.UTF-8   
+        quast.py {input[0]} -o $( dirname {output[0]}) &> {log}
+        """

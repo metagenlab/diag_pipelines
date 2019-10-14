@@ -1,4 +1,6 @@
 
+#!/usr/bin/env python
+
 import pandas
 import re
 import vcf
@@ -59,25 +61,27 @@ def get_neiboring_orf(position, feature_list):
     If no feature found (eg. in the case where the locate in close to the begining/end of the record), return "no CDS".
     '''
     if int(position) > int(feature_list[-1].location.end):
-        try:
+        if 'gene' in feature_list[-1].qualifiers:
             gene = feature_list[-1].qualifiers["gene"][0]
             locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
-        except KeyError:
+        else:
             gene = '-'
-            print(feature_list[-1])
-            locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
+            locus_tag = feature_list[-1].type
+            if 'mobile_element_type' in feature_list[-1].qualifiers:
+                gene = feature_list[-1].qualifiers["mobile_element_type"]
+            else:
+                gene = '-'
         return ['%s (%s)' % (locus_tag, gene), '-']
-    first_feature = False
+
     for n, feature in enumerate(feature_list):
         if feature.type in ['source', 'regulatory']:
             continue
         if int(position) < int(feature.location.start):
-            try:
+            if 'gene' in feature.qualifiers:
                 gene = feature.qualifiers["gene"][0]
                 locus_tag = feature.qualifiers["locus_tag"][0]
-            except KeyError:
+            else:
                 gene = '-'
-                print(feature)
                 locus_tag = feature.type
                 if 'mobile_element_type' in feature.qualifiers:
                     gene = feature.qualifiers["mobile_element_type"]
@@ -181,20 +185,25 @@ def search_mutated_feature(vcf_record, gbk_dico):
                 else:
                     aa_seq_ref = str(feature.extract(record_alt.seq).translate())
                     # mutate reference sequence
-                    record_alt.seq[int(vcf_record.POS) - 1] = str(vcf_record.ALT[0])
-
-                    # check if synonymous or not
-                    aa_seq_alt = str(feature.extract(record_alt.seq).translate())
-                    if str(aa_seq_ref) == str(aa_seq_alt):
-                        results["mut_type"] = 'S'
+                    if vcf_record.ALT[0] == '*':
+                    # frameshift
+                        results["mut_type"] = 'F'
                     else:
-                        results["mut_type"] = 'NS'
+                        record_alt.seq[int(vcf_record.POS) - 1] = str(vcf_record.ALT[0])
+
+                        # check if synonymous or not
+                        aa_seq_alt = str(feature.extract(record_alt.seq).translate())
+                        if str(aa_seq_ref) == str(aa_seq_alt):
+                            results["mut_type"] = 'S'
+                        else:
+                            results["mut_type"] = 'NS'
             return results
     # if no match, return empty results
     return results
 
 
 def parse_vcf(vcf_file, gbk_file):
+    print(gbk_file)
     '''
     Given a vcf input file and the gbk of the reference genome, return an html table of identified variants.
     '''

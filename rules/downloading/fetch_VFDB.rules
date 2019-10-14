@@ -26,7 +26,7 @@ rule extract_VFDB_fasta:
 
 rule filter_VFDB_fasta_by_size:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:
@@ -41,7 +41,7 @@ rule filter_VFDB_fasta_by_size:
 
 rule format_VFDB_fasta:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.0"
     input:

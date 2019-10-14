@@ -44,6 +44,9 @@ RUN mkdir -p data/references/centrifuge_db/
 RUN wget -qO- ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/data/p_compressed+h+v.tar.gz | tar xvz -C /data/references/centrifuge_db/
 RUN conda config --add channels defaults && conda config --add channels conda-forge && conda config --add channels bioconda
 
+# update conda
+RUN conda update conda 
+
 # install snakemake
 RUN conda install snakemake=5.7.0 unzip sra-tools=2.9.1 biopython=1.72
 
