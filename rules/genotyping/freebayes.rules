@@ -1,6 +1,6 @@
 rule genotype_with_freebayes_on_all_samples:
     conda:
-        pipeline_path + "envs/freebayes.yml"
+        "../../envs/freebayes.yml"
     singularity:
         "docker://quay.io/biocontainers/freebayes:1.3.1--py37h56106d0_0"
     threads:
@@ -23,7 +23,7 @@ rule genotype_with_freebayes_on_all_samples:
 
 rule genotype_with_freebayes_one_sample_second_pass:
     conda:
-        pipeline_path + "envs/freebayes.yml"
+        "../../envs/freebayes.yml"
     singularity:
         "docker://quay.io/biocontainers/freebayes:1.3.1--py37h56106d0_0"
     input:

@@ -1,8 +1,8 @@
 rule determine_spa:
     input:
         fasta = "samples/{sample}/annotation/{sample}.fsa",
-        spa_repeats = pipeline_path + "data/spa/sparepeats.fasta",
-        spa_types = pipeline_path + "data/spa/spatypes.txt",
+        spa_repeats = "../../data/spa/sparepeats.fasta",
+        spa_types = "../../data/spa/spatypes.txt",
     output:
         spa = "samples/{sample}/typing/spa.txt",
     script:

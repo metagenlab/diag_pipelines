@@ -1,6 +1,6 @@
 rule assess_mapping_with_qualimap:
     conda:
-        pipeline_path + "envs/qualimap.yml"
+        "../../envs/qualimap.yml"
     singularity:
         "docker://metagenlab/qualimap:1.2"     
     input:

@@ -1,6 +1,6 @@
 rule extract_core_genome_parsnp_from_ref:
     conda:
-        pipeline_path + "envs/bedtools.yml"
+        "../../envs/bedtools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:

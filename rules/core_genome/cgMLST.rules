@@ -1,6 +1,6 @@
 rule extract_cgMLST_regions_from_vcf:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -17,7 +17,7 @@ rule extract_cgMLST_regions_from_vcf:
 
 rule extract_individual_cgMLST_regions_from_vcf:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:

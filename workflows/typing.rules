@@ -17,8 +17,8 @@ species = config["species"].replace(" ", "_")
 minimum_coverage = config["minimum_coverage_for_calling"]
 minimum_alternate_frac = config["minimum_alternate_fraction_for_calling"]
 
-ridom = pandas.read_csv(pipeline_path + "data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
-enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
+ridom = pandas.read_csv("../../data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
+enterobase = pandas.read_csv("../../data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 all_core_genome_dbs = pandas.concat([ridom, enterobase])
 
@@ -29,63 +29,63 @@ for i, j in (itertools.combinations(sorted(read_naming.keys()),2)):
     all_combined_2.append(j)
 
 include:
-    pipeline_path + "rules/core_genome/bed_creation_parsnp.rules"
+    "../../rules/core_genome/bed_creation_parsnp.rules"
 
 if species in all_core_genome_dbs.index:
     include:
-        pipeline_path + "rules/core_genome/cgMLST.rules"
+        "../../rules/core_genome/cgMLST.rules"
     ruleorder: extract_individual_cgMLST_regions_from_vcf > filter_on_frequency_per_sample
     
 include:
-    pipeline_path + "rules/downloading/fetch_single_reference.rules"
+    "../../rules/downloading/fetch_single_reference.rules"
 
 include:
-    pipeline_path + "rules/downloading/adapting_genome_files.rules"
+    "../../rules/downloading/adapting_genome_files.rules"
 
 include:
-    pipeline_path + "rules/mapping/find_closest_genomes.rules"
+    "../../rules/mapping/find_closest_genomes.rules"
 
 include:
-    pipeline_path + "rules/genotyping/freebayes.rules"
+    "../../rules/genotyping/freebayes.rules"
 
 include:
-    pipeline_path + "rules/genotyping/gatk.rules"
+    "../../rules/genotyping/gatk.rules"
 
 include:
-    pipeline_path + "rules/vcf_manipulation/filtering.rules"
+    "../../rules/vcf_manipulation/filtering.rules"
 
 include:
-    pipeline_path + "rules/vcf_manipulation/splitting_merging.rules"
+    "../../rules/vcf_manipulation/splitting_merging.rules"
 
 include:
-    pipeline_path + "rules/vcf_manipulation/indexing.rules"
+    "../../rules/vcf_manipulation/indexing.rules"
 
 include:
-    pipeline_path + "rules/vcf_manipulation/calculate_differences.rules"
+    "../../rules/vcf_manipulation/calculate_differences.rules"
 
 include:
-    pipeline_path + "rules/vcf_manipulation/create_alignment_for_phylogeny.rules"
+    "../../rules/vcf_manipulation/create_alignment_for_phylogeny.rules"
 
 include:
-    pipeline_path + "rules/typing/snp_distance.rules"
+    "../../rules/typing/snp_distance.rules"
 
 include:
-    pipeline_path + "rules/typing/mlst.rules"
+    "../../rules/typing/mlst.rules"
 
 include:
-    pipeline_path + "rules/typing/mentalist.rules"
+    "../../rules/typing/mentalist.rules"
 
 include:
-    pipeline_path + "rules/typing/saureus_spa.rules"
+    "../../rules/typing/saureus_spa.rules"
 
 include:
-    pipeline_path + "rules/phylogeny/raxml.rules"
+    "../../rules/phylogeny/raxml.rules"
 
 include:
-    pipeline_path + "rules/phylogeny/image_creation.rules"
+    "../../rules/phylogeny/image_creation.rules"
 
 include:
-    pipeline_path + "rules/report_generation/snps.rules"
+    "../../rules/report_generation/snps.rules"
 
 if species in all_core_genome_dbs.index:
     rule all_typing:

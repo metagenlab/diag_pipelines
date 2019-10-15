@@ -3,13 +3,13 @@ import pandas
 pipeline_path = workflow.basedir + "/../../"
 
 include:
-    pipeline_path + "workflows/logging.rules"
+    "../../workflows/logging.rules"
     
 include:
-    pipeline_path + "rules/downloading/fetch_single_reference.rules"
+    "../../rules/downloading/fetch_single_reference.rules"
 
    
-ridom = pandas.read_csv(pipeline_path + "data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
+ridom = pandas.read_csv("../../data/core_genome_dbs/ridom_database.tsv", sep="\t", index_col=0)
  
 rule get_scheme_from_ridom:
     params:

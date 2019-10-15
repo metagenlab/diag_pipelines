@@ -1,6 +1,6 @@
 rule keep_only_annotated_region:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     input:
         genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/snps.g.vcf.gz",
         genotype_tbi = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/snps.g.vcf.gz.tbi",
@@ -14,7 +14,7 @@ rule keep_only_annotated_region:
 
 rule decompose_multiallelic_positions_from_genotyping:
     conda:
-        pipeline_path + "envs/vt.yml"
+        "../../envs/vt.yml"
     input:
         genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf.gz",
         genotype_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf.gz.tbi",
@@ -30,7 +30,7 @@ rule decompose_multiallelic_positions_from_genotyping:
 
 rule annotate_positions_from_genotyping:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     input:
         bed_gz_correct = "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
         bed_tbi_correct = "resistance_db/" + species + "/mutations/{db}/correct.bed.gz.tbi",
@@ -51,7 +51,7 @@ rule annotate_positions_from_genotyping:
 
 rule extract_mutated_codons_or_nucleotides:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     input:
         annotation = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/annotation.vcf",
     output:
@@ -68,7 +68,7 @@ rule extract_mutated_codons_or_nucleotides:
 
 rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -81,7 +81,7 @@ rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
 
 rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synonymous_mutations:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     input:
         mutation_gz = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.bed.gz",
         mutation_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.bed.gz.tbi",

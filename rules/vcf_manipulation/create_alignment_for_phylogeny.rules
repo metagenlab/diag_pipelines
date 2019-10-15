@@ -1,6 +1,6 @@
 rule merge_multiallelic_by_sample:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -16,7 +16,7 @@ rule merge_multiallelic_by_sample:
 
 rule extract_alternative_positions_and_unknown_positions:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -34,7 +34,7 @@ rule extract_alternative_positions_and_unknown_positions:
 
 rule create_consensus_sequence_by_sample:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:

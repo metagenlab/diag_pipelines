@@ -1,6 +1,6 @@
 rule annotate_with_prokka:
     conda:
-        pipeline_path + "envs/prokka.yml"
+        "../../envs/prokka.yml"
     singularity:
         "docker://quay.io/biocontainers/prokka:1.14.0--pl526_0"
     input:
@@ -27,7 +27,7 @@ rule annotate_with_prokka:
 
 rule annotate_with_prokka_unfiltered_assembly:
     conda:
-        pipeline_path + "envs/prokka.yml"
+        "../../envs/prokka.yml"
     singularity:
         "docker://quay.io/biocontainers/prokka:1.14.0--pl526_0"
     input:
@@ -47,7 +47,7 @@ rule annotate_with_prokka_unfiltered_assembly:
 
 rule create_blast_database_from_protein_sequences:
     conda:
-        pipeline_path + "envs/blast.yml"
+        "../../envs/blast.yml"
     singularity:
         "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
     input:
@@ -61,7 +61,7 @@ rule create_blast_database_from_protein_sequences:
 
 rule create_blast_database_from_contig_sequences:
     conda:
-        pipeline_path + "envs/blast.yml"
+        "../../envs/blast.yml"
     singularity:
         "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
     input:
@@ -75,7 +75,7 @@ rule create_blast_database_from_contig_sequences:
 
 rule remove_fasta_part_from_gff:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -87,7 +87,7 @@ rule remove_fasta_part_from_gff:
 
 rule get_CDS_and_contigs_depth:
     conda:
-        pipeline_path + "envs/biopython.yml"
+        "../../envs/biopython.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-report:1.2"
     input:

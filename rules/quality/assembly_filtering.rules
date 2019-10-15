@@ -55,7 +55,7 @@ rule filter_contigs_on_coverage:
 '''
 rule prepare_low_coverage_contigs_report:
     conda:
-        pipeline_path + "envs/report.yml"
+        "../../envs/report.yml"
     input:
         low_depth_contigs = expand('')
         assembly_depth = expand('samples/{sample}/quality/assembly_coverage.txt', sample=reads_naming.keys())

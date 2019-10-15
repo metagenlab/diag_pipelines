@@ -13,7 +13,7 @@ rule link_genomes_to_checkm_folder:
 
 rule checkm_analyse:
     conda:
-        pipeline_path + "envs/checkm.yml"
+        "../../envs/checkm.yml"
     singularity:
         "docker://quay.io/biocontainers/checkm-genome:1.0.18--py_0"
     params:
@@ -32,7 +32,7 @@ rule checkm_analyse:
 
 rule checkm_qa:
     conda:
-        pipeline_path + "envs/checkm.yml"
+        "../../envs/checkm.yml"
     singularity:
         "docker://quay.io/biocontainers/checkm-genome:1.0.18--py_0"
     params:
@@ -50,7 +50,7 @@ rule checkm_qa:
 
 rule checkm_markers:
     conda:
-        pipeline_path + "envs/checkm.yml"
+        "../../envs/checkm.yml"
     singularity:
         "docker://quay.io/biocontainers/checkm-genome:1.0.18--py_0"
     params:
@@ -68,7 +68,7 @@ rule checkm_markers:
 
 rule checkm_markers_fastas:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     params:
@@ -85,7 +85,7 @@ rule checkm_markers_fastas:
 
 rule align_marker_fasta_with_mafft:
     conda:
-        pipeline_path + "envs/mafft.yml"
+        "../../envs/mafft.yml"
     singularity:
         "docker://quay.io/biocontainers/mafft:7.407--hf484d3e_2"
     input:
@@ -99,7 +99,7 @@ rule align_marker_fasta_with_mafft:
 
 rule concatenate_checkm_fastas:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -110,7 +110,7 @@ rule concatenate_checkm_fastas:
 
 rule build_phylogeny_with_fasttree:
     conda:
-        pipeline_path + "envs/fasttree.yml"
+        "../../envs/fasttree.yml"
     singularity:
         "docker://quay.io/biocontainers/fasttree:2.1.10--h14c3975_3"        
     input:

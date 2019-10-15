@@ -1,14 +1,14 @@
 pipeline_path = workflow.basedir + "/../../"
 
 include:
-    pipeline_path + "workflows/logging.rules"
+    "../../workflows/logging.rules"
 
 include:
-    pipeline_path + "rules/downloading/fetch_references.rules"
+    "../../rules/downloading/fetch_references.rules"
 
 rule calculate_core_genome_parsnp:
     conda:
-        pipeline_path + "envs/parsnp.yml"
+        "../../envs/parsnp.yml"
     input:
         "references/{spec}/all_complete_genomes_log.txt"
     output:

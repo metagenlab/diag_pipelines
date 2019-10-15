@@ -1,6 +1,6 @@
 rule convert_phylogeny_to_image_with_st:
     conda:
-        pipeline_path + "envs/newick-utils.yml"
+        "../../envs/newick-utils.yml"
     singularity:
         "docker://quay.io/biocontainers/newick_utils:1.6--h470a237_2"  
     params:
@@ -24,7 +24,7 @@ rule convert_phylogeny_to_image_with_st:
 
 rule convert_phylogeny_to_image_no_st:
     conda:
-        pipeline_path + "envs/newick-utils.yml"
+        "../../envs/newick-utils.yml"
     singularity:
         "docker://quay.io/biocontainers/newick_utils:1.6--h470a237_2"  
     params:

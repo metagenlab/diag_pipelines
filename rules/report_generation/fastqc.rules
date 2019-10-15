@@ -1,6 +1,6 @@
 rule assess_quality_single_reads_with_fastqc:
     conda:
-        pipeline_path + "envs/fastqc.yml"
+        "../../envs/fastqc.yml"
     singularity:
         "docker://quay.io/biocontainers/fastqc:0.11.8--1"
     input:
@@ -16,7 +16,7 @@ rule assess_quality_single_reads_with_fastqc:
         
 rule assess_quality_paired_reads_with_fastqc:
     conda:
-        pipeline_path + "envs/fastqc.yml"
+        "../../envs/fastqc.yml"
     singularity:
         "docker://quay.io/biocontainers/fastqc:0.11.8--1"
     input:

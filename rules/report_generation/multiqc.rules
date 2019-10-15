@@ -2,7 +2,7 @@ rule create_multiqc_report_for_assembly:
     params:
         configfile = multiqc_configfile
     conda:
-        pipeline_path + "envs/multiqc.yml"
+        "../../envs/multiqc.yml"
     singularity:
         "docker://quay.io/biocontainers/multiqc:1.7--py_4"         
     input:
@@ -22,7 +22,7 @@ rule create_multiqc_report_for_mapping:
     params:
         configfile = multiqc_configfile
     conda:
-        pipeline_path + "envs/multiqc.yml"
+        "../../envs/multiqc.yml"
     singularity:
         "docker://quay.io/biocontainers/multiqc:1.7--py_4" 
     input:

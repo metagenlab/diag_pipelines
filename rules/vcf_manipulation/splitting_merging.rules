@@ -1,6 +1,6 @@
 rule extract_sample_entry_from_vcf:
     conda:
-        pipeline_path + "envs/bcftools.yml",
+        "../../envs/bcftools.yml",
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -14,7 +14,7 @@ rule extract_sample_entry_from_vcf:
 
 rule merge_all_samples_entries_into_vcf:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -29,7 +29,7 @@ rule merge_all_samples_entries_into_vcf:
 
 rule merge_all_vcf_freebayes_first_pass:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -44,7 +44,7 @@ rule merge_all_vcf_freebayes_first_pass:
 
 rule merge_freebayes_second_pass:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:

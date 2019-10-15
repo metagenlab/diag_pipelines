@@ -1,6 +1,6 @@
 rule blast_virulence_protein_to_proteome_or_contigs:
     conda:
-        pipeline_path + "envs/blast.yml"
+        "../../envs/blast.yml"
     singularity:
         "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
     params:
@@ -39,7 +39,7 @@ rule blast_virulence_protein_to_proteome_or_contigs:
 
 rule remove_redundancy_from_blast_results:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -52,7 +52,7 @@ rule remove_redundancy_from_blast_results:
 
 rule extract_protein_sequences_from_blast_results:
     conda:
-        pipeline_path + "envs/samtools.yml"
+        "../../envs/samtools.yml"
     singularity:
         "docker://metagenlab/bwa-samtools:1.0"
     input:
@@ -76,7 +76,7 @@ rule extract_protein_sequences_from_blast_results:
 if "virulence_factors" in config:
     rule add_description_to_blast_results:
         conda:
-            pipeline_path + "envs/python-r.yml"
+            "../../envs/python-r.yml"
         singularity:
             "docker://metagenlab/diag-pipeline-python-r:1.1"
         input:
@@ -91,7 +91,7 @@ if "virulence_factors" in config:
 
 rule merge_samples_summary:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -100,11 +100,11 @@ rule merge_samples_summary:
     output:
         "virulence_summary.xlsx"
     script:
-        pipeline_path + "rules/annotation/resistance/scripts/merge_non_empty_results.py"
+        "../../rules/annotation/resistance/scripts/merge_non_empty_results.py"
 
 rule generate_html_report:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -118,7 +118,7 @@ rule generate_html_report:
 
 rule blast_proteome_to_VFDB:
     conda:
-        pipeline_path + "envs/blast.yml"
+        "../../envs/blast.yml"
     singularity:
         "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
     params:
@@ -138,7 +138,7 @@ rule blast_proteome_to_VFDB:
 
 rule generate_VFDB_report:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -155,7 +155,7 @@ rule generate_VFDB_report:
 # tab file with contig, start, end label (and color)
 rule prepare_label_file_for_circos:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:

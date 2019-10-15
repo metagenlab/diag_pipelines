@@ -2,7 +2,7 @@
 
 rule create_dictionary_for_reference:
     conda:
-        pipeline_path + "envs/gatk.yml"
+        "../../envs/gatk.yml"
     singularity:
         "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
@@ -19,7 +19,7 @@ rule create_dictionary_for_reference:
 
 rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     conda:
-        pipeline_path + "envs/gatk.yml"
+        "../../envs/gatk.yml"
     singularity:
         "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     threads:
@@ -41,7 +41,7 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
 
 rule merge_gvcf_files_with_GenomicsDBImport_GATK:
     conda:
-        pipeline_path + "envs/gatk.yml"
+        "../../envs/gatk.yml"
     singularity:
         "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
@@ -64,7 +64,7 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
 
 rule merge_gvcf_files_with_CombineGVCFs_GATK:
     conda:
-        pipeline_path + "envs/gatk.yml"
+        "../../envs/gatk.yml"
     singularity:
         "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
@@ -83,7 +83,7 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
 
 rule genotype_with_GenotypeGVCFs_GATK:
     conda:
-        pipeline_path + "envs/gatk.yml"
+        "../../envs/gatk.yml"
     singularity:
         "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     threads:

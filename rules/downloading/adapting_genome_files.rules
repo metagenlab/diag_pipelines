@@ -20,7 +20,7 @@ rule link_full_genome:
 
 rule correct_gbk_extension_for_IGV_visualization:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:

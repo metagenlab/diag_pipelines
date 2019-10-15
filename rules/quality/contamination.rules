@@ -1,6 +1,6 @@
 rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
     conda:
-        pipeline_path + "envs/mash.yml"
+        "../../envs/mash.yml"
     singularity:
         "docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0" 
     threads:
@@ -22,7 +22,7 @@ rule calculate_distance_assembly_from_refseq_genomes_with_mash:
     threads:
         8
     conda:
-        pipeline_path + "envs/mash.yml"
+        "../../envs/mash.yml"
     singularity:
         "docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0"
     input:
@@ -41,7 +41,7 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
     threads:
         8
     conda:
-        pipeline_path + "envs/mash.yml"
+        "../../envs/mash.yml"
     singularity:
         "docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0"
     input:
@@ -58,7 +58,7 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
 
 rule get_taxonomy_from_mash_results:
     conda:
-        pipeline_path + "envs/entrez-direct.yml"
+        "../../envs/entrez-direct.yml"
     input:
         distances = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv"
     output:
@@ -84,7 +84,7 @@ rule format_distances_from_mash_results:
 
 rule format_tsv_to_xlsx_mash_results:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -97,7 +97,7 @@ rule format_tsv_to_xlsx_mash_results:
 
 rule merge_all_xlsx_mash_results:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -105,14 +105,14 @@ rule merge_all_xlsx_mash_results:
     output:
         xlsx_out = "report/contamination/mash/{fastq_or_assembly}/{results}.xlsx",
     script:
-        pipeline_path + "rules/annotation/resistance/scripts/merge_non_empty_results.py"
+        "../../rules/annotation/resistance/scripts/merge_non_empty_results.py"
 
 
 rule paired_reads_classification_with_centrifuge:
     threads:
         4
     conda:
-        pipeline_path + "envs/centrifuge.yml"
+        "../../envs/centrifuge.yml"
     singularity:
         "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
     input:
@@ -132,7 +132,7 @@ rule single_reads_classification_with_centrifuge:
     threads:
         4
     conda:
-        pipeline_path + "envs/centrifuge.yml"
+        "../../envs/centrifuge.yml"
     singularity:
         "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
     input:
@@ -151,7 +151,7 @@ rule convert_centrifuge_to_kraken_output:
     threads:
         4
     conda:
-        pipeline_path + "envs/centrifuge.yml"
+        "../../envs/centrifuge.yml"
     singularity:
         "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
     input:
@@ -167,7 +167,7 @@ rule convert_centrifuge_to_kraken_output:
 
 rule format_centrifuge_kraken:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -179,7 +179,7 @@ rule format_centrifuge_kraken:
 
 rule format_centrifuge_output:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:

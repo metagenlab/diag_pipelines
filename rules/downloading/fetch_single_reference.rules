@@ -42,7 +42,7 @@ rule get_strain_subvalue_identifier_reference:
     
 rule download_gff_for_reference_from_refseq:
     conda:
-        pipeline_path + "envs/entrez-direct.yml"
+        "../../envs/entrez-direct.yml"
     singularity:
         "docker://metagenlab/entrez-direct:1.1"
     output:

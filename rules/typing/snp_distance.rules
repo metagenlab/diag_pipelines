@@ -1,6 +1,6 @@
 rule distance_columns_to_matrix:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"    
     params:
@@ -16,7 +16,7 @@ rule distance_columns_to_matrix:
 
 rule compute_minimum_spanning_tree_with_st:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"   
     params:
@@ -35,7 +35,7 @@ rule compute_minimum_spanning_tree_with_st:
 
 rule compute_minimum_spanning_tree_no_st:
     conda:
-        pipeline_path + "envs/python-r.yml"
+        "../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     params:

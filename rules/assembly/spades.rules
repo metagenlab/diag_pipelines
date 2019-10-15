@@ -1,6 +1,6 @@
 rule correct_error_paired_reads_with_spades:
     conda:
-        pipeline_path + "envs/spades.yml"
+        "../../envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
     threads:
@@ -21,7 +21,7 @@ rule correct_error_paired_reads_with_spades:
 
 rule correct_error_single_reads_with_spades:
     conda:
-        pipeline_path + "envs/spades.yml"
+        "../../envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
     threads:
@@ -39,7 +39,7 @@ rule correct_error_single_reads_with_spades:
 
 rule assemble_genome_corrected_paired_reads_with_spades:
     conda:
-        pipeline_path + "envs/spades.yml"
+        "../../envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
     threads:
@@ -66,7 +66,7 @@ rule assemble_genome_corrected_paired_reads_with_spades:
 
 rule assemble_genome_corrected_single_reads_with_spades:
     conda:
-        pipeline_path + "envs/spades.yml"
+        "../../envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
     threads:
@@ -89,7 +89,7 @@ rule assemble_genome_corrected_single_reads_with_spades:
 
 rule assemble_genome_paired_reads_with_spades:
     conda:
-        pipeline_path + "envs/spades.yml"
+        "../../envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
     threads:
@@ -111,7 +111,7 @@ rule assemble_genome_paired_reads_with_spades:
 
 rule assemble_genome_single_reads_with_spades:
     conda:
-        pipeline_path + "envs/spades.yml"
+        "../../envs/spades.yml"
     singularity:
         "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
     threads:

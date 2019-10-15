@@ -1,6 +1,6 @@
 rule compress_vcf:
     conda:
-        pipeline_path + "envs/htslib.yml"
+        "../../envs/htslib.yml"
     singularity:
         "docker://quay.io/biocontainers/htslib:1.9--ha228f0b_7"   
     input:
@@ -16,7 +16,7 @@ rule index_vcf_bed:
     singularity:
         "docker://quay.io/biocontainers/htslib:1.9--ha228f0b_7"  
     conda:
-        pipeline_path + "envs/htslib.yml"
+        "../../envs/htslib.yml"
     input:
         "{any_vcf}.{vcf_or_bed}.gz",
     output:
@@ -28,7 +28,7 @@ rule index_vcf_bed:
         
 rule sort_vcf:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:

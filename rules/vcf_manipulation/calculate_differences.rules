@@ -1,6 +1,6 @@
 rule calculate_pairwise_distances_by_type:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -16,7 +16,7 @@ rule calculate_pairwise_distances_by_type:
 
 rule get_pairwise_snps_positions_by_type:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -33,7 +33,7 @@ rule get_pairwise_snps_positions_by_type:
 
 rule calculate_distance_with_ref_by_type:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:

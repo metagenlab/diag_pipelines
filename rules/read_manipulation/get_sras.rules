@@ -6,7 +6,7 @@
 
 rule download_sra:
     conda:
-        pipeline_path + "envs/sra-tools.yml"
+        "../../envs/sra-tools.yml"
     output:
         # /home/pipeline_user/ncbi/public
         temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
@@ -23,7 +23,7 @@ rule download_sra:
 
 rule sra_convert_to_fastq_paired:
     conda:
-        pipeline_path + "envs/sra-tools.yml"
+        "../../envs/sra-tools.yml"
     input:
         temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
     output:
@@ -38,7 +38,7 @@ rule sra_convert_to_fastq_paired:
 
 rule sra_convert_to_fastq_single:
     conda:
-        pipeline_path + "envs/sra-tools.yml"
+        "../../envs/sra-tools.yml"
     input:
         temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
     output:

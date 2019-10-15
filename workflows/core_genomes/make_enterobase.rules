@@ -3,16 +3,16 @@ import pandas
 pipeline_path = workflow.basedir + "/../../"
 
 include:
-    pipeline_path + "workflows/logging.rules"
+    "../../workflows/logging.rules"
     
 include:
-    pipeline_path + "rules/downloading/fetch_single_reference.rules"
+    "../../rules/downloading/fetch_single_reference.rules"
     
-enterobase = pandas.read_csv(pipeline_path + "data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
+enterobase = pandas.read_csv("../../data/core_genome_dbs/enterobase_database.tsv", sep="\t", index_col=0)
 
 rule get_schema_from_enterobase:
     input:
-        data = pipeline_path + "data/{spec}/cgMLST.tsv"
+        data = "../../data/{spec}/cgMLST.tsv"
     output:
         gene_list = "core_genomes/cgMLST/{spec}/genes.txt",
     shell:
@@ -22,7 +22,7 @@ rule get_schema_from_enterobase:
 
 rule fetch_gene_entries_from_locus_tag:
     conda:
-        pipeline_path + "envs/biopython.yml"
+        "../../envs/biopython.yml"
     input:
         gbk = lambda wildcards : "references/" + str(enterobase.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_gbwithparts.gbwithparts",
         locus_list = "core_genomes/cgMLST/{spec}/genes.txt",
@@ -30,12 +30,12 @@ rule fetch_gene_entries_from_locus_tag:
         bed = "core_genomes/cgMLST/{spec}_unmerged.bed",
         problematic = "core_genomes/cgMLST/{spec}/enterobase_missing.txt",
     script:
-        pipeline_path + "rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
+        "../../rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
 
 
 rule merbe_bed_file:
     conda:
-        pipeline_path + "envs/bedtools.yml"
+        "../../envs/bedtools.yml"
     input:
         bed = "core_genomes/cgMLST/{spec}_unmerged.bed",
     output:

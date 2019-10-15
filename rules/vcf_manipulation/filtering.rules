@@ -1,6 +1,6 @@
 rule decompose_multiallelics_and_normalize:
     conda:
-        pipeline_path + "envs/vt.yml"
+        "../../envs/vt.yml"
     singularity:
         "docker://quay.io/biocontainers/vt:0.57721--hdf88d34_2"  
     input:
@@ -20,7 +20,7 @@ rule filter_on_coverage:
     params:
         min_cov=minimum_coverage,
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -38,7 +38,7 @@ rule filter_on_frequency_per_sample:
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     conda:
-        pipeline_path + "envs/bcftools.yml",
+        "../../envs/bcftools.yml",
     input:
         sample="samples/{sample}/snps/{snp_caller}/{ref}/{mapping_method}/raw.vcf",
     output:
@@ -50,7 +50,7 @@ rule filter_on_frequency_per_sample:
 
 rule extract_allele_by_type_from_gatk_gvcfs:
     conda:
-        pipeline_path + "envs/gatk.yml"
+        "../../envs/gatk.yml"
     singularity:
         "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
@@ -68,7 +68,7 @@ rule extract_allele_by_type_from_gatk_gvcfs:
 
 rule extract_allele_by_type_from_freebayes_joint_genotyping:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:
@@ -85,7 +85,7 @@ rule extract_allele_by_type_from_freebayes_joint_genotyping:
 
 rule extract_core_genome_parsnp:
     conda:
-        pipeline_path + "envs/bcftools.yml"
+        "../../envs/bcftools.yml"
     singularity:
         "docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7"  
     input:

@@ -2,7 +2,7 @@ rule get_refseq_urls_complete_genomes:
     params:
         excluded_id = "" #excl_id,
     conda:
-        pipeline_path + "envs/entrez-direct.yml"
+        "../../envs/entrez-direct.yml"
     singularity:
         "docker://metagenlab/entrez-direct:1.1"
     output:
@@ -21,7 +21,7 @@ rule get_refseq_urls_complete_genomes:
 
 rule download_all_complete_genomes_fasta:
     conda:
-        pipeline_path + "envs/entrez-direct.yml"
+        "../../envs/entrez-direct.yml"
     singularity:
         "docker://metagenlab/entrez-direct:1.1"
     input:
