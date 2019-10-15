@@ -10,7 +10,7 @@ enterobase = pandas.read_csv(workflow.basedir + "/../../data/core_genome_dbs/ent
 
 rule get_schema_from_enterobase:
     input:
-        data = workflow.basedir + "/../data/{spec}/cgMLST.tsv"
+        data = workflow.basedir + "/../../data/{spec}/cgMLST.tsv"
     output:
         gene_list = "core_genomes/cgMLST/{spec}/genes.txt",
     shell:
