@@ -51,7 +51,7 @@ RUN conda update conda
 RUN conda install snakemake=5.7.0 unzip sra-tools=2.9.1 biopython=1.72
 
 # setup pipeline
-RUN git clone https://github.com/metagenlab/diag_pipelines --single-branch --branch dev $pipeline_folder && echo ok7
+RUN git clone https://github.com/metagenlab/diag_pipelines --single-branch --branch dev $pipeline_folder && echo ok8
 RUN mkdir -p /opt/conda/envs/
 ENV conda_folder=/opt/conda/envs/
 

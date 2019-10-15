@@ -1,7 +1,7 @@
 pipeline_path = workflow.basedir + "/../../"
 
 include:
-    "../../workflows/logging.rules"
+    "../logging.rules"
 
 include:
     "../../rules/downloading/fetch_references.rules"
