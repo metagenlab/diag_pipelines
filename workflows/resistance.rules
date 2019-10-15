@@ -29,20 +29,20 @@ ontology_file_ro = "references/card/obo_files/ro.obo"
 card_categories_file = "references/card/aro_categories.tsv"
 
 include:
-    "../../rules/annotation/resistance/format_xlsx.rules"
+    "../rules/annotation/resistance/format_xlsx.rules"
 
 include:
-    "../../rules/annotation/resistance/rgi.rules"
+    "../rules/annotation/resistance/rgi.rules"
 
 if species in reference_assembly_for_resistance.keys():
     include:
-        "../../rules/annotation/resistance/custom_annotated_dbs.rules"
+        "../rules/annotation/resistance/custom_annotated_dbs.rules"
     include:
-        "../../rules/annotation/resistance/detect_insertions_or_deletions.rules"
+        "../rules/annotation/resistance/detect_insertions_or_deletions.rules"
 
 if species.startswith("Staphylococcus") or species.startswith("Mycobacterium"):
     include:
-        "../../rules/annotation/resistance/mykrobe.rules"
+        "../rules/annotation/resistance/mykrobe.rules"
     rule all_resistance_summaries:
         input:
             rgi = "resistance/rgi_summary.xlsx",

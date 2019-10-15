@@ -2,53 +2,53 @@ include:
     "making_sample_dataset.rules"
 
 
-multiqc_configfile = "../../data/configuration_files/multiqc/config.yaml"
+multiqc_configfile = "../data/configuration_files/multiqc/config.yaml"
 
 
 include:
-    "../../rules/read_manipulation/get_reads.rules"
+    "../rules/read_manipulation/get_reads.rules"
 
 include:
-    "../../rules/read_manipulation/get_sras.rules"
+    "../rules/read_manipulation/get_sras.rules"
 
 include:
-    "../../rules/quality/trimmomatic.rules"
+    "../rules/quality/trimmomatic.rules"
 
 include:
-    "../../rules/quality/assembly_filtering.rules"
+    "../rules/quality/assembly_filtering.rules"
 
 include:
-    "../../rules/quality/contamination.rules"
+    "../rules/quality/contamination.rules"
 
 include:
-    "../../rules/mapping/bwa.rules"
+    "../rules/mapping/bwa.rules"
 
 include:
-    "../../rules/mapping/indexing_files.rules"
+    "../rules/mapping/indexing_files.rules"
 
 include:
-    "../../rules/assembly/spades.rules"
+    "../rules/assembly/spades.rules"
 
 include:
-    "../../rules/annotation/prokka.rules"
+    "../rules/annotation/prokka.rules"
 
 include:
-    "../../rules/report_generation/prepare_files_for_multiqc.rules"
+    "../rules/report_generation/prepare_files_for_multiqc.rules"
 
 include:
-    "../../rules/report_generation/multiqc.rules"
+    "../rules/report_generation/multiqc.rules"
 
 include:
-    "../../rules/report_generation/fastqc.rules"
+    "../rules/report_generation/fastqc.rules"
 
 include:
-    "../../rules/report_generation/quast.rules"
+    "../rules/report_generation/quast.rules"
 
 include:
-    "../../rules/report_generation/qualimap.rules"
+    "../rules/report_generation/qualimap.rules"
 
 include:
-    "../../rules/report_generation/contamination.rules"
+    "../rules/report_generation/contamination.rules"
 
 rule all_assembly_quality:
     input:

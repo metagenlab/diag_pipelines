@@ -2,19 +2,19 @@ include:
     "assembly_quality.rules"
 
 include:
-    "../../rules/downloading/fetch_virulence_factors.rules"
+    "../rules/downloading/fetch_virulence_factors.rules"
 
 include:
-    "../../rules/annotation/virulence.rules"
+    "../rules/annotation/virulence.rules"
 
 include:
-    "../../rules/report_generation/ete_figures.rules"
+    "../rules/report_generation/ete_figures.rules"
 
 include:
-    "../../rules/downloading/fetch_VFDB.rules"
+    "../rules/downloading/fetch_VFDB.rules"
 
 include:
-    "../../rules/report_generation/general_report.rules"
+    "../rules/report_generation/general_report.rules"
 
 include:
-    "../../rules/phylogeny/checkm.rules"
+    "../rules/phylogeny/checkm.rules"
