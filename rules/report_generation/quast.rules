@@ -3,7 +3,7 @@ rule calculate_assembly_statistics_with_quast:
     conda:
         pipeline_path + "envs/quast.yml"
     singularity:
-        "docker://quay.io/biocontainers/quast:5.0.2--py35pl526ha92aebf_0"
+        "docker://metagenlab/quast:5.0.2"
     input:
         "samples/{sample}/annotation/{sample}.fsa"
     output:
@@ -12,8 +12,5 @@ rule calculate_assembly_statistics_with_quast:
         logging_folder+"samples/{sample}/logs/assembly/quast.txt",
     shell:
         """
-        export LANG=en_US.UTF-8  
-        export LANGUAGE=en_US:en  
-        export LC_ALL=en_US.UTF-8   
         quast.py {input[0]} -o $( dirname {output[0]}) &> {log}
         """

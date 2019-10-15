@@ -70,7 +70,7 @@ rule checkm_markers_fastas:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     params:
         markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
     threads:
@@ -101,7 +101,7 @@ rule concatenate_checkm_fastas:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         marker_fastas = dynamic("phylogeny/checkm/marker_alignments/{marker}_mafft.faa")
     output:

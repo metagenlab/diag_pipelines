@@ -41,7 +41,7 @@ rule remove_redundancy_from_blast_results:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         "samples/{sample}/virulence/results_blast.tsv",
     output:
@@ -78,7 +78,7 @@ if "virulence_factors" in config:
         conda:
             pipeline_path + "envs/python-r.yml"
         singularity:
-            "docker://metagenlab/diag-pipeline-python-r:1.0"
+            "docker://metagenlab/diag-pipeline-python-r:1.1"
         input:
             "samples/{sample}/virulence/results_blast_not_redundant.tsv",
             config["virulence_factors"]
@@ -93,7 +93,7 @@ rule merge_samples_summary:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         xlsx=expand("samples/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys()),
         fasta=expand("samples/{sample}/virulence/proteins.fasta", sample = read_naming.keys()),
@@ -106,7 +106,7 @@ rule generate_html_report:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         blast_results="samples/{sample}/virulence/{sample}_virulence_summary.xlsx",
     params:
@@ -140,7 +140,7 @@ rule generate_VFDB_report:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         blast_results="samples/{sample}/virulence/VFDB_results_blast.tsv",
         VFDB_annotation="references/virulence/VFDB_annotations.tab",
@@ -157,7 +157,7 @@ rule prepare_label_file_for_circos:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         gbk_file="samples/{sample}/annotation/{sample}.gbk",
         blast_results="samples/{sample}/virulence/VFDB_results_blast.tsv",

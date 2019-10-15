@@ -120,7 +120,6 @@ def get_gc_coverage_data(contig2gc_content,
 
 
 def bubble_plot_gc_depth(bubble_data):
-    import plotly.plotly as py
     import plotly.graph_objs as go
 
     import pandas as pd
@@ -182,7 +181,6 @@ def resistance_table(rgi_table,
                      samtools_depth_df):
 
     import numpy
-
 
     header = ["Contig",
               "ORF",

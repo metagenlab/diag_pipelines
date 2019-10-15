@@ -2,7 +2,7 @@ rule convert_tsv_to_xlsx:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         tsv = "samples/{sample}/resistance/{software}.tsv",
     output:
@@ -15,7 +15,7 @@ rule merge_rgi_or_mykrobe_xlsx:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         xlsx = expand("samples/{sample}/resistance/{{software}}.xlsx", sample=read_naming.keys())
     output:
@@ -27,7 +27,7 @@ rule merge_rgi_ontology_xlsx:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         xlsx = expand("samples/{sample}/resistance/rgi_ontology.xlsx", sample=read_naming.keys())
     output:

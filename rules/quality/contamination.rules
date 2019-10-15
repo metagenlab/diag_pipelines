@@ -86,7 +86,7 @@ rule format_tsv_to_xlsx_mash_results:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         tsv = "samples/{sample}/contamination/mash/{fastq_or_assembly}/{results}.tsv",
     output:
@@ -99,7 +99,7 @@ rule merge_all_xlsx_mash_results:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         xlsx = expand("samples/{sample}/contamination/mash/{{fastq_or_assembly}}/{{results}}.xlsx", sample=read_naming.keys())
     output:
@@ -169,7 +169,7 @@ rule format_centrifuge_kraken:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         report = "report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt",
     output:
@@ -181,7 +181,7 @@ rule format_centrifuge_output:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         report = "samples/{sample}/contamination/centrifuge/report.tsv",
         detail = "samples/{sample}/contamination/centrifuge/results.tsv",

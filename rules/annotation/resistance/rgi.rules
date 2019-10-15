@@ -17,7 +17,7 @@ rule extract_resistance_from_ontology:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     params:
         ontology_aro = ontology_file_aro,
         ontology_mo = ontology_file_mo,
@@ -35,7 +35,7 @@ rule extract_resistance_mechanism_from_ontology:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     params:
         ontology_aro = ontology_file_aro,
         ontology_mo = ontology_file_mo,
@@ -69,7 +69,7 @@ rule generate_rgi_tsv_file_from_json_file:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         "samples/{sample}/resistance/rgi.json"
     output:
@@ -82,7 +82,7 @@ rule plot_rgi:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         rgi_files=expand("samples/{sample}/resistance/rgi.tsv", sample=read_naming.keys()),
         rgi_mechanism_files=expand("samples/{sample}/resistance/rgi_mechanism.tsv", sample=read_naming.keys()),
@@ -94,11 +94,12 @@ rule plot_rgi:
     script:
         "scripts/plot_gene_presence_heatmap.R"
 
+
 rule generate_rgi_report:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         rgi_tsv_output="samples/{sample}/resistance/rgi.tsv",
         rgi_ontology="samples/{sample}/resistance/rgi_ontology.tsv",

@@ -4,7 +4,7 @@ rule get_refseq_urls_complete_genomes:
     conda:
         pipeline_path + "envs/entrez-direct.yml"
     singularity:
-        "docker://quay.io/biocontainers/entrez-direct:11.0--pl526_0"
+        "docker://metagenlab/entrez-direct:1.1"
     output:
         "references/{spec}/url_complete_genomes.txt"
     shell:
@@ -23,7 +23,7 @@ rule download_all_complete_genomes_fasta:
     conda:
         pipeline_path + "envs/entrez-direct.yml"
     singularity:
-        "docker://quay.io/biocontainers/entrez-direct:11.0--pl526_0"
+        "docker://metagenlab/entrez-direct:1.1"
     input:
         "references/{spec}/url_complete_genomes.txt"
     output:

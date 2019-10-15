@@ -49,7 +49,7 @@ rule generate_snps_html_report:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         # samples/TATRas-control/snps/gatk_gvcfs/TATRas-control_assembled_genome/bwa/freq.vcf
         # typing/gatk_gvcfs/full_genome_TATRas-control_assembled_genome/bwa/all_samples_snp.vcf
@@ -68,7 +68,7 @@ rule generate_deletion_html_report:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         deletion_bed = "samples/{sample}/indel/{mapping_method}/{reference}/indel.bed",
         gbk_file = gbk_ref

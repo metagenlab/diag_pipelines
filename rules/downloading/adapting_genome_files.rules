@@ -22,7 +22,7 @@ rule correct_gbk_extension_for_IGV_visualization:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         genome = "references/{ref}/genome_gbwithparts.gbwithparts",
     output:

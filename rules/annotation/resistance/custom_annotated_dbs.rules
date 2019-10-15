@@ -70,7 +70,7 @@ rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
     conda:
         pipeline_path + "envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.0"
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/position_genotypes.txt",
     output:
