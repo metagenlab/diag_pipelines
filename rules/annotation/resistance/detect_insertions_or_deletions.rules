@@ -1,6 +1,6 @@
 rule extract_coverage_from_bed:
     conda:
-        "../../envs/bedtools.yml"
+        "../../../envs/bedtools.yml"
     input:
         mapping = "samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam",
         bed = "resistance/annotations/{gene}.bed"
@@ -13,7 +13,7 @@ rule extract_coverage_from_bed:
         
 rule create_bed_from_gene:
     conda:
-        "../../envs/python-r.yml"
+        "../../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     params:

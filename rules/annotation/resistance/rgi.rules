@@ -1,4 +1,6 @@
 rule search_resistance_with_rgi:
+    conda:
+        "../../../envs/rgi.yml"
     singularity:
         "docker://metagenlab/rgi:5.0.0-v3.0.4"
     threads:
@@ -15,7 +17,7 @@ rule search_resistance_with_rgi:
 
 rule extract_resistance_from_ontology:
     conda:
-        "../../envs/python-r.yml"
+        "../../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     params:
@@ -33,7 +35,7 @@ rule extract_resistance_from_ontology:
 
 rule extract_resistance_mechanism_from_ontology:
     conda:
-        "../../envs/python-r.yml"
+        "../../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     params:
@@ -67,7 +69,7 @@ rule generate_rgi_tsv_file_from_json_file:
 
 rule generate_rgi_tsv_file_from_json_file:
     conda:
-        "../../envs/python-r.yml"
+        "../../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -80,7 +82,7 @@ rule generate_rgi_tsv_file_from_json_file:
 
 rule plot_rgi:
     conda:
-        "../../envs/python-r.yml"
+        "../../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -97,7 +99,7 @@ rule plot_rgi:
 
 rule generate_rgi_report:
     conda:
-        "../../envs/python-r.yml"
+        "../../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:

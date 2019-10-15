@@ -81,7 +81,7 @@ rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
 
 rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synonymous_mutations:
     conda:
-        "../../envs/bcftools.yml"
+        "../../../envs/bcftools.yml"
     input:
         mutation_gz = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.bed.gz",
         mutation_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.bed.gz.tbi",

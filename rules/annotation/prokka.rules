@@ -87,7 +87,7 @@ rule remove_fasta_part_from_gff:
 
 rule get_CDS_and_contigs_depth:
     conda:
-        "../../envs/biopython.yml"
+        "../../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-report:1.2"
     input:

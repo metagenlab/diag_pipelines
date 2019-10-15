@@ -1,6 +1,6 @@
 rule summary_csv_excel_file:
     conda:
-        "../../envs/python-r.yml"
+        "../../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     params:
@@ -19,7 +19,7 @@ rule summary_csv_excel_file:
 
 rule write_congruent_results_fasta:
     conda:
-        "../../envs/python-r.yml"
+        "../../../envs/python-r.yml"
     singularity:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
@@ -34,7 +34,9 @@ rule write_congruent_results_fasta:
 
 rule merge_summary_xlsx_files:
     conda:
-        "../../envs/pandas-openpyxl-pronto-xlrd.yml"
+        "../../../envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         xlsx=expand("samples/{sample}/resistance/summary.xlsx", sample = read_naming.keys()),
 #        fastas=expand("samples/{sample}/resistance/sequences.faa", sample = read_naming.keys()),
