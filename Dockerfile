@@ -45,13 +45,13 @@ RUN wget -qO- ftp://ftp.ccb.jhu.edu/pub/infphilo/centrifuge/data/p_compressed+h+
 RUN conda config --add channels defaults && conda config --add channels conda-forge && conda config --add channels bioconda
 
 # update conda
-RUN conda update conda 
+RUN conda install conda=4.7.12
 
 # install snakemake
 RUN conda install snakemake=5.7.0 unzip sra-tools=2.9.1 biopython=1.72
 
 # setup pipeline
-RUN git clone https://github.com/metagenlab/diag_pipelines --single-branch --branch dev $pipeline_folder && echo ok2
+RUN git clone https://github.com/metagenlab/diag_pipelines --single-branch --branch dev $pipeline_folder && echo ok666
 RUN mkdir -p /opt/conda/envs/
 ENV conda_folder=/opt/conda/envs/
 
