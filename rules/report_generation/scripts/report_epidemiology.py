@@ -1,18 +1,6 @@
-
 # from snakemake.utils import report
 
-# with open(input[0]) as vcf:
-#    n_calls = sum(1 for l in vcf if not l.startswith("#"))
-# n_samples = list(read_naming.keys()
-
 import os
-print(os.environ['PYTHONPATH'].split(os.pathsep))
-#script_dir_path = os.path.dirname(os.path.realpath(__file__))
-#os.chdir(script_dir_path)
-#for x in os.listdir('.'):
-#    print ("---->", x)
-
-
 import pandas
 from report import quality_table, plot_heatmap_snps, get_core_genome_size, get_reference_genome_size
 import report
