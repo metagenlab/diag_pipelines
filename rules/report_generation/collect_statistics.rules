@@ -1,0 +1,13 @@
+rule statistics:
+    conda:
+        "../../envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
+    input:
+        multiqc_assembly = "report/multiqc_assembly_flash/multiqc_data/multiqc_data.json",
+        contigs = expand("samples/{sample}/assembly/spades/contigs.fasta", sample=read_naming.keys()),
+        mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
+        centrifuge_tables = expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
+        flash_data = expand("samples/{sample}/reads/raw/{sample}.log", sample=read_naming.keys()),
+        multiqc_report = "report/multiqc_assembly_flash/multiqc_report.html",
+        #resistance_tables = resistance_tables(),
