@@ -1,0 +1,20 @@
+
+rule merge_reads_with_flash:
+    conda:
+        "../../envs/flash.yml"
+    singularity:
+        "docker://quay.io/biocontainers/flash:1.2.11--hed695b0_5"
+    input:
+        "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
+        "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"
+    output:
+        "samples/{sample}/reads/raw/{sample}.extendedFrags.fastq",
+        "samples/{sample}/reads/raw/{sample}.notCombined_1.fastq",
+        "samples/{sample}/reads/raw/{sample}.notCombined_2.fastq",
+        "samples/{sample}/reads/raw/{sample}.hist",
+        "samples/{sample}/reads/raw/{sample}.histogram",
+        "samples/{sample}/reads/raw/{sample}.log",
+    shell:
+        """
+        flash -O {input[0]} {input[1]} -o samples/{wildcards.sample}/reads/raw/{wildcards.sample} >> {output[5]}
+        """
