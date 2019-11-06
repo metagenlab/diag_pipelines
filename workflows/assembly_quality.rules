@@ -6,6 +6,12 @@ multiqc_configfile = workflow.basedir + "/../data/configuration_files/multiqc/co
 
 
 include:
+    "../rules/read_manipulation/merge_paired_reads.rules"
+
+include:
+    "../rules/report_generation/collect_statistics.rules"
+
+include:
     "../rules/read_manipulation/get_reads.rules"
 
 include:

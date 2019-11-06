@@ -49,3 +49,17 @@ rule copy_result_files_assembly:
         sed -i.bak "s/.fsa//g" $(dirname {output[0]})/quast/report.tsv
         echo "okay" > {output}
         """
+
+rule copy_result_flash:
+    input:
+        flash_log = "samples/{sample}/reads/raw/{sample}.log",
+        flash_hist = "samples/{sample}/reads/raw/{sample}.hist",
+        log = "samples/{sample}/multiqc/assembly/log.txt"
+    output:
+        "samples/{sample}/multiqc/assembly/log_flash.txt"
+    shell:
+        """
+        cp {input[flash_log]} $(dirname {output[0]})
+        cp {input[flash_hist]} $(dirname {output[0]})
+        echo "okay" > {output}
+        """
