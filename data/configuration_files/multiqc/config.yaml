@@ -5,3 +5,5 @@ quast_config:
     total_length_suffix: 'Mbp'
     total_number_contigs_multiplier: 1
     total_number_contigs_suffix: ''
+flash:
+    use_output_name: true
