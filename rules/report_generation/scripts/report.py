@@ -103,7 +103,7 @@ def get_multiqc_table(assembly_multiqc=False,
 
     if mapping_multiqc:
         for n, multiqc in enumerate(mapping_multiqc):
-            multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc.split('/')[1:])
+            multiqc_link = '<a href="%s">MultiQC</a>' % '/'.join(multiqc.split('/')[1:])
             mq_table.append(["%s" % re.sub("_", " ", multiqc.split("/")[1]), multiqc_link])
     header = ["Name", "Link"]
 

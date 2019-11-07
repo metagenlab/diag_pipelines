@@ -169,7 +169,7 @@ def write_report(output_file,
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
 
-    multiqc_link = '<a href="%s">MiltiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
+    multiqc_link = '<a href="%s">MultiQC</a>' % '/'.join(multiqc_report.split('/')[1:])
     table_lowcoverage_contigs = quality_table(low_cov_fasta)
     table_virulence = virulence_table(virulence_reports,blast_files, ordered_samples)
     table_resistance = resistance_table(resistance_reports)
