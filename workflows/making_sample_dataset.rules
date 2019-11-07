@@ -64,7 +64,8 @@ if "local_samples" in config.keys():
             regex = re.compile(r'%s([^-a-zA-Z0-9]|$)' % i) # this regex ensures that the matching of the sample names end at the end of the str, to prevent S1 matching S10 for instance
             match = [bool(re.match(regex, x)) for x in sorted(list(original_names.keys()))]
             if sum(match) != 1: #there must be one and only one entry matching one sample name
-                raise ValueError("Problem matching SampleName to read file names")
+                match_list = [x for x in sorted(list(original_names.keys())) if re.match(regex, x)]
+                raise ValueError("Problem matching SampleName to read file names. SampleName %s match mutiple fastq files prefix: %s" % (i, match_list))
             sample = str(sorted(list(original_names.keys()))[match.index(True)])
             original_correct[i] = original_names[sample]
             read_correct[i] = reads_local[sample]
