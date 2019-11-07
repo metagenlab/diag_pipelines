@@ -8,9 +8,9 @@ rule merge_reads_with_flash:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"
     output:
-        "samples/{sample}/reads/raw/{sample}.extendedFrags.fastq",
-        "samples/{sample}/reads/raw/{sample}.notCombined_1.fastq",
-        "samples/{sample}/reads/raw/{sample}.notCombined_2.fastq",
+        temp("samples/{sample}/reads/raw/{sample}.extendedFrags.fastq"),
+        temp("samples/{sample}/reads/raw/{sample}.notCombined_1.fastq"),
+        temp("samples/{sample}/reads/raw/{sample}.notCombined_2.fastq"),
         "samples/{sample}/reads/raw/{sample}.hist",
         "samples/{sample}/reads/raw/{sample}.histogram",
         "samples/{sample}/reads/raw/{sample}.log",
