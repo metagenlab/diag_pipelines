@@ -4,33 +4,7 @@ include:
 import sys
 import pandas
 import re
-
-def get_read_naming_patterns(directory):
-    result = []
-    extension= {}
-    for fname in os.listdir(directory):
-        if fname.endswith("fastq.gz") or fname.endswith("fq.gz") or fname.endswith("fastq") or fname.endswith("fq"):
-            regex_str = '(_L0+[1-9]+)?_(R)?(1|2)(\.|_)' #regex for finding R1 and R2, if L001 is present before, it is also included
-            regex = re.compile(regex_str)
-            ext = re.search(regex, fname)
-            if ext is None:
-                ext = re.search(r'f(?:ast)?q(?:\.gz)?', fname)
-                samp = re.sub("\.$", "", re.search(r'^([^\.]*)\.*', fname).group(0))
-                if samp in extension.keys():
-                    if ext.group(0).endswith(".gz"):
-                        extension[samp] = [ext.group(0)]
-                else:
-                    extension[samp] = [ext.group(0)]
-            else:
-                regex_after = re.compile(regex_str+".*")
-                regex_before = re.compile(".*"+regex_str)
-                read = re.compile(re.search(regex_after, fname).group(0))
-                samp = re.sub(regex, '', re.search(regex_before, fname).group(0))
-                extension.setdefault(samp, [])
-                extension[samp].append(re.sub("^_", "", read.pattern))
-    return(extension)
-
-all_samples=pandas.DataFrame()
+import logging
 
 if "link_directory" in config.keys():
     link_directory = config["link_directory"]
@@ -43,7 +17,6 @@ sras_ext = {}
 reads_sra = {}
 
 reads_local = {}
-original_names = {}
 
 if "local_samples" not in config.keys() and "sra_samples" not in config.keys():
     raise ValueError("No samples defined in the config file")
@@ -54,35 +27,19 @@ if "local_samples" in config.keys():
     all_local_sample_names =  "".join(list(local_data.index))
     if "(" in all_local_sample_names or ")" in all_local_sample_names or "_-_" in all_local_sample_names:
         raise ValueError("Forbidden character in sample name in sample name file")
-    reads_local = get_read_naming_patterns(link_directory)
-    #print(reads_local)
-    original_names = { x : x for x in reads_local.keys() }
-    read_correct = {}
-    original_correct = {}
-    if "OldSampleName" not in list(local_data):
-        for i in list(local_data.index):
-            regex = re.compile(r'%s([^-a-zA-Z0-9]|$)' % i) # this regex ensures that the matching of the sample names end at the end of the str, to prevent S1 matching S10 for instance
-            match = [bool(re.match(regex, x)) for x in sorted(list(original_names.keys()))]
-            if sum(match) != 1: #there must be one and only one entry matching one sample name
-                match_list = [x for x in sorted(list(original_names.keys())) if re.match(regex, x)]
-                raise ValueError("Problem matching SampleName to read file names. SampleName %s match mutiple fastq files prefix: %s" % (i, match_list))
-            sample = str(sorted(list(original_names.keys()))[match.index(True)])
-            original_correct[i] = original_names[sample]
-            read_correct[i] = reads_local[sample]
-    else:
-        for i in list(local_data["OldSampleName"]):
-            regex = re.compile(r'%s([^-a-zA-Z0-9]|$)' % i)
-            match = [bool(re.match(regex, x)) for x in sorted(list(original_names.keys()))]
-            if sum(match) != 1:
-                match_list = [x for x in sorted(list(original_names.keys())) if re.match(regex, x)]
-                raise ValueError("Problem matching OldSampleName to read file names. OldSampleName %s match mutiple fastq files prefix: %s" % (i, match_list))
-            old_sample_name=str(sorted(list(original_names.keys()))[match.index(True)])
-            sample=str(local_data.index[local_data['OldSampleName'] == i][0])
-            original_correct[sample] = original_names[old_sample_name]
-            read_correct[sample] = reads_local[old_sample_name]
-    original_names = original_correct
-    reads_local = read_correct
-    all_samples=local_data
+
+    # setup read_naming dictionnatry and check that sample names are unique 
+    if not "R1" in local_data.columns.values:
+        raise IOError('Missing R1 column in sample table.')
+    for sample_name, sample_data in local_data.iterrows():
+        if sample_name in reads_local:
+            raise IOError("Identical sample name used multiple times: %s" % sample_name)
+        reads_local[sample_name] =[sample_data.loc["R1"]] 
+        if 'R2' in local_data.columns.values:
+            if "R1" in sample_data.loc["R2"]:
+                raise IOError("ATTENTION! R1 flag within R2 filename: %s", sample_data.loc["R2"])
+            reads_local[sample_name].append(sample_data.loc["R2"])
+    all_samples = local_data
 
 if "sra_samples" in config.keys():
     sra_data = pandas.read_csv(config["sra_samples"], sep="\t", index_col=0).drop_duplicates()
@@ -113,13 +70,9 @@ if "sra_samples" in config.keys():
 
 all_samples["ScientificName"] = all_samples["ScientificName"].str.replace(" ", "_")
 read_naming = {**reads_local, **sras_ext}
-original_names = {**original_names, **reads_sra}
 
-#for key in read_naming:
-#    print("%s\t%s\t%s" % (key, read_naming[key], original_names[key]))
-
-#for i in list(read_naming.keys()):
-#    print ("%s\t%s\t%s" % (i, read_naming[i], original_names[i]))
+for key in read_naming:
+    print("%s\t%s" % (key, read_naming[key]))
 
 if "reference" in config:
     # preparing reference_genomes variable

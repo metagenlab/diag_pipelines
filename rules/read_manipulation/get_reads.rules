@@ -1,6 +1,6 @@
 rule copy_fastq_paired_from_link:
     input:
-        lambda wildcards: expand(link_directory + original_names[wildcards.sample] + "_{ext}", ext=read_naming[wildcards.sample])
+        lambda wildcards: read_naming[wildcards.sample]
     output:
         temp("samples/{sample}/reads/raw/{sample}_R1.fastq.gz"),
         temp("samples/{sample}/reads/raw/{sample}_R2.fastq.gz")
@@ -8,17 +8,21 @@ rule copy_fastq_paired_from_link:
         """
         gzip -t {input[0]}
         gzip -t {input[1]}
+        echo {input[0]} {output[0]}
         cp {input[0]} {output[0]}
+        echo {input[1]} {output[1]}
         cp {input[1]} {output[1]}
         """
 
-rule copy_fastq_single_from_link:
-    input:
-        lambda wildcards: link_directory + original_names[wildcards.sample]+ "." +read_naming[wildcards.sample][0]
-    output:
-        temp("samples/{sample}/reads/raw/single_{sample}.fastq.gz")
-    shell:
-        """
-        gzip -t {input[0]}
-        cp {input[0]} {output[0]}
-        """
+if not 'R2' in local_data.columns.values:
+
+    rule copy_fastq_single_from_link:
+        input:
+            lambda wildcards: read_naming[wildcards.sample]
+        output:
+            temp("samples/{sample}/reads/raw/single_{sample}.fastq.gz")
+        shell:
+            """
+            gzip -t {input[0]}
+            cp {input[0]} {output[0]}
+            """
