@@ -9,6 +9,8 @@ reference_assembly_for_resistance["Mycobacterium_tuberculosis"] = "538048"
 rule create_reference_lists_from_databases:
     conda:
         "../envs/pandas-openpyxl-pronto-xlrd.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         miotto = "resistance_db/" + species + "/mutations/miotto_high_moderate_minimum_confidence_annotated.tsv",
         mykrobe = "resistance_db/" + species + "/mutations/mykrobe_annotated.tsv",
@@ -31,6 +33,8 @@ rule create_reference_lists_from_databases:
 rule check_annotated_mutations_from_database_and_create_bed_file:
     conda:
         "../envs/pandas-openpyxl-pronto-xlrd.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         db = "resistance_db/" + species + "/mutations/{db}.tsv",
         gene_to_locus = "resistance_db/" + species + "/metadata/locus_tags.tsv",
