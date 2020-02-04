@@ -16,3 +16,21 @@ rule statistics:
         "report/statistics.tab"
     script:
         "scripts/statistics.py"
+
+
+
+rule statistics_minimal:
+    conda:
+        "../../envs/python-r.yml"
+    singularity:
+        "docker://metagenlab/diag-pipeline-python-r:1.1"
+    input:
+        #contigs = expand("samples/{sample}/assembly/spades/contigs.fasta", sample=read_naming.keys()),
+        #contigs_depth = expand("samples/{sample}/{mapping_method}/{sample}_assembled_genome/contig_coverage.txt", sample=read_naming.keys(), mapping_method=config["mapping"]),
+        mash_results = expand('samples/{sample}/contamination/mash/fastq/distances_formated_no_virus.tsv', sample=read_naming.keys()),
+        centrifuge_tables = expand("samples/{sample}/contamination/centrifuge/report.tsv", sample=read_naming.keys()),
+        multiqc_report = "report/multiqc_mapping_to_538048/bwa/multiqc_data.json",
+    output:
+        "report/statistics_minimal.tab"
+    script:
+        "scripts/statistics.py"
