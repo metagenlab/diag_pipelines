@@ -9,6 +9,9 @@ include:
 include:
     "virulence.rules"
 
+include:
+    "benchmark.rules"
+
 rule epidemiology:
     input:
         "report/report_epidemiology.html",

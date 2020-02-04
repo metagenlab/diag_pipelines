@@ -1,0 +1,8 @@
+
+rule combine_all_mykrobe:
+    input:
+        all_mykrobe = expand("samples/{sample}/resistance/mykrobe.tsv", sample = read_naming.keys())
+    output:
+        "report/resistance/mykrobe_all.tsv"
+    script:
+        "scripts/mykrobe_merge.py"

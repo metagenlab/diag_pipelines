@@ -1,0 +1,43 @@
+
+rule copy_tbprofiler_results:
+    threads:
+        1
+    input:
+        "samples/{sample}/resistance/tb-profiler/results/{sample}.results.json",
+    output:
+        temp("report/resistance/tb-profiler/{sample}.results.json"),
+    shell:
+        """
+        cp {input[0]} {output[0]}
+        """
+
+
+rule tbprofiler_collate:
+    singularity:
+        "docker://metagenlab/tb-profiler:2.8.4b"
+    threads:
+        1
+    input:
+        expand("report/resistance/tb-profiler/{sample}.results.json", sample = read_naming.keys())
+    output:
+        "report/resistance/tb-profiler/tbprofiler_results.txt"
+    log:
+        "report/resistance/tb-profiler/tb-profiler.log",
+    shell:
+        """
+        tb-profiler collate --dir report/resistance/tb-profiler/ --prefix report/resistance/tb-profiler/tbprofiler_results
+        """
+
+
+rule format_tbprofiler_collated:
+    singularity:
+        "docker://metagenlab/tb-profiler:2.8.4b"
+    threads:
+        1
+    input:
+        expand("report/resistance/tb-profiler/{sample}.results.json", sample = read_naming.keys())
+    output:
+        "report/resistance/tb-profiler/tbprofiler_results.txt"
+    log:
+        "report/resistance/tb-profiler/tb-profiler.log",
+    script:"scripts/format_tb-profiler_colated.py"

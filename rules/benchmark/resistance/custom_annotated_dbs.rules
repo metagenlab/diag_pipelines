@@ -1,0 +1,12 @@
+
+rule combine_all_customdb_MTB:
+    singularity:
+        "docker://limr/pyvcf:0.6.8"
+    input:
+        all_custom_db = expand("samples/{sample}/resistance/{{bwa_or_stringent}}/{{db}}/mutations.vcf", sample = read_naming.keys()),
+        resistance_genes = "resistance_db/Mycobacterium_tuberculosis/metadata/resistance_genes.tsv"
+    output:
+        "report/resistance/{bwa_or_stringent}/{db}.tsv"
+    script:
+        "scripts/custom_db_merge.py"
+        
