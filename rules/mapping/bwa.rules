@@ -1,3 +1,12 @@
+def check_if_paired(wildcards):
+    
+    if len(read_naming[wildcards.sample]) == 2:
+        return ["samples/{sample}/reads/trimmed/R1_paired.fastq",
+                "samples/{sample}/reads/trimmed/R2_paired.fastq"]
+    else:
+        return ["samples/{sample}/reads/trimmed/single.fastq"]
+
+
 rule map_paired_reads_with_bwa:
     conda:
         "../../envs/bwa-samtools.yml"
@@ -6,8 +15,7 @@ rule map_paired_reads_with_bwa:
     params:
         platform = "ILLUMINA"
     input:
-        fastq1 = "samples/{sample}/reads/trimmed/R1_paired.fastq",
-        fastq2 = "samples/{sample}/reads/trimmed/R2_paired.fastq",
+        fastq = check_if_paired,
         ref = "references/{ref}/genome_fasta.fasta",
         ref_index = "references/{ref}/genome_fasta.fasta.bwt",
     output:
@@ -20,9 +28,10 @@ rule map_paired_reads_with_bwa:
         then
              rm {output[0]}.tmp*
         fi
-        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq1]} {input[fastq2]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
+        (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
 
+'''
 rule map_single_reads_with_bwa:
     conda:
         "../../envs/bwa-samtools.yml"
@@ -46,6 +55,8 @@ rule map_single_reads_with_bwa:
         fi
         (bwa mem -R '@RG\\tID:{wildcards.sample}\\tSM:{wildcards.sample}\\tPL:{params.platform}' {input[ref]} {input[fastq]} -v 1 | samtools sort -O BAM -o {output[0]}) 2> {log}
         """
+'''
+
 
 rule mapping_depth:
     conda:
@@ -122,7 +133,7 @@ rule filter_reads_on_quality:
         ref = "references/{ref}/genome_fasta.fasta",
         ref_index = "references/{ref}/genome_fasta.fasta.bwt",
     output:
-        temp("samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam"),
+        temp("samples/{sample}/mapping/{mapping_method}/{ref}/filtered.bam"),
     shell:
         """
         if ls {output[0]}.tmp* 1> /dev/null 2>&1
@@ -138,10 +149,10 @@ rule remove_duplicates_from_mapping:
     singularity:
         "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
     input:
-        bam = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam",
-        bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_filtered.bam.bai",
+        bam = "samples/{sample}/mapping/{mapping_method}/{ref}/filtered.bam",
+        bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}/filtered.bam.bai",
     output:
-        temp("samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam"),
+        temp("samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam"),
     log:
          logging_folder + "samples/{sample}/mapping/{mapping_method}/{ref}/metrics_deduplicated.txt",
          logging_folder + "samples/{sample}/mapping/{mapping_method}/{ref}/markduplicates.txt",
