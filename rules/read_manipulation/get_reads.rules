@@ -1,3 +1,6 @@
+
+#if "local_samples" in config.keys():
+
 rule copy_fastq_paired_from_link:
     input:
         lambda wildcards: read_naming[wildcards.sample]
@@ -14,15 +17,15 @@ rule copy_fastq_paired_from_link:
         cp {input[1]} {output[1]}
         """
 
-if not 'R2' in local_data.columns.values:
+#if not 'R2' in local_data.columns.values:
 
-    rule copy_fastq_single_from_link:
-        input:
-            lambda wildcards: read_naming[wildcards.sample]
-        output:
-            temp("samples/{sample}/reads/raw/single_{sample}.fastq.gz")
-        shell:
-            """
-            gzip -t {input[0]}
-            cp {input[0]} {output[0]}
-            """
+rule copy_fastq_single_from_link:
+    input:
+        lambda wildcards: read_naming[wildcards.sample]
+    output:
+        temp("samples/{sample}/reads/raw/single_{sample}.fastq.gz")
+    shell:
+        """
+        gzip -t {input[0]}
+        cp {input[0]} {output[0]}
+        """
