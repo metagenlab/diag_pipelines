@@ -25,6 +25,16 @@ rule strain_characterization:
     input:
         "report/report_strain_characterization.html",
 
+rule custom_db:
+    input:
+        expand("samples/{sample}/resistance/bwa/walker_resistant_annotated/mutations.vcf", sample=read_naming.keys()),
+        expand("samples/{sample}/resistance/bwa/mykrobe_annotated/mutations.vcf", sample=read_naming.keys()),
+        "report/resistance/rgi_all.tsv",
+        "report/resistance/mykrobe_all.tsv",
+        "report/resistance/bwa/walker_resistant_annotated.tsv",
+        "report/resistance/tb-profiler/results.txt",
+        expand("samples/{sample}/resistance/tb-profiler/results/{sample}.results.json", sample=read_naming.keys())
+
 
 '''
 - we set a rule order to be able to extract core SNP data from the complete reference genome data
