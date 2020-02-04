@@ -1,10 +1,13 @@
+
+ruleorder: calculate_distance_paired_reads_from_refseq_genomes_with_mash > calculate_distance_single_reads_from_refseq_genomes_with_mash
+
 rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
     conda:
         "../../envs/mash.yml"
     singularity:
         "docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0" 
     threads:
-        8
+        2
     input:
         mash_sketch = "references/mash_sketch.msh",
         R1 = "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
@@ -20,7 +23,7 @@ rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
 
 rule calculate_distance_assembly_from_refseq_genomes_with_mash:
     threads:
-        8
+        2
     conda:
         "../../envs/mash.yml"
     singularity:
@@ -39,7 +42,7 @@ rule calculate_distance_assembly_from_refseq_genomes_with_mash:
 
 rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
     threads:
-        8
+        2
     conda:
         "../../envs/mash.yml"
     singularity:
@@ -108,9 +111,12 @@ rule merge_all_xlsx_mash_results:
         "../../rules/annotation/resistance/scripts/merge_non_empty_results.py"
 
 
+ruleorder: paired_reads_classification_with_centrifuge > single_reads_classification_with_centrifuge
+
+
 rule paired_reads_classification_with_centrifuge:
     threads:
-        4
+        2
     conda:
         "../../envs/centrifuge.yml"
     singularity:
@@ -130,7 +136,7 @@ rule paired_reads_classification_with_centrifuge:
 
 rule single_reads_classification_with_centrifuge:
     threads:
-        4
+        2
     conda:
         "../../envs/centrifuge.yml"
     singularity:
@@ -149,7 +155,7 @@ rule single_reads_classification_with_centrifuge:
 
 rule convert_centrifuge_to_kraken_output:
     threads:
-        4
+        2
     conda:
         "../../envs/centrifuge.yml"
     singularity:
