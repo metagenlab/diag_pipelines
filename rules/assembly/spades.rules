@@ -1,3 +1,13 @@
+
+def check_if_paired(wildcards):
+    
+    if len(read_naming[wildcards.sample]) == 2:
+        return ["samples/{sample}/reads/trimmed/R1_paired.fastq",
+                "samples/{sample}/reads/trimmed/R1_paired.fastq"]
+    else:
+        return ["samples/{sample}/reads/trimmed/R_paired.fastq"]
+
+
 rule correct_error_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
@@ -36,6 +46,9 @@ rule correct_error_single_reads_with_spades:
          """
          spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log}
          """
+
+ruleorder: assemble_genome_corrected_paired_reads_with_spades > assemble_genome_corrected_single_reads_with_spades
+
 
 rule assemble_genome_corrected_paired_reads_with_spades:
     conda:
