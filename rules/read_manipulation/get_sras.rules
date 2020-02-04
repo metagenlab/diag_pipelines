@@ -10,8 +10,8 @@ rule download_sra:
     singularity:
         "docker://ncbi/sra-toolkit:2.9.4-1"
     output:
-        # /home/pipeline_user/ncbi/public
-        temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
+        # /home/pipeline_user/ncbi/public: % os.getenv("HOME")
+        temp("ncbi/public/sra/{sample}.sra" ),
     log:
         logging_folder + "samples/{sample}/sras/dump.txt"
     params:
@@ -29,10 +29,11 @@ rule sra_convert_to_fastq_paired:
     singularity:
         "docker://ncbi/sra-toolkit:2.9.4-1"
     input:
-        temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
+        # temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
+        temp("ncbi/public/sra/{sample}.sra"),
     output:
-        temp(link_directory + "{sample,[A-Za-z0-9]+}_1.fastq.gz"),
-        temp(link_directory + "{sample,[A-Za-z0-9]+}_2.fastq.gz"),
+        "sra/{sample,[A-Za-z0-9]+}_1.fastq.gz",
+        "sra/{sample,[A-Za-z0-9]+}_2.fastq.gz",
     log:
         "log/sra_download/{sample}_dump.txt",
     shell:
@@ -46,9 +47,10 @@ rule sra_convert_to_fastq_single:
     singularity:
         "docker://ncbi/sra-toolkit:2.9.4-1"
     input:
-        temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
+        # "%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")
+        temp("ncbi/public/sra/{sample}.sra"),
     output:
-        temp(link_directory + "{sample,[A-Za-z0-9]+}.fastq.gz"),
+        "sra/{sample,[A-Za-z0-9]+}.fastq.gz",
     log:
         "log/sra_download/{sample}_dump.txt"
     shell:
