@@ -1,3 +1,12 @@
+
+def check_if_paired(wildcards):
+    
+    if len(read_naming[wildcards.sample]) == 2:
+        return ["samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
+                "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"]
+    else:
+        return ["samples/{sample}/reads/raw/{sample}_R1.fastq.gz"]
+
 rule search_resistance_paired_reads_with_mykrobe:
     conda:
         "../../../envs/mykrobe.yml"
@@ -8,8 +17,7 @@ rule search_resistance_paired_reads_with_mykrobe:
         species = mykrobe_species[species.split("_")[0]],
         confidence = mykrobe_confidence
     input:
-        "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
-        "samples/{sample}/reads/raw/{sample}_R2.fastq.gz",
+        check_if_paired
     output:
         "samples/{sample}/resistance/mykrobe.json"
     log:
@@ -29,6 +37,7 @@ rule search_resistance_paired_reads_with_mykrobe:
         fi
         """
 
+'''
 rule search_resistance_single_reads_with_mykrobe:
     conda:
         "../../../envs/mykrobe.yml"
@@ -39,7 +48,7 @@ rule search_resistance_single_reads_with_mykrobe:
         species = mykrobe_species[species.split("_")[0]],
         confidence = mykrobe_confidence,
     input:
-        "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
+        check_if_paired
     output:
         "samples/{sample}/resistance/mykrobe.json"
     log:
@@ -58,6 +67,8 @@ rule search_resistance_single_reads_with_mykrobe:
             fi
         fi
         """
+'''
+
 
 rule generate_mykrobe_tsv_file_from_json_file:
     input:
@@ -66,3 +77,12 @@ rule generate_mykrobe_tsv_file_from_json_file:
         "samples/{sample}/resistance/mykrobe.tsv"
     script:
         "scripts/mykrobe_json_to_tsv.py"
+
+
+rule combine_all_mykrobe:
+    input:
+        all_mykrobe = expand("samples/{sample}/resistance/mykrobe.tsv", sample = read_naming.keys())
+    output:
+        "report/resistance/mykrobe_all.tsv"
+    script:
+        "scripts/mykrobe_merge.py"
