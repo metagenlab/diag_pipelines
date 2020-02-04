@@ -116,3 +116,12 @@ rule generate_rgi_report:
         "report/resistance/{sample}_rgi_report.html",
     script:
         "scripts/generate_rgi_html_report.py"
+
+
+rule combine_all_rgi:
+    input:
+        all_rgi = expand("samples/{sample}/resistance/rgi_ontology.tsv", sample = read_naming.keys())
+    output:
+        "report/resistance/rgi_all.tsv"
+    script:
+        "scripts/rgi_merge.py"
