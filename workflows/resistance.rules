@@ -34,6 +34,9 @@ include:
 include:
     "../rules/annotation/resistance/rgi.rules"
 
+include:
+    "../rules/annotation/resistance/tb-profiler.rules"
+
 if species in reference_assembly_for_resistance.keys():
     include:
         "../rules/annotation/resistance/custom_annotated_dbs.rules"
@@ -41,12 +44,13 @@ if species in reference_assembly_for_resistance.keys():
         "../rules/annotation/resistance/detect_insertions_or_deletions.rules"
 
 if species.startswith("Staphylococcus") or species.startswith("Mycobacterium"):
+    print("sta or myco")
     include:
         "../rules/annotation/resistance/mykrobe.rules"
     rule all_resistance_summaries:
         input:
-            rgi = "resistance/rgi_summary.xlsx",
-            mykrobe = "resistance/mykrobe_summary.xlsx",
+            rgi = "report/resistance/rgi_summary.xlsx",
+            mykrobe = "report/resistance/mykrobe_summary.xlsx",
 
 else:
     rule all_resistance_summaries:

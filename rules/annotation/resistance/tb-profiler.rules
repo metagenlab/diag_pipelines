@@ -1,0 +1,51 @@
+  
+
+rule search_resistance_with_tbprofiler:
+    conda:
+        "../../../envs/rgi.yml"
+    singularity:
+        "docker://metagenlab/tb-profiler:2.8.4b"
+    threads:
+        4
+    input:
+        "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
+        "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"
+    output:
+        "samples/{sample}/resistance/tb-profiler/results/{sample}.results.json",
+        temp("samples/{sample}/resistance/tb-profiler/bam/{sample}.bam"),
+        temp("samples/{sample}/resistance/tb-profiler/vcf/{sample}.targets.vcf.gz"),
+    log:
+        "samples/{sample}/resistance/tb-profiler/tb-profiler.json",
+    shell:
+        """
+        tb-profiler profile --threads 8 -1 {input[0]} -2 {input[1]} --dir samples/{wildcards.sample}/resistance/tb-profiler/ -p {wildcards.sample} >> {log}
+        """
+
+rule copy_tbprofiler_results:
+    threads:
+        1
+    input:
+        "samples/{sample}/resistance/tb-profiler/results/{sample}.results.json",
+    output:
+        temp("report/resistance/tb-profiler/{sample}.results.json"),
+    shell:
+        """
+        cp {input[0]} {output[0]}
+        """
+
+
+rule tbprofiler_collate:
+    singularity:
+        "docker://metagenlab/tb-profiler:2.8.4b"
+    threads:
+        1
+    input:
+        expand("report/resistance/tb-profiler/{sample}.results.json", sample = read_naming.keys())
+    output:
+        "report/resistance/tb-profiler/results.txt"
+    log:
+        "report/resistance/tb-profiler/tb-profiler.log",
+    shell:
+        """
+        tb-profiler collate --dir report/resistance/tb-profiler/
+        """
