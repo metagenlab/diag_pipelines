@@ -49,12 +49,11 @@ rule create_multiqc_report_for_mapping:
     input:
         mapping = expand("samples/{sample}/multiqc/mapping_to_{{ref}}/{{mapping_method}}/log.txt", sample = list(read_naming.keys())),
     output:
-        "report/multiqc_mapping_to_{ref}/{mapping_method}/multiqc_report.html"
+        "report/multiqc_mapping_to_{ref}/{mapping_method}/multiqc_report.html",
+        "report/multiqc_mapping_to_{ref}/{mapping_method}/multiqc_data.json"
     log:
         logging_folder + "logs/quality/multiqc/{mapping_method}/mapping_to_{ref}.txt"
     shell:
         """
         multiqc -c {params.configfile} -f -o $(dirname {output[0]}) $(dirname {input[mapping]}) &> {log[0]}
         """
-
-
