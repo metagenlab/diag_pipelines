@@ -25,8 +25,8 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     threads:
         2
     input:
-        bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
-        bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
+        bam = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
+        bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",
         ref = "references/{ref}/genome_fasta.fasta",
         ref_dict = "references/{ref}/genome_fasta.dict",
     output:
