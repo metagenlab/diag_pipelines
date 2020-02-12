@@ -20,6 +20,6 @@ for mykrobe_result in mykrobe_results:
 
 header = ["sample"] + nr_drug_list
 with open(snakemake.output[0], 'w') as f:
-    f.write("\t".join(nr_drug_list)+'\n')
+    f.write("\t".join(header)+'\n')
     for sample in sample2drug2susceptibility:
         f.write(f"{sample}\t" + '\t'.join([sample2drug2susceptibility[sample][i] for i in nr_drug_list])+'\n')
