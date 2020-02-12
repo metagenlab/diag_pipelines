@@ -30,13 +30,13 @@ rule strain_characterization:
 
 rule custom_db:
     input:
-        expand("samples/{sample}/resistance/bwa/walker_resistant_annotated/mutations.vcf", sample=read_naming.keys()),
-        expand("samples/{sample}/resistance/bwa/mykrobe_annotated/mutations.vcf", sample=read_naming.keys()),
-        "report/resistance/rgi_all.tsv",
-        "report/resistance/mykrobe_all.tsv",
-        "report/resistance/bwa/walker_resistant_annotated.tsv",
-        "report/resistance/tb-profiler/results.txt",
-        expand("samples/{sample}/resistance/tb-profiler/results/{sample}.results.json", sample=read_naming.keys())
+        # expand("samples/{sample}/resistance/bwa/walker_resistant_annotated/mutations.vcf", sample=read_naming.keys()),
+        # expand("samples/{sample}/resistance/bwa/mykrobe_annotated/mutations.vcf", sample=read_naming.keys()),
+        "report/resistance/rgi_benchmark.tsv",
+        "report/resistance/mykrobe_benchmark.tsv",
+        "report/resistance/bwa/walker_resistant_annotated_benchmark.tsv",
+        "report/resistance/tb-profiler/tbprofiler_benchmark.txt",
+        # expand("samples/{sample}/resistance/tb-profiler/results/{sample}.results.json", sample=read_naming.keys())
 
 
 '''
