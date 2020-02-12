@@ -1,0 +1,15 @@
+
+include:
+    "../rules/benchmark/resistance/tb-profiler.rules"
+
+include:
+    "../rules/benchmark/resistance/mykrobe.rules"
+
+include:
+    "../rules/benchmark/resistance/rgi.rules"
+
+include:
+    "../rules/benchmark/resistance/custom_annotated_dbs.rules"
+
+include:
+    "../rules/benchmark/resistance/compare_results.rules"
