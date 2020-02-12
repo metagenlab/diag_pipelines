@@ -1,0 +1,10 @@
+
+rule compare_MTB_res_search:
+    input:
+        table_2 = "{path}_benchmark.tsv"
+    params:
+        reference_table = config["sra_samples"] 
+    output:
+        "{path}_benchmark_results.tsv"
+    script:
+        "scripts/compare_tables.py"
