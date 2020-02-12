@@ -1,6 +1,7 @@
 import json
 import pandas
 import os
+import re
 
 rgi_antibiotics = snakemake.input["all_rgi"]
 
@@ -18,24 +19,22 @@ for rgi_result in rgi_antibiotics:
     sample2drug2susceptibility[sample] = {}
     result_table = pandas.read_csv(rgi_result, sep="\t", index_col="ARO")
     for n, row in result_table.iterrows():
-        mechanism = row["Mechanism"] 
-        drug = row["Antibiotic resistance prediction"].lower()
-        print("drug-mech", drug, mechanism)
-        if drug not in nr_drug_list:
-            nr_drug_list.append(drug)
-        if mechanism == "antibiotic efflux":
-            continue
-        sample2drug2susceptibility[sample][drug] = "R"
+        mechanism = row["Resistance Mechanism"] 
+        drug_list = [re.sub(" antibiotic","", i) for i in row["Drug Class"].lower().split("; ")]
+        for drug in drug_list:
+            if drug not in nr_drug_list:
+                nr_drug_list.append(drug)
+            if "antibiotic efflux" in mechanism:
+                continue
+            sample2drug2susceptibility[sample][drug] = "R"
 
 for sample in sample2drug2susceptibility:
     for drug in nr_drug_list:
         if drug not in sample2drug2susceptibility[sample]:
-            sample2drug2susceptibility[sample]["drug"] = "S"
-
-print(sample2drug2susceptibility)
+            sample2drug2susceptibility[sample][drug] = "S"
 
 header = ["sample"] + nr_drug_list
 with open(snakemake.output[0], 'w') as f:
-    f.write("\t".join(nr_drug_list)+'\n')
+    f.write("\t".join(header)+'\n')
     for sample in sample2drug2susceptibility:
         f.write(f"{sample}\t" + '\t'.join([sample2drug2susceptibility[sample][i] for i in nr_drug_list])+'\n')
