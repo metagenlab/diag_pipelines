@@ -1,9 +1,9 @@
 
 rule combine_all_rgi:
     input:
-        all_rgi = expand("samples/{sample}/resistance/rgi_ontology.tsv", sample = read_naming.keys())
+        all_rgi = expand("samples/{sample}/resistance/rgi.tsv", sample = read_naming.keys())
     output:
-        "report/resistance/rgi_all.tsv"
+        "report/resistance/rgi_benchmark.tsv"
     script:
         "scripts/rgi_merge.py"
         
