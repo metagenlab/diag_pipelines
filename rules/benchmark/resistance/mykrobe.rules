@@ -6,3 +6,12 @@ rule combine_all_mykrobe:
         "report/resistance/mykrobe_benchmark.tsv"
     script:
         "scripts/mykrobe_merge.py"
+
+
+rule mykrobe_variant_frequency:
+    input:
+        all_mykrobe = expand("samples/{sample}/resistance/mykrobe.tsv", sample = read_naming.keys())
+    output:
+        "report/resistance/mykrobe_variant_frequency.tsv"
+    script:
+        "scripts/frequency_mykrobe.py"

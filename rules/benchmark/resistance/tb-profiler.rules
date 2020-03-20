@@ -41,3 +41,17 @@ rule format_tbprofiler_collated:
     log:
         "report/resistance/tb-profiler/tb-profiler.log",
     script:"scripts/format_tb-profiler_colated.py"
+
+
+rule tbprofiler_variant_frequency:
+    singularity:
+        "docker://metagenlab/tb-profiler:2.8.4b"
+    threads:
+        1
+    input:
+        "report/resistance/tb-profiler/tbprofiler_collate.txt"
+    output:
+        "report/resistance/tb-profiler/tbprofiler_variant_frequency.tsv"
+    log:
+        "report/resistance/tb-profiler/tbprofiler_variant_frequency.log",
+    script:"scripts/frequency_tbprofiler.py"

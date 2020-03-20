@@ -6,4 +6,12 @@ rule combine_all_rgi:
         "report/resistance/rgi_benchmark.tsv"
     script:
         "scripts/rgi_merge.py"
-        
+
+
+rule rgi_variant_frequency:
+    input:
+        all_rgi = expand("samples/{sample}/resistance/rgi.tsv", sample = read_naming.keys())
+    output:
+        "report/resistance/rgi_variant_frequency.tsv"
+    script:
+        "scripts/frequency_rgi.py"
