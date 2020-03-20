@@ -84,7 +84,7 @@ for index, row in rgi_results.iterrows():
         ref = snp[0]
         mut = snp[-1]
         for child in term.relations:
-            if child.obo_name=="confers_resistance_to_drug" or child.obo_name=="confers_resistance_to":
+            if child.obo_name=="confers_resistance_to_antibiotic" or child.obo_name=="confers_resistance_to_drug_class":
                 for antibiotic in term.relations[child]:
                     anti = antibiotic.name.replace("antibiotic", "").strip()
                     anti_aro = antibiotic.id
@@ -109,7 +109,7 @@ for index, row in rgi_results.iterrows():
         #print('relations', term.relations)
         for child in term.relations:
             print(child.obo_name)
-            if child.obo_name=="confers_resistance_to_drug" or child.obo_name=="confers_resistance_to":
+            if child.obo_name=="confers_resistance_to_antibiotic" or child.obo_name=="confers_resistance_to_drug_class":
                 for antibiotic in term.relations[child]:
                     anti_class = get_drug_class(antibiotic, obo2drug_class)
                     if anti_class is not None:
@@ -135,8 +135,8 @@ for index, row in rgi_results.iterrows():
             #print('parents', term.rparents())
             for parent in term.rparents():
                 for child in parent.relations:
-                    #print(child.obo_name)
-                    if child.obo_name=="confers_resistance_to_drug" or child.obo_name=="confers_resistance_to":
+                    print(child.obo_name)
+                    if child.obo_name=="confers_resistance_to_antibiotic" or child.obo_name=="confers_resistance_to_drug_class":
                         for antibiotic in parent.relations[child]:
                             anti_class = get_drug_class(antibiotic, obo2drug_class)
                             anti = antibiotic.name.replace("antibiotic", "").strip()
