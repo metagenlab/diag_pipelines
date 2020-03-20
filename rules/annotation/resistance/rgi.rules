@@ -2,7 +2,7 @@ rule search_resistance_with_rgi:
     conda:
         "../../../envs/rgi.yml"
     singularity:
-        "docker://metagenlab/rgi:5.0.0-v3.0.4"
+        "docker://metagenlab/rgi:5.1.0-v3.0.7"
     threads:
         4
     input:
@@ -56,7 +56,7 @@ rule generate_rgi_tsv_file_from_json_file:
     conda:
         "../../../envs/rgi.yml"
     singularity:
-        "docker://metagenlab/rgi:5.0.0-v3.0.4"
+        "docker://metagenlab/rgi:5.1.0-v3.0.7"
     input:
         "samples/{sample}/resistance/rgi.json"
     output:
