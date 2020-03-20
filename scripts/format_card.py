@@ -34,7 +34,10 @@ def parse_card_json(json_file):
 
     with open(json_file, "r") as read_file:
         card_data = json.load(read_file)
+
         for model in card_data:
+            antibiotic = []
+            drug_class = None
             if "_" in model:
                 continue
             if card_data[model]['model_type'] == "protein variant model":
@@ -44,19 +47,17 @@ def parse_card_json(json_file):
                     if "Mycobacterium tuberculosis" in card_data[model]["model_sequences"]["sequence"][sequence]["NCBI_taxonomy"]["NCBI_taxonomy_name"]:
 
                         snp_data = card_data[model]['model_param']['snp']
+
                         for param in card_data[model]['model_param']:
 
-                            if card_data[model]['model_param'][param]['param_type'] == 'multiple resistance variants':
-                                continue
+                            #if card_data[model]['model_param'][param]['param_type'] == 'multiple resistance variants':
+                            #    print("multiple resistance variants",card_data[model]['model_param'][param])
+                            #    print()
 
                             if param != 'blastp_bit_score':
                                 param_type = card_data[model]['model_param'][param]['param_type']
                                 param_values = card_data[model]['model_param'][param]["param_value"]
                                 model_name = card_data[model]["model_name"].split(" ")[2]
-
-
-                                
-                                
 
                                 if "mutations conferring resistance to" in card_data[model]["model_name"]:
                                     s = re.search("(.*) (.*) mutations conferring resistance to (.*)", card_data[model]["model_name"])
@@ -77,10 +78,25 @@ def parse_card_json(json_file):
 
                                 
                                 aro = card_data[model]["ARO_accession"]
+
+                                for i in card_data[model]["ARO_category"]:
+                                    if (card_data[model]["ARO_category"][i]["category_aro_class_name"] == "Drug Class"):
+                                        drug_class = card_data[model]["ARO_category"][i]["category_aro_name"]
+                                    if (card_data[model]["ARO_category"][i]["category_aro_class_name"] == "Antibiotic"):
+                                        antibiotic.append(card_data[model]["ARO_category"][i]["category_aro_name"])
+
+                                if len(antibiotic) == 0:
+                                    category = drug_class
+                                # if resistance to multiple antibiotics of the same class, report the class
+                                elif len(set(antibiotic)) > 1:
+                                    category = re.sub(" antibiotic","", drug_class)
+                                # if resistant to a single antibiotic, report the antibiotic name
+                                else:
+                                    category = re.sub(" antibiotic","", antibiotic[0])
                                 for key in param_values:
                                     value = card_data[model]['model_param'][param]["param_value"][key]
                                     
-                                    print(f"{aro}\t{gene}\t{param_type}\t{value}")
+                                    print(f"{aro}\t{gene}\t{param_type}\t{value}\t{category}")
                                 
 
 

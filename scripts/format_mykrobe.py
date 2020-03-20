@@ -13,6 +13,7 @@ def parse_walker_rable(json_file):
             
             regex = '(.*)_([A-Za-z]+)([\d\-]+)([A-Za-z]+)'
             s = re.search(regex, entry)
+
             if s:
                 gene = s.group(1)
                 REF = s.group(2)
@@ -26,7 +27,8 @@ def parse_walker_rable(json_file):
                     change_type = 'INDEL'
                 else:
                     change_type = 'SNP'
-                print(f"{gene}\t{entry}\t{position}\t{coli_position}\t{REF}\t{ALT}\t{change_type}")
+                for antibio in data[entry]:
+                    print(f"{gene}\t{entry}\t{position}\t{coli_position}\t{REF}\t{ALT}\t{change_type}\t{antibio}")
             else:
                 print("PROBLEM", entry)
 
