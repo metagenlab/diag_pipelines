@@ -66,7 +66,7 @@ def get_neiboring_orf(position, feature_list):
             locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
         else:
             gene = '-'
-            locus_tag = feature_list[-1].type
+            locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
             if 'mobile_element_type' in feature_list[-1].qualifiers:
                 gene = feature_list[-1].qualifiers["mobile_element_type"]
             else:
@@ -82,7 +82,7 @@ def get_neiboring_orf(position, feature_list):
                 locus_tag = feature.qualifiers["locus_tag"][0]
             else:
                 gene = '-'
-                locus_tag = feature.type
+                locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
                 if 'mobile_element_type' in feature.qualifiers:
                     gene = feature.qualifiers["mobile_element_type"]
                 else:
@@ -95,7 +95,7 @@ def get_neiboring_orf(position, feature_list):
                 locus_tag1 = feature.qualifiers["locus_tag"][0]
             except KeyError:
                 gene1 = '-'
-                locus_tag1 = feature.type
+                locus_tag1 = feature_list[-1].qualifiers["locus_tag"][0]
                 if 'mobile_element_type' in feature.qualifiers:
                     gene1 = feature.qualifiers["mobile_element_type"]
                 else:
@@ -105,7 +105,7 @@ def get_neiboring_orf(position, feature_list):
                 locus_tag2 = feature_list[n + 1].qualifiers["locus_tag"][0]
             except KeyError:
                 gene2 = '-'
-                locus_tag2 = feature_list[n + 1].type
+                locus_tag2 = feature_list[n + 1].qualifiers["locus_tag"][0]
                 if 'mobile_element_type' in feature_list[n + 1].qualifiers:
                     gene2 = feature_list[n + 1].qualifiers["mobile_element_type"]
                 else:
