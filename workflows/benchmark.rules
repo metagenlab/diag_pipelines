@@ -13,3 +13,6 @@ include:
 
 include:
     "../rules/benchmark/resistance/compare_results.rules"
+
+include:
+    "../rules/benchmark/resistance/venn.rules"
