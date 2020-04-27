@@ -1,4 +1,7 @@
 
+
+import re
+
 if "--use-singularity" in sys.argv:
     worflow_path = workflow.snakefile.split("workflows/full_pipeline.rules")[0]
     workflow.singularity_args += f' -B {worflow_path}:{worflow_path}'
@@ -12,17 +15,38 @@ include:
 include:
     "benchmark.rules"
 
+
+def get_assembly_list():
+    assembly_out =[]
+    for reference in reference_genomes:
+        if 'assembled_genome' in reference:
+            sample = re.match("full_genome_(.*)_assembled_genome", reference).group(1)
+            assembly_out.append(f"report/genomes/{sample}.faa")
+            assembly_out.append(f"report/genomes/{sample}.fna")
+            assembly_out.append(f"report/genomes/{sample}.gbk")
+    return assembly_out
+
+
 rule epidemiology:
     input:
         "report/report_epidemiology.html",
+        get_assembly_list()
+
 
 rule virulence:
     input:
         "report/report_virulence.html",
+        expand("report/genomes/{sample}.faa", sample=read_naming.keys()),
+        expand("report/genomes/{sample}.gbk", sample=read_naming.keys()),
+        expand("report/genomes/{sample}.fna", sample=read_naming.keys()),
+
 
 rule resistance:
     input:
         "report/report_resistance.html",
+        expand("report/genomes/{sample}.faa", sample=read_naming.keys()),
+        expand("report/genomes/{sample}.gbk", sample=read_naming.keys()),
+        expand("report/genomes/{sample}.fna", sample=read_naming.keys()),
 
 rule strain_characterization:
     input:
