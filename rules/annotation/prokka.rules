@@ -113,3 +113,20 @@ rule copy_filtered_assembly_to_reference_folder:
         cp {input[0]} {output[fasta_ref]}
         cp {input[1]} {output[gbk_ref]}
         """
+
+
+rule copy_filtered_assembly_to_report_folder:
+    input:
+        "samples/{sample}/annotation/{sample}.faa",
+        "samples/{sample}/annotation/{sample}.gbk",
+        "samples/{sample}/annotation/{sample}.fna",
+    output:
+        "report/genomes/{sample}.faa",
+        "report/genomes/{sample}.gbk",
+        "report/genomes/{sample}.fna",
+    shell:
+        """
+        cp {input[0]} {output[0]}
+        cp {input[1]} {output[1]}
+        cp {input[2]} {output[2]}
+        """
