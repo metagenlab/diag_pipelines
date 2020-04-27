@@ -5,10 +5,9 @@ import numpy
 
 # inputs
 rgi_tsv_output = snakemake.input[0]
-rgi_ontology = snakemake.input[1]
-gene_depth_file = snakemake.input[2]
-contig_gc_depth_file = snakemake.input[3]
-samtools_depth = snakemake.input[4]
+gene_depth_file = snakemake.input[1]
+contig_gc_depth_file = snakemake.input[2]
+samtools_depth = snakemake.input[3]
 sample = snakemake.params[0]
 
 # output
@@ -17,10 +16,6 @@ report_file = snakemake.output[0]
 rgi_table = pandas.read_csv(rgi_tsv_output,
                             delimiter='\t',
                             header=0, index_col=0)
-
-ontology_table = pandas.read_csv(rgi_ontology,
-                                 delimiter='\t',
-                                 header=0)
 
 # parse rgi output file
 contig2resistances = {}
@@ -177,7 +172,6 @@ def bubble_plot_gc_depth(bubble_data):
 
 
 def resistance_table(rgi_table,
-                     ontology_table,
                      samtools_depth_df):
 
     import numpy
@@ -222,13 +216,13 @@ def resistance_table(rgi_table,
         snps = one_resistance["SNPs_in_Best_Hit_ARO"]
         model = one_resistance["Model_type"]
         family = one_resistance["AMR Gene Family"]
-        antibio_res_list = list(ontology_table[ontology_table['Name'] == name]["Antibiotic resistance prediction"])
-        antibio_res_class_list = list(ontology_table[ontology_table['Name'] == name]["Class"])
+        #antibio_res_list = list(ontology_table[ontology_table['Name'] == name]["Antibiotic resistance prediction"])
+        antibio_res_class_list = one_resistance["Drug Class"].split("; ")
 
         resistance_code = ''
-        for resistance, resistance_class in zip(antibio_res_list, antibio_res_class_list):
+        for resistance_class in antibio_res_class_list:
             # print(resistance, resistance_class)
-            resistance_code += '%s (%s) </br>' % (resistance, resistance_class)
+            resistance_code += '%s</br>' % (resistance_class)
 
         table_rows.append([contig,
                            orf_id,
@@ -393,7 +387,6 @@ samtools_mean_depth = round(numpy.mean(samtools_depth_df.iloc[:, 1]), 0)
 samtools_median_depth = round(numpy.median(samtools_depth_df.iloc[:, 1]), 0)
 
 rgi_table = resistance_table(rgi_table,
-                             ontology_table,
                              samtools_depth_df)
 
 write_report(report_file,
