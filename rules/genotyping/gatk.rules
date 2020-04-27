@@ -4,7 +4,7 @@ rule create_dictionary_for_reference:
     conda:
         "../../envs/gatk.yml"
     singularity:
-        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
+        singularity_envs["gatk4"]
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         index = "references/{ref}/genome_fasta.fasta.fai"
@@ -21,7 +21,7 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     conda:
         "../../envs/gatk.yml"
     singularity:
-        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
+        singularity_envs["gatk4"]
     threads:
         2
     input:
@@ -43,7 +43,7 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
     conda:
         "../../envs/gatk.yml"
     singularity:
-        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
+        singularity_envs["gatk4"]
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
@@ -66,7 +66,7 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
     conda:
         "../../envs/gatk.yml"
     singularity:
-        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
+        singularity_envs["gatk4"]
     input:
         ref = "references/{ref}/genome_fasta.fasta",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
@@ -85,7 +85,7 @@ rule genotype_with_GenotypeGVCFs_GATK:
     conda:
         "../../envs/gatk.yml"
     singularity:
-        "docker://quay.io/biocontainers/gatk4:4.1.4.0--0"
+        singularity_envs["gatk4"]
     threads:
         4
     input:

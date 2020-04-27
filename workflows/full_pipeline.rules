@@ -1,11 +1,16 @@
 
 
 import re
+import yaml
+import os
 
 if "--use-singularity" in sys.argv:
     worflow_path = workflow.snakefile.split("workflows/full_pipeline.rules")[0]
     workflow.singularity_args += f' -B {worflow_path}:{worflow_path}'
 
+    singularity_envs = yaml.safe_load(open(os.path.join(workflow.basedir,  "../envs/singularity/envs.yml"), 'r'))
+
+    
 include:
     "resistance.rules"
 

@@ -11,7 +11,7 @@ rule search_resistance_paired_reads_with_mykrobe:
     conda:
         "../../../envs/mykrobe.yml"
     singularity:
-        "docker://quay.io/biocontainers/mykrobe:0.7.0--py37h2666aa9_0"
+        singularity_envs["mykrobe"]
     params:
         panel = mykrobe_panel,
         species = mykrobe_species[species.split("_")[0]],
@@ -71,6 +71,8 @@ rule search_resistance_single_reads_with_mykrobe:
 
 
 rule generate_mykrobe_tsv_file_from_json_file:
+    singularity:
+        singularity_envs["python_r"]
     input:
         "samples/{sample}/resistance/mykrobe.json",
     output:

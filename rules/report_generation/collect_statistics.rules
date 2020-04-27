@@ -2,7 +2,7 @@ rule statistics:
     conda:
         "../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+        singularity_envs["python_r"]
     input:
         multiqc_assembly = "report/multiqc_assembly_flash/multiqc_data/multiqc_data.json",
         contigs = expand("samples/{sample}/assembly/spades/contigs.fasta", sample=read_naming.keys()),
@@ -23,7 +23,7 @@ rule statistics_minimal:
     conda:
         "../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+        singularity_envs["python_r"]
     input:
         #contigs = expand("samples/{sample}/assembly/spades/contigs.fasta", sample=read_naming.keys()),
         #contigs_depth = expand("samples/{sample}/{mapping_method}/{sample}_assembled_genome/contig_coverage.txt", sample=read_naming.keys(), mapping_method=config["mapping"]),

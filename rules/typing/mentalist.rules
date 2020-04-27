@@ -2,6 +2,8 @@
 rule determine_mlst_from_trimmed_reads:
     conda:
         "../../envs/mentalist.yml"
+    singularity:
+        singularity_envs["mentalist"]
     input:
         fastq1 = "samples/{sample}/reads/trimmed/R1_paired.fastq",
         fastq2 = "samples/{sample}/reads/trimmed/R2_paired.fastq",
@@ -15,8 +17,6 @@ rule determine_mlst_from_trimmed_reads:
         """
 
 rule merge_mentalist_from_all_samples:
-    conda:
-        "../../envs/mlst.yml"
     input:
         mlsts = expand("samples/{sample}/typing/mentalist.txt", sample=read_naming.keys())
     params:

@@ -14,7 +14,7 @@ rule copy_tbprofiler_results:
 
 rule tbprofiler_collate:
     singularity:
-        "docker://metagenlab/tb-profiler:2.8.4b"
+        singularity_envs["tb-profiler"]
     threads:
         1
     input:
@@ -31,7 +31,7 @@ rule tbprofiler_collate:
 
 rule format_tbprofiler_collated:
     singularity:
-        "docker://metagenlab/tb-profiler:2.8.4b"
+        singularity_envs["python_r"]
     threads:
         1
     input:
@@ -45,7 +45,7 @@ rule format_tbprofiler_collated:
 
 rule tbprofiler_variant_frequency:
     singularity:
-        "docker://metagenlab/tb-profiler:2.8.4b"
+        singularity_envs["python_r"]
     threads:
         1
     input:

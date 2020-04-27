@@ -2,7 +2,7 @@ rule annotate_with_prokka:
     conda:
         "../../envs/prokka.yml"
     singularity:
-        "docker://quay.io/biocontainers/prokka:1.14.5--pl526_0"
+        singularity_envs["prokka"]
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta"
     output:
@@ -29,7 +29,7 @@ rule annotate_with_prokka_unfiltered_assembly:
     conda:
         "../../envs/prokka.yml"
     singularity:
-        "docker://quay.io/biocontainers/prokka:1.14.5--pl526_0"
+        singularity_envs["prokka"]
     input:
         contigs = "samples/{sample}/assembly/spades_no_correction/contigs.fasta"
     output:
@@ -49,7 +49,7 @@ rule create_blast_database_from_protein_sequences:
     conda:
         "../../envs/blast.yml"
     singularity:
-        "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
+        singularity_envs["blast"]
     input:
         proteins = "samples/{sample}/annotation/{sample}.faa",
     output:
@@ -63,7 +63,7 @@ rule create_blast_database_from_contig_sequences:
     conda:
         "../../envs/blast.yml"
     singularity:
-        "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
+        singularity_envs["blast"]
     input:
         contigs = "samples/{sample}/annotation/{sample}.fsa",
     output:
@@ -77,7 +77,7 @@ rule remove_fasta_part_from_gff:
     conda:
         "../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+        singularity_envs["python_r"]
     input:
         "samples/{sample}/annotation/{sample}.gff"
     output:
@@ -89,7 +89,7 @@ rule get_CDS_and_contigs_depth:
     conda:
         "../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-report:1.2"
+        singularity_envs["python_r"]
     input:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
         "samples/{sample}/annotation/{sample}.gbk",

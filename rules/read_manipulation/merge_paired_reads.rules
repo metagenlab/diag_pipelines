@@ -3,7 +3,7 @@ rule merge_reads_with_flash:
     conda:
         "../../envs/flash.yml"
     singularity:
-        "docker://quay.io/biocontainers/flash:1.2.11--hed695b0_5"
+        singularity_envs["flash"]
     input:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"
