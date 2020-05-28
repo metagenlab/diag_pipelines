@@ -2,7 +2,7 @@ rule summary_csv_excel_file:
     conda:
         "../../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+        singularity_envs["python_r"]
     params:
         ontology_aro = ontology_file_aro,
         ontology_mo = ontology_file_mo,
@@ -11,8 +11,8 @@ rule summary_csv_excel_file:
     input:
         expand("samples/{{sample}}/resistance/{software}.tsv", software = config["resistance_prediction_softwares"])
     output:
-        "samples/{sample}/resistance/summary.tsv",
-        "samples/{sample}/resistance/summary.xlsx",
+        "samples/{sample}/resistance/{software}_summary.tsv",
+        "samples/{sample}/resistance/{software}_summary.xlsx",
     script:
         "scripts/summary_csv_xlsx.py"
 
@@ -21,10 +21,10 @@ rule write_congruent_results_fasta:
     conda:
         "../../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+        singularity_envs["python_r"]
     input:
-        "samples/{sample}/resistance/summary.tsv",
-        "samples/{sample}/resistance/rgi.tsv",
+        "samples/{sample}/resistance/{software}_summary.tsv",
+        "samples/{sample}/resistance/{software}_rgi.tsv",
     output:
         "samples/{sample}/resistance/sequences.ffn",
         "samples/{sample}/resistance/sequences.faa",
@@ -36,11 +36,11 @@ rule merge_summary_xlsx_files:
     conda:
         "../../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+        singularity_envs["python_r"]
     input:
-        xlsx=expand("samples/{sample}/resistance/summary.xlsx", sample = read_naming.keys()),
+        xlsx=expand("samples/{sample}/resistance/{software}_summary.xlsx", sample = read_naming.keys()),
 #        fastas=expand("samples/{sample}/resistance/sequences.faa", sample = read_naming.keys()),
     output:
-        "report/resistance/resistance_summary.xlsx"
+        "report/resistance/{software}_summary.xlsx"
     script:
         "scripts/merge_summary_xlsx.py"

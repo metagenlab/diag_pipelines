@@ -1,6 +1,8 @@
 rule determine_mlst:
     conda:
         "../../envs/mlst.yml"
+    singularity:
+        singularity_envs["mlst"]
     input:
         fasta = "samples/{sample}/annotation/{sample}.fsa",
     output:
@@ -12,8 +14,6 @@ rule determine_mlst:
 
 
 rule merge_mlst_from_all_samples:
-    conda:
-        "../../envs/mlst.yml"
     input:
         mlsts = expand("samples/{sample}/typing/mlst.txt", sample=read_naming.keys())
     output:
@@ -26,6 +26,8 @@ rule merge_mlst_from_all_samples:
 rule determine_mlst_reference_genome:
     conda:
         "../../envs/mlst.yml"
+    singularity:
+        singularity_envs["mlst"]
     input:
         genome = "references/{ref}/genome_fasta.fasta"
     output:
@@ -39,7 +41,7 @@ rule generate_xlsx_file_from_mlst_results:
     conda:
         "../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+        singularity_envs["python_r"]
     input:
         "report/typing/mlst/{file}.tsv"
     output:

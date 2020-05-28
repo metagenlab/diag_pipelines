@@ -2,7 +2,7 @@ rule get_mentalist_mlst_scheme:
     conda:
         "../../envs/mentalist.yml"
     singularity:
-        "docker://quay.io/biocontainers/mentalist:0.1.9--hbc14f71_4"  
+        singularity_envs["mentalist"]
     params:
         species_name=lambda wildcards: str(wildcards.species).replace("_", " "),
     output:

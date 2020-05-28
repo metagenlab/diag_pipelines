@@ -56,6 +56,9 @@ include:
 include:
     "../rules/report_generation/contamination.rules"
 
+include:
+    "../rules/report_generation/rgi_docx_report.rules"
+
 rule all_assembly_quality:
     input:
         "quality/multiqc/assembly/multiqc_report.html"

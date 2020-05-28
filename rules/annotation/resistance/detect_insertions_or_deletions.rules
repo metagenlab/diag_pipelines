@@ -1,6 +1,8 @@
 rule extract_coverage_from_bed:
     conda:
         "../../../envs/bedtools.yml"
+    singularity:
+        singularity_envs["bedtools"]
     input:
         mapping = "samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam",
         bed = "resistance/annotations/{gene}.bed"
@@ -15,7 +17,7 @@ rule create_bed_from_gene:
     conda:
         "../../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+       singularity_envs["python_r"]
     params:
         up_down = upstream_downstream
     input:
@@ -31,7 +33,7 @@ rule plot_coverage_over_gene_and_flanking:
     conda:
         "../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+        singularity_envs["python_r"]
     params:
         up_down = upstream_downstream 
     input:
@@ -48,7 +50,7 @@ rule extract_insert_size_over_gene_and_flanking:
     conda:
         "../../envs/samtools.yml"
     singularity:
-        "docker://metagenlab/bwa-samtools:1.0"
+        singularity_envs["bwa_samtools"]
     input:
         mapping = "samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam",
         bed = "resistance/annotations/{gene}.bed",
@@ -65,7 +67,7 @@ rule plot_insert_size_over_gene_and_flanking:
     conda:
         "../../envs/python-r.yml"
     singularity:
-        "docker://metagenlab/diag-pipeline-python-r:1.1"
+       singularity_envs["python_r"]
     params:
         up_down = upstream_downstream 
     input:
@@ -76,5 +78,4 @@ rule plot_insert_size_over_gene_and_flanking:
         mean_insert_sizes = "samples/{sample}/mapping/bwa/{ref}/insert_sizes/{gene}-mean.txt",
     script:
         "scripts/plot_insert_size_over_gene_and_flanking.R"
-        
-        
+    

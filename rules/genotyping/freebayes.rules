@@ -2,12 +2,12 @@ rule genotype_with_freebayes_on_all_samples:
     conda:
         "../../envs/freebayes.yml"
     singularity:
-        "docker://quay.io/biocontainers/freebayes:1.3.1--py37h56106d0_0"
+        singularity_envs["freebayes"]
     threads:
         4
     input:
-        bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}_deduplicated_filtered.bam", sample=read_naming.keys()),
-        bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}_deduplicated_filtered.bam.bai", sample=read_naming.keys()),
+        bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", sample=read_naming.keys()),
+        bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam.bai", sample=read_naming.keys()),
         ref="references/{ref}/genome_fasta.fasta",
         ref_fai="references/{ref}/genome_fasta.fasta.fai",
         quality = "report/multiqc_mapping_to_{ref}/{mapping_method}/multiqc_report.html",
@@ -25,10 +25,10 @@ rule genotype_with_freebayes_one_sample_second_pass:
     conda:
         "../../envs/freebayes.yml"
     singularity:
-        "docker://quay.io/biocontainers/freebayes:1.3.1--py37h56106d0_0"
+        singularity_envs["freebayes"]
     input:
-        bam = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam",
-        bai = "samples/{sample}/mapping/{mapping_method}/{ref}_deduplicated_filtered.bam.bai",
+        bam = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
+        bai = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",
         ref = "references/{ref}/genome_fasta.fasta",
         ref_fai = "references/{ref}/genome_fasta.fasta.fai",
         quality = "report/multiqc_mapping_to_{ref}/multiqc_report.html",

@@ -1,0 +1,19 @@
+
+
+
+
+
+rule venn_wrong_results:
+    singularity:
+        singularity_envs["python_r"]
+    input:
+        rgi = "report/resistance/rgi_benchmark_{FP_or_FN}.tsv",
+        mykrobe = "report/resistance/mykrobe_benchmark_{FP_or_FN}.tsv",
+        tbprofiler = "report/resistance/tb-profiler/tbprofiler_benchmark_{FP_or_FN}.tsv",
+        walker = "report/resistance/bwa/walker_resistant_annotated/walker_resistant_annotated_benchmark_{FP_or_FN}.tsv"
+    params:
+        antibio = lambda wildcards: wildcards.antibiotic
+    output:
+        venn = "report/resistance/venn_{FP_or_FN}_{antibiotic}.pdf"
+    script:
+        "scripts/plot_venn_AMR.py"

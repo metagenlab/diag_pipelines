@@ -23,16 +23,14 @@ reference_assembly_for_resistance = {}
 reference_assembly_for_resistance["Mycobacterium_tuberculosis"] = "538048"
 reference_assembly_for_resistance["Escherichia_coli"] = "79781"
 
-ontology_file_aro = "references/card/obo_files/aro.obo"
-ontology_file_mo = "references/card/obo_files/mo.obo"
-ontology_file_ro = "references/card/obo_files/ro.obo"
-card_categories_file = "references/card/aro_categories.tsv"
-
 include:
     "../rules/annotation/resistance/format_xlsx.rules"
 
 include:
     "../rules/annotation/resistance/rgi.rules"
+
+include:
+    "../rules/annotation/resistance/tb-profiler.rules"
 
 if species in reference_assembly_for_resistance.keys():
     include:
@@ -41,12 +39,13 @@ if species in reference_assembly_for_resistance.keys():
         "../rules/annotation/resistance/detect_insertions_or_deletions.rules"
 
 if species.startswith("Staphylococcus") or species.startswith("Mycobacterium"):
+    print("sta or myco")
     include:
         "../rules/annotation/resistance/mykrobe.rules"
     rule all_resistance_summaries:
         input:
-            rgi = "resistance/rgi_summary.xlsx",
-            mykrobe = "resistance/mykrobe_summary.xlsx",
+            rgi = "report/resistance/rgi_summary.xlsx",
+            mykrobe = "report/resistance/mykrobe_summary.xlsx",
 
 else:
     rule all_resistance_summaries:

@@ -13,7 +13,7 @@ def parse_walker_rable(table):
 
             
             # skip sensitive mutations
-            if characterisation == 'S': 
+            if characterisation != 'R': 
                 continue
 
             # mutation structure: fabG1_C-15T

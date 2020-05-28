@@ -36,7 +36,7 @@ def extract_rgi(row, aro_ont, gene_list):
                 ref = snp[0]
                 mut = snp[-1]
                 for child in term.relations:
-                    if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
+                    if child.obo_name=="confers_resistance_to_antibiotic" or  child.obo_name=="confers_resistance_to_drug_class":
                         for antibiotic in term.relations[child]:
                             anti = antibiotic.name.replace("antibiotic", "").strip()
                             res.append(["rgi", gene, "variant", ref+str(pos)+mut, anti])
@@ -46,7 +46,7 @@ def extract_rgi(row, aro_ont, gene_list):
         term = aro_ont[row["ARO"]]
         gene = row["Best_Hit_ARO"].replace(" ", "_").strip()
         for child in term.relations:
-            if child.obo_name=="confers_resistance_to_drug" or  child.obo_name=="confers_resistance_to":
+            if child.obo_name=="confers_resistance_to_antibiotic" or  child.obo_name=="confers_resistance_to_drug_class":
                 for antibiotic in term.relations[child]:
                     anti = antibiotic.name.replace("antibiotic", "").strip()
                     res.append(["rgi", gene, "gene presence", "", anti])

@@ -3,7 +3,7 @@ rule calculate_assembly_statistics_with_quast:
     conda:
         "../../envs/quast.yml"
     singularity:
-        "docker://metagenlab/quast:5.0.2"
+        singularity_envs["quast"] 
     input:
         "samples/{sample}/annotation/{sample}.fsa"
     output:

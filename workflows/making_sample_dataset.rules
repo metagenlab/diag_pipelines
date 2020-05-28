@@ -18,6 +18,8 @@ reads_sra = {}
 
 reads_local = {}
 
+all_samples=pandas.DataFrame()
+
 if "local_samples" not in config.keys() and "sra_samples" not in config.keys():
     raise ValueError("No samples defined in the config file")
 
@@ -61,7 +63,7 @@ if "sra_samples" in config.keys():
             sample_name = sample_name+"_"+str(list(reads_sra.keys()).count(sample_name))
         reads_sra[sample_name]=str(i)
         if sra_data.loc[i, "LibraryLayout"].lower()=="paired":
-            sras_ext[sample_name]=["1.fastq.gz", "2.fastq.gz"]
+            sras_ext[sample_name]=[f"sra/{sample_name}_1.fastq.gz", f"sra/{sample_name}_2.fastq.gz"]
         elif sra_data.loc[i, "LibraryLayout"].lower()=="single":
             sras_ext[sample_name] = ["fastq.gz"]
         else:

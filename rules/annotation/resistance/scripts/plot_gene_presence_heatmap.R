@@ -6,8 +6,7 @@ library(svglite)
 
 rgi_files <- snakemake@input[["rgi_files"]]
 species <- snakemake@params[["species"]]
-mechanism <- snakemake@input[["rgi_mechanism_files"]]
-sample_table <- data.frame(file=rgi_files, species=species,mechanism=mechanism, stringsAsFactors=FALSE)
+sample_table <- data.frame(file=rgi_files, species=species, stringsAsFactors=FALSE)
 
 for (i in 1:nrow(sample_table)){
   rgi_results_file <- sample_table[i,1]
@@ -19,21 +18,12 @@ for (i in 1:nrow(sample_table)){
     dataset <- read.csv(rgi_results_file, header=TRUE, sep="\t",stringsAsFactors=FALSE)
     dataset$sample <- rep(unlist(strsplit(rgi_results_file, "/"))[2], length(dataset[,1]))
     dataset$species <- rep(species, length(dataset[,1]))
-    resistance_mechanism <-  read.csv(mechanism_file, header=TRUE, sep="\t",stringsAsFactors=FALSE)
-    m <- match(dataset$Best_Hit_ARO, resistance_mechanism$Gene)
-    dataset$mechanism <- resistance_mechanism$Resistance.Mechanism[m]
-
-
   }
   # if the merged dataset does exist, append to it
   if (exists("dataset")){
     temp_dataset <-read.csv(rgi_results_file, header=TRUE, sep="\t",stringsAsFactors=FALSE)
     temp_dataset$sample <- rep(unlist(strsplit(rgi_results_file, "/"))[2], length(temp_dataset[,1]))
     temp_dataset$species <- rep(species, length(temp_dataset[,1]))
-    resistance_mechanism <-  read.csv(mechanism_file, header=TRUE, sep="\t",stringsAsFactors=FALSE)
-    m <- match(temp_dataset$Best_Hit_ARO, resistance_mechanism$Gene)
-    temp_dataset$mechanism <- resistance_mechanism$Resistance.Mechanism[m]
-
     dataset<-rbind(dataset, temp_dataset)
     rm(temp_dataset)
   }
@@ -47,9 +37,9 @@ dataset$Best_Hit_ARO <- factor(dataset$Best_Hit_ARO, levels=u_sort)
 # overview plot
 # prepare one plot/resistance mechanism
 plot_list <- list()
-for (i in 1:length(unique(dataset$mechanism))){
-    resistance_mechanism <- unique(dataset$mechanism)[i]
-    mechanism_subset <- dataset[dataset$mechanism==resistance_mechanism,]
+for (i in 1:length(unique(dataset$Resistance.Mechanism))){
+    resistance_mechanism <- unique(dataset$Resistance.Mechanism)[i]
+    mechanism_subset <- dataset[dataset$Resistance.Mechanism==resistance_mechanism,]
     p <- ggplot(data = mechanism_subset, aes(x = sample, y = Best_Hit_ARO)) + geom_tile(aes(fill = Cut_Off), height = 0.9, width=0.9)
     p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
     p <- p + coord_fixed(ratio=1) + theme(legend.position="none") + ggtitle(resistance_mechanism) #+ theme(strip.text.x = element_text(size=8, angle=75))
@@ -82,9 +72,9 @@ for (species in nr_species){
     sub_dataset$Best_Hit_ARO <- factor(sub_dataset$Best_Hit_ARO, levels=u_sort)
     # prepare one plot/resistance mechanism
     plot_list <- list()
-    for (i in 1:length(unique(sub_dataset$mechanism))){
-        resistance_mechanism <- unique(sub_dataset$mechanism)[i]
-        mechanism_subset <- sub_dataset[sub_dataset$mechanism==resistance_mechanism,]
+    for (i in 1:length(unique(sub_dataset$Resistance.Mechanism))){
+        resistance_mechanism <- unique(sub_dataset$Resistance.Mechanism)[i]
+        mechanism_subset <- sub_dataset[sub_dataset$Resistance.Mechanism==resistance_mechanism,]
         p <- ggplot(data = mechanism_subset, aes(x = sample, y = Best_Hit_ARO)) + geom_tile(aes(fill = Cut_Off), height = 0.9, width=0.9)
         p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
         p <- p + coord_fixed(ratio=1) + theme(legend.position="none") + ggtitle(resistance_mechanism) #+ theme(strip.text.x = element_text(size=8, angle=75))

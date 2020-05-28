@@ -1,8 +1,18 @@
+
+def check_if_paired(wildcards):
+    
+    if len(read_naming[wildcards.sample]) == 2:
+        return ["samples/{sample}/reads/trimmed/R1_paired.fastq",
+                "samples/{sample}/reads/trimmed/R1_paired.fastq"]
+    else:
+        return ["samples/{sample}/reads/trimmed/R_paired.fastq"]
+
+
 rule correct_error_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     singularity:
-        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+       singularity_envs["spades"]
     threads:
         4
     input:
@@ -23,7 +33,7 @@ rule correct_error_single_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     singularity:
-        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+        singularity_envs["spades"]
     threads:
         4
     input:
@@ -37,11 +47,14 @@ rule correct_error_single_reads_with_spades:
          spades.py --only-error-correction  -s {input[single_trimmed]} -o $( dirname $(dirname {output[single_corrected]})) --threads {threads} > {log}
          """
 
+ruleorder: assemble_genome_corrected_paired_reads_with_spades > assemble_genome_corrected_single_reads_with_spades
+
+
 rule assemble_genome_corrected_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     singularity:
-        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+        singularity_envs["spades"]
     threads:
         4
     input:
@@ -68,7 +81,7 @@ rule assemble_genome_corrected_single_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     singularity:
-        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+        singularity_envs["spades"]
     threads:
         4
     input:
@@ -91,7 +104,7 @@ rule assemble_genome_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     singularity:
-        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+        singularity_envs["spades"]
     threads:
         4
     input:
@@ -113,7 +126,7 @@ rule assemble_genome_single_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     singularity:
-        "docker://quay.io/biocontainers/spades:3.13.1--h2d02072_2"
+        singularity_envs["spades"]
     threads:
         4
     input:
