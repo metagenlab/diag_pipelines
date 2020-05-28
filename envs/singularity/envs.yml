@@ -1,11 +1,11 @@
 prokka: docker://quay.io/biocontainers/prokka:1.14.6--pl526_0
 blast: docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4
-rgi: docker://metagenlab/rgi:5.1.0-v3.0.7
+rgi: docker://metagenlab/rgi:5.1.0-v3.0.8
 spades: docker://quay.io/biocontainers/spades:3.14.0--h2d02072_0
 vt: docker://quay.io/biocontainers/vt:0.57721--hdf88d34_2
 bcftools: docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7
 python_r: docker://metagenlab/diag-pipeline-python-r:1.1
-bedtools: gg
+bedtools: docker://quay.io/biocontainers/bedtools:2.29.2--hc088bd4_0
 bwa_samtools: docker://metagenlab/bwa-samtools:1.0
 mykrobe: docker://quay.io/biocontainers/mykrobe:0.7.0--py37h2666aa9_0
 tb-profiler: docker://metagenlab/tb-profiler:2.8.4b
@@ -19,7 +19,7 @@ checkm: docker://quay.io/biocontainers/checkm-genome:1.0.18--py_0
 mafft: docker://quay.io/biocontainers/mafft:7.407--hf484d3e_2
 fasttree: docker://quay.io/biocontainers/fasttree:2.1.10--h14c3975_3
 newick_utils: docker://quay.io/biocontainers/newick_utils:1.6--h470a237_2  
-raxml: gg
+raxml: docker://quay.io/biocontainers/raxml:8.2.12--h14c3975_1
 centrifuge: docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3
 trimmomatic: docker://quay.io/biocontainers/trimmomatic:0.32--3
 sra-toolkit: docker://ncbi/sra-toolkit:2.9.4-1
@@ -28,5 +28,6 @@ fastqc: docker://quay.io/biocontainers/fastqc:0.11.8--1
 multiqc: docker://quay.io/biocontainers/multiqc:1.7--py_4 
 qualimap: docker://metagenlab/qualimap:1.2
 quast: docker://metagenlab/quast:5.0.2
-mlst: gg
+mlst: docker://quay.io/biocontainers/mlst:2.19.0--0
 htslib: docker://quay.io/biocontainers/htslib:1.9--ha228f0b_7 
+pandoc: docker://metagenlab/pandoc:2.9.2.1
