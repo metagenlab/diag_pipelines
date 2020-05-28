@@ -4,6 +4,9 @@ import re
 import yaml
 import os
 
+PIPELINE_VERSION = "2.4.0"
+
+
 if "--use-singularity" in sys.argv:
     worflow_path = workflow.snakefile.split("workflows/full_pipeline.rules")[0]
     workflow.singularity_args += f' -B {worflow_path}:{worflow_path}'
@@ -30,6 +33,14 @@ def get_assembly_list():
             assembly_out.append(f"report/genomes/{sample}.fna")
             assembly_out.append(f"report/genomes/{sample}.gbk")
     return assembly_out
+
+
+rule version:
+    output:
+        "report/pipeline_version.txt"
+    run:
+        with open(output[0], 'w') as f:
+            f.write(f"Diag_pipeline version {PIPELINE_VERSION}\n")
 
 
 rule epidemiology:
