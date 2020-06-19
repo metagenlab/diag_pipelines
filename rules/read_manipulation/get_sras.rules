@@ -29,8 +29,8 @@ rule sra_convert_to_fastq_paired:
     singularity:
         singularity_envs["sra-toolkit"]
     input:
-        # temp("%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")),
-        temp("ncbi/public/sra/{sample}.sra"),
+        # "%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME"),
+        "ncbi/public/sra/{sample}.sra",
     output:
         "sra/{sample,[A-Za-z0-9]+}_1.fastq.gz",
         "sra/{sample,[A-Za-z0-9]+}_2.fastq.gz",
@@ -48,7 +48,7 @@ rule sra_convert_to_fastq_single:
         singularity_envs["sra-toolkit"]
     input:
         # "%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")
-        temp("ncbi/public/sra/{sample}.sra"),
+        "ncbi/public/sra/{sample}.sra",
     output:
         "sra/{sample,[A-Za-z0-9]+}.fastq.gz",
     log:
