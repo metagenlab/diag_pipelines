@@ -30,6 +30,15 @@ rule rst2docx:
         pandoc --reference-doc={params[0]} {input[0]} -o {output[0]} --wrap=preserve
         """
 
+rule tsv2xlsx:
+    singularity:
+        singularity_envs["python_r"]   
+    input:
+        "report/resistance/rgi_detail_format.tsv",
+    output:
+        "report/resistance/rgi_detail_format.xlsx",
+    script:"scripts/tsv2xlsx.py"
+
 
 rule rgi2format_table:
     singularity:
