@@ -105,7 +105,10 @@ def get_neiboring_orf(position, feature_list):
                 locus_tag2 = feature_list[n + 1].qualifiers["locus_tag"][0]
             except KeyError:
                 gene2 = '-'
-                locus_tag2 = feature_list[n + 1].qualifiers["locus_tag"][0]
+                if 'locus_tag' in feature_list[n + 1].qualifiers:
+                    locus_tag2 = feature_list[n + 1].qualifiers["locus_tag"][0]
+                else:
+                    locus_tag2 = '-'
                 if 'mobile_element_type' in feature_list[n + 1].qualifiers:
                     gene2 = feature_list[n + 1].qualifiers["mobile_element_type"]
                 else:
@@ -141,6 +144,12 @@ def check_reference_mapping_GT(vcf_record_list,
                     else:
                         return [False, PASS]
     return [None, None]
+
+
+def extract_mutation(seq1,seq2):
+    for n, (aa1,aa2) in enumerate(zip(list(seq1), list(seq2))):
+        if aa1 != aa2:
+            return f'{aa1}{n+1}{aa2}'
 
 
 def search_mutated_feature(vcf_record, gbk_dico):
@@ -196,7 +205,9 @@ def search_mutated_feature(vcf_record, gbk_dico):
                         if str(aa_seq_ref) == str(aa_seq_alt):
                             results["mut_type"] = 'S'
                         else:
-                            results["mut_type"] = 'NS'
+                            results["mut_type"] = extract_mutation(aa_seq_ref,
+                                                                   aa_seq_alt)
+                    
             return results
     # if no match, return empty results
     return results
