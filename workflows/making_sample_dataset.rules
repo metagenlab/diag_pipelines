@@ -70,7 +70,8 @@ if "sra_samples" in config.keys():
             raise ValueError("Problem in the sra file, LibraryLayout badly defined")
         all_samples.loc[sample_name, "ScientificName"]=sra_data.loc[i, "ScientificName"]
 
-all_samples["ScientificName"] = all_samples["ScientificName"].str.replace(" ", "_")
+all_samples["ScientificName"] = [str(i).replace(" ", "_") for i in all_samples["ScientificName"]]
+
 read_naming = {**reads_local, **sras_ext}
 
 for key in read_naming:
