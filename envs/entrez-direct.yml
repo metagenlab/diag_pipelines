@@ -2,4 +2,4 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
- - entrez-direct = 10.2
+ - entrez-direct = 13.3
