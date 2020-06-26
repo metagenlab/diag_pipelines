@@ -23,6 +23,7 @@ mash_results = snakemake.input["mash_results"]
 contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
 mash_detail = snakemake.input["mash_detail"]
+centrifuge_tables = snakemake.input["centrifuge_tables"]
 
 output_file = snakemake.output[0]
 
@@ -173,6 +174,8 @@ table_virulence = report.virulence_table(virulence_reports,
 
 mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 
+centrifuge_table = report.get_centrifuge_table(centrifuge_tables, sample2scientific_name)
+
 multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
 
 qualimap_table = report.qualimap_table(qualimap_reports, self_mapping=True)
@@ -223,6 +226,13 @@ Three best Mash hits (excluding phages).
 .. raw:: html
 
     {mash_table}
+
+Contamination check: Centrifuge
+********************************
+
+.. raw:: html
+
+    {centrifuge_table}
 
 Qualimap reports
 *****************

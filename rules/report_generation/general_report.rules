@@ -36,6 +36,7 @@ if "resistance" in sys.argv:
             low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
             mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
             resistance_tables = resistance_tables(),
+            centrifuge_tables = expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
         params:
             samples = list(read_naming.keys()),
             sample_table = all_samples
@@ -65,6 +66,7 @@ if "virulence" in sys.argv:
                 mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
                 custom_virulence = expand("report/virulence/custom/{sample}_report.html", sample=read_naming.keys()),
                 custom_virulence_fasta = expand("samples/{sample}/virulence/proteins.fasta", sample=read_naming.keys()),
+                centrifuge_tables = expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
             params:
                 samples = list(read_naming.keys()),
                 sample_table = all_samples,
@@ -91,7 +93,7 @@ if "virulence" in sys.argv:
                 low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
                 mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv', sample=read_naming.keys()),
                 mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
-
+                centrifuge_tables = expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
             params:
                 samples = list(read_naming.keys()),
                 sample_table = all_samples

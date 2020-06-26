@@ -24,6 +24,7 @@ qualimap_reports = snakemake.input["qualimap_reports"]
 low_cov_detail = snakemake.input["low_cov_detail"]
 mash_detail = snakemake.input["mash_detail"]
 sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
+centrifuge_tables = snakemake.input["centrifuge_tables"]
 
 
 STYLE = """
@@ -118,6 +119,7 @@ for one_table in contig_gc_depth_file_list:
     sample2n_contigs[sample] = n_contigs
 
 mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
+centrifuge_table = report.get_centrifuge_table(centrifuge_tables, sample2scientific_name)
 multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
 qualimap_table = report.qualimap_table(qualimap_reports, self_mapping=True)
 
@@ -128,6 +130,7 @@ table_lowcoverage_contigs = quality_table(low_cov_fastas,
                                           sample2n_contigs,
                                           sample2scientific_name,
                                           low_cov_detail=low_cov_detail)
+
 table_resistance = resistance_table(resistance_reports)
 
 report_str = f"""
@@ -176,6 +179,14 @@ Three best Mash hits (excluding phages).
 .. raw:: html
 
     {mash_table}
+
+Contamination check: Centrifuge
+********************************
+
+.. raw:: html
+
+    {centrifuge_table}
+
 
 Qualimap reports (self mapping)
 ********************************
