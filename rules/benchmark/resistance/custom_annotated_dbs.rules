@@ -18,6 +18,6 @@ rule frequency_customdb_MTB:
         all_custom_db = expand("samples/{sample}/resistance/{{bwa_or_stringent}}/{{db}}/mutations.vcf", sample = read_naming.keys()),
         resistance_genes = "resistance_db/Mycobacterium_tuberculosis/metadata/resistance_genes.tsv"
     output:
-        "report/resistance/{bwa_or_stringent}/{db}/{db}_frequency.tsv"
+        "report/resistance/{bwa_or_stringent}/{db}/{db}_variant_frequency.tsv"
     script:
         "scripts/frequency_custom_db.py"
