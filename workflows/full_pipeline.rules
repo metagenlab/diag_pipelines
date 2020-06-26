@@ -68,14 +68,38 @@ rule strain_characterization:
     input:
         "report/report_strain_characterization.html",
 
+MTB_tools = ["mykrobe", "tb-profiler", "walker_resistant_annotated", "rgi"]
+
 rule custom_db:
     input:
         # expand("samples/{sample}/resistance/bwa/walker_resistant_annotated/mutations.vcf", sample=read_naming.keys()),
         # expand("samples/{sample}/resistance/bwa/mykrobe_annotated/mutations.vcf", sample=read_naming.keys()),
-        "report/resistance/tb-profiler/tbprofiler_benchmark_FP.out",
-        "report/resistance/rgi_benchmark_FP.out",
-        "report/resistance/mykrobe_benchmark_FP.out",
-        "report/resistance/bwa/walker_resistant_annotated/walker_resistant_annotated_benchmark_FP.out",
+        #"report/resistance/tb-profiler/tbprofiler_benchmark_FP.out",
+        #"report/resistance/rgi_benchmark_FP.out",
+        #"report/resistance/mykrobe_benchmark_FP.out",
+        #"report/resistance/bwa/walker_resistant_annotated/walker_resistant_annotated_benchmark_FP.out",
+        # var frequency
+        "report/resistance/tb-profiler/tbprofiler_variant_frequency.tsv",
+        "report/resistance/rgi_variant_frequency.tsv",
+        "report/resistance/mykrobe_variant_frequency.tsv",
+        "report/resistance/bwa/walker_resistant_annotated/walker_resistant_annotated_variant_frequency.tsv",
+        # comp phenotype
+        "report/resistance/rgi_variant_phenotype.tsv",
+        "report/resistance/mykrobe_variant_phenotype.tsv",
+        "report/resistance/rgi_variant_phenotype.tsv",
+        "report/resistance/tb-profiler/tbprofiler_variant_phenotype.tsv",
+        # plots 
+        "report/resistance/venn_FN_pyrazinamide.pdf",
+        "report/resistance/venn_FP_rifampicin.pdf",
+        "report/resistance/venn_FP_pyrazinamide.pdf",
+        "report/resistance/venn_FP_ethambutol.pdf",
+        # benchmark
+        "report/resistance/rgi_benchmark_counts.tsv",
+        "report/resistance/rgi_benchmark_discrepancies.tsv",
+        "report/resistance/rgi_benchmark_FN.tsv",
+        "report/resistance/rgi_benchmark_FP.tsv",
+        "report/resistance/rgi_benchmark_stats.tsv",
+
         # expand("samples/{sample}/resistance/tb-profiler/results/{sample}.results.json", sample=read_naming.keys())
 
 
