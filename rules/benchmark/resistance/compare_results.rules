@@ -1,29 +1,32 @@
 
-rule compare_MTB_res_search:
-    singularity:
-        singularity_envs["python_r"]
-    input:
-        table_2 = "{path}_benchmark.tsv"
-    params:
-        reference_table = config["local_samples"]
-    output:
-        discrepancies = "{path}_benchmark_discrepancies.tsv",
-        FP = "{path}_benchmark_FP.tsv",
-        FN = "{path}_benchmark_FN.tsv",
-        counts = "{path}_benchmark_counts.tsv",
-        stats = "{path}_benchmark_stats.tsv",
-    script:
-        "scripts/compare_tables.py"
+
+if 'sra_samples' in config:
+
+    rule compare_MTB_res_search:
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            table_2 = "{path}_benchmark.tsv"
+        params:
+            reference_table = config["sra_samples"]
+        output:
+            discrepancies = "{path}_benchmark_discrepancies.tsv",
+            FP = "{path}_benchmark_FP.tsv",
+            FN = "{path}_benchmark_FN.tsv",
+            counts = "{path}_benchmark_counts.tsv",
+            stats = "{path}_benchmark_stats.tsv",
+        script:
+            "scripts/compare_tables.py"
 
 
-rule add_reference_phenotype:
-    singularity:
-        singularity_envs["python_r"]
-    input:
-        table_2 = "{path}_frequency.tsv"
-    params:
-        reference_table = config["local_samples"]
-    output:
-        discrepancies = "{path}_phenotype.tsv",
-    script:
-        "scripts/add_phenotype.py"
+    rule add_reference_phenotype:
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            table_2 = "{path}_frequency.tsv"
+        params:
+            reference_table = config["sra_samples"]
+        output:
+            discrepancies = "{path}_phenotype.tsv",
+        script:
+            "scripts/add_phenotype.py"
