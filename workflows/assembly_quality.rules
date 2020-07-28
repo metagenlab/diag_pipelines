@@ -21,6 +21,12 @@ include:
     "../rules/quality/trimmomatic.rules"
 
 include:
+    "../rules/quality/checkm.rules"
+
+include:
+    "../rules/quality/16S_check.rules"
+
+include:
     "../rules/quality/assembly_filtering.rules"
 
 include:
