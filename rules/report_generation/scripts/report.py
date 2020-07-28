@@ -5,6 +5,56 @@ from Bio import SeqIO
 from plotly import offline
 
 
+def checkm_table(checkm_table):
+    
+    df = pandas.read_csv(checkm_table, delimiter="\t", header=0)
+    df = df[["Bin Id","Marker lineage","# markers", "Completeness","Contamination","Strain heterogeneity","0","1","2","3","4","5+"]]
+    pandas.set_option('display.max_colwidth', -1)
+
+    df_str = df.to_html(
+        index=False,
+        bold_rows=False,
+        classes=["dataTable"],
+        table_id="checkm_table",
+        escape=False,
+        border=0)
+
+    return df_str.replace("\n", "\n" + 10 * " ")
+
+def get_rrna_summary_table(raw_table, 
+                           sample2scientific_name):
+    df = pandas.read_csv(raw_table, delimiter="\t", header=0)
+    
+    
+    
+    # sample	query	hit	alignment_length	alignment_length	percent_identity	evalue	bitscore
+    row_list = []
+    sample2count = {}
+    for n,row in df.iterrows():
+        sample = row["sample"]
+        contig = row["query"]
+        BBH_taxnonomy = row["hit"].split(",")[1:]
+        identity = row["percent_identity"]
+        if sample not in sample2count:
+            sample2count[sample] = 0
+        sample2count[sample] += 1
+        row_list.append([sample,sample2count[sample], sample2scientific_name[sample], contig, BBH_taxnonomy, identity])
+    
+    header = ["sample", "N.", "expected", "contig", "BBH_taxnonomy", "identity"]
+    df = pandas.DataFrame(row_list, columns=header)
+    pandas.set_option('display.max_colwidth', -1)
+
+    df_str = df.to_html(
+        index=False,
+        bold_rows=False,
+        classes=["dataTable"],
+        table_id="16S_table",
+        escape=False,
+        border=0)
+
+    return df_str.replace("\n", "\n" + 10 * " ")
+
+
 def get_centrifuge_table(centrifuge_links, sample2scientific_name):
     row_list = []
     for sample in centrifuge_links:
@@ -138,13 +188,14 @@ def quality_table(low_cov_fastas,
                   sample2gc,
                   sample2median_depth,
                   sampls2cumulated_size,
+                  sampls2cumulated_size_filtered,
                   sample2n_contigs,
                   sample2scientific_name,
                   undetermined_snps_files=False,
                   core_genome_size=False,
                   low_cov_detail=False):
 
-    header = ["Strain id", "Scientific Name", "Contigs", "Contigs depth < 5", "GC", "Size (Mb)", "Median Depth"]
+    header = ["Strain id", "Scientific Name", "Contigs", "Contigs depth < 5", "GC", "Size >500pb (Mb)", "Size >500bp & >5depth (Mb)", "Median Depth"]
     if low_cov_detail:
         sample2locov_path = {}
         for link in low_cov_detail:
@@ -195,6 +246,7 @@ def quality_table(low_cov_fastas,
                        low_cov_str,
                        sample2gc[sample],
                        round(sampls2cumulated_size[sample] / 1000000, 2),
+                       round(sampls2cumulated_size_filtered[sample] / 1000000, 2),
                        sample2median_depth[sample]]
             for reference in reference2files:
                 tmp_lst.append(reference2sample2n_unknown[reference][sample])
@@ -208,6 +260,7 @@ def quality_table(low_cov_fastas,
                        low_cov_str,
                        sample2gc[sample],
                        round(sampls2cumulated_size[sample] / 1000000, 2),
+                       round(sampls2cumulated_size_filtered[sample] / 1000000, 2),
                        sample2median_depth[sample]]
         cov_table.append(tmp_lst)
 
