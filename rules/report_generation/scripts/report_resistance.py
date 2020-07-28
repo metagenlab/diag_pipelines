@@ -25,6 +25,8 @@ low_cov_detail = snakemake.input["low_cov_detail"]
 mash_detail = snakemake.input["mash_detail"]
 sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 centrifuge_tables = snakemake.input["centrifuge_tables"]
+checkm_table = snakemake.input["checkm_table"]
+rrna_classification_file = snakemake.input["rrna_classification_file"]
 
 
 STYLE = """
@@ -101,6 +103,7 @@ sample2gc = {}
 sample2median_depth = {}
 sampls2cumulated_size = {}
 sample2n_contigs = {}
+sampls2cumulated_size_filtered = {}
 for one_table in contig_gc_depth_file_list:
     table = pandas.read_csv(one_table,
                             delimiter='\t',
@@ -116,17 +119,22 @@ for one_table in contig_gc_depth_file_list:
     sample2gc[sample] = data_whole_gnome["gc_content"]
     sample2median_depth[sample] = data_whole_gnome["mean_depth"]
     sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
+    sampls2cumulated_size_filtered[sample] = int(table.query('median_depth>=5 & contig != "TOTAL"')[["contig_size"]].sum())
     sample2n_contigs[sample] = n_contigs
 
 mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 centrifuge_table = report.get_centrifuge_table(centrifuge_tables, sample2scientific_name)
+rrna_table = report.get_rrna_summary_table(rrna_classification_file, sample2scientific_name)
 multiqc_table = report.get_multiqc_table(assembly_multiqc=multiqc_assembly)
 qualimap_table = report.qualimap_table(qualimap_reports, self_mapping=True)
+checkm_table = report.checkm_table(checkm_table)
+
 
 table_lowcoverage_contigs = quality_table(low_cov_fastas,
                                           sample2gc,
                                           sample2median_depth,
                                           sampls2cumulated_size,
+                                          sampls2cumulated_size_filtered,
                                           sample2n_contigs,
                                           sample2scientific_name,
                                           low_cov_detail=low_cov_detail)
@@ -160,6 +168,7 @@ The analyses covered here include genome assembly with spades, evaluation of the
 depth by mapping of the reads against the assembly and annotation with prokka.
 
 
+
 .. raw:: html
 
     {multiqc_table}
@@ -188,6 +197,20 @@ Contamination check: Centrifuge
     {centrifuge_table}
 
 
+Contamination check: 16S rRNA (contigs >500bp)
+**********************************************
+
+.. raw:: html
+
+    {rrna_table}
+    
+Contamination check: checkM (contigs >500bp)
+**********************************************
+
+.. raw:: html
+
+    {checkm_table}
+    
 Qualimap reports (self mapping)
 ********************************
 
@@ -212,6 +235,29 @@ Detail
 
     {table_resistance}
 
+
+.. raw:: html
+
+    <script>
+    $(document).ready(function() {{
+        $('#16S_table').DataTable( {{
+            dom: 'Bfrtip',
+            "pageLength": 10,
+            "order": [[ 0, "desc" ]],
+            "searching": true,
+            "bLengthChange": false,
+            "paging":   false,
+            "info": false,
+            'rowCallback': function(row, data, index){{
+            var taxnonomy = data[4];
+            var genus = data[2].split("_")[0];
+            if (!(taxnonomy.includes(genus))){{
+                            $(row).css('background-color', 'rgba(255, 0, 0, 0.7)');
+                            }}
+            }},
+        }} );
+    }} );
+    </script>
 """
 with open(output_file, "w") as fh:
     publish_file(

@@ -37,6 +37,9 @@ if "resistance" in sys.argv:
             mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
             resistance_tables = resistance_tables(),
             centrifuge_tables = expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
+            checkm_table = "report/contamination/checkm/checkm_qualty.tab",
+            rrna_classification_file = "report/contamination/markers/rrna/summary.txt",
+            rrna_similarity = "report/contamination/markers/rrna/pairwise_id.tab",
         params:
             samples = list(read_naming.keys()),
             sample_table = all_samples
