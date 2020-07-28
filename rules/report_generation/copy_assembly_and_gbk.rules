@@ -1,0 +1,21 @@
+
+
+rule copy_fna_to_report_folder:
+    input:
+        "samples/{sample}/annotation/{sample}.fna"
+    output:
+        "report/assemblies_filtered/{sample}.fna"
+    shell:
+        """
+        cp {input[0]} {output[0]}
+        """
+
+rule copy_gbk_to_report_folder:
+    input:
+        "samples/{sample}/annotation/{sample}.gbk"
+    output:
+        "report/assemblies_annotation/{sample}.gbk"
+    shell:
+        """
+        cp {input[0]} {output[0]}
+        """
