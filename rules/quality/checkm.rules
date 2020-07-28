@@ -1,0 +1,45 @@
+
+
+rule checkm_lineage_wf:
+    singularity:
+        singularity_envs["checkm"]
+    input:
+        expand("report/assemblies_filtered/{sample}.fna", sample=read_naming.keys())
+    output:
+        "checkm/analyse_wf/lineage.ms",
+    threads:
+        16
+    shell:
+        """
+        # checkm taxonomy_wf -t {threads} domain Bacteria report/assemblies_filtered checkm/analyse_wf
+        checkm lineage_wf -t {threads} report/assemblies_filtered checkm/analyse_wf
+        """
+
+rule checkm_qc:
+    singularity:
+        singularity_envs["checkm"]
+    input:
+        "checkm/analyse_wf/lineage.ms"
+    output:
+        "report/contamination/checkm/checkm_qualty.tab"
+    log:
+        "report/contamination/checkm/checkm_qualty.log"
+    shell:
+        """
+        checkm qa -q {input[0]} checkm/analyse_wf -o 2 --tab_table 1> {output[0]} 2> {log}
+        """
+
+rule checkm_marker_genes:
+    singularity:
+        singularity_envs["checkm"]
+    input:
+        "checkm/analyse_wf/lineage.ms"
+    output:
+        "report/contamination/checkm/checkm_markers.faa"
+    log:
+        "report/contamination/checkm/checkm_markers.log"
+    shell:
+        """
+        checkm qa -q {input[0]} checkm/analyse_wf -o 9 1> {output[0]} 2> {log}
+        """
+
