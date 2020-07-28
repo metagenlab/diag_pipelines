@@ -23,6 +23,8 @@ include:
 include:
     "benchmark.rules"
 
+include:
+    "../rules/report_generation/copy_assembly_and_gbk.rules"
 
 def get_assembly_list():
     assembly_out =[]
@@ -107,3 +109,4 @@ rule custom_db:
 - we set a rule order to be able to extract core SNP data from the complete reference genome data
 (without mapping of the linked cgMLST genome which is the same as the reference one)
 '''
+
