@@ -27,7 +27,7 @@ sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificN
 centrifuge_tables = snakemake.input["centrifuge_tables"]
 checkm_table = snakemake.input["checkm_table"]
 rrna_classification_file = snakemake.input["rrna_classification_file"]
-
+depth_cutoff = snakemake.params["depth_cutoff"]
 
 STYLE = """
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -137,7 +137,8 @@ table_lowcoverage_contigs = quality_table(low_cov_fastas,
                                           sampls2cumulated_size_filtered,
                                           sample2n_contigs,
                                           sample2scientific_name,
-                                          low_cov_detail=low_cov_detail)
+                                          low_cov_detail=low_cov_detail,
+                                          depth_cutoff=depth_cutoff)
 
 table_resistance = resistance_table(resistance_reports)
 
@@ -204,7 +205,7 @@ Contamination check: 16S rRNA (contigs >500bp)
 
     {rrna_table}
     
-Contamination check: checkM (contigs >500bp)
+Contamination check: checkM (contigs >500bp & depth >{depth_cutoff})
 **********************************************
 
 .. raw:: html

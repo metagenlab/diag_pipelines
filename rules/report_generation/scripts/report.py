@@ -193,9 +193,10 @@ def quality_table(low_cov_fastas,
                   sample2scientific_name,
                   undetermined_snps_files=False,
                   core_genome_size=False,
-                  low_cov_detail=False):
+                  low_cov_detail=False,
+                  depth_cutoff=5):
 
-    header = ["Strain id", "Scientific Name", "Contigs", "Contigs depth < 5", "GC", "Size >500pb (Mb)", "Size >500bp & >5depth (Mb)", "Median Depth"]
+    header = ["Strain id", "Scientific Name", "Contigs", f"Contigs depth <{depth_cutoff}", "GC", "Size >500pb (Mb)", f"Size >500bp & >{depth_cutoff}depth (Mb)", "Median Depth"]
     if low_cov_detail:
         sample2locov_path = {}
         for link in low_cov_detail:

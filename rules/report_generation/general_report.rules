@@ -42,7 +42,8 @@ if "resistance" in sys.argv:
             rrna_similarity = "report/contamination/markers/rrna/pairwise_id.tab",
         params:
             samples = list(read_naming.keys()),
-            sample_table = all_samples
+            sample_table = all_samples,
+            depth_cutoff = config["cov_cutoff"]
         output:
             "report/report_resistance.html",
         script:
