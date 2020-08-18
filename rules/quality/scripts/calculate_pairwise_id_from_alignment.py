@@ -16,8 +16,10 @@ def pairewise_identity(seq1, seq2):
             continue
         if str(A[n])==str(B[n]):
             identical_sites+=1
-
-    identity = 100*(identical_sites/float(aligned_sites))
+    try:
+        identity = 100*(identical_sites/float(aligned_sites))
+    except ZeroDivisionError:
+        identity = 0
 
     #print 'identical_sites', identical_sites
     #print 'aligned_sites', aligned_sites
