@@ -206,7 +206,7 @@ Contamination check: 16S rRNA (contigs >500bp)
     {rrna_table}
     
 Contamination check: checkM (contigs >500bp & depth >{depth_cutoff})
-**********************************************
+*********************************************************************
 
 .. raw:: html
 
