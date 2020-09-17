@@ -141,6 +141,7 @@ sample2gc = {}
 sample2median_depth = {}
 sampls2cumulated_size = {}
 sample2n_contigs = {}
+sampls2cumulated_size_filtered = {}
 for one_table in contig_gc_depth_file_list:
     table = pandas.read_csv(one_table,
                             delimiter='\t',
@@ -157,20 +158,22 @@ for one_table in contig_gc_depth_file_list:
     sample2median_depth[sample] = data_whole_gnome["mean_depth"]
     sampls2cumulated_size[sample] = data_whole_gnome["contig_size"]
     sample2n_contigs[sample] = n_contigs
+    sampls2cumulated_size_filtered[sample] = int(table.query('median_depth>=5 & contig != "TOTAL"')[["contig_size"]].sum())
 
 sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 
 table_lowcoverage_contigs = report.quality_table(low_cov_fastas,
-                                          sample2gc,
-                                          sample2median_depth,
-                                          sampls2cumulated_size,
-                                          sample2n_contigs,
-                                          sample2scientific_name,
-                                          low_cov_detail=low_cov_detail)
+                                                 sample2gc,
+                                                 sample2median_depth,
+                                                 sampls2cumulated_size,
+                                                 sampls2cumulated_size_filtered,
+                                                 sample2n_contigs,
+                                                 sample2scientific_name,
+                                                 low_cov_detail=low_cov_detail)
 
 table_virulence = report.virulence_table(virulence_reports,
-                                  blast_files,
-                                  ordered_samples)
+                                         blast_files,
+                                         ordered_samples)
 
 mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 

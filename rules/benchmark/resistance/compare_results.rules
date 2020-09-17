@@ -30,3 +30,19 @@ if 'sra_samples' in config:
             discrepancies = "{path}_phenotype.tsv",
         script:
             "scripts/add_phenotype.py"
+
+
+    rule statistics_wrong_results:
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            rgi = "report/resistance/rgi_variant_phenotype.tsv",
+            mykrobe = "report/resistance/mykrobe_variant_phenotype.tsv",
+            tbprofiler = "report/resistance/tb-profiler/tbprofiler_variant_phenotype.tsv",
+            walker = "report/resistance/bwa/walker_resistant_annotated/walker_resistant_annotated_variant_phenotype.tsv"
+        params:
+            antibio = lambda wildcards: wildcards.antibiotic
+        output:
+            venn = "report/resistance/frequency_FP_{antibiotic}.tab"
+        script:
+            "scripts/get_frequency_FP.py"

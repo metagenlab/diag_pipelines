@@ -26,8 +26,10 @@ rule search_resistance_paired_reads_with_mykrobe:
         """
         if [ "{params.species}" = "staph" ]
         then
+            echo Staphylococcus aureus
             mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
         else
+            echo Mycobacterium tuberculosis
             if [ -z "{params.panel}" ]
             then
                 mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}

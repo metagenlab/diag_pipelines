@@ -23,22 +23,26 @@ def checkm_table(checkm_table):
 
 def get_rrna_summary_table(raw_table, 
                            sample2scientific_name):
+    
     df = pandas.read_csv(raw_table, delimiter="\t", header=0)
-    
-    
     
     # sample	query	hit	alignment_length	alignment_length	percent_identity	evalue	bitscore
     row_list = []
     sample2count = {}
-    for n,row in df.iterrows():
-        sample = row["sample"]
+    for n, row in df.iterrows():
+        sample = str(row["sample"])
         contig = row["query"]
         BBH_taxnonomy = row["hit"].split(",")[1:]
         identity = row["percent_identity"]
         if sample not in sample2count:
             sample2count[sample] = 0
         sample2count[sample] += 1
-        row_list.append([sample,sample2count[sample], sample2scientific_name[sample], contig, BBH_taxnonomy, identity])
+        row_list.append([sample,
+                         sample2count[sample], 
+                         sample2scientific_name[sample], 
+                         contig, 
+                         BBH_taxnonomy, 
+                         identity])
     
     header = ["sample", "N.", "expected", "contig", "BBH_taxnonomy", "identity"]
     df = pandas.DataFrame(row_list, columns=header)

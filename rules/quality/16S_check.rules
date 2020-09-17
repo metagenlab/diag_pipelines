@@ -1,125 +1,127 @@
 
-rule extract_16S_with_barnap:
-    singularity:
-        "docker://quay.io/biocontainers/barrnap:0.9--3"
-    input:
-        "samples/{sample}/assembly/spades/contigs.fasta"
-    output:
-        "{sample}/contamination/markers/rrna/{sample}_barrnap.gff",
-        "{sample}/contamination/markers/rrna/{sample}_barrnap.ffn",
-    shell:
-        """
-        barrnap --outseq {output[1]} --quiet {input} > {output[0]}
-        """
+if "16S_database" in config:
 
-rule extract_16S:
-    singularity:
-        singularity_envs["python_r"]
-    input:
-        "{sample}/contamination/markers/rrna/{sample}_barrnap.ffn",
-    output:
-        "{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn",
-    script:
-        "scripts/extract_16S.py"
+    rule extract_16S_with_barnap:
+        singularity:
+            "docker://quay.io/biocontainers/barrnap:0.9--3"
+        input:
+            "samples/{sample}/assembly/spades/contigs.fasta"
+        output:
+            "samples/{sample}/contamination/markers/rrna/{sample}_barrnap.gff",
+            "samples/{sample}/contamination/markers/rrna/{sample}_barrnap.ffn",
+        shell:
+            """
+            barrnap --outseq {output[1]} --quiet {input} > {output[0]}
+            """
 
-rule merge_16S:
-    singularity:
-        singularity_envs["python_r"]
-    input:
-        expand("{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn", sample=read_naming.keys()),
-    output:
-        "report/contamination/markers/rrna/merged_barrnap_16S.ffn",
-    script: "scripts/combine_16S.py"
+    rule extract_16S:
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            "samples/{sample}/contamination/markers/rrna/{sample}_barrnap.ffn",
+        output:
+            "samples/{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn",
+        script:
+            "scripts/extract_16S.py"
 
-rule align_16S_with_mafft:
-    singularity:
-        singularity_envs["mafft"]
-    input:
-        "report/contamination/markers/rrna/merged_barrnap_16S.ffn",
-    output:
-        "report/contamination/markers/rrna/merged_barrnap_16S_mafft.ffn",
-    shell:
-        """
-        mafft {input} > {output}
-        """
+    rule merge_16S:
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            expand("samples/{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn", sample=read_naming.keys()),
+        output:
+            "report/contamination/markers/rrna/merged_barrnap_16S.ffn",
+        script: "scripts/combine_16S.py"
 
-rule calculate_parwise_identity:
-    singularity:
-        singularity_envs["python_r"]
-    input:
-        "report/contamination/markers/rrna/merged_barrnap_16S_mafft.ffn"
-    output:
-        "report/contamination/markers/rrna/pairwise_id.tab"
-    script:
-        "scripts/calculate_pairwise_id_from_alignment.py"
+    rule align_16S_with_mafft:
+        singularity:
+            singularity_envs["mafft"]
+        input:
+            "report/contamination/markers/rrna/merged_barrnap_16S.ffn",
+        output:
+            "report/contamination/markers/rrna/merged_barrnap_16S_mafft.ffn",
+        shell:
+            """
+            mafft {input} > {output}
+            """
 
-
-rule assign_taxonomy_vsearch:
-    singularity:
-        singularity_envs["vsearch"]
-    input:
-        "{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn"
-    output:
-        "{sample}/contamination/markers/rrna/{sample}_vsearch.txt"
-    shell:
-        """
-        # (for domain) k (kingdom), p (phylum), c (class), o (order), f (family), g (genus), or s (species)
-        # vsearch --sintax fastafile --db fastafile --tabbedout outputfile
-        vsearch --sintax {input[0]} --db /data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp_vsearch_format.fasta --tabbedout {output[0]}
-        """
-
-rule QIIME1_assign_taxonomy_rdp:
-    singularity:
-        singularity_envs["rdp"] 
-    input:
-        "report/contamination/markers/rrna/merged_barrnap_16S.ffn",
-        "/data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp.fasta",
-        "/data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp_taxonomy.txt"
-    output:
-        "report/contamination/markers/rrna/merged_rdp.txt"
-    threads:
-        1
-    shell:
-        '''
-        export RDP_JAR_PATH=$(command -v rdp_classifier-2.2.jar);
-        assign_path=$(which assign_taxonomy.py)
-        python $assign_path \
-          -i {input[0]} \
-          -r {input[1]} \
-          -t {input[2]} \
-          -m rdp \
-          -o $(dirname {output[0]}) \
-          -c 0.5 \
-          --rdp_max_memory 30000
-        '''
+    rule calculate_parwise_identity:
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            "report/contamination/markers/rrna/merged_barrnap_16S_mafft.ffn"
+        output:
+            "report/contamination/markers/rrna/pairwise_id.tab"
+        script:
+            "scripts/calculate_pairwise_id_from_alignment.py"
 
 
-rule assign_taxonomy_ssearch:
-    singularity:
-        singularity_envs["fasta36"]
-    singularity:
-        "docker://quay.io/biocontainers/vsearch:2.15.0--h2d02072_0"
-    input:
-        "{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn",
-        "/data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp_vsearch_format.fasta",
-    output:
-        "report/contamination/markers/rrna/{sample}_ssearch.txt"
-    log:
-        "report/contamination/markers/rrna/{sample}_ssearch.log"
-    shell:
-        """
-        # keep only best hit
-        echo ssearch36 -b 1 -m 10 -n -z 3 {input[0]} {input[1]}
-        ssearch36 -b 1 -m 10 -n -z 3 {input[0]} {input[1]} 1> {output[0]} 2> {log}
-        """
+    rule assign_taxonomy_vsearch:
+        singularity:
+            singularity_envs["vsearch"]
+        input:
+            "samples/{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn"
+        output:
+            "samples/{sample}/contamination/markers/rrna/{sample}_vsearch.txt"
+        shell:
+            """
+            # (for domain) k (kingdom), p (phylum), c (class), o (order), f (family), g (genus), or s (species)
+            # vsearch --sintax fastafile --db fastafile --tabbedout outputfile
+            vsearch --sintax {input[0]} --db /data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp_vsearch_format.fasta --tabbedout {output[0]}
+            """
+
+    rule QIIME1_assign_taxonomy_rdp:
+        singularity:
+            singularity_envs["rdp"] 
+        input:
+            "report/contamination/markers/rrna/merged_barrnap_16S.ffn",
+            "/data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp.fasta",
+            "/data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp_taxonomy.txt"
+        output:
+            "report/contamination/markers/rrna/merged_rdp.txt"
+        threads:
+            1
+        shell:
+            '''
+            export RDP_JAR_PATH=$(command -v rdp_classifier-2.2.jar);
+            assign_path=$(which assign_taxonomy.py)
+            python $assign_path \
+            -i {input[0]} \
+            -r {input[1]} \
+            -t {input[2]} \
+            -m rdp \
+            -o $(dirname {output[0]}) \
+            -c 0.5 \
+            --rdp_max_memory 30000
+            '''
 
 
-rule format_taxonomy_ssearch:
-    singularity:
-        singularity_envs["python_r"]
-    input:
-        expand("report/contamination/markers/rrna/{sample}_ssearch.txt", sample=read_naming.keys())
-    output:
-        "report/contamination/markers/rrna/summary.txt"
-    script:
-        "scripts/ssearch_summary.py"
+    rule assign_taxonomy_ssearch:
+        singularity:
+            singularity_envs["fasta36"]
+        singularity:
+            "docker://quay.io/biocontainers/vsearch:2.15.0--h2d02072_0"
+        input:
+            "samples/{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn",
+            config["16S_database"],
+        output:
+            "report/contamination/markers/rrna/{sample}_ssearch.txt"
+        log:
+            "report/contamination/markers/rrna/{sample}_ssearch.log"
+        shell:
+            """
+            # keep only best hit
+            echo ssearch36 -b 1 -m 10 -n -z 3 {input[0]} {input[1]}
+            ssearch36 -b 1 -m 10 -n -z 3 {input[0]} {input[1]} 1> {output[0]} 2> {log}
+            """
+
+
+    rule format_taxonomy_ssearch:
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            expand("report/contamination/markers/rrna/{sample}_ssearch.txt", sample=read_naming.keys())
+        output:
+            "report/contamination/markers/rrna/summary.txt"
+        script:
+            "scripts/ssearch_summary.py"
