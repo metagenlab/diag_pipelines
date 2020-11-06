@@ -2,7 +2,7 @@
 rule reorder_contigs:
     input:
         fasta="samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_high_coverage.fasta",
-        ref="references/{ref}/genome_fasta.fasta",
+        ref="references/{ref}/genome_fna.fna",
     output:
         "samples/{sample}/assembly/spades/reordered_{ref}/contigs_500bp_high_coverage_reordered.fasta",
     shell:

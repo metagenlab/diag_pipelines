@@ -23,24 +23,31 @@ def gbk_ref(wildcards):
     '''
     # assembled genome
     if "_assembled_genome" in wildcards.reference:
+        print("GBK: assembled reference")
         return "references/" + wildcards.reference + "/genome_filtered.gbk"
     # cgMLST
     elif wildcards.reference == "cgMLST":
+        print("GBK: cgMLST")
         return "references/" + str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) + "/genome_gbwithparts.gbk"
     # downloaded reference genome
     else:
+        "GBK: Reference from NCBI"
         return "references/" + wildcards.reference + "/genome_gbwithparts.gbk"
 
 
 def vcf_ref(wildcards):
     # typing/gatk_gvcfs/full_genome_79781/bwa/filtering/freq_cov_decomposed_normalized.vcf
     if "_assembled_genome" in wildcards.reference:
+        print("VCF: assembled genomes")
         return "typing/" + wildcards.snp_caller + "/full_genome_" + wildcards.reference + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
-    elif "cgMLST" in wildcards.reference or str(wildcards.reference) == str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) :
+    elif "cgMLST" in wildcards.reference:
+        print("VCF: cgMLST")
         return "typing/" + wildcards.snp_caller + "/full_genome_" + str(all_core_genome_dbs.loc[species, "ReferenceGenome"]) + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
     elif "parsnp" in wildcards.reference:
-         return "typing/" + wildcards.snp_caller + "/" + wildcards.reference + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
+        print("VCF: parsnp")
+        return "typing/" + wildcards.snp_caller + "/" + wildcards.reference + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
     else:
+        print("VCF: NCBI reference")
         # NCBI reference?
         return "typing/" + wildcards.snp_caller + "/full_genome_" + wildcards.reference + "/" + wildcards.mapping_method + "/filtering/freq_cov_decomposed_normalized.vcf"
         #raise IOError("wrong reference")

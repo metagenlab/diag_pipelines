@@ -16,8 +16,8 @@ rule map_paired_reads_with_bwa:
         platform = "ILLUMINA"
     input:
         fastq = check_if_paired,
-        ref = "references/{ref}/genome_fasta.fasta",
-        ref_index = "references/{ref}/genome_fasta.fasta.bwt",
+        ref = "references/{ref}/genome_fna.fna",
+        ref_index = "references/{ref}/genome_fna.fna.bwt",
     output:
         temp("samples/{sample}/mapping/bwa/{ref}.bam"),
     log:
@@ -41,8 +41,8 @@ rule map_single_reads_with_bwa:
         platform = "ILLUMINA"
     input:
         fastq = "samples/{sample}/reads/trimmed/single.fastq",
-        ref = "references/{ref}/genome_fasta.fasta",
-        ref_index = "references/{ref}/genome_fasta.fasta.bwt",
+        ref = "references/{ref}/genome_fna.fna",
+        ref_index = "references/{ref}/genome_fna.fna.bwt",
     output:
         temp("samples/{sample}/mapping/bwa/{ref}.bam"),
     log:
@@ -82,8 +82,8 @@ rule map_paired_reads_with_bwa_for_direct_sequencing:
     input:
         fastq1 = "samples/{sample}/reads/trimmed/R1_paired.fastq",
         fastq2 = "samples/{sample}/reads/trimmed/R2_paired.fastq",
-        ref = "references/{ref}/genome_fasta.fasta",
-        ref_index = "references/{ref}/genome_fasta.fasta.bwt",
+        ref = "references/{ref}/genome_fna.fna",
+        ref_index = "references/{ref}/genome_fna.fna.bwt",
     output:
         temp("samples/{sample}/mapping/bwa_stringent/{ref}.bam"),
     log:
@@ -107,8 +107,8 @@ rule map_single_reads_with_bwa_for_direct_sequencing:
         platform = "ILLUMINA"
     input:
         fastq = "samples/{sample}/reads/trimmed/single.fastq",
-        ref = "references/{ref}/genome_fasta.fasta",
-        ref_index = "references/{ref}/genome_fasta.fasta.bwt",
+        ref = "references/{ref}/genome_fna.fna",
+        ref_index = "references/{ref}/genome_fna.fna.bwt",
     output:
         temp("samples/{sample}/mapping/bwa_stringent/{ref}.bam"),
     log:
@@ -130,8 +130,8 @@ rule filter_reads_on_quality:
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}.bam.bai",
-        ref = "references/{ref}/genome_fasta.fasta",
-        ref_index = "references/{ref}/genome_fasta.fasta.bwt",
+        ref = "references/{ref}/genome_fna.fna",
+        ref_index = "references/{ref}/genome_fna.fna.bwt",
     output:
         temp("samples/{sample}/mapping/{mapping_method}/{ref}/filtered.bam"),
     shell:

@@ -4,10 +4,10 @@ rule index_reference_fasta:
     singularity:
         singularity_envs["bwa_samtools"]
     input:
-        "{any_genome}.fasta"
+        "{any_genome}.{ext}"
     output:
-        "{any_genome}.fasta.fai",
-        "{any_genome}.fasta.bwt",
+        "{any_genome}.{ext}.fai",
+        "{any_genome}.{ext}.bwt",
     shell:
         """
         samtools faidx {input[0]} &> /dev/null

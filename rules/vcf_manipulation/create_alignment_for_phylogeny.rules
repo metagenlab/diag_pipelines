@@ -41,7 +41,7 @@ rule create_consensus_sequence_by_sample:
         alt="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alternative_snp.vcf.gz",
         alt_tbi="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alternative_snp.vcf.gz.tbi",
         unknowns="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/unknowns.tab",
-        ref="references/{core_genome_or_full_genome}/genome_fasta.fasta",
+        ref="references/{core_genome_or_full_genome}/genome_fna.fna",
     output:
         alignment="samples/{sample}/alignment/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/consensus.fa",
     shell:
@@ -54,7 +54,7 @@ rule create_consensus_sequence_by_sample:
 rule concatenate_consensus_fasta_files_all_samples:
     input:
         fasta = expand("samples/{sample}/alignment/{{snp_caller}}/{{core_genome_or_full_genome}}/{{mapping_method}}/consensus.fa", sample=read_naming.keys()),
-        ref = "references/{core_genome_or_full_genome}/genome_fasta.fasta",
+        ref = "references/{core_genome_or_full_genome}/genome_fna.fna",
     output:
         alignment="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alignment.fa"
     shell:

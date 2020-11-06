@@ -27,7 +27,7 @@ rule fetch_gene_entries_from_locus_tag:
     conda:
         "../../envs/biopython.yml"
     input:
-        gbk = lambda wildcards : "references/" + str(enterobase.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_gbwithparts.gbwithparts",
+        gbk = lambda wildcards : "references/" + str(enterobase.loc[wildcards.spec, "ReferenceGenome"]) + "/genome_gbff.gbff",
         locus_list = "core_genomes/cgMLST/{spec}/genes.txt",
     output:
         bed = "core_genomes/cgMLST/{spec}_unmerged.bed",

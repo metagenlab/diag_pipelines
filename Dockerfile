@@ -62,7 +62,7 @@ RUN snakemake --snakefile ${pipeline_folder}/rules/downloading/fetch_VFDB.rules 
 
 #CREATE cgMLST BED FILES
 RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Staphylococcus_aureus.bed core_genomes/cgMLST/Mycobacterium_tuberculosis.bed core_genomes/cgMLST/Listeria_monocytogenes.bed core_genomes/cgMLST/Klebsiella_pneumoniae.bed core_genomes/cgMLST/Enterococcus_faecium.bed core_genomes/cgMLST/Acinetobacter_baumannii.bed core_genomes/cgMLST/Legionella_pneumophila.bed core_genomes/cgMLST/Clostridioides_difficile.bed -j 4
-RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Salmonella_enterica.bed core_genomes/cgMLST/Escherichia_coli.bed references/538048/genome_gbwithparts.gbwithparts -j 4
+RUN snakemake --snakefile ${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Salmonella_enterica.bed core_genomes/cgMLST/Escherichia_coli.bed references/538048/genome_gbff.gbff -j 4
 RUN snakemake --snakefile ${pipeline_folder}/rules/downloading/adapting_genome_files.rules --use-conda --conda-prefix ${conda_folder} references/538048/genome_gbwithparts.gbk
 
 # CREATE MTB RESISTANCE DATABASES
@@ -102,7 +102,7 @@ ENTRYPOINT ["/bin/bash"]
 WORKDIR /diag_pipeline/
 
 #RUN mkdir -p ${main}/data/references/1493941/
-#RUN  /bin/bash -c 'source activate /opt/conda/envs/db3680fa/ && efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${main}/data/references/1493941/genome_fasta.fasta'
-#RUN  /bin/bash -c 'source activate /opt/conda/envs/c327f08f/ && mash sketch -o ${main}/data/references/mash_sketch_human.msh ${main}/data/references/1493941/genome_fasta.fasta'
+#RUN  /bin/bash -c 'source activate /opt/conda/envs/db3680fa/ && efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${main}/data/references/1493941/genome_fna.fna'
+#RUN  /bin/bash -c 'source activate /opt/conda/envs/c327f08f/ && mash sketch -o ${main}/data/references/mash_sketch_human.msh ${main}/data/references/1493941/genome_fna.fna'
 #RUN rm -rf ${main}/data/references/1493941/
 #RUN rm -rf links/ &&  rm core_genomes/parsnp/Mycobacterium_tuberculosis/parsnp.xmfa && rm config.yaml && rm *.tsv

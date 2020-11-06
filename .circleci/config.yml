@@ -38,7 +38,7 @@ jobs:
              cp -R ${pipeline_folder}/data/Mycobacterium_tuberculosis ${data_folder}/resistance_db/
              cd $data_folder 
              snakemake --snakefile ../${pipeline_folder}/workflows/core_genomes/make_ridom.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Staphylococcus_aureus.bed core_genomes/cgMLST/Mycobacterium_tuberculosis.bed core_genomes/cgMLST/Listeria_monocytogenes.bed core_genomes/cgMLST/Klebsiella_pneumoniae.bed core_genomes/cgMLST/Enterococcus_faecium.bed core_genomes/cgMLST/Acinetobacter_baumannii.bed core_genomes/cgMLST/Legionella_pneumophila.bed core_genomes/cgMLST/Clostridioides_difficile.bed -j 2 
-             snakemake --snakefile ../${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Salmonella_enterica.bed core_genomes/cgMLST/Escherichia_coli.bed references/538048/genome_gbwithparts.gbwithparts
+             snakemake --snakefile ../${pipeline_folder}/workflows/core_genomes/make_enterobase.rules --use-conda --conda-prefix ${conda_folder} core_genomes/cgMLST/Salmonella_enterica.bed core_genomes/cgMLST/Escherichia_coli.bed references/538048/genome_gbff.gbff
       - run: 
           name: Create reference for MTB
           command: |
@@ -74,10 +74,10 @@ jobs:
           name: Create human genome MASH sketch
           command: |
              source activate ${conda_folder}/envs/618592fe/ 
-             efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${data_folder}/references/1493941/genome_fasta.fasta
+             efetch -db assembly -id 1493941 -format docsum | xtract -pattern DocumentSummary -element FtpPath_RefSeq | sed "s/\(\/GCF_.*\)/\\1\\1_genomic.fna.gz/" | xargs -I % wget -qO- % | gzip -d > ${data_folder}/references/1493941/genome_fna.fna
              source deactivate
              source activate ${conda_folder}/envs/c327f08f/
-             mash sketch -o ${data_folder}/references/mash_sketch_human.msh ${data_folder}/references/1493941/genome_fasta.fasta
+             mash sketch -o ${data_folder}/references/mash_sketch_human.msh ${data_folder}/references/1493941/genome_fna.fna
              source deactivate
              rm -rf ${data_folder}/references/1493941/
 

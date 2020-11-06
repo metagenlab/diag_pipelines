@@ -24,7 +24,7 @@ rule correct_gbk_extension_for_IGV_visualization:
     singularity:
         singularity_envs["python_r"] 
     input:
-        genome = "references/{ref}/genome_gbwithparts.gbwithparts",
+        genome = "references/{ref}/genome_gbff.gbff",
     output:
         genome_for_igv = "references/{ref}/genome_gbwithparts.gbk",
     shell:

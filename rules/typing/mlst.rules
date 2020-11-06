@@ -29,7 +29,7 @@ rule determine_mlst_reference_genome:
     singularity:
         singularity_envs["mlst"]
     input:
-        genome = "references/{ref}/genome_fasta.fasta"
+        genome = "references/{ref}/genome_fna.fna"
     output:
         "references/{ref}/mlst.tsv"
     shell:

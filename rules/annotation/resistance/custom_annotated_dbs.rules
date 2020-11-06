@@ -22,7 +22,7 @@ rule decompose_multiallelic_positions_from_genotyping:
     input:
         genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf.gz",
         genotype_tbi = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf.gz.tbi",
-        reference = "references/" + reference_assembly_for_resistance[species] + "/genome_fasta.fasta",
+        reference = "references/" + reference_assembly_for_resistance[species] + "/genome_fna.fna",
     output:
         genotype_decomposed = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_decomposed.g.vcf",
     log:

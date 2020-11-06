@@ -79,11 +79,11 @@ rule format_distances_from_mash_results:
         distances = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv"
     output:
         formated_distances = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances_formated.tsv",
-        formated_distances_no_viruses = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances_formated_no_virus.tsv"
+        #formated_distances_no_viruses = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances_formated_no_virus.tsv"
     shell:
         """
         cat {input[distances]}  | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | cut -f1,2,4,7 | sort -gr  > {output[formated_distances]}
-        cat {input[distances]} | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | grep -v "ViralProj" | grep -v "phage" | grep -v "virus" | cut -f1,2,4,7 | sort -gr  > {output[formated_distances_no_viruses]}
+        #cat {input[distances]} | cut -f6 | sed "s/\[\.\.\.]//" | sed "s/\[[0-9]\+ seqs] //" | cut -f2- -d' ' | paste {input[0]} - | grep -v "ViralProj" | grep -v "phage" | grep -v "virus" | cut -f1,2,4,7 | sort -gr  
         """
 
 

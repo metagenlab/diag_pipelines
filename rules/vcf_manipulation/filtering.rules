@@ -6,7 +6,7 @@ rule decompose_multiallelics_and_normalize:
     input:
         raw="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf.gz",
         raw_tbi="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf.gz",
-        ref="references/{ref}/genome_fasta.fasta",
+        ref="references/{ref}/genome_fna.fna",
     output:
         decomposed="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/decomposed_normalized.vcf",
     log:

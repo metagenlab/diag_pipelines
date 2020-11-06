@@ -5,7 +5,7 @@ rule extract_core_genome_parsnp_from_ref:
         singularity_envs["bcftools"]  
     input:
         "core_genomes/parsnp/" + species + "/parsnp.xmfa",
-        "references/{ref}/genome_fasta.fasta"
+        "references/{ref}/genome_fna.fna"
     output:
         "core_genomes/parsnp/" + species + "/{ref}.bed",
     shell:

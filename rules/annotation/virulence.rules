@@ -98,7 +98,7 @@ rule merge_samples_summary:
         xlsx=expand("samples/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys()),
         fasta=expand("samples/{sample}/virulence/proteins.fasta", sample = read_naming.keys()),
     output:
-        "virulence_summary.xlsx"
+        "report/virulence/virulence_summary.xlsx"
     script:
         "../../rules/annotation/resistance/scripts/merge_non_empty_results.py"
 

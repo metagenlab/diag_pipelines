@@ -6,10 +6,10 @@ rule create_dictionary_for_reference:
     singularity:
         singularity_envs["gatk4"]
     input:
-        ref = "references/{ref}/genome_fasta.fasta",
-        index = "references/{ref}/genome_fasta.fasta.fai"
+        ref = "references/{ref}/genome_fna.fna",
+        index = "references/{ref}/genome_fna.fna.fai"
     output:
-        dictionary = "references/{ref}/genome_fasta.dict"
+        dictionary = "references/{ref}/genome_fna.dict"
     log:
         logging_folder + "logs/references/{ref}/create_dictionnary.txt"
     shell:
@@ -27,8 +27,8 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",
-        ref = "references/{ref}/genome_fasta.fasta",
-        ref_dict = "references/{ref}/genome_fasta.dict",
+        ref = "references/{ref}/genome_fna.fna",
+        ref_dict = "references/{ref}/genome_fna.dict",
     output:
         gvcf = temp("samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf"),
         gvcf_index = temp("samples/{sample}/snps/gatk/{ref}/{mapping_method}/snps.g.vcf.idx"),
@@ -45,7 +45,7 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
     singularity:
         singularity_envs["gatk4"]
     input:
-        ref = "references/{ref}/genome_fasta.fasta",
+        ref = "references/{ref}/genome_fna.fna",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
         gvcfs_tbi = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
     output:
@@ -68,7 +68,7 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
     singularity:
         singularity_envs["gatk4"]
     input:
-        ref = "references/{ref}/genome_fasta.fasta",
+        ref = "references/{ref}/genome_fna.fna",
         gvcfs = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz", sample=read_naming.keys()),
         gvcfs_tbi = expand("samples/{sample}/snps/gatk/{{ref}}/{{mapping_method}}/snps.g.vcf.gz.tbi", sample=read_naming.keys())
     output:
@@ -89,7 +89,7 @@ rule genotype_with_GenotypeGVCFs_GATK:
     threads:
         4
     input:
-        ref = "references/{ref}/genome_fasta.fasta",
+        ref = "references/{ref}/genome_fna.fna",
         combined = "typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/combined.vcf",
         quality = "report/multiqc_mapping_to_{ref}/{mapping_method}/multiqc_report.html",
     output:

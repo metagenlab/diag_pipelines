@@ -8,8 +8,8 @@ rule genotype_with_freebayes_on_all_samples:
     input:
         bams=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam", sample=read_naming.keys()),
         bais=expand("samples/{sample}/mapping/{{mapping_method}}/{{ref}}/deduplicated_filtered.bam.bai", sample=read_naming.keys()),
-        ref="references/{ref}/genome_fasta.fasta",
-        ref_fai="references/{ref}/genome_fasta.fasta.fai",
+        ref="references/{ref}/genome_fna.fna",
+        ref_fai="references/{ref}/genome_fna.fna.fai",
         quality = "report/multiqc_mapping_to_{ref}/{mapping_method}/multiqc_report.html",
     output:
         vcf="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf"
@@ -29,8 +29,8 @@ rule genotype_with_freebayes_one_sample_second_pass:
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         bai = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",
-        ref = "references/{ref}/genome_fasta.fasta",
-        ref_fai = "references/{ref}/genome_fasta.fasta.fai",
+        ref = "references/{ref}/genome_fna.fna",
+        ref_fai = "references/{ref}/genome_fna.fna.fai",
         quality = "report/multiqc_mapping_to_{ref}/multiqc_report.html",
         variants = "typing/freebayes_two_pass/full_genome_{ref}/{mapping_method}/positions.vcf",
     output:
