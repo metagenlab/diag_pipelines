@@ -77,11 +77,12 @@ read_naming = {**reads_local, **sras_ext}
 for key in read_naming:
     print("%s\t%s" % (key, read_naming[key]))
 
+reference_genomes = []
+reference_genomes_dir = []
 if "reference" in config:
     # preparing reference_genomes variable
     # 3 choices: cgMLST, local/sra sample or NCBI reference
-    reference_genomes = []
-    reference_genomes_dir = []
+
 
     ref_list = config["reference"].split(",")
     sample_references = []

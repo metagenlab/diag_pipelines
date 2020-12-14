@@ -5,7 +5,7 @@ rule rgi2rst:
     input:
         rgi_files=expand("samples/{sample}/resistance/rgi.tsv", sample=read_naming.keys()),
         mlst_file="report/typing/mlst/summary.tsv",
-        mash_files=expand("samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv", sample=read_naming.keys()),
+        mash_files=expand("samples/{sample}/contamination/mash/assembly/distances_formated.tsv", sample=read_naming.keys()),
     output:
         "report/resistance/rgi_report.rst",
     log:

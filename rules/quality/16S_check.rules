@@ -51,6 +51,7 @@ if "16S_database" in config:
         input:
             "report/contamination/markers/rrna/merged_barrnap_16S_mafft.ffn"
         output:
+            # report/contamination/markers/rrna/pairwise_id.tab
             "report/contamination/markers/rrna/pairwise_id.tab"
         script:
             "scripts/calculate_pairwise_id_from_alignment.py"
