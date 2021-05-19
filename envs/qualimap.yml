@@ -2,4 +2,6 @@ channels:
  - bioconda
  - conda-forge
 dependencies:
- - qualimap = 2.2.2a=1
+ - qualimap = 2.2.2d
+ - openjdk
+ - fontconfig
