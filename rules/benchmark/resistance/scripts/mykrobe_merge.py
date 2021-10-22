@@ -11,7 +11,7 @@ nr_drug_list = []
 for mykrobe_result in mykrobe_results:
     sample = mykrobe_result.split("/")[1]
     sample2drug2susceptibility[sample] = {}
-    result_table = pandas.read_csv(mykrobe_result, sep="\t", index_col="drug")
+    result_table = pandas.read_csv(mykrobe_result, sep=",", index_col="drug")
     for drug in result_table.index:
         drug_l = drug.lower()
         if drug_l not in nr_drug_list:
