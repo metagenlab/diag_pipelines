@@ -37,4 +37,5 @@ snp_caller: "gatk_gvcfs"
 # mapping: either bwa or bwa_stringent
 mapping: "bwa"
 
-16S_database: "/data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp_vsearch_format.fasta"
+# /data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp_vsearch_format.fasta
+16S_database: /data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp_vsearch_format.fasta
