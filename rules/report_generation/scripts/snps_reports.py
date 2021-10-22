@@ -63,14 +63,17 @@ def get_neiboring_orf(position, feature_list):
     if int(position) > int(feature_list[-1].location.end):
         if 'gene' in feature_list[-1].qualifiers:
             gene = feature_list[-1].qualifiers["gene"][0]
-            locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
+            
         else:
             gene = '-'
+        if 'locus_tag' in feature_list[-1].qualifiers:
             locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
-            if 'mobile_element_type' in feature_list[-1].qualifiers:
-                gene = feature_list[-1].qualifiers["mobile_element_type"]
-            else:
-                gene = '-'
+        else:
+            locus_tag = '-'
+        if 'mobile_element_type' in feature_list[-1].qualifiers:
+            gene = feature_list[-1].qualifiers["mobile_element_type"]
+        else:
+            gene = '-'
         return ['%s (%s)' % (locus_tag, gene), '-']
 
     for n, feature in enumerate(feature_list):
@@ -81,38 +84,40 @@ def get_neiboring_orf(position, feature_list):
                 gene = feature.qualifiers["gene"][0]
                 locus_tag = feature.qualifiers["locus_tag"][0]
             else:
+                gene = '-' 
+            if 'locus_tag' in feature.qualifiers:
+                locus_tag = feature.qualifiers["locus_tag"][0]
+            if 'mobile_element_type' in feature.qualifiers:
+                gene = feature.qualifiers["mobile_element_type"]
+            else:
                 gene = '-'
-                locus_tag = feature_list[-1].qualifiers["locus_tag"][0]
-                if 'mobile_element_type' in feature.qualifiers:
-                    gene = feature.qualifiers["mobile_element_type"]
-                else:
-                    gene = '-'
             return ["-", "%s (%s)" % (locus_tag, gene)]
 
         if int(position) > int(feature.location.end) and int(position) < int(feature_list[n + 1].location.start):
-            try:
+            if 'gene' in feature.qualifiers:
                 gene1 = feature.qualifiers["gene"][0]
-                locus_tag1 = feature.qualifiers["locus_tag"][0]
-            except KeyError:
+            else:
                 gene1 = '-'
-                locus_tag1 = feature_list[-1].qualifiers["locus_tag"][0]
-                if 'mobile_element_type' in feature.qualifiers:
-                    gene1 = feature.qualifiers["mobile_element_type"]
-                else:
-                    gene1 = '-'
-            try:
+            if 'locus_tag' in feature.qualifiers:
+                locus_tag1 = feature.qualifiers["locus_tag"][0]
+            else:
+                locus_tag1 = '-'
+            if 'mobile_element_type' in feature.qualifiers:
+                gene1 = feature.qualifiers["mobile_element_type"]
+            else:
+                gene1 = '-'
+            if 'gene' in feature_list[n + 1].qualifiers:
                 gene2 = feature_list[n + 1].qualifiers["gene"][0]
-                locus_tag2 = feature_list[n + 1].qualifiers["locus_tag"][0]
-            except KeyError:
+            else:
                 gene2 = '-'
-                if 'locus_tag' in feature_list[n + 1].qualifiers:
-                    locus_tag2 = feature_list[n + 1].qualifiers["locus_tag"][0]
-                else:
-                    locus_tag2 = '-'
-                if 'mobile_element_type' in feature_list[n + 1].qualifiers:
-                    gene2 = feature_list[n + 1].qualifiers["mobile_element_type"]
-                else:
-                    gene2 = '-'
+            if 'locus_tag' in feature_list[n + 1].qualifiers:
+                locus_tag2 = feature_list[n + 1].qualifiers["locus_tag"][0]
+            else:
+                locus_tag2 = '-'
+            if 'mobile_element_type' in feature_list[n + 1].qualifiers:
+                gene2 = feature_list[n + 1].qualifiers["mobile_element_type"]
+            else:
+                gene2 = '-'
             return ["%s (%s)" % (locus_tag1, gene1), "%s (%s)" % (locus_tag2, gene2)]
     return ["no CDS", "no CDS"]
 
@@ -401,7 +406,7 @@ SCRIPT = """
 
 vcf_reader = vcf.Reader(codecs.open(vcf_file, 'r', 'latin-1'))
 n_snps_record = len([vcf_record for vcf_record in vcf_reader if vcf_record.samples[0]['GT'] not in ['.', '0']])
-
+print("n_snps_record", n_snps_record)
 if n_snps_record > 200:
     snp_table = "too much snps"
 else:
