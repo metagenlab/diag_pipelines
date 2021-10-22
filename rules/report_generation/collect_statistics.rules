@@ -18,6 +18,22 @@ rule statistics:
         "scripts/statistics.py"
 
 
+rule statistics_assembly:
+    conda:
+        "../../envs/python-r.yml"
+    singularity:
+        singularity_envs["python_r"]
+    input:
+        multiqc_assembly = "report/multiqc_assembly/multiqc_data/multiqc_data.json",
+        contigs = expand("samples/{sample}/assembly/spades/contigs.fasta", sample=read_naming.keys()),
+        contigs_depth = expand("samples/{sample}/{mapping_method}/{sample}_assembled_genome/contig_coverage.txt", sample=read_naming.keys(), mapping_method=config["mapping"]),
+        mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated.tsv', sample=read_naming.keys()),
+        centrifuge_tables = expand("samples/{sample}/contamination/centrifuge/report.tsv", sample=read_naming.keys()),
+    output:
+        "report/statistics_assembly.tsv"
+    script:
+        "scripts/statistics.py"
+
 
 rule statistics_minimal:
     conda:
@@ -29,7 +45,7 @@ rule statistics_minimal:
         #contigs_depth = expand("samples/{sample}/{mapping_method}/{sample}_assembled_genome/contig_coverage.txt", sample=read_naming.keys(), mapping_method=config["mapping"]),
         mash_results = expand('samples/{sample}/contamination/mash/fastq/distances_formated.tsv', sample=read_naming.keys()),
         centrifuge_tables = expand("samples/{sample}/contamination/centrifuge/report.tsv", sample=read_naming.keys()),
-        multiqc_report = "report/multiqc_mapping_to_538048/bwa/multiqc_data.json",
+        multiqc_report = "report/multiqc_mapping_to_538048/%s/multiqc_data.json" % config["mapping"],
     output:
         "report/statistics_minimal.tab"
     script:
