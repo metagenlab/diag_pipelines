@@ -6,9 +6,9 @@ bcftools: docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7
 python_r: docker://metagenlab/diag-pipeline-python-r:1.1
 bedtools: docker://quay.io/biocontainers/bedtools:2.29.2--hc088bd4_0
 bwa_samtools: docker://metagenlab/bwa-samtools:1.0
-mykrobe: docker://quay.io/biocontainers/mykrobe:0.8.1--py37ha80c686_0
-tb-profiler: docker://metagenlab/tb-profiler:2.8.10
-rgi: docker://metagenlab/rgi:5.1.1-v3.0.9
+mykrobe: docker://quay.io/biocontainers/mykrobe:0.10.0--py39h98c8e45_0
+tb-profiler: docker://metagenlab/tb-profiler:3.0.8
+rgi: docker://metagenlab/rgi:5.2.0-3.1.3
 pyvcf: docker://limr/pyvcf:0.6.8
 mentalist: docker://quay.io/biocontainers/mentalist:0.1.9--hbc14f71_4  
 entrez-direct: docker://quay.io/biocontainers/entrez-direct:13.9--pl526h375a9b1_0 #docker://metagenlab/entrez-direct:1.1
@@ -35,3 +35,4 @@ vsearch: docker://quay.io/biocontainers/vsearch:2.15.0--h2d02072_0
 rdp: docker://metagenlab/amplicons_qiime1_rdp:v.1.0
 fasta36: docker://quay.io/biocontainers/fasta3:36.3.8--h516909a_5
 curl: docker://curlimages/curl:7.73.0
+gtdbtk: docker://quay.io/biocontainers/gtdbtk:1.6.0--pyhdfd78af_0
