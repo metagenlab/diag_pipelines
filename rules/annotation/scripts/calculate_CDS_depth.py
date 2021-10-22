@@ -108,11 +108,11 @@ with open(out_CDS_depth, 'w') as f:
             # attention range
             # index starts from 0
             # range does not include "last count"
-            start_pos = int(record2gene2coord[record][gene][0]) - 1
-            end_pos = int(record2gene2coord[record][gene][1])
+            start_pos = int(record2gene2coord[record][gene][0])
+            end_pos = int(record2gene2coord[record][gene][1]) + 1
             if start_pos > end_pos:
-                start_pos = int(record2gene2coord[record][gene][1]) - 1
-                end_pos = int(record2gene2coord[record][gene][0])
+                start_pos = int(record2gene2coord[record][gene][1])
+                end_pos = int(record2gene2coord[record][gene][0]) + 1
 
             gene_median = numpy.median(subset_table.iloc[start_pos:end_pos, 1])
             f.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (

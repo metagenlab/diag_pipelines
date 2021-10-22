@@ -1,4 +1,6 @@
-rule search_resistance_with_rgi:
+
+'''
+rule search_resistance_with_rgi_contigs:
     conda:
         "../../../envs/rgi.yml"
     singularity:
@@ -8,11 +10,29 @@ rule search_resistance_with_rgi:
     input:
         "samples/{sample}/annotation/{sample}.fsa"
     output:
-        "samples/{sample}/resistance/rgi.json"
+        "samples/{sample}/resistance/rgi_{sample}.json"
     shell:
         """
         # new version
-        rgi main -t contig -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi
+        rgi main -t contig -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi_{wildcards.sample}
+        """
+'''
+
+rule search_resistance_with_rgi_faa:
+    conda:
+        "../../../envs/rgi.yml"
+    singularity:
+        singularity_envs["rgi"]
+    threads:
+        4
+    input:
+        "samples/{sample}/annotation/{sample}.faa"
+    output:
+        "samples/{sample}/resistance/rgi_{sample}.json"
+    shell:
+        """
+        # new version
+        rgi main -t protein -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi_{wildcards.sample}
         """
 
 rule generate_rgi_tsv_file_from_json_file:
@@ -21,15 +41,33 @@ rule generate_rgi_tsv_file_from_json_file:
     singularity:
         singularity_envs["rgi"]
     input:
-        "samples/{sample}/resistance/rgi.json"
+        "samples/{sample}/resistance/rgi_{sample}.json"
     output:
-        "samples/{sample}/resistance/rgi.tsv",
+        temp("samples/{sample}/resistance/rgi_{sample}_raw.tsv"),
 
     shell:
         """
         rgi tab -i {input[0]}
-        mv $(dirname {output[0]})/rgi.txt {output[0]}
+        mv $(dirname {output[0]})/rgi_{wildcards.sample}.txt {output[0]}
         """
+
+rule format_rgi_tsv:
+    '''
+    add start, stop nucleotide sequence to table
+    '''
+    singularity:
+        singularity_envs["python_r"]
+    input:
+        gbk = "samples/{sample}/annotation/{sample}.gbk",
+        rgi_out = "samples/{sample}/resistance/rgi_{sample}_raw.tsv",
+        gene_depth_file="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/CDS_depth.tab",
+        contig_gc_depth_file="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
+    params:
+        sample_name="{sample}",
+    output:
+        "samples/{sample}/resistance/rgi_{sample}.tsv",
+    script: "scripts/rgi_format.py"
+
 
 
 rule plot_rgi:
@@ -38,29 +76,29 @@ rule plot_rgi:
     singularity:
         singularity_envs["python_r"]
     input:
-        rgi_files=expand("samples/{sample}/resistance/rgi.tsv", sample=read_naming.keys()),
+        rgi_files=expand("samples/{sample}/resistance/combined_{sample}.tsv", sample=read_naming.keys()),
     params:
         species = lambda wildcards: all_samples.loc[read_naming.keys(), "ScientificName"],
     output:
         expand("report/resistance/{species}.svg", species=list(set(all_samples.loc[read_naming.keys(), "ScientificName"]))),
-        rgi_plot="report/resistance/rgi_overview.svg",
+        rgi_plot="report/resistance/combined_plot_overview.svg",
     script:
         "scripts/plot_gene_presence_heatmap.R"
 
-rule generate_rgi_report:
+
+rule generate_rgi_BLDB_html_report:
     conda:
         "../../../envs/python-r.yml"
     singularity:
         singularity_envs["python_r"]
     input:
-        rgi_tsv_output="samples/{sample}/resistance/rgi.tsv",
-        gene_depth_file="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/CDS_depth.tab",
+        combined_tsv_output="samples/{sample}/resistance/combined_{sample}.tsv",
         contig_gc_depth_file="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
         samtools_depth = "samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/mapping.depth",
     params:
         sample="{sample}",
     output:
-        "report/resistance/{sample}_rgi_report.html",
+        "report/resistance/{sample}_combined_report.html",
     script:
-        "scripts/generate_rgi_html_report.py"
+        "scripts/generate_combined_html_report.py"
 

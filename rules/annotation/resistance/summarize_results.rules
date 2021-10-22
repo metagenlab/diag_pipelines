@@ -44,3 +44,5 @@ rule merge_summary_xlsx_files:
         "report/resistance/{software}_summary.xlsx"
     script:
         "scripts/merge_summary_xlsx.py"
+
+

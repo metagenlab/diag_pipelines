@@ -30,6 +30,9 @@ include:
     "../rules/annotation/resistance/rgi.rules"
 
 include:
+    "../rules/annotation/resistance/customdb.rules"
+
+include:
     "../rules/annotation/resistance/tb-profiler.rules"
 
 if species in reference_assembly_for_resistance.keys():

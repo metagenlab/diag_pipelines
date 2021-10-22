@@ -13,7 +13,7 @@ rule search_resistance_with_tbprofiler:
     output:
         "samples/{sample}/resistance/tb-profiler/results/{sample}.results.json",
         temp("samples/{sample}/resistance/tb-profiler/bam/{sample}.bam"),
-        temp("samples/{sample}/resistance/tb-profiler/vcf/{sample}.targets.vcf.gz"),
+        temp("samples/{sample}/resistance/tb-profiler/vcf/{sample}.targets.csq.vcf.gz"), # 1052_1458.targets.csq.vcf.gz
     log:
         "samples/{sample}/resistance/tb-profiler/tb-profiler.json",
     shell:

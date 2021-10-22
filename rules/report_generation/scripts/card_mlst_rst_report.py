@@ -14,15 +14,16 @@ def parse_mlst(mlst_tsv_file):
     
     
 def parse_rgi(rgi_file_list,
-              query_cov_cutoff=50):
+              query_cov_cutoff=30):
     import pandas
     import re
     
-    BETALACTAMS = ["monobactam", "carbapenem", "penam", "cephem", "penem", "cephamycin", "cephalosporin"]
+    BETALACTAMS = ["monobactam", "carbapenem", "penam", "cephem", "penem", "cephamycin", "cephalosporin", "Beta-Lactam"]
     # carbapenem; cephalosporin; cephamycin; penam
     sample2rgi = {}
     
     for rgi_file in rgi_file_list:
+        print("rgi_file", rgi_file)
         sample = rgi_file.split("/")[1]
         sample2rgi[sample] = {}
         sample2rgi[sample]["transporters"] = []
@@ -30,27 +31,31 @@ def parse_rgi(rgi_file_list,
         sample2rgi[sample]["drug_resistance"] = {}
         t = pandas.read_csv(rgi_file, sep="\t", header=0)
         for n, row in t.iterrows():
-            gene = row["Best_Hit_ARO"]
+            #print("-------", row)
+            gene = row["Best_hit"]
             model_type = row["Model_type"]
-            mechanism = row["Resistance Mechanism"]
-            coverage = float(row["Percentage Length of Reference Sequence"])
+            mechanism = row["Mechanism"]
+            if not isinstance(mechanism, str):
+                mechanism = 'n/a'
+            coverage = float(row["Percent_coverage"])
             if float(coverage) < query_cov_cutoff:
                 print("Skipping low cov entry: %s (%s %%)" % (gene, coverage))
                 continue
-            identity = float(row["Best_Identities"])
+            identity = float(row["Percent_identity"])
             if "efflux" in mechanism:
                 sample2rgi[sample]["transporters"].append([gene, coverage, identity])
                 continue
             
             # protein variant model
             # protein homolog model
-            if model_type == "protein variant model":
-                SNPs_in_Best_Hit_ARO = row["SNPs_in_Best_Hit_ARO"]
+            # rRNA gene variant model
+            if model_type in ["protein variant model", "rRNA gene variant model"]:
+                SNPs_in_Best_Hit_ARO = row["SNPs"]
                 sample2rgi[sample]["SNP"].append([gene, SNPs_in_Best_Hit_ARO, coverage, identity])
                 continue
             elif model_type == "protein homolog model":
                 try:
-                    drug_class_list = row["Drug Class"].split("; ")
+                    drug_class_list = row["Drug_class"].split("; ")
                 except:
                     drug_class_list = ["Unspecified"]
                 drug_class_list = list(set([i if i not in BETALACTAMS else "Beta-Lactam" for i in drug_class_list]))
@@ -73,6 +78,7 @@ def parse_rgi(rgi_file_list,
                         if coverage < sample2rgi[sample]["drug_resistance"][drug][gene][2]:
                             sample2rgi[sample]["drug_resistance"][drug][gene][2] = identity
             else:
+                # 
                 raise IOError("Unknown model type:", model_type)
     return sample2rgi
                  
@@ -138,11 +144,11 @@ def generate_report_rst(sample2mlst,
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
 
-
+    print("sample2species within", sample2species)
     ######################
     # MLST table
     ######################
-    SAMPLES_LIST = list(sample2mlst.keys())
+    SAMPLES_LIST = list(sample2species.keys())
     MASH_DATA = []
     for sample in SAMPLES_LIST:
         species = sample2species[sample][0]
@@ -303,8 +309,14 @@ Antibiotic efflux systems (& regulators)
 
 
 rgi_file_list = snakemake.input["rgi_files"]
+# input either list of file or a single file
+if not isinstance(rgi_file_list, list):
+    rgi_file_list = [rgi_file_list]
 mlst_file = snakemake.input["mlst_file"]
 mash_file_list = snakemake.input["mash_files"]
+# input either list of file or a single file
+if not isinstance(mash_file_list, list):
+    mash_file_list = [mash_file_list]
 
 output_file = snakemake.output[0]
    
@@ -312,6 +324,8 @@ sample2mlst = parse_mlst(mlst_file)
 sample2rgi = parse_rgi(rgi_file_list)
 
 sample2species = parse_mash(mash_file_list)
+
+print("sample2species", sample2species)
 
 generate_report_rst(sample2mlst, 
                     sample2rgi, 

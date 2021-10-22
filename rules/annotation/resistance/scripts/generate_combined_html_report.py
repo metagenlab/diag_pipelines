@@ -5,9 +5,11 @@ import numpy
 
 # inputs
 rgi_tsv_output = snakemake.input[0]
-gene_depth_file = snakemake.input[1]
-contig_gc_depth_file = snakemake.input[2]
-samtools_depth = snakemake.input[3]
+contig_gc_depth_file = snakemake.input[1]
+print("depth")
+samtools_depth = snakemake.input[2]
+
+print("sample")
 sample = snakemake.params[0]
 
 # output
@@ -15,18 +17,16 @@ report_file = snakemake.output[0]
 
 rgi_table = pandas.read_csv(rgi_tsv_output,
                             delimiter='\t',
-                            header=0, index_col=0)
+                            header=0, index_col="ORF_ID")
 
 # parse rgi output file
 contig2resistances = {}
-with open(rgi_tsv_output, 'r') as f:
-    for row in f:
-        data = row.rstrip().split('\t')
-        contig = '_'.join(data[1].split('_')[0:-1])
-        if contig not in contig2resistances:
-            contig2resistances[contig] = [re.sub("'", "", data[8])]
-        else:
-            contig2resistances[contig].append(re.sub("'", "", data[8]))
+for ORF_ID, row in rgi_table.iterrows():
+    contig = row["Contig"]
+    if contig not in contig2resistances:
+        contig2resistances[contig] = [row["Best_hit"]]
+    else:
+        contig2resistances[contig].append(row["Best_hit"])
 
 # get contig depth and GC
 contig2gc_content = pandas.read_csv(contig_gc_depth_file,
@@ -41,14 +41,11 @@ contig2size = pandas.read_csv(contig_gc_depth_file,
                               delimiter='\t',
                               header=0).set_index("contig").to_dict()["contig_size"]
 
-
-# calculate rgi hit(s) sequencing depth based on position of the CDS in contigs
 def parse_smatools_depth(samtools_depth):
     import pandas
     with open(samtools_depth, 'r') as f:
         table = pandas.read_csv(f, sep='\t', header=None, index_col=0)
     return table
-
 
 def make_div(figure_or_data,
              include_plotlyjs=False,
@@ -171,13 +168,13 @@ def bubble_plot_gc_depth(bubble_data):
     return (make_div(fig, div_id="bubble_plot"))
 
 
-def resistance_table(rgi_table,
-                     samtools_depth_df):
+def resistance_table(rgi_table):
 
     import numpy
 
     header = ["Contig",
               "ORF",
+              "Source",
               "ARO",
               "Model Type",
               "Variant",
@@ -191,42 +188,42 @@ def resistance_table(rgi_table,
               "Depth"]
 
     table_rows = []
-    for n, one_resistance in rgi_table.iterrows():
-        conting_str = one_resistance["Contig"].split('_')
-        if len(conting_str) == 3:
-            contig = '_'.join(conting_str[0:-1])
-        elif len(conting_str) == 2:
-            contig = one_resistance["Contig"]
-        else:
-            raise IOError("Unexpected contig format")
+    for ORF_ID, one_resistance in rgi_table.iterrows():
 
-        orf_id = one_resistance["Contig"].split('_')[-1]
+        db_source = one_resistance["reference_db"]
+        contig = one_resistance["Contig"]
         gene_start = one_resistance["Start"]
         gene_end = one_resistance["Stop"]
-        print(contig, n, one_resistance["Contig"])
-        gene_depth = round(numpy.median(samtools_depth_df.loc[contig].iloc[gene_start:gene_end, 1]), 0)
-        cutoff = one_resistance["Cut_Off"]
-        name = one_resistance["Best_Hit_ARO"]
-        identity = one_resistance["Best_Identities"]
+        gene_depth = one_resistance["Gene_depth"]
+        name = one_resistance["Best_hit"]
+        identity = one_resistance["Percent_identity"]
         aro = one_resistance["ARO"]
-        cov = one_resistance["Percentage Length of Reference Sequence"]
-        bitscore = one_resistance["Best_Hit_Bitscore"]
+        cov = one_resistance["Percent_coverage"]
+        bitscore = one_resistance["Bitscore"]
         pass_bitscore = one_resistance["Pass_Bitscore"]
-        mechanism = one_resistance["Resistance Mechanism"]
-        snps = one_resistance["SNPs_in_Best_Hit_ARO"]
+        mechanism = one_resistance["Mechanism"]
+        snps = one_resistance["SNPs"]
         model = one_resistance["Model_type"]
-        family = one_resistance["AMR Gene Family"]
+        family = one_resistance["AMR_family"]
         #antibio_res_list = list(ontology_table[ontology_table['Name'] == name]["Antibiotic resistance prediction"])
-        antibio_res_class_list = one_resistance["Drug Class"].split("; ")
+        if isinstance(one_resistance["Drug_class"], str):
+            antibio_res_class_list = one_resistance["Drug_class"].split("; ")
+        else:
+            antibio_res_class_list = 'n/a'
 
         resistance_code = ''
         for resistance_class in antibio_res_class_list:
             # print(resistance, resistance_class)
             resistance_code += '%s</br>' % (resistance_class)
 
+        if db_source == 'CARD':
+            aro_cell = '<a href="https://card.mcmaster.ca/aro/%s">%s</a>' % (aro, name)
+        else:
+            aro_cell = '%s (<a href="http://bldb.eu/Enzymes.php">BLDB</a>)' % name
         table_rows.append([contig,
-                           orf_id,
-                           '<a href="https://card.mcmaster.ca/aro/%s">%s</a>' % (aro, name),
+                           ORF_ID,
+                           db_source,
+                           aro_cell,
                            model,
                            snps,
                            cov,
@@ -331,7 +328,7 @@ def write_report(output_file,
     {STYLE}
 
 =============================================================
-RGI report
+Resistance report
 =============================================================
 
 .. contents::
@@ -386,8 +383,7 @@ samtools_depth_df = parse_smatools_depth(samtools_depth)
 samtools_mean_depth = round(numpy.mean(samtools_depth_df.iloc[:, 1]), 0)
 samtools_median_depth = round(numpy.median(samtools_depth_df.iloc[:, 1]), 0)
 
-rgi_table = resistance_table(rgi_table,
-                             samtools_depth_df)
+rgi_table = resistance_table(rgi_table)
 
 write_report(report_file,
              STYLE,

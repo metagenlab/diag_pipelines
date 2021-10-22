@@ -4,11 +4,25 @@ rule convert_tsv_to_xlsx:
     singularity:
         singularity_envs["python_r"]
     input:
-        tsv = "samples/{sample}/resistance/{software}.tsv",
+        tsv = "samples/{sample}/resistance/{software}_{sample}.tsv",
     output:
-        xlsx = "samples/{sample}/resistance/{software,[a-z]+}.xlsx",
+        xlsx = "samples/{sample}/resistance/{software,[a-z]+}_{sample}.xlsx",
     script:
         "scripts/convert_tsv_to_xlsx.py"
+
+
+rule convert_csv_to_xlsx:
+    conda:
+        "../../../envs/python-r.yml"
+    singularity:
+        singularity_envs["python_r"]
+    input:
+        tsv = "samples/{sample}/resistance/{software}_{sample}.csv",
+    output:
+        xlsx = "samples/{sample}/resistance/{software,[a-z]+}_{sample}.xlsx",
+    script:
+        "scripts/convert_csv_to_xlsx.py"
+
 
 
 rule merge_rgi_or_mykrobe_xlsx:
@@ -17,7 +31,7 @@ rule merge_rgi_or_mykrobe_xlsx:
     singularity:
         singularity_envs["python_r"]
     input:
-        xlsx = expand("samples/{sample}/resistance/{{software}}.xlsx", sample=read_naming.keys())
+        xlsx = expand("samples/{sample}/resistance/{{software}}_{sample}.xlsx", sample=read_naming.keys())
     output:
         "report/resistance/{software,[A-Z,a-z]+}_summary.xlsx"
     script:

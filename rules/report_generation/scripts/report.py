@@ -369,9 +369,9 @@ def resistance_table(resistance_reports):
     header = ["Strain id", "Resistance Report"]
 
     rgi_data = []
-    report_template = '<a href="resistance/%s_rgi_report.html">RGI report</a>'
+    report_template = '<a href="resistance/%s_combined_report.html">RGI report</a>'
     for report in resistance_reports:
-        sample = re.search('report/resistance/(.*)_rgi_report.html', report).group(1)
+        sample = re.search('report/resistance/(.*)_combined_report.html', report).group(1)
         rgi_data.append([sample,
                       report_template % sample])
 

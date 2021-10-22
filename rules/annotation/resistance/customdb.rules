@@ -1,0 +1,47 @@
+
+if "BLDB_path" in config:
+
+    rule search_resistance_with_ssearch:
+        singularity:
+            singularity_envs["fasta36"]
+        threads:
+            8
+        input:
+            "samples/{sample}/annotation/{sample}.faa"
+        output:
+            "samples/{sample}/resistance/BLDB_{sample}_raw.tsv"
+        params:
+            config["BLDB_path"]
+        shell:
+            """
+            ssearch36 -T {threads} -m 8 -b 10 -d 0 -E 1e-5 {input[0]} {params[0]} -z 1 > {output[0]}
+            """
+
+    rule resistance_filter_BBH:
+        singularity:
+            singularity_envs["python_r"]
+        threads:
+            1
+        params:
+            sample_name = lambda wildcards: wildcards.sample,
+            db_fasta = config["BLDB_path"],
+            id_cutoff = config["resistance"]["BLDB"]["id_cutoff"]
+        input:
+            ssearch_out = "samples/{sample}/resistance/BLDB_{sample}_raw.tsv",
+            gbk = "samples/{sample}/annotation/{sample}.gbk",
+            gene_depth_file = "samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/CDS_depth.tab",
+
+        output:
+            "samples/{sample}/resistance/BLDB_{sample}.tsv"
+        script: "scripts/extract_BBH.py"
+
+rule resistance_combined_table:
+    singularity:
+        singularity_envs["python_r"]   
+    input:
+        res_files=expand("samples/{{sample}}/resistance/{tool}_{{sample}}.tsv", tool=config["resistance"]),
+    output:
+        "samples/{sample}/resistance/combined_{sample}.tsv",
+    log:
+        logging_folder + "samples/{sample}/resistance/combine_res.log"
+    script: "scripts/merge_resistance_tables.py"

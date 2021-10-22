@@ -1,0 +1,66 @@
+
+import itertools
+import sys
+
+
+
+def resistance_tables():
+    if species in ["Staphylococcus_aureus", "Mycobacterium_tuberculosis"]:
+        return ["report/resistance/combined_detail_NR.xlsx", "report/resistance/tb-profiler/tbprofiler_benchmark.tsv"] # "report/resistance/mykrobe_benchmark.tsv", 
+    else:
+        return ["report/resistance/combined_detail_NR.xlsx"]
+
+
+def resistance_input(wildcards):
+
+            input_data = {
+            "qualimap_reports" : expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
+            "multiqc_assembly" : "report/multiqc_assembly/multiqc_report.html",
+            "resistance_reports" : expand("report/resistance/{sample}_combined_report.html", sample=read_naming.keys()),
+            "low_cov_fastas" : expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+            "high_cov_fastas" : expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta", sample=read_naming.keys()),
+            "contig_gc_depth_file_list" : expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
+            "rgi_overview" : "report/resistance/combined_plot_overview.svg",
+            "mash_results" : expand('samples/{sample}/contamination/mash/assembly/distances_formated.tsv', sample=read_naming.keys()),
+            "low_cov_detail" : expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
+            "mash_detail" : expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
+            "resistance_tables" : resistance_tables(),
+            "centrifuge_tables" : expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
+            "checkm_table" : "report/contamination/checkm/checkm_qualty.tab",
+            "rrna_classification_file" : "report/contamination/markers/rrna/summary.txt",
+            "rrna_similarity" : "report/contamination/markers/rrna/pairwise_id.tab"}
+
+            return input_data
+
+
+if "resistance" in sys.argv:
+
+    rule report_resistance:
+        conda:
+            singularity_envs["python_r"]
+        singularity:
+            "docker://metagenlab/diag-pipeline-python-r:1.1"
+        input:
+            unpack(resistance_input)
+        params:
+            samples = list(read_naming.keys()),
+            sample_table = all_samples,
+            depth_cutoff = config["cov_cutoff"]
+        output:
+            "report/report_resistance.html",
+        script:
+            "scripts/report_resistance.py"
+
+
+rule resistance_detailed_table:
+    singularity:
+        singularity_envs["python_r"]   
+    input:
+        res_files=expand("samples/{sample}/resistance/combined_{sample}.tsv", sample=read_naming.keys()),
+    output:
+        "report/resistance/combined_detail_NR.tsv",
+    shell: 
+        """
+        head -n1 {input[0]} >> {output}
+        cat {input} | grep -v ORF_ID >> {output}
+        """

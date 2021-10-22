@@ -23,8 +23,24 @@ include:
 include:
     "benchmark.rules"
 
+
+include:
+    "../rules/report_generation/general_report.rules"
+
+include:
+    "../rules/report_generation/report_resistance.rules"
+
+include:
+    "../rules/report_generation/report_virulence.rules"
+
+include:
+    "../rules/report_generation/report_epidemiology.rules"
+
 include:
     "../rules/report_generation/copy_assembly_and_gbk.rules"
+
+include:
+    "../rules/taxonomy/gtdbtk.rules"
 
 def get_assembly_list():
     assembly_out =[]
@@ -44,11 +60,16 @@ rule version:
         with open(output[0], 'w') as f:
             f.write(f"Diag_pipeline version {PIPELINE_VERSION}\n")
 
-
 rule epidemiology:
     input:
         "report/report_epidemiology.html",
         get_assembly_list()
+
+print(read_naming.keys())
+print(ref_list)
+rule index_reference_genomes:
+    input:
+        expand("samples/{sample}/annotation/{sample}.fna.fai", sample=[genome for genome in ref_list if (genome != 'cgMLST' and genome in list(read_naming.keys()))]),
 
 
 rule virulence:
@@ -62,9 +83,13 @@ rule virulence:
 rule resistance:
     input:
         "report/report_resistance.html",
+        "report/resistance/combined_detail_NR.xlsx",
+        "report/resistance/combined_report.docx",
         expand("report/genomes/{sample}.faa", sample=read_naming.keys()),
         expand("report/genomes/{sample}.gbk", sample=read_naming.keys()),
         expand("report/genomes/{sample}.fna", sample=read_naming.keys()),
+        expand("report/resistance/combined_report_{sample}.docx", sample=read_naming.keys()),
+
 
 rule strain_characterization:
     input:

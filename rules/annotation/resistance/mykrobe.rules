@@ -19,7 +19,9 @@ rule search_resistance_paired_reads_with_mykrobe:
     input:
         check_if_paired
     output:
-        "samples/{sample}/resistance/mykrobe.json"
+        # samples/8612012420_5247/resistance/mykrobe_8612012420_5247.csv
+        "samples/{sample}/resistance/mykrobe_{sample}.json",
+        "samples/{sample}/resistance/mykrobe_{sample}.csv"
     log:
         logging_folder + "samples/{sample}/resistance/mykrobe.txt"
     shell:
@@ -27,14 +29,14 @@ rule search_resistance_paired_reads_with_mykrobe:
         if [ "{params.species}" = "staph" ]
         then
             echo Staphylococcus aureus
-            mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+            mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --output samples/{wildcards.sample}/resistance/mykrobe 2> {log}
         else
             echo Mycobacterium tuberculosis
             if [ -z "{params.panel}" ]
             then
-                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} > {output[0]} 2> {log}
+                mykrobe predict --format json_and_csv -s "{wildcards.sample}" -S "{params.species}" --seq {input} --min_variant_conf {params.confidence} --output samples/{wildcards.sample}/resistance/mykrobe_{wildcards.sample} 2> {log}
             else
-                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]}  > {output[0]} 2> {log}
+                mykrobe predict --format json_and_csv -s "{wildcards.sample}" -S "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]} --output samples/{wildcards.sample}/resistance/mykrobe_{wildcards.sample} 2> {log}
             fi
         fi
         """
@@ -59,26 +61,26 @@ rule search_resistance_single_reads_with_mykrobe:
         """
         if [ "{params.species}" = "staph" ]
         then
-            mykrobe predict "{wildcards.sample}" --format json "{params.species}" --seq {input} --min_variant_conf {params.confidence} --format json > {output[0]} 2> {log}
+            mykrobe predict "{wildcards.sample}" --format json "{params.species}" --seq {input} --min_variant_conf {params.confidence} --format json_and_csv > {output[0]} 2> {log}
         else
             if [ -z "{params.panel}" ]
             then
-                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf  {params.confidence} --format json > {output[0]} 2> {log}
+                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf  {params.confidence} --format json_and_csv > {output[0]} 2> {log}
             else
-                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]} --format json > {output[0]} 2> {log}
+                mykrobe predict --format json "{wildcards.sample}" "{params.species}" --seq {input} --min_variant_conf {params.confidence} --panel {params[panel]} --format json_and_csv > {output[0]} 2> {log}
             fi
         fi
         """
-'''
+
 
 
 rule generate_mykrobe_tsv_file_from_json_file:
     singularity:
         singularity_envs["python_r"]
     input:
-        "samples/{sample}/resistance/mykrobe.json",
+        "samples/{sample}/resistance/mykrobe_{sample}.json",
     output:
-        "samples/{sample}/resistance/mykrobe.tsv"
+        "samples/{sample}/resistance/mykrobe_{sample}.tsv"
     script:
         "scripts/mykrobe_json_to_tsv.py"
-
+'''

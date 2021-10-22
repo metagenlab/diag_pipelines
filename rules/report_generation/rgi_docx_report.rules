@@ -1,15 +1,29 @@
 
-rule rgi2rst:
+rule combined2rst:
     singularity:
         singularity_envs["python_r"]   
     input:
-        rgi_files=expand("samples/{sample}/resistance/rgi.tsv", sample=read_naming.keys()),
+        rgi_files=expand("samples/{sample}/resistance/combined_{sample}.tsv", sample=read_naming.keys()),
         mlst_file="report/typing/mlst/summary.tsv",
         mash_files=expand("samples/{sample}/contamination/mash/assembly/distances_formated.tsv", sample=read_naming.keys()),
     output:
-        "report/resistance/rgi_report.rst",
+        "report/resistance/combined_report.rst",
     log:
-        logging_folder + "report/resistance/rgi_report.log"
+        logging_folder + "report/resistance/combined_report.log"
+    script: "scripts/card_mlst_rst_report.py"
+
+
+rule rgi2rst_per_sample:
+    singularity:
+        singularity_envs["python_r"]   
+    input:
+        rgi_files="samples/{sample}/resistance/combined_{sample}.tsv",
+        mlst_file="report/typing/mlst/summary.tsv",
+        mash_files="samples/{sample}/contamination/mash/assembly/distances_formated.tsv",
+    output:
+        "report/resistance/combined_report_{sample}.rst",
+    log:
+        logging_folder + "report/resistance/combined_report_{sample}.log"
     script: "scripts/card_mlst_rst_report.py"
 
 
@@ -18,35 +32,26 @@ rule rst2docx:
     singularity:
         singularity_envs["pandoc"]   
     input:
-        "report/resistance/rgi_report.rst",
+        "{path}.rst",
     output:
-        "report/resistance/rgi_report.docx",
+        "{path}.docx",
     params:
         reference_docx = config["reference_docx"]
     log:
-        logging_folder + "report/resistance/rgi_report_docx.log"
+        logging_folder + "{path}.log"
     shell: 
         """
         pandoc --reference-doc={params[0]} {input[0]} -o {output[0]} --wrap=preserve
         """
 
+
 rule tsv2xlsx:
     singularity:
         singularity_envs["python_r"]   
     input:
-        "report/resistance/rgi_detail_format.tsv",
+        "{path}.tsv",
     output:
-        "report/resistance/rgi_detail_format.xlsx",
+        "{path}.xlsx",
     script:"scripts/tsv2xlsx.py"
 
 
-rule rgi2format_table:
-    singularity:
-        singularity_envs["python_r"]   
-    input:
-        rgi_files=expand("samples/{sample}/resistance/rgi.tsv", sample=read_naming.keys()),
-    output:
-        "report/resistance/rgi_detail_format.tsv",
-    log:
-        logging_folder + "report/resistance/rgi_report_tsv.log"
-    script: "scripts/card_mlst_rst_format_detail_table.py"

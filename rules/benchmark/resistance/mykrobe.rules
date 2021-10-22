@@ -3,7 +3,7 @@ rule combine_all_mykrobe:
     singularity:
         singularity_envs["python_r"]
     input:
-        all_mykrobe = expand("samples/{sample}/resistance/mykrobe.tsv", sample = read_naming.keys())
+        all_mykrobe = expand("samples/{sample}/resistance/mykrobe_{sample}.csv", sample = read_naming.keys())
     output:
         "report/resistance/mykrobe_benchmark.tsv"
     script:
@@ -14,7 +14,7 @@ rule mykrobe_variant_frequency:
     singularity:
         singularity_envs["python_r"]
     input:
-        all_mykrobe = expand("samples/{sample}/resistance/mykrobe.tsv", sample = read_naming.keys())
+        all_mykrobe = expand("samples/{sample}/resistance/mykrobe_{sample}.csv", sample = read_naming.keys())
     output:
         "report/resistance/mykrobe_variant_frequency.tsv"
     script:

@@ -1,0 +1,171 @@
+
+import itertools
+import sys
+
+if "epidemiology" in sys.argv:
+    rule report_epidemiology_virulence_resistance_saureus:
+        conda:
+            "../../envs/python-r.yml"
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            multiqc_report = "report/multiqc_assembly/multiqc_report.html",
+            ete_figure = "report/figures/virulence_staph.svg",
+            ete_figure_counts = "report/figures/virulence_counts.svg",
+            virulence_reports = expand("report/virulence/VFDB/{sample}_report.html", sample=read_naming.keys()),
+            blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample=read_naming.keys()),
+            spanning_tree_core = expand("report/figures/%s/{reference}/bwa/distances_in_snp_mst_with_st.svg" % config["snp_caller"], reference=reference_genomes),
+            mlst_tree = "report/figures/mlst_tree.svg",
+            resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
+            low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+            snp_tables = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
+            reference_genome = expand("references/%s/genome_fna.fna", reference=reference_genomes),
+            core_genome_bed = "core_genomes/%s/" % config["reference"] + species + ".bed",
+            mlst = 'report/typing/mlst/summary.tsv',
+        params:
+            samples = list(read_naming.keys()),
+            sample_table = all_samples
+        output:
+            "report/report_epidemiology_virulence_resistance_saureus.html",
+        script:
+            "scripts/report_epidemiology_virulence_resistance_saureus.py"
+
+    def get_undetermined_file_list(sample_list, reference_genomes, snp_caller, mapping_method):
+        import itertools
+        pairs = list(itertools.product(sample_list, reference_genomes))
+        all_outputs = []
+        for pair in pairs:
+            all_outputs.append("samples/%s/snps/%s/%s/%s/unknowns.tab" % (pair[0], snp_caller, pair[1], mapping_method))
+        return all_outputs
+
+    def check_if_cgMLST():
+        if 'cgMLST' in reference_genomes:
+            return "core_genomes/cgMLST/" + species + ".bed"
+        else:
+            return None
+
+    def get_snps_file_list(sample_list, reference_genomes, snp_caller, mapping_method):
+        pairs = list(itertools.product(reference_genomes, sample_list))
+        all_outputs = []
+        for pair in pairs:
+            pair = list(pair)
+            # if among local/sra sample, reference is an assembled genome
+            if pair[0] in read_naming.keys():
+                pair[0] = pair[0]+'_assembled_genome'
+            # "report/snps/{reference}/{mapping_method}/{snp_caller}/{sample}.html"
+            path = "report/snps/%s/%s/%s/%s.html" % (pair[0], mapping_method, snp_caller, pair[1])
+            all_outputs.append(path)
+        return all_outputs
+
+    def get_indel_file_list(sample_list, reference_genomes, mapping_method):
+        '''
+        We have to replace cgMLST by the actual genome if we don't want some parts
+        of the workflow to be executed twice.
+        (otherwise the pipeline will compute the whole analysis on the linked fasta cgMLST file)
+        "report/indel/79781/bwa/TATRas-control.html"
+        '''
+        pairs = list(itertools.product(reference_genomes, sample_list))
+        all_outputs = []
+        for pair in pairs:
+            pair = list(pair)
+            if pair[0] == 'cgMLST':
+                # replace it by complete genome
+                ref_id = str(all_core_genome_dbs.loc[species, "ReferenceGenome"])
+                if ref_id not in reference_genomes:
+                    path = "report/indel/%s/%s/%s.html" % (ref_id, mapping_method, pair[1])
+                else:
+                    continue
+            else:
+                path = "report/indel/%s/%s/%s.html" % (pair[0], mapping_method, pair[1])
+
+            all_outputs.append(path)
+        return all_outputs
+
+    def get_qualimap_file_list(sample_list, reference_genomes, mapping_method):
+        '''
+        We have to replace cgMLST by the actual genome if we don't want some parts
+        of the workflow to be executed twice.
+        (otherwise the pipeline will compute the whole analysis on the linked fasta cgMLST file)
+        '''
+        pairs = list(itertools.product(reference_genomes, sample_list))
+        all_outputs = []
+        for pair in pairs:
+            pair = list(pair)
+            if pair[0] == 'cgMLST':
+                # replace it by complete genome if not among the refference genomes
+                ref_id = str(all_core_genome_dbs.loc[species, "ReferenceGenome"])
+                if ref_id not in reference_genomes:
+                    path = "report/qualimap/%s/%s/%s/qualimapReport.html" % (pair[1], mapping_method, ref_id)
+                else:
+                    continue
+            else:
+                path = "report/qualimap/%s/%s/%s/qualimapReport.html" % (pair[1], mapping_method, pair[0])
+            all_outputs.append(path)
+        return all_outputs
+
+    def get_multiqc_list(mapping,
+                         reference_genomes_dir,
+                         species):
+        multiqc_template = "report/multiqc_mapping_to_%s/%s/multiqc_report.html"
+        lst = []
+        for i in reference_genomes_dir:
+            if i == "cgMLST":
+                lst.append(multiqc_template % (str(all_core_genome_dbs.loc[species, "ReferenceGenome"]),
+                                               mapping))
+            else:
+                lst.append(multiqc_template % (i,
+                                               mapping))
+        return lst
+
+    rule report_epidemiology:
+        conda:
+            "../../envs/python-r.yml"
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            qualimap_reports = get_qualimap_file_list(read_naming.keys(), reference_genomes_dir, config["mapping"]),
+            multiqc_mapping_list = get_multiqc_list(config["mapping"], reference_genomes_dir, species),
+            spanning_trees = expand("report/figures/%s/{reference}/%s/distances_in_snp_mst_no_st.svg" % (config["snp_caller"], config["mapping"]), reference=reference_genomes),
+            #mlst_tree = "report/figures/mlst_tree.svg", ## TODO one tree for each reference genome
+            snp_tables = expand("typing/%s/{reference}/%s/distances_in_snp.tsv" % (config["snp_caller"], config["mapping"]), reference=reference_genomes),
+            reference_genomes = expand("references/{reference}/genome_fna.fna", reference=reference_genomes_dir),
+            #mlst = 'report/typing/mlst/summary.tsv',
+            undetermined_positions = get_undetermined_file_list(read_naming.keys(), reference_genomes, config["snp_caller"], config["mapping"]),
+            snps_reports = get_snps_file_list(read_naming.keys(), ref_list, config["snp_caller"], config["mapping"]),
+            indel_reports = get_indel_file_list(read_naming.keys(), reference_genomes_dir, config["mapping"]),
+            mash_results = expand('samples/{sample}/contamination/mash/fastq/distances_formated.tsv', sample=read_naming.keys()),
+            mash_detail = expand("report/contamination/mash/fastq/{sample}.html", sample=read_naming.keys()),
+            centrifuge_tables = expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
+        params:
+            core_genome_bed = check_if_cgMLST(),
+            samples = list(read_naming.keys()),
+            sample_table = all_samples
+        output:
+            "report/report_epidemiology.html",
+        script:
+            "scripts/report_epidemiology.py"
+
+    rule report_epidemiology_virulence_resistance:
+        conda:
+            "../../envs/python-r.yml"
+        singularity:
+            singularity_envs["python_r"]
+        input:
+            multiqc_report = "report/multiqc_assembly/multiqc_report.html",
+            ete_figure_counts = "report/figures/virulence_counts.svg",
+            virulence_reports = expand("report/virulence/VFDB/{sample}_report.html", sample=read_naming.keys()),
+            blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample=read_naming.keys()),
+            spanning_tree_core = expand("report/figures/%s/{reference}/bwa/distances_in_snp_mst_with_st.svg" % config["snp_caller"], reference=reference_genomes),
+            mlst_tree = "report/figures/mlst_tree.svg",
+            resistance_reports = expand("report/resistance/{sample}_rgi_report.html", sample=read_naming.keys()),
+            low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
+            snp_table = expand("typing/%s/{reference}/bwa/distances_in_snp.tsv" % config["snp_caller"], reference=reference_genomes),
+            reference_genome = expand("references/{reference}/genome_fna.fna", reference=reference_genomes),
+            core_genome_bed = expand("core_genomes/{reference}/" + species + ".bed", reference=reference_genomes),
+            mlst = 'report/typing/mlst/summary.tsv',
+        params:
+            samples = list(read_naming.keys()),
+        output:
+            "report/report_epidemiology_virulence_resistance.html",
+        script:
+            "scripts/report_epidemiology_virulence_resistance.py"
