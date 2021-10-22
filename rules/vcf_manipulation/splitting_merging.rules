@@ -24,7 +24,14 @@ rule merge_all_samples_entries_into_vcf:
         joint_genotype_vcf="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf",
     shell:
         """
-        bcftools merge {input[vfcs]} > {output[joint_genotype_vcf]}
+        # deal with case when working with a single file vs reference genome
+        n_files=$(ls {input[vfcs]} | wc -l)
+        echo $n_files
+        if [ "$n_files" -gt "1" ]; then
+            bcftools merge {input[vfcs]} > {output[joint_genotype_vcf]}
+        else
+            zcat {input[vfcs]} > {output[joint_genotype_vcf]}
+        fi
         """
 
 rule merge_all_vcf_freebayes_first_pass:
