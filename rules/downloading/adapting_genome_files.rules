@@ -27,14 +27,4 @@ rule correct_gbk_extension_for_IGV_visualization:
         genome = "references/{ref}/genome_gbff.gbff",
     output:
         genome_for_igv = "references/{ref}/genome_gbwithparts.gbk",
-    shell:
-        """
-        matchs=$(grep "^VERSION " {input[genome]} -c)
-        if [ "${{matchs}}" != "1" ]
-        then
-            echo 'More than one VERSION in {input[genome]}'
-            exit 1
-        fi
-        version=$(grep "^VERSION " {input[genome]} | sed "s/VERSION *//")
-        sed "s/^\(ACCESSION\s*\).*/\\1${{version}}/" {input[genome]} > {output[genome_for_igv]}
-        """
+    script:"scripts/edit_gbk_for_igv.py"
