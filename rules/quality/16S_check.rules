@@ -64,11 +64,13 @@ if "16S_database" in config:
             "samples/{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn"
         output:
             "samples/{sample}/contamination/markers/rrna/{sample}_vsearch.txt"
+        params:
+            db_16s = config["16S_database"]
         shell:
             """
             # (for domain) k (kingdom), p (phylum), c (class), o (order), f (family), g (genus), or s (species)
             # vsearch --sintax fastafile --db fastafile --tabbedout outputfile
-            vsearch --sintax {input[0]} --db /data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp_vsearch_format.fasta --tabbedout {output[0]}
+            vsearch --sintax {input[0]} --db {params.db_16s} --tabbedout {output[0]}
             """
 
     rule QIIME1_assign_taxonomy_rdp:
