@@ -2,11 +2,15 @@
 import pandas
 from Bio import SeqIO
 
-flash_hist = snakemake.input["flash_hist"] #samples/{sample}/reads/raw/{sample}.hist
+if "flash_hist" in snakemake.input:   
+    flash_hist = snakemake.input["flash_hist"] #samples/{sample}/reads/raw/{sample}.
+else:
+    flash_hist = []
 contigs_files = snakemake.input["contigs"] # samples/{sample}/assembly/spades/contigs.fasta
 contigs_depth = snakemake.input["contigs_depth"] 
 mash_results = snakemake.input["mash_results"] # samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv
 centrifuge_tables = snakemake.input["centrifuge_tables"] # report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt
+
 o = open(snakemake.output[0], "w")
 
 sample2max_flash = {}
@@ -104,7 +108,6 @@ for centrifuge in centrifuge_tables:
 
 header = [
           "sample",
-          "max_flash",
           "centrifuge_hit_1_name",
           "centrifuge_hit_1_proportion",
           "centrifuge_hit_2_name",
@@ -123,10 +126,12 @@ header = [
           "depth_lower_15"
           ]
 
+if "flash_hist" in snakemake.input:  
+    header.append("max_flash")
+
 o.write('\t'.join(header) + "\n")
-for sample in sample2max_flash:
-    # flash
-    max_flash = sample2max_flash[sample]
+for sample in sample2centrifuge:
+
     # centrifuge
     centrifuge_hit_1_name, centrifuge_hit_1_proportion = sample2centrifuge[sample]["hit_1"] 
     centrifuge_hit_2_name, centrifuge_hit_2_proportion = sample2centrifuge[sample]["hit_2"] 
@@ -148,7 +153,6 @@ for sample in sample2max_flash:
 
     row = [
           sample,
-          max_flash,
           centrifuge_hit_1_name,
           centrifuge_hit_1_proportion,
           centrifuge_hit_2_name,
@@ -166,5 +170,9 @@ for sample in sample2max_flash:
           depth_lower_10,
           depth_lower_15
     ]
+    if "flash_hist" in snakemake.input:
+        # flash
+        max_flash = sample2max_flash[sample]
+        row.append(max_flash) 
     o.write('\t'.join([str(i) for i in row]) + "\n")
 o.close() 
