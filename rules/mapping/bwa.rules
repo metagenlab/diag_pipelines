@@ -1,3 +1,6 @@
+
+ruleorder: map_paired_reads_with_bwa_for_direct_sequencing > map_single_reads_with_bwa_for_direct_sequencing
+
 def check_if_paired(wildcards):
     
     if len(read_naming[wildcards.sample]) == 2:
