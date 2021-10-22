@@ -1,0 +1,18 @@
+
+
+rule gtdb_classify_wf:
+    singularity:
+        singularity_envs["gtdbtk"]
+    input:
+        expand("report/genomes/{sample}.faa", sample=read_naming.keys())
+    output:
+        "taxonomy/GTDB/classify/gtdbtk.bac120.classify.tree",
+        "taxonomy/GTDB/classify/gtdbtk.bac120.summary.tsv",
+    params:
+        gtdb_database_path = config["GTDB_database_path"]
+    threads: 60
+    shell:
+        """
+        export GTDBTK_DATA_PATH=/data/databases/GTDB/release202/
+        gtdbtk classify_wf  --genome_dir report/genomes/ -x fna --min_af 0.3 --out_dir taxonomy/GTDB/ --cpus {threads}
+        """
