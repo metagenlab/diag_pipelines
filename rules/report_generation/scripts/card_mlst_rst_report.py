@@ -325,7 +325,7 @@ sample2rgi = parse_rgi(rgi_file_list)
 
 sample2species = parse_mash(mash_file_list)
 
-print("sample2species", sample2species)
+sample2mlst = {key:value for key,value in sample2mlst.items() if key in sample2rgi}
 
 generate_report_rst(sample2mlst, 
                     sample2rgi, 

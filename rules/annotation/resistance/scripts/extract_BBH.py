@@ -102,12 +102,16 @@ for n, row in ssearch_result.iterrows():
         keep.append(row)
 
 ssearch_result_filtered = pandas.DataFrame(keep)
-
-ssearch_result_filtered["Start"] = ssearch_result_filtered["Start"].astype(int)
-ssearch_result_filtered["Stop"] = ssearch_result_filtered["Stop"].astype(int)
-ssearch_result_filtered["Strand"] = ssearch_result_filtered["Strand"].astype(int)
-ssearch_result_filtered["Gene_depth"] = ssearch_result_filtered["Gene_depth"].astype(int)
-ssearch_result_filtered["Contig_depth"] = ssearch_result_filtered["Contig_depth"].astype(int)
-ssearch_result_filtered["Contig_length"] = ssearch_result_filtered["Contig_length"].astype(int)
-
-ssearch_result_filtered[["Sample", "reference_db", "ORF_ID", "Contig", "Contig_length", "Contig_depth", "Start", "Stop", "Strand", "Gene_depth","Best_hit", "ARO", "Bitscore","Pass_Bitscore", "Cut_Off" ,"Percent_identity", "Percent_coverage", "AMR_family", "Model_type", "Mechanism", "SNPs", "Drug_class", "Protein_sequence", "Nucleotide_sequence", "Note"]].to_csv(snakemake.output[0], sep="\t", index=None)
+print("SSEARCH OUT", ssearch_result_filtered)
+if len(ssearch_result_filtered) > 0:
+    ssearch_result_filtered["Start"] = ssearch_result_filtered["Start"].astype(int)
+    ssearch_result_filtered["Stop"] = ssearch_result_filtered["Stop"].astype(int)
+    ssearch_result_filtered["Strand"] = ssearch_result_filtered["Strand"].astype(int)
+    ssearch_result_filtered["Gene_depth"] = ssearch_result_filtered["Gene_depth"].astype(int)
+    ssearch_result_filtered["Contig_depth"] = ssearch_result_filtered["Contig_depth"].astype(int)
+    ssearch_result_filtered["Contig_length"] = ssearch_result_filtered["Contig_length"].astype(int)
+    ssearch_result_filtered[["Sample", "reference_db", "ORF_ID", "Contig", "Contig_length", "Contig_depth", "Start", "Stop", "Strand", "Gene_depth","Best_hit", "ARO", "Bitscore","Pass_Bitscore", "Cut_Off" ,"Percent_identity", "Percent_coverage", "AMR_family", "Model_type", "Mechanism", "SNPs", "Drug_class", "Protein_sequence", "Nucleotide_sequence", "Note"]].to_csv(snakemake.output[0], sep="\t", index=None)
+else:
+    # empty dataframe
+    with open(snakemake.output[0], "w") as f:
+        f.write('\t'.join(["Sample", "reference_db", "ORF_ID", "Contig", "Contig_length", "Contig_depth", "Start", "Stop", "Strand", "Gene_depth","Best_hit", "ARO", "Bitscore","Pass_Bitscore", "Cut_Off" ,"Percent_identity", "Percent_coverage", "AMR_family", "Model_type", "Mechanism", "SNPs", "Drug_class", "Protein_sequence", "Nucleotide_sequence", "Note"]))
