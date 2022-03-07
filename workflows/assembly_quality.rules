@@ -42,7 +42,7 @@ include:
     "../rules/assembly/spades.rules"
 
 include:
-    "../rules/annotation/prokka.rules"
+    "../rules/annotation/bakta.rules"
 
 include:
     "../rules/report_generation/prepare_files_for_multiqc.rules"

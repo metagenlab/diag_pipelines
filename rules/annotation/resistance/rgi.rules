@@ -8,7 +8,7 @@ rule search_resistance_with_rgi_contigs:
     threads:
         4
     input:
-        "samples/{sample}/annotation/{sample}.fsa"
+        "samples/{sample}/annotation/{sample}.fna"
     output:
         "samples/{sample}/resistance/rgi_{sample}.json"
     shell:
@@ -58,7 +58,7 @@ rule format_rgi_tsv:
     singularity:
         singularity_envs["python_r"]
     input:
-        gbk = "samples/{sample}/annotation/{sample}.gbk",
+        gbk = "samples/{sample}/annotation/{sample}.gbff",
         rgi_out = "samples/{sample}/resistance/rgi_{sample}_raw.tsv",
         gene_depth_file="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/CDS_depth.tab",
         contig_gc_depth_file="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",

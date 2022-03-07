@@ -28,7 +28,7 @@ if "BLDB_path" in config:
             id_cutoff = config["resistance"]["BLDB"]["id_cutoff"]
         input:
             ssearch_out = "samples/{sample}/resistance/BLDB_{sample}_raw.tsv",
-            gbk = "samples/{sample}/annotation/{sample}.gbk",
+            gbk = "samples/{sample}/annotation/{sample}.gbff",
             gene_depth_file = "samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/CDS_depth.tab",
 
         output:

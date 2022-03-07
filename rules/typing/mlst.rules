@@ -4,12 +4,12 @@ rule determine_mlst:
     singularity:
         singularity_envs["mlst"]
     input:
-        fasta = "samples/{sample}/annotation/{sample}.fsa",
+        fasta = "samples/{sample}/annotation/{sample}.fna",
     output:
         mlst = "samples/{sample}/typing/mlst.txt"
     shell:
         """
-        mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fsa//"  > {output[0]}
+        mlst --quiet {input[fasta]} | sed "s/.*\///" | sed "s/\.fna//"  > {output[0]}
         """
 
 
