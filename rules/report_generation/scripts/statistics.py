@@ -7,7 +7,8 @@ if "flash_hist" in snakemake.input:
 else:
     flash_hist = []
 contigs_files = snakemake.input["contigs"] # samples/{sample}/assembly/spades/contigs.fasta
-contigs_depth = snakemake.input["contigs_depth"] 
+contigs_depth = snakemake.input["contigs_depth"]
+fastg_assembly = snakemake.input["fastg_assembly"] # samples/{sample}/assembly/spades/assembly_graph.fastg
 mash_results = snakemake.input["mash_results"] # samples/{sample}/contamination/mash/assembly/distances_formated_no_virus.tsv
 centrifuge_tables = snakemake.input["centrifuge_tables"] # report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt
 
@@ -18,6 +19,7 @@ sample2centrifuge = {}
 sample2mash = {}
 sample2small_contigs = {}
 contig2contigs_depth = {}
+no_neighbor_contigs = 0
 
 # parse flash histograms to extract max of the distribution
 for flash in flash_hist:
@@ -104,6 +106,10 @@ for centrifuge in centrifuge_tables:
     sample2centrifuge[sample]["hit_2"] = [table.iloc[1,0], table.iloc[1,7]]
     sample2centrifuge[sample]["hit_3"] = [table.iloc[2,0], table.iloc[2,7]]
 
+#Count number of contigs with no neighbor on assembly graph from SPAdes assembly fastg
+for header in SeqIO.parse(fastg_assembly, "fasta").id:
+    if not ":EDGE" in header:
+        no_neighbor_contigs += 1
 
 
 header = [
@@ -123,7 +129,8 @@ header = [
           "contigs_smaller_2000",
           "depth_lower_5",
           "depth_lower_10",
-          "depth_lower_15"
+          "depth_lower_15",
+          "no_neighbor_contig_perc"
           ]
 
 if "flash_hist" in snakemake.input:  
@@ -150,7 +157,8 @@ for sample in sample2centrifuge:
     depth_lower_5 = contig2contigs_depth[sample]["lower_5"]
     depth_lower_10 = contig2contigs_depth[sample]["lower_10"]
     depth_lower_15 = contig2contigs_depth[sample]["lower_15"]
-
+    # contigs without assembly graph neighbors
+    no_neighbor_contigs_perc = no_neighbor_contigs/n_contigs*100
     row = [
           sample,
           centrifuge_hit_1_name,
@@ -168,7 +176,8 @@ for sample in sample2centrifuge:
           contigs_smaller_2000,
           depth_lower_5,
           depth_lower_10,
-          depth_lower_15
+          depth_lower_15,
+          no_neighbor_contigs_perc
     ]
     if "flash_hist" in snakemake.input:
         # flash
