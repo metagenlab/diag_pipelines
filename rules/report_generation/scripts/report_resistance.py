@@ -10,6 +10,7 @@ import report
 import io
 from docutils.core import publish_file, publish_parts
 from docutils.parsers.rst import directives
+from Bio import SeqIO
 
 multiqc_assembly = snakemake.input["multiqc_assembly"]
 rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
@@ -18,6 +19,7 @@ resistance_reports = snakemake.input["resistance_reports"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 output_file = snakemake.output[0]
 high_cov_fastas = snakemake.input["high_cov_fastas"]
+high_cov_fastgs = snakemake.input["high_cov_fastgs"]
 contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 mash_results = snakemake.input["mash_results"]  # ok
 qualimap_reports = snakemake.input["qualimap_reports"]
@@ -104,6 +106,8 @@ sample2median_depth = {}
 sampls2cumulated_size = {}
 sample2n_contigs = {}
 sampls2cumulated_size_filtered = {}
+sample2no_n_contigs = {}
+
 for one_table in contig_gc_depth_file_list:
     table = pandas.read_csv(one_table,
                             delimiter='\t',
@@ -122,6 +126,21 @@ for one_table in contig_gc_depth_file_list:
     sampls2cumulated_size_filtered[sample] = int(table.query('median_depth>=5 & contig != "TOTAL"')[["contig_size"]].sum())
     sample2n_contigs[sample] = n_contigs
 
+#
+for fastgs in high_cov_fastgs:
+    sample = fastgs.split("/")[1]
+    tot = 0
+    no_neighbor_contigs = 0
+    for header in SeqIO.parse(fastgs, "fasta"):
+        if not ":EDGE" in header.id:
+            no_neighbor_contigs += 1
+            tot += 1
+        else:
+            tot += 1
+
+    sample2no_n_contigs[sample] = f"{round(no_neighbor_contigs/tot*100, 2)}%"
+
+
 mash_table = report.get_mash_table(mash_results, mash_detail, sample2scientific_name)
 centrifuge_table = report.get_centrifuge_table(centrifuge_tables, sample2scientific_name)
 rrna_table = report.get_rrna_summary_table(rrna_classification_file, sample2scientific_name)
@@ -136,6 +155,7 @@ table_lowcoverage_contigs = quality_table(low_cov_fastas,
                                           sampls2cumulated_size,
                                           sampls2cumulated_size_filtered,
                                           sample2n_contigs,
+                                          sample2no_n_contigs,
                                           sample2scientific_name,
                                           low_cov_detail=low_cov_detail,
                                           depth_cutoff=depth_cutoff)

@@ -158,7 +158,7 @@ for sample in sample2centrifuge:
     depth_lower_10 = contig2contigs_depth[sample]["lower_10"]
     depth_lower_15 = contig2contigs_depth[sample]["lower_15"]
     # contigs without assembly graph neighbors
-    no_neighbor_contigs_perc = no_neighbor_contigs/n_contigs*100
+    no_neighbor_contigs_perc = f"{no_neighbor_contigs/n_contigs*100}%"
     row = [
           sample,
           centrifuge_hit_1_name,

@@ -5,7 +5,7 @@ rule statistics:
         singularity_envs["python_r"]
     input:
         multiqc_assembly = "report/multiqc_assembly_flash/multiqc_data/multiqc_data.json",
-	fastg_assembly = expand("samples/{sample}/assembly/spades/assembly_graph.fastg, sample=read_naming.keys())
+	fastg_assembly = expand("samples/{sample}/assembly/spades/assembly_graph.fastg", sample=read_naming.keys()),
         contigs = expand("samples/{sample}/assembly/spades/contigs.fasta", sample=read_naming.keys()),
         contigs_depth = expand("samples/{sample}/{mapping_method}/{sample}_assembled_genome/contig_coverage.txt", sample=read_naming.keys(), mapping_method=config["mapping"]),
         mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated.tsv', sample=read_naming.keys()),
