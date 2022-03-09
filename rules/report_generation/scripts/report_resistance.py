@@ -126,7 +126,7 @@ for one_table in contig_gc_depth_file_list:
     sampls2cumulated_size_filtered[sample] = int(table.query('median_depth>=5 & contig != "TOTAL"')[["contig_size"]].sum())
     sample2n_contigs[sample] = n_contigs
 
-#
+#Counting contigs with no neightbor in graph (higher perc of dead ends in assembly graph means poorer assembly)
 for fastgs in high_cov_fastgs:
     sample = fastgs.split("/")[1]
     tot = 0

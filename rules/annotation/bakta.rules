@@ -39,7 +39,7 @@ rule annotate_with_bakta:
         unset LC_ALL
         """
 
-rule annotate_with_prokka_unfiltered_assembly:
+rule annotate_with_bakta_unfiltered_assembly:
     singularity:
         singularity_envs["bakta"]
     input:
