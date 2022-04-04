@@ -380,6 +380,7 @@ def resistance_table(resistance_reports):
 
     df = pandas.DataFrame(rgi_data, columns=header)
 
+
     # cell content is truncated if colwidth not set to -1
     pandas.set_option('display.max_colwidth', -1)
 

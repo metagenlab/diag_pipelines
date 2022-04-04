@@ -1,0 +1,137 @@
+
+    <html>
+    <head>
+    <style>
+      h2 {
+        text-align: center;
+        font-family: Helvetica, Arial, sans-serif;
+      }
+      table { 
+        margin-left: auto;
+        margin-right: auto;
+      }
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 5px;
+        text-align: center;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 90%;
+      }
+      table tbody tr:hover {
+        background-color: #dddddd;
+      }
+      .wide {
+        width: 90%; 
+      }
+    </style>
+    </head>
+    <body>
+    <h2> Gene prediction differences in pipelines report </h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sample Name</th>
+      <th>Prediction in reference pipeline</th>
+      <th>Prediction in updated pipeline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5965</td>
+      <td>OXA-204 (id: 100.0, cov: 49.06, depth: 222)</td>
+      <td>OXA-252 (id: 100.0, cov: 49.06, depth: 222)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7845</td>
+      <td>-</td>
+      <td>Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 98.53, cov: 66.5, depth: 239)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7877</td>
+      <td>-</td>
+      <td>Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 98.06, cov: 75.55, depth: 218)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7932</td>
+      <td>-</td>
+      <td>Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 97.97, cov: 84.11, depth: 237)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>8052</td>
+      <td>-</td>
+      <td>Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 97.97, cov: 84.11, depth: 153), aadA23 (id: 100.0, cov: 21.24, depth: 78), ANT(3'')-IIa (id: 99.6, cov: 78.02, depth: 115)</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>8057</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>8061</td>
+      <td>✓</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8083</td>
+      <td>SHV-51 (id: 100.0, cov: 27.97, depth: 65), OXA-9 (id: 100.0, cov: 40.15, depth: 183)</td>
+      <td>SHV-198 (id: 100.0, cov: 33.22, depth: 61), Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 98.21, cov: 82.15, depth: 229), SHV-P13 (id: 100.0, cov: 12.18, depth: 63), OXA-896 (id: 100.0, cov: 40.15, depth: 183), SHV-P50 (id: 100.0, cov: 80.0, depth: 154)</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>8088</td>
+      <td>-</td>
+      <td>Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 97.81, cov: 78.24, depth: 216)</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>8090</td>
+      <td>-</td>
+      <td>Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 97.97, cov: 84.11, depth: 231)</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>8117</td>
+      <td>vga(E) Staphylococcus cohnii (id: 100.0, cov: 27.86, depth: 44)</td>
+      <td>Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 94.66, cov: 96.09, depth: 387), aadA23 (id: 100.0, cov: 40.54, depth: 110), ANT(3'')-IIa (id: 98.08, cov: 16.72, depth: 99)</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>8118</td>
+      <td>-</td>
+      <td>sul1 (id: 100.0, cov: 75.27, depth: 77), Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 94.66, cov: 96.09, depth: 126)</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>8121</td>
+      <td>-</td>
+      <td>Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 97.81, cov: 78.24, depth: 181)</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>8160</td>
+      <td>-</td>
+      <td>Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 100.0, cov: 73.35, depth: 115)</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>8161</td>
+      <td>SHV-51 (id: 100.0, cov: 27.97, depth: 9)</td>
+      <td>SHV-198 (id: 100.0, cov: 33.22, depth: 8), TEM-104 (id: 100.0, cov: 94.41, depth: 26), Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin (id: 98.21, cov: 82.15, depth: 44), SHV-P13 (id: 100.0, cov: 12.18, depth: 8), SHV-P50 (id: 100.0, cov: 80.0, depth: 24)</td>
+    </tr>
+  </tbody>
+</table>
+    </body>
+    </html>
+    
