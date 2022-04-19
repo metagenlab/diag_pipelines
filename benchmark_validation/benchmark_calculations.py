@@ -20,6 +20,7 @@ class Args(NamedTuple):
     """ Command-line arguments """
     pipeline_TSV: str
     out: str
+    pre: str
 
 # --------------------------------------------------
 def get_args() -> Args:
@@ -31,14 +32,14 @@ def get_args() -> Args:
 
     parser.add_argument('pipeline_tsv',
                         metavar='tsv file',
-                        help='The output TSV file of the reference pipeline')
+                        help='The output TSV file of the new pipeline')
 
-    # parser.add_argument('-p',
-    #                     '--pre',
-    #                     metavar='tsv file',
-    #                     type=str,
-    #                     help='The output TSV file of previous pipeline to compare to',
-    #                     default='diag_pipelines_2.6.0/combined_detail_NR_2.6.tsv')
+    parser.add_argument('-p',
+                        '--pre',
+                        metavar='tsv file',
+                        type=str,
+                        help='The output TSV file of previous pipeline to compare to',
+                        default='diag_pipelines_2.6.0/combined_detail_NR_2.6.tsv')
 
     parser.add_argument('-o',
                         '--out',
@@ -54,6 +55,10 @@ def get_args() -> Args:
     if not os.path.isfile(args.pipeline_tsv):
         parser.error("File does not exist")
 
+    if not os.path.isfile(args.pre):
+        parser.error("File does not exist")
+
+
     if args.out != "":
         if not os.path.exists(args.out):
             parser.error("Output path does not exist")
@@ -62,15 +67,28 @@ def get_args() -> Args:
 
 
 
-    return Args(args.pipeline_tsv, args.out)
+    return Args(args.pipeline_tsv, args.out, args.pre)
 
 def main() -> None:
     """ Make a jazz noise here """
+    #parse command line arguments and read reference tables
     args = get_args()
-    ref_table = "reference_table.tsv"
-    diag_2_6 = phenotype_microarray_spec_sens(ref_table, "diag_pipelines_2.6.0/combined_detail_NR_2.6.tsv")
-    diag_2_7 = phenotype_microarray_spec_sens(ref_table, "diag_pipelines_2.7.0/combined_detail_NR_2.7.tsv")
-    new_pipeline = phenotype_microarray_spec_sens(ref_table, args.pipeline_TSV)
+    ref_table_neg = pd.read_csv("reference_table_gramneg.tsv", sep='\t', header=0)
+    ref_table_pos = pd.read_csv("reference_table_grampos.tsv", sep='\t', header=0)
+
+    #read parsed tsv file with gene prediction and split into gram positive and negative
+    df = pd.read_csv(args.pipeline_TSV, sep='\t', header=0)
+    df_tuple = split_df_by_gram(df)
+    df_gramneg = df_tuple[0]
+    df_grampos = df_tuple[1]
+
+    #read previous pipeline iteration TSV file
+    diag_2_6 = phenotype_microarray_spec_sens(ref_table_neg, pd.read_csv(args.pre, sep='\t', header=0))
+
+    #calculate sensitivity and specificity scores from gram positive and negative
+    gramneg = phenotype_microarray_spec_sens(ref_table_neg, df_gramneg)
+    grampos = gram_pos_sens_spec(df=df_grampos, ref=ref_table_pos)
+
 
     Template_string = """<!DOCTYPE html>
     <html>
@@ -95,23 +113,31 @@ def main() -> None:
        <br>https://www.sciencedirect.com/science/article/pii/S1198743X15600660?via%3Dihub
        </p>
        <br></br>
+    <h2>Sample information (Gram Negative)</h2>
+        <table align="center">
+            <tr>
+                <th>Total samples</th>
+                <th>Carbapenem resistant samples (MIC Eucast)</th>
+                <th>Carbapenem susceptible samples (MIC Eucast)</th>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: middle;"> $tot </td>
+                <td style="text-align: center; vertical-align: middle;"> $pos </td>
+                <td style="text-align: center; vertical-align: middle;"> $neg </td>
+        </table>
     <h2>Phenotype(MIC) Sensitivity and Specificity</h2>
-
     <table>
       <tr>
         <th>Diag Pipelines 2.6.0</th>
-        <th>Diag Pipelines 2.7.0</th>
         <th>New Pipeline</th>
       </tr>
       <tr>
         <td>Sensitivity: $sens1 %</td>
         <td>Sensitivity: $sens2 %</td>
-        <td>Sensitivity: $sens3 %</td>
       </tr>
       <tr>
         <td>Specificity: $spec1 %</td>
         <td>Specificity: $spec2 %</td>
-        <td>Specificity: $spec3 %</td>
       </tr>
     </table>
 
@@ -120,16 +146,39 @@ def main() -> None:
     <table>
       <tr>
         <th>Diag Pipelines 2.6.0</th>
-        <th>Diag Pipelines 2.7.0</th>
         <th>New Pipeline</th>
       </tr>
       <tr>
         <td>Sensitivity: $sensma1 %</td>
         <td>Sensitivity: $sensma2 %</td>
-        <td>Sensitivity: $sensma3 %</td>
       </tr>
     </table>
     
+    <h2>Sample information (Gram Positive)</h2>
+    
+    <table align="center">
+      <tr>
+        <th>Total samples</th>
+        <th>Vancomycin or Methicilin resistant samples (PCR confirmed)</th>
+      </tr>
+      <tr>
+        <td style="text-align: center; vertical-align: middle;"> $tot2 </td>
+        <td style="text-align: center; vertical-align: middle;"> $postot </td>
+
+    </table>
+    
+    <h2>PCR Sensitivity and Specificity for vanA and mecA genes</h2>
+
+    <table>
+      <tr>
+        <th>Diag Pipelines 2.6.0</th>
+        <th>New Pipeline</th>
+      </tr>
+      <tr>
+        <td>Sensitivity: $senstot %</td>
+        <td>Specficity: $spectot %</td>
+      </tr>
+    </table>
     
     </body>
     </html>
@@ -172,15 +221,15 @@ def main() -> None:
     </body>
     </html>
     """
-
-    formatted_html = Template(Template_string).substitute(sens1=diag_2_6[0], sens2 = diag_2_7[0], sens3 = new_pipeline[0], spec1= diag_2_6[1], spec2=diag_2_7[1],
-                                                          spec3 = new_pipeline[1], sensma1 = diag_2_6[2], sensma2 = diag_2_7[2], sensma3 = new_pipeline[2])
+    #format and export HTML
+    formatted_html = Template(Template_string).substitute(tot = diag_2_6[3], pos = diag_2_6[4], neg = diag_2_6[3] - diag_2_6[4], sens1=diag_2_6[0], sens2 = gramneg[0],
+                                                          spec1= diag_2_6[1], spec2=gramneg[1], sensma1 = diag_2_6[2], sensma2 = gramneg[2], tot2 = grampos[2], postot = grampos[3],
+                                                          senstot = grampos[0], spectot = grampos[1])
 
     pdfkit.from_string(formatted_html, output_path="pipeline_benchmark_summary.pdf")
 
 
-    table = create_sum_table("diag_pipelines_2.6.0/combined_detail_NR_2.6.tsv", args.pipeline_TSV)
-
+    table = create_sum_table(pd.read_csv("diag_pipelines_2.6.0/combined_detail_NR_2.6.tsv", sep='\t', header=0), df)
 
 
     to_html_pretty(table, HTML_TEMPLATE1, HTML_TEMPLATE2, "pipeline_comparison.html", 'Gene prediction differences in pipelines report')
@@ -190,11 +239,9 @@ def main() -> None:
 
 # --------------------------------------------------
 
-def phenotype_microarray_spec_sens(ref, table) -> tuple:
-    """compare table to reference"""
+def phenotype_microarray_spec_sens(ref, df) -> tuple:
+    """compares input tsv from diag pipelines to reference data"""
     carbapenem_genes = ("OXA", "VIM", "NDM", "CTX", "SHV", "KPC", "ACT", "ADC", "CMH", "VEB", "PAL")
-    df = pd.read_csv(table, sep='\t', header=0) #read tsv with pipeline predictions
-    ref = pd.read_csv(ref, sep='\t', header=0) #read reference table with microarray and phenotype data
     samples = tuple(ref["Strain_ID"])
     pheno_tp, pheno_fp, pheno_fn, pheno_tn= 0, 0, 0, 0
     micro_tp= 0
@@ -221,14 +268,12 @@ def phenotype_microarray_spec_sens(ref, table) -> tuple:
             if any(gene_fam in pred for pred in list(subset_df["Best_hit"])):
                 micro_tp += 1
 
-    return (round((pheno_tp/(pheno_tp+pheno_fn))*100), round((pheno_tn/(pheno_tn+pheno_fp))*100), round((micro_tp/33)*100))
+    return (round((pheno_tp/(pheno_tp+pheno_fn))*100), round((pheno_tn/(pheno_tn+pheno_fp))*100), round((micro_tp/33)*100), len(samples), pheno_tp+pheno_fn)
 
 # --------------------------------------------------
 
-def create_sum_table(table1 , table2):
-    """creates the main summary table"""
-    df1 = pd.read_csv(table1, sep='\t', header=0) #read the two csv tables
-    df2 = pd.read_csv(table2, sep='\t', header=0)
+def create_sum_table(df1 , df2):
+    """compares to tsv files outputed from diag pipelines and returns summary table of differences"""
     sample_names = sorted([x for x in list(set(list(df1.iloc[:, 0])))]) #extract sample names and rank by alphabetical order
     preds_ref, preds_new = [], [] #lists for storing the differences in predictions for the two pipelines
     for sample in sample_names:
@@ -278,6 +323,41 @@ def create_sum_table(table1 , table2):
 
     return summary_table
 
+# --------------------------------------------------
+def gram_pos_sens_spec(df, ref):
+    """calculates scores for gram positive samples"""
+    tp, fp, tn, fn = 0, 0, 0, 0
+    samples = tuple(ref["Strain_ID"])
+
+    for sample in samples:
+        pcrvanA = ref[ref['Strain_ID'] == sample].iloc[0,1]
+        pcrmecA = ref[ref['Strain_ID'] == sample].iloc[0,2]
+        subset_df = df[df["Sample"] == sample]
+        preds = list(subset_df["Best_hit"])
+        #check for vanA gene
+        if "vanA" in preds and pcrvanA == "POS":
+            tp += 1
+        elif "vanA" not in preds and pcrvanA == "POS":
+            fp += 1
+        elif "vanA" not in preds and pcrvanA == "NEG":
+            tn += 1
+        else:
+            fn += 1
+        # check for mecA gene
+        if "mecA" in preds and pcrmecA == "POS":
+            tp += 1
+        elif "mecA" not in preds and pcrmecA == "POS":
+            fp += 1
+        elif "mecA" not in preds and pcrmecA == "NEG":
+            tn += 1
+        else:
+            fn += 1
+
+    return (round((tp/(tp+fn))*100), round((tn/(tn+fp))*100), len(samples), tp+fn)
+
+
+# --------------------------------------------------
+
 def to_html_pretty(df, templ1, templ2, filename, title=''):
     '''
     Write an entire dataframe to an HTML file
@@ -292,6 +372,18 @@ def to_html_pretty(df, templ1, templ2, filename, title=''):
 
     with open(filename, 'w') as f:
          f.write(templ1 + ht + templ2)
+
+# --------------------------------------------------
+
+def split_df_by_gram(table):
+    gram_pos_samples = ["31956-1", "32246-1", "32248-1", "32266-1", "32670-1", "32949-1", "33124-1", "33145-1", "33146-1", "33154-1", "31956-2", "32246-2",
+                    "32248-2", "32266-2", "32670-2", "32949-2", "33124-2", "33145-2", "33146-2", "33154-2", "1401020723-1", "1406280727-1", "1412211058-1",
+                    "1505151028-1", "1505223187-1", "1506252844-1", "1508042322-1", "1508181008-1", "1608090778-1", "1608090779-1", "1401020723-2",
+                    "1406280727-2", "1412211058-2", "1505151028-2", "1505223187-2", "1506252844-2", "1508042322-2", "1508181008-2", "1608090778-2",
+                    "1608090779-2"]
+    df_gramneg = table[~table["Sample"].isin(gram_pos_samples)]
+    df_grampos = table[table["Sample"].isin(gram_pos_samples)]
+    return (df_gramneg, df_grampos)
 
 
 # --------------------------------------------------
