@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+
 def parse_mlst(mlst_tsv_file):
     sample2mlst = {}
     with open(mlst_tsv_file, "r") as f:
@@ -11,28 +12,41 @@ def parse_mlst(mlst_tsv_file):
             mlst = data[2]
             sample2mlst[sample] = [mlst_scheme, mlst]
     return sample2mlst
-    
-    
-def parse_rgi(rgi_file_list,
+
+
+def parse_rgi(rgi_file_list, plasmid_contig_list,
               query_cov_cutoff=30):
     import pandas
     import re
-    
+    import os
     BETALACTAMS = ["monobactam", "carbapenem", "penam", "cephem", "penem", "cephamycin", "cephalosporin", "Beta-Lactam"]
     # carbapenem; cephalosporin; cephamycin; penam
+    # create dictionary with sample name as key and list of contigs classified as being on plasmids as values
+    sample2plasmid = {}
+    for plasmid_file in plasmid_contig_list:
+        samplebase = os.path.basename(plasmid_file)
+        sample = os.path.splitext(samplebase)[0]
+        t = pandas.read_csv(plasmid_file, sep="\t", header=0)
+        contig_plasmids = list(t["ID"])
+        sample2plasmid[sample] = contig_plasmids
+
     sample2rgi = {}
-    
     for rgi_file in rgi_file_list:
         print("rgi_file", rgi_file)
         sample = rgi_file.split("/")[1]
+        plasmids = sample2plasmid[sample]
         sample2rgi[sample] = {}
         sample2rgi[sample]["transporters"] = []
         sample2rgi[sample]["SNP"] = []
         sample2rgi[sample]["drug_resistance"] = {}
         t = pandas.read_csv(rgi_file, sep="\t", header=0)
         for n, row in t.iterrows():
-            #print("-------", row)
-            gene = row["Best_hit"]
+            # print("-------", row)
+            if row["Contig"] in plasmids:
+                gene = f"{row['Best_hit']} (p)"
+            else:
+                gene = f"{row['Best_hit']} (c)"
+
             model_type = row["Model_type"]
             mechanism = row["Mechanism"]
             if not isinstance(mechanism, str):
@@ -45,7 +59,7 @@ def parse_rgi(rgi_file_list,
             if "efflux" in mechanism:
                 sample2rgi[sample]["transporters"].append([gene, coverage, identity])
                 continue
-            
+
             # protein variant model
             # protein homolog model
             # rRNA gene variant model
@@ -78,11 +92,11 @@ def parse_rgi(rgi_file_list,
                         if coverage < sample2rgi[sample]["drug_resistance"][drug][gene][2]:
                             sample2rgi[sample]["drug_resistance"][drug][gene][2] = identity
             else:
-                # 
+                #
                 raise IOError("Unknown model type:", model_type)
     return sample2rgi
-                 
-    
+
+
 def parse_mash(mash_file_list):
     sample2species = {}
     for mash_file in mash_file_list:
@@ -309,6 +323,7 @@ Antibiotic efflux systems (& regulators)
 
 
 rgi_file_list = snakemake.input["rgi_files"]
+plasmid_file_list = snakemake.input["plasmid_files"]
 # input either list of file or a single file
 if not isinstance(rgi_file_list, list):
     rgi_file_list = [rgi_file_list]
@@ -321,7 +336,7 @@ if not isinstance(mash_file_list, list):
 output_file = snakemake.output[0]
    
 sample2mlst = parse_mlst(mlst_file)
-sample2rgi = parse_rgi(rgi_file_list)
+sample2rgi = parse_rgi(rgi_file_list, plasmid_file_list)
 
 sample2species = parse_mash(mash_file_list)
 

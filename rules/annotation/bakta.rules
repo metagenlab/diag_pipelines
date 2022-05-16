@@ -39,6 +39,21 @@ rule annotate_with_bakta:
         unset LC_ALL
         """
 
+rule get_plasmids_platon:
+    singularity:
+        singularity_envs["platon"]
+    input:
+        contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta",
+	database = "/data/databases/platon_db/db",
+    output:
+        "samples/{sample}/plasmids/{sample}.tsv",
+    shell:
+        """
+        export LC_ALL=C
+        platon --db {input[database]} --output samples/{wildcards.sample}/plasmids --prefix {wildcards.sample} {input[contigs]}
+        unset LC_ALL
+        """
+
 rule annotate_with_bakta_unfiltered_assembly:
     singularity:
         singularity_envs["bakta"]

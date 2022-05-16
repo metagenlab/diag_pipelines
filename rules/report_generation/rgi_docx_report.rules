@@ -6,6 +6,7 @@ rule combined2rst:
         rgi_files=expand("samples/{sample}/resistance/combined_{sample}.tsv", sample=read_naming.keys()),
         mlst_file="report/typing/mlst/summary.tsv",
         mash_files=expand("samples/{sample}/contamination/mash/assembly/distances_formated.tsv", sample=read_naming.keys()),
+	plasmid_files=expand("samples/{sample}/plasmids/{sample}.tsv", sample=read_naming.keys()),
     output:
         "report/resistance/combined_report.rst",
     log:
@@ -18,6 +19,7 @@ rule rgi2rst_per_sample:
         singularity_envs["python_r"]   
     input:
         rgi_files="samples/{sample}/resistance/combined_{sample}.tsv",
+	plasmid_files=expand("samples/{sample}/plasmids/{sample}.tsv", sample=read_naming.keys()),
         mlst_file="report/typing/mlst/summary.tsv",
         mash_files="samples/{sample}/contamination/mash/assembly/distances_formated.tsv",
     output:

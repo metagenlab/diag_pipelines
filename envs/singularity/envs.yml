@@ -18,7 +18,8 @@ mash: docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0
 checkm: docker://metagenlab/checkm:1.0.20
 mafft: docker://quay.io/biocontainers/mafft:7.407--hf484d3e_2
 fasttree: docker://quay.io/biocontainers/fasttree:2.1.10--h14c3975_3
-newick_utils: docker://quay.io/biocontainers/newick_utils:1.6--h470a237_2  
+newick_utils: docker://quay.io/biocontainers/newick_utils:1.6--h470a237_2
+platon: docker://quay.io/biocontainers/platon:1.6--pyhdfd78af_1 
 raxml: docker://quay.io/biocontainers/raxml:8.2.12--h14c3975_1
 centrifuge: docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3
 trimmomatic: docker://quay.io/biocontainers/trimmomatic:0.32--3
