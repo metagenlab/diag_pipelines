@@ -67,13 +67,14 @@ rule assemble_genome_corrected_paired_reads_with_spades:
         scaffolds = "samples/{sample}/assembly/spades/scaffolds.fasta",
         contigs_paths = "samples/{sample}/assembly/spades/contigs.paths",
         scaffolds_paths = "samples/{sample}/assembly/spades/scaffolds.paths",
-        log = "samples/{sample}/assembly/spades/spades.log",
     params:
         kmer_sizes = config["spades_kmer_sizes"]
+    log:
+        logging_folder + "samples/{sample}/spades_assembly.txt"
     shell:
         """
         # 21,33,55,77,99,127
-        spades.py --only-assembler -k {params.kmer_sizes} -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $(dirname {output[contigs]}) --threads {threads} > /dev/null
+        spades.py --only-assembler -k {params.kmer_sizes} -1 {input[R1_corrected]} -2 {input[R2_corrected]} -s {input[single_corrected]} -o $(dirname {output[contigs]}) --threads {threads} > {log}
         """
 
 
@@ -95,9 +96,11 @@ rule assemble_genome_corrected_single_reads_with_spades:
         log = "samples/{sample}/assembly/spades/spades.log",
     params:
         kmer_sizes = config["spades_kmer_sizes"]
+    log:
+        logging_folder + "samples/{sample}/spades_assembly.txt"
     shell:
         """
-        spades.py --only-assembler -k {params.kmer_sizes} -s {input[single_corrected]} -o $(dirname {output[contigs]}) --threads {threads} > /dev/null
+        spades.py --only-assembler -k {params.kmer_sizes} -s {input[single_corrected]} -o $(dirname {output[contigs]}) --threads {threads} > {log}
         """
 
 rule assemble_genome_paired_reads_with_spades:
@@ -117,9 +120,11 @@ rule assemble_genome_paired_reads_with_spades:
         contigs_paths = "samples/{sample}/assembly/spades_no_correction/contigs.paths",
         scaffolds_paths = "samples/{sample}/assembly/spades_no_correction/scaffolds.paths",
         log = "samples/{sample}/assembly/spades_no_correction/spades.log",
+    log:
+        logging_folder + "samples/{sample}/spades_assembly.txt"
     shell:
         """
-        spades.py --only-assembler -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $(dirname {output[contigs]}) > /dev/null
+        spades.py --only-assembler -1 {input[R1_trimmed]} -2 {input[R2_trimmed]} -o $(dirname {output[contigs]}) > {log}
         """
 
 rule assemble_genome_single_reads_with_spades:
