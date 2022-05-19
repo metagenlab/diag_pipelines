@@ -1,7 +1,16 @@
 
+
+def get_aro_filter():
+    if "rgi_report_filter" in config:
+        return list(config["rgi_report_filter"].keys())
+    else:
+        return []
+
 rule combined2rst:
     singularity:
-        singularity_envs["python_r"]   
+        singularity_envs["python_r"]  
+    params:
+        aro_filter=get_aro_filter()
     input:
         rgi_files=expand("samples/{sample}/resistance/combined_{sample}.tsv", sample=read_naming.keys()),
         mlst_file="report/typing/mlst/summary.tsv",
@@ -16,7 +25,9 @@ rule combined2rst:
 
 rule rgi2rst_per_sample:
     singularity:
-        singularity_envs["python_r"]   
+        singularity_envs["python_r"]
+    params:
+        aro_filter=get_aro_filter()
     input:
         rgi_files="samples/{sample}/resistance/combined_{sample}.tsv",
 	plasmid_files=expand("samples/{sample}/plasmids/{sample}.tsv", sample=read_naming.keys()),
