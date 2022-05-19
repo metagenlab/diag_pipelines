@@ -14,11 +14,14 @@ def parse_mlst(mlst_tsv_file):
     return sample2mlst
 
 
-def parse_rgi(rgi_file_list, plasmid_contig_list,
-              query_cov_cutoff=30):
+def parse_rgi(rgi_file_list, 
+              plasmid_contig_list,
+              query_cov_cutoff=30,
+              aro_filter=[]):
     import pandas
     import re
     import os
+    print("ARO filter:", aro_filter)
     BETALACTAMS = ["monobactam", "carbapenem", "penam", "cephem", "penem", "cephamycin", "cephalosporin", "Beta-Lactam"]
     # carbapenem; cephalosporin; cephamycin; penam
     # create dictionary with sample name as key and list of contigs classified as being on plasmids as values
@@ -49,6 +52,10 @@ def parse_rgi(rgi_file_list, plasmid_contig_list,
 
             model_type = row["Model_type"]
             mechanism = row["Mechanism"]
+            aro = row["ARO"]
+            if aro in aro_filter:
+                print("Skipping aro: {aro}")
+                continue
             if not isinstance(mechanism, str):
                 mechanism = 'n/a'
             coverage = float(row["Percent_coverage"])
@@ -56,7 +63,7 @@ def parse_rgi(rgi_file_list, plasmid_contig_list,
                 print("Skipping low cov entry: %s (%s %%)" % (gene, coverage))
                 continue
             identity = float(row["Percent_identity"])
-            if "efflux" in mechanism:
+            if "efflux" in mechanism or 'permeability' in mechanism:
                 sample2rgi[sample]["transporters"].append([gene, coverage, identity])
                 continue
 
@@ -300,8 +307,8 @@ Single nucleotide polymorphisms (SNP)
 | [1] identity < 90%
 | [2] partial gene (<80% of the length of the reference)
  
-Antibiotic efflux systems (& regulators)
------------------------------------------
+Antibiotic efflux systems, reduced permeability and regulators
+---------------------------------------------------------------
 
 .. list-table::
     :header-rows: 1
@@ -324,6 +331,8 @@ Antibiotic efflux systems (& regulators)
 
 rgi_file_list = snakemake.input["rgi_files"]
 plasmid_file_list = snakemake.input["plasmid_files"]
+
+aro_filter = snakemake.params["aro_filter"]
 # input either list of file or a single file
 if not isinstance(rgi_file_list, list):
     rgi_file_list = [rgi_file_list]
@@ -336,7 +345,9 @@ if not isinstance(mash_file_list, list):
 output_file = snakemake.output[0]
    
 sample2mlst = parse_mlst(mlst_file)
-sample2rgi = parse_rgi(rgi_file_list, plasmid_file_list)
+sample2rgi = parse_rgi(rgi_file_list, 
+                       plasmid_file_list, 
+                       aro_filter=aro_filter)
 
 sample2species = parse_mash(mash_file_list)
 
