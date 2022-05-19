@@ -19,7 +19,7 @@ sample2centrifuge = {}
 sample2mash = {}
 sample2small_contigs = {}
 contig2contigs_depth = {}
-no_neighbor_contigs = 0
+no_neighbor_contigs = {}
 
 # parse flash histograms to extract max of the distribution
 for flash in flash_hist:
@@ -107,9 +107,14 @@ for centrifuge in centrifuge_tables:
     sample2centrifuge[sample]["hit_3"] = [table.iloc[2,0], table.iloc[2,7]]
 
 #Count number of contigs with no neighbor on assembly graph from SPAdes assembly fastg
-for header in SeqIO.parse(fastg_assembly, "fasta").id:
-    if not ":EDGE" in header:
-        no_neighbor_contigs += 1
+print("fastg_assembly", fastg_assembly)
+for fastg in fastg_assembly:
+    sample = fastg.split("/")[1]
+    no_neighbor_contigs[sample] = 0
+    for record in SeqIO.parse(fastg, "fasta"):
+        header = record.id
+        if not ":EDGE" in header:
+            no_neighbor_contigs[sample] += 1
 
 
 header = [
@@ -158,7 +163,7 @@ for sample in sample2centrifuge:
     depth_lower_10 = contig2contigs_depth[sample]["lower_10"]
     depth_lower_15 = contig2contigs_depth[sample]["lower_15"]
     # contigs without assembly graph neighbors
-    no_neighbor_contigs_perc = f"{no_neighbor_contigs/n_contigs*100}%"
+    no_neighbor_contigs_perc = f"{no_neighbor_contigs[sample]/n_contigs*100}%"
     row = [
           sample,
           centrifuge_hit_1_name,
