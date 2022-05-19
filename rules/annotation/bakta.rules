@@ -14,40 +14,52 @@ def get_species(wildcards):
     return species
 
 
-rule annotate_with_prokka:
-    conda:
-        "../../envs/prokka.yml"
+rule annotate_with_bakta:
     singularity:
-        singularity_envs["prokka"]
+        singularity_envs["bakta"]
     input:
-        contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta"
+        contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta",
+	database = "/data/databases/baktadb/db",
     output:
-        "samples/{sample}/annotation/{sample}.gff",
+        "samples/{sample}/annotation/{sample}.gff3",
         "samples/{sample}/annotation/{sample}.faa",
-        "samples/{sample}/annotation/{sample}.fsa",
         "samples/{sample}/annotation/{sample}.txt",
-        "samples/{sample}/annotation/{sample}.gbk",
+        "samples/{sample}/annotation/{sample}.gbff",
         "samples/{sample}/annotation/{sample}.ffn",
         "samples/{sample}/annotation/{sample}.fna",
     log:
         "samples/{sample}/annotation/spades/{sample}.txt",
     params:
         genus = get_genus,
-        spec = get_species 
+        spec = get_species,
     shell:
         """
         export LC_ALL=C
-        prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'
+        bakta --db {input[database]} --output samples/{wildcards.sample}/annotation --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locus-tag 'bakta' --complete {input[contigs]}
         unset LC_ALL
         """
 
-rule annotate_with_prokka_unfiltered_assembly:
-    conda:
-        "../../envs/prokka.yml"
+rule get_plasmids_platon:
     singularity:
-        singularity_envs["prokka"]
+        singularity_envs["platon"]
     input:
-        contigs = "samples/{sample}/assembly/spades_no_correction/contigs.fasta"
+        contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta",
+	database = "/data/databases/platon_db/db",
+    output:
+        "samples/{sample}/plasmids/{sample}.tsv",
+    shell:
+        """
+        export LC_ALL=C
+        platon --db {input[database]} --output samples/{wildcards.sample}/plasmids --prefix {wildcards.sample} {input[contigs]}
+        unset LC_ALL
+        """
+
+rule annotate_with_bakta_unfiltered_assembly:
+    singularity:
+        singularity_envs["bakta"]
+    input:
+        contigs = "samples/{sample}/assembly/spades_no_correction/contigs.fasta",
+	database = "/data/databases/baktadb/db",
     output:
         "samples/{sample}/annotation/spades_no_correction/{sample}.fsa"
     params:
@@ -56,7 +68,7 @@ rule annotate_with_prokka_unfiltered_assembly:
     shell:
         """
         export LC_ALL=C
-        prokka --quiet --outdir $( dirname {output[0]}) --force {input[contigs]} --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locustag 'prokka'
+	bakta --db {input[database]} --output $( dirname {output[0]}) --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locus-tag 'bakta' --complete {input[contigs]}
         unset LC_ALL
         """
 
@@ -81,9 +93,9 @@ rule create_blast_database_from_contig_sequences:
     singularity:
         singularity_envs["blast"]
     input:
-        contigs = "samples/{sample}/annotation/{sample}.fsa",
+        contigs = "samples/{sample}/annotation/{sample}.fna",
     output:
-        "samples/{sample}/annotation/{sample}.fsa.nhr",
+        "samples/{sample}/annotation/{sample}.fna.nhr",
     shell:
         """
         makeblastdb -dbtype nucl -in {input[contigs]}
@@ -95,9 +107,9 @@ rule remove_fasta_part_from_gff:
     singularity:
         singularity_envs["python_r"]
     input:
-        "samples/{sample}/annotation/{sample}.gff"
+        "samples/{sample}/annotation/{sample}.gff3"
     output:
-        "samples/{sample}/annotation/{sample}_truncated.gff"
+        "samples/{sample}/annotation/{sample}_truncated.gff3"
     shell:
         "sed '/^##FASTA$/,$d' {input} > {output}"
 
@@ -108,7 +120,7 @@ rule get_CDS_and_contigs_depth:
         singularity_envs["python_r"]
     input:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
-        "samples/{sample}/annotation/{sample}.gbk",
+        "samples/{sample}/annotation/{sample}.gbff",
         "samples/{sample}/quality/mapping/{mapping_method}/{ref}/mapping.depth",
     output:
         "samples/{sample}/quality/mapping/{mapping_method}/{ref}/CDS_depth.tab",
@@ -120,10 +132,10 @@ rule get_CDS_and_contigs_depth:
 rule copy_filtered_assembly_to_reference_folder:
     input:
         contigs = "samples/{sample}/annotation/{sample}.fna",
-        gbk = "samples/{sample}/annotation/{sample}.gbk",
+        gbk = "samples/{sample}/annotation/{sample}.gbff",
     output:
         fasta_ref = "references/{sample}_assembled_genome/genome_filtered.fna",
-        gbk_ref = "references/{sample}_assembled_genome/genome_filtered.gbk",
+        gbk_ref = "references/{sample}_assembled_genome/genome_filtered.gbff",
     shell:
         """
         cp {input[0]} {output[fasta_ref]}
@@ -134,7 +146,7 @@ rule copy_filtered_assembly_to_reference_folder:
 rule copy_filtered_assembly_to_report_folder:
     input:
         "samples/{sample}/annotation/{sample}.faa",
-        "samples/{sample}/annotation/{sample}.gbk",
+        "samples/{sample}/annotation/{sample}.gbff",
         "samples/{sample}/annotation/{sample}.fna",
     output:
         "report/genomes/{sample}.faa",

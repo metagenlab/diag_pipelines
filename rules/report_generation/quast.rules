@@ -5,7 +5,7 @@ rule calculate_assembly_statistics_with_quast:
     singularity:
         singularity_envs["quast"] 
     input:
-        "samples/{sample}/annotation/{sample}.fsa"
+        "samples/{sample}/annotation/{sample}.fna"
     output:
         "samples/{sample}/quality/quast/report.txt"
     log:

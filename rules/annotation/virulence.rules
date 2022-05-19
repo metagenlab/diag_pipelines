@@ -8,8 +8,8 @@ rule blast_virulence_protein_to_proteome_or_contigs:
         cov_cutoff=config["virulence_coverage_cutoff"],
     input:
         "virulence/protein_fastas/log.txt",
-        "samples/{sample}/annotation/{sample}.fsa",
-        "samples/{sample}/annotation/{sample}.fsa.nhr",
+        "samples/{sample}/annotation/{sample}.fna",
+        "samples/{sample}/annotation/{sample}.fna.nhr",
         "samples/{sample}/annotation/{sample}.faa",
         "samples/{sample}/annotation/{sample}.faa.phr",
     output:
@@ -159,7 +159,7 @@ rule prepare_label_file_for_circos:
     singularity:
         singularity_envs["python_r"]
     input:
-        gbk_file="samples/{sample}/annotation/{sample}.gbk",
+        gbk_file="samples/{sample}/annotation/{sample}.gbff",
         blast_results="samples/{sample}/virulence/VFDB_results_blast.tsv",
         VF_annotation="references/virulence/VFDB_annotations.tab",
     output:
@@ -181,6 +181,6 @@ rule circos_plot_virulence:
     shell:
         """
         cd $(dirname {output[0]});
-        /home/tpillone/work/dev/metagenlab/mummer2circos/mummer2circos.py -r ../../annotation/{wildcards.sample}.fna -gb ../../annotation/{wildcards.sample}.gbk -s ../../quality/mapping/bwa/{wildcards.sample}_assembled_genome/mapping.depth -l -lf VF_loc_table.tab
+        /home/tpillone/work/dev/metagenlab/mummer2circos/mummer2circos.py -r ../../annotation/{wildcards.sample}.fna -gb ../../annotation/{wildcards.sample}.gbff -s ../../quality/mapping/bwa/{wildcards.sample}_assembled_genome/mapping.depth -l -lf VF_loc_table.tab
 
         """

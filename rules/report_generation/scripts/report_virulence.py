@@ -10,6 +10,7 @@ import report
 import io
 from docutils.core import publish_file, publish_parts
 from docutils.parsers.rst import directives
+from Bio import SeqIO
 
 #rgi_overview = '/'.join(snakemake.input["rgi_overview"].split('/')[1:])
 #resistance_reports = snakemake.input["resistance_reports"]
@@ -19,11 +20,15 @@ ordered_samples = snakemake.params["samples"]
 low_cov_fastas = snakemake.input["low_cov_fastas"]
 qualimap_reports = snakemake.input["qualimap_reports"]
 low_cov_detail = snakemake.input["low_cov_detail"]
+high_cov_fastgs = snakemake.input["high_cov_fastgs"]
 mash_results = snakemake.input["mash_results"]
 contig_gc_depth_file_list = snakemake.input["contig_gc_depth_file_list"]
 blast_files = [pandas.read_csv(name, delimiter='\t') for name in snakemake.input["blast_results"]]
 mash_detail = snakemake.input["mash_detail"]
 centrifuge_tables = snakemake.input["centrifuge_tables"]
+rrna_classification_file = snakemake.input["rrna_classification_file"]
+checkm_table = snakemake.input["checkm_table"]
+virulence_coverage_cutoff = snakemake.params["virulence_coverage_cutoff"]
 
 output_file = snakemake.output[0]
 
@@ -142,6 +147,7 @@ sample2median_depth = {}
 sampls2cumulated_size = {}
 sample2n_contigs = {}
 sampls2cumulated_size_filtered = {}
+sample2no_n_contigs = {}
 for one_table in contig_gc_depth_file_list:
     table = pandas.read_csv(one_table,
                             delimiter='\t',
@@ -162,12 +168,31 @@ for one_table in contig_gc_depth_file_list:
 
 sample2scientific_name = snakemake.params["sample_table"].to_dict()["ScientificName"]
 
+#Counting contigs with no neightbor in graph (higher perc of dead ends in assembly graph means poorer assembly)
+for fastgs in high_cov_fastgs:
+    sample = fastgs.split("/")[1]
+    tot = 0
+    no_neighbor_contigs = 0
+    for header in SeqIO.parse(fastgs, "fasta"):
+        if not ":EDGE" in header.id:
+            no_neighbor_contigs += 1
+            tot += 1
+        else:
+            tot += 1
+
+    sample2no_n_contigs[sample] = f"{round(no_neighbor_contigs/tot*100, 2)}%"
+
+rrna_table = report.get_rrna_summary_table(rrna_classification_file, sample2scientific_name)
+checkm_table = report.checkm_table(checkm_table)
+
+
 table_lowcoverage_contigs = report.quality_table(low_cov_fastas,
                                                  sample2gc,
                                                  sample2median_depth,
                                                  sampls2cumulated_size,
                                                  sampls2cumulated_size_filtered,
                                                  sample2n_contigs,
+                                                 sample2no_n_contigs,
                                                  sample2scientific_name,
                                                  low_cov_detail=low_cov_detail)
 
@@ -236,6 +261,20 @@ Contamination check: Centrifuge
 .. raw:: html
 
     {centrifuge_table}
+
+Contamination check: 16S rRNA (contigs >500bp)
+**********************************************
+
+.. raw:: html
+
+    {rrna_table}
+    
+Contamination check: checkM (contigs >500bp & depth >{virulence_coverage_cutoff})
+*********************************************************************
+
+.. raw:: html
+
+    {checkm_table}
 
 Qualimap reports
 *****************

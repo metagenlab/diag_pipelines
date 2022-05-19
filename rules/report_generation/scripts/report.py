@@ -194,13 +194,14 @@ def quality_table(low_cov_fastas,
                   sampls2cumulated_size,
                   sampls2cumulated_size_filtered,
                   sample2n_contigs,
+                  sample2no_n_contigs,
                   sample2scientific_name,
                   undetermined_snps_files=False,
                   core_genome_size=False,
                   low_cov_detail=False,
                   depth_cutoff=5):
 
-    header = ["Strain id", "Scientific Name", "Contigs", f"Contigs depth <{depth_cutoff}", "GC", "Size >500pb (Mb)", f"Size >500bp & >{depth_cutoff}depth (Mb)", "Median Depth"]
+    header = ["Strain id", "Scientific Name", "Contigs", "Perc contigs with no graph neighbors", f"Contigs depth <{depth_cutoff}", "GC", "Size >500pb (Mb)", f"Size >500bp & >{depth_cutoff}depth (Mb)", "Median Depth"]
     if low_cov_detail:
         sample2locov_path = {}
         for link in low_cov_detail:
@@ -248,6 +249,7 @@ def quality_table(low_cov_fastas,
             tmp_lst = [sample,
                        sample2scientific_name[sample],
                        sample2n_contigs[sample],
+                       sample2no_n_contigs[sample],
                        low_cov_str,
                        sample2gc[sample],
                        round(sampls2cumulated_size[sample] / 1000000, 2),
@@ -262,6 +264,7 @@ def quality_table(low_cov_fastas,
             tmp_lst = [sample,
                        sample2scientific_name[sample],
                        sample2n_contigs[sample],
+                       sample2no_n_contigs[sample],
                        low_cov_str,
                        sample2gc[sample],
                        round(sampls2cumulated_size[sample] / 1000000, 2),
@@ -376,6 +379,7 @@ def resistance_table(resistance_reports):
                       report_template % sample])
 
     df = pandas.DataFrame(rgi_data, columns=header)
+
 
     # cell content is truncated if colwidth not set to -1
     pandas.set_option('display.max_colwidth', -1)

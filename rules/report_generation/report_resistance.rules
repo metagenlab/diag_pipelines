@@ -17,6 +17,7 @@ def resistance_input(wildcards):
             "qualimap_reports" : expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
             "multiqc_assembly" : "report/multiqc_assembly/multiqc_report.html",
             "resistance_reports" : expand("report/resistance/{sample}_combined_report.html", sample=read_naming.keys()),
+	    "high_cov_fastgs" : expand("samples/{sample}/assembly/spades/assembly_graph.fastg", sample=read_naming.keys()),
             "low_cov_fastas" : expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
             "high_cov_fastas" : expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta", sample=read_naming.keys()),
             "contig_gc_depth_file_list" : expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab", sample=read_naming.keys()),
