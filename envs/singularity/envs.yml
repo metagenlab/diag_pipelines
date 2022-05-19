@@ -1,6 +1,6 @@
 prokka: docker://quay.io/biocontainers/prokka:1.14.6--pl526_0
 blast: docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4
-spades: docker://quay.io/biocontainers/spades:3.14.0--h2d02072_0
+spades: docker://quay.io/biocontainers/spades:3.15.4--h95f258a_0
 vt: docker://quay.io/biocontainers/vt:0.57721--hdf88d34_2
 bcftools: docker://quay.io/biocontainers/bcftools:1.9--h68d8f2e_7
 python_r: docker://metagenlab/diag-pipeline-python-r:1.1
