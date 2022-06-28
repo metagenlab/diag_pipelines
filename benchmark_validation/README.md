@@ -1,7 +1,7 @@
 ## Pipeline benchmark tools
 
 
-#General Information
+# General Information
 
 The python script present in this folder is meant to validate pipelines with a set of reference data in addition to comparing the output of different pipelines between them.
 The goal is to ensure that new editions of the diag_pipelines tool used for routine sequencing of clinically relevant strains are benchmarked reproducibly on the same reference dataset.
@@ -52,7 +52,7 @@ False Positive: If a sample had no confirmed PCR assay for a targeted gene but a
 True Negative: If a sample had no confirmed PCR assay for one of the two targeted genes and no gene was predicted in the pipeline output.
 False Negative: If a sample had a confirmed PCR assay for one of the two targeted genes and no gene was predicted in the pipeline output.
 
-#Installation:
+# Installation:
 
 Creating conda env:
 ```
@@ -80,7 +80,7 @@ Example of commands
 python benchmark_calculations.py combined_detail_NR.tsv -p diag_pipelines_2.6.0/combined_detail_NR_2.6.tsv -o results
 ```
 
-#Output
+# Output
 
 pipeline_benchmark_summary.pdf:
 
