@@ -19,7 +19,8 @@ rule annotate_with_bakta:
         singularity_envs["bakta"]
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta",
-	database = "/data/databases/baktadb/db",
+    params:
+	    database = config["bakta_db"],
     output:
         "samples/{sample}/annotation/{sample}.gff3",
         "samples/{sample}/annotation/{sample}.faa",
@@ -35,7 +36,7 @@ rule annotate_with_bakta:
     shell:
         """
         export LC_ALL=C
-        bakta --db {input[database]} --output samples/{wildcards.sample}/annotation --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locus-tag 'bakta' --complete {input[contigs]}
+        bakta --db {params[database]} --compliant --output samples/{wildcards.sample}/annotation --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locus-tag 'CHUV' --complete {input[contigs]}
         unset LC_ALL
         """
 
@@ -135,7 +136,7 @@ rule copy_filtered_assembly_to_reference_folder:
         gbk = "samples/{sample}/annotation/{sample}.gbff",
     output:
         fasta_ref = "references/{sample}_assembled_genome/genome_filtered.fna",
-        gbk_ref = "references/{sample}_assembled_genome/genome_filtered.gbff",
+        gbk_ref = "references/{sample}_assembled_genome/genome_filtered.gbk",
     shell:
         """
         cp {input[0]} {output[fasta_ref]}
