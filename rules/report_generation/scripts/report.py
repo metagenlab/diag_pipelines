@@ -108,7 +108,7 @@ def get_mash_table(file_list, mash_detail, sample2scientific_name):
     '''
     sample2detail_link = {}
     for link in mash_detail:
-        sample = link.split("/")[-1].split('.')[0]
+        sample = link.split("/")[-1].split('.html')[0]
         sample2detail_link[str(sample)] = '/'.join(link.split("/")[1:])
 
     row_list = []
