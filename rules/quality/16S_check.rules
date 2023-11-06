@@ -42,7 +42,7 @@ if "16S_database" in config:
             "report/contamination/markers/rrna/merged_barrnap_16S_mafft.ffn",
         shell:
             """
-            mafft {input} > {output}
+            mafft --quiet {input} > {output}
             """
 
     rule calculate_parwise_identity:
