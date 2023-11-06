@@ -38,7 +38,7 @@ rule compute_phylogeny_bootstraps_with_raxml:
             rm -rf $(dirname {output[bootstrap]})
             mkdir -p $(dirname {output[bootstrap]})
         fi
-        raxmlHPC -m GTRCAT -V -n {wildcards.core_genome_or_full_genome} -s {input[alignment]} -b 123 -w $(dirname $(readlink -f {output[bootstrap]})) -N 100 -p 123 > {log} 
+        raxmlHPC -m GTRCAT -V -n {wildcards.core_genome_or_full_genome} -s {input[alignment]} -b 123 -N 100 -p 123 -w $(dirname $(readlink -f {output[bootstrap]}))  > {log} 
         cp $(dirname {output[bootstrap]})/RAxML_bootstrap.{wildcards.core_genome_or_full_genome} $(dirname {output[bootstrap]})/RAxML_bootstrap.nw 
         """
 

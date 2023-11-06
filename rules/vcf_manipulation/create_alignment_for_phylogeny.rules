@@ -27,7 +27,7 @@ rule extract_alternative_positions_and_unknown_positions:
         unknowns="samples/{sample}/snps/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/unknowns.tab",
     shell:
         """
-        bcftools view --include 'GT="alt"' --samples {wildcards.sample} {input[merged_multi]} > {output[alt]}
+        bcftools view --include 'GT="alt"' --samples {wildcards.sample} {input[merged_multi]} | bcftools view --exclude 'ALT="*"' > {output[alt]}
         bcftools view --include 'GT="."' --samples {wildcards.sample} {input[merged_multi]} | bcftools query -f "%CHROM\t%POS\n" > {output[unknowns]}
         """
 
