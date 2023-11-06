@@ -87,6 +87,9 @@ def get_neiboring_orf(position, feature_list):
                 gene = '-' 
             if 'locus_tag' in feature.qualifiers:
                 locus_tag = feature.qualifiers["locus_tag"][0]
+            else:
+                print("No locus_tag", feature)
+                locus_tag = '-'
             if 'mobile_element_type' in feature.qualifiers:
                 gene = feature.qualifiers["mobile_element_type"]
             else:
