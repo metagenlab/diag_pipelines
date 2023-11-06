@@ -2,8 +2,9 @@ library(igraph, warn.conflicts=FALSE)
 library(svglite)
 
 set.seed(1)
-
-sample_sts <- read.csv(snakemake@input[["mlst_samples"]], sep="\t", header=FALSE, row.names=1, stringsAsFactors=FALSE)
+# 8612967186_14346	spyogenes	28	gki(4)	gtr(3)	murI(4)	mutS(4)	recP(4)	xpt(2)	yqiL(4)
+sample_sts <- read.csv(snakemake@input[["mlst_samples"]], sep="\t", header=FALSE, col.names=c("sample","scheme","st","gene1","gene2","gene3","gene4","gene5","gene6","gene7"), row.names=1, stringsAsFactors=FALSE)
+print(sample_sts)
 
 matrix <- as.matrix(read.csv(snakemake@input[["dist"]], sep="\t", header=TRUE, row.names=1))
 colnames(matrix) <- rownames(matrix)
@@ -16,10 +17,13 @@ nb_vertex <- dim(matrix)[1]
 graph <- graph.adjacency(matrix, mode="undirected", weighted=TRUE, diag=FALSE)
 graph <- set_vertex_attr(graph, "name", value=gsub("^X", "", vertex_attr(graph, "name")))
 
-sts <- sample_sts[vertex_attr(graph, "name"), 2]
+print(vertex_attr(graph, "name"))
+sts <- sample_sts[vertex_attr(graph, "name"), "st"]
+print(sts)
 sts[sts == "-"] <- NA
 graph <- set_vertex_attr(graph, "ST", value=sts)
-
+print("graph with st")
+print(vertex_attr(graph, "ST"))
 
 mapping <- 1:nb_vertex
 
@@ -43,8 +47,11 @@ nb_vertex <- nb_vertex - length(to_be_deleted)
 
 
 #Merging clones
-graph <- contract(graph, mapping, vertex.attr.comb = list(name = function(x) paste(x, collapse="\n")))
+graph <- contract(graph, mapping, vertex.attr.comb = list(name = function(x) paste(x, collapse="\n"), ST = function(x) unique(x)))
+print("TEST")
+print(vertex_attr(graph, "ST"))
 graph <- simplify(graph, edge.attr.comb = list(weight = function(x) median(x)))
+
 #Deleting useless vertices
 w<- which(V(graph)$name == "")
 graph <- delete_vertices(graph, w)
@@ -73,17 +80,23 @@ vertices_sizes <- sapply(vertex_attr(mst_graph, "name"), function(x) length(unli
 
 
 #Concatanating the names of the vertices to represent every clonal samples
+print(vertex_attr(mst_graph, "ST"))
 mst_graph <- set_vertex_attr(mst_graph, "name", value=lapply(vertex_attr(mst_graph, "name"), paste, collapse="\n"))
+print("----------------")
+print(vertex_attr(mst_graph, "ST"))
 mst_graph <- set_vertex_attr(mst_graph, "ST", value=lapply(vertex_attr(mst_graph, "ST"), unique))
 
 vertices_colors = rep(NA, nb_vertex)
 
-
-
 uniq_sts = unique(sts[!is.na(sts)])
 number_cols <- length(uniq_sts)
 colors <- rainbow(number_cols)
+
 for (i in 1:length(uniq_sts)){
+    print("st")
+    print(uniq_sts[i])
+    print(vertex_attr(mst_graph, "ST"))
+    print(vertex_attr(mst_graph, "ST")==uniq_sts[i])
     vertices_colors[vertex_attr(mst_graph, "ST")==uniq_sts[i]] <- colors[i]
 }
 
@@ -92,6 +105,7 @@ for (i in 1:length(uniq_sts)){
 svglite(snakemake@output[["mst"]], height=as.numeric(snakemake@params["mst_size"]), width=as.numeric(snakemake@params["mst_size"]))
 par(mar=c(0,8,0,0))
 
+print(vertices_colors)
 
 plot(mst_graph, vertex.size=vertices_sizes, edge.label.dist=35, vertex.label.dist=0, node.label.cex=0.5, vertex.color=vertices_colors, vertex.label=vertex_attr(mst_graph, "label"), vertex.label.color=rep("black", nb_vertex), vertex.label.family="sans", edge.label.family="sans")
 
