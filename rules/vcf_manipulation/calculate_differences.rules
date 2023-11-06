@@ -43,7 +43,7 @@ rule calculate_distance_with_ref_by_type:
         dist_ref=temp("{any_analysis}/distances/to_ref/{sample}_distance_in_{type}.txt"),
     shell:
         """
-        snps=$(bcftools view --samples {wildcards.sample} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | awk '{{s+=$1}} END {{print s}}')
+        snps=$(bcftools view --samples {wildcards.sample} {input[joint_genotype_vcf]} | bcftools query -f '[%GT ]\\n' | grep -v "\." | grep -vc "0" ) || true
         echo ref {wildcards.sample} ${{snps}} > {output[dist_ref]}
         """
 
