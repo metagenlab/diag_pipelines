@@ -75,6 +75,7 @@ rule index_reference_genomes:
 rule virulence:
     input:
         "report/report_virulence.html",
+        "report/virulence/virulence_detail.tsv",
         expand("report/genomes/{sample}.faa", sample=read_naming.keys()),
         expand("report/genomes/{sample}.gbk", sample=read_naming.keys()),
         expand("report/genomes/{sample}.fna", sample=read_naming.keys()),
@@ -89,7 +90,6 @@ rule resistance:
         expand("report/genomes/{sample}.gbk", sample=read_naming.keys()),
         expand("report/genomes/{sample}.fna", sample=read_naming.keys()),
         expand("report/resistance/combined_report_{sample}.docx", sample=read_naming.keys()),
-
 
 rule strain_characterization:
     input:
