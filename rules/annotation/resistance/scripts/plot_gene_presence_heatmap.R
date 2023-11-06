@@ -73,6 +73,9 @@ for (species in nr_species){
     # prepare one plot/resistance mechanism
     plot_list <- list()
     for (i in 1:length(unique(sub_dataset$Mechanism))){
+        print("Mechanism")
+        if(i == 0)
+            next
         resistance_mechanism <- unique(sub_dataset$Mechanism)[i]
         mechanism_subset <- sub_dataset[sub_dataset$Mechanism==resistance_mechanism,]
         p <- ggplot(data = mechanism_subset, aes(x = sample, y = Best_hit)) + geom_tile(aes(fill = Cut_Off), height = 0.9, width=0.9)
