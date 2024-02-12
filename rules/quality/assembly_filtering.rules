@@ -32,7 +32,10 @@ rule extract_assembly_mean_sd_coverage:
         echo "sd_depth $mean" >>  {output[extract]}
         """
 
+# 
 rule filter_contigs_on_coverage:
+    singularity:
+        singularity_envs["python_r"]
     params:
         cutoff = config["cov_cutoff"]
     input:
@@ -41,16 +44,9 @@ rule filter_contigs_on_coverage:
     output:
         "samples/{sample}/assembly/spades/coverage_filtered/{mapping_method}/contigs_500bp_high_coverage.fasta",
         "samples/{sample}/assembly/spades/coverage_filtered/{mapping_method}/contigs_500bp_low_coverage.fasta"
-    shell:
-        """
-        awk '$4 < {params.cutoff}' {input[1]} | cut -f 1 | xargs -I % grep -A 1 "^>%$" {input[0]} > {output[1]}
-        awk '$4 > {params.cutoff}' {input[1]} | cut -f 1 | xargs -I % grep -A 1 "^>%$" {input[0]} > {output[0]}
-        if [ ! -s {output[0]} ];
-        then
-            echo "No contigs with coverage higher than {params.cutoff}"
-            exit 1
-        fi
-        """
+    log:
+        logging_folder+"contig_filtering/{mapping_method}/{sample}.log"
+    script: "scripts/filter_contigs.py"
 
 '''
 rule prepare_low_coverage_contigs_report:
