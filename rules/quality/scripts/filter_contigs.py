@@ -12,8 +12,8 @@ records = SeqIO.parse(snakemake.input[0], "fasta")
 header = ["Name", "Length", "Mapped_bases", "Mean_depth", "std"]
 df_depth = pandas.read_csv(snakemake.input[1], sep="\t", names=header).set_index("Name")
 
-depth_cutoff = float(snakemake.params["cutoff"])
-
+depth_cutoff = float(snakemake.params["depth_cutoff"])
+length_cutoff = float(snakemake.params["length_cutoff"])
 
 def N50(list_of_lengths):
     total = sum(list_of_lengths)
@@ -37,8 +37,9 @@ fract_cutoff = average_depth * depth_cutoff
 high_depth = []
 low_depth = []
 for record in records:
-    print(record)
-    if df_depth.loc[record.name, "Mean_depth"] < fract_cutoff:
+    if len(record.seq) > length_cutoff:
+        high_depth.append(record)
+    elif df_depth.loc[record.name, "Mean_depth"] < fract_cutoff:
         low_depth.append(record)
     else:
         high_depth.append(record)

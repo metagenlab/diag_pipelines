@@ -37,7 +37,8 @@ rule filter_contigs_on_coverage:
     singularity:
         singularity_envs["python_r"]
     params:
-        cutoff = config["cov_cutoff"]
+        depth_cutoff = config["cov_cutoff"],
+        length_cutoff = config["length_cutoff"]
     input:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
         "samples/{sample}/{mapping_method}/{sample}_assembled_genome/contig_coverage.txt"
