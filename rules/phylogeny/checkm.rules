@@ -66,7 +66,7 @@ rule checkm_markers:
         checkm qa {params[0]} phylogeny/checkm/analyse -o 5 --tab_table > {output[0]}
         """
 
-rule checkm_markers_fastas:
+checkpoint checkm_markers_fastas:
     conda:
         "../../envs/python-r.yml"
     container:
@@ -79,11 +79,11 @@ rule checkm_markers_fastas:
         checkm_table = "phylogeny/checkm/analyse/markers.tab",
         checkm_fastas = expand("phylogeny/checkm/analyse/bins/{sample}/genes.fna", sample=read_naming.keys())
     output:
-        marker_fastas = dynamic("phylogeny/checkm/marker_fastas/{marker}.faa")
+        marker_fastas = "phylogeny/checkm/marker_fastas/{marker}.faa"
     script: "scripts/get_checkm_markers_fastas.py"
 
 
-rule align_marker_fasta_with_mafft:
+checkpoint align_marker_fasta_with_mafft:
     conda:
         "../../envs/mafft.yml"
     container:
@@ -103,7 +103,7 @@ rule concatenate_checkm_fastas:
     container:
         singularity_envs["python_r"]
     input:
-        marker_fastas = dynamic("phylogeny/checkm/marker_alignments/{marker}_mafft.faa")
+        marker_fastas = "phylogeny/checkm/marker_alignments/{marker}_mafft.faa"
     output:
         alignment = "phylogeny/checkm/concatenated_alignment.faa"
     script: "scripts/concat_align.py"
