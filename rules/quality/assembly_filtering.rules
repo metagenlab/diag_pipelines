@@ -49,18 +49,7 @@ rule filter_contigs_on_coverage:
         logging_folder+"contig_filtering/{mapping_method}/{sample}.log"
     script: "scripts/filter_contigs.py"
 
-'''
-rule prepare_low_coverage_contigs_report:
-    conda:
-        "../../envs/report.yml"
-    input:
-        low_depth_contigs = expand('')
-        assembly_depth = expand('samples/{sample}/quality/assembly_coverage.txt', sample=reads_naming.keys())
-    output:
-        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-    script:
-        "script/report_lowcov_contigs.py"
-'''
+
 
 rule extract_contigs_longer_than_500bp:
     input:
