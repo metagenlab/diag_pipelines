@@ -2,7 +2,7 @@
 rule calculate_assembly_statistics_with_quast:
     conda:
         "../../envs/quast.yml"
-    singularity:
+    container:
         singularity_envs["quast"] 
     input:
         "samples/{sample}/annotation/{sample}.fna"

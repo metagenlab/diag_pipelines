@@ -7,7 +7,7 @@
 rule download_sra:
     conda:
         "../../envs/sra-tools.yml"
-    singularity:
+    container:
         singularity_envs["sra-toolkit"]
     output:
         # /home/pipeline_user/ncbi/public: % os.getenv("HOME")
@@ -26,7 +26,7 @@ rule download_sra:
 rule sra_convert_to_fastq_paired:
     conda:
         "../../envs/sra-tools.yml"
-    singularity:
+    container:
         singularity_envs["sra-toolkit"]
     input:
         # "%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME"),
@@ -44,7 +44,7 @@ rule sra_convert_to_fastq_paired:
 rule sra_convert_to_fastq_single:
     conda:
         "../../envs/sra-tools.yml"
-    singularity:
+    container:
         singularity_envs["sra-toolkit"]
     input:
         # "%s/ncbi/public/sra/{sample}.sra" % os.getenv("HOME")

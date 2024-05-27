@@ -1,7 +1,7 @@
 rule distance_columns_to_matrix:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]    
     params:
         samples = list(read_naming.keys())
@@ -17,7 +17,7 @@ rule distance_columns_to_matrix:
 rule compute_minimum_spanning_tree_with_st:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]   
     params:
         threshold = config["snp_threshold"],
@@ -36,7 +36,7 @@ rule compute_minimum_spanning_tree_with_st:
 rule compute_minimum_spanning_tree_no_st:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     params:
         threshold=config["snp_threshold"],

@@ -1,7 +1,7 @@
 rule keep_only_annotated_region:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]
     input:
         genotype = "samples/{sample}/snps/gatk/" + reference_assembly_for_resistance[species] + "/{bwa_or_stringent}/snps.g.vcf.gz",
@@ -17,7 +17,7 @@ rule keep_only_annotated_region:
 rule decompose_multiallelic_positions_from_genotyping:
     conda:
         "../../envs/vt.yml"
-    singularity:
+    container:
         singularity_envs["vt"]
     input:
         genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/snps_region_filtered.g.vcf.gz",
@@ -35,7 +35,7 @@ rule decompose_multiallelic_positions_from_genotyping:
 rule annotate_positions_from_genotyping:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]
     input:
         bed_gz_correct = "resistance_db/" + species + "/mutations/{db}/correct.bed.gz",
@@ -58,7 +58,7 @@ rule annotate_positions_from_genotyping:
 rule extract_mutated_codons_or_nucleotides:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]
     input:
         annotation = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/annotation.vcf",
@@ -77,7 +77,7 @@ rule extract_mutated_codons_or_nucleotides:
 rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         genotype = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/position_genotypes.txt",
@@ -90,7 +90,7 @@ rule convert_mutated_codons_or_nucleotides_to_aa_or_nucleotides:
 rule add_mutated_amino_acid_or_nucleotide_value_to_annotation_and_exclude_synonymous_mutations:
     conda:
         "../../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]
     input:
         mutation_gz = "samples/{sample}/resistance/{bwa_or_stringent}/{db}/mutations.bed.gz",

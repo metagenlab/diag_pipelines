@@ -1,7 +1,7 @@
 rule summary_csv_excel_file:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     params:
         ontology_aro = ontology_file_aro,
@@ -20,7 +20,7 @@ rule summary_csv_excel_file:
 rule write_congruent_results_fasta:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         "samples/{sample}/resistance/{software}_summary.tsv",
@@ -35,7 +35,7 @@ rule write_congruent_results_fasta:
 rule merge_summary_xlsx_files:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         xlsx=expand("samples/{sample}/resistance/{software}_summary.xlsx", sample = read_naming.keys()),

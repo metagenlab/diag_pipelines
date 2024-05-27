@@ -3,7 +3,7 @@
 rule create_dictionary_for_reference:
     conda:
         "../../envs/gatk.yml"
-    singularity:
+    container:
         singularity_envs["gatk4"]
     input:
         ref = "references/{ref}/genome_fna.fna",
@@ -20,7 +20,7 @@ rule create_dictionary_for_reference:
 rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
     conda:
         "../../envs/gatk.yml"
-    singularity:
+    container:
         singularity_envs["gatk4"]
     threads:
         2
@@ -42,7 +42,7 @@ rule genotype_with_HaplotypeCaller_GATK_BP_RESOLUTION:
 rule merge_gvcf_files_with_GenomicsDBImport_GATK:
     conda:
         "../../envs/gatk.yml"
-    singularity:
+    container:
         singularity_envs["gatk4"]
     input:
         ref = "references/{ref}/genome_fna.fna",
@@ -65,7 +65,7 @@ rule merge_gvcf_files_with_GenomicsDBImport_GATK:
 rule merge_gvcf_files_with_CombineGVCFs_GATK:
     conda:
         "../../envs/gatk.yml"
-    singularity:
+    container:
         singularity_envs["gatk4"]
     input:
         ref = "references/{ref}/genome_fna.fna",
@@ -84,7 +84,7 @@ rule merge_gvcf_files_with_CombineGVCFs_GATK:
 rule genotype_with_GenotypeGVCFs_GATK:
     conda:
         "../../envs/gatk.yml"
-    singularity:
+    container:
         singularity_envs["gatk4"]
     threads:
         4

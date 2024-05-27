@@ -1,7 +1,7 @@
 rule index_reference_fasta:
     conda:
         "../../envs/bwa-samtools.yml"
-    singularity:
+    container:
         singularity_envs["bwa_samtools"]
     input:
         "{any_genome}.{ext}"
@@ -17,7 +17,7 @@ rule index_reference_fasta:
 rule index_bam_file:
     conda:
         "../../envs/bwa-samtools.yml"
-    singularity:
+    container:
         singularity_envs["bwa_samtools"]
     input:
         "{any_bam}.bam"

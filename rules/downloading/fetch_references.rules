@@ -3,7 +3,7 @@ rule get_refseq_urls_complete_genomes:
         excluded_id = "" #excl_id,
     conda:
         "../../envs/entrez-direct.yml"
-    singularity:
+    container:
         singularity_envs["entrez-direct"]
     output:
         "references/{spec}/url_complete_genomes.txt"
@@ -22,7 +22,7 @@ rule get_refseq_urls_complete_genomes:
 rule download_all_complete_genomes_fasta:
     conda:
         "../../envs/entrez-direct.yml"
-    singularity:
+    container:
         singularity_envs["entrez-direct"]
     input:
         "references/{spec}/url_complete_genomes.txt"

@@ -1,5 +1,5 @@
 rule determine_spa:
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         fasta = "samples/{sample}/annotation/{sample}.fsa",

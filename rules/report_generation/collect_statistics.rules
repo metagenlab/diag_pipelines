@@ -1,7 +1,7 @@
 rule statistics:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         multiqc_assembly = "report/multiqc_assembly_flash/multiqc_data/multiqc_data.json",
@@ -22,7 +22,7 @@ rule statistics:
 rule statistics_assembly:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         multiqc_assembly = "report/multiqc_assembly/multiqc_data/multiqc_data.json",
@@ -40,7 +40,7 @@ rule statistics_assembly:
 rule statistics_minimal:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         #contigs = expand("samples/{sample}/assembly/spades/contigs.fasta", sample=read_naming.keys()),

@@ -13,7 +13,7 @@ rule copy_tbprofiler_results:
 
 
 rule tbprofiler_collate:
-    singularity:
+    container:
         singularity_envs["tb-profiler"]
     threads:
         1
@@ -30,7 +30,7 @@ rule tbprofiler_collate:
 
 
 rule format_tbprofiler_collated:
-    singularity:
+    container:
         singularity_envs["python_r"]
     threads:
         1
@@ -44,7 +44,7 @@ rule format_tbprofiler_collated:
 
 
 rule tbprofiler_variant_frequency:
-    singularity:
+    container:
         singularity_envs["python_r"]
     threads:
         1

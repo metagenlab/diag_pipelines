@@ -34,7 +34,7 @@ rule extract_assembly_mean_sd_coverage:
 
 # 
 rule filter_contigs_on_coverage:
-    singularity:
+    container:
         singularity_envs["python_r"]
     params:
         depth_cutoff = config["cov_cutoff"],

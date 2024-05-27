@@ -13,7 +13,7 @@ def check_if_paired(wildcards):
 rule map_paired_reads_with_bwa:
     conda:
         "../../envs/bwa-samtools.yml"
-    singularity:
+    container:
         singularity_envs["bwa_samtools"]
     params:
         platform = "ILLUMINA"
@@ -38,7 +38,7 @@ rule map_paired_reads_with_bwa:
 rule map_single_reads_with_bwa:
     conda:
         "../../envs/bwa-samtools.yml"
-    singularity:
+    container:
         "docker://metagenlab/bwa-samtools:1.0"
     params:
         platform = "ILLUMINA"
@@ -64,7 +64,7 @@ rule map_single_reads_with_bwa:
 rule mapping_depth:
     conda:
         "../../envs/bwa-samtools.yml"
-    singularity:
+    container:
         singularity_envs["bwa_samtools"]  
     input:
         "samples/{sample}/mapping/bwa/{ref}.bam",
@@ -78,7 +78,7 @@ rule mapping_depth:
 rule map_paired_reads_with_bwa_for_direct_sequencing:
     conda:
         "../../envs/bwa-samtools.yml"
-    singularity:
+    container:
         singularity_envs["bwa_samtools"]
     params:
         platform = "ILLUMINA"
@@ -104,7 +104,7 @@ rule map_paired_reads_with_bwa_for_direct_sequencing:
 rule map_single_reads_with_bwa_for_direct_sequencing:
     conda:
         "../../envs/bwa-samtools.yml"
-    singularity:
+    container:
         singularity_envs["bwa_samtools"]
     params:
         platform = "ILLUMINA"
@@ -128,7 +128,7 @@ rule map_single_reads_with_bwa_for_direct_sequencing:
 rule filter_reads_on_quality:
     conda:
         "../../envs/bwa-samtools.yml"
-    singularity:
+    container:
         singularity_envs["bwa_samtools"]    
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
@@ -149,7 +149,7 @@ rule filter_reads_on_quality:
 rule remove_duplicates_from_mapping:
     conda:
         "../../envs/gatk.yml"
-    singularity:
+    container:
         singularity_envs["gatk4"]
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}/filtered.bam",
@@ -167,7 +167,7 @@ rule remove_duplicates_from_mapping:
 rule extract_large_deletion_from_mapping:
     conda:
         "../../envs/bedtools.yml"
-    singularity:
+    container:
         singularity_envs["bedtools"]       
     params:
         indel_im_size = 10

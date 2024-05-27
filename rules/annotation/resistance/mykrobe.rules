@@ -10,7 +10,7 @@ def check_if_paired(wildcards):
 rule search_resistance_paired_reads_with_mykrobe:
     conda:
         "../../../envs/mykrobe.yml"
-    singularity:
+    container:
         singularity_envs["mykrobe"]
     params:
         panel = mykrobe_panel,
@@ -45,7 +45,7 @@ rule search_resistance_paired_reads_with_mykrobe:
 rule search_resistance_single_reads_with_mykrobe:
     conda:
         "../../../envs/mykrobe.yml"
-    singularity:
+    container:
         "docker:quay.io/biocontainers/mykrobe:0.7.0--py37h2666aa9_0"
     params:
         panel = mykrobe_panel,
@@ -75,7 +75,7 @@ rule search_resistance_single_reads_with_mykrobe:
 
 
 rule generate_mykrobe_tsv_file_from_json_file:
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         "samples/{sample}/resistance/mykrobe_{sample}.json",

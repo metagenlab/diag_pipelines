@@ -1,7 +1,7 @@
 rule decompose_multiallelics_and_normalize:
     conda:
         "../../envs/vt.yml"
-    singularity:
+    container:
         singularity_envs["vt"]   
     input:
         raw="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf.gz",
@@ -21,7 +21,7 @@ rule filter_on_coverage:
         min_cov=minimum_coverage,
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]   
     input:
         decomposed="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/decomposed_normalized.vcf",
@@ -35,7 +35,7 @@ rule filter_on_coverage:
 rule filter_on_frequency_per_sample:
     params:
         min_alt=minimum_alternate_frac,
-    singularity:
+    container:
         singularity_envs["bcftools"]   
     conda:
         "../../envs/bcftools.yml",
@@ -51,7 +51,7 @@ rule filter_on_frequency_per_sample:
 rule extract_allele_by_type_from_gatk_gvcfs:
     conda:
         "../../envs/gatk.yml"
-    singularity:
+    container:
         singularity_envs["gatk4"] 
     input:
         joint_genotype_vcf="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
@@ -69,7 +69,7 @@ rule extract_allele_by_type_from_gatk_gvcfs:
 rule extract_allele_by_type_from_freebayes_joint_genotyping:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]   
     input:
         joint_genotype_vcf="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
@@ -86,7 +86,7 @@ rule extract_allele_by_type_from_freebayes_joint_genotyping:
 rule extract_core_genome_parsnp:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]  
     input:
         vcf_mutation_type = "typing/{snp_caller}/full_genome_{ref}/{mapping_method}/all_samples_{type}.vcf.gz",

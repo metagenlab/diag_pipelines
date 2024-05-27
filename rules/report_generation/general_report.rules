@@ -22,7 +22,7 @@ if "strain_characterization" in sys.argv:
         rule report_strain_characterization:
             conda:
                 "../../envs/python-r.yml"
-            singularity:
+            container:
                 singularity_envs["python_r"]
             input:
                 virulence_reports = expand("report/virulence/VFDB/{sample}_report.html", sample=read_naming.keys()),
@@ -49,7 +49,7 @@ if "strain_characterization" in sys.argv:
         rule report_strain_characterization:
             conda:
                 "../../envs/python-r.yml"
-            singularity:
+            container:
                 singularity_envs["python_r"]
             input:
                 virulence_reports = expand("report/virulence/VFDB/{sample}_report.html", sample=read_naming.keys()),

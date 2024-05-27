@@ -1,7 +1,7 @@
 
 
 rule checkm_lineage_wf:
-    singularity:
+    container:
         singularity_envs["checkm"]
     input:
         expand("report/assemblies_filtered/{sample}.fna", sample=read_naming.keys())
@@ -16,7 +16,7 @@ rule checkm_lineage_wf:
         """
 
 rule checkm_qc:
-    singularity:
+    container:
         singularity_envs["checkm"]
     input:
         "checkm/analyse_wf/lineage.ms"
@@ -30,7 +30,7 @@ rule checkm_qc:
         """
 
 rule checkm_marker_genes:
-    singularity:
+    container:
         singularity_envs["checkm"]
     input:
         "checkm/analyse_wf/lineage.ms"

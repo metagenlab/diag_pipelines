@@ -1,6 +1,6 @@
 
 rule combine_all_rgi:
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         all_rgi = expand("samples/{sample}/resistance/rgi_{sample}.tsv", sample = read_naming.keys())
@@ -11,7 +11,7 @@ rule combine_all_rgi:
 
 
 rule rgi_variant_frequency:
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         all_rgi = expand("samples/{sample}/resistance/rgi_{sample}.tsv", sample = read_naming.keys())

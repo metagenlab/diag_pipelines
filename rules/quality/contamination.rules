@@ -4,7 +4,7 @@ ruleorder: calculate_distance_paired_reads_from_refseq_genomes_with_mash > calcu
 rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
     conda:
         "../../envs/mash.yml"
-    singularity:
+    container:
         singularity_envs["mash"]
     threads:
         2
@@ -26,7 +26,7 @@ rule calculate_distance_assembly_from_refseq_genomes_with_mash:
         2
     conda:
         "../../envs/mash.yml"
-    singularity:
+    container:
         singularity_envs["mash"]
     input:
         mash_sketch = "references/mash_sketch.msh",
@@ -45,7 +45,7 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
         2
     conda:
         "../../envs/mash.yml"
-    singularity:
+    container:
         singularity_envs["mash"]
     input:
         mash_sketch = "references/mash_sketch.msh",
@@ -62,7 +62,7 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
 rule get_taxonomy_from_mash_results:
     conda:
         "../../envs/entrez-direct.yml"
-    singularity:
+    container:
         singularity_envs["entrez-direct"]
     input:
         distances = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv"
@@ -90,7 +90,7 @@ rule format_distances_from_mash_results:
 rule format_tsv_to_xlsx_mash_results:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         tsv = "samples/{sample}/contamination/mash/{fastq_or_assembly}/{results}.tsv",
@@ -103,7 +103,7 @@ rule format_tsv_to_xlsx_mash_results:
 rule merge_all_xlsx_mash_results:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         xlsx = expand("samples/{sample}/contamination/mash/{{fastq_or_assembly}}/{{results}}.xlsx", sample=read_naming.keys())
@@ -121,7 +121,7 @@ rule paired_reads_classification_with_centrifuge:
         2
     conda:
         "../../envs/centrifuge.yml"
-    singularity:
+    container:
         singularity_envs["centrifuge"]
     input:
         R1_trimmed = "samples/{sample}/reads/trimmed/R1_paired.fastq",
@@ -141,7 +141,7 @@ rule single_reads_classification_with_centrifuge:
         2
     conda:
         singularity_envs["centrifuge"]
-    singularity:
+    container:
         "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
     input:
         single = "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
@@ -160,7 +160,7 @@ rule convert_centrifuge_to_kraken_output:
         2
     conda:
         singularity_envs["centrifuge"]
-    singularity:
+    container:
         "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
     input:
         detail = "samples/{sample}/contamination/centrifuge/results.tsv",
@@ -176,7 +176,7 @@ rule convert_centrifuge_to_kraken_output:
 rule format_centrifuge_kraken:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         report = "report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt",
@@ -188,7 +188,7 @@ rule format_centrifuge_kraken:
 rule format_centrifuge_output:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         report = "samples/{sample}/contamination/centrifuge/report.tsv",

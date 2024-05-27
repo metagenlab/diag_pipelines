@@ -1,7 +1,7 @@
 rule calculate_pairwise_distances_by_type:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]  
     input:
         joint_genotype_vcf="{any_analysis}/all_samples_{type}.vcf.gz",
@@ -17,7 +17,7 @@ rule calculate_pairwise_distances_by_type:
 rule get_pairwise_snps_positions_by_type:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]  
     input:
         joint_genotype_vcf="{any_analysis}/all_samples_{type}.vcf.gz",
@@ -34,7 +34,7 @@ rule get_pairwise_snps_positions_by_type:
 rule calculate_distance_with_ref_by_type:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"] 
     input:
         joint_genotype_vcf="{any_analysis}/all_samples_{type}.vcf.gz",

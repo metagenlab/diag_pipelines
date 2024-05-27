@@ -11,7 +11,7 @@ def check_if_paired(wildcards):
 rule correct_error_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
-    singularity:
+    container:
        singularity_envs["spades"]
     threads:
         4
@@ -32,7 +32,7 @@ rule correct_error_paired_reads_with_spades:
 rule correct_error_single_reads_with_spades:
     conda:
         "../../envs/spades.yml"
-    singularity:
+    container:
         singularity_envs["spades"]
     threads:
         4
@@ -53,7 +53,7 @@ ruleorder: assemble_genome_corrected_paired_reads_with_spades > assemble_genome_
 rule assemble_genome_corrected_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
-    singularity:
+    container:
         singularity_envs["spades"]
     threads:
         4
@@ -81,7 +81,7 @@ rule assemble_genome_corrected_paired_reads_with_spades:
 rule assemble_genome_corrected_single_reads_with_spades:
     conda:
         "../../envs/spades.yml"
-    singularity:
+    container:
         singularity_envs["spades"]
     threads:
         4
@@ -106,7 +106,7 @@ rule assemble_genome_corrected_single_reads_with_spades:
 rule assemble_genome_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
-    singularity:
+    container:
         singularity_envs["spades"]
     threads:
         4
@@ -130,7 +130,7 @@ rule assemble_genome_paired_reads_with_spades:
 rule assemble_genome_single_reads_with_spades:
     conda:
         "../../envs/spades.yml"
-    singularity:
+    container:
         singularity_envs["spades"]
     threads:
         4

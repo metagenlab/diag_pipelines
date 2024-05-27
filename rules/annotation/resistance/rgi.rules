@@ -3,7 +3,7 @@
 rule search_resistance_with_rgi_contigs:
     conda:
         "../../../envs/rgi.yml"
-    singularity:
+    container:
         singularity_envs["rgi"]
     threads:
         4
@@ -21,7 +21,7 @@ rule search_resistance_with_rgi_contigs:
 rule search_resistance_with_rgi_faa:
     conda:
         "../../../envs/rgi.yml"
-    singularity:
+    container:
         singularity_envs["rgi"]
     threads:
         4
@@ -38,7 +38,7 @@ rule search_resistance_with_rgi_faa:
 rule generate_rgi_tsv_file_from_json_file:
     conda:
         "../../../envs/rgi.yml"
-    singularity:
+    container:
         singularity_envs["rgi"]
     input:
         "samples/{sample}/resistance/rgi_{sample}.json"
@@ -55,7 +55,7 @@ rule format_rgi_tsv:
     '''
     add start, stop nucleotide sequence to table
     '''
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         gbk = "samples/{sample}/annotation/{sample}.gbff",
@@ -73,7 +73,7 @@ rule format_rgi_tsv:
 rule plot_rgi:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         rgi_files=expand("samples/{sample}/resistance/combined_{sample}.tsv", sample=read_naming.keys()),
@@ -89,7 +89,7 @@ rule plot_rgi:
 rule generate_rgi_BLDB_html_report:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         combined_tsv_output="samples/{sample}/resistance/combined_{sample}.tsv",

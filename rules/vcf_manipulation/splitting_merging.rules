@@ -1,7 +1,7 @@
 rule extract_sample_entry_from_vcf:
     conda:
         "../../envs/bcftools.yml",
-    singularity:
+    container:
         singularity_envs["bcftools"]  
     input:
         vcf_cov="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/cov_decomposed_normalized.vcf",
@@ -15,7 +15,7 @@ rule extract_sample_entry_from_vcf:
 rule merge_all_samples_entries_into_vcf:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]   
     input:
         vfcs=expand("samples/{sample}/snps/{{snp_caller}}/{{ref}}/{{mapping_method}}/freq.vcf.gz", sample=list(read_naming.keys())),
@@ -37,7 +37,7 @@ rule merge_all_samples_entries_into_vcf:
 rule merge_all_vcf_freebayes_first_pass:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]   
     input:
         vfcs = expand("samples/{sample}/typing/freebayes/first_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz", sample=list(read_naming.keys())),
@@ -52,7 +52,7 @@ rule merge_all_vcf_freebayes_first_pass:
 rule merge_freebayes_second_pass:
     conda:
         "../../envs/bcftools.yml"
-    singularity:
+    container:
         singularity_envs["bcftools"]    
     input:
         vfcs = expand("samples/{sample}/typing/freebayes/second_pass/full_genome_{{ref}}/{{mapping_method}}/genotyping.vcf.gz", sample=list(read_naming.keys())),

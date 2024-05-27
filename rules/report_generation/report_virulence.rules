@@ -8,7 +8,7 @@ if "virulence" in sys.argv:
         rule report_virulence:
             conda:
                 "../../envs/python-r.yml"
-            singularity:
+            container:
                 singularity_envs["python_r"]
             input:
                 qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
@@ -40,7 +40,7 @@ if "virulence" in sys.argv:
         rule report_virulence:
             conda:
                 "../../envs/python-r.yml"
-            singularity:
+            container:
                 singularity_envs["python_r"]
             input:
                 qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),

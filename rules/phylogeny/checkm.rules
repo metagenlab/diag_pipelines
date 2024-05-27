@@ -14,7 +14,7 @@ rule link_genomes_to_checkm_folder:
 rule checkm_analyse:
     conda:
         "../../envs/checkm.yml"
-    singularity:
+    container:
         singularity_envs["checkm"]
     params:
         markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
@@ -33,7 +33,7 @@ rule checkm_analyse:
 rule checkm_qa:
     conda:
         "../../envs/checkm.yml"
-    singularity:
+    container:
         singularity_envs["checkm"]
     params:
         markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
@@ -51,7 +51,7 @@ rule checkm_qa:
 rule checkm_markers:
     conda:
         "../../envs/checkm.yml"
-    singularity:
+    container:
         singularity_envs["checkm"]
     params:
         markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
@@ -69,7 +69,7 @@ rule checkm_markers:
 rule checkm_markers_fastas:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     params:
         markers = pipeline_path + 'configuration_files/data/checkm/bacteria.ms'
@@ -86,7 +86,7 @@ rule checkm_markers_fastas:
 rule align_marker_fasta_with_mafft:
     conda:
         "../../envs/mafft.yml"
-    singularity:
+    container:
         singularity_envs["mafft"]
     input:
         fasta = "phylogeny/checkm/marker_fastas/{marker}.faa"
@@ -100,7 +100,7 @@ rule align_marker_fasta_with_mafft:
 rule concatenate_checkm_fastas:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         marker_fastas = dynamic("phylogeny/checkm/marker_alignments/{marker}_mafft.faa")
@@ -111,7 +111,7 @@ rule concatenate_checkm_fastas:
 rule build_phylogeny_with_fasttree:
     conda:
         "../../envs/fasttree.yml"
-    singularity:
+    container:
         singularity_envs["fasttree"]        
     input:
         alignment = "phylogeny/checkm/concatenated_alignment.faa"

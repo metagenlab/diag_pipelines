@@ -3,7 +3,7 @@ if "virulence_factors" in config:
     rule plot_virulence_ete_tree:
         conda:
             "../../envs/pandas-ete3-matplotlib.yml",
-        singularity:
+        container:
             singularity_envs["python_r"]
         input:
             nr_blast_results=expand("samples/{sample}/virulence/results_blast_not_redundant.tsv", sample = read_naming.keys()),
@@ -17,7 +17,7 @@ if "virulence_factors" in config:
     rule plot_virulence_ete_tree_s_aureus:
         conda:
             "../../envs/pandas-ete3-matplotlib.yml",
-        singularity:
+        container:
             singularity_envs["python_r"]
         input:
             nr_blast_results=expand("samples/{sample}/virulence/results_blast_not_redundant.tsv", sample = read_naming.keys()),
@@ -37,7 +37,7 @@ if "virulence_factors" in config:
 rule plot_MLST_ete_tree:
     conda:
         "../../envs/pandas-ete3-matplotlib.yml",
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         best_tree = "phylogeny/gatk_gvcfs/cgMLST/bwa/normal_run/RAxML_bestTree.nw",
@@ -50,7 +50,7 @@ rule plot_MLST_ete_tree:
 rule plot_VFDB_ete_tree_counts:
     conda:
         "../../envs/pandas-ete3-matplotlib.yml",
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
@@ -66,7 +66,7 @@ rule plot_VFDB_ete_tree_counts:
 rule plot_VFDB_ete_matrix:
     conda:
         "../../envs/pandas-ete3-matplotlib.yml",
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         blast_results=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),

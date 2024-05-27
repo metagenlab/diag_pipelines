@@ -3,7 +3,7 @@ rule create_multiqc_report_for_assembly:
         configfile = multiqc_configfile
     conda:
         "../../envs/multiqc.yml"
-    singularity:
+    container:
         singularity_envs["multiqc"]        
     input:
         assembly=expand("samples/{sample}/multiqc/assembly/log.txt", sample = list(read_naming.keys())),
@@ -23,7 +23,7 @@ rule create_multiqc_report_for_assembly_and_flash:
         configfile = multiqc_configfile
     conda:
         "../../envs/multiqc.yml"
-    singularity:
+    container:
         singularity_envs["multiqc"]          
     input:
         assembly=expand("samples/{sample}/multiqc/assembly/log_flash.txt", sample = list(read_naming.keys())),
@@ -44,7 +44,7 @@ rule create_multiqc_report_for_mapping:
         configfile = multiqc_configfile
     conda:
         "../../envs/multiqc.yml"
-    singularity:
+    container:
         singularity_envs["multiqc"]  
     input:
         mapping = expand("samples/{sample}/multiqc/mapping_to_{{ref}}/{{mapping_method}}/log.txt", sample = list(read_naming.keys())),

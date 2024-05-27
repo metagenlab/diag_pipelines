@@ -4,7 +4,7 @@
 
 
 rule venn_wrong_results:
-    singularity:
+    container:
         singularity_envs["python_r"]
     input:
         rgi = "report/resistance/rgi_benchmark_{FP_or_FN}.tsv",

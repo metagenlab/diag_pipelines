@@ -1,7 +1,7 @@
 
 
 rule gtdb_classify_wf:
-    singularity:
+    container:
         singularity_envs["gtdbtk"]
     input:
         expand("report/genomes/{sample}.faa", sample=read_naming.keys())
