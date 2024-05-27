@@ -15,7 +15,7 @@ rule combined2rst:
         rgi_files=expand("samples/{sample}/resistance/combined_{sample}.tsv", sample=read_naming.keys()),
         mlst_file="report/typing/mlst/summary.tsv",
         mash_files=expand("samples/{sample}/contamination/mash/assembly/distances_formated.tsv", sample=read_naming.keys()),
-	plasmid_files=expand("samples/{sample}/plasmids/{sample}.tsv", sample=read_naming.keys()),
+        plasmid_files=expand("samples/{sample}/plasmids/{sample}.tsv", sample=read_naming.keys()),
     output:
         "report/resistance/combined_report.rst",
     log:
@@ -30,14 +30,15 @@ rule rgi2rst_per_sample:
         aro_filter=get_aro_filter()
     input:
         rgi_files="samples/{sample}/resistance/combined_{sample}.tsv",
-	plasmid_files=expand("samples/{sample}/plasmids/{sample}.tsv", sample=read_naming.keys()),
+        plasmid_files=expand("samples/{sample}/plasmids/{sample}.tsv", sample=read_naming.keys()),
         mlst_file="report/typing/mlst/summary.tsv",
         mash_files="samples/{sample}/contamination/mash/assembly/distances_formated.tsv",
     output:
         "report/resistance/combined_report_{sample}.rst",
     log:
         logging_folder + "report/resistance/combined_report_{sample}.log"
-    script: "scripts/card_mlst_rst_report.py"
+    script: 
+        "scripts/card_mlst_rst_report.py"
 
 
 
