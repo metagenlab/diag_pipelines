@@ -62,7 +62,7 @@ rule annotate_with_bakta_unfiltered_assembly:
     input:
         contigs = "samples/{sample}/assembly/spades_no_correction/contigs.fasta",
     params:
-	    database = "/data/databases/baktadb/db",
+	    database = config["bakta_db"],
     output:
         "samples/{sample}/annotation/spades_no_correction/{sample}.fsa"
     threads: 8
