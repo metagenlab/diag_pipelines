@@ -1,5 +1,8 @@
 
 import numpy
+import pandas
+from Bio import SeqIO
+from Bio.SeqUtils import gc_fraction
 
 fna_file = snakemake.input[0]
 gbk_file = snakemake.input[1]
@@ -40,7 +43,7 @@ def get_contig_id2mean_depth(contig2depth_list):
 
 def contig_id2contig_length(contigs_file):
 
-    from Bio import SeqIO
+    
 
     fasta_handle = open(contigs_file, 'r')
     id2length = {}
@@ -52,21 +55,20 @@ def contig_id2contig_length(contigs_file):
 
 def contig_id2gc_content(contigs_file):
 
-    from Bio import SeqIO
-    from Bio.SeqUtils import GC
+
+    
 
     fasta_handle = open(contigs_file, 'r')
     id2gc = {}
     cumul_seq = ''
     for record in SeqIO.parse(fasta_handle, "fasta"):
-        id2gc[record.name] = GC(record.seq)
+        id2gc[record.name] = gc_fraction(record.seq)
         cumul_seq += record.seq
-    id2gc["TOTAL"] = round(GC(cumul_seq), 2)
+    id2gc["TOTAL"] = round(gc_fraction(cumul_seq), 2)
     return id2gc
 
 def gbk2CDS_loc(gbk_file):
 
-    from Bio import SeqIO
     record2locus2location = {}
     with open(gbk_file, 'r') as f:
         for record in SeqIO.parse(f, 'genbank'):
@@ -79,7 +81,7 @@ def gbk2CDS_loc(gbk_file):
     return record2locus2location
 
 def parse_smatools_depth(samtools_depth):
-    import pandas
+
 
     with open(samtools_depth, 'r') as f:
         table = pandas.read_csv(f, sep='\t', header=None, index_col=0)
