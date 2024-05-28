@@ -2,7 +2,7 @@ rule convert_phylogeny_to_image_with_st:
     conda:
         "../../envs/newick-utils.yml"
     container:
-        singularity_envs["newick_utils"]
+        containers["newick_utils"]
     params:
         size = config["phylogeny_image_size"]
     input:
@@ -26,7 +26,7 @@ rule convert_phylogeny_to_image_no_st:
     conda:
         "../../envs/newick-utils.yml"
     container:
-        singularity_envs["newick_utils"]  
+        containers["newick_utils"]  
     params:
         size = config["phylogeny_image_size"]
     input:

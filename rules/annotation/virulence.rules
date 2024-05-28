@@ -2,7 +2,7 @@ rule blast_virulence_protein_to_proteome_or_contigs:
     conda:
         "../../envs/blast.yml"
     container:
-        singularity_envs["blast"]
+        containers["blast"]
     params:
         perc_id_cutoff=config["virulence_percentage_identity_cutoff"],
         cov_cutoff=config["virulence_coverage_cutoff"],
@@ -41,7 +41,7 @@ rule remove_redundancy_from_blast_results:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         "samples/{sample}/virulence/results_blast.tsv",
     output:
@@ -54,7 +54,7 @@ rule extract_protein_sequences_from_blast_results:
     conda:
         "../../envs/samtools.yml"
     container:
-        singularity_envs["bwa_samtools"]
+        containers["bwa_samtools"]
     input:
         blast_res = "samples/{sample}/virulence/results_blast_not_redundant.tsv",
         annotation_prot = "samples/{sample}/annotation/{sample}.faa",
@@ -78,7 +78,7 @@ if "virulence_factors" in config:
         conda:
             "../../envs/python-r.yml"
         container:
-            singularity_envs["python_r"]
+            containers["python_r"]
         input:
             "samples/{sample}/virulence/results_blast_not_redundant.tsv",
             config["virulence_factors"]
@@ -93,7 +93,7 @@ rule merge_samples_summary:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         xlsx=expand("samples/{sample}/virulence/{sample}_virulence_summary.xlsx", sample = read_naming.keys()),
         fasta=expand("samples/{sample}/virulence/proteins.fasta", sample = read_naming.keys()),
@@ -106,7 +106,7 @@ rule generate_html_report:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         blast_results="samples/{sample}/virulence/{sample}_virulence_summary.xlsx",
     params:
@@ -120,7 +120,7 @@ rule blast_proteome_to_VFDB:
     conda:
         "../../envs/blast.yml"
     container:
-        singularity_envs["blast"]
+        containers["blast"]
     params:
         perc_id_cutoff=config["virulence_percentage_identity_cutoff"],
         cov_cutoff=config["virulence_coverage_cutoff"],
@@ -140,7 +140,7 @@ rule generate_VFDB_report:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         blast_results="samples/{sample}/virulence/VFDB_results_blast.tsv",
         VFDB_annotation="references/virulence/VFDB_annotations.tab",
@@ -156,7 +156,7 @@ rule merge_virulence_files:
     conda:
         "../../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
          tsv=expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
     output:
@@ -171,7 +171,7 @@ rule prepare_label_file_for_circos:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         gbk_file="samples/{sample}/annotation/{sample}.gbff",
         blast_results="samples/{sample}/virulence/VFDB_results_blast.tsv",

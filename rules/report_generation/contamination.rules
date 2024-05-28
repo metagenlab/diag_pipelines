@@ -3,7 +3,7 @@ rule mash_report:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         mash_results = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv",
     params:
@@ -16,7 +16,7 @@ rule low_coverage_contig_report:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         low_cov_contigs_fasta = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta",
     output:

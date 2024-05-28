@@ -2,7 +2,7 @@ rule sketch_kmers_complete_genomes_with_mash:
     conda:
         "../quality/env/mash.yml"
     container:
-        singularity_envs["mash"]
+        containers["mash"]
     input:
         "references/all_complete_genomes_log.txt"
     output:
@@ -16,7 +16,7 @@ rule calculate_distance_to_complete_genomes_with_mash:
     conda:
         "../quality/env/mash.yml"
     container:
-         singularity_envs["mash"]
+         containers["mash"]
     input:
         "references/all_complete_genomes.msh",
         "samples/{sample}/annotation/{sample}.fsa"

@@ -2,7 +2,7 @@ rule compress_vcf:
     conda:
         "../../envs/htslib.yml"
     container:
-        singularity_envs["htslib"]   
+        containers["htslib"]   
     input:
         "{any_vcf}.{vcf_or_bed}",
     output:
@@ -14,7 +14,7 @@ rule compress_vcf:
 
 rule index_vcf_bed:
     container:
-        singularity_envs["htslib"]  
+        containers["htslib"]  
     conda:
         "../../envs/htslib.yml"
     input:
@@ -30,7 +30,7 @@ rule sort_vcf:
     conda:
         "../../envs/bcftools.yml"
     container:
-        singularity_envs["htslib"]  
+        containers["htslib"]  
     input:
         "{any_vcf}.vcf.gz",
     output:

@@ -22,7 +22,7 @@ rule correct_gbk_extension_for_IGV_visualization:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"] 
+        containers["python_r"] 
     input:
         genome = "references/{ref}/genome_gbff.gbff",
     output:

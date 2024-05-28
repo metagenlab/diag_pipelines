@@ -3,7 +3,7 @@ rule determine_mlst_from_trimmed_reads:
     conda:
         "../../envs/mentalist.yml"
     container:
-        singularity_envs["mentalist"]
+        containers["mentalist"]
     input:
         fastq1 = "samples/{sample}/reads/trimmed/R1_paired.fastq",
         fastq2 = "samples/{sample}/reads/trimmed/R2_paired.fastq",

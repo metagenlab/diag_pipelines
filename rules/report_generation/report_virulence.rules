@@ -9,7 +9,7 @@ if "virulence" in sys.argv:
             conda:
                 "../../envs/python-r.yml"
             container:
-                singularity_envs["python_r"]
+                containers["python_r"]
             input:
                 qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
                 multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
@@ -41,7 +41,7 @@ if "virulence" in sys.argv:
             conda:
                 "../../envs/python-r.yml"
             container:
-                singularity_envs["python_r"]
+                containers["python_r"]
             input:
                 qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
                 multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",

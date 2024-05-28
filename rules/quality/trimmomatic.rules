@@ -4,7 +4,7 @@ rule trim_paired_reads_with_trimmomatic:
     conda:
         "../../envs/trimmomatic.yml"
     container:
-        singularity_envs["trimmomatic"]        
+        containers["trimmomatic"]        
     input:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"
@@ -38,7 +38,7 @@ rule trim_single_reads_with_trimmomatic:
     conda:
         "../../envs/trimmomatic.yml"
     container:
-        singularity_envs["trimmomatic"]
+        containers["trimmomatic"]
     input:
         "samples/{sample}/reads/raw/single_{sample}.fastq.gz"
     params:

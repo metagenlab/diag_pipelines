@@ -56,7 +56,7 @@ rule generate_snps_html_report:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         # samples/TATRas-control/snps/gatk_gvcfs/TATRas-control_assembled_genome/bwa/freq.vcf
         # typing/gatk_gvcfs/full_genome_TATRas-control_assembled_genome/bwa/all_samples_snp.vcf
@@ -75,7 +75,7 @@ rule generate_deletion_html_report:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         deletion_bed = "samples/{sample}/indel/{mapping_method}/{reference}/indel.bed",
         gbk_file = gbk_ref

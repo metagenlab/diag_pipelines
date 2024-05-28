@@ -3,7 +3,7 @@ if "BLDB_path" in config:
 
     rule search_resistance_with_ssearch:
         container:
-            singularity_envs["fasta36"]
+            containers["fasta36"]
         threads:
             8
         input:
@@ -19,7 +19,7 @@ if "BLDB_path" in config:
 
     rule resistance_filter_BBH:
         container:
-            singularity_envs["python_r"]
+            containers["python_r"]
         threads:
             1
         params:
@@ -37,7 +37,7 @@ if "BLDB_path" in config:
 
 rule resistance_combined_table:
     container:
-        singularity_envs["python_r"]   
+        containers["python_r"]   
     input:
         res_files=expand("samples/{{sample}}/resistance/{tool}_{{sample}}.tsv", tool=config["resistance"]),
     output:

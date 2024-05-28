@@ -2,7 +2,7 @@ rule decompose_multiallelics_and_normalize:
     conda:
         "../../envs/vt.yml"
     container:
-        singularity_envs["vt"]   
+        containers["vt"]   
     input:
         raw="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf.gz",
         raw_tbi="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/raw/all_samples.vcf.gz",
@@ -22,7 +22,7 @@ rule filter_on_coverage:
     conda:
         "../../envs/bcftools.yml"
     container:
-        singularity_envs["bcftools"]   
+        containers["bcftools"]   
     input:
         decomposed="typing/{snp_caller}/full_genome_{ref}/{mapping_method}/filtering/decomposed_normalized.vcf",
     output:
@@ -36,7 +36,7 @@ rule filter_on_frequency_per_sample:
     params:
         min_alt=minimum_alternate_frac,
     container:
-        singularity_envs["bcftools"]   
+        containers["bcftools"]   
     conda:
         "../../envs/bcftools.yml",
     input:
@@ -52,7 +52,7 @@ rule extract_allele_by_type_from_gatk_gvcfs:
     conda:
         "../../envs/gatk.yml"
     container:
-        singularity_envs["gatk4"] 
+        containers["gatk4"] 
     input:
         joint_genotype_vcf="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
         joint_genotype_vcf_tbi="typing/gatk_gvcfs/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz.tbi",
@@ -70,7 +70,7 @@ rule extract_allele_by_type_from_freebayes_joint_genotyping:
     conda:
         "../../envs/bcftools.yml"
     container:
-        singularity_envs["bcftools"]   
+        containers["bcftools"]   
     input:
         joint_genotype_vcf="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz",
         joint_genotype_vcf_tbi="typing/freebayes_joint_genotyping/full_genome_{ref}/{mapping_method}/filtering/freq_cov_decomposed_normalized.vcf.gz.tbi",
@@ -87,7 +87,7 @@ rule extract_core_genome_parsnp:
     conda:
         "../../envs/bcftools.yml"
     container:
-        singularity_envs["bcftools"]  
+        containers["bcftools"]  
     input:
         vcf_mutation_type = "typing/{snp_caller}/full_genome_{ref}/{mapping_method}/all_samples_{type}.vcf.gz",
         vcf_mutation_type_tbi = "typing/{snp_caller}/full_genome_{ref}/{mapping_method}/all_samples_{type}.vcf.gz.tbi",

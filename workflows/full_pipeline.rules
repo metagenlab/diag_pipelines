@@ -7,11 +7,11 @@ import os
 PIPELINE_VERSION = "2.8.0"
 
 
-if "--use-singularity" in sys.argv:
+if "--use-singularity" in sys.argv or "--use-apptainer" in sys.argv:
     worflow_path = workflow.snakefile.split("workflows/full_pipeline.rules")[0]
     workflow.deployment_settings.apptainer_args += f' -B {worflow_path}:{worflow_path}'
 
-    singularity_envs = yaml.safe_load(open(os.path.join(workflow.basedir,  "../envs/singularity/envs.yml"), 'r'))
+    containers = yaml.safe_load(open(os.path.join(workflow.basedir,  "../envs/containers/envs.yml"), 'r'))
 
     
 include:

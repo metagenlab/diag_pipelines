@@ -2,7 +2,7 @@ rule assess_mapping_with_qualimap:
     conda:
         "../../envs/qualimap.yml"
     container:
-        singularity_envs["qualimap"]     
+        containers["qualimap"]     
     input:
         # samples/{sample}/mapping/bwa/{ref}.bam
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",

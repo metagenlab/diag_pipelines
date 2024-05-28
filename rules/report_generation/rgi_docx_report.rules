@@ -8,7 +8,7 @@ def get_aro_filter():
 
 rule combined2rst:
     container:
-        singularity_envs["python_r"]  
+        containers["python_r"]  
     params:
         aro_filter=get_aro_filter()
     input:
@@ -25,7 +25,7 @@ rule combined2rst:
 
 rule rgi2rst_per_sample:
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     params:
         aro_filter=get_aro_filter()
     input:
@@ -44,7 +44,7 @@ rule rgi2rst_per_sample:
 
 rule rst2docx:
     container:
-        singularity_envs["pandoc"]   
+        containers["pandoc"]   
     input:
         "{path}.rst",
     output:
@@ -61,7 +61,7 @@ rule rst2docx:
 
 rule tsv2xlsx:
     container:
-        singularity_envs["python_r"]   
+        containers["python_r"]   
     input:
         "{path}.tsv",
     output:

@@ -16,7 +16,7 @@ def get_species(wildcards):
 
 rule annotate_with_bakta:
     container:
-        singularity_envs["bakta"]
+        containers["bakta"]
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta",
     threads: 8
@@ -42,7 +42,7 @@ rule annotate_with_bakta:
 
 rule get_plasmids_platon:
     container:
-        singularity_envs["platon"]
+        containers["platon"]
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta",
     params:
@@ -58,7 +58,7 @@ rule get_plasmids_platon:
 
 rule annotate_with_bakta_unfiltered_assembly:
     container:
-        singularity_envs["bakta"]
+        containers["bakta"]
     input:
         contigs = "samples/{sample}/assembly/spades_no_correction/contigs.fasta",
     params:
@@ -82,7 +82,7 @@ rule create_blast_database_from_protein_sequences:
     conda:
         "../../envs/blast.yml"
     container:
-        singularity_envs["blast"]
+        containers["blast"]
     input:
         proteins = "samples/{sample}/annotation/{sample}.faa",
     output:
@@ -96,7 +96,7 @@ rule create_blast_database_from_contig_sequences:
     conda:
         "../../envs/blast.yml"
     container:
-        singularity_envs["blast"]
+        containers["blast"]
     input:
         contigs = "samples/{sample}/annotation/{sample}.fna",
     output:
@@ -110,7 +110,7 @@ rule remove_fasta_part_from_gff:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         "samples/{sample}/annotation/{sample}.gff3"
     output:
@@ -122,7 +122,7 @@ rule get_CDS_and_contigs_depth:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
         "samples/{sample}/annotation/{sample}.gbff",

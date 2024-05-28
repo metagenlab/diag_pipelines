@@ -2,7 +2,7 @@ rule compute_phylogeny_with_raxml:
     conda:
         "../../envs/raxml.yml"
     container:
-        singularity_envs["raxml"]
+        containers["raxml"]
     input:
         alignment="typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alignment.fa"
     output:
@@ -24,7 +24,7 @@ rule compute_phylogeny_bootstraps_with_raxml:
     conda:
         "../../envs/raxml.yml"
     container:
-        singularity_envs["raxml"]
+        containers["raxml"]
     input:
         alignment = "typing/{snp_caller}/{core_genome_or_full_genome}/{mapping_method}/alignment.fa"
     output:

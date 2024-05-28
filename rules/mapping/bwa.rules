@@ -14,7 +14,7 @@ rule map_paired_reads_with_bwa:
     conda:
         "../../envs/bwa-samtools.yml"
     container:
-        singularity_envs["bwa_samtools"]
+        containers["bwa_samtools"]
     params:
         platform = "ILLUMINA"
     input:
@@ -65,7 +65,7 @@ rule mapping_depth:
     conda:
         "../../envs/bwa-samtools.yml"
     container:
-        singularity_envs["bwa_samtools"]  
+        containers["bwa_samtools"]  
     input:
         "samples/{sample}/mapping/bwa/{ref}.bam",
     output:
@@ -79,7 +79,7 @@ rule map_paired_reads_with_bwa_for_direct_sequencing:
     conda:
         "../../envs/bwa-samtools.yml"
     container:
-        singularity_envs["bwa_samtools"]
+        containers["bwa_samtools"]
     params:
         platform = "ILLUMINA"
     input:
@@ -105,7 +105,7 @@ rule map_single_reads_with_bwa_for_direct_sequencing:
     conda:
         "../../envs/bwa-samtools.yml"
     container:
-        singularity_envs["bwa_samtools"]
+        containers["bwa_samtools"]
     params:
         platform = "ILLUMINA"
     input:
@@ -129,7 +129,7 @@ rule filter_reads_on_quality:
     conda:
         "../../envs/bwa-samtools.yml"
     container:
-        singularity_envs["bwa_samtools"]    
+        containers["bwa_samtools"]    
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}.bam.bai",
@@ -150,7 +150,7 @@ rule remove_duplicates_from_mapping:
     conda:
         "../../envs/gatk.yml"
     container:
-        singularity_envs["gatk4"]
+        containers["gatk4"]
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}/filtered.bam",
         bam_bai = "samples/{sample}/mapping/{mapping_method}/{ref}/filtered.bam.bai",
@@ -168,7 +168,7 @@ rule extract_large_deletion_from_mapping:
     conda:
         "../../envs/bedtools.yml"
     container:
-        singularity_envs["bedtools"]       
+        containers["bedtools"]       
     params:
         indel_im_size = 10
     input:

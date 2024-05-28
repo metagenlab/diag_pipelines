@@ -4,7 +4,7 @@ rule search_resistance_with_tbprofiler:
     conda:
         "../../../envs/rgi.yml"
     container:
-        singularity_envs["tb-profiler"]
+        containers["tb-profiler"]
     threads:
         4
     input:

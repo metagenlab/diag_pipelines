@@ -12,7 +12,7 @@ rule correct_error_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     container:
-       singularity_envs["spades"]
+       containers["spades"]
     threads:
         4
     input:
@@ -33,7 +33,7 @@ rule correct_error_single_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     container:
-        singularity_envs["spades"]
+        containers["spades"]
     threads:
         4
     input:
@@ -54,7 +54,7 @@ rule assemble_genome_corrected_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     container:
-        singularity_envs["spades"]
+        containers["spades"]
     threads:
         4
     input:
@@ -82,7 +82,7 @@ rule assemble_genome_corrected_single_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     container:
-        singularity_envs["spades"]
+        containers["spades"]
     threads:
         4
     input:
@@ -107,7 +107,7 @@ rule assemble_genome_paired_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     container:
-        singularity_envs["spades"]
+        containers["spades"]
     threads:
         4
     input:
@@ -131,7 +131,7 @@ rule assemble_genome_single_reads_with_spades:
     conda:
         "../../envs/spades.yml"
     container:
-        singularity_envs["spades"]
+        containers["spades"]
     threads:
         4
     input:

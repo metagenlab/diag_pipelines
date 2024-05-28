@@ -2,7 +2,7 @@ rule assess_quality_single_reads_with_fastqc:
     conda:
         "../../envs/fastqc.yml"
     container:
-        singularity_envs["fastqc"]
+        containers["fastqc"]
     input:
         "samples/{sample}/reads/trimmed/single.fastq",
     output:
@@ -18,7 +18,7 @@ rule assess_quality_paired_reads_with_fastqc:
     conda:
         "../../envs/fastqc.yml"
     container:
-        singularity_envs["fastqc"]
+        containers["fastqc"]
     input:
         "samples/{sample}/reads/trimmed/R1_paired.fastq",
         "samples/{sample}/reads/trimmed/R2_paired.fastq"

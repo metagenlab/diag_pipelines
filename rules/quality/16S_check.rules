@@ -16,7 +16,7 @@ if "16S_database" in config:
 
     rule extract_16S:
         container:
-            singularity_envs["python_r"]
+            containers["python_r"]
         input:
             "samples/{sample}/contamination/markers/rrna/{sample}_barrnap.ffn",
         output:
@@ -26,7 +26,7 @@ if "16S_database" in config:
 
     rule merge_16S:
         container:
-            singularity_envs["python_r"]
+            containers["python_r"]
         input:
             expand("samples/{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn", sample=read_naming.keys()),
         output:
@@ -35,7 +35,7 @@ if "16S_database" in config:
 
     rule align_16S_with_mafft:
         container:
-            singularity_envs["mafft"]
+            containers["mafft"]
         input:
             "report/contamination/markers/rrna/merged_barrnap_16S.ffn",
         output:
@@ -47,7 +47,7 @@ if "16S_database" in config:
 
     rule calculate_parwise_identity:
         container:
-            singularity_envs["python_r"]
+            containers["python_r"]
         input:
             "report/contamination/markers/rrna/merged_barrnap_16S_mafft.ffn"
         output:
@@ -59,7 +59,7 @@ if "16S_database" in config:
 
     rule assign_taxonomy_vsearch:
         container:
-            singularity_envs["vsearch"]
+            containers["vsearch"]
         input:
             "samples/{sample}/contamination/markers/rrna/{sample}_barrnap_16S.ffn"
         output:
@@ -75,7 +75,7 @@ if "16S_database" in config:
 
     rule QIIME1_assign_taxonomy_rdp:
         container:
-            singularity_envs["rdp"] 
+            containers["rdp"] 
         input:
             "report/contamination/markers/rrna/merged_barrnap_16S.ffn",
             "/data/databases/amplicon_based_metagenomics/16S/ezbiocloud201805/QIIME/DB_amp.fasta",
@@ -101,7 +101,7 @@ if "16S_database" in config:
 
     rule assign_taxonomy_ssearch:
         container:
-            singularity_envs["fasta36"]
+            containers["fasta36"]
         container:
             "docker://quay.io/biocontainers/vsearch:2.15.0--h2d02072_0"
         input:
@@ -121,7 +121,7 @@ if "16S_database" in config:
 
     rule format_taxonomy_ssearch:
         container:
-            singularity_envs["python_r"]
+            containers["python_r"]
         input:
             expand("report/contamination/markers/rrna/{sample}_ssearch.txt", sample=read_naming.keys())
         output:

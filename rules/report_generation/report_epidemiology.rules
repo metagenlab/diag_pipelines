@@ -7,7 +7,7 @@ if "epidemiology" in sys.argv:
         conda:
             "../../envs/python-r.yml"
         container:
-            singularity_envs["python_r"]
+            containers["python_r"]
         input:
             multiqc_report = "report/multiqc_assembly/multiqc_report.html",
             ete_figure = "report/figures/virulence_staph.svg",
@@ -121,7 +121,7 @@ if "epidemiology" in sys.argv:
         conda:
             "../../envs/python-r.yml"
         container:
-            singularity_envs["python_r"]
+            containers["python_r"]
         input:
             qualimap_reports = get_qualimap_file_list(read_naming.keys(), reference_genomes_dir, config["mapping"]),
             multiqc_mapping_list = get_multiqc_list(config["mapping"], reference_genomes_dir, species),
@@ -149,7 +149,7 @@ if "epidemiology" in sys.argv:
         conda:
             "../../envs/python-r.yml"
         container:
-            singularity_envs["python_r"]
+            containers["python_r"]
         input:
             multiqc_report = "report/multiqc_assembly/multiqc_report.html",
             ete_figure_counts = "report/figures/virulence_counts.svg",

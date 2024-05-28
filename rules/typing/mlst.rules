@@ -2,7 +2,7 @@ rule determine_mlst:
     conda:
         "../../envs/mlst.yml"
     container:
-        singularity_envs["mlst"]
+        containers["mlst"]
     input:
         fasta = "samples/{sample}/annotation/{sample}.fna",
     output:
@@ -27,7 +27,7 @@ rule determine_mlst_reference_genome:
     conda:
         "../../envs/mlst.yml"
     container:
-        singularity_envs["mlst"]
+        containers["mlst"]
     input:
         genome = "references/{ref}/genome_fna.fna"
     output:
@@ -41,7 +41,7 @@ rule generate_xlsx_file_from_mlst_results:
     conda:
         "../../envs/python-r.yml"
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     input:
         "report/typing/mlst/{file}.tsv"
     output:
