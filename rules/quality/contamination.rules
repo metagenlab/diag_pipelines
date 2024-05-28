@@ -159,9 +159,9 @@ rule convert_centrifuge_to_kraken_output:
     threads:
         2
     conda:
-        containers["centrifuge"]
+        "../../envs/centrifuge.yml"
     container:
-        "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
+        containers["centrifuge"]
     input:
         detail = "samples/{sample}/contamination/centrifuge/results.tsv",
         database = "references/centrifuge_db/p_compressed+h+v.1.cf"
