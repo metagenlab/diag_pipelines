@@ -1,15 +1,8 @@
-
-# from snakemake.utils import report
-
-# with open(input[0]) as vcf:
-#    n_calls = sum(1 for l in vcf if not l.startswith("#"))
-# n_samples = list(read_naming.keys()
 import pandas
 from report import quality_table, resistance_table
 import report
 import io
-from docutils.core import publish_file, publish_parts
-from docutils.parsers.rst import directives
+from docutils.core import publish_file
 from Bio import SeqIO
 
 multiqc_assembly = snakemake.input["multiqc_assembly"]
