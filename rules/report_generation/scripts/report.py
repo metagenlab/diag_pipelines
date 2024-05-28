@@ -9,7 +9,7 @@ def checkm_table(checkm_table):
     
     df = pandas.read_csv(checkm_table, delimiter="\t", header=0)
     df = df[["Bin Id","Marker lineage","# markers", "Completeness","Contamination","Strain heterogeneity","0","1","2","3","4","5+"]]
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
@@ -46,7 +46,7 @@ def get_rrna_summary_table(raw_table,
     
     header = ["sample", "N.", "expected", "contig", "BBH_taxnonomy", "identity"]
     df = pandas.DataFrame(row_list, columns=header)
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
@@ -86,7 +86,7 @@ def get_centrifuge_table(centrifuge_links, sample2scientific_name):
         row_list.append(row)
     header = ["sample", "expected", "taxon 1", "% reads", "taxon 2", "% reads", "taxon 3", "% reads", "detail"]
     df = pandas.DataFrame(row_list, columns=header)
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
@@ -136,7 +136,7 @@ def get_mash_table(file_list, mash_detail, sample2scientific_name):
         row_list.append(row)
     header = ["sample", "expected", "score", "sketch", "description", "score", "sketch", "description","score", "sketch", "description", "detail"]
     df = pandas.DataFrame(row_list, columns=header)
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
@@ -164,7 +164,7 @@ def get_multiqc_table(assembly_multiqc=False,
     df = pandas.DataFrame(mq_table, columns=header)
 
     # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
@@ -276,7 +276,7 @@ def quality_table(low_cov_fastas,
         df = pandas.DataFrame(cov_table, columns=header)
 
         # cell content is truncated if colwidth not set to -1
-        pandas.set_option('display.max_colwidth', -1)
+        pandas.set_option('display.max_colwidth', 1)
 
         df_str = df.to_html(
             index=False,
@@ -314,7 +314,7 @@ def qualimap_table(qualimap_links, self_mapping=False):
     df = pandas.DataFrame(cov_table, columns=header)
 
     # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
@@ -354,7 +354,7 @@ def virulence_table(virulence_reports,
     df = pandas.DataFrame(vf_data, columns=header)
 
     # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
@@ -382,7 +382,7 @@ def resistance_table(resistance_reports):
 
 
     # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
@@ -496,7 +496,7 @@ def get_snp_detail_table(snp_link_list, indel_link_list):
     df = pandas.DataFrame(rows, columns=header)
 
     # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
