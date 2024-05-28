@@ -35,7 +35,7 @@ rule extract_assembly_mean_sd_coverage:
 # 
 rule filter_contigs_on_coverage:
     container:
-        singularity_envs["python_r"]
+        containers["python_r"]
     params:
         depth_cutoff = config["cov_cutoff"],
         length_cutoff = config["length_cutoff"]
@@ -57,7 +57,10 @@ rule extract_contigs_longer_than_500bp:
     output:
         "samples/{sample}/assembly/spades/contigs_500bp.fasta"
     shell:
-        "awk '/^>/{{print (NR==1)?$0: \"\\n\" $0;next}} {{printf \"%s\", $0}}END{{print \"\"}}' {input} |  awk \'!/^>/ {{ next }} {{ getline seq }} length(seq) >= 500 {{ print $0 \"\\n\" seq }}\'  > {output}"
+        """
+        awk '/^>/ {print (NR==1)?$0: "\\n" $0;next} {printf "%s", $0} END {print ""}' {input} | \
+        awk '!/^>/ { next } { getline seq } length(seq) >= 500 { print $0 "\\n" seq }' > {output}
+        """
 
 
 rule rename_contigs:
@@ -66,4 +69,6 @@ rule rename_contigs:
     output:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
     shell:
-        "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig_\\1/\" {input} > {output}"
+        """
+        sed "s/NODE_\\([0-9]\\+\\)_.*/contig_\\1/" {input} > {output}
+        """
