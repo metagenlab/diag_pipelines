@@ -1,8 +1,7 @@
 
 import pandas
 from Bio import SeqIO
-import report
-from Bio.SeqUtils import GC
+from Bio.SeqUtils import gc_fraction
 import io
 from docutils.core import publish_file, publish_parts
 
@@ -17,21 +16,21 @@ output_file = snakemake.output[0]
 def get_fasta_table(fasta_records):
     header = ["contig",
               "contig_length",
-              "gc content",
+              "gc_fraction content",
               "BLAST"]
 
     rows = []
     for record in records:
         rows.append([record.name,
                     len(record.seq),
-                    GC(record.seq),
+                    gc_fraction(record.seq),
                     '<a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?ALIGNMENT_VIEW=Pairwise&PROGRAM=blastn&DATABASE=nt&CMD=Put&QUERY=%s"> %s ...</a>' % (record.seq,
                                                   record.seq[0:80])])
 
     df = pandas.DataFrame(rows, columns=header)
 
     # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option('display.max_colwidth', 1)
 
     df_str = df.to_html(
         index=False,
