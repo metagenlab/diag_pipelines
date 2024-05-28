@@ -15,7 +15,7 @@ entrez-direct: docker://quay.io/biocontainers/entrez-direct:13.9--pl526h375a9b1_
 freebayes: docker://quay.io/biocontainers/freebayes:1.3.1--py37h56106d0_0
 gatk4: docker://quay.io/biocontainers/gatk4:4.1.4.0--0
 mash: docker://quay.io/biocontainers/mash:2.2.1--h3d38be6_0
-checkm: docker://metagenlab/checkm:1.0.20
+checkm: docker://quay.io/biocontainers/checkm-genome:1.2.2--pyhdfd78af_1
 mafft: docker://quay.io/biocontainers/mafft:7.407--hf484d3e_2
 fasttree: docker://quay.io/biocontainers/fasttree:2.1.10--h14c3975_3
 newick_utils: docker://quay.io/biocontainers/newick_utils:1.6--h470a237_2
