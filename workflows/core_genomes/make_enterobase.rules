@@ -1,7 +1,7 @@
 import pandas
 import yaml
 
-singularity_envs = yaml.safe_load(open(os.path.join(workflow.basedir,  "../../envs/singularity/envs.yml"), 'r'))
+containers = yaml.safe_load(open(os.path.join(workflow.basedir,  "../../envs/singularity/envs.yml"), 'r'))
 
 include:
     "../logging.rules"
@@ -22,8 +22,8 @@ rule get_schema_from_enterobase:
         """
 
 rule fetch_gene_entries_from_locus_tag:
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     conda:
         "../../envs/biopython.yml"
     input:
@@ -36,9 +36,9 @@ rule fetch_gene_entries_from_locus_tag:
         "../../rules/core_genome/scripts/parse_gff_extract_locus_tags.py"
 
 
-rule merbe_bed_file:
-    singularity:
-        singularity_envs["bedtools"]
+rule merge_bed_file:
+    container:
+        containers["bedtools"]
     conda:
         "../../envs/bedtools.yml"
     input:

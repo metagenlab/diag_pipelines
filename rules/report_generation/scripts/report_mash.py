@@ -1,23 +1,16 @@
-
 import pandas
 from Bio import SeqIO
-import report
-from Bio.SeqUtils import GC
 import io
-from docutils.core import publish_file, publish_parts
+from docutils.core import publish_file
 import re
 
 link = snakemake.input[0]
 output_file = snakemake.output[0]
 expected_genus = snakemake.params["expected_genus"]
 
+
 def get_mash_table(link):
-    header = ["score",
-              "sketch",
-               "n",
-              "e-value",
-              "accession",
-              "description"]
+    header = ["score", "sketch", "n", "e-value", "accession", "description"]
 
     table = pandas.read_csv(link, delimiter="\t", names=header)
     table = table.sort_values(table.columns[0], ascending=False)
@@ -29,22 +22,20 @@ def get_mash_table(link):
         accession = re.findall("(GCF_[0-9]*\.[0-9]+)_.*", row["accession"])[0]
         description = re.sub("\[[0-9]+ seqs\] ", "", row["description"])
 
-
-        data = [score,
-                sketch,
-                evalue,
-                '<a href="https://www.ncbi.nlm.nih.gov/assembly/%s/">%s</a>' % (accession, accession),
-                ' '.join(description.split(" ")[1:])[0:80]]
+        data = [
+            score,
+            sketch,
+            evalue,
+            '<a href="https://www.ncbi.nlm.nih.gov/assembly/%s/">%s</a>'
+            % (accession, accession),
+            " ".join(description.split(" ")[1:])[0:80],
+        ]
         rows.append(data)
-    header = ["score",
-              "sketch",
-              "e-value",
-              "accession",
-              "description"]
+    header = ["score", "sketch", "e-value", "accession", "description"]
     df = pandas.DataFrame(rows, columns=header)
 
     # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option("display.max_colwidth", 1)
 
     df_str = df.to_html(
         index=False,
@@ -52,7 +43,8 @@ def get_mash_table(link):
         classes=["dataTable"],
         table_id="mash_table",
         escape=False,
-        border=0)
+        border=0,
+    )
 
     return df_str.replace("\n", "\n" + 10 * " ")
 
@@ -69,7 +61,8 @@ STYLE = """
     </style>
     """
 
-SCRIPT = """
+SCRIPT = (
+    """
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -113,9 +106,9 @@ SCRIPT = """
     } );
     </script>
 
-    """ % expected_genus
-
-
+    """
+    % expected_genus
+)
 
 
 contig_table = get_mash_table(link)

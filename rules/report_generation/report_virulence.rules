@@ -8,8 +8,8 @@ if "virulence" in sys.argv:
         rule report_virulence:
             conda:
                 "../../envs/python-r.yml"
-            singularity:
-                singularity_envs["python_r"]
+            container:
+                containers["python_r"]
             input:
                 qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
                 multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
@@ -19,14 +19,14 @@ if "virulence" in sys.argv:
                 contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
                 sample=read_naming.keys()),
                 low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
-		high_cov_fastgs = expand("samples/{sample}/assembly/spades/assembly_graph.fastg", sample=read_naming.keys()),
+                high_cov_fastgs = expand("samples/{sample}/assembly/spades/assembly_graph.fastg", sample=read_naming.keys()),
                 mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated.tsv', sample=read_naming.keys()),
                 mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
                 custom_virulence = expand("report/virulence/custom/{sample}_report.html", sample=read_naming.keys()),
                 custom_virulence_fasta = expand("samples/{sample}/virulence/proteins.fasta", sample=read_naming.keys()),
                 centrifuge_tables = expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
-		rrna_classification_file = "report/contamination/markers/rrna/summary.txt",
-		checkm_table = "report/contamination/checkm/checkm_qualty.tab"
+                rrna_classification_file = "report/contamination/markers/rrna/summary.txt",
+                checkm_table = "report/contamination/checkm/checkm_qualty.tab"
             params:
                 samples = list(read_naming.keys()),
                 sample_table = all_samples,
@@ -40,23 +40,23 @@ if "virulence" in sys.argv:
         rule report_virulence:
             conda:
                 "../../envs/python-r.yml"
-            singularity:
-                singularity_envs["python_r"]
+            container:
+                containers["python_r"]
             input:
                 qualimap_reports = expand("report/qualimap/{sample}/bwa/{sample}_assembled_genome/qualimapReport.html", sample=read_naming.keys()),
                 multiqc_assembly = "report/multiqc_assembly/multiqc_report.html",
                 virulence_reports = expand("report/virulence/VFDB/{sample}_report.html", sample=read_naming.keys()),
                 blast_results = expand("samples/{sample}/virulence/VFDB_results_blast.tsv", sample = read_naming.keys()),
                 low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-		high_cov_fastgs = expand("samples/{sample}/assembly/spades/assembly_graph.fastg", sample=read_naming.keys()),
+                high_cov_fastgs = expand("samples/{sample}/assembly/spades/assembly_graph.fastg", sample=read_naming.keys()),
                 contig_gc_depth_file_list = expand("samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",
                 sample=read_naming.keys()),
                 low_cov_detail = expand("report/contamination/low_coverage_contigs/{sample}.html", sample=read_naming.keys()),
                 mash_results = expand('samples/{sample}/contamination/mash/assembly/distances_formated.tsv', sample=read_naming.keys()),
                 mash_detail = expand("report/contamination/mash/assembly/{sample}.html", sample=read_naming.keys()),
                 centrifuge_tables = expand("report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt", sample=read_naming.keys()),
-		rrna_classification_file = "report/contamination/markers/rrna/summary.txt",
-		checkm_table = "report/contamination/checkm/checkm_qualty.tab"
+                rrna_classification_file = "report/contamination/markers/rrna/summary.txt",
+                checkm_table = "report/contamination/checkm/checkm_qualty.tab"
             params:
                 samples = list(read_naming.keys()),
                 sample_table = all_samples

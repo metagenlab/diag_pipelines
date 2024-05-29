@@ -1,7 +1,7 @@
 
 rule combine_all_customdb_MTB:
-    singularity:
-        singularity_envs["pyvcf"]
+    container:
+        containers["pyvcf"]
     input:
         all_custom_db = expand("samples/{sample}/resistance/{{bwa_or_stringent}}/{{db}}/mutations.vcf", sample = read_naming.keys()),
         resistance_genes = "resistance_db/Mycobacterium_tuberculosis/metadata/resistance_genes.tsv"
@@ -12,8 +12,8 @@ rule combine_all_customdb_MTB:
         
 
 rule frequency_customdb_MTB:
-    singularity:
-        singularity_envs["pyvcf"]
+    container:
+        containers["pyvcf"]
     input:
         all_custom_db = expand("samples/{sample}/resistance/{{bwa_or_stringent}}/{{db}}/mutations.vcf", sample = read_naming.keys()),
         resistance_genes = "resistance_db/Mycobacterium_tuberculosis/metadata/resistance_genes.tsv"

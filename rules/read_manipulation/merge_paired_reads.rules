@@ -2,8 +2,8 @@
 rule merge_reads_with_flash:
     conda:
         "../../envs/flash.yml"
-    singularity:
-        singularity_envs["flash"]
+    container:
+        containers["flash"]
     input:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"

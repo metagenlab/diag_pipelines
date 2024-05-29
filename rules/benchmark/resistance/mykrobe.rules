@@ -1,7 +1,7 @@
 
 rule combine_all_mykrobe:
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         all_mykrobe = expand("samples/{sample}/resistance/mykrobe_{sample}.csv", sample = read_naming.keys())
     output:
@@ -11,8 +11,8 @@ rule combine_all_mykrobe:
 
 
 rule mykrobe_variant_frequency:
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         all_mykrobe = expand("samples/{sample}/resistance/mykrobe_{sample}.csv", sample = read_naming.keys())
     output:

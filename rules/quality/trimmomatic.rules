@@ -3,13 +3,13 @@ ruleorder: trim_paired_reads_with_trimmomatic > trim_single_reads_with_trimmomat
 rule trim_paired_reads_with_trimmomatic:
     conda:
         "../../envs/trimmomatic.yml"
-    singularity:
-        singularity_envs["trimmomatic"]        
+    container:
+        containers["trimmomatic"]        
     input:
         "samples/{sample}/reads/raw/{sample}_R1.fastq.gz",
         "samples/{sample}/reads/raw/{sample}_R2.fastq.gz"
     params:
-        conda_path = workflow.conda_prefix,
+        conda_path = workflow.deployment_settings.conda_prefix,
         minlength = config["minimum_read_length"],
         minqual = config["minimum_quality_base"],
         adapter_file_name = config["adapter_file_name"],
@@ -37,12 +37,12 @@ rule trim_paired_reads_with_trimmomatic:
 rule trim_single_reads_with_trimmomatic:
     conda:
         "../../envs/trimmomatic.yml"
-    singularity:
-        singularity_envs["trimmomatic"]
+    container:
+        containers["trimmomatic"]
     input:
         "samples/{sample}/reads/raw/single_{sample}.fastq.gz"
     params:
-        conda_path = workflow.conda_prefix,
+        conda_path = workflow.deployment_settings.conda_prefix,
         minlength = config["minimum_read_length"],
         minqual = config["minimum_quality_base"],
         adapter_file_name = config["adapter_file_name"],

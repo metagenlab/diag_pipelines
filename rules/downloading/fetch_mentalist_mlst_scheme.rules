@@ -1,8 +1,8 @@
 rule get_mentalist_mlst_scheme:
     conda:
         "../../envs/mentalist.yml"
-    singularity:
-        singularity_envs["mentalist"]
+    container:
+        containers["mentalist"]
     params:
         species_name=lambda wildcards: str(wildcards.species).replace("_", " "),
     output:

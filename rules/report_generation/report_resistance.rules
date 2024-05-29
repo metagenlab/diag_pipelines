@@ -37,10 +37,8 @@ def resistance_input(wildcards):
 if "resistance" in sys.argv:
 
     rule report_resistance:
-        conda:
-            singularity_envs["python_r"]
-        singularity:
-            "docker://metagenlab/diag-pipeline-python-r:1.1"
+        container:
+            containers["python_r"]
         input:
             unpack(resistance_input)
         params:
@@ -54,8 +52,8 @@ if "resistance" in sys.argv:
 
 
 rule resistance_detailed_table:
-    singularity:
-        singularity_envs["python_r"]   
+    container:
+        containers["python_r"]   
     input:
         res_files=expand("samples/{sample}/resistance/combined_{sample}.tsv", sample=read_naming.keys()),
     output:

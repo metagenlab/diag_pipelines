@@ -1,28 +1,9 @@
 
-'''
-rule search_resistance_with_rgi_contigs:
-    conda:
-        "../../../envs/rgi.yml"
-    singularity:
-        singularity_envs["rgi"]
-    threads:
-        4
-    input:
-        "samples/{sample}/annotation/{sample}.fna"
-    output:
-        "samples/{sample}/resistance/rgi_{sample}.json"
-    shell:
-        """
-        # new version
-        rgi main -t contig -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi_{wildcards.sample}
-        """
-'''
-
 rule search_resistance_with_rgi_faa:
     conda:
         "../../../envs/rgi.yml"
-    singularity:
-        singularity_envs["rgi"]
+    container:
+        containers["rgi"]
     threads:
         4
     input:
@@ -31,15 +12,14 @@ rule search_resistance_with_rgi_faa:
         "samples/{sample}/resistance/rgi_{sample}.json"
     shell:
         """
-        # new version
         rgi main -t protein -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi_{wildcards.sample}
         """
 
 rule generate_rgi_tsv_file_from_json_file:
     conda:
         "../../../envs/rgi.yml"
-    singularity:
-        singularity_envs["rgi"]
+    container:
+        containers["rgi"]
     input:
         "samples/{sample}/resistance/rgi_{sample}.json"
     output:
@@ -55,8 +35,8 @@ rule format_rgi_tsv:
     '''
     add start, stop nucleotide sequence to table
     '''
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         gbk = "samples/{sample}/annotation/{sample}.gbff",
         rgi_out = "samples/{sample}/resistance/rgi_{sample}_raw.tsv",
@@ -73,8 +53,8 @@ rule format_rgi_tsv:
 rule plot_rgi:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         rgi_files=expand("samples/{sample}/resistance/combined_{sample}.tsv", sample=read_naming.keys()),
     params:
@@ -89,8 +69,8 @@ rule plot_rgi:
 rule generate_rgi_BLDB_html_report:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         combined_tsv_output="samples/{sample}/resistance/combined_{sample}.tsv",
         contig_gc_depth_file="samples/{sample}/quality/mapping/bwa/{sample}_assembled_genome/contig_gc_depth_500bp_high_coverage.tab",

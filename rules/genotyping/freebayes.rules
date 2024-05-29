@@ -1,8 +1,8 @@
 rule genotype_with_freebayes_on_all_samples:
     conda:
         "../../envs/freebayes.yml"
-    singularity:
-        singularity_envs["freebayes"]
+    container:
+        containers["freebayes"]
     threads:
         4
     input:
@@ -24,8 +24,8 @@ rule genotype_with_freebayes_on_all_samples:
 rule genotype_with_freebayes_one_sample_second_pass:
     conda:
         "../../envs/freebayes.yml"
-    singularity:
-        singularity_envs["freebayes"]
+    container:
+        containers["freebayes"]
     input:
         bam = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam",
         bai = "samples/{sample}/mapping/{mapping_method}/{ref}/deduplicated_filtered.bam.bai",

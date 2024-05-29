@@ -1,6 +1,6 @@
 rule determine_spa:
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         fasta = "samples/{sample}/annotation/{sample}.fsa",
         spa_repeats = "../../data/spa/sparepeats.fasta",

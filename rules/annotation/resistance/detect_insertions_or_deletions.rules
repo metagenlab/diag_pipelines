@@ -1,8 +1,8 @@
 rule extract_coverage_from_bed:
     conda:
         "../../../envs/bedtools.yml"
-    singularity:
-        singularity_envs["bedtools"]
+    container:
+        containers["bedtools"]
     input:
         mapping = "samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam",
         bed = "resistance/annotations/{gene}.bed"
@@ -16,8 +16,8 @@ rule extract_coverage_from_bed:
 rule create_bed_from_gene:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
-       singularity_envs["python_r"]
+    container:
+       containers["python_r"]
     params:
         up_down = upstream_downstream
     input:
@@ -32,8 +32,8 @@ rule create_bed_from_gene:
 rule plot_coverage_over_gene_and_flanking:
     conda:
         "../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     params:
         up_down = upstream_downstream 
     input:
@@ -49,8 +49,8 @@ rule extract_insert_size_over_gene_and_flanking:
         up_down = upstream_downstream
     conda:
         "../../envs/samtools.yml"
-    singularity:
-        singularity_envs["bwa_samtools"]
+    container:
+        containers["bwa_samtools"]
     input:
         mapping = "samples/{sample}/mapping/bwa/{ref}_deduplicated_filtered.bam",
         bed = "resistance/annotations/{gene}.bed",
@@ -66,8 +66,8 @@ rule extract_insert_size_over_gene_and_flanking:
 rule plot_insert_size_over_gene_and_flanking:
     conda:
         "../../envs/python-r.yml"
-    singularity:
-       singularity_envs["python_r"]
+    container:
+       containers["python_r"]
     params:
         up_down = upstream_downstream 
     input:

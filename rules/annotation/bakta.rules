@@ -15,8 +15,8 @@ def get_species(wildcards):
 
 
 rule annotate_with_bakta:
-    singularity:
-        singularity_envs["bakta"]
+    container:
+        containers["bakta"]
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta",
     threads: 8
@@ -41,8 +41,8 @@ rule annotate_with_bakta:
         """
 
 rule get_plasmids_platon:
-    singularity:
-        singularity_envs["platon"]
+    container:
+        containers["platon"]
     input:
         contigs = "samples/{sample}/assembly/spades/coverage_filtered/bwa/contigs_500bp_high_coverage.fasta",
     params:
@@ -57,12 +57,12 @@ rule get_plasmids_platon:
         """
 
 rule annotate_with_bakta_unfiltered_assembly:
-    singularity:
-        singularity_envs["bakta"]
+    container:
+        containers["bakta"]
     input:
         contigs = "samples/{sample}/assembly/spades_no_correction/contigs.fasta",
     params:
-	    database = "/data/databases/baktadb/db",
+	    database = config["bakta_db"],
     output:
         "samples/{sample}/annotation/spades_no_correction/{sample}.fsa"
     threads: 8
@@ -81,8 +81,8 @@ rule annotate_with_bakta_unfiltered_assembly:
 rule create_blast_database_from_protein_sequences:
     conda:
         "../../envs/blast.yml"
-    singularity:
-        singularity_envs["blast"]
+    container:
+        containers["blast"]
     input:
         proteins = "samples/{sample}/annotation/{sample}.faa",
     output:
@@ -95,8 +95,8 @@ rule create_blast_database_from_protein_sequences:
 rule create_blast_database_from_contig_sequences:
     conda:
         "../../envs/blast.yml"
-    singularity:
-        singularity_envs["blast"]
+    container:
+        containers["blast"]
     input:
         contigs = "samples/{sample}/annotation/{sample}.fna",
     output:
@@ -109,8 +109,8 @@ rule create_blast_database_from_contig_sequences:
 rule remove_fasta_part_from_gff:
     conda:
         "../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         "samples/{sample}/annotation/{sample}.gff3"
     output:
@@ -121,8 +121,8 @@ rule remove_fasta_part_from_gff:
 rule get_CDS_and_contigs_depth:
     conda:
         "../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
         "samples/{sample}/annotation/{sample}.gbff",

@@ -34,8 +34,8 @@ rule extract_assembly_mean_sd_coverage:
 
 # 
 rule filter_contigs_on_coverage:
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     params:
         depth_cutoff = config["cov_cutoff"],
         length_cutoff = config["length_cutoff"]
@@ -49,18 +49,7 @@ rule filter_contigs_on_coverage:
         logging_folder+"contig_filtering/{mapping_method}/{sample}.log"
     script: "scripts/filter_contigs.py"
 
-'''
-rule prepare_low_coverage_contigs_report:
-    conda:
-        "../../envs/report.yml"
-    input:
-        low_depth_contigs = expand('')
-        assembly_depth = expand('samples/{sample}/quality/assembly_coverage.txt', sample=reads_naming.keys())
-    output:
-        low_cov_fastas = expand("samples/{sample}/assembly/spades/coverage_filtered/contigs_500bp_low_coverage.fasta", sample=read_naming.keys()),
-    script:
-        "script/report_lowcov_contigs.py"
-'''
+
 
 rule extract_contigs_longer_than_500bp:
     input:
@@ -68,7 +57,10 @@ rule extract_contigs_longer_than_500bp:
     output:
         "samples/{sample}/assembly/spades/contigs_500bp.fasta"
     shell:
-        "awk '/^>/{{print (NR==1)?$0: \"\\n\" $0;next}} {{printf \"%s\", $0}}END{{print \"\"}}' {input} |  awk \'!/^>/ {{ next }} {{ getline seq }} length(seq) >= 500 {{ print $0 \"\\n\" seq }}\'  > {output}"
+        """
+        awk '/^>/ {{print (NR==1)?$0: "\\n" $0;next}} {{printf "%s", $0}} END {{print ""}}' {input} | \
+        awk '!/^>/ {{ next }} {{ getline seq }} length(seq) >= 500 {{ print $0 "\\n" seq }}' > {output}
+        """
 
 
 rule rename_contigs:
@@ -77,4 +69,6 @@ rule rename_contigs:
     output:
         "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta"
     shell:
-        "sed \"s/NODE_\\([0-9]\\+\\)_.*/contig_\\1/\" {input} > {output}"
+        """
+        sed "s/NODE_\\([0-9]\\+\\)_.*/contig_\\1/" {input} > {output}
+        """

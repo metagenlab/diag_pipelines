@@ -1,8 +1,8 @@
 rule convert_tsv_to_xlsx:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         tsv = "samples/{sample}/resistance/{software}_{sample}.tsv",
     output:
@@ -14,8 +14,8 @@ rule convert_tsv_to_xlsx:
 rule convert_csv_to_xlsx:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         tsv = "samples/{sample}/resistance/{software}_{sample}.csv",
     output:
@@ -28,8 +28,8 @@ rule convert_csv_to_xlsx:
 rule merge_rgi_or_mykrobe_xlsx:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         xlsx = expand("samples/{sample}/resistance/{{software}}_{sample}.xlsx", sample=read_naming.keys())
     output:
@@ -40,8 +40,8 @@ rule merge_rgi_or_mykrobe_xlsx:
 rule merge_rgi_ontology_xlsx:
     conda:
         "../../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         xlsx = expand("samples/{sample}/resistance/rgi_ontology.xlsx", sample=read_naming.keys())
     output:

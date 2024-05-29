@@ -1,6 +1,6 @@
 pipeline_path = workflow.basedir + "/../../"
 
-singularity_envs = yaml.safe_load(open(os.path.join(workflow.basedir,  "../../envs/singularity/envs.yml"), 'r'))
+containers = yaml.safe_load(open(os.path.join(workflow.basedir,  "../../envs/singularity/envs.yml"), 'r'))
 
 include:
     "../logging.rules"

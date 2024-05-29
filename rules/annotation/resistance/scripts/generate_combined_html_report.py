@@ -1,4 +1,3 @@
-
 import pandas
 import re
 import numpy
@@ -15,9 +14,9 @@ sample = snakemake.params[0]
 # output
 report_file = snakemake.output[0]
 
-rgi_table = pandas.read_csv(rgi_tsv_output,
-                            delimiter='\t',
-                            header=0, index_col="ORF_ID")
+rgi_table = pandas.read_csv(
+    rgi_tsv_output, delimiter="\t", header=0, index_col="ORF_ID"
+)
 
 # parse rgi output file
 contig2resistances = {}
@@ -29,36 +28,43 @@ for ORF_ID, row in rgi_table.iterrows():
         contig2resistances[contig].append(row["Best_hit"])
 
 # get contig depth and GC
-contig2gc_content = pandas.read_csv(contig_gc_depth_file,
-                                    delimiter='\t',
-                                    header=0).set_index("contig").to_dict()["gc_content"]
+contig2gc_content = (
+    pandas.read_csv(contig_gc_depth_file, delimiter="\t", header=0)
+    .set_index("contig")
+    .to_dict()["gc_content"]
+)
 
-contig2median_depth = pandas.read_csv(contig_gc_depth_file,
-                                      delimiter='\t',
-                                      header=0).set_index("contig").to_dict()["median_depth"]
+contig2median_depth = (
+    pandas.read_csv(contig_gc_depth_file, delimiter="\t", header=0)
+    .set_index("contig")
+    .to_dict()["median_depth"]
+)
 
-contig2size = pandas.read_csv(contig_gc_depth_file,
-                              delimiter='\t',
-                              header=0).set_index("contig").to_dict()["contig_size"]
+contig2size = (
+    pandas.read_csv(contig_gc_depth_file, delimiter="\t", header=0)
+    .set_index("contig")
+    .to_dict()["contig_size"]
+)
+
 
 def parse_smatools_depth(samtools_depth):
     import pandas
-    with open(samtools_depth, 'r') as f:
-        table = pandas.read_csv(f, sep='\t', header=None, index_col=0)
+
+    with open(samtools_depth, "r") as f:
+        table = pandas.read_csv(f, sep="\t", header=None, index_col=0)
     return table
 
-def make_div(figure_or_data,
-             include_plotlyjs=False,
-             show_link=False,
-             div_id=None):
+
+def make_div(figure_or_data, include_plotlyjs=False, show_link=False, div_id=None):
 
     from plotly import offline
 
-    div = offline.plot(figure_or_data,
-                       include_plotlyjs=include_plotlyjs,
-                       show_link=show_link,
-                       output_type="div",
-                       )
+    div = offline.plot(
+        figure_or_data,
+        include_plotlyjs=include_plotlyjs,
+        show_link=show_link,
+        output_type="div",
+    )
     if ".then(function ()" in div:
         div = f"""{div.partition(".then(function ()")[0]}</script>"""
     if div_id:
@@ -72,9 +78,7 @@ def make_div(figure_or_data,
     return div
 
 
-def get_gc_coverage_data(contig2gc_content,
-                         contig2resistances,
-                         contig2size):
+def get_gc_coverage_data(contig2gc_content, contig2resistances, contig2size):
     import math
 
     bubble_data = {}
@@ -94,17 +98,23 @@ def get_gc_coverage_data(contig2gc_content,
         depth = contig2median_depth[contig]
         gc = contig2gc_content[contig]
         if contig in contig2resistances:
-            bubble_data["with_resistance"]["hover_text"].append("%s (%sbp): %s" % (contig,
-                                                                                   contig2size[contig],
-                                                                                   ','.join(contig2resistances[contig])))
-            bubble_data["with_resistance"]["contig_size"].append(float(contig2size[contig]) + 10000)
+            bubble_data["with_resistance"]["hover_text"].append(
+                "%s (%sbp): %s"
+                % (contig, contig2size[contig], ",".join(contig2resistances[contig]))
+            )
+            bubble_data["with_resistance"]["contig_size"].append(
+                float(contig2size[contig]) + 10000
+            )
             bubble_data["with_resistance"]["GC"].append(gc)
             bubble_data["with_resistance"]["depth"].append(depth)
 
         else:
-            bubble_data["without_resistance"]["hover_text"].append("%s (%sbp)" % (contig,
-                                                                                  contig2size[contig]))
-            bubble_data["without_resistance"]["contig_size"].append(float(contig2size[contig]) + 10000)
+            bubble_data["without_resistance"]["hover_text"].append(
+                "%s (%sbp)" % (contig, contig2size[contig])
+            )
+            bubble_data["without_resistance"]["contig_size"].append(
+                float(contig2size[contig]) + 10000
+            )
             bubble_data["without_resistance"]["GC"].append(gc)
             bubble_data["without_resistance"]["depth"].append(depth)
 
@@ -117,75 +127,88 @@ def bubble_plot_gc_depth(bubble_data):
     import pandas as pd
     import math
 
-    trace0 = go.Scatter(x=bubble_data["with_resistance"]["GC"],
-                        y=bubble_data["with_resistance"]["depth"],
-                        mode='markers',
-                        name='With resistance(s)',
-                        text=bubble_data["with_resistance"]["hover_text"],
-                        marker=dict(symbol='circle',
-                                    sizemode='area',
-                                    sizeref=2.*max(bubble_data["without_resistance"]["contig_size"])/(40.**2),
-                                    size=bubble_data["with_resistance"]["contig_size"],
-                                    line=dict(width=2),
-                                    )
-                        )
+    trace0 = go.Scatter(
+        x=bubble_data["with_resistance"]["GC"],
+        y=bubble_data["with_resistance"]["depth"],
+        mode="markers",
+        name="With resistance(s)",
+        text=bubble_data["with_resistance"]["hover_text"],
+        marker=dict(
+            symbol="circle",
+            sizemode="area",
+            sizeref=2.0
+            * max(bubble_data["without_resistance"]["contig_size"])
+            / (40.0**2),
+            size=bubble_data["with_resistance"]["contig_size"],
+            line=dict(width=2),
+        ),
+    )
 
-    trace1 = go.Scatter(x=bubble_data["without_resistance"]["GC"],
-                        y=bubble_data["without_resistance"]["depth"],
-                        mode='markers',
-                        name='Without resistance',
-                        text=bubble_data["without_resistance"]["hover_text"],
-                        marker=dict(symbol='circle',
-                                    sizemode='area',
-                                    sizeref=2.*max(bubble_data["without_resistance"]["contig_size"])/(40.**2),
-                                    size=bubble_data["without_resistance"]["contig_size"],
-                                    line=dict(width=2),
-                                    )
-                        )
+    trace1 = go.Scatter(
+        x=bubble_data["without_resistance"]["GC"],
+        y=bubble_data["without_resistance"]["depth"],
+        mode="markers",
+        name="Without resistance",
+        text=bubble_data["without_resistance"]["hover_text"],
+        marker=dict(
+            symbol="circle",
+            sizemode="area",
+            sizeref=2.0
+            * max(bubble_data["without_resistance"]["contig_size"])
+            / (40.0**2),
+            size=bubble_data["without_resistance"]["contig_size"],
+            line=dict(width=2),
+        ),
+    )
     data = [trace0, trace1]
-    layout = go.Layout(title='GC vs sequencing Depth plot',
-                       width=1000,
-                       height=700,
-                       xaxis=dict(title='GC (%)',
-                                  gridcolor='rgb(255, 255, 255)',
-                                  # range=[2.003297660701705, 5.191505530708712],
-                                  zerolinewidth=1,
-                                  ticklen=5,
-                                  gridwidth=2,
-                                  ),
-                       yaxis=dict(title='Depth',
-                                  gridcolor='rgb(255, 255, 255)',
-                                  # range=[36.12621671352166, 91.72921793264332],
-                                  zerolinewidth=1,
-                                  ticklen=5,
-                                  gridwidth=2,
-                                  ),
-                       paper_bgcolor='rgb(243, 243, 243)',
-                       plot_bgcolor='rgb(243, 243, 243)',
-                       )
+    layout = go.Layout(
+        title="GC vs sequencing Depth plot",
+        width=1000,
+        height=700,
+        xaxis=dict(
+            title="GC (%)",
+            gridcolor="rgb(255, 255, 255)",
+            # range=[2.003297660701705, 5.191505530708712],
+            zerolinewidth=1,
+            ticklen=5,
+            gridwidth=2,
+        ),
+        yaxis=dict(
+            title="Depth",
+            gridcolor="rgb(255, 255, 255)",
+            # range=[36.12621671352166, 91.72921793264332],
+            zerolinewidth=1,
+            ticklen=5,
+            gridwidth=2,
+        ),
+        paper_bgcolor="rgb(243, 243, 243)",
+        plot_bgcolor="rgb(243, 243, 243)",
+    )
     fig = go.Figure(data=data, layout=layout)
 
-    return (make_div(fig, div_id="bubble_plot"))
+    return make_div(fig, div_id="bubble_plot")
 
 
 def resistance_table(rgi_table):
 
     import numpy
 
-    header = ["Contig",
-              "ORF",
-              "Source",
-              "ARO",
-              "Model Type",
-              "Variant",
-              "Cov (%)",
-              "Identity (%)",
-              "Score",
-              "Score cutoff",
-              "Family",
-              "Mechanism",
-              "Resistance",
-              "Depth"]
+    header = [
+        "Contig",
+        "ORF",
+        "Source",
+        "ARO",
+        "Model Type",
+        "Variant",
+        "Cov (%)",
+        "Identity (%)",
+        "Score",
+        "Score cutoff",
+        "Family",
+        "Mechanism",
+        "Resistance",
+        "Depth",
+    ]
 
     table_rows = []
     for ORF_ID, one_resistance in rgi_table.iterrows():
@@ -205,40 +228,44 @@ def resistance_table(rgi_table):
         snps = one_resistance["SNPs"]
         model = one_resistance["Model_type"]
         family = one_resistance["AMR_family"]
-        #antibio_res_list = list(ontology_table[ontology_table['Name'] == name]["Antibiotic resistance prediction"])
+        # antibio_res_list = list(ontology_table[ontology_table['Name'] == name]["Antibiotic resistance prediction"])
         if isinstance(one_resistance["Drug_class"], str):
             antibio_res_class_list = one_resistance["Drug_class"].split("; ")
         else:
-            antibio_res_class_list = 'n/a'
+            antibio_res_class_list = "n/a"
 
-        resistance_code = ''
+        resistance_code = ""
         for resistance_class in antibio_res_class_list:
             # print(resistance, resistance_class)
-            resistance_code += '%s</br>' % (resistance_class)
+            resistance_code += "%s</br>" % (resistance_class)
 
-        if db_source == 'CARD':
+        if db_source == "CARD":
             aro_cell = '<a href="https://card.mcmaster.ca/aro/%s">%s</a>' % (aro, name)
         else:
             aro_cell = '%s (<a href="http://bldb.eu/Enzymes.php">BLDB</a>)' % name
-        table_rows.append([contig,
-                           ORF_ID,
-                           db_source,
-                           aro_cell,
-                           model,
-                           snps,
-                           cov,
-                           identity,
-                           bitscore,
-                           pass_bitscore,
-                           family,
-                           mechanism,
-                           resistance_code,
-                           gene_depth])
+        table_rows.append(
+            [
+                contig,
+                ORF_ID,
+                db_source,
+                aro_cell,
+                model,
+                snps,
+                cov,
+                identity,
+                bitscore,
+                pass_bitscore,
+                family,
+                mechanism,
+                resistance_code,
+                gene_depth,
+            ]
+        )
 
     df = pandas.DataFrame(table_rows, columns=header)
 
     # cell content is truncated if colwidth not set to -1
-    pandas.set_option('display.max_colwidth', -1)
+    pandas.set_option("display.max_colwidth", 1)
 
     df_str = df.to_html(
         index=False,
@@ -246,7 +273,8 @@ def resistance_table(rgi_table):
         classes=["dataTable"],
         table_id="res_table",
         escape=False,
-        border=0)
+        border=0,
+    )
 
     return df_str.replace("\n", "\n" + 10 * " ")
 
@@ -302,22 +330,24 @@ SCRIPT = """
     """
 
 
-def write_report(output_file,
-                 STYLE,
-                 SCRIPT,
-                 table_rgi,
-                 bubble_plot,
-                 samtools_median_depth,
-                 samtools_mean_depth):
+def write_report(
+    output_file,
+    STYLE,
+    SCRIPT,
+    table_rgi,
+    bubble_plot,
+    samtools_median_depth,
+    samtools_mean_depth,
+):
 
     import io
     from docutils.core import publish_file, publish_parts
     from docutils.parsers.rst import directives
 
     if samtools_median_depth < 50:
-        warning_type = 'danger'
+        warning_type = "danger"
     else:
-        warning_type = 'info'
+        warning_type = "info"
 
     report_str = f"""
 
@@ -372,9 +402,7 @@ Table
         )
 
 
-plot_data = get_gc_coverage_data(contig2gc_content,
-                                 contig2resistances,
-                                 contig2size)
+plot_data = get_gc_coverage_data(contig2gc_content, contig2resistances, contig2size)
 
 bubble_plot = bubble_plot_gc_depth(plot_data)
 
@@ -385,10 +413,12 @@ samtools_median_depth = round(numpy.median(samtools_depth_df.iloc[:, 1]), 0)
 
 rgi_table = resistance_table(rgi_table)
 
-write_report(report_file,
-             STYLE,
-             SCRIPT,
-             rgi_table,
-             bubble_plot,
-             samtools_mean_depth,
-             samtools_median_depth)
+write_report(
+    report_file,
+    STYLE,
+    SCRIPT,
+    rgi_table,
+    bubble_plot,
+    samtools_mean_depth,
+    samtools_median_depth,
+)

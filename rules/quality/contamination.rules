@@ -4,8 +4,8 @@ ruleorder: calculate_distance_paired_reads_from_refseq_genomes_with_mash > calcu
 rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
     conda:
         "../../envs/mash.yml"
-    singularity:
-        singularity_envs["mash"]
+    container:
+        containers["mash"]
     threads:
         2
     input:
@@ -26,8 +26,8 @@ rule calculate_distance_assembly_from_refseq_genomes_with_mash:
         2
     conda:
         "../../envs/mash.yml"
-    singularity:
-        singularity_envs["mash"]
+    container:
+        containers["mash"]
     input:
         mash_sketch = "references/mash_sketch.msh",
         assembly = "samples/{sample}/assembly/spades/contigs_500bp_renamed.fasta",
@@ -45,8 +45,8 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
         2
     conda:
         "../../envs/mash.yml"
-    singularity:
-        singularity_envs["mash"]
+    container:
+        containers["mash"]
     input:
         mash_sketch = "references/mash_sketch.msh",
         single = "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
@@ -62,8 +62,8 @@ rule calculate_distance_single_reads_from_refseq_genomes_with_mash:
 rule get_taxonomy_from_mash_results:
     conda:
         "../../envs/entrez-direct.yml"
-    singularity:
-        singularity_envs["entrez-direct"]
+    container:
+        containers["entrez-direct"]
     input:
         distances = "samples/{sample}/contamination/mash/{fastq_or_assembly}/distances.tsv"
     output:
@@ -90,8 +90,8 @@ rule format_distances_from_mash_results:
 rule format_tsv_to_xlsx_mash_results:
     conda:
         "../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         tsv = "samples/{sample}/contamination/mash/{fastq_or_assembly}/{results}.tsv",
     output:
@@ -103,8 +103,8 @@ rule format_tsv_to_xlsx_mash_results:
 rule merge_all_xlsx_mash_results:
     conda:
         "../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         xlsx = expand("samples/{sample}/contamination/mash/{{fastq_or_assembly}}/{{results}}.xlsx", sample=read_naming.keys())
     output:
@@ -121,8 +121,8 @@ rule paired_reads_classification_with_centrifuge:
         2
     conda:
         "../../envs/centrifuge.yml"
-    singularity:
-        singularity_envs["centrifuge"]
+    container:
+        containers["centrifuge"]
     input:
         R1_trimmed = "samples/{sample}/reads/trimmed/R1_paired.fastq",
         R2_trimmed = "samples/{sample}/reads/trimmed/R2_paired.fastq",
@@ -140,8 +140,8 @@ rule single_reads_classification_with_centrifuge:
     threads:
         2
     conda:
-        singularity_envs["centrifuge"]
-    singularity:
+        containers["centrifuge"]
+    container:
         "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
     input:
         single = "samples/{sample}/reads/raw/single_{sample}.fastq.gz",
@@ -159,9 +159,9 @@ rule convert_centrifuge_to_kraken_output:
     threads:
         2
     conda:
-        singularity_envs["centrifuge"]
-    singularity:
-        "docker://quay.io/biocontainers/centrifuge:1.0.4_beta--he860b03_3"
+        "../../envs/centrifuge.yml"
+    container:
+        containers["centrifuge"]
     input:
         detail = "samples/{sample}/contamination/centrifuge/results.tsv",
         database = "references/centrifuge_db/p_compressed+h+v.1.cf"
@@ -176,8 +176,8 @@ rule convert_centrifuge_to_kraken_output:
 rule format_centrifuge_kraken:
     conda:
         "../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         report = "report/contamination/centrifuge/{sample}/centrifuge_kraken_format.txt",
     output:
@@ -188,8 +188,8 @@ rule format_centrifuge_kraken:
 rule format_centrifuge_output:
     conda:
         "../../envs/python-r.yml"
-    singularity:
-        singularity_envs["python_r"]
+    container:
+        containers["python_r"]
     input:
         report = "samples/{sample}/contamination/centrifuge/report.tsv",
         detail = "samples/{sample}/contamination/centrifuge/results.tsv",

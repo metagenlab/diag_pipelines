@@ -3,7 +3,7 @@
 rule download_VFDB_fasta:
     conda:
         "../../envs/curl.yml"
-    singularity:
+    container:
         "docker://curlimages/curl:latest"
     output:
         "references/virulence/VFDB_setA_pro.fas.gz",
@@ -13,7 +13,7 @@ rule download_VFDB_fasta:
         """
 
 rule extract_VFDB_fasta:
-    singularity:
+    container:
         "docker://kubeless/unzip:latest"
     input:
         "references/virulence/VFDB_setA_pro.fas.gz",
@@ -27,7 +27,7 @@ rule extract_VFDB_fasta:
 rule filter_VFDB_fasta_by_size:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         "references/virulence/VFDB_formated.faa",
@@ -42,7 +42,7 @@ rule filter_VFDB_fasta_by_size:
 rule format_VFDB_fasta:
     conda:
         "../../envs/python-r.yml"
-    singularity:
+    container:
         "docker://metagenlab/diag-pipeline-python-r:1.1"
     input:
         "references/virulence/VFDB_setA_pro.fas",
@@ -55,7 +55,7 @@ rule format_VFDB_fasta:
 rule create_VFDB_blast_database:
     conda:
         "../../envs/blast.yml"
-    singularity:
+    container:
         "docker://quay.io/biocontainers/blast:2.9.0--pl526h3066fca_4"
     input:
         proteins = "references/virulence/VFDB_larger_50aa.faa",

@@ -3,8 +3,8 @@
 if 'sra_samples' in config:
 
     rule compare_MTB_res_search:
-        singularity:
-            singularity_envs["python_r"]
+        container:
+            containers["python_r"]
         input:
             table_2 = "{path}_benchmark.tsv"
         params:
@@ -20,8 +20,8 @@ if 'sra_samples' in config:
 
 
     rule add_reference_phenotype:
-        singularity:
-            singularity_envs["python_r"]
+        container:
+            containers["python_r"]
         input:
             table_2 = "{path}_frequency.tsv"
         params:
@@ -33,8 +33,8 @@ if 'sra_samples' in config:
 
 
     rule statistics_wrong_results:
-        singularity:
-            singularity_envs["python_r"]
+        container:
+            containers["python_r"]
         input:
             rgi = "report/resistance/rgi_variant_phenotype.tsv",
             mykrobe = "report/resistance/mykrobe_variant_phenotype.tsv",
