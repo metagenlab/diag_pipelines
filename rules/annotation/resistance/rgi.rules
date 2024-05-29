@@ -1,23 +1,4 @@
 
-'''
-rule search_resistance_with_rgi_contigs:
-    conda:
-        "../../../envs/rgi.yml"
-    container:
-        containers["rgi"]
-    threads:
-        4
-    input:
-        "samples/{sample}/annotation/{sample}.fna"
-    output:
-        "samples/{sample}/resistance/rgi_{sample}.json"
-    shell:
-        """
-        # new version
-        rgi main -t contig -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi_{wildcards.sample}
-        """
-'''
-
 rule search_resistance_with_rgi_faa:
     conda:
         "../../../envs/rgi.yml"
@@ -31,7 +12,6 @@ rule search_resistance_with_rgi_faa:
         "samples/{sample}/resistance/rgi_{sample}.json"
     shell:
         """
-        # new version
         rgi main -t protein -i {input[0]} -n {threads} -o $(dirname {output[0]})/rgi_{wildcards.sample}
         """
 
