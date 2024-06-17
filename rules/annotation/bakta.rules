@@ -36,7 +36,7 @@ rule annotate_with_bakta:
     shell:
         """
         export LC_ALL=C
-        bakta --threads {threads} --db {params[database]} --compliant --output samples/{wildcards.sample}/annotation --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locus-tag 'CHUV' --complete {input[contigs]}
+        bakta --force --threads {threads} --db {params[database]} --compliant --output samples/{wildcards.sample}/annotation --prefix {wildcards.sample} --strain {wildcards.sample} --genus '{params.genus}' --species '{params.spec}' --locus-tag 'CHUV' --complete {input[contigs]}
         unset LC_ALL
         """
 

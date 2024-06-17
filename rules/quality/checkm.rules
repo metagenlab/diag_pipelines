@@ -12,7 +12,7 @@ rule checkm_lineage_wf:
     shell:
         """
         # checkm taxonomy_wf -t {threads} domain Bacteria report/assemblies_filtered checkm/analyse_wf
-        checkm lineage_wf -t {threads} report/assemblies_filtered checkm/analyse_wf
+        checkm lineage_wf --reduced_tree -t {threads} report/assemblies_filtered checkm/analyse_wf
         """
 
 rule checkm_qc:
