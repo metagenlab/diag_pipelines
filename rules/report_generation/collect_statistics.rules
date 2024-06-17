@@ -18,6 +18,11 @@ rule statistics:
     script:
         "scripts/statistics.py"
 
+rule flash_all:
+    input:
+        flash_data = expand("samples/{sample}/reads/raw/{sample}.log", sample=read_naming.keys()),
+        flash_hist = expand("samples/{sample}/reads/raw/{sample}.hist", sample=read_naming.keys()),
+
 
 rule statistics_assembly:
     conda:
