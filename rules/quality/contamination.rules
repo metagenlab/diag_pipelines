@@ -24,6 +24,8 @@ rule calculate_distance_paired_reads_from_refseq_genomes_with_mash:
 rule calculate_distance_assembly_from_refseq_genomes_with_mash:
     threads:
         2
+    resources:
+         mem_gb=12
     conda:
         "../../envs/mash.yml"
     singularity:
@@ -119,6 +121,8 @@ ruleorder: paired_reads_classification_with_centrifuge > single_reads_classifica
 rule paired_reads_classification_with_centrifuge:
     threads:
         2
+    resources:
+         mem_gb=20
     conda:
         "../../envs/centrifuge.yml"
     singularity:
@@ -139,6 +143,8 @@ rule paired_reads_classification_with_centrifuge:
 rule single_reads_classification_with_centrifuge:
     threads:
         2
+    resources:
+         mem_gb=20
     conda:
         singularity_envs["centrifuge"]
     singularity:
