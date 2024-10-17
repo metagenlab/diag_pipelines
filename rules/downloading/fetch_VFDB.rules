@@ -4,7 +4,7 @@ rule download_VFDB_fasta:
     conda:
         "../../envs/curl.yml"
     singularity:
-        "docker://curlimages/curl:latest"
+        "https://depot.galaxyproject.org/singularity/curl:7.80.0"
     output:
         "references/virulence/VFDB_setA_pro.fas.gz",
     shell:
