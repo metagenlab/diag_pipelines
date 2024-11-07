@@ -39,6 +39,10 @@ dataset$Best_hit <- factor(dataset$Best_hit, levels=u_sort)
 plot_list <- list()
 for (i in 1:length(unique(dataset$Mechanism))){
     resistance_mechanism <- unique(dataset$Mechanism)[i]
+    if(length(resistance_mechanism) == 0)
+        next
+    if (is.na(resistance_mechanism))
+        next
     mechanism_subset <- dataset[dataset$Mechanism==resistance_mechanism,]
     p <- ggplot(data = mechanism_subset, aes(x = sample, y = Best_hit)) + geom_tile(aes(fill = Cut_Off), height = 0.9, width=0.9)
     p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
@@ -56,8 +60,6 @@ svglite(snakemake@output[["rgi_plot"]], height=25,width=longest_label/15 + (0.5*
 #p <- ggplot(data = dataset, aes(x = sample, y = Best_hit)) + geom_raster(aes(fill = CUT_OFF))
 #p <- p + theme_grey(base_size = 10)  + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 #print (p + coord_fixed(ratio=1))
-ggarrange(plots=plot_list, ncol = 1, newpage = FALSE)
-dev.off()
 
 ###
 # produce one plot per species
@@ -72,8 +74,10 @@ for (species in nr_species){
     sub_dataset$Best_hit <- factor(sub_dataset$Best_hit, levels=u_sort)
     # prepare one plot/resistance mechanism
     plot_list <- list()
-    for (i in 1:length(unique(sub_dataset$Mechanism))){
-        print("Mechanism")
+
+    mechanisms <- na.omit(unique(sub_dataset$Mechanism))
+
+    for (i in 1:length(mechanisms)){
         if(i == 0)
             next
         resistance_mechanism <- unique(sub_dataset$Mechanism)[i]
