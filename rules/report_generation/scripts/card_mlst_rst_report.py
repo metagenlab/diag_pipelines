@@ -21,7 +21,7 @@ def parse_rgi(rgi_file_list,
     import pandas
     import re
     import os
-    print("ARO filter:", aro_filter)
+
     BETALACTAMS = ["monobactam", "carbapenem", "penam", "cephem", "penem", "cephamycin", "cephalosporin", "Beta-Lactam"]
     # carbapenem; cephalosporin; cephamycin; penam
     # create dictionary with sample name as key and list of contigs classified as being on plasmids as values
@@ -44,7 +44,6 @@ def parse_rgi(rgi_file_list,
         sample2rgi[sample]["drug_resistance"] = {}
         t = pandas.read_csv(rgi_file, sep="\t", header=0)
         for n, row in t.iterrows():
-            # print("-------", row)
             if row["Contig"] in plasmids:
                 gene = f"{row['Best_hit']} (p)"
             else:
@@ -235,7 +234,7 @@ def generate_report_rst(sample2mlst,
     for sample in SAMPLES_LIST:
         if sample in sample2rgi:
             sample_str = ''
-            if len(sample2rgi[sample]["drug_resistance"]) != 0: 
+            if len(sample2rgi[sample]["drug_resistance"]) != 0:
                 drug_list = list(sample2rgi[sample]["drug_resistance"].keys())
                 drug_list.sort(key=lambda v: v.upper())
                 for drug in drug_list:
@@ -258,7 +257,7 @@ def generate_report_rst(sample2mlst,
                         gene_str_list.append(gene_str)
                     sample_str += f' | **{drug_format}:** ' + ", ".join(gene_str_list) + '\n        '
             else:
-                gene_str = "No resistance genes found"
+                sample_str = "No resistance genes found"
             resistance_table_rows.append(f"* - {sample}\n      - {sample_str}")
         resistance_table = '\n    '.join(resistance_table_rows)
     report_str = f"""
@@ -272,7 +271,7 @@ Strain identification
 
 .. csv-table::
     :header: "Sample", "Scheme", "MLST", "Mash best hit"
-    :widths: 7, 10, 7, 30
+    :widths: 4, 2, 1, 6
 
     {table_1}
 
@@ -282,7 +281,7 @@ Antibiotic resistance genes
 
 .. list-table::
    :header-rows: 1
-   :widths: 10, 50
+   :widths: 1, 2
    :header-rows: 1
 
     * - **Sample**
@@ -297,7 +296,7 @@ Single nucleotide polymorphisms (SNP)
 
 .. list-table::
    :header-rows: 1
-   :widths: 10, 50
+   :widths: 1, 2
    :header-rows: 1
 
     * - **Sample**
@@ -312,7 +311,7 @@ Antibiotic efflux systems, reduced permeability and regulators
 
 .. list-table::
     :header-rows: 1
-    :widths: 10, 50
+    :widths: 1, 2
     
     * - **Sample**
       - **Transporters**
