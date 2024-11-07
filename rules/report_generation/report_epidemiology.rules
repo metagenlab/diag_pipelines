@@ -142,6 +142,7 @@ if "epidemiology" in sys.argv:
             sample_table = all_samples
         output:
             "report/report_epidemiology.html",
+            "report/report_epidemiology.rst",
         script:
             "scripts/report_epidemiology.py"
 
