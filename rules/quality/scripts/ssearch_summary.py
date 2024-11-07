@@ -24,5 +24,5 @@ for ssearch in ssearch_results:
             bitscore = hit.hsps[0].bitscore
             # 16S_rRNA::NODE_52_length_5592_cov_1.520403:3723-5244(-)
             # 95266;tax=d:Bacteria,p:Bacteroidetes,c:Bacteroidia,o:Bacteroidales,f:Porphyromonadaceae,g:Parabacteroides,s:Parabacteroides
-            
+            # >140578;tax=Bacteria;Firmicutes;Bacilli;Bacillales;Staphylococcaceae;Staphylococcus;Staphylococcus ..
             o.write(f'{sample}\t{query_accession.split(":")[2]}\t{hit_accession.split("tax=")[1]}\t{alignment_length}\t{percent_identity}\t{evalue}\t{bitscore}\n')
