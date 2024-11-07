@@ -32,6 +32,7 @@ mlst_tree = ""  #'/'.join(mlst_tree.split('/')[1:])
 core_genome_bed = snakemake.params["core_genome_bed"]
 
 output_file = snakemake.output[0]
+output_file2 = snakemake.output[1]
 
 '''
 leaf2mlst = pandas.read_csv(snakemake.input["mlst"],
@@ -251,11 +252,14 @@ Phylogeny + MLST
 
 """
 
+with open(output_file2, "w") as fh:
+    fh.write(report_str)
+
 with open(output_file, "w") as fh:
     publish_file(
         source=io.StringIO(report_str),
         destination=fh,
         writer_name="html",
-        settings_overrides={"stylesheet_path": ""},
+        settings_overrides={"stylesheet_path": "", "line_length_limit": 2000000000},
     )
 
