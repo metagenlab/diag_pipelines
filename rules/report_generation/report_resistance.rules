@@ -63,5 +63,5 @@ rule resistance_detailed_table:
     shell: 
         """
         head -n1 {input[0]} >> {output}
-        cat {input} | grep -v ORF_ID >> {output}
+        cat {input} | grep -v ORF_ID >> {output} || true
         """
