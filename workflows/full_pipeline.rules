@@ -4,7 +4,7 @@ import re
 import yaml
 import os
 
-PIPELINE_VERSION = "2.8.0"
+PIPELINE_VERSION = "2.8.1"
 
 
 if "--use-singularity" in sys.argv:
