@@ -1,5 +1,5 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14753522.svg)](https://doi.org/10.5281/zenodo.14753522)
-
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.14753522.svg
+  :target: https://doi.org/10.5281/zenodo.14753522
 
 Routine procedures for diagnostic purposes using microbial genomics and metagenomics.
 
